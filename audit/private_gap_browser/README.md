@@ -295,7 +295,7 @@ Public engines worked 2026-10-11 (the public no-rate leads, `audit/price_researc
   the day view carry no fee; it appears only in the cart, and the reserve link didn't add a site
   when followed directly. Ask AWH.
 - **Bonfire** (`book.letsbonfire.com/<park>`) carries a reCAPTCHA: don't automate the search
-  (same rule as Firefly); ask AWH for a saved page. **bookmysites** links now open a login page.
+  (same rule as Firefly); ask AWH for a saved page. **bookmysites** links opened a login page in 2026-10 sweeps, but some parks' engines show rates and availability publicly (Crossroads Travel Park and Scenic Mountain, GA, 2026-10-29) - try the link before asking.
 - **A page a plain fetch was refused** (403, TLS, bad gzip) almost always renders in the browser;
   one that fails there too has usually MOVED - search for the agency's new domain (Town of
   Bainbridge NY .org -> .gov, Chenango County, Tulare County Parks, Shelby County KY, Silverton BC
