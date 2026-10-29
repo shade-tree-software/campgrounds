@@ -1,0 +1,84 @@
+{
+  "id": 713,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232683 (description, notices, rules), read 2026-10-29",
+    "https://www.recreation.gov/api/camps/campgrounds/232683/rates, read 2026-10-29",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232683 (117 sites: price_range, attributes, coordinates), read 2026-10-29",
+    "https://www.recreation.gov/api/camps/availability/campground/232683/month (Nov 2026 - Mar 2027), read 2026-10-29"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 36,
+        "nightly_high": 36,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "$36 a night at every single site, all year, 2026 and 2027 alike. The ten double sites (040, 047, 050, 052, 065, 080, 084, 087, 089, 101; up to 16 people and 8 vehicles) are $72."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232683/rates ('Peak Season' 2026-01-01..2026-12-31 and 2027-01-01..2027-12-31: STANDARD ELECTRIC 36, double-site variants 72); per-site price_range in https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232683 (107 sites $36, 10 sites $72), read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232683 (all 117 STANDARD ELECTRIC sites 'Water Hookup' Yes; 'Electricity Hookup' 30 or 50 (59 sites with 50); no sewer attribute on any site), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 117,
+        "max_rig_ft": 100,
+        "pull_through": true,
+        "note": "Seven loops (A-G), every site electric + water, paved driveways 25-100 ft, so all 117 take a 23-ft rig; 11 pull-throughs. 102 sites tagged lakefront."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232683 ('Max Vehicle Length', 'Driveway Entry', 'Driveway Surface', 'Proximity to Water' per site; RIDB catalog in trip_data/ridb_campsites.json agrees), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "dump": true,
+        "laundry": true,
+        "showers": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232683 ('Other amenities include a dump station, coin laundry facilities, hot showers, a boat ramp, and hiking trails'), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true
+      },
+      "source": "https://www.recreation.gov/api/camps/availability/campground/232683/month (sites Available or Reserved through every month Nov 2026 - Mar 2027; audit/recgov_calendar.json shows the same for Jun 2026 - Mar 2027), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232683",
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "max_stay_nights": 14,
+        "note": "Two-night weekend minimum (marked soft, so recreation.gov may relax it for a same-day booking) and three nights on holiday weekends. 14 nights in any 30 days. Gates locked 10 pm - 7 am; card payment only; four vehicles per site, no overflow parking. Check-in 4 pm, check-out 3 pm."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232683 (rules minWeekendStay 2 'soft', minHolidayWeekendStay 3, maxStay 14 nights 'Rolling 30 Days'; notices 'GATES are locked from 10:00 p.m. EST to 7:00 a.m. EST', 'four (4) vehicle per campsite limit ... There is no overflow parking', 'credit card, debit card, or prepaid credit card only', 'CHECK-IN TIME is guaranteed for reservations after 4:00 p.m. CHECK-OUT TIME is 3:00 p.m.'), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "summary": "recreation.gov 232683 (USACE West Point Lake, not commercially managed; reservable, no FCFS statement): 117 sites, all water + 30/50 A (no sewer), 25-100 ft (all fit), 11 pull-throughs, 102 tagged lakefront; $36 every single site all year in 2026 and 2027 (stored 36 confirmed), ten double sites $72 (in fees.note). Max 100, pull-through, dump/laundry/showers, year-round (calendar), 2-night soft weekend + 3-night holiday minimum and 14-night max added. Count 117 confirmed. AWH note kept verbatim. Phone and pin - see flags.",
+  "flags": [
+    "Phone missing -> 706-645-2404 (recreation.gov facility phone, also the number the gate notice gives for emergencies).",
+    "Pin ~400 m off: stored 32.9272,-85.1639 is recreation.gov's facility point (near the entrance). The 117 sites' coordinates centre on 32.9294,-85.1672 (span 32.9249-32.9353, -85.1713 to -85.1630). Suggest 32.9294,-85.1672; elevation_meters needs re-fetching.",
+    "recreation.gov carries a 'militaryDiscount' rule with no wording; discounts left alone."
+  ]
+}
