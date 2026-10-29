@@ -6880,20 +6880,78 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov 232749 ('80 sites with water and electric hook ups') + RIDB catalog (all 80 sites: Electricity Hookup 50, Water Hookup Yes; no sewer attribute on any site), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232749/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232749/rates (Peak Season 2026, 2027, 2028: STANDARD ELECTRIC 32), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "recreation.gov 232749 ('80 sites') + RIDB catalog for 232749 (79 STANDARD ELECTRIC reservable, 1 MANAGEMENT not reservable; Max Vehicle Length 24-65; Driveway Entry Pull-Through 37 / Back-In 43), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "recreation.gov 232749 Facilities ('two bathhouses that have flush toilets and showers, and a pit toilet'; 'a new dump station'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "season": {
+        "source": "recreation.gov rates for 232749 (Peak Season 2026-03-27 to 2026-09-13, 2027-04-02 to 2027-09-11, the only season priced) + availability (Nov 2026 and Mar 2027 every site 'Not Available'; first bookable night 2027-04-02; Oct 2027 'Not Available'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232749 (fee description 'All payments and fees will occur through recreation.gov or the on-site Gate Attendant'; facility_rules minHolidayWeekendStay 3, maxStay 14 per rolling 30 days, reservationCutOff 0; gate and boat-ramp text), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 32,
       "nightly_high": 32,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$32 a night at every water/electric site in 2026, 2027 and 2028."
+    },
+    "sites": {
+      "count": 80,
+      "max_rig_ft": 65,
+      "pull_through": true,
+      "note": "79 reservable water/50 A electric sites plus one management site; Max Vehicle Length 24-65 ft, so all 79 take a 23-ft motorhome; 37 pull-through."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-02",
+      "closes": "09-11",
+      "note": "Open spring to mid-September; the dates shift each year (2026: Mar 27 - Sep 13; 2027: Apr 2 - Sep 11)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Pay through recreation.gov or the gate attendant. Bookable through the day of arrival. 3-night minimum on holiday weekends; 14 nights in any rolling 30 days. Gates 7 am - 10 pm, code given at check-in. Boat ramp and courtesy dock for registered campers only."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232749 https://www.recreation.gov/api/camps/campgrounds/232749/rates https://www.recreation.gov/api/camps/availability/campground/232749/month (2026-11, 2027-03, 2027-04, 2027-09, 2027-10) RIDB campsite catalog for 232749 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "recreation.gov + RIDB: USACE Savannah District campground on the Little River arm of Thurmond Lake near Mistletoe SP; 80 sites (79 reservable water/50 A, 24-65 ft, all fit 23 ft, 37 pull-through), showers, dump; $32 a night 2026-2028 (confirmed); open about Apr - mid-Sep; 3-night holiday minimum, 14-night max. Pin is 80 m from rec.gov's facility point. AWH note kept verbatim (rec.gov: 'on the shoreline of the J Strom Thurmond lake'; 'All shorelines adjacent to campsites are public property'). Op"
+    },
+    "phone": "706-541-0147"
   },
   {
     "id": 93,
@@ -56560,7 +56618,7 @@
     "location": "34.2089,-84.0873",
     "elevation_meters": 344.0,
     "website": "https://www.register.forsythco.com/forsythcounty/discover/facility/0257d4fb-53bc-4c13-bc8c-11ac304730bc",
-    "phone": "770-781-2215,770-889-1591",
+    "phone": "678-455-9929",
     "state": "GA",
     "ownership": "local",
     "waterfront": "lakefront",
@@ -56577,6 +56635,94 @@
       "sig": "3b0b90989602f0d4",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/0257d4fb-53bc-4c13-bc8c-11ac304730bc (Amenities: 'Water and electric hookups (50 amp)'; campground rules: 'The discharge of gray or black water (sewage) is prohibited. Please use the dump station.'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.register.forsythco.com/forsythcounty/reservation/campgrounds/0257d4fb-53bc-4c13-bc8c-11ac304730bc (site list, e.g. 'Baldridge - Site #3 (maximum RV length 55')', 'ADA Site #62 (maximum RV length 33')'; 73 sites, lengths 19-55 ft); facility page ('Accommodation for up to 3 vehicles and 8 people'); campground rules PDF (one camper or motor home per site, two tents), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/0257d4fb-53bc-4c13-bc8c-11ac304730bc (Amenities: 'Bathhouses with hot showers', 'Dump station', 'Boat ramp with courtesy dock', 'Playground', 'Swimming beach'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/0257d4fb-53bc-4c13-bc8c-11ac304730bc ('Bald Ridge Campground will close for the 2026 season December 13.'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/0257d4fb-53bc-4c13-bc8c-11ac304730bc ('Please note that reservations are required to camp. Reservations must be made at least one day in advance.', '2-night minimum is required for weekends and holidays'); campground information PDF ('Staying longer than 14 days within a 30-consecutive-day period is prohibited', no-show and cancellation rules); reservation page ('Min: 1 night, Max: 2 weeks', 'Create an account or log in to reserve a campsite'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.register.forsythco.com/forsythcounty/reservation/campgrounds/0257d4fb-53bc-4c13-bc8c-11ac304730bc (all 73 sites '$30.00 / night', Oct 29 - Nov 14 2026 view), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://storage.googleapis.com/forsyth_county_assets/facilities%2F7203b268-0284-4c08-b79d-d7b4f30f2312.pdf ('The following America the Beautiful passes are accepted at Bald Ridge and Sawnee Campgrounds only: Annual Senior, Lifetime Senior, Access, and Golden Access'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      }
+    },
+    "sites": {
+      "count": 73,
+      "max_rig_ft": 55,
+      "note": "73 bookable sites, each with a stated maximum RV length of 19-55 ft (only one under 25 ft), five of them ADA sites. Up to 8 people and 3 vehicles a site; one RV per site, tents on the designated pad (two at most)."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "season": {
+      "closes": "12-13",
+      "note": "The county says it 'will close for the 2026 season December 13'; no opening date is published."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.register.forsythco.com/forsythcounty/reservation/campgrounds/0257d4fb-53bc-4c13-bc8c-11ac304730bc",
+      "fcfs": "never",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 2,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Forsyth County Parks & Recreation's own booking site; an account is needed. 'Reservations are required to camp. Reservations must be made at least one day in advance.' No more than 14 days in any 30. A site is held until noon the day after arrival, then cancelled as a no-show. Cancel 48+ hours ahead for a refund less a 10% fee."
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$30 a night for every site (water and 50-amp electric). Read 2026-10-29."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "America the Beautiful Annual/Lifetime Senior, Access and Golden Access passes accepted (photo ID at check-in), one site per pass holder, whole stay."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://www.register.forsythco.com/forsythcounty/discover/facility/0257d4fb-53bc-4c13-bc8c-11ac304730bc https://www.register.forsythco.com/forsythcounty/reservation/campgrounds/0257d4fb-53bc-4c13-bc8c-11ac304730bc https://storage.googleapis.com/forsyth_county_assets/facilities%2F7203b268-0284-4c08-b79d-d7b4f30f2312.pdf",
+      "note": "Forsyth County's booking site: 73 sites, water + 50 A, per-site max RV 19-55 ft (72 take 23 ft), all $30; showers, dump, beach, boat ramp; reservations required 1+ day ahead, 2-night weekend/holiday minimum, 14 nights in 30; closes for 2026 on Dec 13; ATB Senior/Access accepted. All groups were unset. AWH note kept verbatim (still accurate). Pin OK."
     }
   },
   {
@@ -319020,9 +319166,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "GA state park + search: ~24-site campground with electric/water RV/tent sites, pull-throughs up to 40 ft, reservable online -> real RV campground",
     "waterfront_evidence": "satellite at 34.5698,-84.2438: campground loops in forested mountain terrain, no lake/river at pads (falls are a gorge creek away)",
-    "website": "https://gastateparks.org/AmicalolaFalls\nhttps://www.amicalolafallslodge.com/\nhttps://gastateparks.reserveamerica.com",
-    "phone": "",
-    "note": "GA state park (concessionaire-managed by North Georgia Mountains Authority/Coral Hospitality). Small drive-in campground, ~24 sites with electric+water hookups (20/30/50 amp), gravel pads, bathhouse, laundry; no on-site dump station. Sites fit RVs up to ~40 ft per some sources (others cite ~24 ft) — 23-ft EKKO fits. Reservable online via ReserveAmerica. --Claude",
+    "website": "https://gastateparks.org/AmicalolaFalls\nhttps://amicalolafallslodge.com/accommodations/",
+    "phone": "706-344-1500",
+    "note": "Coral Hospitality runs the campground for the state; check in at the Lodge. The paved road up to the campground is steep: the park says the hill reaches a 25% grade at times and to use a low gear. Glamping safari tents (sites 2-6) book separately.",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -319033,41 +319179,45 @@
       "water": true
     },
     "sites": {
-      "count": 24
+      "count": 19,
+      "pull_through": true,
+      "note": "19 RV/tent sites with power and water (sites 1 and 7-24; site 1 is a paved ADA site, RV only, 32 x 13 ft; site 11 is 77 ft long); sites 2-6 are glamping safari tents booked separately. The lodge pages say 18 and 24 campsites in different places. Tents must fit the tent pads; six people per site."
     },
     "facilities": {
       "showers": true,
       "laundry": true,
-      "dump": false
+      "dump": true
     },
     "booking": {
       "reservable": true,
-      "platform": "reserveamerica"
+      "platform": "operator",
+      "url": "https://us01.iqwebbook.com/TLAAFGA683/"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://amicalolafallslodge.com/accommodations/ ('each one of our well-maintained campsites is an easy pull-in or back-in site with water, power, grill and fire ring'); every campsite in the lodge's booking engine is named 'Power/Water' (https://us01.iqwebbook.com/TLAAFGA683/api/roomtype/getall), read 2026-10-29. Amperage not stated; derived electric left.",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://us01.iqwebbook.com/TLAAFGA683/api/roomtype/getall (campsites CP01 'Power/Water Paved Campsite #01 RV Only ADA' 32'x13', CP07-CP24 'Power/Water Campsite', CP11 77'x14'2\", CP02-CP06 glamping 'Book online at https://amicalola.tlglamping.com/'); https://amicalolafallslodge.com/accommodations/ ('18 wooded campsites accommodating tent camping and RVs', 'easy pull-in or back-in site', six-person limit, tent pads); https://amicalolafallslodge.com/georgia-state-park/ ('24 wooded campsites'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://amicalolafallslodge.com/wp-content/uploads/2025/11/Coral-Hospitality-2024-3D-Pad-Map-Amicalola-Falls-State-Park.pdf (park map: 'Dump Site' and 'C.S. Bath House' drawn in the campground, 'Tent & Trailer Sites 1-24'), read 2026-10-29. Contradicts the derived dump:false.",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://amicalolafallslodge.com/accommodations/ ('Reserve a Campsite' -> https://us01.iqwebbook.com/TLAAFGA683/, the lodge's own engine, which lists and prices every campsite; 'Check-in services for campsites are at the Lodge'); Camping FAQs PDF ('contact us at 706-344-1500 or toll free at 800-573-9656 ... to reserve your campsite'), read 2026-10-29. Not on gastateparks.reserveamerica.com.",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://us01.iqwebbook.com/TLAAFGA683/ (Amicalola Falls Lodge's booking engine: every 'Campsite ... Power/Water' $49.00 on 2027-01-12, $59.00 on 2027-01-16; ga_lodges/)",
-        "checked": "2026-10-12"
+        "source": "https://us01.iqwebbook.com/TLAAFGA683/api/roomtype/search (every 'Campsite ... Power/Water' $49.00 for 2027-06-16, $59.00 for 2027-06-19); https://amicalolafallslodge.com/georgia-state-park/ ('All vehicles entering Amicalola Falls State Park require a $10 GA State Park Pass'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -319080,8 +319230,14 @@
       "nightly_high": 59,
       "currency": "USD",
       "checked": "2026",
-      "note": "$49 a night for a campsite with power and water on a weeknight, $59 on a Saturday (January 2027). The campground books through the lodge's own reservation system, not the state parks' site. Vehicles need the $10 ParkPass. Read 2026-10-12."
-    }
+      "note": "$49 a night for a campsite with power and water on a weeknight, $59 on a Saturday (June 2027, the same as January). The campground books through the lodge's own reservation system, not the state parks' site. Vehicles need the $10 ParkPass. Read 2026-10-29."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://amicalolafallslodge.com/accommodations/ https://amicalolafallslodge.com/georgia-state-park/ https://amicalolafallslodge.com/wp-content/uploads/2024/12/Amicalola-Falls-State-Park-Camping-FAQs.pdf https://amicalolafallslodge.com/wp-content/uploads/2025/11/Coral-Hospitality-2024-3D-Pad-Map-Amicalola-Falls-State-Park.pdf https://us01.iqwebbook.com/TLAAFGA683/ https://gastateparks.org/AmicalolaFalls",
+      "note": "Lodge (Coral Hospitality) books the campground on its own iqwebbook engine: 19 power/water sites (1, 7-24), pull-in or back-in, site 1 paved RV-only 32 ft; $49 weeknight / $59 Saturday confirmed for June 2027, $10 ParkPass; park map shows a dump station (derived dump:false was wrong). Booking set to operator + engine url. Note: dropped ReserveAmerica, amps, site count, laundry/dump and length claims; kept the steep-road warning."
+    },
+    "policy_ref": "none"
   },
   {
     "id": 4517,
@@ -319094,16 +319250,19 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "gastateparks.org: 44 tent, trailer & RV campsites with electric hookups, accepts RVs/trailers -> real RV campground",
     "waterfront_evidence": "satellite at 34.9061,-83.4076: mountaintop campground under dense canopy, no water body adjacent (park lake is well away)",
-    "website": "https://gastateparks.org/BlackRockMountain\nhttps://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146\nhttps://gastateparks.reserveamerica.com",
+    "website": "https://gastateparks.org/BlackRockMountain\nhttps://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146",
     "phone": "706-746-2141",
-    "note": "GA's highest state park (~3,640 ft). 44 tent/trailer/RV sites with electric (Hickory Grove area), plus walk-in and backcountry sites (excluded). Bathhouse, laundry, dump station. Park warns of steep, winding mountain access roads but developed sites accept trailers/RVs. Reservable online via ReserveAmerica. --Claude",
+    "note": "Georgia's highest state park (3,640 ft). The park says RVers should be comfortable driving on steep, winding roads, and that it may close during icy weather.",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "sites": {
-      "count": 44
+      "count": 44,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "44 electric RV/tent sites; per-site max vehicle length 20 ft at 20 of them, 30 ft at 12, 40 ft at 8, 50 ft at 4 (sites 05, 11, 36, 38), so 24 sites take a 23-ft rig. Site 08 is the only pull-through. Sites 14 and 35 are marked Host. 12 walk-in and 4 backcountry tent sites besides."
     },
     "facilities": {
       "showers": true,
@@ -319112,13 +319271,14 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "reserveamerica"
+      "platform": "reserveamerica",
+      "url": "https://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146"
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146 (every site's Max Vehicle Length / Driveway Entry); https://gastateparks.org/BlackRockMountain ('44 Tent, Trailer & RV Campsites', '12 Walk-In Campsites', '4 Backcountry Campsites'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -319126,17 +319286,23 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gastateparks.org/BlackRockMountain ('Make a Reservation' -> Georgia State Parks' ReserveAmerica site; every campsite bookable there), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "gastateparks.reserveamerica.com parkId 530146 (Black Rock Mountain State Park; sampled sites' 1-night price for 2027-06-15 and 2027-06-19, read 2026-10-12)",
-        "checked": "2026-10-12"
+        "source": "https://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146 (1-night prices for every site on 2027-06-16; sites 05 and 08 also on 2026-11-10 and 2027-06-19: $36.00 and $38.00 Per Night), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "season": {
         "source": "https://gastateparks.reserveamerica.com/campgroundSeasonDates.do?contractCode=GA&parkId=530146 (Season Schedule: Peak 2026-01-01 to 2026-12-31; Peak 2027-01-01 to 2027-12-31), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146 (site details of all 44 'Campsite Electric' sites: 'Electricity Hookup: 30', 'Water Hookup: Y'; sewer only at the two host-designated sites 14 and 35), read 2026-10-29",
+        "checked": "2026-10-29",
         "method": "manual"
       }
     },
@@ -319147,13 +319313,22 @@
     },
     "fees": {
       "nightly_low": 36,
-      "nightly_high": 36,
+      "nightly_high": 38,
       "currency": "USD",
       "checked": "2026",
-      "note": "$36 a night for a site with electric and water. The same on a Saturday. Georgia prices site by site; these are sampled sites' prices for a Tuesday and a Saturday in June 2027 on Georgia State Parks' booking site, read 2026-10-12. Vehicles need the $10 ParkPass."
+      "note": "$36 a night for an electric/water back-in site, $38 for the pull-through (site 08) and the two host-designated sites; the same on a weekday and a Saturday (November 2026, June 2027). Walk-in tent sites $25, backcountry $20. Vehicles need the $10 ParkPass. Read 2026-10-29."
     },
     "season": {
       "year_round": true
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://gastateparks.org/BlackRockMountain https://gastateparks.reserveamerica.com/campgroundDetails.do?contractCode=GA&parkId=530146",
+      "note": "Confirmed on gastateparks.org + ReserveAmerica: 44 electric sites (30 A, water; sewer only at 2 host sites), per-site lengths 20-50 ft with 24 sites taking 23 ft, one pull-through; $36 (pull-through $38) weekday and Saturday, ParkPass $10; phone and pin OK. Added hookups, max length, deep booking link. Facilities left (park page silent). Note: dropped site count, hookups, bathhouse/laundry/dump and ReserveAmerica text; kept the steep-roads and icy-weather warnings."
     }
   },
   {
@@ -320874,14 +321049,17 @@
     "waterfront_evidence": "TheDyrt reviews + park info: RV/trailer loop is ~3/4 mi from the bridge/creek, set back in woods; only primitive (non-RV) sites front Big Cloud Creek",
     "website": "https://gastateparks.org/WatsonMillBridge\nhttps://gastateparks.reserveamerica.com/camping/watson-mill-bridge-state-park/r/campgroundDetails.do?contractCode=GA&parkId=530202",
     "phone": "706-783-5349",
-    "note": "21 tent/trailer/RV sites with electric hookups (separate from the equestrian campground); flush toilets, showers, dump station. Reservable online via ReserveAmerica. Drive-in, fits 23-ft rigs — enter from Hwy 22 (covered bridge has 9-ft clearance/3-ton limit; do NOT route an RV over it). On the South Fork Broad River below the historic covered bridge/millpond. --Claude",
+    "note": "Wooded campground north of the covered bridge and the South Fork River shoals; the equestrian campground is separate. Enter from Hwy 22: the covered bridge has a 9-ft clearance and 3-ton limit, so do NOT route an RV over it. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "sites": {
-      "count": 21
+      "count": 21,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "21 electric/water sites, Max Vehicle Length 30-50 ft, so every one takes a 23-ft motorhome; 18 pull-through, 3 back-in (03, 05, 16). Site 01 is the host site but is listed (it alone shows sewer). The equestrian, buddy and pioneer sites are not counted."
     },
     "facilities": {
       "flush_toilets": true,
@@ -320890,23 +321068,24 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "reserveamerica"
+      "platform": "reserveamerica",
+      "url": "https://gastateparks.reserveamerica.com/camping/watson-mill-bridge-state-park/r/campgroundDetails.do?contractCode=GA&parkId=530202"
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gastateparks.org/WatsonMillBridge ('21 Tent, Trailer & RV Campsites', '11 Equestrian Campsites') + ReserveAmerica parkId 530202 campsiteDetails ('Max Vehicle Length' 30-50, 'Driveway Entry'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gastateparks.reserveamerica.com/camping/watson-mill-bridge-state-park/r/campgroundDetails.do?contractCode=GA&parkId=530202 (facility list 'Dump Station', 'Restrooms', 'Showers'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gastateparks.org/WatsonMillBridge (its Reserve links all go to gastateparks.reserveamerica.com parkId 530202; 'Reservations 800-864-7275'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -320914,12 +321093,18 @@
         "method": "derived"
       },
       "fees": {
-        "source": "gastateparks.reserveamerica.com parkId 530202 (Watson Mill Bridge State Park; sampled sites' 1-night price for 2027-06-15 and 2027-06-19, read 2026-10-12)",
-        "checked": "2026-10-12"
+        "source": "ReserveAmerica parkId 530202 campsiteDetails, all campsites arrival 6/16/2027 (Campsite 03, 05, 16 '$32.00 Per Night , $224.00 Per Week'; the pull-throughs '$36.00 Per Night , $252.00 Per Week'); sites 02 and 03 the same for 6/19/2027 and 11/10/2026, read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "season": {
         "source": "https://gastateparks.reserveamerica.com/camping/watson-mill-bridge-state-park/r/campgroundSeasonDates.do?contractCode=GA&parkId=530202 (Season Schedule: Peak 2026-03-01 to 2026-11-30; Peak 2026-12-01 to 2027-02-28; Peak 2027-03-01 to 2027-11-30), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "ReserveAmerica parkId 530202 campsiteDetails for all 21 'Campsite Electric' sites ('Water Hookup Y'; 'Electricity Hookup 30' at 18 sites, '50/30' at sites 01, 02 and 21), read 2026-10-29",
+        "checked": "2026-10-29",
         "method": "manual"
       }
     },
@@ -320936,10 +321121,19 @@
       "nightly_high": 36,
       "currency": "USD",
       "checked": "2026",
-      "note": "$32-36 a night for a site with electric and water. The same on a Saturday. Georgia prices site by site; these are sampled sites' prices for a Tuesday and a Saturday in June 2027 on Georgia State Parks' booking site, read 2026-10-12. Vehicles need the $10 ParkPass."
+      "note": "$32 a night at the three back-in sites, $36 at the pull-throughs ($224 / $252 a week); the same on a Saturday and in November 2026 and June 2027."
     },
     "season": {
       "year_round": true
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://gastateparks.org/WatsonMillBridge https://gastateparks.reserveamerica.com/camping/watson-mill-bridge-state-park/r/campgroundDetails.do?contractCode=GA&parkId=530202 (campground page + campsiteDetails.do for every campsite, arrival 6/16/2027; sites 02 and 03 also 6/19/2027 and 11/10/2026) Esri World Imagery at 34.0285,-83.0735",
+      "note": "Georgia State Parks still book on ReserveAmerica (gastateparks.reserveamerica.com; every Reserve link on gastateparks.org goes there). Confirmed 21 RV sites, phone 706-783-5349, $32-36, showers/dump, open year round. Added water + electric (50 A at 3 sites, 30 A elsewhere), max 50 ft (all 21 fit 23 ft), 18 pull-throughs, the RA deep link. Park page: 'Overnight guests pay daily ParkPass fee only once per vehicle during their stay' - left to the inherited agency entrance row. Covered-bridge notice"
     }
   },
   {
@@ -322815,27 +323009,30 @@
     "id": 4577,
     "kind": "campground",
     "name": "Upper Stamp Creek Campground",
-    "location": "34.1431,-84.7028",
-    "elevation_meters": 302.0,
+    "location": "34.20270,-84.67900",
+    "elevation_meters": 295,
     "state": "GA",
     "ownership": "local",
     "waterfront": "lakefront",
     "inclusion_evidence": "recreation.gov (allatoonalake.org): 18 sites 50-amp electric+water, RVs up to 33 ft, operating mid-Apr-Aug; USACE Allatoona; 2026-10-11: now Bartow County's - the county reservation site lists 18 electric RV sites (19-33 ft) + 2 tent-only, and recreation.gov 729 is gone",
     "waterfront_evidence": "original pin 6.5km off; real campground (80 Chitwood Cove Rd) on Allatoona peninsula; allatoonalake.org/multi-source: 'Sites 7-14 face the water directly, lakefront sites available' (18 W/E RV sites, swim beach, fishing dock); satellite at 34.1431,-84.7028 shows loop on water-surrounded peninsula",
-    "website": "https://www.sam.usace.army.mil/Missions/Civil-Works/Recreation/Allatoona-Lake/Camping/Upper-Stamp-Campground/\nhttps://gabartowcountyweb.myvscloud.com/webtrac/web/siterentals.html?location=Upper%20Stamp%20Creek",
-    "phone": "",
-    "note": "Bartow County Parks & Recreation campground on USACE Allatoona Lake (Etowah River arm), formerly a Corps concession. 20 sites: 18 paved back-in RV sites (19-33 ft) with water and 30/50-amp electric, 10 of them waterfront, plus 2 tent-only; flush toilets, showers, dump station, boat ramp, swim beach. Seasonal (~mid-May to early Sep); book through the county's reservation site (no longer on recreation.gov). --Claude",
+    "website": "https://www.bartowcountyga.gov/departments/parksandrecreation/parks_and_facilities.php",
+    "phone": "770-607-6245",
+    "note": "Bartow County Parks & Recreation campground on USACE Allatoona Lake (Etowah River arm), formerly a Corps concession. The waterfront sites are 7-16, along the peninsula toward the swim beach and boat ramp. --Claude",
     "rating": {
       "stars": 5,
       "source": "rvlife"
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": false
     },
     "sites": {
       "count": 20,
-      "max_rig_ft": 33
+      "max_rig_ft": 33,
+      "pull_through": true,
+      "note": "18 water/electric RV sites, back-in except site 16 (pull-through, 20 ft); driveways 19-33 ft, and 11 of the 18 take 23 ft or more (sites 1, 2, 3, 5, 7, 10, 12, 13, 15, 17, 18). Sites 19-20 are tent-only, water only, up a steep road posted no RVs or trailers."
     },
     "facilities": {
       "flush_toilets": true,
@@ -322847,19 +323044,19 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "Bartow County WebTrac rental detail for USC 001-018 ('Standard Electric Site: Accommodates 30 & 50 Amp', 'Water Hookups', 'Dump Station on Site, No Sewer hookups'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "Bartow County WebTrac rental detail ('Equipment length/Driveway: 25' Back-In' etc. per site; 'USC 016 (20') WF Pull-Through'; 'USC 019 Tent Only', 'USC 020 Tent Only') + county campground map ('Steep road No RVs or trailers' to sites 19-20; legend water only / water and power), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "Bartow County WebTrac rental detail ('Dump Station on Site') + county campground map ('Rest Room and Shower', 'Dump Station'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -322867,12 +323064,14 @@
         "method": "derived"
       },
       "booking": {
-        "source": "https://gabartowcountyweb.myvscloud.com/webtrac/web/siterentals.html?location=Upper%20Stamp%20Creek (Bartow County WebTrac campground rentals, read 2026-10-11)",
-        "checked": "2026-10-11"
+        "source": "https://www.bartowcountyga.gov/departments/parksandrecreation/parks_and_facilities.php ('Campground Rentals: 770-607-6245'; 'We now require a 2 night minimum stay at all campgrounds on Friday and Saturday nights'; pass-holder line) + Campground Rules rev. 2024-06-19 ('CAMPING LIMIT is a maximum of 14 consecutive days or 14 non-consecutive days in any 30-day period ... leave the campground for 16 days'; gate hours), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://gabartowcountyweb.myvscloud.com/webtrac/web/search.html?display=detail&module=RN&keyword=Upper%20Stamp (Bartow County WebTrac rental search, read 2026-10-11 for 10/12-10/13/2026: USC 001-006 and 017-018 '$30.00', USC 007-016 'WF' '$34.00', USC 019-020 'Tent Only' '$24.00'; each RV site 'Standard Electric Site: Accommodates 30 & 50 Amp', water hookups, 19-33 ft back-in)",
-        "checked": "2026-10-11"
+        "source": "Bartow County WebTrac rental search for 06/15/2027 (USC 001-006 and 017-018 '$30.00', USC 007-016 'WF' '$34.00', USC 019-020 'Tent Only' '$24.00') + Campground Rules rev. 2024-06-19 ('ALL CANCELLATIONS WILL INCUR A $10.00 CANCELLATION FEE'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -322884,11 +323083,26 @@
       "nightly_low": 30,
       "nightly_high": 34,
       "currency": "USD",
-      "note": "RV sites (water, 30/50-amp electric) $30/night, waterfront sites $34 (Bartow County reservation site, Monday Oct 12 2026); tent-only sites $24."
+      "note": "$30 a night at the non-waterfront RV sites, $34 at the waterfront (WF) sites 7-16; tent-only sites $24. No resident/non-resident rate shown. $10 fee on any cancellation.",
+      "checked": "2026"
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://gabartowcountyweb.myvscloud.com/webtrac/web/siterentals.html?location=Upper%20Stamp%20Creek",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Bartow County's WebTrac reservation site or the campground office, 770-607-6245 (Mon-Fri 8-5, Sat 8-4). Golden Age / Access pass holders call the office to add the pass before booking. 14 nights in any 30 days, then away 16 days. No check-in after 9:30 pm; gate closed 10:30 pm - 7 am."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://gabartowcountyweb.myvscloud.com/webtrac/web/search.html?display=detail&module=RN&keyword=Upper%20Stamp&begindate=06/15/2027&enddate=06/16/2027 https://gabartowcountyweb.myvscloud.com/webtrac/web/siterentals.html?location=Upper%20Stamp%20Creek https://www.bartowcountyga.gov/departments/parksandrecreation/parks_and_facilities.php https://www.bartowcountyga.gov/departments/parksandrecreation/index.php https://www.bartowcountyga.gov/Campground%20Rules%20update%206.19.24.pdf https://www.bartowcountyga.gov/9939_BCPR_UpperStampCreekCampground_06-03-25%20(1).jpg https://www.sam.usace.army.mil/Missions/Civil-Works/Recreation/Allatoona-Lake/Camping/Upper-Stamp-Campground/ https://www.google.com/maps/place/Upper+Stamp+Creek+Campground/@34.2031106,-84.6811838,17z Esri World Imagery around 34.2025,-84.6775",
+      "note": "Bartow County WebTrac (still the engine; the county's Rec1 catalog has no campground items) + county parks page, rules PDF and site map: 18 water/50-amp RV sites (19-33 ft, 11 take 23 ft+, site 16 pull-through) + 2 tent-only, no sewer, dump + shower house; $30 / $34 waterfront (June 2027), weekend 2-night minimum, 14-night max. Season not stated by the county (left as is). Lakefront supported: the county map shows the loop on a peninsula with sites 7-16 marked WF on the shore. Note trimmed of co"
     }
   },
   {
@@ -323324,38 +323538,51 @@
     "waterfront_evidence": "satellite at 32.334,-81.956: RV pads lined along the pond's south shore with an open grass apron to the waterline, scattered non-screening trees, within distance bound",
     "website": "https://beaverrunrvpark.com/",
     "phone": "912-362-4737",
-    "note": "Owner-operated commercial RV park just off I-16 Exit 111; nightly/weekly/monthly ($45/night RV), transient-dominant with a few long-term residents. Large spaced sites, pull-thru + back-in; 23-ft fits. Book direct by phone/email. --Claude",
+    "note": "Just off I-16 at Exit 111. Spring-fed Shine Lake in the middle of the park, with a swim beach and boats; the 54-72 row faces it across the loop road. Hosts snowbirds and working travellers as well as overnighters. No Dobermans, Rottweilers, chows or pit bulls.",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "note": "Level pull-through sites, shaded and open, 'Big Rig Friendly'; the park map numbers about 80 full-hookup sites (lakeside row 54-72), plus tent sites and cabins."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Call 912-362-4737 or send the website's reservation request form. A non-refundable deposit of the first night holds a site; holiday weekends are paid in advance, non-refundable."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beaverrunrvpark.com/ ('This Metter campground has level, pull-thru sites that are Big Rig Friendly'); park map (August 2024), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beaverrunrvpark.com/reservations/ ('If you have questions or would like to make a reservation, feel free to contact us! Our policy is to take a non-refundable deposit equivalent to your first night's stay'); https://beaverrunrvpark.com/ ('Call today to book'); https://beaverrunrvpark.com/faq/ (cancellation policy), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://beaverrunrvpark.com/reservations/ ('Want to save 10% on your stay? Join Good Sam Club now!'); https://beaverrunrvpark.com/camping/ ('Ask about our Good Sam Discount!'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://beaverrunrvpark.com/camping/ (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://beaverrunrvpark.com/camping/ (Rate: Nightly $45, 1 Week $290, Monthly $555 +Electricity, 3 Month - Cash $1565, Holiday $50 for 1 night; 3% card surcharge); https://beaverrunrvpark.com/faq/ (rec pass $10), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://beaverrunrvpark.com/ ('pull-thru sites with 30 and 50 amp full hook-up service and cable and WI-FI'; 'Sites are 30 or 50 amp, and come with full hook-up, cable, and free WiFi'); park map legend '30/50 Full' on every RV site (https://beaverrunrvpark.com/wp-content/uploads/2025/02/Beaver_Creek_RV_Park_August_2024.jpg), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://beaverrunrvpark.com/ (Amenities: 'Clean Bathrooms', 'Hot Showers', 'Coin Laundry', 'Propane Refilling', 'Free Fiber Internet and Cable TV', game room, playground, swimmable spring-fed lake); https://beaverrunrvpark.com/faq/ (fiber internet at every site plus a WiFi network), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -323372,23 +323599,39 @@
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "Beaver Run: $45 a night, $50 on holidays, $290 a week; tents $25; 3% card fee. Read 2026-10-15."
+      "note": "$45 a night, $50 for a holiday night; $290 a week, $555 a month plus electricity. 3% surcharge on card payments. Rec pass for the lake's boats and boards $10 a stay. Read 2026-10-29."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://beaverrunrvpark.com/ https://beaverrunrvpark.com/camping/ https://beaverrunrvpark.com/faq/ https://beaverrunrvpark.com/reservations/ https://beaverrunrvpark.com/maps/",
+      "note": "Park pages confirm: 30/50 A full hookups, level big-rig pull-throughs, showers/laundry/fiber internet; $45 nightly ($50 holiday), $290 weekly, $555 monthly + electric, 3% card fee; book by phone/form with a 1-night deposit; Good Sam 10% confirmed (military left: page silent). Tent $25 dropped from fees note (not on the site now). Note: dropped rates, booking, site-type and 23-ft text; added the lake row and pet-breed rule. Pin OK."
     }
   },
   {
     "id": 4586,
     "kind": "campground",
     "name": "Big Hart Campground",
-    "location": "33.61461,-82.51282",
-    "elevation_meters": 112.0,
+    "location": "33.61450,-82.50910",
+    "elevation_meters": 129,
     "state": "GA",
     "ownership": "local",
     "waterfront": "lakefront",
     "inclusion_evidence": "bighartcampground.com: 31 full-hookup RV drive-in campsites + group site, open year-round, reservable",
     "waterfront_evidence": "TripAdvisor review: sites 25-26 'right on the lake', boats anchored at sites on Clarks Hill Lake; canopy-blind satellite at 33.615,-82.513 cannot downgrade",
-    "website": "https://www.bighartcampground.com/\nhttps://bookings13.rmscloud.com/Search/Index/13026/90/",
-    "phone": "706-595-8613",
-    "note": "On USACE J. Strom Thurmond (Clarks Hill) Lake land but operated by McDuffie County under a 2020 10-yr lease (no longer on recreation.gov) — credit the local operator. 32 sites, mostly pull-through, RV max ~60 ft so 23-ft fits. Reservable online via RMSCloud. --Claude",
+    "website": "https://www.bighartcampground.com/",
+    "phone": "706-595-6759",
+    "note": "On USACE J. Strom Thurmond (Clarks Hill) Lake land but operated by McDuffie County under a 2020 lease (no longer on recreation.gov). Gates stay open at all hours.",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -323396,28 +323639,75 @@
     },
     "sites": {
       "count": 32,
-      "max_rig_ft": 60,
-      "pull_through": true
+      "pull_through": true,
+      "note": "31 water/electric sites (20 pull-through, the rest back-in) plus a group site of 7 hookup sites. The booking engine offers the pull-throughs to rigs '35 ft and up' and the back-ins up to 34 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://bookings13.rmscloud.com/Search/Index/63861812FF867544/90/",
+      "window_opens_days": 365,
+      "max_stay_nights": 30,
+      "note": "McDuffie County's own RMS booking page, or call 706-595-6759. Paid in full before setting up. $30 fee on every cancellation; under 72 hours before arrival, no refund."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.bighartcampground.com/ (31 campsites and one group site); RMS booking engine https://bookings13.rmscloud.com/Search/Index/63861812FF867544/90/ (categories 'Pull Through RV Sites' 20 sites, 'Back In RV Sites', 'Group RV Site: contains 7 Private RV Hookups Sites'; per-category RV-length filters), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.bighartcampground.com/rules-fees ('Reservations can be made up to twelve months in advance'; 'The maximum number of days that any camper may stay is 30 days continuous'; '$30.00 cancellation fee on ALL cancellations'); https://www.bighartcampground.com/contact-us ('For Reservations Book Online or Call Us Today (706) 595-6759'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.bighartcampground.com/ ('31 campsites and one group site, all with 50/30/15 amp electrical hookups'); https://www.bighartcampground.com/contact-us ('Each of our campsites have electric and water hook-ups! 15/30/50 AMP'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.bighartcampground.com/ (Amenities: on-site bathhouses, dump station, two playgrounds, day-use area with a beach, boat ramp; FAQ 'we have a dump station located close to the entrance'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.bighartcampground.com/ FAQ ('Big Hart Campground is open year around for all types of camping'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "RMS booking engine https://bookings13.rmscloud.com/Search/Index/63861812FF867544/90/ (Wed 16 Jun 2027, 2 adults: Back In RV Sites from $30, Pull Through RV Sites from $30, every site 'Nightly Rate 30', tax 0; Group RV Site $200), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "240280e2b1c81616",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "facilities": {
+      "dump": true
+    },
+    "season": {
+      "year_round": true
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "$30 a night, pull-through or back-in; the group site (7 hookup sites) $200 a night. Quoted for June 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://www.bighartcampground.com/ https://www.bighartcampground.com/rules-fees https://www.bighartcampground.com/contact-us https://bookings13.rmscloud.com/Search/Index/63861812FF867544/90/",
+      "note": "County site + RMS engine: 31 W/E sites with 50/30/15 A (20 pull-through) + a group site; $30 a night (June 2027 quote), group $200; year round; dump; booking 12 months ahead, 30-night max, $30 cancellation fee. max_rig_ft 60 cleared (no current source; the engine just takes 35 ft+ at pull-throughs). Note trimmed of counts, booking and 23-ft text."
     }
   },
   {
@@ -323431,9 +323721,9 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "reservations.gplakes.com (Georgia Power): RV + tent sites (~51, asphalt pads), dump station/hookups, drive-in",
     "waterfront_evidence": "satellite at 32.743,-85.108: RVs in open clearing at peninsula shoreline on Lake Harding; GA Power/review authority names lakefront sites 3 & 9 with boat docks",
-    "website": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=1\nhttps://www.georgiapower.com/our-impact/lakes-rivers/our-lakes/west-georgia-lakes.html",
+    "website": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=1",
     "phone": "706-643-7737",
-    "note": "Georgia Power utility recreation area on Lake Harding (Bartletts Ferry Lake, Chattahoochee) — NOT West Point Lake as aggregators misfile it. 51 sites, electric+water (no sewer; tent sites 16-23). RV sites fit 23-ft (rigs to 33-60 ft reported). Seasonal ~Mar-Oct, reservable via Georgia Power's gplakes portal. --Claude",
+    "note": "Georgia Power utility recreation area on Lake Harding (Bartletts Ferry Lake, Chattahoochee) - NOT West Point Lake as aggregators misfile it. Boat ramps, fishing piers, playground; tent stakes not allowed on the asphalt pads.",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -323444,40 +323734,59 @@
       "sewer": false
     },
     "sites": {
-      "count": 51
+      "count": 51,
+      "max_rig_ft": 45,
+      "note": "43 electric/water sites (Site-1 to 15, 24 to 51) of 26-45 ft, every one long enough for 23 ft; Sites 16-23 are walk-in tent sites. Sites 9, 24-26, 28, 37, 39 and 44-47 have asphalt pads. The engine tags 17 RV sites Waterfront (2, 3, 5-7, 9, 10, 12, 13, 15, 24, 25, 27, 44-47)."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-30",
+      "note": "2026: March 1 - November 30, last overnight stay November 29."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=1",
+      "window_opens_days": 45,
+      "max_stay_nights": 14,
+      "note": "Georgia Power's own reservation site (GP Lakes) or 855-607-6462. Reservations open 45 days ahead (a 14-night stay booked at 45 days may run to day 59). After 14 nights, away at least 3 days. Late arrival: call the office before 4pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "GP Lakes engine, every campsite at facID=1 (GetUnitDetailView, Site-1 to Site-51): amenities 'Electric', 'Water Hookup' (no sewer listed; amperage not published), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "GP Lakes engine https://reservations.gplakes.com/FacilityDetails.aspx?facID=1 (per-site MaxEquipLength, unit type, amenities; facility description lists the asphalt-pad sites), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reservations.gplakes.com/Policies.aspx ('2026 Camping Season Dates: Opens March 1, 2026 - November 30, 2026 (Last day for overnight stay will be Nov 29th)' over Lawrence Shoals, Old Salem and Blanton Creek Campground); Georgia Power west-georgia-lakes page ('Blanton Creek Campground - Open Seasonal'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reservations.gplakes.com/Policies.aspx ('To make reservations at any of Georgia Power Company's facilities go online to www.GPLakes.com or call 855-607-6462'; 'Overnight Camping Reservations may be made up to 45 days in advance of your arrival date. Campsite occupancy is limited to 14 nights...'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://reservations.gplakes.com/Policies.aspx ('The America the Beautiful Senior and Access pass ... honored at a $2.00 per night savings'; 'Military discounts are honored at a $2.00 per night savings for active duty, retired or veteran members of the U.S. Military'; 'Discounts ... limited to one per reservation'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=1 ('Amenities include a playground, boat ramps, fishing piers, a marina (at Lake Oliver), laundry facilities, restrooms, hot showers and a dump station'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "GP Lakes engine facID=1 (GetReservationCost, 16-17 Jun 2027: $36 at every electric site, $31 at Tent Only sites); https://reservations.gplakes.com/Policies.aspx ($36.00 RV site per sleeping facility per night plus a non-refundable $7.75 reservation fee; weekly RV $216; $15.50 change/cancel), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -323486,7 +323795,29 @@
       "model": "claude-opus-5"
     },
     "discounts": {
-      "good_sam": false
+      "good_sam": false,
+      "interagency_senior_access": true,
+      "military": true,
+      "note": "America the Beautiful Senior and Access passes, and active duty, retired or veteran military (proof required): $2 a night off. One discount per reservation."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "dump": true
+    },
+    "fees": {
+      "nightly_low": 36,
+      "nightly_high": 36,
+      "currency": "USD",
+      "checked": "2027",
+      "reservation_fee": 7.75,
+      "note": "$36 per sleeping facility per night at every RV site (weekly $216); an extra tent on an RV site +$31 a night; tent sites $31. Change or cancellation $15.50."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=1 https://reservations.gplakes.com/Policies.aspx https://www.georgiapower.com/our-impact/lakes-rivers/our-lakes/west-georgia-lakes.html",
+      "note": "GP Lakes engine + policies: 43 W/E RV sites 26-45 ft (all fit 23 ft) + 8 walk-in tent sites, 17 RV sites tagged Waterfront; $36 a night + $7.75 reservation fee (June 2027 quote), weekly $216; season Mar 1 - Nov 30 (2026; the note's ~Mar-Oct was short); 45-day window, 14-night max; showers/laundry/dump; Senior/Access and military $2 a night off. Amperage not published. Note trimmed of counts, hookups, season and booking. Pin OK (at the shore by the camping area; Google's pin is the entrance gate"
     }
   },
   {
@@ -325663,7 +325994,7 @@
         "method": "manual"
       },
       "discounts": {
-        "source": "https://reservations.gplakes.com/Policies.aspx ('The America the Beautiful Senior and Access pass ... are honored at a $2.00 per night savings.'), read 2026-10-29",
+        "source": "https://reservations.gplakes.com/Policies.aspx ('The America the Beautiful Senior and Access pass ... honored at a $2.00 per night savings'; 'Military discounts are honored at a $2.00 per night savings for active duty, retired or veteran members of the U.S. Military'; 'Discounts ... limited to one per reservation'), read 2026-10-29",
         "checked": "2026-10-29",
         "method": "manual"
       }
@@ -325690,7 +326021,8 @@
     },
     "discounts": {
       "interagency_senior_access": true,
-      "note": "America the Beautiful Senior and Access passes: $2 a night off."
+      "note": "America the Beautiful Senior and Access passes, and active duty, retired or veteran military (proof required): $2 a night off. One discount per reservation.",
+      "military": true
     },
     "verify_scan": {
       "checked": "2026-10-29",
@@ -327778,8 +328110,8 @@
     "inclusion_evidence": "Macon-Bibb/Good Sam: 58 sites 20/30/50-amp + water, full hookups & dump, county-managed, reservable -> local-gov RV campground",
     "waterfront_evidence": "satellite at 32.8205,-83.8005: RV pads/loops run to the Lake Tobesofkee shoreline along entire eastern and southern edge, multiple pads with spur docks at the waterline",
     "website": "https://laketobo.maconbibb.us/camping/",
-    "phone": "478-474-8770",
-    "note": "Macon-Bibb County Lake Tobesofkee Recreation Area (Arrowhead Park). Open year-round; 58 sites: 24 water/electric, 17 with sewer, 11 waterfront and 6 tent sites, with pull-throughs, level pads, a dump station and a beach. Reservable online through the county's Rec1 catalog; weekend 2-night minimum. --Claude",
+    "phone": "478-935-2302",
+    "note": "Macon-Bibb County's Lake Tobesofkee recreation area. Register at the gate on arrival; campers must be 21+. Many sites slope, stated site by site in the booking catalog.",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -327787,44 +328119,53 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 58,
+      "max_rig_ft": 72,
+      "note": "58 sites: 24 water/electric, 17 full-hookup (sewer; 9 of them pull-throughs: 04-08, 16-21), 11 waterfront (14, 35-44; water/electric) and 6 tent sites (45-50, with water and electric). Back-in pads are 27-72 ft; many are on a 5-45 degree slope, stated site by site. No tents on pull-through, waterfront or full-hookup sites."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "operator",
+      "url": "https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413",
+      "window_opens_days": 60,
+      "max_stay_nights": 14,
+      "note": "Macon-Bibb County's Rec1 catalog; an account is needed to book. It opens 60 days out (maxDaysOut 60). Stay limits: 7 nights within 30 days at waterfront and full-hookup sites, 14 at electric/water and tent sites. Cancel by phone two business days before arrival for a refund."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413 (Arrowhead Campground site details: every RV site 'Water, electricity, 30 and 50 amp'; 17 'RV Sewage' sites 'Sewage, water, electricity, 30 and 50 amp'); https://laketobo.maconbibb.us/camping/ ('full electrical and water hook-ups'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413 (all 58 Arrowhead sites' details, e.g. 'Site 42: 7 day limit 72' Back-in Waterfront', 'Site 27: ... 27' Back-in', 'Site 12: ... 35-45 degree slope', 'Site 04: Pull-through Sewage'); https://laketobo.maconbibb.us/camping/ ('Tent Camping is not permitted on Pull-Through, Waterfront, or Full-Hookup Sites'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413 (site pages: 'Make a Reservation', 'An account is required to add reservations to cart', cancellation policy; availability feed 'maxDaysOut':60, maxReservationDate 12/28/2026 on 2026-10-29); https://laketobo.maconbibb.us/camping/ ('Campers may stay a total of seven (7) nights within a thirty (30) day period at Waterfront Sites or Full-Hookup sites. Campers may stay a total of fourteen (14) nights at Electricity/Water sites'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://laketobo.maconbibb.us/camping/ (FAQ: 'Both campgrounds provide full power and water, a dump station, and offer laundries and full-time park ranger staffs'; 'The Dumping Station is located near the exit of the Park and is free to all registered Campers'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413 (driver browser follow-up after the crawl), read 2026-10-16",
-        "checked": "2026-10-16"
+        "source": "https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413 (site list: 'RV $27/Multi-Day', 'RV Sewage $30', 'RV Waterfront $30', 'Tent $23'; rate feed for site 11 on 2026-11-10 and 2027-06-19: base_fee 27, residency 'any'; 'Limit 4 campers per site, additional will be $3 per day and $5 per day for vessel'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://laketobo.maconbibb.us/camping/ ('Arrowhead and Claystone Parks are open year-round'; 'open 365 days a year'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -327833,17 +328174,23 @@
       "model": "claude-opus-5/session"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "laundry": true
     },
     "fees": {
       "nightly_low": 27,
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Macon-Bibb County (Lake Tobesofkee) booking catalog: RV sites $27 a night, sewer and waterfront RV sites $30; tent sites $23; lake admission may apply. Read 2026-10-16."
+      "note": "$27 a night for a water/electric RV site, $30 for a full-hookup (sewer) or waterfront site; tent sites $23. Same rate on weekdays and weekends, 2026 and 2027. More than 4 campers on a site: $3 a day each; a boat $5 a day. Read 2026-10-29."
     },
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://laketobo.maconbibb.us/camping/ https://secure.rec1.com/GA/lake-tobesofkee-ga/catalog/index/5050606a78c1b36454b1e1e1eebb5413",
+      "note": "Confirmed on the county camping page + Rec1 catalog: 58 sites (24 W/E, 17 full-hookup incl. 9 pull-throughs, 11 waterfront, 6 tent), 30/50 A, pads 27-72 ft; $27 W/E, $30 sewer/waterfront, tent $23; open year round; dump + laundry; 60-day window; 7/14-night limits. Booking platform phone -> operator (Rec1, online). Note: dropped site counts, hookups, Rec1, weekend 2-night minimum (not stated anywhere read) and 'lake admission may apply' (not stated)."
     }
   },
   {
@@ -327858,54 +328205,77 @@
     "inclusion_evidence": "City of Bainbridge / Explore GA: 12 sites full water & electric (50/30/20/15), online reservations required -> local-gov RV campground",
     "waterfront_evidence": "operator page: sites 3,4,7 'sit on high bank above the Flint River' with river views/kayak access, most sites canopied; satellite at 30.8972,-84.6002 shows loop set back behind a continuous riverbank treeline on a high bank (bench above river, not walk-across apron)",
     "website": "https://www.bainbridgecity.com/page/bainbridge-riverview-campground",
-    "phone": "229-246-4774",
-    "note": "Operated by the City of Bainbridge at Earle May Boat Basin Recreation Area on the Flint River. 12 shaded sites (back-in and pull-through), water/electric, restrooms/showers, dump station; sites 3,4,7 have river views/access. Online reservations required (parkwith.us), pick site number; $35/night. --Claude",
+    "phone": "229-726-9582",
+    "note": "City of Bainbridge campground at the Earle May Boat Basin Recreation Area on the Flint River; boat ramps, trails and disc golf in the park.",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50
     },
     "sites": {
       "count": 12,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 90,
+      "note": "12 sites, 40-90 ft long (one 40 ft, the rest 60 ft or more); one has sewer as well as water and 20/30/50 A. Campground host at site 9."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "wifi": true
     },
     "booking": {
       "reservable": true,
-      "fcfs": "never"
+      "fcfs": "never",
+      "platform": "operator",
+      "url": "https://parkwith.us/camps/bainbridge-riverview-campground"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkwith.us/camps/bainbridge-riverview-campground ('12-site campground with full water and electric hookups'; availability for 2027-06-19: every site '20/30/50A ... Water', one also 'Sewage'); https://www.bainbridgecity.com/page/bainbridge-riverview-campground ('Water, Electricity'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkwith.us/camps/bainbridge-riverview-campground (availability list for a 23-ft rig, 2027-06-19: 12 sites, lengths 40/60/60/65/70/70/75/80x4/90 ft); https://www.bainbridgecity.com/page/bainbridge-riverview-campground ('Twelve beautiful, shaded campsites are available for RVs and tent camping', 'Campground host can be found at Spot 9'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.bainbridgecity.com/page/bainbridge-riverview-campground ('The Campground features: Restrooms, Showers, Water, Electricity, Fiber Optic Internet and Dump Station'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.bainbridgecity.com/page/bainbridge-riverview-campground ('To reserve a campsite: click here' -> https://parkwith.us/camps/bainbridge-riverview-campground, which books dated stays by site), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.bainbridgecity.com/page/bainbridge-riverview-campground ('$35.00 per night'); https://parkwith.us/camps/bainbridge-riverview-campground (every site $35.00 / night on 2026-11-10 and 2027-06-19), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "2aaad38413c193b7",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 35,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$35 a night for every site, weekday or Saturday (November 2026, June 2027). Read 2026-10-29."
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://www.bainbridgecity.com/page/bainbridge-riverview-campground https://parkwith.us/camps/bainbridge-riverview-campground",
+      "note": "Confirmed on the city page + Park With Us: 12 sites, 20/30/50 A + water (one with sewer), 40-90 ft; restrooms/showers/dump/fiber internet; $35 weekday and Saturday (fees were unset). Booking set to operator + parkwith.us link. Note: dropped site count, hookups, amenities, the booking/price text and the 'sites 3,4,7' river-view claim (not on the city's pages; the engine's map does draw 3, 4 and 7 nearest the river)."
     }
   },
   {
@@ -968221,7 +968591,7 @@
     "inclusion_evidence": "abigwheelrvpark.com live with rates and phone; RV Life 4.5* $$ over 147 reviews (price passes on the tier, gate 2026-10-01); Google 4.5 over 218; nightly sites (daily rate published); re-check 2026-10-12: rates page: daily full hookup $60 incl. electric and tax",
     "website": "https://www.abigwheelrvpark.com/",
     "phone": "912-576-5386",
-    "note": "Family-owned RV park (since 2006) under live oaks on Charlie Smith Sr Hwy north of St Marys, across from Crooked River State Park; call to reserve. 2026 daily full hookup $60 incl. tax; weekly and monthly rates too. RV Life 4.5*/$$ (auto 10/2026). --Claude",
+    "note": "Family-owned RV park (since 2006) under live oaks on Charlie Smith Sr Hwy north of St Marys, across the road from Crooked River State Park; catch-and-release fishing pond. Weekly and monthly rates too; the owners say most guests stay about three days, snowbirds a month or two. No generators. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -968230,26 +968600,39 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Call to reserve, 912-576-5386; sites are assigned by the office. A non-refundable reservation payment is required; no debit cards at registration."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.abigwheelrvpark.com/ ('60 foot long full hookup concrete sites'; 'Our sites are ready for you with everything you need, 50/30/20 metered pedistal, 4\"sewer connection') + rates page ('Daily Full Hookup: Includes: Water, Sewer, Electric & Tax'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.abigwheelrvpark.com/rates--reservations.html ('CALL TO RESERVE'; 'All reservations require: a non-refundable reservation payment'; 'No DEBIT cards will be accepted at registration') + /rules--policies.html ('All sites are assigned by the office'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.abigwheelrvpark.com/rates--reservations.html ('Daily Full Hookup: | Includes: Water, Sewer, | Electric & Tax', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.abigwheelrvpark.com/rates--reservations.html ('Rates based on: 2 people, 1 RV, & 1 tow vehicle'; 'Daily Full Hookup: Includes: Water, Sewer, Electric & Tax -- $60.00'; 'Daily Pond Rates Electric Only Sites: -- $50.00 Water & Electric Sites: -- $60.00'; 'Weekly Full Hookup ... $385.00'; 'Monthly Full Hookup ... $775.00 ... Metered Electric charged Monthly ... Must stay 23 days or more'), read 2026-10-29 (no year printed; the live operator page)",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.abigwheelrvpark.com/park-features.html ('24 approx 20' x 70' full hookup, pull through concrete pads, 11 other sites') + rates page ('Daily Pond Rates: Electric Only Sites ... Water & Electric Sites'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.abigwheelrvpark.com/park-features.html ('ADA accessible restrooms & shower facilities', 'Onsite coin laundry washers & dryers', 'Basic wifi') + rates page (pond sites 'Includes: Use of Water Fill Station & Dump Station'), read 2026-10-29",
+        "checked": "2026-10-29",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -968261,7 +968644,25 @@
       "nightly_low": 50,
       "nightly_high": 60,
       "currency": "USD",
-      "note": "Tax included: electric-only pond sites $50, water + electric $60, full hookup $60."
+      "note": "Tax included, for 2 people, 1 RV and 1 tow vehicle: electric-only pond sites $50 a night, water/electric pond sites and full hookups $60; full hookup $385 a week; monthly from $775 plus metered electric (23+ days). Extra people/vehicles charged per night. Non-refundable reservation payment.",
+      "checked": "2026"
+    },
+    "sites": {
+      "count": 35,
+      "pull_through": true,
+      "note": "24 full-hookup pull-through concrete pads (about 20 x 70 ft) and 11 other sites, including electric-only and water/electric sites by the pond."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "wifi": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-29",
+      "sources": "https://www.abigwheelrvpark.com/ https://www.abigwheelrvpark.com/rates--reservations.html https://www.abigwheelrvpark.com/park-features.html https://www.abigwheelrvpark.com/rules--policies.html python3 audit/price_research/gateways.py 30.8373,-81.5645 Esri World Imagery at 30.8373,-81.5645",
+      "note": "Operator site: 35 sites (24 full-hookup 20x70-ft concrete pull-throughs + 11 others), 50/30/20 A, showers, laundry, wifi, dump at the pond sites; tax-included $50 (electric-only pond site) to $60 (full hookup / water-electric), weekly $385, monthly from $775; call to reserve, phone 912-576-5386 confirmed. Transient in character ('Most guests stay about three days with us'), so the long-stay tests pass. Price gate: the cheapest RV site is $50 tax included (under $50 before tax), so it passes on t"
     }
   },
   {
