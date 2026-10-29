@@ -1,0 +1,60 @@
+{
+  "id": 4629,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://www.parkwoodrv.com/rvsites.php (RV Site Rates, amenities, policies), read 2026-10-29",
+    "https://www.parkwoodrv.com/reservations.php, read 2026-10-29",
+    "https://www.parkwoodrv.com/faqs.php, read 2026-10-29",
+    "https://www.parkwoodrv.com/assets/img/parkwoodrv-map.jpg (park site map, (c) 2025)",
+    "python3 audit/price_research/gateways.py 32.41270,-81.80317"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 47,
+        "nightly_high": 47,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$47 a night at every RV site, +$5 on special-event dates (the park's events calendar); a week is six nights at the nightly rate, the 7th free. Monthly $680 plus metered electric ($100 electric deposit). $10 processing fee kept on any cancellation."
+      },
+      "source": "https://www.parkwoodrv.com/rvsites.php ('RV Site Rates Nightly $47 For Special Events: +$5'; 'Weekly 6 Nights at Nightly Rate 7th night free!'; 'Monthly $680* *Additional electricity charges will apply. A $100 electric deposit is required.'; 'A $10 processing fee will be retained for all cancelled reservations'), read 2026-10-29. The engine is a request form with no quotes, so no dated 2027 price exists; the page carries no year.",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.parkwoodrv.com/rvsites.php ('Each of these level sites includes 50/30/20 amp electric, water, sewer'); https://www.parkwoodrv.com/faqs.php ('All of the sites have full hookup (water, sewer, 30 & 50 amp electric)'), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 47,
+        "pull_through": true,
+        "note": "47 RV sites, all full hookup: 41 pull-throughs (1-6, 9-43; the website says 30 ft wide by 85-100 ft long) and 6 back-ins (44-49). Plus cottages and RV storage."
+      },
+      "source": "https://www.parkwoodrv.com/assets/img/parkwoodrv-map.jpg ('Pull-through Sites 1-6, 9-43', 'Back-in Site Sites 44-49'); rvsites.php ('Level Pull-Thru Sites: 30x100ft'); faqs.php ('The majority of our sites are pull thru, 30 ft. wide x 85 ft. long'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true},
+      "source": "https://www.parkwoodrv.com/rvsites.php ('Clean Bathrooms/Showers with Hot Water', 'Access to our Laundry Facilities'); site map (Showers, Restroom, Laundry), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.parkwoodrv.com/reservations.php",
+        "note": "The website's reservation form takes a deposit and is confirmed by the office during office hours (Mon-Fri 8-5:30, Sat 12:30-5:30); stays of seven nights or more by phone, 912-681-3105. Refund if cancelled 48 hours ahead (7 days on event dates, 2 weeks for 7+ night stays); no refunds for early departure."
+      },
+      "source": "https://www.parkwoodrv.com/reservations.php ('Online reservations are only processed during our office hours ... The amount submitted during your reservation request only represents a deposit to hold your site'; 'To make a reservation for a stay of seven days or longer, please contact the park office directly'); rvsites.php (Cancellation Policy), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "Big-rig RV park on US-301 south of Statesboro: open level sites, paved roads, pool, clubhouse, propane; cottages and RV storage. --Claude",
+  "summary": "Own site (no priced engine - a deposit request form): $47 a night, +$5 on special-event dates, 7th night free, monthly $680 + electric (stored 47 confirmed; no year on the page). Site map (2025): 47 RV sites, 41 pull-throughs + 6 back-ins, all full hookups 50/30/20 A. Count 50 -> 47, hookups/laundry confirmed, showers/toilets, booking url and note added. Gate: $47 < US$50 (no gateway within 40 km; Savannah 76 km). Presence: working website with rates, phone (912) 681-3105 (matches), office hours. Note cleaned (counts, hookups, booking line dropped).",
+  "flags": [
+    "Price gate: $47 passes, but special-event dates add $5 ('For Special Events: +$5') = $52 on those dates, over US$50; no gateway within 40 km (nearest Savannah 76 km). Event dates are on the park's Google calendar.",
+    "Long-stay tests: nightly ($47), weekly and monthly ($680 + electric) rates are all posted and short stays book through the website form (test 2 passes); the site pitches it as 'a great option for your winter home' and has monthly cottages. No published count of sites held by monthly guests, so test 4 (share sold nightly) can't be checked from the operator; no reviews read.",
+    "Discounts: stored military true (Good Sam directory, derived) - the operator's site mentions no military or other discount. Left as stored; clear it if operator statement is required."
+  ]
+}

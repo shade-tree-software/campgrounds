@@ -1,0 +1,61 @@
+{
+  "id": 94,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232668 (facility description, notices, rules), read 2026-10-29",
+    "https://www.recreation.gov/api/camps/campgrounds/232668/rates (rate seasons through 2028), read 2026-10-29",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232668 (90 campsites with attributes and coordinates), read 2026-10-29",
+    "Esri World Imagery around 33.6612,-82.2605"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 32,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Electric sites $32 a night in peak season (2027: Apr 2 - Sep 11) and $26 off-peak; seven of them (55, 56, 63, 64, 73, 91, 93) are $28 / $24. The eight non-electric sites (15-ft pads) are $22 / $18."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232668/rates (2027 'Peak Season' 2027-04-02..2027-09-11: STANDARD ELECTRIC 32, STANDARD ELECTRIC u24 variant 28, STANDARD NONELECTRIC 22; 'Non-Peak Season': 26 / 24 / 18); per-site price_range in the campsite search, read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov campsite search, asset 232668: all 82 STANDARD ELECTRIC sites 'Electricity Hookup' 50 and 'Water Hookup' Yes; no sewer attribute on any site, read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 90,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "Loops A-C: 82 electric sites (50 A + water) and 8 non-electric 15-ft back-ins (65-72). Electric driveways 20-45 ft; 75 take a 23-ft rig, seven are 20 ft (11, 15, 87-91). 55 pull-throughs."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232668 (90 site-specific reservable sites, 'Max Vehicle Length' and 'Driveway Entry' per site), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232668 ('four bathhouses ... that have flush toilets and showers'; 'there are two dump stations'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232668",
+        "min_stay": [{"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "Three-night minimum on holiday weekends (recreation.gov sometimes relaxes such minimums for same-day bookings). 14 nights in any 30 days across USACE campgrounds. Gate open 7 am - 10 pm; campers get the lock combination at check-in. Check-in 3 pm, check-out 1 pm."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232668 (rules minHolidayWeekendStay 3, minConsecutiveStay 1, maxStay 14 nights 'Rolling 30 Days'; notices 'Maximum stay is 14-days within 30 day period', 'Gates open at 7:00am and close at 10:00pm. Combination lock codes will be issued to registered campers at check-in', 'Check-out time is 1 p.m. Check-in time is 3 p.m.'), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "summary": "recreation.gov 232668 (USACE, Thurmond Lake): 90 reservable sites, 82 electric 50 A + water (no sewer), 8 non-electric 15-ft; 75 electric sites take 23 ft (20-45 ft), 55 pull-throughs. 2027 rates: electric $32 peak / $26 off-peak (seven at $28/$24); non-electric $22/$18. Fees 18-32 -> 24-32 (the $18 is the 15-ft non-electric pads EKKO can't use). Hookups confirmed; sites, facilities, booking (holiday 3-night minimum, 14 max) added. Season left unset (rate table spans the whole year but no open/close statement). Note unchanged (--AWH). Pin sits on the entrance road just south of loop A, within ~350 m of the site centroid: fine. Waterfront lakefront fits (shoreline loops on imagery).",
+  "flags": [
+    "Phone missing -> 706-541-9464 (recreation.gov facility phone).",
+    "Fees low changed 18 -> 24: $18/$22 belongs only to the eight 15-ft non-electric sites (65-72). Revert to 18 if the range should include sites EKKO doesn't fit.",
+    "Inclusion evidence mentions a post-Helene repair closure; recreation.gov today shows all 90 sites 'Open' and no closure notice."
+  ]
+}
