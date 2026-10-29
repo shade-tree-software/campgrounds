@@ -1,0 +1,72 @@
+{
+  "id": 4628,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://reservations.gplakes.com/FacilityDetails.aspx?facID=4 (page + its GetUnitDetailView / GetReservationCost calls for every unit id 240-345, arrival 6/16/2027; sites 3 and 52 also 11/10/2026 and 6/19/2027)",
+    "https://reservations.gplakes.com/Policies.aspx",
+    "https://www.google.com/maps/search/Parks+Ferry+Recreation+Area+Greensboro+GA",
+    "Esri World Imagery at 33.4978,-83.2690, 33.5180,-83.2700 and 33.5225,-83.2720"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"water": true},
+      "source": "reservations.gplakes.com facID=4 unit details: 51 of the 53 'Campsite Electric - Parks Ferry' sites carry 'Water Hookup' and 'Electric' (amperage not given), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 53,
+        "max_rig_ft": 50,
+        "note": "53 electric sites (Site-1 to Site-53): 51 take 25-50 ft; Site-45 (20 ft) and Site-46 (22 ft) are shorter. Also 4 tent-only primitive sites (54-57)."
+      },
+      "source": "reservations.gplakes.com facID=4 unit details ('MaxEquipLength' 20-50 per site; 'Tent Only - Parks Ferry' Sites 54-57 'Primitive'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "laundry": true},
+      "source": "https://reservations.gplakes.com/Policies.aspx ('A sanitary disposal station is provided in the park for your use.' 'Washers and Dryers are provided.'), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "10-31", "note": "2026: May 1 - October 31, last overnight stay October 30. Boat ramp open year-round."},
+      "source": "https://reservations.gplakes.com/Policies.aspx ('Opens May 1, 2026 - October 31, 2026 (Last day for overnight stay will be Oct 30th) ... Parks Ferry Campground - Boat Ramp open year round'), read 2026-10-29",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 36,
+        "nightly_high": 36,
+        "currency": "USD",
+        "checked": "2026",
+        "reservation_fee": 7.75,
+        "note": "$36 per sleeping facility per night at every RV site (weekly $216); an extra tent on an RV site +$31 a night; tent sites $31. Change or cancellation $15.50."
+      },
+      "source": "https://reservations.gplakes.com/Policies.aspx ('Campers with self-contained units are charged a $36.00 (RV site) parking fee per sleeping facility per night plus a non-refundable $7.75 reservation fee (per reservation, not per night)'; 'Weekly rates are Tents $186.00 / RV’s $216.00') + facID=4 GetReservationCost $36.00 for every electric site, read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=4",
+        "window_opens_days": 45,
+        "max_stay_nights": 14,
+        "note": "Georgia Power's own reservation site (GP Lakes) or 855-607-6462. Reservations open 45 days ahead (a 14-night stay booked at 45 days may run to day 59). After 14 nights, away at least 3 days. Late arrival: call the office before 4pm."
+      },
+      "source": "https://reservations.gplakes.com/Policies.aspx ('To make reservations at any of Georgia Power Company's facilities go online to www.GPLakes.com or call 855-607-6462'; 'Overnight Camping Reservations may be made up to 45 days in advance of your arrival date. Campsite occupancy is limited to 14 nights. Campers using the site for 14 nights will be requested to vacate the park for a period of at least 3 days before returning.'), read 2026-10-29",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "America the Beautiful Senior and Access passes: $2 a night off."},
+      "source": "https://reservations.gplakes.com/Policies.aspx ('The America the Beautiful Senior and Access pass ... are honored at a $2.00 per night savings.'), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "Georgia Power utility-run recreation area on Lake Oconee (operator: Georgia Power Lakes): swimming beach (May-Labor Day), boat ramp, playground. Per project convention a utility-run campground is private. --Claude",
+  "summary": "GP Lakes engine and its policies page: 53 electric sites (water at 51) up to 50 ft (51 take 25 ft+), $36 a night + $7.75 reservation fee, 45-day window, 14-night max, season May 1 - Oct 31 (2026), dump + laundry, Senior/Access pass $2/night off. Electric amperage not published. Deep link facID=4 in booking.url. Note trimmed of counts/hookups/season/booking. Google: 4.4 stars / 170 reviews, phone 706-453-4308 matches. $36 is under the gate; no family stay.",
+  "flags": [
+    "Website is the generic reservations root (https://reservations.gplakes.com/); Parks Ferry's own page on it is https://reservations.gplakes.com/FacilityDetails.aspx?facID=4 (now in booking.url) - suggest it as the website. Georgia Power's own lakes page (georgiapower.com/our-impact/lakes-rivers/our-lakes.html) has no per-park page; gplakes.com redirects to the reservations site.",
+    "Pin is wrong: 33.49779,-83.26897 sits in a housing subdivision about 2.8 km south of the recreation area. Imagery shows the Parks Ferry beach and boat ramp at about 33.5240,-83.2735 / 33.5205,-83.2740, with wooded camping loops and two bathhouse roofs east of the beach around 33.5232,-83.2700 (under canopy). Google's place pin is 33.51876,-83.27058 (on the access road, ~550 m south of the loops). Suggest about 33.5232,-83.2700 after a check against a site map.",
+    "Waterfront: no lead. The engine has 'Waterfront' and 'Water View' site filters but tags none of the 57 Parks Ferry sites with either; the loops are under canopy, some within ~60 m of the cove south of the beach, so imagery can't place sites on the shore."
+  ]
+}
