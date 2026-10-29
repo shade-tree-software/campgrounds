@@ -1,0 +1,61 @@
+{
+  "id": 4679,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://georgiawildlife.com/evans-county-pfa",
+    "https://reservations.gooutdoorsgeorgia.com/FacilityDetails.aspx?facID=2 (page + its GetUnitDetailView / GetReservationCost calls for every unit, arrival 6/16/2027; Site-9 also 11/10/2026 and 6/19/2027)",
+    "https://reservations.gooutdoorsgeorgia.com/Policies.aspx",
+    "Esri World Imagery at 32.1305,-81.7925"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "Go Outdoors Georgia facID=2 unit details (Full Facility Sites 11, 14, 17, 20, 22-27: Water, Sewer, Electric 20/30/50 amp; RV/Tent Combo sites: Water, Electric 20/30/50 amp) + https://georgiawildlife.com/evans-county-pfa ('all containing electricity, water... five of which are premium sites offering full sewer service'), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 27,
+        "max_rig_ft": 50,
+        "pull_through": true,
+        "note": "The booking site now lists 18 RV sites, all taking 50 ft: 10 'Full Facility' with sewer and pull-through (Sites 11, 14, 17, 20, 22-27) and 8 'RV/Tent Combo' with water and electric (9, 12, 13, 15, 16, 18, 19, 21); plus 8 tent-only sites and a group tent site. The WRD page still says 22 sites (14 RV + 8 tent, 5 premium)."
+      },
+      "source": "Go Outdoors Georgia facID=2 unit details (UnitTypeName Full Facility / RV/Tent Combo / Tent Only / Group Tent, MaxEquipLength 50 on every RV unit, 'Pull Through' on the Full Facility units), read 2026-10-29",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 40,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$35 a night for an RV/tent combo site (water and electric), $40 for a full-facility site (sewer, pull-through); tent-only $20, group tent $30. Read for 2026-11-10, 2027-06-16 and Saturday 2027-06-19."
+      },
+      "source": "Go Outdoors Georgia facID=2 GetReservationCost (RV/Tent Combo 35.00, Full Facility 40.00, Tent Only 20.00, Group Tent 30.00, arrival 6/16/2027; Site-9 35.00 on 11/10/2026 and 6/19/2027), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://georgiawildlife.com/evans-county-pfa ('Hours: Year-round 24 hours/day'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://reservations.gooutdoorsgeorgia.com/FacilityDetails.aspx?facID=2",
+        "window_opens_days": 395,
+        "max_stay_nights": 14,
+        "note": "Go Outdoors Georgia (Wildlife Resources Division's own reservation site) or 1-800-366-2661. 'Reservations can be made up to 13 months in advance.' 'Camping is limited to 14 consecutive days at any one facility. Visitors using a campsite for 14 nights must vacate the facility for at least seven days before returning.' $5 change or cancellation fee."
+      },
+      "source": "https://reservations.gooutdoorsgeorgia.com/Policies.aspx + https://georgiawildlife.com/evans-county-pfa ('To make a reservation and see pricing please visit www.reservations.gooutdoorsgeorgia.com'), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "Georgia DNR Wildlife Resources Division Public Fishing Area (state, not a county park). 372-acre PFA with 3 lakes; campground on the east shore of Bidd Sands Lake beside the event center, 4757 Area Line Rd. --Claude",
+  "summary": "WRD page and Go Outdoors Georgia: confirmed full-facility sites with sewer and pull-through, $35 combo / $40 full-facility (2026 and 2027, Saturdays the same), year-round, phone 912-727-2112 (Region 6 office). Changed site count 22 -> 27 (the booking site now lists 10 full-facility sites, 22-27 new, 8 combo, 8 tent, 1 group tent). Added 50-amp, max 50 ft on every RV site, the 13-month window and 14-night max, the facility deep link. Note trimmed of counts/hookups/booking; 'unpaved Area Line Rd' dropped (imagery shows Area Line Road paved-grey past the campground; loops are gravel). Lakeview left: every site carries the engine's 'Water View' tag, none 'Waterfront'.",
+  "flags": [
+    "Pin is in Bidd Sands Lake (~230 m off): the campground loops centre on about 32.1299,-81.7901 on imagery (east shore, between the lake and Area Line Road).",
+    "Two websites stored in one field (the WRD page and the bare reservations host, newline-separated); the facility deep link is now in booking.url, so website can be just https://georgiawildlife.com/evans-county-pfa."
+  ]
+}
