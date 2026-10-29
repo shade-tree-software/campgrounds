@@ -1,0 +1,54 @@
+{
+  "id": 4556,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232575",
+    "https://www.recreation.gov/api/camps/campgrounds/232575/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232575 (per-site equipment, lengths, waterfront tags, coordinates)",
+    "trip_data/ridb_campsites.json (RIDB catalog for facility 232575, fetched 2026-10-20)",
+    "https://www.sam.usace.army.mil/Missions/Civil-Works/Recreation/Carters-Lake/Camping/ (Access Denied to plain HTTP)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 42, "nightly_high": 42, "currency": "USD", "checked": "2026", "note": "Standard electric sites $42 a night in the 2026 peak season (Apr 15 - Oct 31) and the 2027 one (Apr 5 - Nov 14); tent-only sites $26 (non-electric) and $30 (electric), group tent area $120. No off-peak rate has been listed since 2023."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232575/rates (2026 and 2027 Peak Season price maps: STANDARD ELECTRIC 42, TENT ONLY NONELECTRIC 26, TENT ONLY ELECTRIC 30, group 120), read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "trip_data/ridb_campsites.json + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232575 (bookable STANDARD ELECTRIC sites: Electricity Hookup 50 at most, 20/30/50 at 01-05 and H-1/H-2, 30 at 14, 21-23, 25, 26, 41-44, 46; Water Hookup Yes at every RV site; Sewer Hookup only at the unreservable MANAGEMENT sites 15-17), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 49, "max_rig_ft": 55, "pull_through": true, "note": "recreation.gov describes '68 campsites' but books 49: 35 standard electric RV sites, 1 tent-only electric, 12 tent-only non-electric and a group tent area; 19 more are management/hidden. Every standard electric site is listed for 25 ft or more (most 40 ft, site 25 at 55 ft); 27 of them name an RV or trailer of 25 ft+ in their permitted equipment. Pull-throughs at 01, 03, 08 and H-1."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232575 + RIDB catalog (Max Vehicle Length, Driveway Entry, reservable flag per site) + https://www.recreation.gov/api/camps/campgrounds/232575 ('offering 68 campsites to choose from'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232575 ('Flush toilets, showers and drinking water are provided. Additional amenities include a children's playground and a dump station.'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "'ALL CAMPERS MUST HAVE A RESERVATION BEFORE ENTERING CAMPGROUND'; campers self-register at the gatehouse, no transactions there. 14 days in any 30 at Carters Lake (36 CFR 327.7B). Max 8 people, 2 vehicles and 1 boat per site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232575 (notices; facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 nights rolling 30 days), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Mobile District, Carters Lake. Heavily wooded peninsula campground with its own boat ramp; recreation.gov warns the access road has a steep downhill grade. --Claude",
+  "summary": "recreation.gov listing, rates and per-site catalog: $42 standard electric (2026 and 2027 peak), reservations required (fcfs never), 2-night weekend / 3-night holiday minimum, 14-night max; 50 A + water (no public sewer); 49 bookable sites (35 RV), max 55 ft, pull-throughs; flush toilets, showers, water, dump. Count 68 -> 49 (bookable). Season not stated (calendar shows booking Apr-Oct, Nov-Mar not released). Pin ~490 m off; waterfront lead; phone missing (706-276-4413).",
+  "flags": [
+    "Phone missing: recreation.gov gives '(706) 276-4413' for local information and (706) 334-2248 for general information (Carters Lake office). Suggest 706-276-4413.",
+    "Pin ~490 m off: stored 34.60370,-84.61211 is east of the campground (near the entrance road). recreation.gov's per-site coordinates for the 35 RV sites span 34.6014-34.6107 / -84.6200 to -84.6143 with a centroid at about 34.6056,-84.6169. Suggest 34.6056,-84.6169; elevation_meters needs re-fetching.",
+    "Waterfront re-audit lead: stored 'not waterfront', but recreation.gov tags RV site 12 and tent sites 19, 20, 34-37 and 45 'Proximity to Water: Lakefront' (peninsula campground). Do not change without the imagery gate.",
+    "Access-road caution from the operator: 'The park access road has a steep downhill grade; campers should use caution when entering.' No length or 4WD restriction stated.",
+    "The USACE Carters Lake camping page in website returns 'Access Denied' to plain HTTP (Akamai); not read."
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "id": 4678,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://euharlee.com/campground-faqs/",
+    "https://www.campspot.com/park/euharlee-creek-campground-at-frankie-harris-park",
+    "https://www.campspot.com/api/gator-core/v2/availability/parks/3455 (per-type prices and per-site rig lengths, 2026-11-10 one night)",
+    "https://www.campspot.com/book/euharlee-creek-campground/site/33305/... (price breakdown, one night from 2026-11-10 and two nights from 2027-06-12, 2 adults)",
+    "Esri World Imagery around 34.1443,-84.9325 and 34.1425,-84.9334"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 50,
+        "nightly_high": 50,
+        "currency": "USD",
+        "reservation_fee": 4,
+        "checked": "2026",
+        "note": "Campspot's '30/50 Amp Full Hook-Up RV Site' (open to motorhomes, no rig-type split): $50.00 a night for 2 adults, before tax, on Tuesday 2026-11-10 and on Saturday-Sunday 2027-06-12/13. Plus a 'Campground Fees' line of $4.00 once per stay (1 night $54, 2 nights $104). The 'Extended Stay' type is also $50 but books no sites online."
+      },
+      "source": "https://www.campspot.com/book/euharlee-creek-campground/site/33305 ('$50.00 x 1 night | Campground Fees $4.00 | Site Total $54.00'; '$50.00 x 2 nights | $100.00 | Campground Fees $4.00 | Site Total $104.00') + marketplace filter 'Up to $50/night', read 2026-10-29",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "passport_america": true,
+        "military": true
+      },
+      "source": "https://euharlee.com/campground-faqs/ ('We offer Senior (55+), local, and military/first responder discounts. We also participate in the Passport America program.') + Campspot park page ('Passport America Members can receive 50% off our daily rate for weeknights'), read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://www.campspot.com/park/euharlee-creek-campground-at-frankie-harris-park (filters: RV Sites 26; 30-Amp 26, 50-Amp 26, Sewer Hook-Up 26, Water Hook-Up 26), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 26,
+        "pull_through": false,
+        "max_rig_ft": 45
+      },
+      "source": "https://www.campspot.com/park/euharlee-creek-campground-at-frankie-harris-park (RV Sites 26, Back-In 26, Concrete Pad 26, no tent or cabin sites) + availability API (every listed site rvLengthMax 45, rvTypes include Motorhome), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "camp_store": true,
+        "wifi": true
+      },
+      "source": "https://euharlee.com/campground-faqs/ ('we have a campground store with firewood, camping supplies') + Campspot park page ('Showers', 'Bathrooms', 'Internet Access', 'General Store'; Wi-Fi at 7 sites), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "campspot",
+        "url": "https://www.campspot.com/book/euharlee-creek-campground",
+        "note": "Check-in 3 pm, check-out noon. Several sites are set aside for 1-6 month extended stays, by application through the city (camping@euharlee.com, 770-386-1542)."
+      },
+      "source": "https://euharlee.com/campground-faqs/ ('Where can I book a campsite?: Visit www.euharleecreekcampground.com' - which forwards to Campspot; 'several campsites set aside for extended stay ... one (1) to six (6) months ... application process'; 'Check-in/Check-out time: 3pm & 12pm') + the city site's 'Euharlee Creek Campground' menu link to https://www.campspot.com/book/euharlee-creek-campground, read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "City of Euharlee campground in Frankie Harris Park, near Euharlee Creek and its historic covered bridge. --Claude",
+  "summary": "City FAQ page + Campspot: $50 a night (Nov 2026 and Jun 2027) plus a $4 per-stay campground fee, Passport America (50% weeknights) and military discounts, 26 back-in concrete full-hookup 30/50 A sites (rig length up to 45 ft), showers, store, Wi-Fi, books on Campspot; a few sites are kept for 1-6 month extended stays by application. Laundry (note-derived) left as is - the pages are silent. Not waterfront kept. Note trimmed of 'paved back-in sites and a bathhouse' (fields hold them).",
+  "flags": [
+    "Phone missing: the city's FAQ gives 'Campground Host Contact Information: 404-803-8397' (the same number is in Campspot's park record). Suggest 404-803-8397.",
+    "Website: the stored Campspot marketplace page is a third-party listing. The city's own page is https://euharlee.com/campground-faqs/ (its 'Euharlee Creek Campground' menu item links straight to https://www.campspot.com/book/euharlee-creek-campground, the operator's booking engine). Suggest the city FAQ page plus that /book/ link.",
+    "Waterfront lead (kept not waterfront): imagery puts the site loop on the north bank of Euharlee Creek (~15 m wide), the nearest sites ~30-45 m from the water behind a continuous tree belt; neither page mentions creek access or creekside sites. A creekside call would need site photos.",
+    "Pin ~250 m off: stored 34.14430,-84.93254 (Campspot's park point) is at the office/parking area by the covered bridge; the RV loop's centre on imagery is about 34.1422,-84.9336. Suggest that; elevation_meters needs re-fetching."
+  ]
+}

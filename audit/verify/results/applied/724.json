@@ -1,0 +1,55 @@
+{
+  "id": 724,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232580",
+    "https://www.recreation.gov/api/camps/campgrounds/232580/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232580 (per-site equipment, lengths, coordinates)",
+    "trip_data/ridb_campsites.json (RIDB catalog for facility 232580, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "Standard electric sites $30 a night in the 2026 and 2027 rate tables (the listing's fee text still says 'Campsites are $28.00 per night'); tent-only sites $14; a second standard-electric rate of $50 is also listed. Visitors $5, extra vehicles $3."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232580/rates (Peak Season 2026-01-01 to 2026-12-31 and 2027: STANDARD ELECTRIC 30, a coded STANDARD ELECTRIC 50, TENT ONLY NONELECTRIC 14) + https://www.recreation.gov/api/camps/campgrounds/232580 (notices: 'Visitor fees are $5.00', 'Extra vehicle fees are $3.00'), read 2026-10-29",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232580 (fee description: 'We accept America the Beautiful Senior Lifetime, Senior Annual, and Access Passes.'), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232580 ('The campground is open year-round'), read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232580 ('most of which have both electric and water hookups') + RIDB catalog (every STANDARD ELECTRIC site: Electricity Hookup 50, Water Hookup Yes; no sewer attribute), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 59, "max_rig_ft": 69, "note": "recreation.gov describes 65 sites and books 59: 57 standard electric (one, C37/38, a double) and 2 tent-only; 4 more are management sites. Every electric site takes 26 ft or more, most 40-52 ft, B51 69 ft; all with a stated entry are back-ins."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232580 + RIDB catalog (reservable flag, Max Vehicle Length, Driveway Entry per site) + https://www.recreation.gov/api/camps/campgrounds/232580 ('a total of 65 sites'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "laundry": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232580 ('Flush toilets, showers, drinking water, laundry facilities and a dump station are provided.'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "14 consecutive nights, and 14 in any rolling 30 days. Park gate locked 10 pm - 7 am Eastern. Max 8 people and 3 vehicles per site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232580 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, maxStay 14 nights rolling 30 days; notices on the gate and occupancy), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "summary": "recreation.gov listing, rates and per-site catalog: $30 standard electric (2026 and 2027; fee text's $28 is stale), Senior/Access accepted, open year-round, 50 A + water at every RV site, 59 bookable sites (57 electric) all 26 ft+ (max 69), flush toilets, showers, water, laundry, dump; 2-night weekend / 3-night holiday minimum, 14-night max. Phone 229-662-9273 matches. Pin matches the site centroid (30.7181,-84.8517). AWH note kept verbatim (lakefront unchanged; recreation.gov carries no waterfront tags).",
+  "flags": []
+}
