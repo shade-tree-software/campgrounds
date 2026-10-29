@@ -1,0 +1,69 @@
+{
+  "id": 4620,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://reservations.gplakes.com/FacilityDetails.aspx?facID=2 (Georgia Power reservation site; facility text, per-site GIS points, and every site's details via FacilityDetails.aspx/GetUnitDetailView; 1-night cost via GetReservationCost for sites 1 and 6 on 2026-11-10, 2026-11-14, 2027-06-15, 2027-06-19)",
+    "https://reservations.gplakes.com/Policies.aspx (season dates, reservation window, stay limit, fees, cancellations, discounts), read 2026-10-29",
+    "Esri World Imagery around 33.3555,-83.1725 with the reservation site's per-site GIS points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 36,
+        "nightly_high": 36,
+        "currency": "USD",
+        "reservation_fee": 7.75,
+        "checked": "2026",
+        "note": "Every RV site is $36 a night (a 'parking fee per sleeping facility'), the same on a Tuesday and a Saturday in November 2026 and June 2027; weekly $216. Plus a non-refundable $7.75 reservation fee per reservation. Changes or cancellations cost $15.50; inside 24 hours you also lose a night. An extra tent on an RV site is $31 a night."
+      },
+      "source": "https://reservations.gplakes.com/Policies.aspx ('Campers with self-contained units are charged a $36.00 (RV site) parking fee per sleeping facility per night plus a non-refundable $7.75 reservation fee (per reservation, not per night)', 'Weekly rates are Tents $186.00 / RV's $216.00'); GetReservationCost 'FinalPrice 36.0000' for sites 1 and 6 on 2026-11-10, 2026-11-14, 2027-06-15, 2027-06-19, read 2026-10-29",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true, "interagency_senior_access": true},
+      "source": "https://reservations.gplakes.com/Policies.aspx ('The America the Beautiful Senior and Access pass ... are honored at a $2.00 per night savings', 'Military discounts are honored at a $2.00 per night savings for active duty, retired or veteran members'; one discount per reservation, applied after an application on the Shop page), read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true},
+      "source": "reservations.gplakes.com facID=2 ('an outstanding campground with water and electrical hookups'; GetUnitDetailView amenities 'Electric', 'Water Hookup' - no amperage given), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 48,
+        "max_rig_ft": 45,
+        "note": "49 water/electric sites, all bookable online; site 11 is 'small camper only' (15 ft), so 48 take a 23-ft rig. Pads 30-45 ft, several sloped ('slopes to front/back'). The stored 65 ft is not on the reservation site."
+      },
+      "source": "reservations.gplakes.com GetUnitDetailView for units 105-153 ('MaxEquipLength', e.g. Site-11 'Paved small camper only' 15 ft, Site-5 'Level up to 45 ft camper'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "dump": true},
+      "source": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=2 ('comfort stations with hot showers, washers/dryers, ice, and R/V dump stations'), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-01", "closes": "11-30"},
+      "source": "https://reservations.gplakes.com/Policies.aspx ('2026 Camping Season Dates: Opens March 1, 2026 - November 30, 2026 (Last day for overnight stay will be Nov 29th)'); facility text ('Lawrence Shoals access will close for camping December 1st thru February 28th and will reopen March 1st'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://reservations.gplakes.com/FacilityDetails.aspx?facID=2",
+        "window_opens_days": 45,
+        "max_stay_nights": 14
+      },
+      "source": "https://reservations.gplakes.com/Policies.aspx ('Overnight Camping Reservations may be made up to 45 days in advance of your arrival date', 'Campsite occupancy is limited to 14 nights', reservations online at GPLakes.com or 855-607-6462), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "Georgia Power lake recreation campground on Lake Oconee at 123 Lawrence Shoals Rd, Eatonton. Utility-operated (Georgia Power) -> classified private per project convention. Wooded loops; boat docks for campers, boat ramp (open year-round), swim beach (summer). Gates close 9 pm Sun-Thu, 10 pm Fri-Sat. --Claude",
+  "summary": "Georgia Power's own reservation site: 49 water/electric sites, all $36 on every sampled date (Nov 2026, Jun 2027, weekday and Saturday; stored note's ~$30-36 superseded) -> fees added 36-36 plus $7.75 reservation fee; $2/night military and ATB Senior/Access discounts added. Site lengths 30-45 ft (site 11 15 ft), so max 65 -> 45 and count 48 fitting 23 ft. Water confirmed; amperage not given anywhere (stored 50 from note prose left as is). Showers, laundry, dump confirmed. Season Mar 1-Nov 30 (stored year_round false; the note's 'Mar-Sep' was wrong). Booking URL, 45-day window, 14-night limit added. Note's address corrected (Lawrence Shoals Rd per the reservation site). Price under $50 (private gate passes). Phone: stored 706-485-5494 matches Google; the reservation line is 855-607-6462 - left. Pin and waterfront - see flags.",
+  "flags": [
+    "Pin ~390 m off: stored 33.35143,-83.16981 is on the entrance road south-east of the campground. The reservation site's per-site GIS points for sites 1-49 centre on 33.35453,-83.17177 (range 33.3533-33.3558, -83.1731 to -83.1703), matching the loops seen under canopy on imagery (Google's pin 33.35416,-83.17173 agrees). Suggest 33.3545,-83.1718 (Open-Meteo elevation 160 m, stored 166).",
+    "Waterfront re-audit lead (operator claim differs): stored 'not waterfront', but the reservation site tags sites 6, 12, 13, 15 and 17 'Waterfront'. Their GIS points sit ~80-120 m from the Lake Oconee shoreline coves under continuous canopy, so imagery can't settle it either way (a 'lakeview' or even nothing may be right); needs the gate's check against per-site photos."
+  ]
+}

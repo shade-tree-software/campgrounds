@@ -1,0 +1,73 @@
+{
+  "id": 4625,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://www.longridgecampground.com/rates-and-reservations.html, read 2026-10-29",
+    "https://www.longridgecampground.com/about-us.html, read 2026-10-29",
+    "https://www.longridgecampground.com/store-office-hours.html, read 2026-10-29",
+    "https://www.longridgecampground.com/rules-and-regulations.html, read 2026-10-29",
+    "CampLife booking API for campground 1277 (https://www.camplife.com/1277/reservation/step1, the site's 'Click Here for RV & Tent Site Reservations' link): site list, every RV site's record, availability and estimates for 2026-10-20, 2027-06-08 (Tue) and 2027-06-11 (Fri-Sat), read 2026-10-29"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 40,
+        "nightly_high": 50,
+        "currency": "USD",
+        "reservation_fee": 5,
+        "checked": "2026",
+        "note": "$40 a night for a 30-amp water-and-electric site (8-10), $50 for full hookups, weeknight or weekend, plus a $5 charge per reservation (October 2026 and June 2027). Weekly $275 for full hookups. Base rate covers 4 people and 1 vehicle; extra person $5, extra vehicle $5, extra tent $10 a night. All cancellations carry a fee; no refunds for October, holidays or events."
+      },
+      "source": "https://www.longridgecampground.com/rates-and-reservations.html ('30 Amp FHU = $50/night', '30 Amp Water & Electric Only = $40/night', '50/30 Amp FHU= $50/night', 'Weekly RV Rates ... $275', extra person/vehicle/tent charges, cancellation policy); CampLife estimates: site 8 (W/E) $45 for 1 night and $85 for 2 nights on 2027-06-08 and $85 for Fri-Sat 2027-06-11; site 4 (FHU) $55 / $105 / $105, read 2026-10-29 (the $5 left after the nightly step is a per-stay charge)",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "CampLife site list (sites '50/30 Amp FHU', '30 Amp FHU', '30 Amp W/E'); https://www.longridgecampground.com/about-us.html ('Full hook up sites offering 30 and 50 amp electric service, water & sewer'), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 28,
+        "max_rig_ft": 38,
+        "pull_through": true,
+        "note": "28 RV sites sold online (24-38 ft, so all take a 23-ft rig): 15 50/30-amp full hookup, 10 30-amp full hookup, 3 30-amp water and electric; 5 pull-throughs (20, 21, 26-28). Plus 6 primitive tent sites and 2 cabins."
+      },
+      "source": "CampLife booking API campground 1277 (siteMap and each site's 'maxLength': 24-38; types 'Back In' / 'Pull Through'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "wifi": true},
+      "source": "https://www.longridgecampground.com/about-us.html ('bath house for men and women with hot showers and flush toilets', 'FREE fiber optic WiFi internet access at your site'), read 2026-10-29",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true},
+      "source": "https://www.longridgecampground.com/rates-and-reservations.html ('10% Military Discount Offered on site charges, but NOT combined with any other discounts'), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "04-01", "closes": "11-30"},
+      "source": "https://www.longridgecampground.com/about-us.html ('Open April 1 - November 30'; 'Self contained annual units only from first freeze through last freeze (approximately December 1st thru March 1st)'); https://www.longridgecampground.com/store-office-hours.html ('The office /short term sites are closed for the \"off season\" months of December through March'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.camplife.com/1277/reservation/step1",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 2, "applies": "holiday"}],
+        "season": {"opens": "05-01", "closes": "10-31"},
+        "note": "Online through CampLife or by phone; cancellations only by phone or email. Holiday minimum is 2 or 3 nights depending on the weekday the holiday falls; the booking system works it out. No arrivals after 9:30 PM. Check-in 2 PM, check-out noon."
+      },
+      "source": "https://www.longridgecampground.com/rates-and-reservations.html ('Click Here to enter our RV & Tent reservations site!' -> camplife.com; 'Weekends: Fri-Sat 2 night min required'; 'Holidays: 2-3 night min required dependent on day of week the holiday falls'); CampLife availability answers ('2 night minimum stay for weekends'; for 2027-01-26 'The park is closed for winter. Reservations are open for the upcoming season, May 1st through October 31st'); https://www.longridgecampground.com/rules-and-regulations.html (check-in/out), read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "Private mountain campground near Hiawassee (~2,100 ft) with a catch-and-release pond and two creeks running through it; not on Lake Chatuge, about a mile away. Gravel roads with an uphill grade at the entrance and throughout; the operator says sites 11-13 may need 4WD to park a rig, and staff will help. Up to half the sites may be long-term. --Claude",
+  "summary": "Operator's rates page and its CampLife engine agree: $40 (30 A W/E) / $50 (FHU) weeknight and weekend, Oct 2026 and Jun 2027, plus a $5 per-stay charge (stored 40-50 confirmed; reservation_fee 5 added). Passes the $50 private gate. Count 33 -> 28 RV sites (24-38 ft, all fit 23 ft), max 40 -> 38, 5 pull-throughs; hookups 50 A/water/sewer confirmed; showers/flush toilets/wifi, military 10%, season Apr 1 - Nov 30, booking operator (CampLife) with 2-night weekend/holiday minimum and May-Oct booking season. Long-term capped at 50% of sites, nights sold online: passes the 2026-10-14 long-stay tests. Pin ~37 m from CampLife's (fine). Note trimmed of counts/hookups/booking.",
+  "flags": [
+    "Waterfront re-audit lead: stored not waterfront. CampLife's site descriptions say sites 11-19 'Backs up to creek' and sites 22-25 'Backs up to pond' (a small catch-and-release pond), so creekside/pond for those rows may be earned.",
+    "Access, for the human: the rates page says 'There is an uphill grade when entering and throughout the campground. Sites 11-12-13 will require 4 wheel drive to park your camper. However, we are available and experienced to assist you'. The 4WD statement is about three sites, not the road; the other 25 sites carry no such warning."
+  ]
+}

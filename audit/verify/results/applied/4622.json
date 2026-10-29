@@ -1,0 +1,58 @@
+{
+  "id": 4622,
+  "checked": "2026-10-29",
+  "sources": [
+    "https://lakepines.net/booking/ (Rates page, '2027 RATES'), read 2026-10-29",
+    "https://lakepines.net/faq/ and https://lakepines.net/amenities/, read 2026-10-29",
+    "Good Sam directory record 'Lake Pines RV Park & Campground', Columbus (gs: true), cached trip_data/goodsam_parks.json",
+    "python3 audit/price_research/gateways.py 32.53811,-84.82625 -> none within 40 km (nearest Atlanta 141 km; family homes included)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 65,
+        "nightly_high": 65,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "2027 rates: full hookup 30/50 A $65 a night for 1-2 people ($58.50 Good Sam, $55.25 rally); weekly $409.50. Extra persons $3 (under 17) / $5 (adult) a night. Tents $30. Cancellation: $15 more than 7 days out, $60 (one night) within 7 days."
+      },
+      "source": "https://lakepines.net/booking/ ('2027 RATES', 'FULL HOOK-UP WITH 30/50 AMP SERVICE', 'DAILY 1 or 2 people ... $65.00', 'Good Sam Camping Club member rate: $58.50', 'Rally: $55.25', 'WEEKLY ... $409.50'), read 2026-10-29",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"good_sam": true},
+      "source": "https://lakepines.net/booking/ ('Good Sam Members enjoy 10% discount on the Daily Rate'), read 2026-10-29",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://lakepines.net/booking/ ('FULL HOOK-UP WITH 30/50 AMP SERVICE'); https://lakepines.net/amenities/ ('Full hook-ups', '30/50 amp service'), read 2026-10-29",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true},
+      "source": "https://lakepines.net/amenities/ ('Long pull-thrus', 'Big rig friendly'), read 2026-10-29",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"laundry": true, "dump": true, "wifi": true},
+      "source": "https://lakepines.net/amenities/ ('Laundry', 'Dump station', 'WiFi Hotspots'), read 2026-10-29",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://lakepines.net/faq/ ('Is Lake Pines open all year? YES! We are open year-round'), read 2026-10-29",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "phone"},
+      "source": "https://lakepines.net/faq/ ('We strongly recommend making a reservation ... if you do arrive without a reservation, we are happy to accommodate you, if space allows'; self-registration after hours); no online booking engine on the site - the 'booking' page is the rate sheet, contact by 706-561-9675 or info@lakepines.net, read 2026-10-29",
+      "method": "manual"
+    }
+  },
+  "note": "Family-owned private RV park (since 1966) on 20 wooded acres at 6404 Garrett Rd, Midland (Columbus area), minutes from Fort Benning. Concrete patios, plus primitive sites; pool, catch-and-release pond (no license), propane. --Claude",
+  "summary": "Rates page now posts 2027 rates: full hookup $65 (GS $58.50, rally $55.25, weekly $409.50) - fees 51-51 (2023 rates) -> 65-65. Good Sam discount added (the page states 10% off). Hookups 50 A/water/sewer, pull-throughs, laundry, dump, WiFi confirmed; year-round season added; booking platform phone (no engine on the site). Not waterfront stands (private pond only). Phone matches. Price gate fails - see flag. Note trimmed of hookups/laundry/dump/booking.",
+  "flags": [
+    "Price gate: private park, 2027 posted rate $65 for a full-hookup site (the only RV site type); as a Good Sam Park, judged at 10% off = $58.50, still over US$50. No gateway or family home within 40 km (gateways.py: nearest Atlanta 141 km). Weekly $409.50 is also $58.50/night. Meets the drop rule - suggest drop (rates page: https://lakepines.net/booking/)."
+  ]
+}
