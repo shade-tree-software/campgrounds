@@ -1,0 +1,68 @@
+{
+  "id": 4555,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10203811 (description, fee text, notices, rules), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/10203811/rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10203811 (all 11 sites: permitted equipment, Driveway Length, coordinates) + RIDB catalog in trip_data/ridb_campsites.json (fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/dockery-lake-recreation-area ('Site Open'), read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 4,
+        "nightly_high": 8,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "$8 a night April 1 - October 31; $4 a night November 1 - December 31, when the water is off and the campground is winterized."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10203811/rates (Peak Season 2026-04-01..10-31 and 2027-04-01..10-31 'PeakStandardNon-electric 8'; Non-Peak 2026-11-01..12-31 'OffPeakStandardNon-electric 4'); FS page ('Peak Season: April 1 - October 31 $8.00 per night/site; Off Peak Season(no water): November 1 - January 1 $4.00'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 5,
+        "note": "11 sites, but recreation.gov permits an RV at only 5: lake sites 3, 5, 7 and 9 and site 11 (gravel back-in driveways 42-55 ft). The other six take tents, vans, pickup campers, pop-ups and (1, 4, 8) trailers."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10203811 (permitted_equipment lists 'RV' only at Site 3(lake site), Site 5(lake site), Site 7(lake site), Site 9(lake site), Site 11; Driveway Length 55, 55, 43, 42, 43) + RIDB catalog, read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "12-31"
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10203811 ('$8.00 a night from 4/1-10/31 $4.00 a night from 11/1-12/31 Campground closed from 1/1-3/31'); FS page ('Closed: January 2 - March 31'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "url": "https://www.recreation.gov/camping/campgrounds/10203811",
+        "note": "Reservations required; same-day booking allowed online or by phone (877-444-6777), not on site. Self-service campground. Check-in 3 pm, check-out 2 pm."
+      },
+      "source": "FS page ('Reservations are required to camp in this campground', 'You may reserve camp sites the same day as you arrive and as far as six (6) months in advance. However, reservations cannot be made on-site'); recreation.gov notices ('Check-out at 2:00 PM ; Check-In at 3:00 PM. This campground is self-service and visitors are invited to occupy campsites with a qualified reservation'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": false,
+        "note": "Flush toilets and drinking water April 1 - October 31 only; vault toilet in the day-use area."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10203811 ('There are no water or electric hook-ups or dump station available in the campground. 1 flush facility in the campground and 1 vault toilet in the day use area... Flush facilty and drinking water is only available from 4/1 through 10/31'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Chattahoochee NF, Blue Ridge RD; on 6-acre Dockery Lake (trout, electric motors only, no swimming), 12 mi N of Dahlonega off GA-60 via 1 mile of FS Road 654. Access is a twisty gravel FS road; firsthand reviews confirm a 23-ft RV fits though turns are tight. --Claude",
+  "summary": "Fees confirmed $4-8: $8 Apr-Oct, $4 Nov-Dec (the stored range was right, not wrong). Season set Apr 1 - Dec 31 (closed Jan-Mar). Reservations required on recreation.gov (fcfs never). Site count changed 11 -> 5: rec.gov permits an RV only at sites 3, 5, 7, 9, 11 (driveways 42-55 ft, so a 23-ft motorhome fits those). No hookups, no dump; flush toilets + water seasonal. Stored 'lakefront' consistent (four sites named 'lake site'). FS page shows 'Site Open'. Note cleaned of field facts.",
+  "flags": [
+    "PHONE missing: recreation.gov's facility phone is 706-745-6928 (Blue Ridge Ranger District). Use it.",
+    "PIN ~260 m off: stored 34.6730,-83.9760 is SW of the campground. The 11 sites' recreation.gov coordinates centre on 34.6750,-83.9745 (span 34.6743-34.6759, -83.9752 to -83.9738). Suggest 34.6750,-83.9745; elevation_meters needs re-fetching. (rec.gov's facility point 34.6641,-83.9813 is wrong as well, ~1.3 km away.)",
+    "RV sites: only 5 of 11 sites list RV as permitted equipment (3, 5, 7, 9, 11); the rest exclude RVs. A 23-ft motorhome can book those five. No 4WD or length warning found on the FS page or recreation.gov (directions only say 'Forest Service Road 654... go 1.0 mile'). The FS page's driving directions are wrong (they send you down FS Road 69 to the fish hatchery, the Frank Gross/Deep Hole route); rec.gov's (GA-60 to FS 654) are right."
+  ]
+}

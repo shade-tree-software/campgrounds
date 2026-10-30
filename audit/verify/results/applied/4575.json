@@ -1,0 +1,46 @@
+{
+  "id": 4575,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232715",
+    "https://www.recreation.gov/api/camps/campgrounds/232715/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232715 (all 150 sites: type, Max Vehicle Length, Proximity to Water, coordinates)",
+    "trip_data/ridb_campsites.json (RIDB catalog for facility 232715, fetched 2026-10-20)",
+    "https://www.recreation.gov/api/camps/availability/campground/232715/month for 2026-09, 2026-10, 2027-03",
+    "Esri World Imagery around the site extent"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 34, "currency": "USD", "checked": "2027", "note": "Peak season (2026: March 12 - September 7; 2027: March 11 - September 6): standard electric/water sites $30, the premium (lakefront) electric sites $34; tent-only $24; group sites $290."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232715/rates (Peak Season 2026-03-12..2026-09-07 and 2027-03-11..2027-09-06: STANDARD ELECTRIC 30, STANDARD ELECTRICu32 34, TENT ONLY NONELECTRIC 24, GROUP STANDARD ELECTRICu270 290) + campsite search (the $34 fee template is on the lakefront-tagged sites), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "RIDB catalog for 232715 (102 of the 106 STANDARD ELECTRIC sites 'Electricity Hookup' 50, Water Hookup Yes; no sewer except one non-public site) + https://www.recreation.gov/api/camps/campgrounds/232715, read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 106, "max_rig_ft": 75, "pull_through": true, "note": "106 electric/water RV sites, every one rated 23 ft or longer (23-75 ft); 23 pull-throughs. 24 of them carry 'Proximity to Water: Lakefront' on recreation.gov. Also 42 tent-only sites and 2 group sites (150 in all). Max 3 vehicles and 8 people per site."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:232715 (campsite types, Max Vehicle Length, Driveway Entry, Proximity to Water) + RIDB catalog + facility notices ('Maximum of eight people per campsite', 'Maximum of three vehicles per campsite'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "note": "Swimming beach and a fishing dock at the campground."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232715 ('Fire rings, picnic areas, drinking water, flush toilets and showers are all provided', 'conveniently located near the dock and swimming beach'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232715", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "note": "14 nights in any 30 at Corps campgrounds on Allatoona Lake. Same-day booking allowed (cut-off 0 days). Check-in 4 pm, check-out 11 am. Entrance gate closed 10:30 pm - 7 am."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232715 (facility_rules maxStay 14 'Rolling 30 Days', minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 0; notices 'Camping limit is 14 consecutive days or 14 non-consecutive days in any 30-day period', 'Entrance gate is closed from 10:30 p.m. to 7 a.m.'; site attributes Checkin Time 4:00 PM, Checkout Time 11:00 AM), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Lake Allatoona (Mobile District), run by a private contractor; off Fields Chapel Rd between Cartersville and Canton. Swimming beach and fishing dock. --Claude",
+  "summary": "rec.gov confirms $30 standard / $34 lakefront (2026 and 2027 peak), 50-amp + water, flush toilets/showers/water; reservable with a 2-night weekend / 3-night holiday minimum and 14 nights in 30. Count changed 151 -> 106 RV sites (all 23-75 ft; plus 42 tent-only, 2 group), pull-throughs added. 24 RV sites tagged Lakefront on rec.gov, consistent with stored 'lakefront'. Season left unset: 2026 bookable nights end Sep 7 (Labor Day) and the 2027 calendar is not yet released (spring shows 'Closed'); 2027 rate season Mar 11 - Sep 6. Dump not stated on rec.gov (left derived). Note cleaned of field facts.",
+  "flags": [
+    "PHONE missing: recreation.gov 'Contact Info: This location is staffed. Please call (770) 720-4025 to speak with local staff.' (the facility phone field, 678-721-6700, is the Allatoona Lake project office line also stored on McKaskey Creek). Use 770-720-4025.",
+    "PIN: stored 34.1962,-84.5785 sits at the NE corner of the site spread; the 106 RV sites' recreation.gov coordinates average 34.1935,-84.5830 (~510 m away; sites span 34.1897-34.1976, -84.5906 to -84.5762). Move to about 34.1935,-84.5830.",
+    "rec.gov's militaryDiscount rule flag carries no wording; discounts left alone."
+  ]
+}
