@@ -131,3 +131,4 @@
 - [EKKO model year](user_ekko_model_year.md) — 2023 (AWH 2026-10-22); a 10-year rig-age rule passes until 2033
 - [Book EKKO as a motorhome](feedback_book_as_motorhome.md) — AWH 2026-10-24: where an engine offers van AND motorhome types, price the motorhome type (Fort DeSoto turned a "van" booking away)
 - [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — AWH 2026-10-30: very poor reviews dropped Sugar Mill; on a borderline price I may let reviews decide (Blackwater 5.0/48 kept at $52.79)
+- [Florida Keys price re-screen](project_keys_rescreen.md) — IN PROGRESS 2026-10-30: AWH lifted the price gate for the whole Keys; 26 never-researched RV Life parks, one agent each; resume rule inside

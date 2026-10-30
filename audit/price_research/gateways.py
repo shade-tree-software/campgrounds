@@ -11,6 +11,9 @@ National Parks, etc.)". Working definition, applied to every over-gate private e
     - a family home (AWH 2026-10-21): every kind "family" entry in the gitignored trip_data/family.json,
       read at import so no address lands in this tracked file. Reported as "family home" with no name,
       because these labels get copied into tracked evidence strings. No family.json = no family points.
+    - anywhere inside a whole-region exception (ZONES): the Florida Keys (AWH 2026-10-30: "Campgrounds on
+      the keys that pass all other criteria can be kept even if the price is too high"), Key Largo to
+      Key West, not just the 40 km around the Key West attraction point. Reported at 0 km.
 
 Points are approximate (a few km); the radius is generous enough that this doesn't matter. National recreation
 areas, monuments and seashores count only where they are on the attractions list.
@@ -123,6 +126,17 @@ ATTRACTIONS = {
 }
 
 
+def _in_florida_keys(lat, lng):
+    """The island chain from Key Largo / Ocean Reef to Key West: a band along the line through both ends,
+    reaching ~11 km north of it (which keeps out Flamingo and the mainland Everglades) and ~28 km south."""
+    if not (-81.85 <= lng <= -80.2 and lat < 25.35):
+        return False
+    line = 25.31 - 0.75 * (-80.28 - lng) / 1.52
+    return line - 0.25 <= lat <= line + 0.1
+
+
+ZONES = {"Florida Keys": _in_florida_keys}
+
 
 def _family_homes():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "trip_data", "family.json")
@@ -150,6 +164,7 @@ def gateways(lat, lng, radius=RADIUS_KM):
     out += [(min(km(p, c) for c in cs), "national park", n) for n, cs in NATIONAL_PARKS.items()]
     out += [(km(p, c), "attraction", n) for n, c in ATTRACTIONS.items()]
     out += [(min(km(p, c) for c in FAMILY_HOMES), "family", "family home")] if FAMILY_HOMES else []
+    out += [(0.0, "zone", n) for n, inside in ZONES.items() if inside(lat, lng)]
     return sorted(x for x in out if x[0] <= radius)
 
 
