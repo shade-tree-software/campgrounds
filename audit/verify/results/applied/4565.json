@@ -1,0 +1,44 @@
+{
+  "id": 4565,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-sinclair-recreation-area (Current Conditions, seasons, fees, restrictions, contact), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/10322686 (description, fee description, notice) and /rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10322686 and https://ridb.recreation.gov/api/v1/facilities/10322686/campsites (44 sites: 5 STANDARD ELECTRIC with water, 39 TENT ONLY; no lengths), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/availability/campground/10322686/month for 2026-08..2027-05, read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2027", "note": "The 5 electric/water sites are the only RV sites; tent sites $9. Senior/Access pass holders pay $10.50 (electric/water) or $4.50 (tent)."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-sinclair-recreation-area ('Camping without hook-ups: $9/site/night Camping with hook-ups: $15/site/night') + recreation.gov fee description ('Electric and water $15 night Tent Camping $9 Night America the Beautiful Acess Pass and Senior Liftetime Pass- $4.50 Tent and $10.50 electric and water') and /rates (Peak Season 2026, 2027, 2028: ElectricWaterRV 15), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "recreation.gov fee description for 10322686 ('America the Beautiful Acess Pass and Senior Liftetime Pass- $4.50 Tent and $10.50 electric and water'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "closes": null},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-sinclair-recreation-area ('Seasons of Use Open year round'), read 2026-10-30; replaces the calendar-derived 09-22 close",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 33, "note": "Only the 5 Loop A sites (electric and water) take RVs; the rest are tent sites. recreation.gov's catalog lists 44 (5 STANDARD ELECTRIC, 39 TENT ONLY). No page gives a site length."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-sinclair-recreation-area ('offers 33 campsites, with 5 campsites for campers with electric and water being available') + recreation.gov notice ('5 sites with electric and water hookups are for RV/Trailers ONLY and are not lake view. Tent sites DO NOT have electric or water hook ups') + campsite search (sites 1-5 STANDARD ELECTRIC, 6-44 TENT ONLY NONELECTRIC), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "note": "Dump station temporarily closed for repair (FS, October 2026). Swim beach, boat ramp and dock. No generators."},
+      "source": "recreation.gov description ('Bath House with toilets and showers RV Dump Station Boat Ramp Boat Dock Swim Beach'; 'drinking water provided by faucets located on each loop'; 'Generators are NOT permitted') + FS page ('The sanitary dump station at Lake Sinclair is TEMPORARILY CLOSED for repair'; 'No generators allowed'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Oconee NF on Lake Sinclair (Eatonton). The RV sites are in Loop A and are not lake view. --Claude",
+  "summary": "FS + rec.gov confirm $15 for the 5 electric/water RV sites (tent $9; fees manual, checked 2027), Senior/Access pass pricing, open year round (season: derived closes 09-22 cleared, year_round true), 33 sites of which only 5 take RVs, toilets/showers/water/dump (dump temporarily closed). Hookups and max_rig_ft left as stored: no page states amperage or a site length. Note cleaned of field facts.",
+  "flags": [
+    "CRITERIA: only 5 RV sites (Loop A, electric+water), and no page (FS, recreation.gov, RIDB catalog) gives any site or vehicle length. The stored max_rig_ft 24 rests on old note prose ('Reported max RV ~24 ft'); hookups.electric 50 likewise (note prose '30/50A'), unconfirmed.",
+    "FS Current Conditions (Oct 2026): dump station TEMPORARILY CLOSED for repair; 'Sites 1 & 5 do not have electricity at the moment' - 3 of the 5 RV sites have power.",
+    "BOOKING unclear: recreation.gov shows every site 'Not Reservable' from Oct 28 2026 through at least May 2027 (Aug-Oct 2026 shows only a handful of sites, all Reserved), and the FS page says only 'Check in for camping is upon arrival'. A 2025 rate season was named 'First-come, First-served'. booking left as stored (reservable, recreation.gov); may be FCFS in practice now."
+  ]
+}

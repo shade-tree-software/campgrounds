@@ -1,0 +1,51 @@
+{
+  "id": 4571,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10404059 (description, fee description, notices, facility_rules), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/10404059/rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10404059 (all 11 sites: Max Vehicle Length, Electric/Water Hookup, Proximity to Water, coordinates), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/availability/campground/10404059/month for 2026-06..2027-08, read 2026-10-30",
+    "https://ridb.recreation.gov/api/v1/recareas/445 (Lake Seminole, RecAreaPhone) and /facilities/10404059, read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2027", "note": "Every site $28 a night in all rate seasons from 2026-09-30 through 2028. Extra vehicle $3, visitor $5."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10404059 ('Campsites are $28.00 per night. We accept America the Beautiful Senior Lifetime, Senior Annual, and Access Passes'; notice 'Visitor fees are $5.00... Extra vehicle fees are $3.00') + /rates (PeakStandardElectric 28 for 2026-09-30..2026-12-31 and 2027-01-01..2027-07-15; OffPeak 28 2027-09-30..2027-12-31; 2028 the same), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10404059 ('We accept America the Beautiful Senior Lifetime, Senior Annual, and Access Passes'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10404059 (all 11 sites 'Electric Hookup 30/50', 'Water Hookup Yes'; no sewer attribute), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 11, "max_rig_ft": 40, "note": "All 11 sites take a 23-ft rig (Max Vehicle Length 24-40 ft; four at 40). Max 8 people and 3 vehicles per site."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10404059 (11 STANDARD ELECTRIC sites, Loop A, Max Vehicle Length 40/40/40/40/36/36/36/33/30/25/24, Site Access 'Drive In') + facility description ('a total of 11 sites'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "note": "Boat ramp, dock and a group picnic shelter."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10404059 ('Flush toilets, showers, drinking water, and a dump station are provided. A group picnic shelter is on-site'; 'The campground offers a boat ramp, and dock'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10404059", "max_stay_nights": 14, "note": "All 11 sites site-specific on recreation.gov since the facility was listed (inventory from 2026-09-30); same-day booking allowed (cut-off 0 days). 14 nights in any 30. Park gate locked 10 pm - 7 am Eastern."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10404059 (facility_rules maxStay 14 'Rolling 30 Days', reservationCutOff 0; notice 'Park gate is locked from 10:00 p.m. to 7:00 a.m. eastern time'); availability months (Nov-Dec 2026 and Mar 2027 Available/Reserved, Jun 2027 NYR), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Mobile District, Lake Seminole, at the Georgia-Florida line. Hard-packed level gravel sites with picnic table and fire ring. Sites overlook the lake through trees. --Claude",
+  "summary": "rec.gov confirms $28 every site (rate seasons 2026-09-30 to 2028; fees now manual, checked 2027), Senior/Access passes accepted, 30/50-amp + water at all 11 sites, all 11 fit 23 ft (24-40 ft), flush toilets/showers/water/dump, reservable on rec.gov, same-day OK, 14 nights in 30. Season left unset: rec.gov says only 'open seasonally' and its rate seasons skip Jul 16 - Sep 29 (a Campendium reviewer quotes the host: closed July 15 - Oct 1), not a statement. Pin OK (~165 m from the site centroid). Note cleaned of field facts.",
+  "flags": [
+    "PHONE missing: recreation.gov lists no facility phone; the Lake Seminole project (rec area 445) phone is (229) 662-2001 (RIDB RecAreaPhone). Suggest 229-662-2001.",
+    "WATERFRONT re-audit lead: stored 'lakeview', but recreation.gov tags all 11 sites 'Proximity to Water: Lakefront' (sites centre 30.7498,-84.8400). Re-audit from the pads.",
+    "SEASON unconfirmed: recreation.gov says 'open seasonally'; rate seasons run Sep 30 - Jul 15 each year with nothing Jul 16 - Sep 29, and a Campendium reviewer reported the host saying it closes July 15 - Oct 1. No agency statement found (the USACE Lake Seminole page returns 403 to plain HTTP).",
+    "WEBSITE: second line (sam.usace.army.mil Lake Seminole page) answers 403 to plain HTTP (Akamai); likely live in a browser, keep."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": 716,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232665 (description, fee description, notices, facility_rules) and /rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232665 (56 sites: type, Max Vehicle Length, hookups, driveway, Proximity to Water, coordinates), read 2026-10-30",
+    "https://www.recreation.gov/api/communication/external/alert?location_id=232665 (no alerts) and https://ridb.recreation.gov/api/v1/facilities/232665 (phone, reservable, updated 2026-02-25), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/availability/campground/232665/month for 2026-08..2027-06, read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 34, "currency": "USD", "checked": "2027", "note": "Standard sites $30, the 18 premium lakefront sites and the full-hookup site $34; double sites $60-68."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232665/rates (Peak Season 2026-03-12..2026-09-07 and 2027-03-11..2027-09-06: STANDARD ELECTRIC 30, premium STANDARD ELECTRIC 34, RV ELECTRIC 34, doubles 60/68) + fee description ('Campsite fees range from $22-$64 per night'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:232665 (all 45 RV sites 'Electricity Hookup 50', 'Water Hookup Y'; sewer on site 59 only), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 57, "max_rig_ft": 58, "pull_through": true, "note": "recreation.gov sells 56: 45 RV sites (Max Vehicle Length 20-58 ft; 43 take a 23-ft rig, sites 13 and 14 are 20-21 ft; 8 pull-throughs; three doubles) and 11 tent-only. 18 sites lakefront."},
+      "source": "recreation.gov description ('Payne Campground provides 57 spacious reservable campsites') + campsite search (44 STANDARD ELECTRIC + 1 RV ELECTRIC, Max Vehicle Length 20..58, Driveway Entry Pull-through x8; 11 TENT ONLY NONELECTRIC; Proximity to Water 'Lakefront' x18), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "note": "Dock and swimming beach."},
+      "source": "recreation.gov description ('Fire rings, picnic areas, drinking water, flush toilets and showers are all provided'; 'conveniently located near the dock and swimming beach'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232665", "max_stay_nights": 14, "note": "2-night minimum on weekends, 3 on holiday weekends; 14 nights in any 30 at Allatoona Corps campgrounds; same-day booking allowed. Check-in 4 pm, check-out 11 am. Entrance gate closed 10:30 pm - 7 am."},
+      "source": "recreation.gov facility_rules (minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days', reservationCutOff 0) + notices ('Camping limit is 14 consecutive days or 14 non-consecutive days in any 30-day period'; 'Entrance gate is closed from 10:30 p.m. to 7 a.m.') + site attributes (Checkin Time 4:00 PM, Checkout Time 11:00 AM), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "summary": "rec.gov confirms $30-34 (fees manual, checked 2027; doubles $60-68 in fees.note), 50-amp + water (now manual), 57 sites (56 sold; 43 of 45 RV sites take 23 ft, max 58, 8 pull-throughs), flush toilets/showers/water, reservable on rec.gov with 2-night weekend / 3-night holiday minimums and 14 in 30. Season left unset. AWH note kept verbatim (its 18 waterfront sites match rec.gov's 18 'Lakefront').",
+  "flags": [
+    "PHONE missing: recreation.gov/RIDB facility phone (678) 721-6700.",
+    "PIN ~290 m from the RV-site centroid: stored 34.1226,-84.6210; suggest 34.1203,-84.6195 (centroid of 45 rec.gov RV sites).",
+    "CLOSURE status: inclusion_evidence says 'temporarily closed for septic repair'. Search snippets of the rec.gov page still quote 'Payne Campground will remain closed until further notice due to issues with septic system', but the live rec.gov API carries no such notice and the alert endpoint returns none (RIDB record updated 2026-02-25); 2027 rate season is loaded (Mar 11 - Sep 6). The 2027 calendar reads 'Closed' from Mar 11, but so do Victoria and Sweetwater (inventory not yet released), so it proves nothing. Worth confirming with the project office before relying on it.",
+    "SEASON unset: no page states it; rec.gov rate seasons run mid-March to the day after Labor Day (2026-03-12..09-07, 2027-03-11..09-06) and sites read 'Not Available' from 2026-09-08. Third-party sites say Mar 13 - Sep 1.",
+    "DUMP station: inclusion_evidence mentions one; the current rec.gov description does not, so facilities.dump left unset.",
+    "WEBSITE: the USACE Allatoona camping page (sam.usace.army.mil) answers 403 to plain HTTP."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": 13201,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/andrews-cove-campground (Site Open; no drinking water; season 03/15-12/15; fees; passes; phone), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/10309337 (description, fee description, notices, facility_rules) and /rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10309337 (10 sites: permitted equipment lengths, Driveway Length, Driveway Entry, coordinates), read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 12, "nightly_high": 12, "currency": "USD", "checked": "2027", "reservation_fee": 8, "note": "Double site 9 $18."},
+      "source": "recreation.gov fee description ('Sites 1-8, 10: $12/night + $8/reservation fee. Site 9: $18/night + $8/reservation fee.') + /rates (Peak Season 2026, 2027, 2028: SingleCampsite 12, DoubleSite 18) + FS page ('Camping: $12/site/night, Site 9 is the double site at $18 a night'), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/andrews-cove-campground ('The America the Beautiful Interagency Senior and Access Passes also the Golden Age and Golden Access Passports are accepted. These passes entitle the pass holder to a 50% discount on camping fees.'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "03-15", "closes": "12-15"},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/andrews-cove-campground ('Seasons of Use 03/15 - 12/15'; 'Andrew's Cove CG is closed for the winter season and will reopen on March 15.'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite search (all 10 sites STANDARD NONELECTRIC, no hookup attributes) + FS page ('Drinking water is no longer available at Andrews Cove Campground'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 10, "max_rig_ft": 24, "note": "9 single sites and 1 double (site 9). recreation.gov permits trailers only at sites 3 and 9 (24 ft) and 10 (16 ft); the other seven list tents, cars and pickup campers only, and no site lists RVs."},
+      "source": "recreation.gov description ('This campground offers 9 single campsites and 1 double campsite') + campsite search (permitted_equipment: site 3 Trailer 24 / Max Vehicle Length 24, site 9 Trailer 24, site 10 Trailer 16; sites 1, 2, 4-8 Tent/Pickup Camper/Vehicle/Car only; no 'RV' entry on any site), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": false, "dump": false},
+      "source": "FS page ('Drinking water is no longer available at Andrews Cove Campground. The campground well system is being decommissioned') + recreation.gov notice ('Drinking water will not be available at this campground'); description lists only 'a toilet faciilty adjacent to site #3' (type not given) and no dump station, read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10309337", "fcfs": "never", "max_stay_nights": 14, "note": "Reservation only, online or 1-877-444-6777. 14 nights in any 30, then off the national forest. Check-in 2 pm, check-out 12:01 pm. Unstaffed."},
+      "source": "recreation.gov notices ('All Camping at Andrew's Cove is by Reservation Only. There are NO First Come, First Serve sites.'; 'Check-out time is 12:01 pm. Check-in time is 2:00 pm.') + facility_rules maxStay 14 'Rolling 30 Days' + description ('This location is unstaffed'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "Chattahoochee NF campground on Andrews Creek off GA-75, about 6 miles north of Helen; the entrance is on a sharp curve. Bring all water: the Forest Service is decommissioning the well. The 1.9-mile Andrews Cove Trail to the Appalachian Trail starts beside sites 6 and 7. --Claude",
+  "summary": "FS + rec.gov confirm $12 (double $18, $8 reservation fee; fees manual, checked 2027), Senior/Access 50%, season 03-15 to 12-15 (set), no hookups/no water, 10 sites (max_rig 24 set), reservation only (fcfs never), 14 in 30; booking platform/url added. Note cleaned of field facts.",
+  "flags": [
+    "CRITERIA (23-ft fit): recreation.gov permitted equipment lists no 'RV' at any site and allows trailers only at sites 3 and 9 (24 ft; site 3's driveway is listed at 14 ft) and site 10 (16 ft); sites 1, 2 and 4-8 take tents, cars and pickup campers only. inclusion_evidence's '24-78 ft stated lengths' are driveway lengths, not equipment limits. At most two sites (3, the double 9) admit a 23-ft rig, at a 24-ft limit. Human decision.",
+    "Pin OK (~80 m from the site centroid 34.7786,-83.7364). All 10 sites tagged 'Proximity to Water: Springs'."
+  ]
+}

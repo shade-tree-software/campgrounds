@@ -1,0 +1,55 @@
+{
+  "id": 4564,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground (Site Open; seasons, fees, passes, loops, amenities; last updated March 16, 2026), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/273781 (description, notices, facility_rules) and /rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:273781 (41 sites: type, Max Vehicle Length, coordinates), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/availability/campground/273781/month for 2026-11..2027-04, read 2026-10-30",
+    "Esri World Imagery around 34.494,-83.498, read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2027", "note": "Double sites (30D, 42D) $48."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground ('Camping: $24/site/night single, $48/double site/night') + recreation.gov /rates (Peak Season 2026, 2027 and 2028 all year: STANDARD NONELECTRIC 24, double 48), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground ('America the Beautiful Senior or Access pass, Golden Age and Golden Access passes are accepted for the 50% discount on camping.'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Loop A is open spring to late fall/early winter only."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground ('Seasons of Use year-round - year-round'; 'Loop A is open spring to late fall/early winter.') + recreation.gov availability (all 41 sites Available/Reserved through Nov 2026 - Apr 2027, January included), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground ('No electricity at the sites. Water at spigots within the loop') + recreation.gov description ('there are no hookups'; all sites STANDARD/TENT ONLY NONELECTRIC), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 42, "max_rig_ft": 67, "note": "Loop A 16 sites, Loop B 26. recreation.gov sells 41 (no site 24): 32 standard sites, all back-in, Max Vehicle Length 29-67 ft (doubles 30D 49 ft and 42D 67 ft; largest single 65 ft), so every one takes a 23-ft rig; 9 tent-only."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground ('This developed campground offers 42 campsites'; 'Loop A 16 camping sites'; 'Loop B 26 camping sites') + recreation.gov campsite search (32 STANDARD NONELECTRIC, Max Vehicle Length 29..67, Driveway Entry Back-In; 9 TENT ONLY NONELECTRIC), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "note": "Swim beach, boat launch (electric, wind or paddle only) and fishing dock. The restroom across from site 25 is decommissioned."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/273781 ('Water is available throughout the campground via water hydrants. Bathrooms have flush toilets with showers... boat launch, fishing dock, and near Loop A of the campground is a dump station'; notice 'The bathroom across from Campsite #25 has been decommissioned') + FS page ('2 Conventional flush restrooms, all with hot showers'; 'Dump Station located just outside Loop A'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/273781", "fcfs": "never", "max_stay_nights": 14, "note": "Reservation only, no first-come sites. 14 nights in any 30, then off the national forest for 30 days. Check-in 2 pm, check-out noon."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/lake-russell-recreation-area-campground ('All Camping is by Reservation Only. There is no First Come/First Serve.'; 'After the camper(s) has/have accumulated 14 days within any 30-day time period...'; 'The check-out time is at noon. The reservation check-in time is 2 p.m.') + recreation.gov notice ('Campsites are available through reservation only') and maxStay 14 'Rolling 30 Days', read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Chattahoochee NF on 100-acre Lake Russell; no gas motors on the lake. Two paved loops. Firsthand reports: sites are uneven, bring leveling blocks. --Claude",
+  "summary": "FS page + rec.gov confirm $24 (doubles $48; fees manual, checked 2027), Senior/Access 50%, year-round (Loop A spring to early winter; season set), no hookups, 42 sites (41 on rec.gov, all 32 RV sites 29-67 ft; max_rig 36->67), flush toilets/showers/water/dump, reservation only (fcfs never), 14 in 30. Note cleaned of field facts.",
+  "flags": [
+    "PHONE missing: recreation.gov says 'For facility specific information, please call (706) 754-6221' (Chattooga River Ranger District); its facility_phone field is 706-778-8427. Suggest 706-754-6221.",
+    "PIN ~335 m from the centroid of the 32 RV sites: stored 34.49516,-83.49691 sits just east of Loop A's first sites; suggest 34.4931,-83.4995 (rec.gov site centroid).",
+    "FS page's generic amenity block says 'Potable water is not available at this site', contradicting its own 'Water at spigots within the loop' and rec.gov's hydrants; kept potable_water true."
+  ]
+}

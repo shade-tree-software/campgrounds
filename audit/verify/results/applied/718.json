@@ -1,0 +1,50 @@
+{
+  "id": 718,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.bobbybrownpark.com/campground.php (site counts, amenities, policies, rates, park pass, discounts, phone), read 2026-10-30",
+    "https://www.campspot.com/book/bobbybrownpark (Campspot API, park 1155: availability 2026-11-10, 2027-04-13, 2027-05-15, 2027-06-15; type quotes for '30 AMP Broad River Interior Campsite' and '50 AMP Savannah River Waterfront Campsite'), read 2026-10-30 in headless Chromium",
+    "https://www.bobbybrownpark.com/uploads/Campground%20Map.pdf (park and campground map), read 2026-10-30",
+    "Esri World Imagery around 33.969,-82.577, read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 40, "currency": "USD", "checked": "2027", "entrance": {"resident": 5, "nonresident": 5, "per": "vehicle_stay", "name": "Park Pass"}, "note": "30-amp sites $30, 50-amp and 30-amp waterfront sites $35, 50-amp waterfront $40 (Campspot site charges before its $3-4 booking fee; the same on a November 2026 weeknight and in June 2027). Elbert County residents $2 a night off (promo code ELBERTCOUNTY); seniors 65+ $2 a night off (code SENIOR)."},
+      "source": "https://www.bobbybrownpark.com/campground.php ('Camping Rates $30 - $40 per night.'; 'Park Pass Fees are not included with reservation. The fee will be $5 per vehicle for length of stay.'; 'We offer a $2/night discount for Elbert County residents'; '$2/night discount for seniors 65 and older') + Campspot quotes (11268 2026-11-10 averagePricePerNightBeforeTaxesAndFees 30.0 + 'Booking Fee' 3.00; 11280 2027-06-15 40.0; list averages 33/38/43 incl. the booking fee), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true},
+      "source": "https://www.bobbybrownpark.com/campground.php ('We offer a 10% discount for active military personnel, veterans, public safety officials, fire and EMS personnel, law enforcement officers, and 911 operators. Please enter promo code MilitaryPublicSafety at check-out.'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.bobbybrownpark.com/campground.php ('Each site is equipped with a water and electric hookup') + Campspot site amenities ('50-Amp' on 38 of 55 sites, 'Water Hook-Up' on all), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 58, "max_rig_ft": 55, "pull_through": true, "note": "Broad River Side 25 sites (11 waterfront, 14 interior) and Savannah River Side 33 (7 waterfront, 27 interior). Of the 55 sold on Campspot, 54 take a 23-ft rig (to 55 ft); BR 4 is listed at 20 ft. Three pull-throughs. Also a primitive Pioneer camping area."},
+      "source": "https://www.bobbybrownpark.com/campground.php ('The Broad River Side Campground offers 25 campsites, including 11 waterfront and 14 interior sites, while the Savannah River Side Campground provides 33 campsites, with 7 waterfront and 27 interior sites') + Campspot site rvLengthMax / 'Pull-Through' amenity, Motorhome Class C permitted on every type, read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "dump": true, "wifi": true},
+      "source": "https://www.bobbybrownpark.com/campground.php ('Both campgrounds feature comfort stations with restrooms, showers, handicap access, and washer/dryer facilities, along with a dump station in each area. WiFi is also available for all guests.'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/bobbybrownpark", "note": "Online on Campspot or by phone at the park office, 706-283-5500; reservations open 11 months ahead and specific sites can be reserved. Holiday and special-event weekends are charged for the original arrival and departure dates. Check-in after 1 pm, check-out 11 am."},
+      "source": "https://www.bobbybrownpark.com/campground.php ('Reservations may be made 11 months in advance by calling the Park Office at 706-283-5500. Reservations may also be made online by clicking on the link below. Specific sites may be reserved in advance.' -> campspot.com/book/bobbybrownpark; 'Check - IN: After 1 p.m. Check - OUT: At 11 a.m.'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "County-managed park on J. Strom Thurmond Reservoir.  18 designated waterfront RV sites across two campgrounds.  --AWH Formerly Bobby Brown State Outdoor Recreation Area; Elbert County now runs it. The Broad River Side and Savannah River Side campgrounds sit at the confluence and share the park's one gated entrance. --Claude",
+  "summary": "Operator page + Campspot confirm $30-40 (fees manual, checked 2027) plus a $5-per-vehicle Park Pass for the stay (entrance), resident and senior $2 discounts in fees.note, military 10% (manual). Hookups set: 50-amp + water. Sites set: 58 (54 of 55 online take 23 ft, max 55, 3 pull-throughs). Facilities set: showers, laundry, dump, WiFi. Booking platform operator -> campspot with the Campspot link; 11-month window in booking.note. AWH note kept verbatim; Claude text updated (reservations are on Campspot now).",
+  "flags": [
+    "PHONE missing: the park office is 706-283-5500 (campground page and footer).",
+    "WEBSITE: add the Campspot booking link https://www.campspot.com/book/bobbybrownpark (the operator's 'RESERVATIONS' link).",
+    "PIN: stored 33.9710,-82.5781 sits on the park road between the two campgrounds (Broad River Side to the SW, Savannah River Side by the courtesy boat dock to the NE), roughly 0.3-0.4 km from each; pads are under canopy on imagery and the county map is schematic, so no move is proposed. Campspot's own park point (33.98367,-82.59628) is ~2 km NW on the entrance road.",
+    "Two campgrounds share one gated park entrance (county map) - not a split."
+  ]
+}

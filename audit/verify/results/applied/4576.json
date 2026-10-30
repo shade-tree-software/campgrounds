@@ -1,0 +1,53 @@
+{
+  "id": 4576,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/tallulah-river-campground (Site Open; season, fees, passes, restrictions, directions; last updated April 17, 2026), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/10309319 (description, notices, facility_rules) and /rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10309319 (16 sites: permitted equipment lengths, Driveway Entry, Proximity to Water, coordinates), read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2027"},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/tallulah-river-campground ('Camping: $15/site/night') + recreation.gov /rates (Peak Season 2026, 2027, 2028 all year: SingleCampsite 15), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/tallulah-river-campground ('The Interagency Senior/Golden Age Passports and Access Passes/Access Passports are accepted. These passes entitle the pass holder to a 50% discount on camping fees'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/tallulah-river-campground ('Tallulah River Campground is open year-round'; 'Seasons of Use Open Year-Round') + recreation.gov description ('The campground is open year-round, starting in mid-April through mid-October a camp host is available on-site'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite search (all 16 sites STANDARD NONELECTRIC, no hookup attributes) + FS page ('No gray water or black water dumping at the campground'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 45, "pull_through": true, "note": "recreation.gov sells 16 (no site 8). Permitted trailer/fifth-wheel lengths: 45 ft at sites 12-16, 40 at 7 and 17, 28-36 at 1-6, 16-20 at 9-10; site 11 is tent/vehicle only. 13 take a 23-ft rig. RV is listed only on sites 1 and 6 (30 ft). Site 1 is a pull-through, 7 parallel, the rest back-in."},
+      "source": "recreation.gov description ('The campground offers 17 campsites') + campsite search (permitted_equipment Trailer/Fifth Wheel max_length 45/45/45/45/45/40/40/36/32/30/28/28/28/20/16; RV 30 on site 6; Driveway Entry 'Pull-through' site 1), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "dump": false},
+      "source": "recreation.gov description ('The vault toilet has interior lighting') + FS page ('No gray water or black water dumping at the campground, Moccasin Creek State Campground on Hwy 197 is the nearest site'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10309319", "fcfs": "never", "max_stay_nights": 14, "note": "Reservation only, online or (877) 444-6777. 14 nights in any 30, then off the national forest for 30 days. Check-in 2 pm, check-out 12:01 pm."},
+      "source": "recreation.gov notices ('Camping is by Reservation Only. To camp on all sites, reservations need to be made before arrival'; 'Check out time is 12:01 pm and check in time starts at 2:00 pm') + facility_rules maxStay 14 'Rolling 30 Days' + FS page ('All camping at Tallulah River Campground is by Reservation Only'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Chattahoochee NF, near Clayton, on the Tallulah River; camp host mid-April to mid-October. Persimmon Road is paved, then 1 mile of FS Road 70. Roads in the campground are narrow. --Claude",
+  "summary": "FS + rec.gov confirm $15 (fees manual, checked 2027), Senior/Access 50%, open year-round (season set), no hookups, 17 sites (16 sold; 13 take 23 ft; max_rig 30->45 from permitted trailer lengths; pull_through false->true, site 1), vault toilet, no dump, reservation only, 14 in 30. Note cleaned of field facts.",
+  "flags": [
+    "WATER conflict: recreation.gov says 'The campground has many areas to collect drinking water', the FS page's generic block says 'Potable water is not available at this site'. potable_water left unset.",
+    "Pin OK (~85 m from the rec.gov site centroid 34.9277,-83.5442). 9 of 16 sites tagged 'Riverfront', consistent with stored riverfront.",
+    "The '(no big-rig/pull-through)' wording in the old note is contradicted by site 1 (pull-through); RV equipment is listed only on two sites (1, 6 at 30 ft) while trailers to 45 ft are permitted elsewhere."
+  ]
+}
