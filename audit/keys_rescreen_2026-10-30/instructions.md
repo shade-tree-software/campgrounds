@@ -68,14 +68,17 @@ applying every gate except price, and write one result file.
 - **Google reviews (AWH 2026-10-30):** give the park's Google Maps rating and review count in `google`
   ("4.6/812"). A markedly poor rating (AWH dropped a park for "very poor Google reviews") is a flag with
   what the reviews complain of; say what you would decide.
-- **Owner-lot (condo) RV resorts:** Good Sam types Key Largo Kampground, Calusa, Venture Out and Bluewater
-  Key as `CONDO_PARK`, and others may be the same. Long-stay test 5 says a park that sells lots fails, but
-  in the Keys many such resorts run a rental program that sells nights to travellers. For one of these, do
-  the full research anyway and return `"decision": "hold"` with every add field filled, plus in `flags`:
-  who sells the nights (the resort's own booking engine, or only individual owners on VRBO/Airbnb), how many
-  lots are in the nightly rental program out of the total, whether owners live there year-round, and any
-  owner-approval or application step. AWH will decide. A park whose nights are sold only by individual
-  owners, or that has no rental program, is a plain skip.
+- **Owner-lot (condo) RV resorts (AWH 2026-10-30):** "Florida Keys owner lot resorts that rent spots by the
+  night are ok if they have a normal booking site which works like a regular nightly campground and they
+  meet all other criteria (except price)." Good Sam types Key Largo Kampground, Calusa, Venture Out and
+  Bluewater Key as `CONDO_PARK`; others may be the same. For one of these, test 5's "sells lots" does not
+  fail it. It is an add when the resort (or its association / rental manager) sells nights on a normal
+  booking site that works like a regular nightly campground: pick dates, pick a site, pay, with no
+  application, owner approval or lease. Every other rule still applies, including 1 site in 10 sold
+  nightly and the minimum-stay rules. Nights sold only by individual owners (VRBO/Airbnb/by contacting the
+  owner), or only by phone/email inquiry, or no rental program at all, is a skip. Put in the note what it
+  mostly is (e.g. "Owner-lot condo resort: about 38 of its 171 lots are rented by the night."), and in
+  `flags` the rental-program lot count and who runs the booking site.
 - **Seasonal minimums are common in the Keys** (for example 3+ nights from Christmas to Easter, or a
   monthly-only winter). Apply the minimum and peak-season rules above exactly, give the dates, and flag it.
 - **Hurricane damage:** Irma (2017) and Ian (2022) closed many Keys parks for years. If a park looks closed,
@@ -91,13 +94,16 @@ applying every gate except price, and write one result file.
 - **Canals and marina channels are not the bay.** Keys parks are laced with dredged canals and boat
   basins. A site on a canal, boat basin or marina channel is not `bayfront`/`oceanfront` just because the
   channel reaches open water; say plainly in the evidence whether the sites face open bay/ocean or a
-  canal/channel, and judge a canal as the narrow water it is under the curation doc's gate (default down).
+  canal/channel, and judge a canal as the narrow water it is under the curation doc's gate (default down):
+  by the size rule a canal of roughly 30 m+ open water at the sites is `riverfront` (Lakeport 14424), a
+  narrower one `creekside`. A marina basin that opens onto the bay within a few tens of metres, with the bay
+  in view, is bay water (`bayfront`).
 - Add `"google": "<rating>/<count>"` to the result record below.
 
 ## Result file
 Write `audit/keys_rescreen_2026-10-30/results/<slug>.json`: ONE JSON object.
 ```
-{"decision": "add" | "skip" | "hold", "kind_of_no": "<short, if skip>", "why": "<one line with source + date, if skip>",
+{"decision": "add" | "skip", "kind_of_no": "<short, if skip>", "why": "<one line with source + date, if skip>",
  "name": "<published name>", "state": "XX", "location": "lat,lng", "elevation_meters": <num>,
  "ownership": "private", "website": "<operator page>\n<booking deep link>", "phone": "xxx-xxx-xxxx",
  "note": "...", "inclusion_evidence": "<one line: source + what it showed + 'price gate lifted: Florida Keys zone (AWH 2026-10-30, gateways.py)'>",
