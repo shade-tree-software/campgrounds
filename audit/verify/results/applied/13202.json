@@ -1,0 +1,49 @@
+{
+  "id": 13202,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10156125 (facility record: description, directions, notices), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/campgrounds/10156125/rates (rate table: Peak Apr 1-Oct 31 $15 standard/tent, $30 group; Non-Peak Nov 1-Mar 31 $7.50/$15, 2026-2028), read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10156125 (per-site coordinates and loops) and the RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20: per-site equipment and driveway lengths), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/availability/campground/10156125/month (Nov 2026-Apr 2027 all months bookable), read 2026-10-30",
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/alerts (no alert for Cooper Creek or FS Road 4; 'main phone line for the Blue Ridge Ranger District has been changed to 706-745-6928'), read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 7.5, "nightly_high": 15, "currency": "USD", "checked": "2026", "note": "Standard sites $15 a night in peak season (Apr 1-Oct 31), $7.50 off-peak (Nov 1-Mar 31, water shut off). Group site 24 $30 / $15. Same rates loaded through 2028."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156125/rates (PeakStandardNon-Electric 15, OffPeakStandardNon-Electric 7.5 for 2026-2028 seasons), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156125 ('The campground has no flush toilets, showers, hook-ups, or dumstations'); RIDB catalog: all 25 sites STANDARD NONELECTRIC, read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "flush_toilets": false, "showers": false, "dump": false, "potable_water": true, "note": "Drinking water April 1 through October 31 only."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156125 ('two vault toilets... no flush toilets, showers, hook-ups, or dumstations. Drinking water is provided only during peak season, which is from April 1st though October 31st'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "max_rig_ft": 99, "pull_through": true, "note": "25 sites in two loops: Cooper Creek (12-25) and Mulky (1-11). 22 take an RV: tent-only 6 and 12 are out, and site 7's driveway is 10 ft; group site 24 included. Driveways 36-99 ft; site 23 is the RV pull-through. Creek sites 15 and 16."},
+      "source": "RIDB campsite catalog for facility 10156125 (equipment lists, Driveway Length, Driveway Entry), fetched 2026-10-20; recreation.gov campsite search (site names, loops), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10156125", "note": "Mulky Loop (sites 1-11) is booked under this campground. Two vehicles per site except group site 24. No cell coverage."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156125 (notice: 'MULKY CAMPGROUND IS RESERVABLE WITH THE COOPER CREEK CAMPGOUND...UNDER MULKY LOOP. SITES 1-11', 'LIMIT OF TWO VEHICLES PER CAMPSITE'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open all year; water and full rates April-October, reduced off-peak rate November-March."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156125/rates (Peak Apr 1-Oct 31 and Non-Peak Nov 1-Mar 31 seasons) and availability calendar (Nov 2026-Feb 2027 bookable), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "summary": "Recreation.gov listing live, bookable all winter. Confirmed fees $7.50-15 (off-peak/peak, not a discount; re-sourced), electric 0 (derived -> manual) plus no water/sewer. Added vault toilets, seasonal drinking water, no showers/dump, 22 RV-usable sites (max 99 ft, 1 pull-through), recreation.gov booking, year-round season. Phone 706-745-6928 confirmed as the Blue Ridge RD's new main line. Note kept.",
+  "flags": [
+    "Two loops, one entry (not a split): Cooper Creek Loop and Mulky Loop centroids are 615 m apart (recreation.gov site coordinates), under the ~1 km split threshold, and booked as one facility; the note's 'about 700 m apart' is close.",
+    "Pin 34.76295,-84.06815 sits on the Cooper Creek Loop (42 m from its site centroid; Mulky Loop is 573 m WSW at ~34.7615,-84.0742). The combined site centroid (34.7624,-84.0706) falls between the loops, so the pin is fine as is.",
+    "Site 7 is listed for RVs but its driveway is 10 ft - not counted."
+  ]
+}

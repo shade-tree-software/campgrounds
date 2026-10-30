@@ -1,0 +1,64 @@
+{
+  "id": 4550,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10056267 (description, fee description, notices, facility_rules) and /rates, read 2026-10-30",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10056267 (14 sites: permitted equipment, driveway entry, proximity to water), read 2026-10-30",
+    "https://www.recreation.gov/api/camps/availability/campground/10056267/month (2026-09 through 2027-06), read 2026-10-30",
+    "Esri World Imagery around 33.7270,-82.2995, read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 10,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "recreation.gov's rate table charges $10 a night (PeakPrimitive, every season 2020-2028); the same listing's fee description says 'Camping fees at $14 per night'."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10056267/rates (Peak Season 2026, 2027, 2028: PeakPrimitive 10) + facility_use_fee_description ('Camping fees at $14 per night. Fees must be paid when reserving a site'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false},
+      "source": "recreation.gov campsite search (all 14 sites STANDARD NONELECTRIC, no hookup attributes) + description ('There is a hand pump for non-potable water'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 14,
+        "pull_through": true,
+        "note": "Two loops: A (sites 1-10) and B (11-14), gravel driveways; sites 1, 4 and 6 pull-through, 10 parallel. recreation.gov lists only 'Pop up' as permitted equipment on every site, with no length. One wheeled unit per site. Six more hike/bike/ride/boat-in sites lie out on the peninsula (not part of this campground's booking)."
+      },
+      "source": "recreation.gov campsite search (loops A/B, Driveway Entry Pull-through on 1/4/6, Parallel on 10, Driveway Surface Gravel, permitted_equipment 'Pop up' max_length 0 on all 14) + notices ('Maximum occupancy per campsite is ONE (1) wheeled unit') + overview ('six hike/bike/ride/boat in camping/picnic sites'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "A hand pump for non-potable water. Pack in/pack out: no dumpsters."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10056267 ('two loops of campsites, each with a vaulted pit toilet. There is a hand pump for non-potable water.', 'Pack In/Pack Out. Dumpsters are not provided.'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/10056267",
+        "window_opens_days": 240,
+        "max_stay_nights": 14,
+        "note": "Fees are paid when reserving online or at 877-444-6777; 'DO NOT CALL the campground' to make or cancel. 14 nights in a rolling 30. Check-in 3 pm, check-out 2 pm. Unstaffed. The 2026-27 calendar shows 20 October-31 December 'Not Reservable', January-February 'Closed' and sites bookable from 1 March 2027."
+      },
+      "source": "recreation.gov notices ('Reservations can be made up to 240 days in advance of desired date', 'Check-In is at 3:00 PM & Check Out is at 2:00 PM'), facility_rules (maxStay 14, 'Rolling 30 Days'), Contact Info ('This location is unstaffed'), availability calendar 2026-10 to 2027-03, read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USACE J. Strom Thurmond (Clarks Hill) Lake, Savannah District, at the entrance to the Bussey Point wilderness recreation area, a 2,545-acre peninsula with a boat ramp, natural beaches and a 12.5-mile horse trail; serves riders and mountain bikers but is a general campground. The last 0.5 mi is dirt road past the end of the pavement. Heavily wooded pine and hardwood. --Claude",
+  "summary": "rec.gov: confirmed $10 (2026-2028 rate table; the fee text says $14), 14 non-electric sites in two loops with pull-throughs, vault toilets, reservable 240 days out, 14-night max. Changed potable_water true -> false (hand pump is 'non-potable'). Note cleaned ($6 was wrong; field facts dropped). rec.gov states no season and no site lengths.",
+  "flags": [
+    "FIT QUESTION: recreation.gov's catalog lists only 'Pop up' (no length) as permitted equipment on all 14 sites - no site lists RV, motorhome or trailer. The inclusion evidence ('sites large enough for horse trailers with some pull-throughs') rests on the old note; rec.gov gives no driveway lengths. Not horse-only: the overview welcomes hikers, bikers and riders.",
+    "Fee conflict on recreation.gov itself: rate table $10/night (2026-2028), fee description '$14 per night'. Stored $10 kept; the old note's $6 was wrong.",
+    "Missing phone: rec.gov gives no facility phone; it says 'This location is unstaffed. To speak with our main office for general information, please call: (800) 533-3478' (Thurmond Lake office).",
+    "Waterfront re-audit lead: recreation.gov tags all 14 sites 'Proximity to Water: Lakefront'; stored 'not waterfront'.",
+    "Pin lead: stored 33.72879,-82.29937 is on the wooded access road; imagery shows gravel campsite pads in clearings near the cove about 350 m south (~33.7256,-82.2996) - rec.gov gives no site coordinates, so this is unconfirmed.",
+    "Season: stored closes 10-03 (derived) left; the calendar shows Jan-Feb 'Closed', 20 Oct-Dec 'Not Reservable' and bookable from 1 March, but no statement of when the campground is open."
+  ]
+}
