@@ -1,0 +1,57 @@
+{
+  "id": 4567,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/low-gap-campground",
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/alerts/campground-updates-low-gap-now-open-and-water-system-changes-upper",
+    "https://www.recreation.gov/api/camps/campgrounds/10309348",
+    "https://www.recreation.gov/api/camps/campgrounds/10309348/rates",
+    "https://www.recreation.gov/api/camps/campgrounds/10309348/campsites",
+    "Google Maps 'Low Gap Campground 190 Low Gap Rd Helen GA', read in a browser 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 12, "nightly_high": 12, "currency": "USD", "checked": "2026"},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/low-gap-campground ('Camping: $12 per site per night') + https://www.recreation.gov/api/camps/campgrounds/10309348/rates (2026 and 2027 Peak Season PeakSingleCampsite $12), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/low-gap-campground ('The Interagency Senior and Access Passes and the Golden Age and Access Passports are accepted. These passes entitle the pass holder to a 50% discount on camping fees'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-15", "closes": "12-15"},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/low-gap-campground ('Seasons of Use 03/15 - 12/15'; 'closes during the winter season and, during normal operations, reopens mid-March'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "max_stay_nights": 14, "note": "Reservation only - no first-come sites. Check-in from 2 pm, check-out 12:01 pm."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/low-gap-campground ('Camping is by Reservation Only. There is no First Come/First Service'; 'The maximum stay is 14 days') + https://www.recreation.gov/api/camps/campgrounds/10309348 ('There are no First Come, First Serve sites'; 'Check out time is 12:01 pm and check in time starts at 2:00 pm'; rule maxConsecutiveStay 14), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10309348/campsites (all 13 sites STANDARD NONELECTRIC) + FS page ('Potable water is not available at this site'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/low-gap-campground ('Vault Toilet (1)'; 'drinking water is no longer available at Low Gap Campground. Visitors planning to camp at Low Gap should plan to bring their own drinking water') + rec.gov notice ('Drinking water will not be available at this campground. The well systems that previously served this campground is being decommissioned'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 26, "note": "Recreation.gov lists no site for an RV/motorhome: equipment is tents, pickup campers, camper vans and trailers, with trailers to 24 ft at sites 2, 3, 4 and 8 and 26 ft at site 5 (14-21 ft elsewhere; 11 and 12 tent/vehicle only). The Forest Service says 'Due to narrow, curving, and steep roads to and from this area, the recommended size of a RV is 28 ft.'"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10309348/campsites (per-site permitted_equipment) + FS page ('This 13-site developed campground'; 'the recommended size of a RV is 28 ft'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Chattahoochee NF (Chattooga River RD) on Low Gap Creek (stocked with trout April-July), in the Chattahoochee WMA below the Mark Trail Wilderness, 4.4 mi up Chattahoochee River Rd (FS 44) from Helen. The road is narrow, curving and steep. The vault toilet is across the bridge at the back of the campground. Generators up to 4 hours a day, 6 am-10 pm. --Claude",
+  "summary": "FS page + rec.gov: confirmed $12, reservation-only on rec.gov, 13 nonelectric sites, vault toilet, senior/access 50%; added season 03-15 to 12-15, 14-night max, check-in times, max_rig_ft 26 (trailer; FS recommends RVs <= 28 ft), potable_water false (well decommissioned 2026; reopened after restroom replacement). Stored dump true is not mentioned by either page (left). Note: dropped the wrong 'seasonal hand-pump well' and '~mid-Mar-Sep' and the field repeats. Pin matches Google's and the FS address (190 Low Gap Rd).",
+  "flags": [
+    "Fit question (equipment): recreation.gov permits no RV/motorhome type at any of the 13 sites - only tents, pickup campers, camper vans and trailers (trailers 24 ft at sites 2, 3, 4, 8; 26 ft at site 5). EKKO books as a motorhome. The Forest Service page itself recommends RVs up to 28 ft, so the agency allows RVs; the catalog just lacks the type.",
+    "Missing phone: Chattooga River Ranger District 706-754-6221 (FS page; rec.gov facility phone 706-754-6221; Google Maps the same).",
+    "Waterfront re-audit lead (upward): rec.gov: 'Named for Low Gap Creek that flows through the campground'; stored 'not waterfront' was a default-down on illegible imagery. The catalog has no per-site coordinates.",
+    "rec.gov's facility coordinates (34.927176, -83.543205) are ~28 km off, near Lakemont - the stored pin (Google's point at 190 Low Gap Rd) is the one to keep."
+  ]
+}
