@@ -1,0 +1,51 @@
+{
+  "id": 739,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.register.forsythco.com/forsythcounty/discover/facility/bd419aea-3bdc-4175-bcff-428e46673d40",
+    "https://www.register.forsythco.com/forsythcounty/reservation/campgrounds/bd419aea-3bdc-4175-bcff-428e46673d40 (public site list with rates; the engine's facility/venue data read through the page's own GraphQL responses)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "30-amp RV sites $28 a night, 50-amp RV sites $30. Up to 8 people and 3 vehicles per site. America the Beautiful Senior/Access pass holders 50% off. Cancellations 2+ days out refund 90%."},
+      "source": "Forsyth County reservation page ('Sawnee - Site #6 ... $28.00 / night', 'Sawnee - ADA Site #28 ... $30.00 / night'; rates 'Sawnee RV 30 Amp Site Rate' 2800 cents, 'Baldridge RV 50 Amp Site Rate' 3000 cents; facility settings refunds percent 0.9 windowDays 2), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "Forsyth County reservation engine booking option 'I have an America The Beautiful Pass (discount 50% off)' ('applies to the Annual Senior Pass, Lifetime Senior Pass, Access Pass, and Golden Access Pass'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/bd419aea-3bdc-4175-bcff-428e46673d40 ('Water and electric hookups (30 and 50 amp)'); engine: 9 bookable 'RV 50 Amp' sites (19, 21, 22, 28, 31-34, 36), 30 'RV 30 Amp' sites, read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 39, "max_rig_ft": 45, "pull_through": true, "note": "39 bookable RV sites (30 at 30 A, 9 at 50 A) plus 3 host sites, tent-only and electric tent sites. Posted max RV lengths: 31 sites take 30-45 ft; sites 1, 2, 4, 10, 11, 12 (20 ft) and 3, 5 (15 ft) are too short for a 23-ft rig. Pull-throughs include 19, 21, 22, 28, 52, 55."},
+      "source": "Forsyth County reservation engine venue list (names 'Site #N (max RV length X')', amenities 'Back-in'/'Pull-thru', '20/30 amp'/'20/30/50 amp'; host sites 'DO NOT RESERVE'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/bd419aea-3bdc-4175-bcff-428e46673d40 ('Bathhouses with hot showers', 'Dump station'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-05", "closes": "10-17"},
+      "source": "Forsyth County reservation engine: every site's schedule carries 'Closed for the season' 2026-10-19 to 2027-03-04 and 2027-10-18 to 2028-03-02; facility page 'Sawnee Campground will close for the 2026 season October 19', read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.register.forsythco.com/forsythcounty/reservation/campgrounds/bd419aea-3bdc-4175-bcff-428e46673d40", "fcfs": "never", "window_opens_days": 380, "max_stay_nights": 14, "reserve_until": {"relative_to": "arrival", "offset_hours": -24}, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 2, "applies": "holiday"}], "note": "Forsyth County Parks & Recreation's own engine (free account needed to check out). Reservations required, at least one day ahead; up to 380 days out; 14 nights max. Office/check-in hours 2-7 pm daily in season."},
+      "source": "https://www.register.forsythco.com/forsythcounty/discover/facility/bd419aea-3bdc-4175-bcff-428e46673d40 ('reservations are required to camp. Reservations must be made at least one day in advance', '2-night minimum is required for weekends and holidays', hours 'Everyday from 2PM - 7PM') + engine settings (maxDaysInAdvance 380, minDaysInAdvance 1; booking info 'max_booking_time 14 DAY'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "summary": "Forsyth County's engine is public: 39 bookable RV sites, 30 A $28 / 50 A $30 (2026), lengths per site (31 take 23 ft+, max 45), pull-throughs, showers, dump, reservations-only one day ahead up to 380 days, 14-night max, 2-night weekend/holiday minimum, ATB 50%. Season 2027 Mar 5 - Oct 17 (closed for 2026 since Oct 19). Pin ~125 m from the site centroid (fine). AWH note unchanged.",
+  "flags": [
+    "PHONE: the county's facility page gives 678-455-9930; the stored field holds two other numbers (770-781-2215,770-887-0592). Replace with 678-455-9930.",
+    "SEASON wording: the engine's facility hours still say 'From March 21st to October 31st', but every site's calendar is closed 2026-10-19 to 2027-03-04 and from 2027-10-18 - the per-site calendar was used.",
+    "DISCOUNT: no 10% senior/veteran discount appears in this engine for Sawnee (the only booking option is the America the Beautiful 50%)."
+  ]
+}

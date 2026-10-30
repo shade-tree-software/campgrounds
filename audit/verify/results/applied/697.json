@@ -1,0 +1,54 @@
+{
+  "id": 697,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234590 (overview, notices, rules) and /rates",
+    "https://www.recreation.gov/api/camps/campsites/<id> for every non-host site (fee template, coordinates)",
+    "recreation.gov campsite catalog for 234590 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "recreation.gov availability, campground 234590, Nov 2026 - May 2027",
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/morganton-point-recreation-area"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 50, "currency": "USD", "checked": "2026", "note": "Every RV site is a 'Standard Electric' (50-amp + water) site at $45 a night; the two pull-through double sites (9, 13; four vehicles allowed) are $50. The $30 rate is for the tent-only walk-in sites, which no RV can use. Visitors' vehicles park in the day-use lot and pay the day-use fee ($5 per person 16+)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234590/rates (Peak Season 2026-01-01 to 2026-12-31 and 2027: 'PeakSTANDARD ELECTRIC' 45, 'PeakSTANDARD ELECTRICu36...' 50, 'PeakTENT ONLY NONELECTRIC' 30) + per-site fee templates (sites 01-08, 10, 12, 15, 17-30 'PeakSTANDARD ELECTRIC'; 09 and 13 the $50 template) + https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/morganton-point-recreation-area ('Single sites with electric and water: $45/site/night', 'Double sites: $50', 'group sites (#9, #13) four vehicles', 'All guest or visitors must park in day use area and pay parking fee', '$5.00/per person/day for 16+'), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "Senior/Access pass: 50% off single-family campsites, excluding hook-ups (FS page)."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/morganton-point-recreation-area ('These passes entitle the pass holder to a 50% discount for single family campsites (excluding hook-ups)'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov catalog for 234590 (RV sites: 'Electricity Hookup' 50 or 30/50, 'Water Hookup' Yes on all 32 RV-equipment sites; sewer only at the two host sites and non-reservable site 17) + FS page ('Single sites with electric and water'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 26, "max_rig_ft": 30, "pull_through": true, "note": "26 RV sites (25 reservable, site 17 not reservable) besides two host sites; 24 take 30 ft, site 22 takes 22 ft. Upper-loop sites 31-37 and the group sites take tents, pop-ups or 20-ft trailers only; walk-in sites A-F, 11 and 14 are tent-only."},
+      "source": "recreation.gov catalog for 234590 (Max Vehicle Length 30 on 24 RV sites, 22 on site 22; 'Driveway Entry' Pull-Through at 09 and 13; site 17 reservable false; '16 - H', '23 - H' MANAGEMENT), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/morganton-point-recreation-area ('Accessible showers and drinking water are also provided', 'Potable water is available at this site'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "recreation.gov availability for 234590 read 2026-10-30: sites Available/Reserved on every night sampled Nov 2026 through Apr 2027 (none closed); recreation.gov overview ('year-round recreation opportunities including camping')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "window_opens_days": 180, "max_stay_nights": 14, "note": "Book on recreation.gov up to six months ahead and same day; not on site. Some sites are first-come (FCFS campers park in the lot beside those sites). 14 nights a month. Two vehicles per site (four at doubles 9 and 13)."},
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/morganton-point-recreation-area ('You may reserve camp sites the same day as you arrive and as far as six (6) months in advance. However, reservations cannot be made on-site', 'First-come first-serve campers should park in the lot adjacent to those sites') + recreation.gov 234590 ('Some sites are available on a first-come, first-served basis'; rule maxStay 14 nights 'Each Month'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "summary": "recreation.gov + the FS page: all RV sites are Standard Electric (50 A + water) at $45, pull-through doubles 9/13 at $50 (2026 and 2027) -> fees 30-45 changed to 45-50 (the $30 was the tent-only walk-ins). 26 RV sites, 24 at 30 ft, 2 pull-throughs; showers, drinking water; some FCFS; 14 nights/month; bookable all winter (year-round kept). FS page 'Site Open'. Pin 120 m from the RV sites' centre (fine). Phone was missing. AWH note kept unchanged.",
+  "flags": [
+    "PHONE missing: 706-374-1645 (recreation.gov facility phone, and the FS page: 'Contact the campground at 706-374-1645').",
+    "WEBSITE: add the Forest Service page https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/morganton-point-recreation-area beside the recreation.gov link.",
+    "FS page wording conflicts with itself: 'Reservations are required to camp in this campground' and 'Some sites are available on a first-come, first-served basis' / 'First-come first-serve campers should park in the lot adjacent to those sites'. Recorded fcfs some_sites from the latter."
+  ]
+}

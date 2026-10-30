@@ -1,0 +1,87 @@
+{
+  "id": 4570,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/10296890 (+ /rates)",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 26 sites (permitted_equipment Trailer max_length)",
+    "https://www.recreation.gov/api/camps/availability/campground/10296890/month for 2026-09 .. 2027-04",
+    "Esri World Imagery at the pin"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 15,
+        "nightly_high": 15,
+        "currency": "USD",
+        "checked": "2026"
+      },
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area ('$15/site/night') + recreation.gov rates (PeakPocketCampground 15, Peak Season 2026-04-01..2026-10-31 and 2027), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true
+      },
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area ('The Interagency Senior and Access Passes ... entitle the holder to a 50% discount on camping fees'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "recreation.gov 10296890 ('There is no electricity at this campground'; all 26 sites STANDARD NONELECTRIC, no water/sewer hookup attributes; water from hydrants), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 26,
+        "max_rig_ft": 28,
+        "note": "One loop of back-in sites with paved spurs. Trailer limits per site: 16 sites take 28 ft and site 1 takes 25 ft; sites 9 (18), 11, 20, 22 (20), 10, 12, 13 (15) and 15 (13) are too short for a 23-ft rig; site 18 lists none."
+      },
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area ('RV maximum length 28 feet') + recreation.gov campsites API permitted_equipment Trailer max_length for each of the 26 sites, read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "potable_water": true,
+        "showers": false,
+        "dump": false
+      },
+      "source": "recreation.gov 10296890 ('a restroom with flush toilets centrally located (no showers). Water hydrants are located throughout', 'There is no dump station') + FS page ('Potable water is available at this site'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "10-31"
+      },
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area ('Seasons of Use: April - October 31') + recreation.gov rate season 2026-04-01..2026-11-01 and the availability calendar (bookable nights end 2026-10-31), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/10296890",
+        "fcfs": "never",
+        "max_stay_nights": 14,
+        "note": "Reservations only (the Forest Service ended walk-up). Recreation.gov or 877-444-6777. Check-in 3 pm, check-out 2 pm; arrive by noon the day after the first reserved night or the reservation may be cancelled. 14 days in any 30 on the forest. The next season goes on sale as a block, not on a rolling 6-month window."
+      },
+      "source": "https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area ('The Pocket campground has transitioned to reservations only', '14-day limit') + recreation.gov notices ('Check-Out time: 2:00 pm Check-In time: 3:00 pm', '14-Day Forest Stay Limit') and overrideSlidingWindow rule, read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Chattahoochee NF, in a limestone valley between Horn and Mill mountains in NW Georgia; Spring Branch creek runs through the adjacent picnic area. Paved access road. Cell service very limited; nearest store and gas 8 miles away in Villanow. Alcohol prohibited in the whole recreation area. --Claude",
+  "summary": "Confirmed $15, 26 non-electric back-in sites, flush toilets, hydrant water, no showers/dump, RV max 28 ft. Added: season Apr 1 - Oct 31 (FS page + rec.gov calendar), reservations-only (fcfs none), 14-night limit, check-in/out, Senior/Access 50%. Per-site lengths: 17 of 26 sites take a 23-ft rig. Old fs.usda.gov/recarea link replaced with the r08 page. Note trimmed of field facts.",
+  "flags": [
+    "WEBSITE: replace the second website line (old https://www.fs.usda.gov/recarea/conf/recreation/camping-cabins/recarea?actid=50&recid=10460) with https://www.fs.usda.gov/r08/chattahoochee-oconee/recreation/pocket-recreation-area.",
+    "PHONE missing: recreation.gov lists 706-695-6736 for the facility (Conasauga Ranger District). The FS page footer shows only the forest supervisor's 770-297-3000.",
+    "BOOKING WINDOW: the inherited federal 180-day rolling window does not hold here - rec.gov has overrideSlidingWindow set and April 2027 is still 'Not Yet Released' on 2026-10-30, so the season goes on sale as a block. No release date is stated.",
+    "PIN unverifiable: the stored pin 34.58570,-85.08340 sits ~100 m north of the valley road under full canopy; rec.gov's facility point is 34.583573,-85.08544 (~290 m SW, also in forest by the entrance road); no site has coordinates in rec.gov, and Overpass was unreachable. The loop can't be seen through the canopy, so I'm not proposing a move."
+  ]
+}
