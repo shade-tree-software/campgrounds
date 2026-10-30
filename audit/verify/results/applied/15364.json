@@ -1,0 +1,77 @@
+{
+  "id": 15364,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.leafyoaks.com/ (and /accommodations, /transient-spots, /amenities, /rates-policies; rendered in a browser, read 2026-10-30)",
+    "https://www.camplife.com/808/reservation/step1 (CampLife API in the browser: park record, booking session with 74 online sites, availability for 10 dates April-September 2027 all refused 'The park is not open for these dates. Please choose dates between April & October.', read 2026-10-30)",
+    "audit/goodsam_skips_2026-10-15/leafyoaks.jsonl (CampLife one-night quotes for Sat 2026-10-17 and per-site records, read 2026-10-15)",
+    "Google Maps listing 'Leafy Oaks Campground Inc' (4.3 stars, 242 reviews, (567) 230-6499, leafyoaks.com), read 2026-10-30"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 44,
+        "nightly_high": 62,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Operator's rate table (rates include 2 adults and up to 3 children): back-in sites under 36 ft $44/$49 Sunday-Thursday and $47/$52 Friday-Saturday (the pair is 30-amp water/electric vs 30/50-amp), waterfront back-ins under 34 ft $49/$54 and $52/$57, pull-throughs under 42 ft $54/$59 and $57/$62; holidays $59-69 with a 3-night minimum. CampLife quoted more than the table for Saturday 2026-10-17: 30-amp back-in $51.50, 30/50-amp back-in and waterfront full-hookup back-in $57.50, full-hookup pull-through $62.50 (no fees itemised). CampLife's park description says 'Back In Sites <34' - $46-$61'. 2027 dates are not loaded yet and the engine warns next-year reservations are 'subject to a rate increase'."
+      },
+      "source": "https://www.leafyoaks.com/transient-spots ('Back In sites <36'' Standard (Sun-Thurs) $44/$49 Weekdays, Weekend (Fri-Sat) $47/$52 Weekends, Holiday Rates $59/3 night min.'; 'Pull Thru sites <42'' ... $54/$59 ... $57/$62 ... $69/3 night min.'; 'Back In Waterfront <34'' ... $49/$54 ... $52/$57 ... $64') + https://www.leafyoaks.com/accommodations ('All rates include 2 adults & up to 3 children', Transient Spots 'As low as $44.00 per night'), read 2026-10-30; CampLife quotes for 2026-10-17 from audit/goodsam_skips_2026-10-15/leafyoaks.jsonl (read 2026-10-15)",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 50,
+        "max_rig_ft": 42,
+        "pull_through": true,
+        "note": "50 RV sites sold online on CampLife: 33 back-in water/electric (rated 26-32 ft on sampled sites), 9 full-hookup pull-throughs (42 ft), 6 waterfront full-hookup back-ins (29-34 ft) and 2 buddy sites; plus 19 tent sites, 3 rental campers and 2 cabins. Seasonal sites are by phone. The operator's table gives back-ins under 36 ft, waterfront back-ins under 34 ft and pull-throughs under 42 ft. Motorhomes are a listed equipment type on every RV site type."
+      },
+      "source": "CampLife booking session for park 808 (siteMap: 74 online sites by type; site types' equipment lists include MOTORHOME) and per-site records (maxLength 26-42) + https://www.leafyoaks.com/transient-spots (site lengths) + https://www.leafyoaks.com/accommodations ('Seasonal Spots ... Call to inquire'), read 2026-10-15 and 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "laundry": true,
+        "camp_store": true,
+        "note": "Two shower houses (near Loops A and C); laundromat in the large shower house, open 24 hours. Licensed camp store (beer and wine). Swimming pond with sand beach, catch-and-release fishing pond, fenced dog park."
+      },
+      "source": "https://www.leafyoaks.com/amenities ('private hot showers, flush toilets', 'full on-site laundromat', 'fully stocked camp store', 'Swimming Pond', 'Dog Park') + CampLife park description ('Licensed Camp Store', 'Wine & Beer Sales'), read 2026-10-30",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-01",
+        "closes": "10-18",
+        "note": "CampLife's park description: 'Open May 1st - October 18th'; its availability message says 'Please choose dates between April & October.' Swimming pond open Memorial Day to Labor Day."
+      },
+      "source": "CampLife park record for 808 (description 'Open May 1st - October 18th') and availability errors, read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.camplife.com/808/reservation/step1",
+        "min_stay": [
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "note": "Booked online on CampLife ('Book Your Spot Now!'); one-night Saturday stays sold (October 2026). Holiday weekends need 3 nights and payment in full; the 2-night weekend minimum is for cabins. A one-night deposit for campsites; cancellation 2+ weeks out refunded less $10, within 14 days forfeited. Check-in 2 pm, check-out 1 pm. Renters must be 21+."
+      },
+      "source": "https://www.leafyoaks.com/rates-policies ('Our cabin requires payment in full to reserve, weekends are a 2 night minimum. All holiday weekends are a 3 night minimum and require payment in full', 'Campsite Check In 2pm/ Check Out is 1pm', 'Minimum 21 years of age to rent a cabin or campsite') + https://www.leafyoaks.com/accommodations ('* Holidays 3 night minimum *') + CampLife 2026-10-17 one-night quotes, read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "Family campground at 6955 OH-101 near Clyde, in Seneca County, on 80 acres: back-in water/electric sites, full-hookup pull-throughs and waterfront back-ins, buddy sites, tent sites, cabins and rental campers, plus seasonal sites. Swimming pond with a sand beach, fishing pond, creek and wooded trails, live music on summer weekends. --Claude",
+  "summary": "Fees changed 51.50-62.50 -> 44-62 from the operator's posted table (weekday 30-amp back-in $44; engine's Oct 2026 Saturday quote $51.50 kept in the fee note). Added 50 online RV sites to 42 ft, showers/flush/laundry (camp store confirmed), season May 1-Oct 18, CampLife URL and the 3-night holiday minimum. Hookups (manual) and Good Sam/military (directory) left as they are. Note: dropped 'Open April to October' (season field; the park says May 1) and 'camp store' (facilities).",
+  "flags": [
+    "Private gate facts (borderline on price): the operator's own rate table posts $44 Sunday-Thursday / $47 Friday-Saturday for a 30-amp back-in under 36 ft (a 23-ft motorhome fits; MOTORHOME is an allowed type), rates including 2 adults and 3 children, no per-night fees named. But CampLife's live quote for Saturday 2026-10-17 was $51.50 for that site type ($4.50 above the table's $47), and CampLife's description says back-ins from $46. So a weekday night is $44-48.50 and a Saturday $47-51.50 depending on which the park charges; 2027 isn't loaded ('subject to a rate increase'). Good Sam Park (stored good_sam true, directory): 10% off brings even $51.50 to $46.35. No gateway within 40 km (nearest Point Pelee NP 92 km). Family has not stayed. Presence passes: working website + phone (567) 230-6499 and CampLife online booking. Google Maps 4.3 stars from 242 reviews.",
+    "Long-stay tests: seasonal sites exist ('Seasonal Spots ... Call to inquire'; 'Daily/Monthly Rates' on CampLife), but 50 RV sites plus 19 tent sites are sold nightly online, so tests 2 and 4 pass.",
+    "Waterfront (stored not waterfront, audited 2026-10-15 on satellite: pond rim is swim beach, engine's waterfront type not confirmed at the pads): the operator's own rate table now also sells 'Back In Waterfront <34'' sites ($49-57), and CampLife lists 'Waterview Sites' and 'Creek Access & View' on some back-ins - an operator water claim contrary to ours, so a re-audit lead only."
+  ]
+}
