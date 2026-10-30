@@ -1,0 +1,67 @@
+{
+  "id": 13372,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://stonemountainpark.com/campground/",
+    "https://www.campspot.com/book/stone-mountain-campground-stone-mountain-ga",
+    "https://www.campspot.com/api/gator-core/v2/parks/slug/stone-mountain-campground-stone-mountain-ga (park 3801: features, terms)",
+    "https://www.campspot.com/api/gator-core/v2/availability/parks/3801 (1 night from Tue 2026-11-17, 2027-01-12, 2027-04-20, 2027-06-15; 2 nights from Tue 2026-11-17, Tue 2027-06-15, Fri 2027-06-18)",
+    "https://www.campspot.com/api/gator-core/v2/3801/campsite-types/availability/{35513,35515,35519}/ (pricing breakdowns)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 51.7,
+        "nightly_high": 87.89,
+        "currency": "USD",
+        "checked": "2026",
+        "entrance": {"resident": 25, "nonresident": 25, "per": "vehicle_stay", "name": "Stone Mountain Park parking fee"},
+        "note": "Site charge plus the park's 3.4% processing fee: $51.70 a weeknight for the cheapest RV sites (water and electric, unrenovated loop that needs levelling), $56.87 Friday-Saturday; $56.87/$62.04 for the cheapest full hookups; renovated premium full-hookup loops $82.72/$87.89; lakeside $62.04-74.45; super sites $134.42. Same in November 2026 and June 2027. Each online booking adds a $7 fee and Campspot's own booking fee. Every vehicle pays the park's $25 parking fee once per stay."
+      },
+      "source": "Campspot API park 3801, pricing for type 35513 'PHU RV Site' (2 nights from Tue 2026-11-17 and Tue 2027-06-15: tripTotalBeforeTaxesFeesAndDiscounts 100.0, 'Processing Fee' 3.40, 'Online Booking Fee' 7.00, externalFees CAMPSPOT_BOOKING_FEE 3.31) and 35519 'Premium FHU RV Site' (2 nights Tue 2027-06-15: 160.0 + 5.44 + 7.00; Fri 2027-06-18: 170.0), list averages for every RV type on those dates; https://stonemountainpark.com/campground/ ('A one-time $25 parking fee is required') + Campspot terms ('Parking Fee A $25 ... non-refundable parking fee is required for all vehicles entering Stone Mountain Park. Campground guests will receive a car pass for re-entry'), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "Campspot site-type descriptions park 3801 ('LS PHU RV Site ... 20/30/50 amp electrical services and water hook up'; 'FHU with Cable RV Site ... 20/30/50 amp electrical service is provided. Sewer, water and cable hook ups'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "max_rig_ft": 90,
+        "note": "232 RV sites listed on Campspot for June 2027 in seven types, every type listing Motorhome Class C on most or all of its sites (the cheapest 'PHU RV' type: 26 of 31). Tent/Pop-Up types (53 + 20 sites) list only pop-up, van, truck camper and tent. Site lengths 20-90 ft."
+      },
+      "source": "Campspot availability API park 3801 (per-site rvInfo rvTypes and rvLengthMax, 2026-11-17 and 2027-06-15), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "laundry": true, "flush_toilets": true},
+      "source": "Campspot park 3801 parkFeatures ('Bathrooms', 'Dump Station', 'Laundry' (additional cost), 'Pool', 'Showers', 'Waterfront'), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "campspot",
+        "url": "https://www.campspot.com/book/stone-mountain-campground-stone-mountain-ga",
+        "min_stay": [{"nights": 2, "applies": "always"}],
+        "max_stay_nights": 7,
+        "note": "Two-night minimum on every date read (Tuesdays in November 2026 and January, April and June 2027). After a 7-night stay, 7 nights must pass before rebooking. Check-in 2-10 pm, check-out noon."
+      },
+      "source": "Campspot API park 3801 (every type on 1-night searches 2026-11-17, 2027-01-12, 2027-04-20, 2027-06-15: RESERVATION_MIN_RULE 'There is a 2 night minimum over the requested period of time'; 2-night searches priced) + terms ('After completing a 7-night stay, guests must wait a minimum of 7 nights before rebooking'; 'Check-In Time: 2:00 PM to 10:00 PM'; 'Check-Out Time: 12:00 PM for RV, Pop-Up, and Tent Sites'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "Inside Stone Mountain Park east of Atlanta, on a peninsula in Stone Mountain Lake; the park belongs to a state authority (Stone Mountain Memorial Association) and Aramark runs the campground. Enter by the East Gate (US-78 exit 8): GPS may route through the West Gate's 12-ft underpass. --Claude",
+  "summary": "Campspot (park's own engine, outside the GA state parks system; policy_ref none stays). Cheapest RV night $51.70 (water/electric, $50 + 3.4% processing fee) on a weeknight, Nov 2026 and June 2027 alike; stored $61.70 had the $7 per-booking fee and Campspot's booking fee folded into a one-night average. Added the $25 per-vehicle parking fee as entrance, a standing 2-night minimum, 7-night max, max 90 ft, showers/flush toilets, booking deep link. Atlanta gateway anyway. Note cleaned of field facts.",
+  "flags": [
+    "STANDING 2-NIGHT MINIMUM on every date read (Tue 2026-11-17; Tue 2027-01-12, 2027-04-20, 2027-06-15): Campspot 'There is a 2 night minimum over the requested period of time' on every site type. A 2-night standing minimum stays if marked; recorded in booking.min_stay (applies always).",
+    "Price for the record (state-owned, so the private gate does not apply; Atlanta is a gateway anyway): cheapest RV night $50.00 site charge + $1.70 processing fee = $51.70 weeknight, $56.87 Fri-Sat; plus the mandatory $25 parking fee once per vehicle per stay ($12.50 a night over the 2-night minimum). The cheapest type is described 'the cheapest RV sites due to road conditions and site conditions. This area has not been renovated yet. It will require leveling.'",
+    "Parking fee changed: stored note said a one-time $20; the campground page and Campspot terms now say $25 per vehicle, cards only, with a car pass for re-entry.",
+    "Waterfront lead (upward): two RV types are named Lakeside - 'LS PHU RV Site (Trail O & P)' (13 sites, 'a great view of the lake and the mountain') and 'LS FHU with Cable RV Site (M)' (14 sites) - and Campspot lists the park feature 'Waterfront'. Stored lakeview matches the description's 'view'; per-site positions of Trails O, P and M against the shore were not measured.",
+    "Good Sam directory lists 'Stone Mountain Park Campground' as a Good Sam Park (isGsPark true, phone 7704985710). Neither the campground page nor Campspot mentions a Good Sam discount; discounts left unset.",
+    "Pin 33.80350,-84.12800 sits among the campground loops on the peninsula (Esri imagery); Campspot's park point 33.802514,-84.123675 is the office/entrance by the road, 414 m ESE. Pin kept.",
+    "Clearance: Campspot terms 'GPS may direct you to enter via the Park's West Gate, which includes a 12' underpass ... enter through Stone Mountain Park's East Gate via Exit 8 on US-78'. EKKO is under 10.5 ft, so not a fit problem; the routing advice is kept in the note.",
+    "Phone 770-498-5710 confirmed (Campspot park record). Campspot rating 4.4 from 199."
+  ]
+}

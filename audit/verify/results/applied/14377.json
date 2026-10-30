@@ -1,0 +1,53 @@
+{
+  "id": 14377,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.tedandtracysrvcampground.com/rates/",
+    "https://www.roverpass.com/c/ted-tracy-s-rv-campground-washington-ga/booking/ (RoverPass booking API: park record, rates for one night from 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, open sites per rate, 1- and 2-night carts)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 55,
+        "nightly_high": 69,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$55 a night for the regular full-hookup sites near the entrance (45-60 ft), $67 mid-park, $69 creekside; the $50 'Camper Van/Small Camper Site' takes rigs only to 20 ft. Same on weekdays and Saturdays in January and June 2027. RoverPass adds its platform and processing fees at checkout."
+      },
+      "source": "https://www.tedandtracysrvcampground.com/rates/ (Camper Van/Small Camper Site Daily $50, Regular Sites (Closer to the Entrance/Road) $55, Mid-Park Sites $67, Creekside Sites $69) + RoverPass API rates and open sites (31048 Camper Van/Small Camper Site $50.00, maxLength 20, site 16 '20'; 30990 Regular $55.00, sites 1, 2, 3, 6, 15 at 45-55 ft, maxLength 55-60; cart for 30990 one night 2027-01-26: 'Full Hook Up - Back In' $55.00, no park fee items, platform fee $3.50, processing fee $1.90), read 2026-10-30",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "RoverPass API rate and site amenities ('amps_50', 'water_hookups', 'sewer_hookups' on every RV rate and site; cart item 'Full Hook Up'), read 2026-10-30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "max_rig_ft": 60,
+        "note": "About 20 RV sites in four rates. The Camper Van/Small Camper Site (site 16) is 20 ft; regular, mid-park and creekside sites run 30-60 ft. Every site listed is a back-in."
+      },
+      "source": "RoverPass API (sitesCountByTypeDuring 'RV Sites' 20 for June 2027; open sites per rate with maxLength), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "roverpass",
+        "url": "https://www.roverpass.com/c/ted-tracy-s-rv-campground-washington-ga/booking/",
+        "note": "Online on RoverPass up to 24 months ahead. 'A three-night minimum stay may be required during specific time periods, special events, and holidays' (a separate 'Masters' rate group exists). Check-in noon-6 pm, call (706) 533-6132 on arrival; check-out 11 am."
+      },
+      "source": "https://www.tedandtracysrvcampground.com/rates/ ('Book Now' -> roverpass.com/c/ted-tracy-s-rv-campground-washington-ga/booking/) + RoverPass park record (isBookable true, systemType CRS, advancedMonths 24, rules 'Check-In: 12pm (noon) - 6pm', 'Check-Out: 11am', 'How long can I stay? A three-night minimum stay may be required during specific time periods, special events, and holidays. We welcome long term stays.'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded RV campground on Aonia Road outside Washington. --Claude",
+  "summary": "DROP CANDIDATE on price: the stored $50 low is the 'Camper Van/Small Camper Site' capped at 20 ft, which EKKO doesn't fit; the cheapest night EKKO fits is $55 (regular full-hookup sites, 45-60 ft) in January and June 2027, weekday and Saturday. No gateway (Atlanta 164 km); not a Good Sam Park. Google Maps 4.7 from 52 reviews, so a borderline call for AWH. Fees 50-69 -> 55-69; added 50 A, max 60 ft, booking deep link and rules. Note trimmed of field facts.",
+  "flags": [
+    "DROP CANDIDATE (price, borderline): cheapest RV night a 23-ft motorhome fits is $55 ('Regular Sites (Closer to the Entrance/Road)', full hookup back-in, 45-55 ft, RoverPass cart $55.00 + RoverPass fees) on Tue 2027-01-26, Sat 2027-01-30, Tue 2027-06-08 and Sat 2027-06-12. The $50 'Camper Van/Small Camper Site' is one 20-ft site (RoverPass maxLength 20). No gateway within 40 km (Atlanta 164 km, gateways.py); not a family-stay campground; Good Sam directory: listed, isGsPark false. Google Maps: 4.7 stars from 52 reviews, phone (706) 533-6132, website tedandtracysrvcampground.com, open. $5 over the line with strong reviews - AWH kept one such park (5 stars / 48 reviews).",
+    "Presence passes: operator site live (RoverPass-built), RoverPass listing CLAIMED and bookable (isBookable true, CRS system, operator email and phone).",
+    "Long-stay character: 'We welcome long term stays. Call for pricing and availability' and a monthly-reservation deposit rule, but every RV rate sells single nights online with a posted price (test 2 met). 'Recreational campers only.'",
+    "Waterfront lead (upward): a 'Creekside Sites' rate ($69, site 12 and others, 30-40 ft) against stored 'not waterfront'. The creek and sites were not measured; the pin is on the RV clearing.",
+    "Pin 33.6827,-82.6143 sits on the RV clearing on Esri imagery; Good Sam's point 33.681393,-82.615444 is ~180 m SW by the road. Pin kept."
+  ]
+}

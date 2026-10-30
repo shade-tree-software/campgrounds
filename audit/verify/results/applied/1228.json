@@ -1,0 +1,56 @@
+{
+  "id": 1228,
+  "checked": "2026-10-30",
+  "sources": [
+    "https://www.mwcd.org/places/atwood-lake-park/ (Info, Rates and Maps tabs; read in a browser, Cloudflare blocks plain HTTP)",
+    "https://www.mwcd.org/visit-our-lakes/lodging-facilities/reservations-and-fees/",
+    "https://www.mwcd.org/visit-our-lakes/lodging-facilities/camping/",
+    "https://www.mwcd.org/wp-content/uploads/2026/03/2026-Campground-Rues-FINAL_.pdf (2026 MWCD Campground Rules)",
+    "https://www.mwcd.org/wp-content/uploads/2025/02/What-is-a-seasonal-camper-2025.pdf",
+    "https://reserve.mwcd.org/atwood/camping (AWS WAF image captcha - not passed; not read)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.mwcd.org/places/atwood-lake-park/ (Info: '600+ campsites (full hookup and electric sites)') + the stored fees note from AWH's saved reserve.mwcd.org/atwood calendar of 2026-10-10 ('30/50-amp full hookup'), read 2026-10-30",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "camp_store": true},
+      "source": "https://www.mwcd.org/places/atwood-lake-park/ (Info: 'Shower house & laundry facilities', 'Camp store with concessions and retail'; Services: Laundromat, Camp Store), read 2026-10-30",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://reserve.mwcd.org/atwood/camping",
+        "window_opens_days": 340,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+        "note": "MWCD's own reservation site or the call center, 1-855-822-6764 (Mon-Fri 9-6, Sat-Sun 9-5); book at least 48 hours ahead (a Friday night by Wednesday). Changes and cancellations through the park office, 330-343-6780. Visa, MasterCard or Discover only. After Labor Day and before Memorial Day some MWCD parks switch to self-registration at the gate."
+      },
+      "source": "https://www.mwcd.org/visit-our-lakes/lodging-facilities/reservations-and-fees/ ('All reservations must be made 48 hours prior to the beginning of the reservation'; 'Individual sites become available both online and through the call center 340 days prior to the start of the reservation'; call-center hours; park phone table) + 2026 Campground Rules B.2/B.4 (reservations; self-registration after Labor Day), read 2026-10-30",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "military": true,
+        "note": "Active-duty military 25% off daily camping (subject to availability, free park admission); veterans 10%; seniors 60+ 10%; former POWs and 100% disabled veterans 50% off daily and 30-day camping. Only one discount, and only for the senior or veteran staying on the site."
+      },
+      "source": "https://www.mwcd.org/places/atwood-lake-park/ (Rates tab, 'Discounts'), read 2026-10-30",
+      "method": "manual"
+    }
+  },
+  "note": "Muskingum Watershed Conservancy District (regional authority) park on Atwood Lake near Mineral City, with camp areas A-H and 1-4 and a limited number of seasonal sites. --Claude",
+  "summary": "MWCD regional authority, Atwood Lake. The booking engine reserve.mwcd.org is behind an AWS WAF image captcha, so per-site rates, transient counts, Area H and the season were NOT read; stored fees (manual, AWH 2026-10-10 calendar) left alone. Confirmed from mwcd.org: full-hookup and electric sites, showers/laundry/store, 340-day window, 48-hour cutoff, $8 per-site reservation fee (flag), military 25% / veterans and seniors 10%; campers' vehicle passes waive the summer gate fee. Note trimmed of field facts.",
+  "flags": [
+    "UNVERIFIED (captcha): https://reserve.mwcd.org/atwood/camping answers an AWS WAF 'Human Verification' image puzzle ('Choose all the curtains') to plain HTTP and to the browser driver; not solved. So the transient RV site count, per-site Area H lakefront tags, the cheapest RV night, what the $87/$99 group is, and whether any area takes winter campers are unread. These need a human pass of the engine.",
+    "FEES (manual provenance, not overwritten): stored $27-99 from AWH's saved July 2027 calendar. mwcd.org adds a non-refundable '$8.00 per site non-refundable reservation fee' (charged once per reservation - suggest fees.reservation_fee 8) and lists no rates of its own ('For rates on camping, cabins, and pavilions: reserve.mwcd.org'). The cheapest night per the stored note is the $27 30-amp electric site Sun-Thu; a $87/$99 'premium group' is not described anywhere on mwcd.org.",
+    "Park entry fee: 'Memorial Day Weekend-Labor Day Daily admission: $5 for single-occupant vehicles; $10 for vehicles with two or more passengers.' Campers don't pay it: 2026 Rules B.3 'Passes issued with each camping permit must be displayed on the rearview mirror to allow free access at the entrance gate.' Not stored as an entrance fee.",
+    "Site count: mwcd.org says '600+ campsites' on the park page and 'more than 500 campsites, RV rental, and seasonal camping' on the camping page; stored count 530 (derived from note) left alone. MWCD seasonal permits run April 1 - October 31 with a lottery and 'a limit to the number of seasonal campsites that are permitted each year'; the seasonal share at Atwood is not published.",
+    "Season left as stored (year_round false, derived): MWCD's 'Primary Season' is April 1 - October 31 and 'WINTER SEASON ... November 1 through March 31' is a storage-permit term, but whether Atwood sells winter nights could not be read from the engine.",
+    "Waterfront (stored lakefront): Area H is described in the inclusion evidence and old note as 142 lakefront full-hookup sites; the Area H map (area_h_sitesii.pdf) shows the area on the lake shore, but per-site tags could not be read. Re-check per site when the engine is read.",
+    "Pin 40.5447,-81.2700 sits on the entrance road by the park office at the north edge of the camp areas; the camp loops spread 0.3-1.2 km south and east along the shore. Suggest ~40.5432,-81.2660 (the middle of the camp areas, ~380 m ESE) if a central pin is wanted.",
+    "Phone 330-343-6780 confirmed (park page and reservations table). Website lines: park page and reserve.mwcd.org/atwood/camping are both the operator's - fine."
+  ]
+}
