@@ -14,3 +14,5 @@ metadata:
 **Backlog: DONE 2026-10-19** (audit/koa_backlog_2026-10-19/, followups.md there is the state). 400 RV Life 4*+ KOAs quoted on koa.com: +134 added (ids 15397-15530, 7 commits), 243 skipped over the gate (verdicts.json), 0 drops. Most "no quote" rows were calendars ending before May 2027 - the page says "the latest date you can make a reservation for is X"; retry.py re-quotes inside the window, and an off-season quote is only a lower bound (over = firm skip; a pass needs margin or the park's peak season). Left for spring 2027: dodge-city KS, cave-junction OR, beaver UT (at the gate off-season) and ~10 closed calendars; 5 RV Life rows whose koa.com reserve page 404s.
 
 **Fort Myers / Pine Island KOA Holiday (14882, FL; $104.50+/night)** stays on the family-home gateway (10 km). It was a named exception until AWH retired those on 2026-10-21.
+
+AWH 2026-10-30: "Sugarloaf can stay" - a park that has LEFT the Sun brand (Sugarloaf Key RV Resort 15583, ex-Sun Outdoors Sugarloaf Key, independent since 2025-04-15) is not skipped as Sun; the skip follows the current brand.
