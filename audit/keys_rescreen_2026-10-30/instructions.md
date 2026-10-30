@@ -88,6 +88,10 @@ applying every gate except price, and write one result file.
 - **Long Key State Park** is state-owned (no price gate at all). Its campground closed after Irma; find
   whether it has reopened to RVs. If it is open or reopening, return it as an add with `ownership: "state"`
   and the Florida State Parks booking link; leave `rvlife`/`google` as for any entry.
+- **Canals and marina channels are not the bay.** Keys parks are laced with dredged canals and boat
+  basins. A site on a canal, boat basin or marina channel is not `bayfront`/`oceanfront` just because the
+  channel reaches open water; say plainly in the evidence whether the sites face open bay/ocean or a
+  canal/channel, and judge a canal as the narrow water it is under the curation doc's gate (default down).
 - Add `"google": "<rating>/<count>"` to the result record below.
 
 ## Result file
