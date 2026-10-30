@@ -108,16 +108,16 @@
 - [EKKO is not 4WD](user_ekko_no_4wd.md) — an agency 4WD requirement OR recommendation drops a site unless AWH confirms 2WD access (Flagpole, Long Run, 10-21); AWD does not count
 - [Private-gap sources are enough](feedback_private_sources_standard.md) — AWH 2026-10-02: keep RV Life + Good Sam with the 4*/$$ screens; a private park on neither is a red flag
 - [Off-road parks out of scope](feedback_offroad_parks_out_of_scope.md) — off-road parks + OHV staging camps of any owner are out, general campgrounds with an OHV side stay (AWH 2026-10-02)
-- [Wildlife-agency camping: agency-designated sites](feedback_wildlife_agency_camping.md) — MDC/KS fishing lakes/NE WMAs: agency-designated campsites qualify as `state`; parking-lot allowances do not; VA WMA lots on water or near a ramp = drop (10-21)
+- [Wildlife-agency camping: agency-designated sites](feedback_wildlife_agency_camping.md) — agency-designated sites = `state`; parking-lot allowances and VA WMA ramp lots do not
 - [Verify image reads rendered](feedback_verify_image_reads.md) — image Reads can silently fail ("media removed: request limit"); never write satellite evidence from a read with no pixels
-- [Standing minimums](feedback_minimum_stay.md) — SINCE 2026-10-19 I may DROP any park requiring 3+ nights outside weekends/holidays (report which); a 2-night standing minimum stays if marked; rec.gov "soft" minimums are rules (10-21)
+- [Standing minimums](feedback_minimum_stay.md) — I may drop 3+ night standing minimums (report); time-of-year or waivable minimums stay; 2-night stays if marked
 - [Mandatory entry fees count toward price](feedback_mandatory_fees_count.md) — resort day/grounds fees per person are part of the nightly rate for the $50 gate (Avalon skipped, AWH 2026-09-30)
 - [One headless browser at a time](feedback_limit_headless_browsers.md) — AWH 2026-10-03: parallel gm.py/rates.py Chrome instances ate memory+CPU; run helpers sequentially, batch queries into one gm.py call with -u
 - [Skip Sun brands; KOA skip RETIRED](feedback_skip_sun_koa_brands.md) — Sun Outdoors/Retreats still pre-skipped; KOAs vetted like any private park since AWH 2026-10-19 (koa.py quotes them)
 - [Canada private gap: no holds](feedback_canada_no_holds.md) — AWH 2026-10-07: hold only for a permanent human-only captcha; blank/non-loading site = skip; rate-limit block = back off and retry
 - [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites); next id 15339; recipe in audit/pa_sf_dispersed/
-- [Price-gate rule + exceptions](feedback_price_gate_proximity_exceptions.md) — over US$50/C$69 = drop (I may, since 10-19; report which) unless within 40 km of a gateway (family homes count since 10-21); GS Parks at 10% off; named exceptions inside
-- [Family-home price re-screen — DONE](project_family_home_rescreen.md) — 2026-10-21: +22 (15531-15552), 12 skips, AWH skipped Cedar Hills + Sun brands (gateway never lifts the Sun skip); RV Life price_only buckets were the real backlog
+- [Price-gate rule + exceptions](feedback_price_gate_proximity_exceptions.md) — over US$50/C$69 = drop (report) unless a gateway within 40 km, a GS Park at 10% off, or the Keys zone
+- [Family-home price re-screen — DONE](project_family_home_rescreen.md) — 2026-10-21: +22 (15531-15552); gateway never lifts the Sun skip
 - [Eastern reservable designated sites — DONE](project_fl_wmd_reservable_gap.md) — 2026-10-10: +3 (Stoney Pond NY, DuPuis + Town of KICCO SFWMD), ids 15339-15341
 - [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11/12: 17 back (15342-15358) + Lac Libby 15359 + Red Gut Bay 15360 (min was the cabins')
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note; probe misses parked/blank/forwarded domains
