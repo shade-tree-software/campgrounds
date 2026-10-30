@@ -91,6 +91,12 @@ applying every gate except price, and write one result file.
 - **Long Key State Park** is state-owned (no price gate at all). Its campground closed after Irma; find
   whether it has reopened to RVs. If it is open or reopening, return it as an add with `ownership: "state"`
   and the Florida State Parks booking link; leave `rvlife`/`google` as for any entry.
+- **RV Life `$$$`/`$$$$` is a price indicator in the Keys (AWH 2026-10-30):** "Yes, you can let RV Life $$$ or
+  $$$$ count as a price in the Florida Keys". The presence rule's "RV Life $ or $$ in place of a published
+  rate" extends to every tier here, so a real, open park whose only gap is a posted rate passes on its RV
+  Life tier (presence still needs a website with a phone, or Google open + 25 reviews + phone). Long-stay
+  parks still need a posted nightly rate or a booking site. Give the tier in `rvlife` and say in the note
+  that rates are by phone.
 - **Canals and marina channels are not the bay.** Keys parks are laced with dredged canals and boat
   basins. A site on a canal, boat basin or marina channel is not `bayfront`/`oceanfront` just because the
   channel reaches open water; say plainly in the evidence whether the sites face open bay/ocean or a
