@@ -51,6 +51,8 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
     clash = [i for q, i in pins if km(loc, q) < 0.3]
     if norm(r['name']) in names or clash:
         sys.exit(f"{r['name']}: already in the database ({clash})")
+    if re.search(r'\s', r.get('website') or ''):
+        sys.exit(f"{r['name']}: website must be one URL, got {r['website']!r}")
     m = re.fullmatch(r'([\d.]+)\*/(\$*)', r.get('rvlife', '') or '')
     e = {'id': next_id, 'kind': 'campground', 'name': r['name'], 'location': r['location'],
          'elevation_meters': r['elevation_meters'], 'state': r['state'], 'ownership': r['ownership'],
