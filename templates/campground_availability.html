@@ -222,8 +222,9 @@
   <h2>Federal Campground Availability</h2>
   <p class="avail-intro">
     Search any recreation.gov (federal) campground, pick your dates, and see which
-    sites have openings. Only sites EKKO fits are shown — drive-in RV sites long
-    enough for a 23-ft rig. Each column is one night; a green ✓ means available.
+    sites have openings. Only sites EKKO fits are shown — drive-in sites that take a
+    motorhome or trailer, with both the parking spur and recreation.gov's posted
+    length limit long enough for a 23-ft rig. Each column is one night; a green ✓ means available.
     Booking still happens on recreation.gov.
   </p>
 
@@ -643,7 +644,7 @@
     html += '<ul class="avail-cards">';
     sites.forEach(s => {
       const open = s.statuses.filter(st => st === 'Available').length;
-      const dl = s.driveway_ft ? Math.round(s.driveway_ft) + ' ft' : 'length unknown';
+      const dl = s.length_ft ? Math.round(s.length_ft) + ' ft' : 'length unknown';
       html += '<li class="ac-item">' +
         '<div class="ac-head"><span class="ac-name">' + escapeHtml(s.name) + '</span>' +
         '<span class="verdict-tag verdict-' + s.verdict + '">' + dl + '</span></div>' +
@@ -666,7 +667,7 @@
 
     sites.forEach(s => {
       html += '<tr>';
-      const dl = s.driveway_ft ? Math.round(s.driveway_ft) + ' ft' : '—';
+      const dl = s.length_ft ? Math.round(s.length_ft) + ' ft' : '—';
       const loop = s.loop ? ' · ' + escapeHtml(s.loop) : '';
       html += '<td class="site-col">' + escapeHtml(s.name) +
         ' <span class="verdict-tag verdict-' + s.verdict + '">' + dl + '</span>' + loop +

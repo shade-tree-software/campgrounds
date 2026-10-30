@@ -24,14 +24,22 @@ RV-fit determination (calibrated against RMNP data quirks):
   - `Max Vehicle Length` is UNRELIABLE in RIDB — sparse and contaminated with
     stray vehicle-*count* values (sites reporting a "max length" of 1-2 ft), so
     we do NOT gate on it.
-  - `Driveway Length` is the dense, consistent physical spur length and is the
-    field we measure fit on. It's conservative (never shorter than a real
-    max-vehicle cap where both exist).
-  - A site is RV-capable when CampsiteType starts with "STANDARD" AND its
-    PERMITTEDEQUIPMENT lists an RV-class item (RV, trailer, fifth wheel, etc.).
-  - A site "fits" EKKO when it's RV-capable AND Driveway Length >= --fit-ft
-    (default 25 = 23-ft rig + slack). 23-24 ft is "tight"; missing length is
-    reported as "unknown — verify", never silently counted as a fit.
+  - `Driveway Length` is the dense, consistent physical spur length. It is NOT
+    a rig limit: Upper Chattahoochee River (GA) has 39-87 ft spurs on sites
+    that permit only a 10-ft trailer.
+  - The rig limit is the per-equipment `MaxLength` in PERMITTEDEQUIPMENT (what
+    recreation.gov shows as "Trailer 10 ft"); 0 means none posted. EKKO books
+    as a motorhome, so where a site lists RV/motorhome that type's cap applies;
+    otherwise the trailer / fifth-wheel cap stands in for it (a camper van
+    does not: EKKO books as a motorhome).
+  - A site is RV-capable for EKKO when CampsiteType starts with "STANDARD" AND
+    its PERMITTEDEQUIPMENT lists a type a 23-ft motorhome can use (EKKO_EQUIPMENT).
+    A pop-up, pickup camper or camper van alone does not count.
+  - A site's length for EKKO is the shorter of Driveway Length and that posted
+    cap (`ekko_length`). It "fits" when RV-capable AND that length >= --fit-ft
+    (default 25 = 23-ft rig + slack). 23-24 ft is "tight"; a cap under 23 ft is
+    "too_small" whatever the spur; missing length is reported as
+    "unknown — verify", never silently counted as a fit.
   - The per-facility COVERAGE report prints how often each length field is
     populated, so a campground where even Driveway Length is sparse (making the
     fit count unreliable) is visible rather than silently swallowed.
@@ -56,6 +64,12 @@ RV_EQUIPMENT = {
     "RV", "RV/MOTORHOME", "TRAILER", "FIFTH WHEEL", "PICKUP CAMPER",
     "CARAVAN/CAMPER VAN", "POP UP",
 }
+# The types a 23-ft motorhome can book. RV_EQUIPMENT above (any camper at all)
+# stays as it is for the hookup and gap-triage tools that import it.
+MOTORHOME_EQUIPMENT = {"RV", "RV/MOTORHOME"}
+# A camper van is left out: EKKO books as a motorhome, not a van (Fort DeSoto
+# turned a "van" booking away, AWH 2026-10-24).
+EKKO_EQUIPMENT = MOTORHOME_EQUIPMENT | {"TRAILER", "FIFTH WHEEL"}
 DEFAULT_FIT_FT = 25  # 23-ft EKKO + slack for bumper/hitch and back-in maneuvering
 
 
@@ -142,19 +156,52 @@ def _equip_status(site):
     equip = {e.get("EquipmentName", "").upper() for e in site.get("PERMITTEDEQUIPMENT", [])}
     if not equip:
         return "empty"
-    return "rv" if (equip & RV_EQUIPMENT) else "tent_only"
+    return "rv" if (equip & EKKO_EQUIPMENT) else "tent_only"
 
 
 def is_rv_capable(site):
-    """Confirmed drive-in RV site: STANDARD type AND an RV-class item permitted."""
+    """Confirmed drive-in site for EKKO: STANDARD type AND a motorhome-class item permitted."""
     return _equip_status(site) == "rv"
+
+
+def equipment_cap(site):
+    """The posted length limit (ft) for a rig like EKKO, or None when none is posted.
+
+    The motorhome types' cap when the site lists one, else the trailer / fifth
+    wheel cap. A MaxLength of 0 or blank means no posted limit, and
+    one uncapped type among them means the site has none.
+    """
+    caps = {}
+    for e in site.get("PERMITTEDEQUIPMENT", []):
+        name = e.get("EquipmentName", "").upper()
+        if name in EKKO_EQUIPMENT:
+            try:
+                ft = float(e.get("MaxLength") or 0)
+            except (TypeError, ValueError):
+                ft = 0.0
+            caps.setdefault(name, []).append(ft)
+    group = [ft for n, fts in caps.items() if n in MOTORHOME_EQUIPMENT for ft in fts] \
+        or [ft for fts in caps.values() for ft in fts]
+    if not group or any(ft <= 0 for ft in group):
+        return None
+    return max(group)
+
+
+def ekko_length(site):
+    """The usable length for EKKO: the shorter of the spur and the posted cap (None if neither)."""
+    dl = _num_attr(site, "Driveway Length")
+    dl = dl if dl and dl > 0 else None
+    cap = equipment_cap(site)
+    known = [x for x in (dl, cap) if x is not None]
+    return min(known) if known else None
 
 
 def classify_fit(site, fit_ft):
     """Return one of: 'fits', 'tight', 'too_small', 'unknown', 'not_rv'.
 
-    Fit is judged on Driveway Length only (see module docstring on why
-    Max Vehicle Length is not trusted). 'unknown' means RV-plausible but
+    Fit is judged on the shorter of Driveway Length and the posted equipment
+    cap (see module docstring; Max Vehicle Length is not trusted). A cap under
+    23 ft is too small whatever the spur. 'unknown' means RV-plausible but
     unconfirmed — either a STANDARD site with no equipment list, or an
     RV-capable site with no driveway length. Resolve those against the
     campground map; never assume they fit.
@@ -164,9 +211,13 @@ def classify_fit(site, fit_ft):
         return "not_rv"
     if status == "empty":
         return "unknown"  # STANDARD but can't confirm RV equipment — verify
+    cap = equipment_cap(site)
+    if cap is not None and cap < 23:
+        return "too_small"
     dl = _num_attr(site, "Driveway Length")
     if dl is None or dl <= 0:
         return "unknown"
+    dl = min(dl, cap) if cap is not None else dl
     if dl >= fit_ft:
         return "fits"
     if dl >= 23:
@@ -249,6 +300,7 @@ def availability_matrix(facility, start, end, fit_ft=DEFAULT_FIT_FT, cache=None)
             "name": s.get("CampsiteName", "?"),
             "loop": s.get("Loop", "") or "",
             "driveway_ft": _num_attr(s, "Driveway Length"),
+            "length_ft": ekko_length(s),
             "verdict": v,
         }
 
@@ -276,6 +328,7 @@ def availability_matrix(facility, start, end, fit_ft=DEFAULT_FIT_FT, cache=None)
             "name": info["name"],
             "loop": info["loop"],
             "driveway_ft": info["driveway_ft"],
+            "length_ft": info["length_ft"],
             "verdict": info["verdict"],
             "statuses": statuses,
             "available_nights": open_n,
@@ -286,7 +339,7 @@ def availability_matrix(facility, start, end, fit_ft=DEFAULT_FIT_FT, cache=None)
     # Most-open first; then fit quality; then longer sites; then site name.
     _vrank = {"fits": 0, "tight": 1, "unknown": 2}
     out_sites.sort(key=lambda r: (-r["available_nights"], _vrank.get(r["verdict"], 9),
-                                  -(r["driveway_ft"] or 0), r["name"]))
+                                  -(r["length_ft"] or 0), r["name"]))
     return {
         "nights": [d.isoformat() for d in nights],
         "sites": out_sites,
@@ -315,7 +368,7 @@ def report_availability(facility, start, end, fit_ft):
         ekko[s["CampsiteID"]] = {
             "name": s.get("CampsiteName", "?"),
             "loop": s.get("Loop", ""),
-            "driveway": _num_attr(s, "Driveway Length"),
+            "driveway": ekko_length(s),
             "verdict": v,
         }
 
@@ -345,7 +398,7 @@ def report_availability(facility, start, end, fit_ft):
 
     rng = f"{start.isoformat()} → {end.isoformat()} ({len(nights)} night{'s' if len(nights) != 1 else ''})"
     print(f"\n=== Availability: {name} (FacilityID {cg_id}) ===")
-    print(f"  Range: {rng}   EKKO fit threshold: driveway >= {fit_ft} ft")
+    print(f"  Range: {rng}   EKKO fit threshold: length (spur, capped by the posted limit) >= {fit_ft} ft")
     print(f"  EKKO-plausible sites considered: {len(ekko)}  "
           f"(bookable all nights: {len(bookable)}, taken some night: {blocked}, not-yet-released: {nyr})")
     if not bookable:
