@@ -399,3 +399,9 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1318 Elkhart County Fairgrounds (IN, p3-228):** run by the Elkhart County 4H Fair association; no page says county-run. Stored local unconfirmed. About 3 months blacked out in 2026. Kept under the fairground rule.
 
 - **1086 Hardy Lake (IN, p3-228):** Wooster's on-water sites are $14 primitive, 'primarily to serve fishermen'; Shale Bluff is the main campground above the water. Does the entry's rating follow Wooster?
+
+- **1380 Robinson's Whitewater (IN, p3-230):** temporarily closed after the August 2026 flood, no reopening date. Owner's listing says 'daily, weekly, seasonal and permanent camping', a June 2026 camper says 'a lot of people live at the campground', imagery shows settled units; no posted rate, no engine. Long-stay test 2 fails if that is its character. Google 4.6/273, warm. Recommend drop; kept for now.
+
+- **15432 Richmond KOA (IN, p3-230):** passes at $45.89 only on 30-amp back-ins KOA calls 'Perfect for pop-ups', offered to a 23-ft motorhome search. Next is $54.11, then $67+; no gateway. Google 4.6/628. Kept for now.
+
+- **1363 Old Mill Run (IN, p3-230):** $46.73, about 1 night site in 7. Newest review: '90% of the sites are used by what looks like full time residents... looks like a run down mobile home park'. Others warm; Google 4.5/280. Kept for now.
