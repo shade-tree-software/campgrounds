@@ -45156,24 +45156,89 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm ('No electric or water hookups at individual sites'); recreation.gov catalog types every RV site RV NONELECTRIC, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/258887/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm ('$25.00 per night camping fee') + https://www.recreation.gov/api/camps/campgrounds/258887/rates (2026 RV Nonelectric $25) + https://www.nps.gov/indu/planyourvisit/fees.htm ('Private Vehicle $25.00', 7-day; rec.gov: 'A valid entrance pass or receipt is required for all visitors'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/258887 ('66 campsites') and the RIDB catalog (53 RV + 13 tent-only, 4 of the RV sites Pull-through), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm ('Campground Open Dates: April 1 through November 1'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm + https://www.recreation.gov/api/camps/campgrounds/258887 ('Stays are limited to 14 days in a 30-day period'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm (restrooms and showers in each loop, RV dump station, potable water in each loop) + NPS campgrounds API (Flush Toilets), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "NPS campgrounds API, parkCode indu (Access Pass and Senior Pass $12.50 per night), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "entrance": {
+        "resident": 25,
+        "nonresident": 25,
+        "per": "vehicle_stay"
+      }
+    },
+    "sites": {
+      "count": 66,
+      "pull_through": true
+    },
+    "season": {
+      "opens": "04-01",
+      "closes": "11-01",
+      "year_round": false
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/258887",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "All sites reservable six months ahead of check-in; sites become reservable November 15 for the following season. Check-out noon; a new arrival cannot occupy a site before noon unless it is vacant."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "potable_water": true
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm https://www.recreation.gov/api/camps/campgrounds/258887 https://www.recreation.gov/api/camps/campgrounds/258887/rates https://www.nps.gov/indu/planyourvisit/fees.htm",
+      "note": "$25, no hookups, reservable on rec.gov confirmed; entrance fee, season Apr 1-Nov 1, 66 sites, 14-night limit, facilities and the pass discount added. Pin is good. All 53 RV sites have driveways of 26 ft or more; max_rig_ft left out because rec.gov posts driveways only (top values 95 and 99 ft look unreliable) and says some sites are length-limited without saying which."
+    },
+    "phone": "219-395-1882"
   },
   {
     "id": 586,
@@ -77701,16 +77766,16 @@
     "id": 1066,
     "kind": "campground",
     "name": "Charlestown State Park",
-    "location": "38.453953,-85.602501",
-    "elevation_meters": 204.0,
+    "location": "38.43389,-85.63562",
+    "elevation_meters": 193.0,
     "state": "IN",
     "ownership": "state",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 38.4540,-85.6025: campground loops on upland plateau, no water in frame; Ohio River below via bluffs",
     "inclusion_evidence": "IN DNR / ReserveAmerica (570044): ~60 full-hookup + ~132 electric paved-pad drive-in sites -> real RV campground",
     "website": "https://www.in.gov/dnr/state-parks/parks-lakes/charlestown-state-park/\nhttps://www.reserveamerica.com/camping/charlestown-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570044",
-    "phone": "",
-    "note": "~60 full-hookup + ~132 electric sites, paved pads. Campground sits on the upland plateau; the Ohio River and Fourteenmile Creek are well below via bluffs, not at the sites. Reservable online. --Claude",
+    "phone": "812-256-5600",
+    "note": "Paved pads. Campground sits on the upland plateau; the Ohio River and Fourteenmile Creek are well below via bluffs, not at the sites. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -77719,29 +77784,34 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "count": 192
+      "count": 192,
+      "max_rig_ft": 45
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://indianastateparks.reserveamerica.com/camping/charlestown-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570044",
+      "note": "Check-in and check-out 2 pm; 5 pm Sundays and designated holidays."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/charlestown-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570044 (per-site list: 'Electric Hookup available: 50 amp' on 126 of 176 sites read, 'Full Hookup available' on 53), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/charlestown-state-park/ ('Full Hookup / 60 sites', 'Electric / 132 sites') + https://indianastateparks.reserveamerica.com/camping/charlestown-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570044 (all 176 sites read list '45 Back-In'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/charlestown-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570044 + https://www.in.gov/dA/4f4e988b00/charlestown_fullhookup_electric.pdf, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees (statewide ranges, read 2026-10-12) + indianastateparks.reserveamerica.com parkId 570044 (sampled sites' prices for 2027-06-15 and 2027-06-19, read 2026-10-12)",
@@ -77750,6 +77820,11 @@
       "season": {
         "source": "https://www.in.gov/dnr/state-parks/publications-and-brochures/winter-camping/ (2025-26 winter season: \"Camping is available year-round at Indiana State Parks\"; Charlestown listed), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.in.gov/dA/4f4e988b00/charlestown_fullhookup_electric.pdf (map legend and icons: Shower, Dumping Station), read 2026-10-31",
+        "checked": "2026-10-31",
         "method": "manual"
       }
     },
@@ -77772,22 +77847,31 @@
     "season": {
       "year_round": true,
       "note": "In winter only one or two loops stay open, water may be a single source, and most dump stations close."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.in.gov/dnr/state-parks/parks-lakes/charlestown-state-park/ https://indianastateparks.reserveamerica.com/camping/charlestown-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570044 https://www.in.gov/dA/4f4e988b00/charlestown_fullhookup_electric.pdf https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees",
+      "note": "Fees ($33 electric, within DNR's $33-45 range), year-round, 50A, full hookups, 192 sites confirmed; max rig 45 ft (all sites read), showers, dump and the ReserveAmerica link added; note cleaned. Pin is 3.6 km off."
     }
   },
   {
     "id": 1067,
     "kind": "campground",
     "name": "Clifty Falls State Park",
-    "location": "38.76084,-85.41878",
-    "elevation_meters": 262.0,
+    "location": "38.75754,-85.42278",
+    "elevation_meters": 256.0,
     "state": "IN",
     "ownership": "state",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 38.7608,-85.4188: campground loops upland near town, gorge/Ohio River valley trail-access only, no water at sites",
     "inclusion_evidence": "IN DNR / ReserveAmerica (570045): ~99 electric (50-amp, pull-throughs) + ~62 non-electric drive-in sites -> real RV campground",
     "website": "https://www.in.gov/dnr/state-parks/parks-lakes/clifty-falls-state-park/\nhttps://www.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045",
-    "phone": "",
-    "note": "~99 electric (50-amp, many pull-through) + ~62 non-electric sites. Campground is upland, above the gorge/Ohio River valley (creek and falls are trail-access only), not waterfront. Reservable online. --Claude",
+    "phone": "812-273-8885",
+    "note": "Campground is upland, above the gorge/Ohio River valley (creek and falls are trail-access only), not waterfront. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -77798,27 +77882,31 @@
       "electric": 50
     },
     "sites": {
-      "count": 161,
-      "pull_through": true
+      "count": 169,
+      "pull_through": true,
+      "max_rig_ft": 90
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://indianastateparks.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045",
+      "note": "Check-in and check-out 2 pm; 5 pm Sundays and designated holidays."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045 (per-site list: 'Electric Hookup available: 20/30/50 amp' on the 92 electric sites read), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/clifty-falls-state-park/ ('Electric / 106 sites', 'Non-electric / 63 sites') + https://indianastateparks.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045 (per-site list: 37 of 153 pull-through; longest pull-through 90 ft, next 80 and 75), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045 + https://www.in.gov/dA/950ad78868/clifty_electric_primitive_prt.pdf, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees (statewide ranges, read 2026-10-12) + indianastateparks.reserveamerica.com parkId 570045 (sampled sites' prices for 2027-06-15 and 2027-06-19, read 2026-10-12)",
@@ -77827,6 +77915,11 @@
       "season": {
         "source": "https://www.in.gov/dnr/state-parks/publications-and-brochures/winter-camping/ (2025-26 winter season: \"Camping is available year-round at Indiana State Parks\"; Clifty Falls listed), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/clifty-falls-state-park/ (Dumping Station) + https://indianastateparks.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045 (legend: Camp Stores, Laundry), read 2026-10-31",
+        "checked": "2026-10-31",
         "method": "manual"
       }
     },
@@ -77849,22 +77942,32 @@
     "season": {
       "year_round": true,
       "note": "In winter only one or two loops stay open, water may be a single source, and most dump stations close."
+    },
+    "facilities": {
+      "dump": true,
+      "camp_store": true,
+      "laundry": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.in.gov/dnr/state-parks/parks-lakes/clifty-falls-state-park/ https://indianastateparks.reserveamerica.com/camping/clifty-falls-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570045 https://www.in.gov/dA/950ad78868/clifty_electric_primitive_prt.pdf https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees",
+      "note": "Fees confirmed: $20 base is a real RV site (all 61 non-electric sites read allow 35-60 ft and are RV/trailer category), electric $33; 50A, year-round confirmed. Count 161 -> 169 (DNR 106 + 63), max rig 90, dump/store/laundry and RA link added; note cleaned. Pin 500 m off."
     }
   },
   {
     "id": 1068,
     "kind": "campground",
     "name": "Harmonie State Park",
-    "location": "38.09034,-87.94341",
-    "elevation_meters": 157.0,
+    "location": "38.06397,-87.95282",
+    "elevation_meters": 150.0,
     "state": "IN",
     "ownership": "state",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 38.090,-87.945: campground clearing set back ~700m+ from Wabash River behind wide forest strip",
     "inclusion_evidence": "IN DNR / ReserveAmerica (570048): 200-site electric family campground, 50-amp pull-throughs -> real RV campground",
     "website": "https://www.in.gov/dnr/state-parks/parks-lakes/harmonie-state-park/\nhttps://www.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048",
-    "phone": "",
-    "note": "200-site electric family campground (50-amp accessible sites, pull-throughs). On the Wabash River (boat ramp) but the campground is set back in the hills, not waterfront. Reservable online. --Claude",
+    "phone": "812-682-4821",
+    "note": "On the Wabash River (boat ramp) but the campground is set back in the hills, not waterfront. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -77876,26 +77979,30 @@
     },
     "sites": {
       "count": 200,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 78
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://indianastateparks.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048",
+      "note": "Check-in and check-out 2 pm; 5 pm Sundays and designated holidays."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048 (per-site list: 13 sites 'Electric Hookup available: 50 amp', 172 at 30 amp) + https://www.in.gov/dA/3ea068d034/harmonie_electric.pdf (50-amp sites marked; accessible 50-amp sites 9-14 for permit holders only), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/harmonie-state-park/ ('Electric / 200 sites') + https://www.in.gov/dA/3ea068d034/harmonie_electric.pdf ('Pull-through Sites: 111 (70L, 14W), 146 (83L, 11W)') + https://indianastateparks.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048 (longest believable listing 78 ft; 120, 142 and 199 ft left out as typos), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048 + https://www.in.gov/dA/3ea068d034/harmonie_electric.pdf, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees (statewide ranges, read 2026-10-12) + indianastateparks.reserveamerica.com parkId 570048 (sampled sites' prices for 2027-06-15 and 2027-06-19, read 2026-10-12)",
@@ -77904,6 +78011,11 @@
       "season": {
         "source": "https://www.in.gov/dnr/state-parks/publications-and-brochures/winter-camping/ (2025-26 winter season: \"Camping is available year-round at Indiana State Parks\"; Harmonie listed), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/harmonie-state-park/ (Dumping Station) + https://indianastateparks.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048 (legend: Showers), read 2026-10-31",
+        "checked": "2026-10-31",
         "method": "manual"
       }
     },
@@ -77925,6 +78037,15 @@
     "season": {
       "year_round": true,
       "note": "In winter only one or two loops stay open, water may be a single source, and most dump stations close."
+    },
+    "facilities": {
+      "dump": true,
+      "showers": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.in.gov/dnr/state-parks/parks-lakes/harmonie-state-park/ https://indianastateparks.reserveamerica.com/camping/harmonie-state-park/r/campgroundDetails.do?contractCode=IN&parkId=570048 https://www.in.gov/dA/3ea068d034/harmonie_electric.pdf https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees",
+      "note": "Fees ($33 electric), 50A, 200 sites, pull-throughs and year-round confirmed; max rig 78, dump, showers and RA link added; note cleaned. Pin 3 km off."
     }
   },
   {
@@ -79243,8 +79364,8 @@
     "inclusion_evidence": "IN DNR Hardy Lake page: 'Electric / 149 sites - Shale Bluff' drive-in campground -> real RV campground",
     "waterfront_evidence": "satellite at 38.7758,-85.6945: Shale Bluff loops ~120-160 m from lake behind unbroken forest; DNR Shale Bluff map schematic, no shoreline sites",
     "website": "https://www.in.gov/dnr/state-parks/parks-lakes/hardy-lake/\nhttps://www.reserveamerica.com/camping/hardy-lake/r/campgroundDetails.do?contractCode=IN&parkId=570047",
-    "phone": "",
-    "note": "Indiana DNR, Hardy Lake SRA (Shale Bluff campground). 149 electric (30/50A) drive-in sites on a bluff above the lake — filtered lake views with trails down to the water, not at the water's edge. Reservable online. (The genuinely on-water sites are in the separate Wooster primitive campground.) --Claude",
+    "phone": "812-794-3800",
+    "note": "Shale Bluff campground sits on a bluff above the lake, with filtered lake views and trails down to the water, not at the water's edge. The on-water sites are in the separate Wooster primitive campground. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -79255,26 +79376,30 @@
       "electric": 50
     },
     "sites": {
-      "count": 149
+      "count": 157,
+      "max_rig_ft": 60
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://indianastateparks.reserveamerica.com/camping/hardy-lake/r/campgroundDetails.do?contractCode=IN&parkId=570047",
+      "note": "Check-in and check-out 2 pm; 5 pm Sundays and designated holidays."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/hardy-lake/r/campgroundDetails.do?contractCode=IN&parkId=570047 (per-site list: 41 sites 'Electric Hookup available: 50 amp', 98 at 30 amp, of 147 read), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/hardy-lake/ ('Electric / 149 sites - Shale Bluff', 'Primitive / 8 sites - Wooster') + https://indianastateparks.reserveamerica.com/camping/hardy-lake/r/campgroundDetails.do?contractCode=IN&parkId=570047 (longest listed 60 ft, Shale Bluff), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://indianastateparks.reserveamerica.com/camping/hardy-lake/r/campgroundDetails.do?contractCode=IN&parkId=570047 + https://www.in.gov/dA/7e68d98ab2/hardy_wooster_primitive.pdf, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees (statewide ranges, read 2026-10-12) + indianastateparks.reserveamerica.com parkId 570047 (sampled sites' prices for 2027-06-15 and 2027-06-19, read 2026-10-12)",
@@ -79283,6 +79408,11 @@
       "season": {
         "source": "https://www.in.gov/dnr/state-parks/publications-and-brochures/winter-camping/ (2025-26 winter season: \"Camping is available year-round at Indiana State Parks\"; Hardy Lake listed), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.in.gov/dnr/state-parks/parks-lakes/hardy-lake/ (Dumping Station), read 2026-10-31",
+        "checked": "2026-10-31",
         "method": "manual"
       }
     },
@@ -79305,6 +79435,14 @@
     "season": {
       "year_round": true,
       "note": "In winter only one or two loops stay open, water may be a single source, and most dump stations close."
+    },
+    "facilities": {
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.in.gov/dnr/state-parks/parks-lakes/hardy-lake/ https://indianastateparks.reserveamerica.com/camping/hardy-lake/r/campgroundDetails.do?contractCode=IN&parkId=570047 https://www.in.gov/dA/7e68d98ab2/hardy_wooster_primitive.pdf https://www.in.gov/dA/12e95b5883/hardy_shale_electric.pdf https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees",
+      "note": "Fees confirmed: $14 is the Wooster primitive rate, not stale, and it is a site EKKO fits (6 of 8 Wooster sites allow 25-45 ft, RV category); electric $33. 50A, year-round confirmed. Count 149 -> 157 (adds Wooster's 8), max rig 60, dump and RA link added; note cleaned. Waterfront re-audit lead at Wooster."
     }
   },
   {
@@ -80135,16 +80273,16 @@
     "id": 1100,
     "kind": "campground",
     "name": "Hardin Ridge Recreation Area (Hoosier National Forest)",
-    "location": "39.0175,-86.4525",
-    "elevation_meters": 237.0,
+    "location": "39.01939,-86.44284",
+    "elevation_meters": 246.0,
     "state": "IN",
     "ownership": "federal",
     "waterfront": "not waterfront",
     "waterfront_evidence": "USFS Hardin Ridge per-site area map: all numbered campsite loops (Pine/White Oak/Bluegill/Holland/Eads/Southern Point) sit on the interior ridge set back from Monroe Lake behind 50ft-contour slope; shoreline holds only boat-launch/swim/cabins. Pin was on access road ~2.5km E of loops; fixed to loop core",
     "inclusion_evidence": "recreation.gov 232056: 197 sites in six loops, electric+nonelectric RV/tent drive-in sites, showerhouses, reservable, 2026 season active -> real RV campground",
     "website": "https://www.fs.usda.gov/r09/hoosier/recreation/hardin-ridge-recreation-area/\nhttps://www.recreation.gov/camping/campgrounds/232056",
-    "phone": "",
-    "note": "USFS, Hoosier NF on Monroe Lake. ~200+ drive-in sites in six loops, mix of electric and non-electric, showerhouses; the largest Hoosier NF campground. On the reservoir but standard sites are set back in the loops, not waterfront. Reservable online. --Claude",
+    "phone": "812-837-9453",
+    "note": "On the reservoir but standard sites are set back in the loops, not waterfront. Generators allowed in Eads Loop only. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -80152,30 +80290,54 @@
       "source": "rvlife"
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/232056",
+      "window_opens_days": 335,
+      "max_stay_nights": 14,
+      "note": "Reservable up to 11 months ahead (rec.gov rule; the calendar is bookable through September 2027 as of today). Run by concessionaire BA Services, Inc."
     },
     "provenance": {
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232056 ('Centralized water, flush toilets and showers are provided'; 'there is a dump station located near the gatehouse'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232056 (reservationWindow 11 Months; maxStay 14 nights rolling 30 days; soft minimum of 1 is no rule) + https://www.fs.usda.gov/r09/hoosier/recreation/hardin-ridge-recreation-area/, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB catalog for facility 232056: 50A on 13 bookable sites, 'Water Hookup: Yes' on all 14 RV Electric sites ($38), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232056/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/hoosier/recreation/hardin-ridge-recreation-area/ ('Walk-to and primitive sites - $24/night', 'Standard Electric sites (single) - $33/night', 'RV Electric - $38/night', 'Double sites with electric - $52/night') + https://www.recreation.gov/api/camps/campgrounds/232056/rates (2026 Standard Nonelectric $24). The $24 base is a Standard Nonelectric site: 62 of 70 take RVs, most 30-35 ft, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232056 ('197 camp sites ... 36 of which are walk-in tenting only'); RIDB catalog Max Vehicle Length, longest 60 ft (3 sites), 148 of 155 RV-capable sites 25 ft or more, 3 Pull-through, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/hoosier/recreation/hardin-ridge-recreation-area/ ('Camping will close for the season on October 25, 2026 at noon, and reopen in early April, 2027'; 'Campsites available beginning early April through late October'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/hoosier/recreation/hardin-ridge-recreation-area/ ('Interagency Access, Senior and Military-Lifetime pass holders can receive discounts on base camping fees'; single sites only), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -80190,7 +80352,28 @@
     "fees": {
       "nightly_low": 24,
       "nightly_high": 38,
-      "currency": "USD"
+      "currency": "USD",
+      "surcharges": {
+        "electric": 9
+      }
+    },
+    "sites": {
+      "count": 197,
+      "max_rig_ft": 60,
+      "pull_through": true
+    },
+    "season": {
+      "closes": "10-25",
+      "year_round": false,
+      "note": "Early April to late October, dates set yearly. 2026 closed October 25 at noon; reopens early April 2027."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.fs.usda.gov/r09/hoosier/recreation/hardin-ridge-recreation-area/ https://www.recreation.gov/api/camps/campgrounds/232056 https://www.recreation.gov/api/camps/campgrounds/232056/rates https://www.recreation.gov/camping/campgrounds/232056",
+      "note": "$24-38 confirmed ($24 is a real RV site); 197 sites, 50A and water at RV Electric sites, season, 11-month window, facilities added; note cleaned. Not waterfront stands: plotted every site. Pin should move."
     }
   },
   {
@@ -92497,7 +92680,7 @@
     "inclusion_evidence": "4hfair.org public-camping page: year-round transient public RV camping Mar 1-Nov 30, W/30A + W/S/50A back-in sites, reservations by phone, blackout only during events -> real transient RV campground",
     "website": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping",
     "phone": "574-533-3247",
-    "note": "Elkhart County 4-H Fair Association. Public RV camping Mar 1-Nov 30, nightly reservations by phone; back-in 30/50A W/E/S, no tents/pull-thrus. Blackout during fair/rallies. --Claude",
+    "note": "Elkhart County 4-H Fair Association. Bring extra power cord and sewer hose, plus a Y-valve: most water hydrants are shared. No tents. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -92509,41 +92692,52 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": false
+      "pull_through": false,
+      "count": 280,
+      "note": "'Over 280 permanent sites' is the rally page's figure; the public page gives no count."
     },
     "season": {
       "year_round": false,
       "opens": "03-01",
-      "closes": "11-30"
+      "closes": "11-30",
+      "note": "Public camping unavailable in 2026: May 7-17, May 24-30, July 6-Sept 7, Oct 2-9 (subject to change)."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "max_stay_nights": 30,
+      "note": "Call 574-533-3247, Monday-Friday 8 am-5 pm; reservations required, walk-ins only during those hours."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping (rate lines; 'Most water hydrants are shared'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping ('All sites are back-in only; pull-through sites are not available') + https://www.4hfair.org/p/plan-your-visit/rv-camping1 ('over 280 permanent sites'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping ('Our Camping Season is March 1 - November 30'; 'Public Camping is Unavailable'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping (audit/price_research/local_in_2026-10-15/in_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping ('Rates in effect January 1, 2026', 'Water/30amp (per night) $40.00 + TAX', 'Water/Sewer/50amp (per night) $53.00 + TAX'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping ('Complimentary Wi-Fi, Shower facilities, Restrooms, Dump stations'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -92556,7 +92750,17 @@
       "nightly_high": 53,
       "currency": "USD",
       "checked": "2026",
-      "note": "Elkhart County 4-H Fair (rates from January 1, 2026): water and 30-amp $40 a night, full hookup with 50-amp $53, plus tax. Read 2026-10-15."
+      "note": "Plus tax. No weekly or monthly rates."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.4hfair.org/p/plan-your-visit/rv-camping1/public-camping https://www.4hfair.org/p/plan-your-visit/rv-camping1",
+      "note": "Rates, hookups, back-in only, Mar 1-Nov 30 and phone booking confirmed; 2026 blackouts, 30-night limit, facilities and the 280-site figure added; note cleaned. Pin sits in the fairground, acceptable."
     }
   },
   {
@@ -93110,39 +93314,53 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 68
+      "count": 75,
+      "max_rig_ft": 90,
+      "pull_through": true,
+      "note": "County: approximately 60 electric and 15 primitive. Campspot lists 45 RV and 9 tent sites online."
     },
     "season": {
       "year_round": false,
       "opens": "05-01",
-      "closes": "11-02"
+      "closes": "11-02",
+      "note": "County's Fowler page says the season 'concludes October 15th'; Campspot took bookings to November 2 in 2026."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/fowlerparkin/",
+      "note": "2026 reservations opened February 2 at 8 am."
     },
     "provenance": {
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://vigoparks.org/fowler-park-2/ ('approximately 60 modern sites with electricity and approximately 15 primitive campsites'); Campspot read 2026-10-13 (audit/price_research/campspot_tier_2026-10-13.jsonl): Ash RV Site max 90 ft with Pull-Through, Oak 48, Riverbirch 58-60, Accessible 35, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "season": {
-        "source": "https://www.campspot.com/book/fowlerparkin/ (Campspot park record: closed 2026-01-01 to 2026-04-30 and from 2026-11-03), read 2026-10-13; replaces the note scan's {\"closes\": \"10-15\"}",
-        "checked": "2026-10-13"
+        "source": "https://vigoparks.org/camping/ ('May 1st at Fowler') + https://vigoparks.org/fowler-park-2/ + Campspot closed dates 2026-11-03 to 2027-04-30 (read 2026-10-13, audit/price_research/campspot_tier_2026-10-13.jsonl), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://vigoparks.org/camping/, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "hookups": {
-        "source": "https://www.campspot.com/book/fowlerparkin/ (Campspot park record and RV site types' amenities: 30-Amp, 50-Amp, Water Hook-Up), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "Campspot site types read 2026-10-13 (audit/price_research/campspot_tier_2026-10-13.jsonl): 30-Amp, 50-Amp, 'Water Hook-Up' on Riverbirch; https://vigoparks.org/camping/ ('electric and direct water'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/fowlerparkin/ (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2026-11-10, 2026-11-14, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://vigoparks.org/camping/ ('2026 Camping Rates: Camping Electric - $22, Camping Electric/Water - $27, Camping Primitive - $20'; 'flat daily rate per the site selected'); booking fee from Campspot quotes read 2026-10-13 (audit/price_research/campspot_tier_2026-10-13.jsonl), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://vigoparks.org/fowler-park-2/ ('Shower houses, restrooms, and a dump station are available to campers'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -93155,12 +93373,21 @@
       "water": true
     },
     "fees": {
-      "nightly_low": 20,
+      "nightly_low": 22,
       "nightly_high": 27,
       "currency": "USD",
       "reservation_fee": 3,
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Ash RV Site, Oak RV Site and Riverbirch RV Site (Electric; direct Water Hook-Up)). October 2026: $22-27 on a Tuesday; $20-27 on a Saturday. Campspot shows the park closed in November 2026. June 2027 isn't open for booking yet. Plus the park's $3 'Booking Fee', once per stay. Read 2026-10-13."
+      "note": "Flat daily rates. Campspot adds a $3 booking fee once per stay; an optional $5 fee locks a specific site. $20 primitive sites are typed tent-only on Campspot."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://vigoparks.org/camping/ https://vigoparks.org/fowler-park-2/ https://www.campspot.com/book/fowlerparkin/ https://vigoparks.org/wp-content/uploads/2025/01/Fowler-Park-Complete-Map.pdf",
+      "note": "Lakefront stands (county: 'campsites are located next to the lakes edge'; the map and imagery show the camp on lake peninsulas). Base $20->$22: $20 is the primitive tent type and one stray Campspot Saturday quote. Count 68->~75, max rig 90, pull-through and facilities added. Pin is on the electric peninsula."
     }
   },
   {
@@ -94838,15 +95065,15 @@
     "id": 1354,
     "kind": "campground",
     "name": "Deer Ridge Camping Resort",
-    "location": "39.8658,-84.8511",
-    "elevation_meters": 320.0,
+    "location": "39.86814,-84.85125",
+    "elevation_meters": 322.0,
     "state": "IN",
     "ownership": "private",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 39.866,-84.851: open-field RV resort off I-70; only a tiny amenity pond, no sites on water",
     "inclusion_evidence": "deerridgecampingresort.com: operating May 1-Oct 31, reservations taken, RV resort -> real transient RV campground",
     "website": "https://www.deerridgecampingresort.com/",
-    "note": "Private. 60 full-hookup sites off I-70 Exit 153 (Richmond), big-rig 50A pull-thrus, AAA/Good Sam listed; some seasonal but takes nightly transient. Season May-Oct. --Claude",
+    "note": "Private, off I-70 Exit 153 (Richmond). Some seasonal but takes nightly transient. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -94858,36 +95085,49 @@
       "sewer": true
     },
     "sites": {
-      "count": 60,
+      "count": 62,
       "pull_through": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-31"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.deerridgecampingresort.com/rates-site-map ('Nightly rates include water, 30 amp electric, and sewer'; 50 Amp $9), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.deerridgecampingresort.com/site-map (site map image: 60 numbered sites plus Upper and Lower Pull Thru), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.deerridgecampingresort.com/ ('Camping begins May 1st and ends October 31st'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://www.deerridgecampingresort.com/ ('We belong to RVIC, ARVC and Good Sam. We offer Coast to Coast, Passport America, Escapees, and Military Discounts') + Good Sam directory (isGsPark true, read 2026-10-31), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.deerridgecampingresort.com/rates-site-map ('RV Site (20, 30 amp) | $45 - $55', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.deerridgecampingresort.com/rates-site-map ('RV Site (20, 30 amp) $45 - $55', 'RV Site (Pull Thru) $50 - $60', '50 Amp $9', 'Extra Adult $5'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.deerridgecampingresort.com/ ('Please Call to Reserve - 765-939-0888') + https://www.deerridgecampingresort.com/rates-site-map + https://www.deerridgecampingresort.com/site-map, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.deerridgecampingresort.com/amenities ('On Site 24 hr Laundry', 'Camp Store'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -94897,14 +95137,30 @@
     },
     "discounts": {
       "good_sam": true,
-      "military": true
+      "military": true,
+      "passport_america": true
     },
     "fees": {
       "nightly_low": 45,
       "nightly_high": 69,
       "currency": "USD",
-      "note": "RV sites (20/30A) $45-55, pull-throughs $50-60; 50A $9 extra."
-    }
+      "note": "RV sites (20/30A) $45-55, pull-throughs $50-60; 50A $9 extra. Covers 2 adults and their children under 18; extra adult $5."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "One night deposit for holiday and special-event reservations; two-week cancellation notice. Check-in 2 pm, check-out noon."
+    },
+    "facilities": {
+      "laundry": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.deerridgecampingresort.com/ https://www.deerridgecampingresort.com/rates-site-map https://www.deerridgecampingresort.com/site-map https://www.deerridgecampingresort.com/amenities",
+      "note": "Rates, 50A, full hookups, Good Sam Park and military confirmed; season May 1-Oct 31, phone booking, Passport America, facilities added; count 60->62 from the site map; note cleaned. Passes the gate. Pin should move."
+    },
+    "phone": "765-939-0888"
   },
   {
     "id": 1355,
@@ -94919,7 +95175,7 @@
     "inclusion_evidence": "cornerstonecampground.com: open Apr 1-Nov 1, accommodates tent/big rig/everything between -> real RV campground",
     "website": "https://cornerstonecampground.com/",
     "phone": "765-987-8700",
-    "note": "Private Christian retreat/campground near I-70 (New Castle). 110 sites incl. big-rig pull-throughs to 50 ft, full/W-E hookups, on-site fishing lake (amenity); nightly bookable via RoverPass. --Claude",
+    "note": "Private Christian retreat/campground near I-70 (New Castle), with an on-site catch-and-release fishing lake (amenity). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -94927,32 +95183,34 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "count": 110,
-      "max_rig_ft": 50,
+      "count": 128,
       "pull_through": true
     },
     "booking": {
       "reservable": true,
-      "platform": "roverpass"
+      "platform": "operator",
+      "url": "https://cornerstonecampground.com/contact-us/",
+      "note": "Reservation request by web form or phone; staff answer forms in 2-4 business days. Check-in 2 pm; check-out noon, 2 pm Sunday."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cornerstonecampground.com/rates/ + https://cornerstonecampground.com/map/ (50 AMP stars on the 2024 map), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cornerstonecampground.com/campground-and-retreat/ ('We have 128 campsites, 26 of which are full hookups, and 102 water and electric sites'). max_rig_ft cleared: 50 ft came from note prose and no operator page gives a length, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cornerstonecampground.com/contact-us/ ('please allow the Cornerstone Staff 2-4 business days to respond') + https://cornerstonecampground.com/. RoverPass cleared: its page is an unclaimed listing ('Claim my Campground', 'Last Updated: 11/15/2024') and the operator's site never links it, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -94960,8 +95218,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://cornerstonecampground.com/rates/ ('Daily 30 Amp and Water | $35-$55', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://cornerstonecampground.com/rates/ ('Daily 30 Amp and Water $35-$55', 'Daily 50 Amp Full-Hookup $47-$67', 'Buy 6 Get the 7th night free'; undated page), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://cornerstonecampground.com/ ('We are open from April 1-November 1'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://cornerstonecampground.com/campground-and-retreat/ ('Clean showers and restrooms', 'Laundry Center', 'Dump Station', 'Firewood and Ice for sale in the cafe') + https://cornerstonecampground.com/ ('camp store'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -94977,6 +95246,23 @@
       "nightly_high": 67,
       "currency": "USD",
       "note": "Water + electric 30A $35-55, 50A $40-60; full hookup 30A $42-62, 50A $47-67; 7th night free."
+    },
+    "season": {
+      "opens": "04-01",
+      "closes": "11-01",
+      "year_round": false
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://cornerstonecampground.com/ https://cornerstonecampground.com/rates/ https://cornerstonecampground.com/campground-and-retreat/ https://cornerstonecampground.com/map/ https://cornerstonecampground.com/contact-us/ https://cornerstonecampground.com/cornerstone-mission-statement/",
+      "note": "Rates, phone and 50A confirmed; count 110->128, season Apr 1-Nov 1 and facilities added; booking roverpass->operator's request form; 50-ft max rig cleared as unsourced; note cleaned. Passes the gate: $35 base, 4.7/243."
     }
   },
   {
@@ -95761,7 +96047,7 @@
     "inclusion_evidence": "coveredbridgecampground.com: full-hookup (W/E/S, 30/50A) RV sites incl. pull-thrus, phone-reservable, Rockville -> real RV campground",
     "website": "http://www.coveredbridgecampground.com/",
     "phone": "765-569-5080",
-    "note": "Private, closest campground to downtown Rockville. Full hookups (W/E/S, 50A), grassy/flat sites, RVs to 40 ft; popular for the Covered Bridge Festival. --Claude",
+    "note": "Private, closest campground to downtown Rockville. White-rock and grass sites, some shaded; popular for the Covered Bridge Festival. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -95772,9 +96058,6 @@
       "water": true,
       "sewer": true
     },
-    "sites": {
-      "max_rig_ft": 40
-    },
     "provenance": {
       "hookups": {
         "source": "note prose",
@@ -95782,15 +96065,39 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared: 40 ft came from note prose and no operator page gives a length, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "Operator's page as archived 2022-10-06 by the Wayback Machine (secondary: the live page now 404s): http://web.archive.org/web/20221006031836/http://coveredbridgecampground.com/campinginfo.html",
+        "checked": "2026-10-31",
+        "method": "reported"
+      },
+      "facilities": {
+        "source": "Operator's page as archived 2022-10-06 ('We also have showers and restroom facilities'; the live page now 404s): http://web.archive.org/web/20221006031836/http://coveredbridgecampground.com/campinginfo.html",
+        "checked": "2026-10-31",
+        "method": "reported"
       }
     },
     "note_scan": {
       "sig": "503e572bd69a2e3a",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Required for the Covered Bridge Festival; otherwise call ahead or just stop in (self-registration envelope when the office is closed)."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.coveredbridgecampground.com/ http://web.archive.org/web/20221006031836/http://coveredbridgecampground.com/campinginfo.html",
+      "note": "No current rate: the live site is a one-page welcome (W/E/S hookups, phone via Google) and its rates page is gone; the last archived rates are 2021, so fees stay empty. 40-ft max rig cleared as unsourced; booking and showers added from the archive; note cleaned."
     }
   },
   {
@@ -96200,15 +96507,15 @@
     "id": 1378,
     "kind": "campground",
     "name": "Hillbilly Acres Campground",
-    "location": "39.03587,-87.21748",
-    "elevation_meters": 175.0,
+    "location": "39.03330,-87.21760",
+    "elevation_meters": 160.0,
     "state": "IN",
     "ownership": "private",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 39.0359,-87.2175: two tree-ringed catch-and-release lakes; RV/overnight sites set inland among trees, no open shoreline pads visible",
     "inclusion_evidence": "operator site: 24 overnight full-hookup sites ($40), 30/50A, daily/weekly/monthly -> real RV campground",
     "website": "https://www.hillbillyacrescampgroundllc.com/",
-    "note": "Private, on the edge of Greene-Sullivan State Forest (Linton). Full hookups with a dedicated overnight transient area + own bathhouse (24 overnight sites) plus seasonals; two catch-and-release lakes. --Claude",
+    "note": "Private, on the edge of Greene-Sullivan State Forest (Linton). Dedicated overnight transient area + own bathhouse, plus seasonals; two catch-and-release lakes. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -96220,13 +96527,34 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hillbillyacrescampgroundllc.com/about-3 ('full hookup - water, septic & electric'); no amperage stated, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hillbillyacrescampgroundllc.com/rates ('Overnight Camping-$40.00/Night up to 6 adults.', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.hillbillyacrescampgroundllc.com/rates ('Overnight Camping -$40.00/Night up to 6 adults', 'EACH ADDITIONAL PERSON 16+ ------$10/night'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.hillbillyacrescampgroundllc.com/permanent-campsites ('capacity for around 100 seasonal campers') + https://www.hillbillyacrescampgroundllc.com/map (map image numbers the overnight sites 1-26), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.hillbillyacrescampgroundllc.com/rates ('Open Season April 1st- November 1st (Weather Permitting)'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hillbillyacrescampgroundllc.com/ ('PLEASE CALL TO MAKE RESERVATIONS') + https://www.hillbillyacrescampgroundllc.com/general-5, read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hillbillyacrescampgroundllc.com/projects-7 ('Hillbilly Acres now has its own Camp Store!'; 'open every weekend'), read 2026-10-31",
+        "checked": "2026-10-31",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -96238,8 +96566,32 @@
       "nightly_low": 40,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Overnight camping $40 for up to 6 adults."
-    }
+      "note": "Overnight camping $40 for up to 6 adults; each additional person 16+ $10."
+    },
+    "sites": {
+      "count": 126,
+      "note": "About 100 seasonal, 26 numbered overnight sites on the map; also 6 cabins."
+    },
+    "season": {
+      "opens": "04-01",
+      "closes": "11-01",
+      "year_round": false,
+      "note": "Weather permitting. Seasonal rigs may stay on site all year with the water off."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Specific site not guaranteed, only site type. Check-in 3 pm, check-out noon. Cancellation over 7 days out refunded; none within 3 days."
+    },
+    "facilities": {
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-31",
+      "sources": "https://www.hillbillyacrescampgroundllc.com/ https://www.hillbillyacrescampgroundllc.com/rates https://www.hillbillyacrescampgroundllc.com/about-3 https://www.hillbillyacrescampgroundllc.com/permanent-campsites https://www.hillbillyacrescampgroundllc.com/map https://www.hillbillyacrescampgroundllc.com/general-5",
+      "note": "$40 for up to 6 adults, full hookups and the seasonal + overnight split confirmed; about 126 sites, season Apr 1-Nov 1, phone booking and camp store added; note cleaned. Passes the five long-stay tests with overnight about 21%."
+    },
+    "phone": "812-798-6458"
   },
   {
     "id": 1379,

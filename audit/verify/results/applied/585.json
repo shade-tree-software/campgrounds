@@ -1,0 +1,88 @@
+{
+ "id": 585,
+ "sources": [
+  "https://www.nps.gov/indu/planyourvisit/campgrounds.htm",
+  "https://www.recreation.gov/api/camps/campgrounds/258887",
+  "https://www.recreation.gov/api/camps/campgrounds/258887/rates",
+  "https://www.nps.gov/indu/planyourvisit/fees.htm"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 25,
+    "nightly_high": 25,
+    "currency": "USD",
+    "entrance": {
+     "resident": 25,
+     "nonresident": 25,
+     "per": "vehicle_stay"
+    }
+   },
+   "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm ('$25.00 per night camping fee') + https://www.recreation.gov/api/camps/campgrounds/258887/rates (2026 RV Nonelectric $25) + https://www.nps.gov/indu/planyourvisit/fees.htm ('Private Vehicle $25.00', 7-day; rec.gov: 'A valid entrance pass or receipt is required for all visitors'), read 2026-10-31",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0,
+    "water": false,
+    "sewer": false
+   },
+   "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm ('No electric or water hookups at individual sites'); recreation.gov catalog types every RV site RV NONELECTRIC, read 2026-10-31",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 66,
+    "pull_through": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/258887 ('66 campsites') and the RIDB catalog (53 RV + 13 tent-only, 4 of the RV sites Pull-through), read 2026-10-31",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "opens": "04-01",
+    "closes": "11-01",
+    "year_round": false
+   },
+   "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm ('Campground Open Dates: April 1 through November 1'), read 2026-10-31",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/258887",
+    "window_opens_days": 180,
+    "max_stay_nights": 14,
+    "note": "All sites reservable six months ahead of check-in; sites become reservable November 15 for the following season. Check-out noon; a new arrival cannot occupy a site before noon unless it is vacant."
+   },
+   "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm + https://www.recreation.gov/api/camps/campgrounds/258887 ('Stays are limited to 14 days in a 30-day period'), read 2026-10-31",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "dump": true,
+    "potable_water": true
+   },
+   "source": "https://www.nps.gov/indu/planyourvisit/campgrounds.htm (restrooms and showers in each loop, RV dump station, potable water in each loop) + NPS campgrounds API (Flush Toilets), read 2026-10-31",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {
+    "interagency_senior_access": true
+   },
+   "source": "NPS campgrounds API, parkCode indu (Access Pass and Senior Pass $12.50 per night), read 2026-10-31",
+   "method": "manual"
+  }
+ },
+ "summary": "$25, no hookups, reservable on rec.gov confirmed; entrance fee, season Apr 1-Nov 1, 66 sites, 14-night limit, facilities and the pass discount added. Pin is good. All 53 RV sites have driveways of 26 ft or more; max_rig_ft left out because rec.gov posts driveways only (top values 95 and 99 ft look unreliable) and says some sites are length-limited without saying which.",
+ "flags": [
+  "ENTRANCE FEE: every camper also needs the park's entrance pass, $25 per vehicle for 7 days (rec.gov notice + NPS fees page), on top of $25 a night. Separately recorded as fees.entrance, not added to the base.",
+  "WATER (AWH value, not changed): stored 'coastal woods' is an --AWH manual call. Rec.gov says Lake View Beach is '1.5 miles north of the campground'; imagery agrees, roughly 2.2 km with the South Shore rail line, US 12 and Beverly Shores between (imagery estimate; Overpass was down this session). AWH may want to consider whether that is still coastal woods.",
+  "COUNT: NPS's page says 67 campsites (1-54 RV, 55-67 tent); rec.gov's text, NPS's API and the RIDB catalog say 66 (53 RV, 13 tent) plus one MANAGEMENT site. Wrote 66.",
+  "PHONE: stored none; 219-395-1882 ('The Indiana Dunes Visitor Center handles all campground questions', NPS page)."
+ ],
+ "checked": "2026-10-31"
+}

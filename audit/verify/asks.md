@@ -393,3 +393,9 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1373 AOK (IN, p3-226):** Google 3.7/219, well below RV Life 5*, and the only readable snippet says 'some maybe full time residents'. $35, daily/weekly/monthly. You judge reviews by what they say and most were blocked; drop if they read poorly. Kept for now.
 
 - **13346 Seneca Lake (OH, p3-226):** Marina Point (199 full-hookup sites, own gatehouse on SR 313, 1.3 km across the water) would be its own entry if it sells nights. Stored text says seasonal-only from a search excerpt; imagery fits; engine is behind the captcha. Left out.
+
+- **1371 Covered Bridge (IN, p3-228):** Google 3.9/61, mixed: small close sites, shower stalls without locks, 'need a mow', also 'peaceful, clean', 'inexpensive'. Rates page 404s; last posted 2021 $32 W/E, RV Life $$ avg $32. Kept; your call on the reviews.
+
+- **1318 Elkhart County Fairgrounds (IN, p3-228):** run by the Elkhart County 4H Fair association; no page says county-run. Stored local unconfirmed. About 3 months blacked out in 2026. Kept under the fairground rule.
+
+- **1086 Hardy Lake (IN, p3-228):** Wooster's on-water sites are $14 primitive, 'primarily to serve fishermen'; Shale Bluff is the main campground above the water. Does the entry's rating follow Wooster?
