@@ -405,3 +405,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **15432 Richmond KOA (IN, p3-230):** passes at $45.89 only on 30-amp back-ins KOA calls 'Perfect for pop-ups', offered to a 23-ft motorhome search. Next is $54.11, then $67+; no gateway. Google 4.6/628. Kept for now.
 
 - **1363 Old Mill Run (IN, p3-230):** $46.73, about 1 night site in 7. Newest review: '90% of the sites are used by what looks like full time residents... looks like a run down mobile home park'. Others warm; Google 4.5/280. Kept for now.
+
+- **1367 Walnut Ridge (IN, p3-231):** $50 at the line ($55 for 50-amp), Google 4.3/129. About 113 of 160 sites priced as seasonal (~29% left, by subtraction). Reviews: 'Mostly permanent sites. We were put right next to maintenance building', 'We will never return', 'Many of the sites appear to be long term guests'. Sits beside an RV dealership. Recommend drop; kept for now.
+
+- **1370 White Oaks (IN, p3-231):** $50 weekdays at the line, Google 4.5/179. Operator says bathhouses are in rough shape, laundry closed; a review says cold water only. Kept for now.
