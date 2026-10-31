@@ -373,3 +373,11 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1266 Kenisee (OH, p3-221):** 300 sites; only ~12-25 appear sold nightly (4-8%, no published count), 'settle for a season', sells RVs set up on site, reviews mention long-term residents. $50 posted, Google 4.6/188. Test 4 looks failed; a call to 440-466-2320 would settle it. Kept for now.
 
 - **1292 Shady Trails (OH, p3-222):** stored 'mostly seasonal' has no source; no operator page or booking site; only rate is Good Sam's undated 'From $35'. Google 4.5/79 reads like overnight use ('a couple nights', 'every weekend'). Kept for now as an ordinary park; on test 2 it would go. 937-393-5618.
+
+- **1014 Malabar Farm (OH, p3-223):** ODNR: 'outfitted for equestrian camping', '15 sites designated for equestrian camping'; ReserveOhio site 001 says 'available to all campers', pads 43-60 ft, campers report 36-ft trailers. Horse camps are out, general campgrounds with horse sites are in; this is a horse camp that admits others. Recommend drop. Kept for now.
+
+- **1313 Timashamie (OH, p3-223):** no posted rate, no engine; operator leads with 'SEASONAL SITES ARE AVAILABLE!', tightly packed lots; a 2023 camper paid $35 a night. If long-stay it fails test 2. Google 4.4/125. Kept for now; 330-525-7054 would settle it.
+
+- **1241 Village Green (OH, p3-223):** public $45 daily, but a 2025 camper says 'mainly populated with seasonal campers', some with moss on them; share unposted, test 4 unmeasured. Kept for now; 440-224-0310.
+
+- **14306 Walnut Creek (OH, p3-223):** a 7/2026 motorhome review (4 of 10, 'Will not return') opens with a warning about the road in, Blacksmith Hill, and RV Life's API cuts the text there. Read it before taking EKKO; EKKO is not 4WD. Other 2025-26 reviews, incl. a motorhome, raise nothing readable. Kept.
