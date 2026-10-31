@@ -387,3 +387,9 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **14318 Big Bear Lake (OH, p3-225):** $40 posted, Google 4.7/187, but lease-based: numbered lease sites 1-335 with 'one camp site for the year', members sell campers and improvements on their lots, leaf-off shows packed trailers. Overnight blocks look like ~25-35 sites, near or under 1 in 10 by a rough map count. Recommend drop. Kept for now.
 
 - **13345 Charles Mill (OH, p3-225):** Eagle Point (electric with spigots, sites 400-612) and Main Camp (mostly full hookup) have own entrances either side of the causeway, ~800 m across the water, ~1 km by road: right at the split line. Per-area rates sit behind the captcha. Left as one entry; pages saved from a browser would allow a split.
+
+- **14307 Sandy Springs (OH, p3-226):** site is behind a bot check, so nothing was re-read. Stored $45 is an October rate, riverview $50, riverside $65; a summer rate over $50 wouldn't show. Google 4.9/207. A look at sandyspringscampground.com rates, or a saved page, would settle the gate and the riverside row. Kept for now.
+
+- **1373 AOK (IN, p3-226):** Google 3.7/219, well below RV Life 5*, and the only readable snippet says 'some maybe full time residents'. $35, daily/weekly/monthly. You judge reviews by what they say and most were blocked; drop if they read poorly. Kept for now.
+
+- **13346 Seneca Lake (OH, p3-226):** Marina Point (199 full-hookup sites, own gatehouse on SR 313, 1.3 km across the water) would be its own entry if it sells nights. Stored text says seasonal-only from a search excerpt; imagery fits; engine is behind the captcha. Left out.

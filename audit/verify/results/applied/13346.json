@@ -1,0 +1,78 @@
+{
+ "id": 13346,
+ "sources": [
+  "https://www.mwcd.org/places/seneca-lake/ (read in a browser; Cloudflare blocks plain HTTP)",
+  "https://www.mwcd.org/visit-our-lakes/lodging-facilities/reservations-and-fees/",
+  "https://www.mwcd.org/wp-content/uploads/2026/03/2026-Campground-Rues-FINAL_.pdf",
+  "https://www.mwcd.org/wp-content/uploads/2024/02/SEN20185011_PS_db.pdf",
+  "https://www.mwcd.org/wp-content/uploads/2024/02/SEN20195018_ParksideCentral_db.pdf",
+  "https://www.mwcd.org/wp-content/uploads/2024/02/SEN20215001_MarinaPt_update.pdf",
+  "https://www.mwcd.org/wp-content/uploads/2024/02/SEN20195018_Woodlands_db.pdf",
+  "https://www.mwcd.org/wp-content/uploads/2023/09/SEN-S1.pdf",
+  "https://www.mwcd.org/wp-content/uploads/2024/01/camp_rate_brochure_for_web-1.pdf",
+  "https://reserve.mwcd.org/seneca-lake/ (AWS WAF; not read)"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "https://www.mwcd.org/wp-content/uploads/2024/01/camp_rate_brochure_for_web-1.pdf ('Premium lots are renovated sites with 50 amp electric, full hook-up concrete pads', priced for Seneca) + https://www.mwcd.org/wp-content/uploads/2024/02/SEN20185011_PS_db.pdf (legend 'Full Hookup', 'Electric Site'), read 2026-10-31",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 300,
+    "note": "MWCD: 'Parkside campground: 300', which the park map splits into Parkside, Parkside Central and Woodlands. A limited number are seasonal; the transient count isn't published."
+   },
+   "source": "https://www.mwcd.org/places/seneca-lake/ ('499 campsites (Marina Point: 199 sites | Parkside campground: 300)'), read 2026-10-31",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "laundry": true,
+    "potable_water": true
+   },
+   "source": "https://www.mwcd.org/places/seneca-lake/ ('Shower house & laundry facilities') + https://www.mwcd.org/wp-content/uploads/2024/02/SEN20185011_PS_db.pdf (legend 'Spigot', 'Shower House'), read 2026-10-31",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://reserve.mwcd.org/seneca-lake/",
+    "window_opens_days": 340,
+    "reserve_until": {
+     "relative_to": "arrival",
+     "offset_hours": -48
+    },
+    "fcfs": "some_sites",
+    "note": "MWCD's own reservation site or the call center, 1-855-822-6764; book at least 48 hours ahead (a Friday night by Wednesday). Changes and cancellations through the park office. Campers without a reservation are given the list of open lots."
+   },
+   "source": "https://www.mwcd.org/visit-our-lakes/lodging-facilities/reservations-and-fees/ ('All reservations must be made 48 hours prior'; 'available both online and through the call center 340 days prior') + https://www.mwcd.org/wp-content/uploads/2026/03/2026-Campground-Rues-FINAL_.pdf ('except for seasonal camping and sites designated as non-reservable'; 'Campers without reservations will be provided with a list of available lots'), read 2026-10-31",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {
+    "military": true,
+    "note": "Active-duty military 25% off daily camping (subject to availability, free park admission); veterans 10%; seniors 60+ 10%; former POWs and 100% disabled veterans 50% off daily and 30-day camping. Discounts cannot be combined and apply only to the senior or veteran staying on the site."
+   },
+   "source": "https://www.mwcd.org/places/seneca-lake/ (Rates tab, Discounts), read 2026-10-31",
+   "method": "manual"
+  }
+ },
+ "note": "Muskingum Watershed Conservancy District park on Seneca Lake near Senecaville, south of Cambridge. Nightly camping is in the Parkside, Parkside Central and Woodlands areas; shoreline electric sites run along the north end of Parkside. The Marina Point campground across the bay is seasonal. Beach, marina. --Claude",
+ "summary": "Hookups 50/W/S, Parkside 300 sites, showers/laundry/spigots, operator booking 340-day window and 48-hour cutoff, some non-reservable, military discount detail confirmed. Stored fees (manual) untouched: engine behind a captcha. Note trimmed. Pin OK. Season not stated.",
+ "flags": [
+  "SPLIT candidate, not this entry's own areas: Marina Point (199 full-hookup sites, centre ~39.9285,-81.4310, own gatehouse and entrance on SR 313, 1.3 km from this pin across the water and several km by road) is at a separate place with its own entrance. The stored evidence and note call it seasonal-only, sourced to a search excerpt; MWCD's page and map don't say so, and imagery shows it packed with parked units, consistent with that; the engine that would settle it is unread. If it does sell nights, it's a separate entry. Parkside, Parkside Central (~39.9110,-81.4190, 0.9 km from the pin) and Woodlands (~39.9060,-81.4150, ~1.5 km) are NOT a split: all use the one Park Road entrance off SR 574 (park map).",
+  "UNVERIFIED (captcha): reserve.mwcd.org answers AWS WAF; not solved. Per-site rates, lengths, the current seasonal share and the season were not read.",
+  "FEES (manual provenance, not overwritten): stored $31-99 from AWH's saved July 2027 calendar. mwcd.org adds 'There is an $8.00 per site non-refundable reservation fee' (suggest fees.reservation_fee 8). Its 2024 sheet: electric $46, full hookup $53, premium $64, waterfront $55-57, premium waterfront $82, primitive $42, +$10 peak weekends/holidays.",
+  "Site-count conflict on MWCD's pages: Seneca page '499 campsites' and 'more than 400 campsites available', camping page '513 campsites in two locations'. Wrote the 300 that names Parkside.",
+  "Local park: the public can book an ordinary night. WATERFRONT lakefront holds: MWCD's Parkside map draws the electric row at the north end on the shore, and it sells Waterfront lots here. Pin 39.9170,-81.4265 sits in that Parkside row, ~200 m from the Parkside centre (~39.9157,-81.4255). Phone 740-685-6013 confirmed.",
+  "Park entry fee ('Memorial Day Weekend-Labor Day daily admission: $5 single-occupant vehicle, $10 two or more') is for day visitors: campers with reservations get vehicle passes (2026 rules), so not recorded as a camping fee."
+ ],
+ "checked": "2026-10-31"
+}
