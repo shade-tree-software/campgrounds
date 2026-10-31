@@ -1,0 +1,78 @@
+{
+  "id": 999,
+  "checked": "2026-10-31",
+  "sources": [
+    "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/forked-run-state-park-campground",
+    "https://reserveohio.com/OhioCampWeb/#!park/350 (API: ohiordr.usedirect.com/OhioRDR/rdr/search/grid, /search/details)",
+    "Esri World Imagery around 39.0905,-81.7775, read 2026-10-31"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "surcharges": {
+          "electric": 10
+        },
+        "reservation_fee": 6.5,
+        "checked": "2026",
+        "note": "$25 a night for a site without electric, $35 with electric (June 2027). Off-peak (January 2027) $21 and $31. 28 non-electric sites are rated 35-40 ft, so they set the RV base. Plus tax and a $6.50 reservation fee per reservation. ReserveOhio's prices read 2026-10-31."
+      },
+      "source": "ReserveOhio search/grid and search/details (facilities 440, 441): Campsite Non-Electric #084 rate 25.00 on 2027-06-15 and 21.00 on 2027-01-19; Campsite Electric #035 and #142 rate 35.00 and 31.00; fee 6.50, read 2026-10-31",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50
+      },
+      "source": "ReserveOhio search/grid and search/details (facilities 440, 441): 'Electricity Hookup' '50' on all 25 electric sites rated 23 ft or longer, read 2026-10-31",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 143,
+        "max_rig_ft": 58,
+        "pull_through": true,
+        "note": "79 electric and 64 non-electric sites in five areas. Only 53 are rated 23 ft or longer (25 electric at 35-58 ft, 28 non-electric at 35-40 ft); the others are rated 13-22 ft, so filter by length when booking. Six long sites are pull-throughs (31, 33, 35, 37, 39, 141)."
+      },
+      "source": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/forked-run-state-park-campground ('143 campsites in five camping areas'; '79 electric sites'; '64 non-electric sites') + ReserveOhio search/grid and search/details (facilities 440, 441): VehicleLength per site; PullInTypeName 'Pull Through' on 6 of the 53 long sites, read 2026-10-31",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "vault_toilets": true,
+        "dump": true,
+        "potable_water": true
+      },
+      "source": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/forked-run-state-park-campground ('Showers, vault latrines, dump station'; 'The dump station remains open and water is available'), read 2026-10-31",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Area 1 is the only area open November 1 through April 1. Its showerhouse closes in winter (ODNR: 'December 5 through April 31'); the dump station stays open and water is available."
+      },
+      "source": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/forked-run-state-park-campground ('Area 1 is the only camping area open from November 1 through April 1'), read 2026-10-31",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "max_stay_nights": 14
+      },
+      "source": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/forked-run-state-park-campground ('Reservations may be made up to six months in advance online or by calling (866) 644-6727') + ReserveOhio search/grid and search/details (facilities 440, 441): MaximumStay 14, read 2026-10-31",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed fees $25 base, +$10 electric; not waterfront. Added 143 sites, 58 ft max, pull-throughs, 50A, showers/vault/dump/water, year-round via Area 1, 14-night max, $6.50 fee. Only 53 sites fit 23 ft.",
+  "flags": [
+    "PIN WRONG: stored 39.0890,-81.7930 is about 1.4 km west of the campground, in forest and about 800 m beyond the westernmost site. Corrected: about 39.0907,-81.7768 (centroid of ReserveOhio's per-site coordinates for 146 sites; range 39.0884-39.0931, -81.7839 to -81.7710). The stored elevation was read at the old pin.",
+    "PHONE BLANK: the ODNR campground page lists (740) 378-6206 under its emergencies/phone block. It does not label it camp office. Reservations are (866) 644-6727.",
+    "Waterfront stays 'not waterfront': on the plotted site coordinates the nearest sites to the lake (e.g. 142, 96) are about 150 m or more through forest, and the Ohio River is about 1 km or more south. No re-audit needed.",
+    "AMPERAGE: the details call says '50' on the long electric sites but the map icon for all of them is named 'Trailer.E30', and ODNR doesn't state amps. I wrote 50 from the explicit field.",
+    "No split: the five areas share one campground and road system."
+  ]
+}

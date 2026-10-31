@@ -365,3 +365,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1274 Adventure Bound Pleasant View (OH, p3-219):** $44 midweek shows beside $85 on the same row, so it may be a promotion. If so the real night is $78-85 and it fails the price gate (no gateway, not a GS Park, Google 3.7/386). Kept for now. **AWH 2026-10-31: rates start at $79; dropped.**
 - **14292 Bluegrass (OH, p3-219):** has an 'Extended-Stay RV Sites for Traveling Workers' page; nightly rates posted ($50, GS member $45), nightly share unknown. Kept; worth a look against the workforce exclusion. **AWH 2026-10-31: stays.**
 - **597 South Bass (OH, p3-219):** island campground reached by Miller Ferry at about $124 round trip with two adults, on top of the site. Kept.
+
+- **1299 Clinton Lake (OH, p3-220):** no posted rate, no booking engine; looks long-stay ('close-knit community', monthly and seasonal rates listed by others, packed settled rows, third-generation campers). If long-stay it fails test 2, and RV Life $$ doesn't stand in. Google 4.6/175; a call to 419-585-3331 would settle it. Kept for now.
+- **14297 Hickory Lakes (OH, p3-220):** $45 posted, but rules are written for seasonal owners (shed limits, 2014-or-newer) with ~150 packed units; nightly share may be under 1 in 10. Kept for now.
+- **1244 Friendship Park (OH, p3-220):** its page also lists Sam Kerr RV Campground ($35, 30/50A, sewer; call for availability), not located. Can't tell which cluster the pin is on, so split undecided. Kept as one entry.
