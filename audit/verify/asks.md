@@ -411,3 +411,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1370 White Oaks (IN, p3-231):** $50 weekdays at the line, Google 4.5/179. Operator says bathhouses are in rough shape, laundry closed; a review says cold water only. Kept for now. **Dropped 2026-10-31 under AWH's standing calls.**
 
 - **1369 Amishville (IN, p3-232):** no operator site (amishville.com parked), no operator rate, Good Sam 'from $31' undated. Recent reviews: 'very few full hook-up sites that aren't occupied by people living there full time'; 'monthly payers who live there'; 'Never, ever staying here again'. Google 4.3/259. If long-stay, test 2 fails. Recommend drop; kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
+
+- **1320 Johnson County Fairgrounds (IN, p3-233):** run by a member Fair Association; no filing found and nothing says who holds the grounds. Stored local left, same question as 1318 Elkhart. $30 passes either way.
+
+- **1341 Lake Waveland (IN, p3-233):** pin is in a crop field and I can't place the camp loops on imagery; no operator rate (camper report $30, undated). A call to 765-435-2073 would settle both. Kept.
