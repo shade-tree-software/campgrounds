@@ -25,3 +25,5 @@ When vetting private (and any) campgrounds, EXCLUDE parks that are predominantly
 **Keys owner-lot exception (AWH 2026-10-30):** in the Florida Keys only, an owner-lot (condo) RV resort that rents lots by the night through a normal booking site that works like a regular nightly campground passes test 5 despite selling lots; every other test still applies. See [[project-keys-rescreen]].
 
 AWH 2026-10-30 (River Bend, OH 1300): "tent sites can count toward the nightly number" - test 4 (1 site in 10 sold nightly) counts ALL nightly sites, tent sites included, not only RV sites (16 of 231 RV sites + ~25 tent = 16%, kept).
+
+**On the fence = drop (AWH 2026-10-31, rest of phase 7):** "if you are on the fence about a mostly seasonal campground that looks iffy, just go ahead and drop it and let me know." Don't park these in asks.md; drop and report. Applied that day to 9 open asks.
