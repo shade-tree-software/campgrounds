@@ -21,3 +21,5 @@ AWH 2026-10-30, two rulings the same day:
 Relates to [[feedback-price-gate-proximity-exceptions]], [[feedback-require-live-web-presence]] and [[project-phase7-verification]].
 
 AWH 2026-10-31 dropped Clinton Lake (OH) on "so-so" reviews even at 4.6/175, on an entry already doubtful on long-stay. Read the text, not just the score.
+
+**Standing call (AWH 2026-10-31):** "you can drop private campgrounds that are borderline in price and quality if they have questionable policies, unusual facility issues, or poor reviews." Drop and report; don't park these in asks.md. See [[feedback-exclude-seasonal-residential]].
