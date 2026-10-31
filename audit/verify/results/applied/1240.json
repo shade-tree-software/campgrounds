@@ -1,0 +1,60 @@
+{
+  "id": 1240,
+  "checked": "2026-10-31",
+  "sources": [
+    "https://www.mwcd.org/places/piedmont-lake/ (Info, Maps, Rates tabs; read in a browser, Cloudflare blocks plain HTTP)",
+    "https://www.mwcd.org/wp-content/uploads/2023/09/pie20195021_db.pdf (Piedmont Lake Main Campground map with lot numbers)",
+    "https://www.mwcd.org/visit-our-lakes/lodging-facilities/reservations-and-fees/",
+    "https://www.mwcd.org/visit-our-lakes/lodging-facilities/camping/",
+    "https://www.mwcd.org/wp-content/uploads/2026/03/2026-Campground-Rues-FINAL_.pdf (2026 MWCD Campground Rules)",
+    "https://reserve.mwcd.org/piedmont/camping (AWS WAF 'Human Verification' puzzle - not passed; not read)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.mwcd.org/places/piedmont-lake/ (Info: 'Full hook-up campsites with 50-amp power'), read 2026-10-31",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 71, "max_rig_ft": null, "note": "71 numbered full-hookup sites on MWCD's main campground map (plus six park model cabins). The map shows no seasonal or tent-only marking; the reservation engine was not readable."},
+      "source": "https://www.mwcd.org/wp-content/uploads/2023/09/pie20195021_db.pdf (legend 'Full Hookup', lots 1-71; 'Park Model Cabin' 1-6), read 2026-10-31",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "camp_store": true, "wifi": true, "note": "WiFi is free at the marina building only."},
+      "source": "https://www.mwcd.org/places/piedmont-lake/ ('Shower house & laundry facility'; Services: Camp Store, Laundromat; 'FREE WiFi at the Marina building'), read 2026-10-31",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://reserve.mwcd.org/piedmont/camping",
+        "window_opens_days": 340,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+        "note": "MWCD's own reservation site or the call center, 1-855-822-6764; book at least 48 hours ahead (a Friday night by Wednesday). Changes and cancellations through the park office, 740-658-1029."
+      },
+      "source": "https://www.mwcd.org/visit-our-lakes/lodging-facilities/reservations-and-fees/ ('All reservations must be made 48 hours prior to the beginning of the reservation'; 'Individual sites become available both online and through the call center 340 days prior to the start of the reservation'; park phone table), read 2026-10-31",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "military": true,
+        "note": "Active-duty military 25% off daily camping (subject to availability, free park admission); veterans 10%; seniors 60+ 10%; former POWs and 100% disabled veterans 50% off daily and 30-day camping. Discounts cannot be combined and apply only to the senior or veteran staying on the site."
+      },
+      "source": "https://www.mwcd.org/places/piedmont-lake/ (Rates tab, 'Discounts'), read 2026-10-31",
+      "method": "manual"
+    }
+  },
+  "note": "Muskingum Watershed Conservancy District park on Piedmont Lake, with a marina. Lakeside sites are 2-8 at the northeast end of the loop, by the campground dock. --Claude",
+  "summary": "Hookups 50/W/S confirmed; sites 80 -> 71 (MWCD lot map), derived max_rig_ft 35 cleared (no MWCD page states it; the note said 35, the inclusion evidence 40); added showers/laundry/store/WiFi, operator booking with 340-day window and 48-hour cutoff, discount detail. Engine behind a captcha, so stored fees (manual, AWH 2026-10-10) left alone and per-site tags unread. Note trimmed of field facts.",
+  "flags": [
+    "UNVERIFIED (captcha): https://reserve.mwcd.org/piedmont/camping answers an AWS WAF 'Human Verification' puzzle to plain HTTP and the browser driver, same as Atwood (1228); not solved. So per-site rates, lengths, any 'lakefront' tag and the season were not read. Needs the same human pass as Atwood.",
+    "FEES (manual provenance, not overwritten): stored $39-49 from AWH's saved July 2027 calendar. mwcd.org adds 'There is an $8.00 per site non-refundable reservation fee' (once per reservation; suggest fees.reservation_fee 8) and lists no rates itself ('For rates on camping, cabins, and pavilions: reserve.mwcd.org').",
+    "Max length: stored 35 (derived from note prose) cleared. Nothing on mwcd.org states a length; the old note said ~35 ft, inclusion_evidence says 40 ft 'MWCD/ohio.org'. Map note: 'Campsite locations & dimensions are not to scale.' A 23-ft rig is not in doubt (concrete full-hookup pads, rigs parked in imagery).",
+    "Pin 40.1666,-81.2256 is on the marina store/boat docks about 400 m from the campground. Centre of the loops read from imagery: ~40.1679,-81.2300. No per-site coordinates available (engine captcha).",
+    "Phone 740-658-1029 confirmed for reservation changes (reservations table and camping page, 'Piedmont ... (740) 658-1029'). The park page's 'Contact' block instead shows (740) 433-4847, hours 8-4. Both are MWCD's; no change proposed.",
+    "Waterfront (stored lakefront, evidence: sites 2-8 at cove shore, pads 12-25 m from waterline): re-viewed. MWCD map draws sites 2-8 at the lake with a dock, and imagery shows the northeast end of the loop at the cove's edge beside the docks. Only about 7 of 71 sites; no change proposed.",
+    "Season left unset: MWCD's 'Primary Season' is April 1 - October 31 and 'Winter Season' Nov 1 - Mar 31 is a permit term; whether Piedmont sells winter nights could not be read from the engine."
+  ]
+}
