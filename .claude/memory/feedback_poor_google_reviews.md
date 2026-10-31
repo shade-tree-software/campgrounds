@@ -19,3 +19,5 @@ AWH 2026-10-30, two rulings the same day:
 - Borderline price (a few dollars over US$50, or just past the 40 km gateway radius): I may decide it myself on the reviews - strong (about 4.7+ on a few dozen reviews) keeps it, mediocre or poor drops it. Report which way and why. No exact cut-off has been set; Blackwater (5.0/48, $2.79 over) is the worked keep.
 - A markedly poor rating on a park that otherwise passes: flag it as a drop candidate for AWH with what the reviews complain of.
 Relates to [[feedback-price-gate-proximity-exceptions]], [[feedback-require-live-web-presence]] and [[project-phase7-verification]].
+
+AWH 2026-10-31 dropped Clinton Lake (OH) on "so-so" reviews even at 4.6/175, on an entry already doubtful on long-stay. Read the text, not just the score.
