@@ -381,3 +381,5 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1241 Village Green (OH, p3-223):** public $45 daily, but a 2025 camper says 'mainly populated with seasonal campers', some with moss on them; share unposted, test 4 unmeasured. Kept for now; 440-224-0310.
 
 - **14306 Walnut Creek (OH, p3-223):** a 7/2026 motorhome review (4 of 10, 'Will not return') opens with a warning about the road in, Blacksmith Hill, and RV Life's API cuts the text there. Read it before taking EKKO; EKKO is not 4WD. Other 2025-26 reviews, incl. a motorhome, raise nothing readable. Kept.
+
+- **1242 Sally Buffalo (OH, p3-224):** village park, no published rate (only ~$450/month, WOSU 2015); WOSU describes oilfield workers with no two-week cap, a 2007 review says 3 of 4 areas are permanent; imagery shows three packed lots. Village page doesn't say it takes ordinary nights. Google 4.4/468. Evidence is old; recommend drop unless 740-942-3213 says nightly. Kept for now.
