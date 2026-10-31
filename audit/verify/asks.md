@@ -367,22 +367,22 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **597 South Bass (OH, p3-219):** island campground reached by Miller Ferry at about $124 round trip with two adults, on top of the site. Kept.
 
 - **1299 Clinton Lake (OH, p3-220):** no posted rate, no booking engine; looks long-stay ('close-knit community', monthly and seasonal rates listed by others, packed settled rows, third-generation campers). If long-stay it fails test 2, and RV Life $$ doesn't stand in. Google 4.6/175; a call to 419-585-3331 would settle it. **AWH 2026-10-31: dropped, reviews so-so.**
-- **14297 Hickory Lakes (OH, p3-220):** $45 posted, but rules are written for seasonal owners (shed limits, 2014-or-newer) with ~150 packed units; nightly share may be under 1 in 10. Kept for now.
+- **14297 Hickory Lakes (OH, p3-220):** $45 posted, but rules are written for seasonal owners (shed limits, 2014-or-newer) with ~150 packed units; nightly share may be under 1 in 10. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 - **1244 Friendship Park (OH, p3-220):** its page also lists Sam Kerr RV Campground ($35, 30/50A, sewer; call for availability), not located. Can't tell which cluster the pin is on, so split undecided. Kept as one entry.
 
-- **1266 Kenisee (OH, p3-221):** 300 sites; only ~12-25 appear sold nightly (4-8%, no published count), 'settle for a season', sells RVs set up on site, reviews mention long-term residents. $50 posted, Google 4.6/188. Test 4 looks failed; a call to 440-466-2320 would settle it. Kept for now.
+- **1266 Kenisee (OH, p3-221):** 300 sites; only ~12-25 appear sold nightly (4-8%, no published count), 'settle for a season', sells RVs set up on site, reviews mention long-term residents. $50 posted, Google 4.6/188. Test 4 looks failed; a call to 440-466-2320 would settle it. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
 - **1292 Shady Trails (OH, p3-222):** stored 'mostly seasonal' has no source; no operator page or booking site; only rate is Good Sam's undated 'From $35'. Google 4.5/79 reads like overnight use ('a couple nights', 'every weekend'). Kept for now as an ordinary park; on test 2 it would go. 937-393-5618.
 
 - **1014 Malabar Farm (OH, p3-223):** ODNR: 'outfitted for equestrian camping', '15 sites designated for equestrian camping'; ReserveOhio site 001 says 'available to all campers', pads 43-60 ft, campers report 36-ft trailers. Horse camps are out, general campgrounds with horse sites are in; this is a horse camp that admits others. Recommend drop. Kept for now.
 
-- **1313 Timashamie (OH, p3-223):** no posted rate, no engine; operator leads with 'SEASONAL SITES ARE AVAILABLE!', tightly packed lots; a 2023 camper paid $35 a night. If long-stay it fails test 2. Google 4.4/125. Kept for now; 330-525-7054 would settle it.
+- **1313 Timashamie (OH, p3-223):** no posted rate, no engine; operator leads with 'SEASONAL SITES ARE AVAILABLE!', tightly packed lots; a 2023 camper paid $35 a night. If long-stay it fails test 2. Google 4.4/125. Kept for now; 330-525-7054 would settle it. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
-- **1241 Village Green (OH, p3-223):** public $45 daily, but a 2025 camper says 'mainly populated with seasonal campers', some with moss on them; share unposted, test 4 unmeasured. Kept for now; 440-224-0310.
+- **1241 Village Green (OH, p3-223):** public $45 daily, but a 2025 camper says 'mainly populated with seasonal campers', some with moss on them; share unposted, test 4 unmeasured. Kept for now; 440-224-0310. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
 - **14306 Walnut Creek (OH, p3-223):** a 7/2026 motorhome review (4 of 10, 'Will not return') opens with a warning about the road in, Blacksmith Hill, and RV Life's API cuts the text there. Read it before taking EKKO; EKKO is not 4WD. Other 2025-26 reviews, incl. a motorhome, raise nothing readable. Kept.
 
-- **1242 Sally Buffalo (OH, p3-224):** village park, no published rate (only ~$450/month, WOSU 2015); WOSU describes oilfield workers with no two-week cap, a 2007 review says 3 of 4 areas are permanent; imagery shows three packed lots. Village page doesn't say it takes ordinary nights. Google 4.4/468. Evidence is old; recommend drop unless 740-942-3213 says nightly. Kept for now.
+- **1242 Sally Buffalo (OH, p3-224):** village park, no published rate (only ~$450/month, WOSU 2015); WOSU describes oilfield workers with no two-week cap, a 2007 review says 3 of 4 areas are permanent; imagery shows three packed lots. Village page doesn't say it takes ordinary nights. Google 4.4/468. Evidence is old; recommend drop unless 740-942-3213 says nightly. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
 - **14318 Big Bear Lake (OH, p3-225):** $40 posted, Google 4.7/187, but lease-based: numbered lease sites 1-335 with 'one camp site for the year', members sell campers and improvements on their lots, leaf-off shows packed trailers. Overnight blocks look like ~25-35 sites, near or under 1 in 10 by a rough map count. Recommend drop. Kept for now.
 
@@ -400,14 +400,14 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1086 Hardy Lake (IN, p3-228):** Wooster's on-water sites are $14 primitive, 'primarily to serve fishermen'; Shale Bluff is the main campground above the water. Does the entry's rating follow Wooster?
 
-- **1380 Robinson's Whitewater (IN, p3-230):** temporarily closed after the August 2026 flood, no reopening date. Owner's listing says 'daily, weekly, seasonal and permanent camping', a June 2026 camper says 'a lot of people live at the campground', imagery shows settled units; no posted rate, no engine. Long-stay test 2 fails if that is its character. Google 4.6/273, warm. Recommend drop; kept for now.
+- **1380 Robinson's Whitewater (IN, p3-230):** temporarily closed after the August 2026 flood, no reopening date. Owner's listing says 'daily, weekly, seasonal and permanent camping', a June 2026 camper says 'a lot of people live at the campground', imagery shows settled units; no posted rate, no engine. Long-stay test 2 fails if that is its character. Google 4.6/273, warm. Recommend drop; kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
 - **15432 Richmond KOA (IN, p3-230):** passes at $45.89 only on 30-amp back-ins KOA calls 'Perfect for pop-ups', offered to a 23-ft motorhome search. Next is $54.11, then $67+; no gateway. Google 4.6/628. Kept for now.
 
-- **1363 Old Mill Run (IN, p3-230):** $46.73, about 1 night site in 7. Newest review: '90% of the sites are used by what looks like full time residents... looks like a run down mobile home park'. Others warm; Google 4.5/280. Kept for now.
+- **1363 Old Mill Run (IN, p3-230):** $46.73, about 1 night site in 7. Newest review: '90% of the sites are used by what looks like full time residents... looks like a run down mobile home park'. Others warm; Google 4.5/280. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
-- **1367 Walnut Ridge (IN, p3-231):** $50 at the line ($55 for 50-amp), Google 4.3/129. About 113 of 160 sites priced as seasonal (~29% left, by subtraction). Reviews: 'Mostly permanent sites. We were put right next to maintenance building', 'We will never return', 'Many of the sites appear to be long term guests'. Sits beside an RV dealership. Recommend drop; kept for now.
+- **1367 Walnut Ridge (IN, p3-231):** $50 at the line ($55 for 50-amp), Google 4.3/129. About 113 of 160 sites priced as seasonal (~29% left, by subtraction). Reviews: 'Mostly permanent sites. We were put right next to maintenance building', 'We will never return', 'Many of the sites appear to be long term guests'. Sits beside an RV dealership. Recommend drop; kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
 - **1370 White Oaks (IN, p3-231):** $50 weekdays at the line, Google 4.5/179. Operator says bathhouses are in rough shape, laundry closed; a review says cold water only. Kept for now.
 
-- **1369 Amishville (IN, p3-232):** no operator site (amishville.com parked), no operator rate, Good Sam 'from $31' undated. Recent reviews: 'very few full hook-up sites that aren't occupied by people living there full time'; 'monthly payers who live there'; 'Never, ever staying here again'. Google 4.3/259. If long-stay, test 2 fails. Recommend drop; kept for now.
+- **1369 Amishville (IN, p3-232):** no operator site (amishville.com parked), no operator rate, Good Sam 'from $31' undated. Recent reviews: 'very few full hook-up sites that aren't occupied by people living there full time'; 'monthly payers who live there'; 'Never, ever staying here again'. Google 4.3/259. If long-stay, test 2 fails. Recommend drop; kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
