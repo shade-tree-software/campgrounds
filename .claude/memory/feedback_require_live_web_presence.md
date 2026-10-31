@@ -51,3 +51,5 @@ Two dead-by-construction classes worth knowing: **Google `business.site`** domai
 **Two gotchas when writing results back to `campgrounds.json`:** apply website backfills **additively** (an entry may already hold several newline-separated URLs — replacing the value drops them), and never build the replacement with `re.sub`'s template, which interprets the `\n` inside a JSON string as a real newline and corrupts the file. Use a lambda replacement. Strip `utm_*` params off URLs that came from a directory.
 
 See also [[feedback_note_rate_sourcing]], [[feedback_campground_vetting_discipline]], [[feedback_urls_in_website_not_notes]], [[reference_good_sam_ratings]], [[reference_rvlife_price]].
+
+**Fairgrounds (AWH 2026-10-31):** a county fairground stays as long as it has a published rate and a phone, even with no stated hookups or booking method (Ross County 1231 kept at $30).
