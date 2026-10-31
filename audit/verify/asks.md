@@ -409,3 +409,5 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1367 Walnut Ridge (IN, p3-231):** $50 at the line ($55 for 50-amp), Google 4.3/129. About 113 of 160 sites priced as seasonal (~29% left, by subtraction). Reviews: 'Mostly permanent sites. We were put right next to maintenance building', 'We will never return', 'Many of the sites appear to be long term guests'. Sits beside an RV dealership. Recommend drop; kept for now.
 
 - **1370 White Oaks (IN, p3-231):** $50 weekdays at the line, Google 4.5/179. Operator says bathhouses are in rough shape, laundry closed; a review says cold water only. Kept for now.
+
+- **1369 Amishville (IN, p3-232):** no operator site (amishville.com parked), no operator rate, Good Sam 'from $31' undated. Recent reviews: 'very few full hook-up sites that aren't occupied by people living there full time'; 'monthly payers who live there'; 'Never, ever staying here again'. Google 4.3/259. If long-stay, test 2 fails. Recommend drop; kept for now.
