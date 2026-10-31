@@ -130,12 +130,16 @@ class TestPopupPayload(unittest.TestCase):
         return row
 
     def test_an_inherited_group_arrives_with_its_agency_named(self):
+        # Phase 7 keeps giving these entries booking facts of their own, so the
+        # group may be `mixed`; what must hold is that `fcfs` stays the agency's.
         row = self._first(lambda r: r.get("ownership") == "state"
-                          and r.get("state") == "IN")
+                          and r.get("state") == "IN"
+                          and r.get("policy_ref") != "none"
+                          and "fcfs" not in (r.get("booking") or {}))
         payload = self._popup(row["id"])
         self.assertEqual(payload["policy_label"], "Indiana state parks")
         booking = payload["policy"]["booking"]
-        self.assertEqual(booking["scope"], "agency")
+        self.assertIn(booking["scope"], ("agency", "mixed"))
         self.assertIn("fcfs", booking["inherited"])
 
     def test_every_inherited_key_is_named_so_the_halves_can_be_split(self):
