@@ -438,14 +438,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
 - 2423 Cove (CO, p3-174): dropped; moot.
-- 2544 Lottis Creek (CO, p3-181): stored not waterfront vs rec.gov "on the shores of Lottis Creek" (creek runs through). Contrary claim - gate; possible creekside.
-- 2479 Mavreeso (CO, p3-181): stored riverfront, but the West Dolores is ~10-15 m wide (creek vocabulary); Loop B 01-04 sit 5-20 m above an open gravel bank - creekside.
-- 2523 Marshall Park (CO, p3-181): riverfront looks supported (east/south sites ~30-50 m across open meadow and a thin tree line) - confirm sites.
-- 13173 Mill Creek (Lake Fork Gunnison) (CO, p3-182): stored not waterfront vs BLM "Nestled along the Lake Fork of the Gunnison River"; creek-sized river ~30-60 m from sites 16/13/12 through dense spruce, no open apron. Contrary claim - gate; possible creekview.
-- 2530 Mix Lake (CO, p3-182): stored not waterfront vs FS "overlooks Mix Lake" (Mix Lake Overlook on site); loops ~300-350 m east of the NE arm on open ground - possible lakeview for the west loop. The Conejos below Platoro dam has river value only.
-- 2410 Molly Brown (CO, p3-183): stored not waterfront vs rec.gov "perched along the scenic waters"; west-row sites ~011-019 are 60-90 m inside lodgepole from Turquoise Lake's full-pool edge, no open apron - possible lakeview at most.
-- 14479 Monument Lake Resort (CO, p3-183): stored lakeview; the primitive sites are "Lakeside and Creekside" but the hookup sites sit below the dam above Cherry Creek (no lake value). Needs a site map to split the groups.
-- 2547 Mosca (CO, p3-183): stored not waterfront vs FS "located on the banks of Spring Creek Reservoir" (boat ramp in the campground); pin ~150 m south of the south shore west of the dam; winter-only imagery, no per-site points.
 - 2331 Narrows (CO, p3-183): stored riverfront; Upper RV sites 001-004 are ~40-50 m from the Poudre across a brushy riparian strip, closer at 004-005 - open-apron question.
 - 2299 Paonia State Park (Hawsapple & Spruce) (CO, p3-184): stored riverfront, but the water at the sites is the Muddy Creek inflow, ~10-20 m wide - creekside by size; the stored evidence names the North Fork Gunnison, which begins below the dam. cpwshop tags 006-009 Lakefront. Re-run the gate (likely creekside, or lakefront on 006-009 at full pool).
 - 2245 North Sterling (Inlet Grove & Chimney View) (CO, p3-184): stored lakeview; cpwshop tags 8 Inlet Grove sites Lakefront - re-audit up, both ways.
@@ -862,3 +854,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2553 Lost Lake (Paonia RD) (CO, p3-180): stored lakeview; north-shore pull-outs ~15-30 m from the slough across open grass - lakefront if they are numbered sites (needs a site map).
 - 2445 Matchless (CO, p3-181): stored lakefront with NO waterfront_evidence; agencies say "eastern shore", but imagery shows the boat-ramp lot and a paved lot 60-110 m inland behind conifers above a 20-40 m drawdown beach. Needs a real audit.
 - 2414 May Queen (CO, p3-181): stored lakefront; rec.gov "on a level, open field along a creek"; nearest sites 55-75 m from the lake across road and day-use parking. Lakeview or creek value.
+
+## Resolved 2026-11-01, wf-co-11 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2544 Lottis Creek (CO, p3-181): stored not waterfront vs rec.gov "on the shores of Lottis Creek" (creek runs through). Contrary claim - gate; possible creekside.
+- 2479 Mavreeso (CO, p3-181): stored riverfront, but the West Dolores is ~10-15 m wide (creek vocabulary); Loop B 01-04 sit 5-20 m above an open gravel bank - creekside.
+- 2523 Marshall Park (CO, p3-181): riverfront looks supported (east/south sites ~30-50 m across open meadow and a thin tree line) - confirm sites.
+- 13173 Mill Creek (Lake Fork Gunnison) (CO, p3-182): stored not waterfront vs BLM "Nestled along the Lake Fork of the Gunnison River"; creek-sized river ~30-60 m from sites 16/13/12 through dense spruce, no open apron. Contrary claim - gate; possible creekview.
+- 2530 Mix Lake (CO, p3-182): stored not waterfront vs FS "overlooks Mix Lake" (Mix Lake Overlook on site); loops ~300-350 m east of the NE arm on open ground - possible lakeview for the west loop. The Conejos below Platoro dam has river value only.
+- 2410 Molly Brown (CO, p3-183): stored not waterfront vs rec.gov "perched along the scenic waters"; west-row sites ~011-019 are 60-90 m inside lodgepole from Turquoise Lake's full-pool edge, no open apron - possible lakeview at most.
+- 14479 Monument Lake Resort (CO, p3-183): stored lakeview; the primitive sites are "Lakeside and Creekside" but the hookup sites sit below the dam above Cherry Creek (no lake value). Needs a site map to split the groups.
+- 2547 Mosca (CO, p3-183): stored not waterfront vs FS "located on the banks of Spring Creek Reservoir" (boat ramp in the campground); pin ~150 m south of the south shore west of the dam; winter-only imagery, no per-site points.
