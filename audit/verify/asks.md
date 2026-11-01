@@ -445,3 +445,4 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 
 - **2658 Molas Lake (CO), wf-co-4:** the town's site PDF calls P32 "waterfront... RVs up to 23 ft" under a header saying "under 23 ft", and says over 23 ft belongs in the view sites. If EKKO fits P32 it's lakefront (pad ~17 m over open shore); held at lakeview.
 - **2469 Cement Creek (CO), wf-co-7:** Campendium: "nothing larger than 20ish feet" (2022), a 25-ft trailer fit one site (2021), Loop 2 cars and vans only; no posted limit. Kept, tight; note now says so. Drop if that's too thin for EKKO.
+- **2388 Elk Wallow (CO), wf-co-8:** Campendium and a Dyrt review (10/2020) give a 22-ft max vehicle; allstays says 30 ft. No agency figure read. Kept unless an agency source caps it.

@@ -438,14 +438,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
 - 2423 Cove (CO, p3-174): dropped; moot.
-- 2392 Deep Lake (CO, p3-175): stored not waterfront vs FS "on the east side of 37 acre Deep Lake ... nice views" and rec.gov "Nestled against Deep Lake"; main loops on the open east shore, west loop road ~30-60 m from the water behind a thin fringe. Contrary claim - gate; possible lakeview or better.
-- 2462 Dinner Station (CO, p3-175): stored not waterfront; rec.gov "The Taylor River can be accessed from within the campground"; ponderosa sites 001-013 ~20-60 m from the river. Possible riverview/riverfront.
-- 2380 Dearhamer (CO, p3-175): stored riverfront; sites 1-5 ~20-40 m from the Fryingpan behind cottonwoods (open apron unclear); 7-8 ~60 m from the drawdown-prone inlet arm.
-- 2513 Deer Creek (Bailey) (CO, p3-175): stored creekside not re-audited - dense canopy on imagery.
-- 2278 Elkhead Bears Ears (CO, p3-176): stored lakeview vs cpwshop Lakefront tags on 009, 010, 012, 014, 016 (north/west rim, ~15-40 m from the water on imagery; stored evidence said 40-70 m). Reservoir side of the dam, so the below-dam rule doesn't apply. Operator claim - gate; possible lakefront.
-- 13170 Elk Creek (Conejos) (CO, p3-176): stored riverfront, but the water beside it is Elk Creek, a small stream (creekside at most); only sites 01, 03, 10, 11 are ~35-55 m from it.
-- 2450 Elbert Creek (CO, p3-176): stored not waterfront; Halfmoon Creek 50-100 m north, no site points.
-- 2388 Elk Wallow (CO, p3-176): stored not waterfront; a stream ~40-60 m across willow meadow, no site points.
 - 2495 Florida (CO, p3-177): stored riverfront, but the Florida River is ~10-20 m wide here - creekside at most under the size rule.
 - 13589 Estes Park Campground at Mary's Lake (CO, p3-177): stored not waterfront; operator says sites "look over Mary's Lake", nearest sites ~50-80 m across Mary's Lake Rd. Possible lakeview.
 - 2486 Golden Horn (CO, p3-177): stored creekside; FS "Do not camp within 100 ft of any water source" and a 2025-08-21 review says the riverside spots are now blocked with wooden X's.
@@ -853,3 +845,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2449 Cottonwood Lake (PSICC) (CO, p3-174): stored lakeview doubtful - loops on an aspen hillside ~350-450 m from open water with marsh between; FS says only "within walking distance". Likely not waterfront.
 - 2505 Comstock (CO, p3-174): stored not waterfront; the bench is ~20-40 m from the South Fork of Rock Creek - possible creekside, sites not visible on imagery.
 - 2576 Cochetopa Creek (CO, p3-174): stored creekside unaudited; no site locations to check.
+
+## Resolved 2026-11-01, wf-co-8 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2392 Deep Lake (CO, p3-175): stored not waterfront vs FS "on the east side of 37 acre Deep Lake ... nice views" and rec.gov "Nestled against Deep Lake"; main loops on the open east shore, west loop road ~30-60 m from the water behind a thin fringe. Contrary claim - gate; possible lakeview or better.
+- 2462 Dinner Station (CO, p3-175): stored not waterfront; rec.gov "The Taylor River can be accessed from within the campground"; ponderosa sites 001-013 ~20-60 m from the river. Possible riverview/riverfront.
+- 2380 Dearhamer (CO, p3-175): stored riverfront; sites 1-5 ~20-40 m from the Fryingpan behind cottonwoods (open apron unclear); 7-8 ~60 m from the drawdown-prone inlet arm.
+- 2513 Deer Creek (Bailey) (CO, p3-175): stored creekside not re-audited - dense canopy on imagery.
+- 2278 Elkhead Bears Ears (CO, p3-176): stored lakeview vs cpwshop Lakefront tags on 009, 010, 012, 014, 016 (north/west rim, ~15-40 m from the water on imagery; stored evidence said 40-70 m). Reservoir side of the dam, so the below-dam rule doesn't apply. Operator claim - gate; possible lakefront.
+- 13170 Elk Creek (Conejos) (CO, p3-176): stored riverfront, but the water beside it is Elk Creek, a small stream (creekside at most); only sites 01, 03, 10, 11 are ~35-55 m from it.
+- 2450 Elbert Creek (CO, p3-176): stored not waterfront; Halfmoon Creek 50-100 m north, no site points.
+- 2388 Elk Wallow (CO, p3-176): stored not waterfront; a stream ~40-60 m across willow meadow, no site points.
