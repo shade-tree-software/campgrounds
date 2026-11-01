@@ -437,14 +437,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
-- 2266 AHRA Railroad Bridge (CO, p3-170): stored not waterfront; cpwshop tags sites 1407/1408 "Riverfront", ~40-50 m from the Arkansas through a tree band - run the gate.
-- 2641 Carter Lake Eagle (CO, p3-170): stored not waterfront; operator says E01-E22 are "on a hill overlooking the lake" (~250 m) - possible lakeview.
-- 2313 Ponderosa (CO, p3-170): stored lakeview; the 5 Lower-loop sites are ~20-40 m from Blue Mesa's full-pool line on open ground - possible lakefront (gate against 7,519 ft).
-- 2361 Cow Creek South (CO, p3-170): stored lakeview; sites on open ground ~20-40 m from Green Mountain Reservoir's high-water line - possible lakefront.
-- 2346 Aspen Glen (CO, p3-171): stored riverfront doubtful - spurs end 30-70 m from Joe Wright Creek through unbroken forest. Re-audit.
-- 2411 Baby Doe (CO, p3-171): stored not waterfront vs rec.gov "perched along the scenic lakeshore"; the $33 sites (4-11, 13, 14) are 40-100 m from Turquoise Lake's high-water line through lodgepole, no open apron. Contrary claim triggers the gate; at most lakeview.
-- 2540 Aspen Glade (CO, p3-171): riverfront stands on loop B west (015-017, ~20-30 m, open) - recorded for the per-site question; loop C 020-026 under canopy.
-- 2568 Bear Lake (CO, p3-172): stored lakeview may rest on the day-use loop; the conifer spur loops by the FS point sit ~200-600 m east, below the dam, no sightline. Possible downgrade.
 - 2347 Big Bend (CO, p3-172): stored riverfront borderline - spurs ~20-30 m from the Poudre through conifer/willow with gaps.
 - 2550 Big Creek (CO, p3-172): stored lakeview; loop spurs ~25-40 m from full pool behind a conifer fringe, west end open meadow ~50-60 m. Re-look both ways.
 - 2506 Big Creek Lakes (CO, p3-172): stored lakefront holds only for the north-shore loop (043-045 ~35-40 m, partly open); west loops 60-200 m back in lodgepole.
@@ -844,3 +836,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2668 Wupperman (CO, p3-169): stored lakeview; the county says "Sites are available on the lake or on the cliffs above", and the 21-22 loop and north loop (26-31) sit at the water's edge on imagery - possible lakefront.
 - 2633 Wolford (CO, p3-169): stored lakeview; loops on a point, outer east-loop sites ~50-100 m from high water across open sage - re-run the gate.
 - 2305 Aspenglen (CO, p3-169): stored not waterfront; sites 045/046 ~43-49 m from the Fall River with trees and a slope between - weak lead.
+
+## Resolved 2026-11-01, wf-co-5 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2266 AHRA Railroad Bridge (CO, p3-170): stored not waterfront; cpwshop tags sites 1407/1408 "Riverfront", ~40-50 m from the Arkansas through a tree band - run the gate.
+- 2641 Carter Lake Eagle (CO, p3-170): stored not waterfront; operator says E01-E22 are "on a hill overlooking the lake" (~250 m) - possible lakeview.
+- 2313 Ponderosa (CO, p3-170): stored lakeview; the 5 Lower-loop sites are ~20-40 m from Blue Mesa's full-pool line on open ground - possible lakefront (gate against 7,519 ft).
+- 2361 Cow Creek South (CO, p3-170): stored lakeview; sites on open ground ~20-40 m from Green Mountain Reservoir's high-water line - possible lakefront.
+- 2346 Aspen Glen (CO, p3-171): stored riverfront doubtful - spurs end 30-70 m from Joe Wright Creek through unbroken forest. Re-audit.
+- 2411 Baby Doe (CO, p3-171): stored not waterfront vs rec.gov "perched along the scenic lakeshore"; the $33 sites (4-11, 13, 14) are 40-100 m from Turquoise Lake's high-water line through lodgepole, no open apron. Contrary claim triggers the gate; at most lakeview.
+- 2540 Aspen Glade (CO, p3-171): riverfront stands on loop B west (015-017, ~20-30 m, open) - recorded for the per-site question; loop C 020-026 under canopy.
+- 2568 Bear Lake (CO, p3-172): stored lakeview may rest on the day-use loop; the conifer spur loops by the FS point sit ~200-600 m east, below the dam, no sightline. Possible downgrade.
