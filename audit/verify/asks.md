@@ -415,3 +415,6 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 - **1320 Johnson County Fairgrounds (IN, p3-233):** run by a member Fair Association; no filing found and nothing says who holds the grounds. Stored local left, same question as 1318 Elkhart. $30 passes either way.
 
 - **1341 Lake Waveland (IN, p3-233):** pin is in a crop field and I can't place the camp loops on imagery; no operator rate (camper report $30, undated). A call to 765-435-2073 would settle both. Kept.
+
+## 174 Blythe Island Regional Park (GA): your not waterfront, or lakeview? (wf-ga-1, 2026-11-01)
+Stored not waterfront rests on your note ("some sites may hav a water view, but this is not confirmed"). The county prices sites 1-13 as "Lakeview" at $45 against $42 for the wooded sites. Canopy hides the sites on imagery, so nothing confirms or refutes it. Recommend lakeview if you recall a view at the low-numbered sites; otherwise it stays.

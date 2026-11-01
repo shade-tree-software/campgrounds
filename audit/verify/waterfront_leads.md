@@ -554,7 +554,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 
 
-- **4696 Sprewell Bluff follow-up (2026-10-29):** Firefly's site text: "the location is on the mountain ridge of the Flint River ... the views are spectacular" - a ridge-top riverview lead (marketing text, needs the gate's imagery look from the new pin).
 
 
 
@@ -612,13 +611,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4148 Nickerson stored not waterfront: RA Near Water on 21 sites in Areas 1 and 5 (23-ft-capable: Area 1 025, 027, 038; Area 5 016) (MA; p3-193)
 - 4152 Tolland lakefront rests on three 23-ft-capable Near Water sites (023, 024, 032 on Sargent Rd) (MA; p3-193)
 - 4167 Travelers Woods: outer loop within ~50 m of the Fall River behind trees; operator lists river fishing (MA; p3-193)
-- 14374 Bear Branch RV Park stored not waterfront: pin at the head of a millpond cove with RVs and pads along the cove's south shore, open to the water (George L. Smith SP millpond) (GA; p3-195)
-- 4528 George T. Bagby stored lakefront: imagery predates the new campground and ReserveAmerica tags no site waterfront - re-check when newer imagery exists (GA; p3-195)
-- 4637 River Campground & Lodge stored not waterfront: operator lists RV sites #7, #8, #9, #10 and #12 on the Tallulah River ("#9 ... is on the river"; "#10 ... view of river is obstructed"); imagery shows the site row on the north bank west of Joy Bridge Rd; river ~20-28 m wide, so creekside if the site-level check (bank height, screening) passes (GA; p3-196)
-- 14373 A Big Wheel (weak): operator prices "Daily Pond Rates" sites; imagery shows the RV row ~80-100 m from a small pond across open grass - not waterfront probably stands (GA; p3-197)
-- 174 Blythe Island: county calls sites 1-13 "RV Lakeview Sites" ("lovely view of Lake Cindee", a small swimming lake); stored not waterfront (from the AWH note's "not confirmed") - re-audit for lakeview. 182 Cat Head Creek: a ~1.5 ha pond lies against the west row of the RV loop. 4601 Currahee: back-in sites on a creek with decks ("#15 Full hookup on a stream") (GA; p3-198)
-- 4524 Florence Marina (STRONG, downward): stored lakefront unsupported - the park map puts the campground east of the park road with the clubhouse, picnic area and mini-golf between it and the reservoir; imagery ~100 m from shore behind a field and trees. Likely not waterfront (GA; p3-199)
-- 4556 Doll Mountain (upward): recreation.gov tags RV site 12 and tent sites 19, 20, 34-37, 45 "Lakefront"; stored not waterfront (GA; p3-199)
 - 4526 Fort Yargo (trail map "campsites are near the water's edge"; southern loop pads along the east shore) (GA; p3-200)
 - 4681 Gatewood (WebTrac marks 28 RV sites "WF", $4 more; loops ring the peninsula) (GA; p3-200)
 - 4529 Georgia Veterans (stored lakeview; resort's engine names 27 sites "Water Front", "pull a boat right up to your campsite"; a row along open shore on imagery) (GA; p3-200)
@@ -781,3 +773,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **p3-233 (2026-10-31, IN):** 1319 Lynnville (lakeview; row 101-112 ~30-60 m, shadow on shoreline; the $25 block 150-200 m); 283 Paynetown (lakefront, evidence empty; outer rows ~40-65 m, no RA GIS or tags for RV sites); 1341 Lake Waveland (lakeview, evidence empty, loops not located). Holds: 1329, 1349, 1082, 1071, 1095, 1320, 1360 not waterfront.
 - **p3-234 (2026-10-31, IN):** UPWARD: 1323 Madison (riverview; city '18 sites bordering the Ohio River', Riverfront type; south row ~50 m across open grass: looks earned); 1357 Unhitched (pond; a section along the Ohio near 38.9756,-84.8338, east row ~35 m behind trees, 'Riverfront Back-In' type; unproven as theirs); 1351 Rockville (not waterfront; 'Lakefront sites 1-12'; rows by the beach 40-60 m); 1335 Linton (lakeview; 'nestled between two lakes', east loop ~20 m through trees). DOWNWARD: 1375 Peaceful Waters pond rests on 3-4 RV pads. Holds: 1085 lakeview; 563, 1083, 1075 not waterfront.
 - **p3-235 (2026-10-31, IN):** 1099 Yellowwood (not waterfront; Red Pine west tip 20-30 m through wooded bank, leaf-off *view question); 1103 Buzzard Roost (not waterfront; site 4 ~165 m down a bluff, leaf-off *view at most). Holds: 1347 lakefront (Red Fox and Milligan Point open shore, CampLife tags Redfox 22, 26; only 41 of 154 sites); 1101 not waterfront (250 m forest); 13403, 13402, 14487, 1330, 1331, 1326 not waterfront; France Park's old on-water claim could not be confirmed and was removed.
+
+## Resolved 2026-11-01, wf-ga-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- **4696 Sprewell Bluff follow-up (2026-10-29):** Firefly's site text: "the location is on the mountain ridge of the Flint River ... the views are spectacular" - a ridge-top riverview lead (marketing text, needs the gate's imagery look from the new pin).
+- 14374 Bear Branch RV Park stored not waterfront: pin at the head of a millpond cove with RVs and pads along the cove's south shore, open to the water (George L. Smith SP millpond) (GA; p3-195)
+- 4528 George T. Bagby stored lakefront: imagery predates the new campground and ReserveAmerica tags no site waterfront - re-check when newer imagery exists (GA; p3-195)
+- 4637 River Campground & Lodge stored not waterfront: operator lists RV sites #7, #8, #9, #10 and #12 on the Tallulah River ("#9 ... is on the river"; "#10 ... view of river is obstructed"); imagery shows the site row on the north bank west of Joy Bridge Rd; river ~20-28 m wide, so creekside if the site-level check (bank height, screening) passes (GA; p3-196)
+- 14373 A Big Wheel (weak): operator prices "Daily Pond Rates" sites; imagery shows the RV row ~80-100 m from a small pond across open grass - not waterfront probably stands (GA; p3-197)
+- 174 Blythe Island: county calls sites 1-13 "RV Lakeview Sites" ("lovely view of Lake Cindee", a small swimming lake); stored not waterfront (from the AWH note's "not confirmed") - re-audit for lakeview. 182 Cat Head Creek: a ~1.5 ha pond lies against the west row of the RV loop. 4601 Currahee: back-in sites on a creek with decks ("#15 Full hookup on a stream") (GA; p3-198)
+- 4524 Florence Marina (STRONG, downward): stored lakefront unsupported - the park map puts the campground east of the park road with the clubhouse, picnic area and mini-golf between it and the reservoir; imagery ~100 m from shore behind a field and trees. Likely not waterfront (GA; p3-199)
+- 4556 Doll Mountain (upward): recreation.gov tags RV site 12 and tent sites 19, 20, 34-37, 45 "Lakefront"; stored not waterfront (GA; p3-199)
