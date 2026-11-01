@@ -486,14 +486,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Open leads per entry, split out of the batch paragraphs 2026-11-01 (mkwfbatch.py reads these; moves to Resolved as worked)
 
-- 2564 Snowblind creekside: stream ~3-5 m, willow-lined, under cover - big enough? (CO; p3-187)
-- 2354 South Fork (Williams Fork) not waterfront: recreation.gov "next to South Fork Creek", 20-35 m inside dense conifers (CO; p3-187)
-- 2534 Stunner stored riverview, but the Alamosa here is ~8-12 m (creek-sized) and 100-200 m from the sites behind spruce - downgrade lead (not waterfront). 2293 Fisherman's Paradise lakefront confirmed at the corrected pin (cpwshop tags 035/040 Lakefront, shore row 10-25 m across open grass); the old "set back 200 m+" evidence came from the wrong pin (CO; p3-188)
-- 2533 Storm King creekside possible, not confirmable on imagery (kept down) (CO; p3-188)
-- 13297 The Gate stored riverfront, but the Lake Fork is ~11-15 m of open water at the campground (NAIP) - by size creekside, earned at site 6 (~12-15 m, grassy bank) and 3-5 (~25-35 m, open flat); 1-2 and 8 ~45-50 m back (CO; p3-189)
-- 2558 Transfer Park: "the lower loop is near the river" (Florida, ~7-11 m) 20-40 m through conifers - creekside not earned without per-site evidence (CO; p3-189)
-- 2439 Tabor lakeview vs not waterfront: lot 50-70 m back behind lodgepole and a second lot (CO; p3-189)
-- 2348 Tunnel stored riverfront, but the Laramie River is ~4-8 m wide here - by size creekside (CO; p3-190)
 - 13592 Uravan Ballpark riverview may be riverfront (tables 10-25 m from the San Miguel on imagery), but no source places the sites (CO; p3-190)
 - 2485 West Dolores stored riverfront, but the West Dolores is ~10 m wide here - by size creekside, earned at 4E (~7 m) and arguably 3E (~20 m) (CO; p3-191)
 - 2440 Weston Pass stored creekside NOT confirmed: a 1-3 m channel in a willow meadow, visible sites 50-60 m off - creekview or not waterfront (CO; p3-191)
@@ -871,3 +863,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2545 Rivers End lakeview: full-pool shoreline ~30-80 m from the loop on topo; a lakefront upgrade needs per-site evidence at normal summer pool (CO; p3-186)
 - 276 Silver Bell stored not waterfront, but FS/recreation.gov "on the banks of Maroon Creek" - creek (8-10 m) is 10-15 m from tent sites 010-012; the RV sites are 35-60 m behind spruce (CO; p3-187)
 - 2376 South Fork White River riverview: catalog tags all 18 sites "Riverfront"; southern sites 20-35 m from a 10-15 m channel through willow/cottonwood - riverside lead (CO; p3-187)
+
+## Resolved 2026-11-01, wf-co-14 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2564 Snowblind creekside: stream ~3-5 m, willow-lined, under cover - big enough? (CO; p3-187)
+- 2354 South Fork (Williams Fork) not waterfront: recreation.gov "next to South Fork Creek", 20-35 m inside dense conifers (CO; p3-187)
+- 2534 Stunner stored riverview, but the Alamosa here is ~8-12 m (creek-sized) and 100-200 m from the sites behind spruce - downgrade lead (not waterfront). 2293 Fisherman's Paradise lakefront confirmed at the corrected pin (cpwshop tags 035/040 Lakefront, shore row 10-25 m across open grass); the old "set back 200 m+" evidence came from the wrong pin (CO; p3-188)
+- 2533 Storm King creekside possible, not confirmable on imagery (kept down) (CO; p3-188)
+- 13297 The Gate stored riverfront, but the Lake Fork is ~11-15 m of open water at the campground (NAIP) - by size creekside, earned at site 6 (~12-15 m, grassy bank) and 3-5 (~25-35 m, open flat); 1-2 and 8 ~45-50 m back (CO; p3-189)
+- 2558 Transfer Park: "the lower loop is near the river" (Florida, ~7-11 m) 20-40 m through conifers - creekside not earned without per-site evidence (CO; p3-189)
+- 2439 Tabor lakeview vs not waterfront: lot 50-70 m back behind lodgepole and a second lot (CO; p3-189)
+- 2348 Tunnel stored riverfront, but the Laramie River is ~4-8 m wide here - by size creekside (CO; p3-190)
