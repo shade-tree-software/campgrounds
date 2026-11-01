@@ -610,8 +610,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4148 Nickerson stored not waterfront: RA Near Water on 21 sites in Areas 1 and 5 (23-ft-capable: Area 1 025, 027, 038; Area 5 016) (MA; p3-193)
 - 4152 Tolland lakefront rests on three 23-ft-capable Near Water sites (023, 024, 032 on Sargent Rd) (MA; p3-193)
 - 4167 Travelers Woods: outer loop within ~50 m of the Fall River behind trees; operator lists river fishing (MA; p3-193)
-- 13352 Winton Woods (lakeview; south loops reach the shore, kayak launch at site 86; no site map) (OH; p3-226; UPWARD)
-- 14307 Sandy Springs (riverview; ~60 m tree strip to the Ohio River, operator sells 'riverside' at $65; site walled) (OH; p3-226; UPWARD)
 
 ## Resolved 2026-11-01: the batch paragraphs, kept for their holds and detail; their open leads are the per-entry list above
 
@@ -826,3 +824,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13347 Clendening (lakeview; map puts 93-102 and 11-16 backing the shore, rigs at the shoreline on imagery, docks) (OH; p3-225; UPWARD)
 - 13354 Lake Snowden (lakeview; operator 'Big Oak camp has some lakefront sites'; 202-205, 126-131, Grassy 42-47) (OH; p3-225; UPWARD)
 - 13353 New London (lakefront holds only for W&E loop 118-131 on the point, ~50 m behind cabins; full-hookup lots 1-103 150-400 m back) (OH; p3-226; DOWNWARD)
+
+## Resolved 2026-11-01, wf-oh-6 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 13352 Winton Woods (lakeview; south loops reach the shore, kayak launch at site 86; no site map) (OH; p3-226; UPWARD)
+- 14307 Sandy Springs (riverview; ~60 m tree strip to the Ohio River, operator sells 'riverside' at $65; site walled) (OH; p3-226; UPWARD)
