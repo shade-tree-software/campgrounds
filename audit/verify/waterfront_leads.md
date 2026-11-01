@@ -438,14 +438,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
 - 2423 Cove (CO, p3-174): dropped; moot.
-- 2515 Jefferson Creek (CO, p3-179): stored riverview is the wrong kind - Jefferson Creek is well under 30 m wide and the sites are 60-100 m through conifers. Likely not waterfront.
-- 2344 Kelly Flats (CO, p3-179): stored riverfront; nearest pads ~20-40 m from the Poudre behind riparian trees (river ~25-30 m wide here, at the river/creek line); cloud on imagery, open apron unconfirmed.
-- 2476 Lodgepole (Taylor River) (CO, p3-180): stored riverfront, but every site is south of paved CR 742 and the river north of it; nearest sites 007/009 ~45-50 m with the road and a fishing lot between. Fails the open apron - riverview at most.
-- 13172 Lake Fork (Conejos) (CO, p3-180): stored riverfront, but the Conejos is ~15-20 m wide here (creekside by the size rule); sites 014-016 ~25-35 m across open grass.
-- 2458 Lake Irwin (CO, p3-180): stored lakefront; only RV site 004 (~45-50 m, open slope), maybe 003, could hold it; the rest read lakeview.
-- 2553 Lost Lake (Paonia RD) (CO, p3-180): stored lakeview; north-shore pull-outs ~15-30 m from the slough across open grass - lakefront if they are numbered sites (needs a site map).
-- 2445 Matchless (CO, p3-181): stored lakefront with NO waterfront_evidence; agencies say "eastern shore", but imagery shows the boat-ramp lot and a paved lot 60-110 m inland behind conifers above a 20-40 m drawdown beach. Needs a real audit.
-- 2414 May Queen (CO, p3-181): stored lakefront; rec.gov "on a level, open field along a creek"; nearest sites 55-75 m from the lake across road and day-use parking. Lakeview or creek value.
 - 2544 Lottis Creek (CO, p3-181): stored not waterfront vs rec.gov "on the shores of Lottis Creek" (creek runs through). Contrary claim - gate; possible creekside.
 - 2479 Mavreeso (CO, p3-181): stored riverfront, but the West Dolores is ~10-15 m wide (creek vocabulary); Loop B 01-04 sit 5-20 m above an open gravel bank - creekside.
 - 2523 Marshall Park (CO, p3-181): riverfront looks supported (east/south sites ~30-50 m across open meadow and a thin tree line) - confirm sites.
@@ -859,3 +851,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2512 Hidden Lakes (CO, p3-178): stored lakeview, open clearing ~25-35 m from the shore. Possible lakefront.
 - 2446 Hayden Creek (CO, p3-178): stored not waterfront vs FS "on the banks of Hayden Creek" (canopy). Contrary claim - gate; possible creekside.
 - 2507 Hahns Peak Lake (CO, p3-178): stored lakefront, pads ~40-60 m from the water - borderline.
+
+## Resolved 2026-11-01, wf-co-10 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2515 Jefferson Creek (CO, p3-179): stored riverview is the wrong kind - Jefferson Creek is well under 30 m wide and the sites are 60-100 m through conifers. Likely not waterfront.
+- 2344 Kelly Flats (CO, p3-179): stored riverfront; nearest pads ~20-40 m from the Poudre behind riparian trees (river ~25-30 m wide here, at the river/creek line); cloud on imagery, open apron unconfirmed.
+- 2476 Lodgepole (Taylor River) (CO, p3-180): stored riverfront, but every site is south of paved CR 742 and the river north of it; nearest sites 007/009 ~45-50 m with the road and a fishing lot between. Fails the open apron - riverview at most.
+- 13172 Lake Fork (Conejos) (CO, p3-180): stored riverfront, but the Conejos is ~15-20 m wide here (creekside by the size rule); sites 014-016 ~25-35 m across open grass.
+- 2458 Lake Irwin (CO, p3-180): stored lakefront; only RV site 004 (~45-50 m, open slope), maybe 003, could hold it; the rest read lakeview.
+- 2553 Lost Lake (Paonia RD) (CO, p3-180): stored lakeview; north-shore pull-outs ~15-30 m from the slough across open grass - lakefront if they are numbered sites (needs a site map).
+- 2445 Matchless (CO, p3-181): stored lakefront with NO waterfront_evidence; agencies say "eastern shore", but imagery shows the boat-ramp lot and a paved lot 60-110 m inland behind conifers above a 20-40 m drawdown beach. Needs a real audit.
+- 2414 May Queen (CO, p3-181): stored lakefront; rec.gov "on a level, open field along a creek"; nearest sites 55-75 m from the lake across road and day-use parking. Lakeview or creek value.
