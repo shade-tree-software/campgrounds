@@ -438,8 +438,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
 - 2423 Cove (CO, p3-174): dropped; moot.
-- 2441 Parry Peak (CO, p3-184): stored not waterfront; south-spur pullouts ~10-30 m from Lake Creek (~10 m wide) - possible creekside.
-- 2334 Peaceful Valley (CO, p3-184): stored creekside; creek in a wooded gully, sites 1-4 ~25-40 m behind trees - creekside doubtful under the open-apron rule.
 
 
 
@@ -488,12 +486,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Open leads per entry, split out of the batch paragraphs 2026-11-01 (mkwfbatch.py reads these; moves to Resolved as worked)
 
-- 2524 River Hill stored riverfront, but the Rio Grande below the reservoir is ~20-25 m of open water (under the ~30 m line) - by size reads creekside; sites 001/005/014 ~10-15 m from the water behind a narrow willow fringe (CO; p3-186)
-- 2573 Salida East riverfront: cpwshop tags 9 drive-ins Riverfront; on NAIP 1606/1607/1609/1611 are ~15-25 m from the ~50-60 m Arkansas behind a broken cottonwood/juniper fringe - a strict open-apron reading could make it riverview (CO; p3-186)
-- 2529 Rock Creek creekside unresolved (FS "some sites next to the creek", unbroken canopy) (CO; p3-186)
-- 2545 Rivers End lakeview: full-pool shoreline ~30-80 m from the loop on topo; a lakefront upgrade needs per-site evidence at normal summer pool (CO; p3-186)
-- 276 Silver Bell stored not waterfront, but FS/recreation.gov "on the banks of Maroon Creek" - creek (8-10 m) is 10-15 m from tent sites 010-012; the RV sites are 35-60 m behind spruce (CO; p3-187)
-- 2376 South Fork White River riverview: catalog tags all 18 sites "Riverfront"; southern sites 20-35 m from a 10-15 m channel through willow/cottonwood - riverside lead (CO; p3-187)
 - 2564 Snowblind creekside: stream ~3-5 m, willow-lined, under cover - big enough? (CO; p3-187)
 - 2354 South Fork (Williams Fork) not waterfront: recreation.gov "next to South Fork Creek", 20-35 m inside dense conifers (CO; p3-187)
 - 2534 Stunner stored riverview, but the Alamosa here is ~8-12 m (creek-sized) and 100-200 m from the sites behind spruce - downgrade lead (not waterfront). 2293 Fisherman's Paradise lakefront confirmed at the corrected pin (cpwshop tags 035/040 Lakefront, shore row 10-25 m across open grass); the old "set back 200 m+" evidence came from the wrong pin (CO; p3-188)
@@ -868,3 +860,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2565 Ophir Creek (CO, p3-184): stored not waterfront; creekside possible under canopy.
 - 14471 Outpost Motel (CO, p3-184): stored not waterfront vs Campspot "directly on the banks of the Dolores River" + Waterfront tag; pads ~20-40 m back behind cottonwoods on imagery.
 - 2537 Park Creek (CO, p3-184): stored riverfront, but the South Fork is ~15-20 m wide here - creekside by size.
+
+## Resolved 2026-11-01, wf-co-13 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2441 Parry Peak (CO, p3-184): stored not waterfront; south-spur pullouts ~10-30 m from Lake Creek (~10 m wide) - possible creekside.
+- 2334 Peaceful Valley (CO, p3-184): stored creekside; creek in a wooded gully, sites 1-4 ~25-40 m behind trees - creekside doubtful under the open-apron rule.
+- 2524 River Hill stored riverfront, but the Rio Grande below the reservoir is ~20-25 m of open water (under the ~30 m line) - by size reads creekside; sites 001/005/014 ~10-15 m from the water behind a narrow willow fringe (CO; p3-186)
+- 2573 Salida East riverfront: cpwshop tags 9 drive-ins Riverfront; on NAIP 1606/1607/1609/1611 are ~15-25 m from the ~50-60 m Arkansas behind a broken cottonwood/juniper fringe - a strict open-apron reading could make it riverview (CO; p3-186)
+- 2529 Rock Creek creekside unresolved (FS "some sites next to the creek", unbroken canopy) (CO; p3-186)
+- 2545 Rivers End lakeview: full-pool shoreline ~30-80 m from the loop on topo; a lakefront upgrade needs per-site evidence at normal summer pool (CO; p3-186)
+- 276 Silver Bell stored not waterfront, but FS/recreation.gov "on the banks of Maroon Creek" - creek (8-10 m) is 10-15 m from tent sites 010-012; the RV sites are 35-60 m behind spruce (CO; p3-187)
+- 2376 South Fork White River riverview: catalog tags all 18 sites "Riverfront"; southern sites 20-35 m from a 10-15 m channel through willow/cottonwood - riverside lead (CO; p3-187)
