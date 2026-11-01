@@ -372,7 +372,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1266 Kenisee (OH, p3-221):** 300 sites; only ~12-25 appear sold nightly (4-8%, no published count), 'settle for a season', sells RVs set up on site, reviews mention long-term residents. $50 posted, Google 4.6/188. Test 4 looks failed; a call to 440-466-2320 would settle it. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
-- **1292 Shady Trails (OH, p3-222):** stored 'mostly seasonal' has no source; no operator page or booking site; only rate is Good Sam's undated 'From $35'. Google 4.5/79 reads like overnight use ('a couple nights', 'every weekend'). Kept for now as an ordinary park; on test 2 it would go. 937-393-5618.
+- **1292 Shady Trails (OH, p3-222):** stored 'mostly seasonal' has no source; no operator page or booking site; only rate is Good Sam's undated 'From $35'. Google 4.5/79 reads like overnight use ('a couple nights', 'every weekend'). Kept for now as an ordinary park; on test 2 it would go. 937-393-5618. **AWH 2026-11-01: dropped, reviews suggest mostly seasonal with many permanent campers.**
 
 - **1014 Malabar Farm (OH, p3-223):** ODNR: 'outfitted for equestrian camping', '15 sites designated for equestrian camping'; ReserveOhio site 001 says 'available to all campers', pads 43-60 ft, campers report 36-ft trailers. Horse camps are out, general campgrounds with horse sites are in; this is a horse camp that admits others. Recommend drop. Kept for now. **AWH 2026-11-01: dropped, no separate horse and general areas found.**
 
@@ -380,7 +380,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1241 Village Green (OH, p3-223):** public $45 daily, but a 2025 camper says 'mainly populated with seasonal campers', some with moss on them; share unposted, test 4 unmeasured. Kept for now; 440-224-0310. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
-- **14306 Walnut Creek (OH, p3-223):** a 7/2026 motorhome review (4 of 10, 'Will not return') opens with a warning about the road in, Blacksmith Hill, and RV Life's API cuts the text there. Read it before taking EKKO; EKKO is not 4WD. Other 2025-26 reviews, incl. a motorhome, raise nothing readable. Kept.
+- **14306 Walnut Creek (OH, p3-223):** a 7/2026 motorhome review (4 of 10, 'Will not return') opens with a warning about the road in, Blacksmith Hill, and RV Life's API cuts the text there. Read it before taking EKKO; EKKO is not 4WD. Other 2025-26 reviews, incl. a motorhome, raise nothing readable. Kept. **AWH 2026-11-01: dropped, reviews indicate mostly full-time residents.**
 
 - **1242 Sally Buffalo (OH, p3-224):** village park, no published rate (only ~$450/month, WOSU 2015); WOSU describes oilfield workers with no two-week cap, a 2007 review says 3 of 4 areas are permanent; imagery shows three packed lots. Village page doesn't say it takes ordinary nights. Google 4.4/468. Evidence is old; recommend drop unless 740-942-3213 says nightly. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
@@ -435,8 +435,8 @@ Operator-sold "Waterfront" sites 311-323 back onto a ~0.6 ha swim pond across ~1
 Your note says wooded loops, not on the shoreline, so the value stays. On the ODNR map and leaf-off imagery, lake-side pads read about 20-35 m through thin woods with no road between (a rough scale reading). Say if you remember any lake-side sites worth lakefront.
 
 ## Also open, 2026-11-01 (raised in chat, logged here)
-- **1294 Shadow Lake (OH):** packed with parked rigs, nightly share unpublished, $45, Google 4.7/87; kept.
-- **15591 Maple Grove (OH):** reviewers say "space is tight", nobody reports a 23-ft rig, no limit posted; kept under the posted-limit rule.
+- **1294 Shadow Lake (OH):** packed with parked rigs, nightly share unpublished, $45, Google 4.7/87; kept. **AWH 2026-11-01: keep.**
+- **15591 Maple Grove (OH):** reviewers say "space is tight", nobody reports a 23-ft rig, no limit posted; kept under the posted-limit rule. **AWH 2026-11-01: keep; overhead imagery and Google review photos show room for EKKO.**
 - **13347 Clendening / 1238 Pleasant Hill (OH):** reserve.mwcd.org captcha; saved pages would settle 93-99 nightly (lakefront) and Pleasant Hill's per-site tags.
 - **4671 Broad River / 14379 Clay Hill (GA):** Firefly "RV Site - Water Access" units behind reCAPTCHA; Broad River's fees also open.
 - **4561 Lake Conasauga:** Availability page hides all sites on rec.gov's 21-ft motorhome limit; recommend leaving it, alternative is a "tight" flag within 2 ft.
