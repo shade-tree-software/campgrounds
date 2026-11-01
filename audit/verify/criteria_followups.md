@@ -1197,3 +1197,5 @@ me drop and report); each needs the research named before a verdict.
 - **wf-ga-7 (2026-11-01):** 4692 Pyne Road lakefront -> lakeview is the weak call: imagery partly hidden by pines, county prose ("even-numbered, some right on the water's edge") and reviews of sites 8 and 13 point the other way; a county site map could reverse it. 14377 Ted & Tracy's: "Creekside Sites" is RoverPass/Outdoorsy only, no site map.
 
 - **wf-in-1 (2026-11-01):** 1362 Charlarose pond rests on a 3-pad spur whose nightly status is inferred from winter imagery (765-234-7286). 1086 Hardy Lake lakefront rests on one primitive site, 155. 1383 Rising Sun's riverbank units are not sold nightly.
+
+- **wf-in-2 (2026-11-01):** 1319 Lynnville: a town-confirmed site 115 on the west end pad would earn lakefront. 1345 Wabash & Erie Canal: a canal has no vocabulary word, sites 30-60 m across the towpath, left not waterfront. 1337 Rivertown: pin sits between site groups, ~200 m from the nearest, under the move rule.
