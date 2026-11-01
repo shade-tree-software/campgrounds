@@ -442,3 +442,5 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **4561 Lake Conasauga:** Availability page hides all sites on rec.gov's 21-ft motorhome limit; recommend leaving it, alternative is a "tight" flag within 2 ft.
 - **3900 Bond Falls (MI):** two areas ~4 km apart, pin below the dam; split? Held until answered.
 - **`header-icon-bar`:** merged branch only AWH can delete.
+
+- **2658 Molas Lake (CO), wf-co-4:** the town's site PDF calls P32 "waterfront... RVs up to 23 ft" under a header saying "under 23 ft", and says over 23 ft belongs in the view sites. If EKKO fits P32 it's lakefront (pad ~17 m over open shore); held at lakeview.

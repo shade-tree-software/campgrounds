@@ -437,14 +437,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
-- 2283 Island Acres (CO, p3-166): stored not waterfront; Loop D west row 20-40 m from the pond's east shore, Loop B ~40 m from the Colorado River through trees - re-run the gate.
-- 2658 Molas Lake (CO, p3-166): stored lakeview; operator sells "Premium Water View" sites described as waterfront that take 23-ft RVs - possible lakefront, needs the satellite gate.
-- 2402 Monarch Park (CO, p3-166): stored creekside; rec.gov says some sites are on the banks of the South Fork Arkansas, imagery (snow) shows the channel ~100-150 m from the nearest sites - re-check in summer imagery.
-- 2612 Pleasant Valley Cabins & Campground (CO, p3-167): stored not waterfront; operator says all sites are "along the north bank" of the Little Cimarron, and the RV pads are ~20 m from the channel behind riparian cottonwoods - run the gate (treeline-screen rule).
-- 2369 North Fork (CO, p3-167): stored not waterfront; sites ~95 m from the North Fork White River on a bench above it, CR 8 between; rec.gov "most sites ... open up to the river valley" - possible riverview.
-- 2668 Wupperman (CO, p3-169): stored lakeview; the county says "Sites are available on the lake or on the cliffs above", and the 21-22 loop and north loop (26-31) sit at the water's edge on imagery - possible lakefront.
-- 2633 Wolford (CO, p3-169): stored lakeview; loops on a point, outer east-loop sites ~50-100 m from high water across open sage - re-run the gate.
-- 2305 Aspenglen (CO, p3-169): stored not waterfront; sites 045/046 ~43-49 m from the Fall River with trees and a slope between - weak lead.
 - 2266 AHRA Railroad Bridge (CO, p3-170): stored not waterfront; cpwshop tags sites 1407/1408 "Riverfront", ~40-50 m from the Arkansas through a tree band - run the gate.
 - 2641 Carter Lake Eagle (CO, p3-170): stored not waterfront; operator says E01-E22 are "on a hill overlooking the lake" (~250 m) - possible lakeview.
 - 2313 Ponderosa (CO, p3-170): stored lakeview; the 5 Lower-loop sites are ~20-40 m from Blue Mesa's full-pool line on open ground - possible lakefront (gate against 7,519 ft).
@@ -841,3 +833,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2577 Arkansas River Rim (CO, p3-164): river ~60-90 m east of the sites behind conifers; stored riverview, possibly generous.
 - 2267 Clear Creek Reservoir SWA (CO, p3-164): stored creekside looks supportable - SE pull-outs 10-30 m from Clear Creek under conifers; reservoir 151 m.
 - 15412 Estes Park KOA (CO, p3-165): stored lakeview, but no source mentions a lake view; KOA says Lake Estes is "across the street" - re-run the gate.
+
+## Resolved 2026-11-01, wf-co-4 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2283 Island Acres (CO, p3-166): stored not waterfront; Loop D west row 20-40 m from the pond's east shore, Loop B ~40 m from the Colorado River through trees - re-run the gate.
+- 2658 Molas Lake (CO, p3-166): stored lakeview; operator sells "Premium Water View" sites described as waterfront that take 23-ft RVs - possible lakefront, needs the satellite gate.
+- 2402 Monarch Park (CO, p3-166): stored creekside; rec.gov says some sites are on the banks of the South Fork Arkansas, imagery (snow) shows the channel ~100-150 m from the nearest sites - re-check in summer imagery.
+- 2612 Pleasant Valley Cabins & Campground (CO, p3-167): stored not waterfront; operator says all sites are "along the north bank" of the Little Cimarron, and the RV pads are ~20 m from the channel behind riparian cottonwoods - run the gate (treeline-screen rule).
+- 2369 North Fork (CO, p3-167): stored not waterfront; sites ~95 m from the North Fork White River on a bench above it, CR 8 between; rec.gov "most sites ... open up to the river valley" - possible riverview.
+- 2668 Wupperman (CO, p3-169): stored lakeview; the county says "Sites are available on the lake or on the cliffs above", and the 21-22 loop and north loop (26-31) sit at the water's edge on imagery - possible lakefront.
+- 2633 Wolford (CO, p3-169): stored lakeview; loops on a point, outer east-loop sites ~50-100 m from high water across open sage - re-run the gate.
+- 2305 Aspenglen (CO, p3-169): stored not waterfront; sites 045/046 ~43-49 m from the Fall River with trees and a slope between - weak lead.
