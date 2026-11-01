@@ -421,3 +421,6 @@ Stored not waterfront rests on your note ("some sites may hav a water view, but 
 
 ## 4623 Lake Tobesofkee Claystone (GA): does the campground's own loop road block lakefront? (wf-ga-2, 2026-11-01) — ANSWERED 2026-11-01: yes; lakeview stays, rule added to the curation doc (done)
 Sites 40-45 are sold as "RV WF"; the nearest is ~45-50 m from shore across the loop road and an open slope. Stored lakeview stays under the road-between rule. It would read lakefront only if a low-traffic loop road does not count.
+
+## 725 Paulk Park (GA): does your lakefront stand under the new loop-road rule? (wf-ga-5, 2026-11-01)
+Your note says "25 lakeside RV sites on a 10-acre lake", so the stored lakefront stays. On imagery the pull-through rows run ~40-65 m (east ends) to ~100 m (west ends) from shore across open lawn and the campground's loop road. Under your 2026-11-01 rule that would read lakeview, but you have been there and I have not.
