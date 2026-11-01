@@ -438,14 +438,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
 - 2423 Cove (CO, p3-174): dropped; moot.
-- 2495 Florida (CO, p3-177): stored riverfront, but the Florida River is ~10-20 m wide here - creekside at most under the size rule.
-- 13589 Estes Park Campground at Mary's Lake (CO, p3-177): stored not waterfront; operator says sites "look over Mary's Lake", nearest sites ~50-80 m across Mary's Lake Rd. Possible lakeview.
-- 2486 Golden Horn (CO, p3-177): stored creekside; FS "Do not camp within 100 ft of any water source" and a 2025-08-21 review says the riverside spots are now blocked with wooden X's.
-- 2447 Goose Creek (CO, p3-177): stored not waterfront; FS "Goose Creek runs through the campground" (bank under canopy). Possible creekside.
-- 2554 Haviland Lake (CO, p3-178): stored lakefront, nearest sites ~55-65 m from the shore. Looks like lakeview.
-- 2512 Hidden Lakes (CO, p3-178): stored lakeview, open clearing ~25-35 m from the shore. Possible lakefront.
-- 2446 Hayden Creek (CO, p3-178): stored not waterfront vs FS "on the banks of Hayden Creek" (canopy). Contrary claim - gate; possible creekside.
-- 2507 Hahns Peak Lake (CO, p3-178): stored lakefront, pads ~40-60 m from the water - borderline.
 - 2515 Jefferson Creek (CO, p3-179): stored riverview is the wrong kind - Jefferson Creek is well under 30 m wide and the sites are 60-100 m through conifers. Likely not waterfront.
 - 2344 Kelly Flats (CO, p3-179): stored riverfront; nearest pads ~20-40 m from the Poudre behind riparian trees (river ~25-30 m wide here, at the river/creek line); cloud on imagery, open apron unconfirmed.
 - 2476 Lodgepole (Taylor River) (CO, p3-180): stored riverfront, but every site is south of paved CR 742 and the river north of it; nearest sites 007/009 ~45-50 m with the road and a fishing lot between. Fails the open apron - riverview at most.
@@ -856,3 +848,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13170 Elk Creek (Conejos) (CO, p3-176): stored riverfront, but the water beside it is Elk Creek, a small stream (creekside at most); only sites 01, 03, 10, 11 are ~35-55 m from it.
 - 2450 Elbert Creek (CO, p3-176): stored not waterfront; Halfmoon Creek 50-100 m north, no site points.
 - 2388 Elk Wallow (CO, p3-176): stored not waterfront; a stream ~40-60 m across willow meadow, no site points.
+
+## Resolved 2026-11-01, wf-co-9 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2495 Florida (CO, p3-177): stored riverfront, but the Florida River is ~10-20 m wide here - creekside at most under the size rule.
+- 13589 Estes Park Campground at Mary's Lake (CO, p3-177): stored not waterfront; operator says sites "look over Mary's Lake", nearest sites ~50-80 m across Mary's Lake Rd. Possible lakeview.
+- 2486 Golden Horn (CO, p3-177): stored creekside; FS "Do not camp within 100 ft of any water source" and a 2025-08-21 review says the riverside spots are now blocked with wooden X's.
+- 2447 Goose Creek (CO, p3-177): stored not waterfront; FS "Goose Creek runs through the campground" (bank under canopy). Possible creekside.
+- 2554 Haviland Lake (CO, p3-178): stored lakefront, nearest sites ~55-65 m from the shore. Looks like lakeview.
+- 2512 Hidden Lakes (CO, p3-178): stored lakeview, open clearing ~25-35 m from the shore. Possible lakefront.
+- 2446 Hayden Creek (CO, p3-178): stored not waterfront vs FS "on the banks of Hayden Creek" (canopy). Contrary claim - gate; possible creekside.
+- 2507 Hahns Peak Lake (CO, p3-178): stored lakefront, pads ~40-60 m from the water - borderline.
