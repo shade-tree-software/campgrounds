@@ -611,10 +611,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4148 Nickerson stored not waterfront: RA Near Water on 21 sites in Areas 1 and 5 (23-ft-capable: Area 1 025, 027, 038; Area 5 016) (MA; p3-193)
 - 4152 Tolland lakefront rests on three 23-ft-capable Near Water sites (023, 024, 032 on Sargent Rd) (MA; p3-193)
 - 4167 Travelers Woods: outer loop within ~50 m of the Fall River behind trees; operator lists river fishing (MA; p3-193)
-- 4692 Pyne Road (stored lakefront; RV pads look 100-200 m back from the shore - re-check from the corrected pin) (GA; p3-211; DOWNWARD)
-- 14380 War Hill Park GA (stored not waterfront; county PDF marks 12 of 14 sites "On the water", loop circles a Lanier peninsula - strong) (GA; p3-212; UPWARD)
-- 13372 Stone Mountain (Lakeside types O/P/M tagged 'Waterfront'; stored lakeview) (GA; p3-212; UPWARD)
-- 14377 Ted & Tracy's (Creekside sites) (GA; p3-212; UPWARD)
 - 1228 Atwood Lake OH: Area H on the shore per the map, per-site tags unread (captcha) (OH; p3-212; UPWARD)
 - 1015 Mary Jane Thurston (note: electric riverfront sites front the Maumee, e.g. pull-through site 8 at 41.41046,-83.87909 per ReserveOhio; stored not waterfront, evidence put the loop 150-200 m back), 14295 Freedom Valley ('along the Vermilion River', Eagles Nest loop 97-107 'near the river'; stored not waterfront, may hold) (OH; p3-213; UPWARD)
 - 1291 Kokosing Valley (stored riverfront; park map marks every riverside site seasonal, the ~55 transient 30-A sites are inland) (OH; p3-213; DOWNWARD)
@@ -799,3 +795,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4560 Jacks River Fields (FS "on the bank of the south fork of the Jacks River"; stored not waterfront) (GA; p3-211; UPWARD)
 - 4567 Low Gap (Low Gap Creek "flows through the campground") (GA; p3-211; UPWARD)
 - 4684 Lakeside RV Camps (operator: site 8 "lakefront ... 20 feet away") (GA; p3-211; UPWARD)
+
+## Resolved 2026-11-01, wf-ga-7 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 4692 Pyne Road (stored lakefront; RV pads look 100-200 m back from the shore - re-check from the corrected pin) (GA; p3-211; DOWNWARD)
+- 14380 War Hill Park GA (stored not waterfront; county PDF marks 12 of 14 sites "On the water", loop circles a Lanier peninsula - strong) (GA; p3-212; UPWARD)
+- 13372 Stone Mountain (Lakeside types O/P/M tagged 'Waterfront'; stored lakeview) (GA; p3-212; UPWARD)
+- 14377 Ted & Tracy's (Creekside sites) (GA; p3-212; UPWARD)
