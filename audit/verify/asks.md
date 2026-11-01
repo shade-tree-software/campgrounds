@@ -424,3 +424,9 @@ Sites 40-45 are sold as "RV WF"; the nearest is ~45-50 m from shore across the l
 
 ## 725 Paulk Park (GA): does your lakefront stand under the new loop-road rule? (wf-ga-5, 2026-11-01)
 Your note says "25 lakeside RV sites on a 10-acre lake", so the stored lakefront stays. On imagery the pull-through rows run ~40-65 m (east ends) to ~100 m (west ends) from shore across open lawn and the campground's loop road. Under your 2026-11-01 rule that would read lakeview, but you have been there and I have not.
+
+## 597 South Bass Island (OH): does lakeview stand? (wf-oh-2, 2026-11-01)
+Your note says RV sites "are set back a ways from the water", so I left lakeview alone. On leaf-off imagery the closest RV pads, 126 and 129, are ~40-50 m from shore through trees, the electric block 100-250 m back in woods, with no open sightline found. It reads not waterfront unless you remember a view.
+
+## 15364 Leafy Oaks (OH): does a campground's own swim beach count as day use? (wf-oh-2, 2026-11-01)
+Operator-sold "Waterfront" sites 311-323 back onto a ~0.6 ha swim pond across ~15 m of grass and a roped sand beach. Left not waterfront under the no-day-use rule. If the campers' own beach doesn't block, those sites earn pond.
