@@ -581,7 +581,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 
 
-- **15593 Eco Lake Park (IN, new 2026-10-31):** lakefront on a 9-acre county lake, lake-side pads ~15-25 m on open slope; southern pads on undated Google tiles only; Google's summary says 'decent pond', so `pond` is the alternative.
 
 ## Open leads per entry, split out of the batch paragraphs 2026-11-01 (mkwfbatch.py reads these; moves to Resolved as worked)
 
@@ -653,13 +652,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13353 New London (lakefront holds only for W&E loop 118-131 on the point, ~50 m behind cabins; full-hookup lots 1-103 150-400 m back) (OH; p3-226; DOWNWARD)
 - 13352 Winton Woods (lakeview; south loops reach the shore, kayak launch at site 86; no site map) (OH; p3-226; UPWARD)
 - 14307 Sandy Springs (riverview; ~60 m tree strip to the Ohio River, operator sells 'riverside' at $65; site walled) (OH; p3-226; UPWARD)
-- 1362 Charlarose (lakefront; ~3-acre lake, pads ~45-50 m across camp road and lawn; lakeview or pond-size question) (IN; p3-227; DOWNWARD)
-- 1348 Buffalo Trace (lakeview; 38, 39, 47-50 30-60 m across a paved trail and open bank) (IN; p3-227; UPWARD)
-- 1086 Hardy Lake (not waterfront; Wooster's 8 primitive drive-in sites are RA 'Lakefront' on a peninsula, 155-159 and 009H fit 23 ft at $14, no hookups; Shale Bluff stays above; lake being drawn down 2026) (IN; p3-228; UPWARD)
-- 1344 Johnny Appleseed (riverview; nearest sites 110-170 m across Harry Baals Dr and parkland) (IN; p3-229; DOWNWARD)
-- 15432 Richmond KOA (lakeview; ~1.5-acre fishing pond, so pond); 1363 Old Mill Run (pond; overnight rows 30-130 m, on-pond sites 445-462 are seasonal) (IN; p3-230; DOWNWARD)
-- 1383 Rising Sun (riverfront; RV sites unplotted, east loop 30-60 m through trees, note says set back) (IN; p3-230; DOWNWARD)
-- 1324 Pike Lake (lakefront holds for north row only, 20-30 m across a road; inner rows 70-120 m) (IN; p3-230; DOWNWARD)
 - 1337 Rivertown (riverview; Campspot sells S01-S18 as Riverfront, map shows them last before the Ohio; imagery may predate) (IN; p3-230; UPWARD)
 - 1345 Wabash & Erie (not waterfront; sites D/E/G 30-60 m from a ~20 m canal across the towpath) (IN; p3-231; UPWARD)
 - 1336 Westwood (lakeview; 'borders the lake', east loop 20-40 m through trees on a peninsula); 1370 White Oaks (not waterfront; Lower Village south row ~55 m with beach building between, so lakeview at most; the pin is inland Upper Village) (IN; p3-231; UPWARD)
@@ -802,3 +794,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14380 War Hill Park GA (stored not waterfront; county PDF marks 12 of 14 sites "On the water", loop circles a Lanier peninsula - strong) (GA; p3-212; UPWARD)
 - 13372 Stone Mountain (Lakeside types O/P/M tagged 'Waterfront'; stored lakeview) (GA; p3-212; UPWARD)
 - 14377 Ted & Tracy's (Creekside sites) (GA; p3-212; UPWARD)
+
+## Resolved 2026-11-01, wf-in-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- **15593 Eco Lake Park (IN, new 2026-10-31):** lakefront on a 9-acre county lake, lake-side pads ~15-25 m on open slope; southern pads on undated Google tiles only; Google's summary says 'decent pond', so `pond` is the alternative.
+- 1362 Charlarose (lakefront; ~3-acre lake, pads ~45-50 m across camp road and lawn; lakeview or pond-size question) (IN; p3-227; DOWNWARD)
+- 1348 Buffalo Trace (lakeview; 38, 39, 47-50 30-60 m across a paved trail and open bank) (IN; p3-227; UPWARD)
+- 1086 Hardy Lake (not waterfront; Wooster's 8 primitive drive-in sites are RA 'Lakefront' on a peninsula, 155-159 and 009H fit 23 ft at $14, no hookups; Shale Bluff stays above; lake being drawn down 2026) (IN; p3-228; UPWARD)
+- 1344 Johnny Appleseed (riverview; nearest sites 110-170 m across Harry Baals Dr and parkland) (IN; p3-229; DOWNWARD)
+- 15432 Richmond KOA (lakeview; ~1.5-acre fishing pond, so pond); 1363 Old Mill Run (pond; overnight rows 30-130 m, on-pond sites 445-462 are seasonal) (IN; p3-230; DOWNWARD)
+- 1383 Rising Sun (riverfront; RV sites unplotted, east loop 30-60 m through trees, note says set back) (IN; p3-230; DOWNWARD)
+- 1324 Pike Lake (lakefront holds for north row only, 20-30 m across a road; inner rows 70-120 m) (IN; p3-230; DOWNWARD)
