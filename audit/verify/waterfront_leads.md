@@ -437,14 +437,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
-- 2366 Heaton Bay (CO, White River NF): FS "located on the shores of Lake Dillon"; entry lakeview. Pin ~340 m north of the RV-site centroid (39.60198,-106.07693) - check at the sites (p3-160).
-- 2367 Lowry (CO, White River NF): the stored "not waterfront" evidence was read at the old pin 39.6060,-106.0435, 1.76 km from the sites. Re-pinned to the per-site centroid 39.5972,-106.0264 (FS point 39.597101,-106.027543); re-run the gate at the sites (p3-161).
-- 15566 Navajo SP (Windsurf Beach) and 15567 (Arboles Point), CO (add-co-1): measured to the CURRENT water at historic low pool (river channel ~300 m / ~200 m across dry lakebed; CPW: "not on the water or near the reservoir at this time"). The curation doc measures a reservoir to the high-water edge, so re-check both against the full-pool shoreline when imagery at higher water is available; Arboles sits 6-9 m above the bed (bench, so a view at most). 15564 Juniper Breaks: pads 174-176 / 181-183 ~35-45 m from the water behind a dirt track and rocky band - lakeview.
-- 2589 Dark Sky River Lodge (CO, p3-164): the stored pin 38.4350,-105.8338 was a different property ~1.7 km WNW; re-pinned to the RV pads 38.4296,-105.8150 (10281 US-50). The stored "riverfront" was judged at the wrong place: nearest rigs ~15-25 m from the Arkansas behind a dirt lane and a tree line, Upper River zone (sites 1-4) under canopy - re-run the gate at the new pin.
-- 2285 Vega SP (Early Settlers) (CO, p3-164): stored lakefront, but cpwshop pads sit 64-259 m from the OSM reservoir polygon; z17 imagery near full pool shows the NE pads ~50-80 m from the water across open grass. Lakeview certain, lakefront borderline - re-run the gate.
-- 2577 Arkansas River Rim (CO, p3-164): river ~60-90 m east of the sites behind conifers; stored riverview, possibly generous.
-- 2267 Clear Creek Reservoir SWA (CO, p3-164): stored creekside looks supportable - SE pull-outs 10-30 m from Clear Creek under conifers; reservoir 151 m.
-- 15412 Estes Park KOA (CO, p3-165): stored lakeview, but no source mentions a lake view; KOA says Lake Estes is "across the street" - re-run the gate.
 - 2283 Island Acres (CO, p3-166): stored not waterfront; Loop D west row 20-40 m from the pond's east shore, Loop B ~40 m from the Colorado River through trees - re-run the gate.
 - 2658 Molas Lake (CO, p3-166): stored lakeview; operator sells "Premium Water View" sites described as waterfront that take 23-ft RVs - possible lakefront, needs the satellite gate.
 - 2402 Monarch Park (CO, p3-166): stored creekside; rec.gov says some sites are on the banks of the South Fork Arkansas, imagery (snow) shows the channel ~100-150 m from the nearest sites - re-check in summer imagery.
@@ -838,3 +830,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2297 Crawford SP (Clear Fork) (CO): the stored lakefront evidence names perimeter sites 46-49, which CPW lists as tent sites - re-check which RV sites sit on the apron (p3-159).
 - 2649 Gateway RV Park (Carbondale) (CO, local): town says "along the Roaring Fork River"; entry not waterfront (p3-159, mild).
 - 2340 Green Ridge (CO, Arapaho NF): FS and rec.gov say "located on beautiful Shadow Mountain Reservoir", with a boat ramp and dock in the campground; entry lakeview (p3-160).
+
+## Resolved 2026-11-01, wf-co-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2366 Heaton Bay (CO, White River NF): FS "located on the shores of Lake Dillon"; entry lakeview. Pin ~340 m north of the RV-site centroid (39.60198,-106.07693) - check at the sites (p3-160).
+- 2367 Lowry (CO, White River NF): the stored "not waterfront" evidence was read at the old pin 39.6060,-106.0435, 1.76 km from the sites. Re-pinned to the per-site centroid 39.5972,-106.0264 (FS point 39.597101,-106.027543); re-run the gate at the sites (p3-161).
+- 15566 Navajo SP (Windsurf Beach) and 15567 (Arboles Point), CO (add-co-1): measured to the CURRENT water at historic low pool (river channel ~300 m / ~200 m across dry lakebed; CPW: "not on the water or near the reservoir at this time"). The curation doc measures a reservoir to the high-water edge, so re-check both against the full-pool shoreline when imagery at higher water is available; Arboles sits 6-9 m above the bed (bench, so a view at most). 15564 Juniper Breaks: pads 174-176 / 181-183 ~35-45 m from the water behind a dirt track and rocky band - lakeview.
+- 2589 Dark Sky River Lodge (CO, p3-164): the stored pin 38.4350,-105.8338 was a different property ~1.7 km WNW; re-pinned to the RV pads 38.4296,-105.8150 (10281 US-50). The stored "riverfront" was judged at the wrong place: nearest rigs ~15-25 m from the Arkansas behind a dirt lane and a tree line, Upper River zone (sites 1-4) under canopy - re-run the gate at the new pin.
+- 2285 Vega SP (Early Settlers) (CO, p3-164): stored lakefront, but cpwshop pads sit 64-259 m from the OSM reservoir polygon; z17 imagery near full pool shows the NE pads ~50-80 m from the water across open grass. Lakeview certain, lakefront borderline - re-run the gate.
+- 2577 Arkansas River Rim (CO, p3-164): river ~60-90 m east of the sites behind conifers; stored riverview, possibly generous.
+- 2267 Clear Creek Reservoir SWA (CO, p3-164): stored creekside looks supportable - SE pull-outs 10-30 m from Clear Creek under conifers; reservoir 151 m.
+- 15412 Estes Park KOA (CO, p3-165): stored lakeview, but no source mentions a lake view; KOA says Lake Estes is "across the street" - re-run the gate.
