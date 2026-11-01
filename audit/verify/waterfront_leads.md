@@ -437,14 +437,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
-- 14480 Mountainside RV Park (CO, temporarily closed): operator "The 'Muddy Creek' runs next to the sites"; entry not waterfront (p3-155).
-- 2280 State Forest SP (North Michigan) (CO): the stored "not waterfront" evidence was read at the old pin ("Reservoir lies 500m+ north"). Re-pinned to 40.5522,-105.9957; per-site catalog coordinates sit 31-228 m from OSM-mapped water, several at ~31-41 m, and the old note claimed shoreline sites. Re-run the gate at the sites (p3-156).
-- 2408 White Star (CO, Pike-San Isabel NF): FS "on the northern shore of Twin Lakes Reservoir"; entry lakeview (p3-157).
-- 2634 Woodlake Park (CO, private): operator says the River Loop's 28 sites are "placed right along the Lake Fork River"; entry not waterfront. Per-site pins sit in the operator's map.html PARK_DATA (p3-157).
-- 2644 Clear Creek RV Park (CO, City of Golden): city says the park is "on the banks of Clear Creek" and sells "Creek-side sites" (the $85 tier); entry riverview (p3-158).
-- 2297 Crawford SP (Clear Fork) (CO): the stored lakefront evidence names perimeter sites 46-49, which CPW lists as tent sites - re-check which RV sites sit on the apron (p3-159).
-- 2649 Gateway RV Park (Carbondale) (CO, local): town says "along the Roaring Fork River"; entry not waterfront (p3-159, mild).
-- 2340 Green Ridge (CO, Arapaho NF): FS and rec.gov say "located on beautiful Shadow Mountain Reservoir", with a boat ramp and dock in the campground; entry lakeview (p3-160).
 - 2366 Heaton Bay (CO, White River NF): FS "located on the shores of Lake Dillon"; entry lakeview. Pin ~340 m north of the RV-site centroid (39.60198,-106.07693) - check at the sites (p3-160).
 - 2367 Lowry (CO, White River NF): the stored "not waterfront" evidence was read at the old pin 39.6060,-106.0435, 1.76 km from the sites. Re-pinned to the per-site centroid 39.5972,-106.0264 (FS point 39.597101,-106.027543); re-run the gate at the sites (p3-161).
 - 15566 Navajo SP (Windsurf Beach) and 15567 (Arboles Point), CO (add-co-1): measured to the CURRENT water at historic low pool (river channel ~300 m / ~200 m across dry lakebed; CPW: "not on the water or near the reservoir at this time"). The curation doc measures a reservoir to the high-water edge, so re-check both against the full-pool shoreline when imagery at higher water is available; Arboles sits 6-9 m above the bed (bench, so a view at most). 15564 Juniper Breaks: pads 174-176 / 181-183 ~35-45 m from the water behind a dirt track and rocky band - lakeview.
@@ -835,3 +827,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2412 Father Dyer (CO, Pike-San Isabel NF): rec.gov "situated on the eastern shore of Turquoise Lake"; entry not waterfront (p3-154).
 - 2333 Pawnee (CO, Arapaho-Roosevelt NF): rec.gov "next to 25-acre Brainard Lake", FS "on the east side of Brainard Lake"; entry not waterfront (p3-155).
 - 2656 Marble RV Park and Campground (CO): stored riverfront, operator says "up from the Crystal River" (p3-155).
+
+## Resolved 2026-11-01, wf-co-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 14480 Mountainside RV Park (CO, temporarily closed): operator "The 'Muddy Creek' runs next to the sites"; entry not waterfront (p3-155).
+- 2280 State Forest SP (North Michigan) (CO): the stored "not waterfront" evidence was read at the old pin ("Reservoir lies 500m+ north"). Re-pinned to 40.5522,-105.9957; per-site catalog coordinates sit 31-228 m from OSM-mapped water, several at ~31-41 m, and the old note claimed shoreline sites. Re-run the gate at the sites (p3-156).
+- 2408 White Star (CO, Pike-San Isabel NF): FS "on the northern shore of Twin Lakes Reservoir"; entry lakeview (p3-157).
+- 2634 Woodlake Park (CO, private): operator says the River Loop's 28 sites are "placed right along the Lake Fork River"; entry not waterfront. Per-site pins sit in the operator's map.html PARK_DATA (p3-157).
+- 2644 Clear Creek RV Park (CO, City of Golden): city says the park is "on the banks of Clear Creek" and sells "Creek-side sites" (the $85 tier); entry riverview (p3-158).
+- 2297 Crawford SP (Clear Fork) (CO): the stored lakefront evidence names perimeter sites 46-49, which CPW lists as tent sites - re-check which RV sites sit on the apron (p3-159).
+- 2649 Gateway RV Park (Carbondale) (CO, local): town says "along the Roaring Fork River"; entry not waterfront (p3-159, mild).
+- 2340 Green Ridge (CO, Arapaho NF): FS and rec.gov say "located on beautiful Shadow Mountain Reservoir", with a boat ramp and dock in the campground; entry lakeview (p3-160).
