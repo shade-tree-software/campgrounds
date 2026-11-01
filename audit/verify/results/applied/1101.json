@@ -1,0 +1,80 @@
+{
+ "id": 1101,
+ "checked": "2026-10-31",
+ "sources": [
+  "https://www.fs.usda.gov/r09/hoosier/recreation/tipsaw-lake-recreation-area",
+  "https://www.recreation.gov/camping/campgrounds/232114",
+  "https://www.recreation.gov/api/camps/campgrounds/232114",
+  "https://www.recreation.gov/api/camps/campgrounds/232114/rates",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232114"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 24,
+    "nightly_high": 38,
+    "currency": "USD",
+    "checked": "2026",
+    "note": "2026 and 2027 peak rates on recreation.gov: STANDARD NONELECTRIC $24, double $37; STANDARD ELECTRIC $33, double $49; RV ELECTRIC (electric and water) $38. Each single site includes one vehicle; a second vehicle is $8 a day."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232114/rates (Peak 2026-04-03 to 2026-10-25; Peak 2027-04-16 to 2027-10-31) + notices ('There is a $8.00 charge per day for the second vehicle'), read 2026-10-31",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "some_sites",
+    "window_opens_days": 330,
+    "max_stay_nights": 14,
+    "note": "recreation.gov window 11 months; reservations cut off a day before arrival there, while the Forest Service says 'A three day reservation window is required' and sites not reserved in time can go as walk-ups. 14 nights in a rolling 30 days. Booked on recreation.gov, run on site by the concessionaire."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232114 (facility_rules reservationWindow 11 Months, reservationCutOff 1, maxStay 14 Rolling 30 Days; 'First-come, first-served sites may be available') + https://www.fs.usda.gov/r09/hoosier/recreation/tipsaw-lake-recreation-area ('some campsites sites may be reserved online'; 'Some sites are only non-reservabe and only available as first come, first served.'), read 2026-10-31",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "opens": "04-01",
+    "closes": "10-31",
+    "note": "'Camping loops are open April through October.' Exact dates move: 'Camping will close for the season on October 25, 2026 at noon, and reopen in early April, 2027.'"
+   },
+   "source": "https://www.fs.usda.gov/r09/hoosier/recreation/tipsaw-lake-recreation-area, read 2026-10-31",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true
+   },
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232114 (CATB RV ELECTRIC sites: Electricity Hookup 50 at 001, 003, 005, 007, 009, Water Hookup Y; Jack Pine and Dogwood electric 15 or 30), read 2026-10-31",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 41,
+    "max_rig_ft": 72,
+    "note": "recreation.gov catalog: 41 sites taking RVs or trailers (plus 4 walk-to tent sites and 2 group areas). 6 of the 41 are capped at 20 ft (Jack Pine 001, 003, 006, 007, 009, 010), and 035 and 036 at 25 ft."
+   },
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232114 (per-site type, permitted_equipment and Max Vehicle Length; site 004's 102 ft left out as implausible), read 2026-10-31",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "potable_water": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232114 ('Accessible flush toilets, showers and drinking water are provided.'), read 2026-10-31",
+   "method": "manual"
+  }
+ },
+ "note": "USFS, Hoosier NF on 131-acre Tipsaw Lake (electric motors only), with a beach and boat ramp. Sites sit in the forest a few hundred metres up from the lake, not at the water's edge. --Claude",
+ "summary": "$24-38 confirmed for 2026 and 2027. Site count 60->41 RV/trailer sites per the catalog (stored 60 was note prose). 50A/water confirmed. Season Apr-Oct, fcfs some_sites, 11-month window, 14-night max, facilities added. Not waterfront stands; pin 3.8 km off.",
+ "flags": [
+  "PIN: stored 38.153567,-86.604957 is 3.8 km NE of the campground. recreation.gov's per-site coordinates centre on 38.1348,-86.6412 (Jack Pine 38.1353,-86.6425; Dogwood 38.1337,-86.6427; CATB 38.1355,-86.6377); rec.gov's own facility point 38.13306,-86.63306 is the group/day-use end. Move to about 38.1348,-86.6412.",
+  "WATER: plotted every site. The nearest, Dogwood 31-33, is about 250 m from the shore through solid forest. Not waterfront stands; no view. Agency wording 'adjacent to 131-acre Tipsaw Lake' is the recreation area, not the sites.",
+  "OPERATOR/PHONE: entry has no phone. Forest Service page: 'BA Services, Inc., 1257 Hammond Street, Bangor, Maine... Managed by Karen & Stan Arthur, 812-837-9453'. recreation.gov lists 812-843-4891. Concessionaire on federal land, booked on recreation.gov, so federal stands with no policy_ref change. Suggest 812-837-9453, the manager's.",
+  "FIT: Jack Pine 001, 003, 006, 007, 009, 010 are capped at 20 ft; the other RV/trailer sites post 25-72 ft (one 102 ft, ignored), and CATB (11 sites) is the 44 ft and up loop. The $24 base is Dogwood nonelectric 028-037, all taking RVs, 35 ft except 035/036 at 25 ft.",
+  "STATUS: closed for the season since Oct 25, 2026 ('reopen in early April, 2027'): ordinary season, no status written. Alert: 'Tipsaw Trail Bridge Closed Temporarily', a trail only. Rec.gov says 'five loops', Forest Service 'three camping loops, two group camping areas'; they agree with the catalog (Jack Pine, Dogwood, CATB + 2 group). Forest Service: 'Interagency Access, Senior and Military-Lifetime pass holders can receive discounts on base camping fees'; left inherited."
+ ]
+}
