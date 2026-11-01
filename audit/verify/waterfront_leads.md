@@ -652,14 +652,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13353 New London (lakefront holds only for W&E loop 118-131 on the point, ~50 m behind cabins; full-hookup lots 1-103 150-400 m back) (OH; p3-226; DOWNWARD)
 - 13352 Winton Woods (lakeview; south loops reach the shore, kayak launch at site 86; no site map) (OH; p3-226; UPWARD)
 - 14307 Sandy Springs (riverview; ~60 m tree strip to the Ohio River, operator sells 'riverside' at $65; site walled) (OH; p3-226; UPWARD)
-- 1341 Lake Waveland (lakeview, evidence empty, loops not located) (IN; p3-233)
-- 1323 Madison (riverview; city '18 sites bordering the Ohio River', Riverfront type; south row ~50 m across open grass: looks earned) (IN; p3-234; UPWARD)
-- 1357 Unhitched (pond; a section along the Ohio near 38.9756,-84.8338, east row ~35 m behind trees, 'Riverfront Back-In' type; unproven as theirs) (IN; p3-234; UPWARD)
-- 1351 Rockville (not waterfront; 'Lakefront sites 1-12'; rows by the beach 40-60 m) (IN; p3-234; UPWARD)
-- 1335 Linton (lakeview; 'nestled between two lakes', east loop ~20 m through trees) (IN; p3-234; UPWARD)
-- 1375 Peaceful Waters pond rests on 3-4 RV pads (IN; p3-234; DOWNWARD)
-- 1099 Yellowwood (not waterfront; Red Pine west tip 20-30 m through wooded bank, leaf-off *view question) (IN; p3-235)
-- 1103 Buzzard Roost (not waterfront; site 4 ~165 m down a bluff, leaf-off *view at most) (IN; p3-235)
 
 ## Resolved 2026-11-01: the batch paragraphs, kept for their holds and detail; their open leads are the per-entry list above
 
@@ -808,3 +800,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1091 weak lead by the boat launch (IN; p3-232)
 - 1319 Lynnville (lakeview; row 101-112 ~30-60 m, shadow on shoreline; the $25 block 150-200 m) (IN; p3-233)
 - 283 Paynetown (lakefront, evidence empty; outer rows ~40-65 m, no RA GIS or tags for RV sites) (IN; p3-233)
+
+## Resolved 2026-11-01, wf-in-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 1341 Lake Waveland (lakeview, evidence empty, loops not located) (IN; p3-233)
+- 1323 Madison (riverview; city '18 sites bordering the Ohio River', Riverfront type; south row ~50 m across open grass: looks earned) (IN; p3-234; UPWARD)
+- 1357 Unhitched (pond; a section along the Ohio near 38.9756,-84.8338, east row ~35 m behind trees, 'Riverfront Back-In' type; unproven as theirs) (IN; p3-234; UPWARD)
+- 1351 Rockville (not waterfront; 'Lakefront sites 1-12'; rows by the beach 40-60 m) (IN; p3-234; UPWARD)
+- 1335 Linton (lakeview; 'nestled between two lakes', east loop ~20 m through trees) (IN; p3-234; UPWARD)
+- 1375 Peaceful Waters pond rests on 3-4 RV pads (IN; p3-234; DOWNWARD)
+- 1099 Yellowwood (not waterfront; Red Pine west tip 20-30 m through wooded bank, leaf-off *view question) (IN; p3-235)
+- 1103 Buzzard Roost (not waterfront; site 4 ~165 m down a bluff, leaf-off *view at most) (IN; p3-235)
