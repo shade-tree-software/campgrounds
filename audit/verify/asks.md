@@ -430,3 +430,6 @@ Your note says RV sites "are set back a ways from the water", so I left lakeview
 
 ## 15364 Leafy Oaks (OH): does a campground's own swim beach count as day use? (wf-oh-2, 2026-11-01)
 Operator-sold "Waterfront" sites 311-323 back onto a ~0.6 ha swim pond across ~15 m of grass and a roped sand beach. Left not waterfront under the no-day-use rule. If the campers' own beach doesn't block, those sites earn pond.
+
+## 567 West Branch (OH): does your not waterfront stand? (wf-oh-3, 2026-11-01)
+Your note says wooded loops, not on the shoreline, so the value stays. On the ODNR map and leaf-off imagery, lake-side pads read about 20-35 m through thin woods with no road between (a rough scale reading). Say if you remember any lake-side sites worth lakefront.
