@@ -437,14 +437,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
-- 2320 Camp Dick (CO, Arapaho-Roosevelt NF): FS "adjacent to Middle Saint Vrain Creek"; entry not waterfront (p3-153).
-- 2321 Chambers Lake (CO, Arapaho-Roosevelt NF): rec.gov "on beautiful Chambers Lake"; entry lakeview (p3-153).
-- 2360 Chapman (CO, White River NF): FS + rec.gov "several [sites] at the river's edge" on the Fryingpan; entry lakeview (p3-153).
-- 2362 Difficult (CO, White River NF): re-pinned 2026-10-26 ~1.5 km to the rec.gov campsite centroid 39.1413,-106.7722 (p3-154); re-check the riverfront call at the new pin.
-- 2364 Elliott Creek (CO, White River NF): FS "Located on the northwest shore of Green Mountain Reservoir"; entry lakeview (p3-154).
-- 2412 Father Dyer (CO, Pike-San Isabel NF): rec.gov "situated on the eastern shore of Turquoise Lake"; entry not waterfront (p3-154).
-- 2333 Pawnee (CO, Arapaho-Roosevelt NF): rec.gov "next to 25-acre Brainard Lake", FS "on the east side of Brainard Lake"; entry not waterfront (p3-155).
-- 2656 Marble RV Park and Campground (CO): stored riverfront, operator says "up from the Crystal River" (p3-155).
 - 14480 Mountainside RV Park (CO, temporarily closed): operator "The 'Muddy Creek' runs next to the sites"; entry not waterfront (p3-155).
 - 2280 State Forest SP (North Michigan) (CO): the stored "not waterfront" evidence was read at the old pin ("Reservoir lies 500m+ north"). Re-pinned to 40.5522,-105.9957; per-site catalog coordinates sit 31-228 m from OSM-mapped water, several at ~31-41 m, and the old note claimed shoreline sites. Re-run the gate at the sites (p3-156).
 - 2408 White Star (CO, Pike-San Isabel NF): FS "on the northern shore of Twin Lakes Reservoir"; entry lakeview (p3-157).
@@ -832,3 +824,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4148 Nickerson stored not waterfront: RA Near Water on 21 sites in Areas 1 and 5 (23-ft-capable: Area 1 025, 027, 038; Area 5 016) (MA; p3-193)
 - 4152 Tolland lakefront rests on three 23-ft-capable Near Water sites (023, 024, 032 on Sargent Rd) (MA; p3-193)
 - 4167 Travelers Woods: outer loop within ~50 m of the Fall River behind trees; operator lists river fishing (MA; p3-193)
+
+## Resolved 2026-11-01, wf-co-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2320 Camp Dick (CO, Arapaho-Roosevelt NF): FS "adjacent to Middle Saint Vrain Creek"; entry not waterfront (p3-153).
+- 2321 Chambers Lake (CO, Arapaho-Roosevelt NF): rec.gov "on beautiful Chambers Lake"; entry lakeview (p3-153).
+- 2360 Chapman (CO, White River NF): FS + rec.gov "several [sites] at the river's edge" on the Fryingpan; entry lakeview (p3-153).
+- 2362 Difficult (CO, White River NF): re-pinned 2026-10-26 ~1.5 km to the rec.gov campsite centroid 39.1413,-106.7722 (p3-154); re-check the riverfront call at the new pin.
+- 2364 Elliott Creek (CO, White River NF): FS "Located on the northwest shore of Green Mountain Reservoir"; entry lakeview (p3-154).
+- 2412 Father Dyer (CO, Pike-San Isabel NF): rec.gov "situated on the eastern shore of Turquoise Lake"; entry not waterfront (p3-154).
+- 2333 Pawnee (CO, Arapaho-Roosevelt NF): rec.gov "next to 25-acre Brainard Lake", FS "on the east side of Brainard Lake"; entry not waterfront (p3-155).
+- 2656 Marble RV Park and Campground (CO): stored riverfront, operator says "up from the Crystal River" (p3-155).
