@@ -418,3 +418,6 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 ## 174 Blythe Island Regional Park (GA): your not waterfront, or lakeview? (wf-ga-1, 2026-11-01)
 Stored not waterfront rests on your note ("some sites may hav a water view, but this is not confirmed"). The county prices sites 1-13 as "Lakeview" at $45 against $42 for the wooded sites. Canopy hides the sites on imagery, so nothing confirms or refutes it. Recommend lakeview if you recall a view at the low-numbered sites; otherwise it stays.
+
+## 4623 Lake Tobesofkee Claystone (GA): does the campground's own loop road block lakefront? (wf-ga-2, 2026-11-01)
+Sites 40-45 are sold as "RV WF"; the nearest is ~45-50 m from shore across the loop road and an open slope. Stored lakeview stays under the road-between rule. It would read lakefront only if a low-traffic loop road does not count.
