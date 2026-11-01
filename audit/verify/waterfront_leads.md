@@ -437,15 +437,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
-- 2471 Buckeye / Pioneer (CO, p3-172): stored lakeview; sites 08, 11-15 ~20-40 m from the bank on open ground - possible lakefront (reservoir drainable).
-- 2385 Cataract Creek (CO, p3-173): stored lakeview unsupported - the spur is in dense conifer, Green Mountain Reservoir ~2.3 km+, Lower Cataract Lake ~1 km behind trees and a rise. Likely not waterfront.
-- 2563 Cayton (CO, p3-173): stored riverfront doubtful - Loop A pads ~35-45 m from the Dolores behind a continuous conifer band; no waterfront_evidence.
-- 2469 Cement Creek (CO, p3-173): stored creekside rests only on the note's "Sites 3-9 sit along the creek"; no evidence, no per-site points, winter imagery.
-- 2493 Cimarrona (CO, p3-173): stored not waterfront; FS quotes a visitor "Can see the reservoir from sites" - possible lakeview.
-- 2449 Cottonwood Lake (PSICC) (CO, p3-174): stored lakeview doubtful - loops on an aspen hillside ~350-450 m from open water with marsh between; FS says only "within walking distance". Likely not waterfront.
-- 2505 Comstock (CO, p3-174): stored not waterfront; the bench is ~20-40 m from the South Fork of Rock Creek - possible creekside, sites not visible on imagery.
 - 2423 Cove (CO, p3-174): dropped; moot.
-- 2576 Cochetopa Creek (CO, p3-174): stored creekside unaudited; no site locations to check.
 - 2392 Deep Lake (CO, p3-175): stored not waterfront vs FS "on the east side of 37 acre Deep Lake ... nice views" and rec.gov "Nestled against Deep Lake"; main loops on the open east shore, west loop road ~30-60 m from the water behind a thin fringe. Contrary claim - gate; possible lakeview or better.
 - 2462 Dinner Station (CO, p3-175): stored not waterfront; rec.gov "The Taylor River can be accessed from within the campground"; ponderosa sites 001-013 ~20-60 m from the river. Possible riverview/riverfront.
 - 2380 Dearhamer (CO, p3-175): stored riverfront; sites 1-5 ~20-40 m from the Fryingpan behind cottonwoods (open apron unclear); 7-8 ~60 m from the drawdown-prone inlet arm.
@@ -850,3 +842,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2239 Boyd Lake Cottonwood (CO, p3-172): stored lakeview vs cpwshop Lakefront tags on loop B-F perimeter sites, ~75-150 m from the shore path; operator claim triggers the gate.
 - 2491 Bradfield (CO, p3-172): stored riverfront doubtful - loops 20-40 m from the Dolores behind a continuous dense riparian band.
 - 2561 Bridge (CO, p3-172): stored riverview; sites 05 and 13 ~25-35 m from Williams Creek across open meadow - possible riverfront.
+
+## Resolved 2026-11-01, wf-co-7 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2471 Buckeye / Pioneer (CO, p3-172): stored lakeview; sites 08, 11-15 ~20-40 m from the bank on open ground - possible lakefront (reservoir drainable).
+- 2385 Cataract Creek (CO, p3-173): stored lakeview unsupported - the spur is in dense conifer, Green Mountain Reservoir ~2.3 km+, Lower Cataract Lake ~1 km behind trees and a rise. Likely not waterfront.
+- 2563 Cayton (CO, p3-173): stored riverfront doubtful - Loop A pads ~35-45 m from the Dolores behind a continuous conifer band; no waterfront_evidence.
+- 2469 Cement Creek (CO, p3-173): stored creekside rests only on the note's "Sites 3-9 sit along the creek"; no evidence, no per-site points, winter imagery.
+- 2493 Cimarrona (CO, p3-173): stored not waterfront; FS quotes a visitor "Can see the reservoir from sites" - possible lakeview.
+- 2449 Cottonwood Lake (PSICC) (CO, p3-174): stored lakeview doubtful - loops on an aspen hillside ~350-450 m from open water with marsh between; FS says only "within walking distance". Likely not waterfront.
+- 2505 Comstock (CO, p3-174): stored not waterfront; the bench is ~20-40 m from the South Fork of Rock Creek - possible creekside, sites not visible on imagery.
+- 2576 Cochetopa Creek (CO, p3-174): stored creekside unaudited; no site locations to check.
