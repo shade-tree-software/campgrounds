@@ -486,11 +486,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Open leads per entry, split out of the batch paragraphs 2026-11-01 (mkwfbatch.py reads these; moves to Resolved as worked)
 
-- 13592 Uravan Ballpark riverview may be riverfront (tables 10-25 m from the San Miguel on imagery), but no source places the sites (CO; p3-190)
-- 2485 West Dolores stored riverfront, but the West Dolores is ~10 m wide here - by size creekside, earned at 4E (~7 m) and arguably 3E (~20 m) (CO; p3-191)
-- 2440 Weston Pass stored creekside NOT confirmed: a 1-3 m channel in a willow meadow, visible sites 50-60 m off - creekview or not waterfront (CO; p3-191)
-- 2352 Willow Creek stored lakefront NOT confirmed: spur ends 45-50 m from shore at near-full pool through continuous lodgepole, the only opening is the boat ramp - lakeview at most (CO; p3-191)
-- 13298 Wolcott riverview may earn riverfront at the west spurs and ramp lot (15-30 m from a ~30 m Eagle River, behind willow) (CO; p3-191)
 
 ## Resolved 2026-11-01: the batch paragraphs, kept for their holds and detail; their open leads are the per-entry list above
 
@@ -874,3 +869,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2558 Transfer Park: "the lower loop is near the river" (Florida, ~7-11 m) 20-40 m through conifers - creekside not earned without per-site evidence (CO; p3-189)
 - 2439 Tabor lakeview vs not waterfront: lot 50-70 m back behind lodgepole and a second lot (CO; p3-189)
 - 2348 Tunnel stored riverfront, but the Laramie River is ~4-8 m wide here - by size creekside (CO; p3-190)
+
+## Resolved 2026-11-01, wf-co-15 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 13592 Uravan Ballpark riverview may be riverfront (tables 10-25 m from the San Miguel on imagery), but no source places the sites (CO; p3-190)
+- 2485 West Dolores stored riverfront, but the West Dolores is ~10 m wide here - by size creekside, earned at 4E (~7 m) and arguably 3E (~20 m) (CO; p3-191)
+- 2440 Weston Pass stored creekside NOT confirmed: a 1-3 m channel in a willow meadow, visible sites 50-60 m off - creekview or not waterfront (CO; p3-191)
+- 2352 Willow Creek stored lakefront NOT confirmed: spur ends 45-50 m from shore at near-full pool through continuous lodgepole, the only opening is the boat ramp - lakeview at most (CO; p3-191)
+- 13298 Wolcott riverview may earn riverfront at the west spurs and ramp lot (15-30 m from a ~30 m Eagle River, behind willow) (CO; p3-191)
