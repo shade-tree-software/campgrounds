@@ -1187,3 +1187,5 @@ me drop and report); each needs the research named before a verdict.
 - **wf-ga-1 (2026-11-01):** 4528 George T. Bagby re-pinned 825 m to the new loops; imagery is construction-stage, so re-look at the lakefront call on finished imagery with site numbers. 14374 Bear Branch: whether the shore row sells nights is unconfirmed (478-494-0094). 14373 A Big Wheel: only the pond sites are $50, full hookups $60.
 
 - **wf-ga-3 (2026-11-01):** 4625 Long Ridge: map or booking text suggests sites 11-13 may need 4WD and up to half the sites may be long-term; re-check against the long-stay tests next time it is touched. 4625 and 4647 Stay Wilder creekside rest on the operator's site map with the creek under canopy (low confidence).
+
+- **wf-ga-4 (2026-11-01):** 4671 Broad River: Firefly sells an "RV Site - Water Access" class, unit list behind reCAPTCHA; a person reading the units could upgrade it (already an open ask for its fees). 4654 Trackrock: operator map draws a small stream by sites 70-76, unconfirmed.
