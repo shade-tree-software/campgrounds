@@ -374,7 +374,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1292 Shady Trails (OH, p3-222):** stored 'mostly seasonal' has no source; no operator page or booking site; only rate is Good Sam's undated 'From $35'. Google 4.5/79 reads like overnight use ('a couple nights', 'every weekend'). Kept for now as an ordinary park; on test 2 it would go. 937-393-5618.
 
-- **1014 Malabar Farm (OH, p3-223):** ODNR: 'outfitted for equestrian camping', '15 sites designated for equestrian camping'; ReserveOhio site 001 says 'available to all campers', pads 43-60 ft, campers report 36-ft trailers. Horse camps are out, general campgrounds with horse sites are in; this is a horse camp that admits others. Recommend drop. Kept for now.
+- **1014 Malabar Farm (OH, p3-223):** ODNR: 'outfitted for equestrian camping', '15 sites designated for equestrian camping'; ReserveOhio site 001 says 'available to all campers', pads 43-60 ft, campers report 36-ft trailers. Horse camps are out, general campgrounds with horse sites are in; this is a horse camp that admits others. Recommend drop. Kept for now. **AWH 2026-11-01: dropped, no separate horse and general areas found.**
 
 - **1313 Timashamie (OH, p3-223):** no posted rate, no engine; operator leads with 'SEASONAL SITES ARE AVAILABLE!', tightly packed lots; a 2023 camper paid $35 a night. If long-stay it fails test 2. Google 4.4/125. Kept for now; 330-525-7054 would settle it. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
@@ -388,9 +388,9 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **13345 Charles Mill (OH, p3-225):** Eagle Point (electric with spigots, sites 400-612) and Main Camp (mostly full hookup) have own entrances either side of the causeway, ~800 m across the water, ~1 km by road: right at the split line. Per-area rates sit behind the captcha. Left as one entry; pages saved from a browser would allow a split.
 
-- **14307 Sandy Springs (OH, p3-226):** site is behind a bot check, so nothing was re-read. Stored $45 is an October rate, riverview $50, riverside $65; a summer rate over $50 wouldn't show. Google 4.9/207. A look at sandyspringscampground.com rates, or a saved page, would settle the gate and the riverside row. Kept for now.
+- **14307 Sandy Springs (OH, p3-226):** site is behind a bot check, so nothing was re-read. Stored $45 is an October rate, riverview $50, riverside $65; a summer rate over $50 wouldn't show. Google 4.9/207. A look at sandyspringscampground.com rates, or a saved page, would settle the gate and the riverside row. Kept for now. **AWH 2026-11-01: keep.**
 
-- **1373 AOK (IN, p3-226):** Google 3.7/219, well below RV Life 5*, and the only readable snippet says 'some maybe full time residents'. $35, daily/weekly/monthly. You judge reviews by what they say and most were blocked; drop if they read poorly. Kept for now.
+- **1373 AOK (IN, p3-226):** Google 3.7/219, well below RV Life 5*, and the only readable snippet says 'some maybe full time residents'. $35, daily/weekly/monthly. You judge reviews by what they say and most were blocked; drop if they read poorly. Kept for now. **AWH 2026-11-01: dropped, under 4 stars and borderline long-stay.**
 
 - **13346 Seneca Lake (OH, p3-226):** Marina Point (199 full-hookup sites, own gatehouse on SR 313, 1.3 km across the water) would be its own entry if it sells nights. Stored text says seasonal-only from a search excerpt; imagery fits; engine is behind the captcha. Left out.
 
@@ -398,7 +398,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1318 Elkhart County Fairgrounds (IN, p3-228):** run by the Elkhart County 4H Fair association; no page says county-run. Stored local unconfirmed. About 3 months blacked out in 2026. Kept under the fairground rule.
 
-- **1086 Hardy Lake (IN, p3-228):** Wooster's on-water sites are $14 primitive, 'primarily to serve fishermen'; Shale Bluff is the main campground above the water. Does the entry's rating follow Wooster?
+- **1086 Hardy Lake (IN, p3-228):** Wooster's on-water sites are $14 primitive, 'primarily to serve fishermen'; Shale Bluff is the main campground above the water. Does the entry's rating follow Wooster? **Resolved 2026-11-01 (wf-in-1): lakefront on site 155.**
 
 - **1380 Robinson's Whitewater (IN, p3-230):** temporarily closed after the August 2026 flood, no reopening date. Owner's listing says 'daily, weekly, seasonal and permanent camping', a June 2026 camper says 'a lot of people live at the campground', imagery shows settled units; no posted rate, no engine. Long-stay test 2 fails if that is its character. Google 4.6/273, warm. Recommend drop; kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
@@ -425,11 +425,20 @@ Sites 40-45 are sold as "RV WF"; the nearest is ~45-50 m from shore across the l
 ## 725 Paulk Park (GA): does your lakefront stand under the new loop-road rule? (wf-ga-5, 2026-11-01) — ANSWERED 2026-11-01: AWH says lakeview, loop road; applied
 Your note says "25 lakeside RV sites on a 10-acre lake", so the stored lakefront stays. On imagery the pull-through rows run ~40-65 m (east ends) to ~100 m (west ends) from shore across open lawn and the campground's loop road. Under your 2026-11-01 rule that would read lakeview, but you have been there and I have not.
 
-## 597 South Bass Island (OH): does lakeview stand? (wf-oh-2, 2026-11-01)
+## 597 South Bass Island (OH): does lakeview stand? (wf-oh-2, 2026-11-01) — ANSWERED 2026-11-01: lakeview, filtered view in reserveohio photos
 Your note says RV sites "are set back a ways from the water", so I left lakeview alone. On leaf-off imagery the closest RV pads, 126 and 129, are ~40-50 m from shore through trees, the electric block 100-250 m back in woods, with no open sightline found. It reads not waterfront unless you remember a view.
 
-## 15364 Leafy Oaks (OH): does a campground's own swim beach count as day use? (wf-oh-2, 2026-11-01)
+## 15364 Leafy Oaks (OH): does a campground's own swim beach count as day use? (wf-oh-2, 2026-11-01) — ANSWERED 2026-11-01: own swim beach is day use; not waterfront stays
 Operator-sold "Waterfront" sites 311-323 back onto a ~0.6 ha swim pond across ~15 m of grass and a roped sand beach. Left not waterfront under the no-day-use rule. If the campers' own beach doesn't block, those sites earn pond.
 
-## 567 West Branch (OH): does your not waterfront stand? (wf-oh-3, 2026-11-01)
+## 567 West Branch (OH): does your not waterfront stand? (wf-oh-3, 2026-11-01) — ANSWERED 2026-11-01: lakeview, filtered view in reserveohio photos; applied
 Your note says wooded loops, not on the shoreline, so the value stays. On the ODNR map and leaf-off imagery, lake-side pads read about 20-35 m through thin woods with no road between (a rough scale reading). Say if you remember any lake-side sites worth lakefront.
+
+## Also open, 2026-11-01 (raised in chat, logged here)
+- **1294 Shadow Lake (OH):** packed with parked rigs, nightly share unpublished, $45, Google 4.7/87; kept.
+- **15591 Maple Grove (OH):** reviewers say "space is tight", nobody reports a 23-ft rig, no limit posted; kept under the posted-limit rule.
+- **13347 Clendening / 1238 Pleasant Hill (OH):** reserve.mwcd.org captcha; saved pages would settle 93-99 nightly (lakefront) and Pleasant Hill's per-site tags.
+- **4671 Broad River / 14379 Clay Hill (GA):** Firefly "RV Site - Water Access" units behind reCAPTCHA; Broad River's fees also open.
+- **4561 Lake Conasauga:** Availability page hides all sites on rec.gov's 21-ft motorhome limit; recommend leaving it, alternative is a "tight" flag within 2 ft.
+- **3900 Bond Falls (MI):** two areas ~4 km apart, pin below the dam; split? Held until answered.
+- **`header-icon-bar`:** merged branch only AWH can delete.
