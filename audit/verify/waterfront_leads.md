@@ -24,6 +24,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3044 Hickory Grove stored lakeview: county's park map and rules unread (Cloudflare); a photo would confirm
 - 3171 Osborne stored not waterfront, p3-244: Esri imagery predates the 2025 campground; county says the Volga runs through the park; no map found
 - 2994 Mill Creek stored not waterfront: a site map or photo could lift it; a view unproven under canopy
+- 14507 Quail Hollow stored not waterfront, p3-245: operator's sites 17-19 'overlooking the pond', ~1.7-acre pond; my frame is cloud-smeared with trees at the water; a photo could make it pond for those $50 sites
+- 3065 Roberts Creek East stored not waterfront: mycountyparks campsite photos for sites 37-41 unread; would show if lake is visible
+- 3126 Riverside Spillville stored creekside: channel straddles 30 m; a width measure could restore riverfront
+- 3005 Riverside Sac City stored not waterfront: south tip's pads maybe 25-30 m from the river through trees
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
