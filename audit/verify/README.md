@@ -127,3 +127,7 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
 is `manual` for the operator's or agency's own page, `reported` for anything secondary (and
 the `source` must say what it was). A result with no `groups` is still written: it records
 that the pages were read and said nothing new, which takes the entry off the queue.
+
+## Standing process (AWH)
+
+One verifier per session; the next batch starts only after the last is applied (2026-10-22). Keep/drop and waterfront rules live in `docs/campground-curation.md`. The current brief is `prompt_template_in.txt`: copy it, change the batch number and replace the entry paragraphs.

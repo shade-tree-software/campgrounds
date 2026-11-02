@@ -89,4 +89,4 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 **2026-11-01: WATERFRONT BACKLOG CLEARED** (GA, IN, OH, MA, CO wf-co-1..15; last commit f4d9d0fb, local, origin at 931cc073 and live site not updated). Phase 7 still paused at p3-235; resume only when AWH says. 2026-11-02: Colorado's width recheck done too (wf-co-16..19). AWH 2026-11-02: do NOT do a separate pass on other states' riverfront entries (~719) or the 101 coastal woods entries; check them when each campground is next revisited for updates.
 
 
-**RESUMED 2026-11-02 by AWH (session d7d0d5a8), pushed + deployed through 0436844a:** p3-236 (IN) running; brief built from p3-235_prompt.txt in that session's scratchpad, with the 11-01 waterfront rulings added.
+**RESUMED 2026-11-02 by AWH (session d7d0d5a8), pushed + deployed through 0436844a:** p3-236 (IN) running; the brief is saved as audit/verify/prompt_template_in.txt (11-01 and 11-02 rulings included); point its scratch paths at the new session's scratchpad.
