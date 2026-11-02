@@ -485,14 +485,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 
 ## Open leads per entry, split out of the batch paragraphs 2026-11-01 (mkwfbatch.py reads these; moves to Resolved as worked)
-- 2358 Bogan Flats Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2424 Lone Rock Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2425 Spillway Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2498 Mogote Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2536 Palisade Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2584 Cañon Bonito RV & Fisherman's Club stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2590 Drake Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
-- 2657 Meeker Town Park stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
 - 2666 Telluride Town Park Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
 - 13668 Rio Grande Campground (Creede) stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
 - 14459 Ponderosa Campground (Antonito) stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
@@ -899,3 +891,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2264 Arkansas Headwaters Recreation Area (Rincon) stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
 - 2317 Gates of Lodore Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
 - 2357 Blue River Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+
+## Resolved 2026-11-02, wf-co-17 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- 2358 Bogan Flats Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2424 Lone Rock Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2425 Spillway Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2498 Mogote Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2536 Palisade Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2584 Cañon Bonito RV & Fisherman's Club stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2590 Drake Campground stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
+- 2657 Meeker Town Park stored riverfront: channel width at the sites never measured against the ~30 m size rule (CO; size-rule recheck 2026-11-02)
