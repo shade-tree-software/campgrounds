@@ -20,3 +20,5 @@ Found 2026-10-14 pricing parks that had left Campspot ([[reference_campspot_api]
 - The "from" price matched none of McNab 9254's posted rates (C$20 against C$25-42), so price from the operator's own rate page where there is one.
 
 Old campreservations.ca links now redirect to Campspot's home page: the link is dead, not a Campspot listing.
+
+**Bonfire (book.letsbonfire.com/<slug>/reserve?checkIn=&checkOut=&adults=&children=0):** renders in the driver with no login (added 2026-11-02, Big Eddy ME). The page's `/rest/v1/spot?` response lists every site: `maxTrailerLength`, `hideOnline`, `electrical`, and `rates.rate_type_id` (2 = seasonal). Seasonal sites are hidden from the visible table, so read that response before calling a park's RV sites nightly. The table may not reflect per-adult charging (`guest_payment_policy`).
