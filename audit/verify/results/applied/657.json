@@ -1,0 +1,85 @@
+{
+ "id": 657,
+ "checked": "2026-11-02",
+ "sources": [
+  "https://www.nps.gov/acad/planyourvisit/seawall-campground.htm",
+  "https://www.recreation.gov/api/camps/campgrounds/234674",
+  "https://www.recreation.gov/api/camps/campgrounds/234674/rates",
+  "https://developer.nps.gov/api/v1/campgrounds?parkCode=acad"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 30,
+    "nightly_high": 30,
+    "currency": "USD",
+    "entrance": {
+     "resident": 35,
+     "nonresident": 35,
+     "per": "vehicle_stay"
+    },
+    "checked": "2026",
+    "note": "$30 a night for drive-up tent, camper and motor home sites (walk-in tent $22, group tent $60), paid when reserving, not at the campground. An Acadia entrance pass is required while staying in the campground: $35 per vehicle. Non-US residents 16 and older also pay a $100 nonresident fee unless admitted with an Annual or America the Beautiful pass."
+   },
+   "source": "https://www.nps.gov/acad/planyourvisit/seawall-campground.htm ('Drive-up tent, camper, and motor home sites: $30') + https://www.recreation.gov/api/camps/campgrounds/234674/rates (season 2026-05-20 to 2026-10-11: RV NONELECTRIC 30) + the facility's notices on https://www.recreation.gov/api/camps/campgrounds/234674 ('An entrance pass is required in the park and while staying in the campground ... $35 per vehicle'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/234674",
+    "window_opens_days": 180,
+    "fcfs": "never",
+    "max_stay_nights": 14,
+    "note": "All sites by reservation on recreation.gov; none at the office or in person. 90% of sites are released six months ahead on the first of each month at 10 am Eastern, the other 10% at 10 am 14 days ahead of arrival, rolling; same-day reservations if sites are open. Combined limit of 14 nights in Acadia campgrounds between the Friday of Memorial Day weekend and Columbus Day, 30 nights per calendar year. Check-in after noon, check-out before 10 am."
+   },
+   "source": "https://www.nps.gov/acad/planyourvisit/seawall-campground.htm + https://www.recreation.gov/api/camps/campgrounds/234674 (Overview, facility_rules reservationWindow 6 months, maxConsecutiveStay 14, notices), read 2026-11-02",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "note": "'open seasonally, typically from the Wednesday before Memorial Day to Columbus Day'. NPS's page still gives the 2025 dates, May 21 through Oct 13; recreation.gov's 2026 rate season ran May 20 to Oct 11."
+   },
+   "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=acad (Seawall operatingHours) + https://www.nps.gov/acad/planyourvisit/seawall-campground.htm ('Season Dates: May 21 through Oct 13, 2025'), read 2026-11-02",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0
+   },
+   "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=acad (electricalHookups 0) + recreation.gov catalog (every site type NONELECTRIC or walk-to), read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 202,
+    "max_rig_ft": 35,
+    "note": "Of 202 sites only Loop C's 30 RV sites list 30 or 35 ft; Loop A's 20 RV-permitted sites and C15, C33 list 20 ft. The rest are walk-to or tent-only. NPS gives a 20-ft maximum, explaining it by the tight turn of the A-Loop road. One vehicle per site, all equipment on the pad. Generators only in Loop C, 8-10 am and 4-7 pm.",
+    "pull_through": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/234674 ('some sites can accommodate RVs up to 35 ft'; 'Generators may only be used in Loop C') + its campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20) + https://developer.nps.gov/api/v1/campgrounds?parkCode=acad (totalSites 202; rvMaxLength 20), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "potable_water": true,
+    "dump": true,
+    "showers": false,
+    "note": "No showers in the campground (portable showers prohibited); private pay showers less than a mile away. Cell coverage is poor."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/234674 ('Flush toilets, running water and a dump station are provided'; 'No showers') + https://www.nps.gov/acad/planyourvisit/seawall-campground.htm, read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "summary": "Confirmed $30 drive-up RV sites (2026 rec.gov rate table + NPS), no hookups, dump, flush toilets, no showers, 6-month rec.gov windows. Added $35 Acadia entrance fee, booking, season, 202 sites, 35-ft max (Loop C only). Note kept verbatim.",
+ "flags": [
+  "WATERFRONT LEAD (AWH to decide, stored value isn't mine to change): stored 'coastal woods' against the highway rule (AWH 2026-11-01, 'a highway or town in between rules out coastal woods'). Recreation.gov: 'All the sites at Seawall Campground are wooded and within a 10-minute walk to the ocean'; 'A picnic area is located on the shore across from the campground entrance'. So Route 102A and the Seawall picnic area lie between the sites and the shore. AWH's own note says the sites 'are not waterfront'. I read this as not waterfront. This is a revisit under the 2026-11-02 'no separate pass' line. I did not see the shore in the imagery frame I pulled, only canopy and the entrance road, so the road crossing rests on the rec.gov sentence.",
+  "RIG FIT: NPS's campground record lists rvMaxLength 20 ('Maximum vehicle length is due to the tight turning radius of the A-Loop road ... you may be turned away'), and A-Loop's catalog sites do list 20 ft. Recreation.gov says 'some sites can accommodate RVs up to 35 ft'; Loop C has 29 sites at 30 ft or 35 ft plus C20 typed '030'. Those are RV NONELECTRIC, equipment list includes RV. A 23-ft motorhome fits Loop C only. Rec.gov also warns 'Seawall Campground was not designed to accomodate large RVs and trailers'.",
+  "PHONE: none stored. Recreation.gov notices give 'Seawall can be reached (207) 244-0069' and 'Campground Questions? ... (207) 412-8346' (the number Schoodic Woods 209 carries). apply.py doesn't write phone.",
+  "PIN fine: stored 44.2422,-68.3060 is under canopy ~110 m from NPS's point (44.24156,-68.30514), with a campground loop road visible ~150 m west. Rec.gov's facility point (44.23861,-68.30278) is ~480 m south-east and looks to be near the entrance, not the sites. I can't plot Loop C under the canopy.",
+  "NPS's page season is still the 2025 one (May 21-Oct 13). 2027 calendar dates in May all read 'Not Available', which I read as unreleased, so no 2027 season was recorded."
+ ]
+}
