@@ -211965,11 +211965,11 @@
     "elevation_meters": 202.0,
     "state": "IA",
     "ownership": "federal",
-    "waterfront": "riverfront",
+    "waterfront": "riverview",
     "inclusion_evidence": "recreation.gov 272084: 20 Standard Electric drive-in RV sites + 2 walk-to tent -> real USACE RV campground",
-    "waterfront_evidence": "waterfront 'riverfront' assessed in commit 9d88f72 (Add 22 IA federal campgrounds (USACE reservoirs + Mississippi pools)); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-246 (2026-11-02): the park road runs the whole river side of the loop with cars on it; pads ~30 m+ from the water behind it; Iowa River ~70-120 m wide, below the dam. Rec.gov has no per-site water tag. Lagoon pond west of the loop ~3 acres, no value.",
     "website": "https://www.recreation.gov/camping/campgrounds/272084\nhttps://www.mvr.usace.army.mil/Missions/Recreation/Coralville-Lake/",
-    "note": "USACE Coralville Lake, west bank of the Iowa River below the dam. 22 sites: full-hookup (20/30/50A + water) and standard electric plus non-electric walk-to tent sites; rec.gov per-site max length to ~62 ft, big-rig friendly. Modern restroom/showers, fish-cleaning station. Reservable on recreation.gov. --Claude",
+    "note": "USACE Coralville Lake, on the west bank of the Iowa River below the dam, concrete pads in an open loop with the river across the park road. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -211981,40 +211981,49 @@
       "sewer": true
     },
     "sites": {
-      "count": 22,
-      "max_rig_ft": 62
+      "count": 20,
+      "max_rig_ft": 69,
+      "pull_through": true,
+      "note": "20 RV sites (T01-T20) plus 2 walk-to tent sites (T21, T22). Lengths 40-69 ft; T13 and T16 pull through; concrete. Sewer at T03, T05, T07, T13, T16, T18, T19, T20."
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "Dump station and drinking water are just outside the West Overlook Campground, whose fee booth is where you register. Fish cleaning station on site."
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "14 nights in a rolling 30 days. Register at the West Overlook fee booth before setting up. Check-in 2pm, check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/272084/rates + RIDB catalog (all 20 STANDARD ELECTRIC: Electricity Hookup 20/30/50, Water Yes; sewer at T03, T05, T07, T13, T16, T18, T19, T20), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/272084 ('22 campsites to include full hook-up campsites, standard electric campsites, and non-electric walk-to tent campsites') + RIDB catalog (Max Vehicle Length, Driveway Entry; RV listed on all 20), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/272084 ('modern restroom with shower facility, and fish cleaning station'; 'the dump station and drinking water is located just outside of the West Overlook Campground'; amenities Flush Toilets, Showers), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/272084 (facility_rules maxStay 14, 'Rolling 30 Days'; notices), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/272084/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/272084/rates (2026-05-01 to 2026-10-17 and 2027-05-01 to 2027-10-17: 'CONCRETE SITE: 50 AMP & WATER' 28, 'CONCRETE SITE: 50 Amp, Water, & Sewer' 30, 'WALK TO: Non-Electric' 14), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -212024,9 +212033,17 @@
     },
     "fees": {
       "nightly_low": 28,
-      "nightly_high": 28,
-      "currency": "USD"
-    }
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 and 2027 peak season: concrete site with 50 amp and water $28; with sewer too $30; walk-to tent $14."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/272084 https://www.recreation.gov/api/camps/campgrounds/272084/rates trip_data/ridb_campsites.json (RIDB campsite catalog for facility 272084, fetched 2026-10-20) Esri World_Imagery at 41.7220,-91.5293, read 2026-11-02",
+      "note": "Changed fees 28/28 -> 28/30 (sewer sites, 2026 and 2027), max_rig 62 -> 69 (catalog), count 22 -> 20 RV + 2 walk-to tent. Confirmed 50-amp/water/sewer, showers, rec.gov. Added flush toilets, water, dump (outside the loop), pull-through, 14-night limit. Rec.gov's rate season isn't a campground season, so season left unset; military flag not written. Pin ~95 m from the loop centre."
+    },
+    "phone": "319-338-3685"
   },
   {
     "id": 2962,
@@ -215722,24 +215739,25 @@
   {
     "id": 3011,
     "kind": "campground",
-    "name": "Silver Lake City Park - East",
+    "name": "Silver Lake City Park Campground",
     "location": "43.44665,-95.32745",
     "elevation_meters": 453.0,
     "state": "IA",
     "ownership": "local",
-    "waterfront": "not waterfront",
+    "waterfront": "lakeview",
     "inclusion_evidence": "City of Lake Park camping info (via search of lakeparkia.com): 8 electric (30A) RV sites, 6 pull-throughs, 35 ft max -> real RV campground",
-    "waterfront_evidence": "satellite at 43.4467,-95.3275: RV row set back ~60-80m behind a continuous wooded shore band along Silver Lake's east shore; lake screened by the treeline",
+    "waterfront_evidence": "p3-246 (2026-11-02): Esri re-viewed at 43.4465,-95.3275: main row of ~8 rigs 35-85 m from shore; two or three west pads ~20-25 m through a shore tree belt, no road between. A view through thin trees; the belt keeps it off on-water. Replaces the 'screened' read.",
     "website": "https://lakeparkia.com/explore/camping",
-    "note": "City of Lake Park-operated RV campground on the east shore of Silver Lake; 8 electric-only RV sites (RV-only, no tents), level gravel pads, 6 pull-throughs, ~35 ft max length (easily fits a 23-ft rig). Dump station, showers/toilets, pet-friendly; city pool and playground within walking distance. Season Apr 15-Oct 15; daily/weekly/monthly rates (~$25/night reported, cash). Reserve by calling the camp host (no online booking). Satellite at 43.44665,-95.32745 shows ~6-8 RVs parked on the gravel loop, set back behind a continuous shoreline treeline (no on-water pads confirmed). --Claude",
+    "note": "City of Lake Park campground on the east shore of Silver Lake, gravel pads among trees beside the ball field; city pool and playground within walking distance. Tents also taken. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": false,
-      "sewer": false
+      "water": true,
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
       "count": 8,
@@ -215757,13 +215775,14 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reserve by phone with the hosts: Larry Dalton 712-540-2605 or Caren Dalton 712-541-1749; campground information 712-320-3178."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lakeparkia.com/explore/camping (Silver Lake City Park Campground amenities: 'Hookups: 50-amp, Water, Sewer'; the sister campground's list says its water is 'at a central location'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -215771,26 +215790,44 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lakeparkia.com/explore/camping (Restrooms, Showers, Picnic Shelter, Dump Station, Swimming Pool), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lakeparkia.com/explore/camping ('The camping season runs from April 15 to October 15 each year'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lakeparkia.com/explore/camping ('For reservations call Larry Dalton at 712-540-2605 or Caren Dalton at 712-541-1749'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://lakeparkia.com/explore/camping ('2026 Rates' for Silver Lake City Park Campground), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "938d3401240d6a35",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "fees": {
+      "nightly_low": 25,
+      "nightly_high": 25,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026: with hookups $25 a day, $125 a week, $300 a month; no hookups $10 a day."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://lakeparkia.com/explore/camping Esri World_Imagery at 43.4465,-95.3275 (200 m and 700 m frames) and 43.4340,-95.3400, read 2026-11-02",
+      "note": "Changed water/sewer false->true (operator lists 50-amp, water, sewer); no-tents claim in the old note is contradicted, dropped. Added 2026 rates $25 with hookups ($10 without), season, showers, dump, phone booking confirmed. Count 8, 35 ft and pull-through are not on the page, left."
+    },
+    "phone": "712-320-3178"
   },
   {
     "id": 3012,
@@ -215869,30 +215906,33 @@
     "id": 3013,
     "kind": "campground",
     "name": "Southwood Conservation Area",
-    "location": "42.22901,-95.94782",
-    "elevation_meters": 409.0,
+    "location": "42.221,-95.9526",
+    "elevation_meters": 375,
     "state": "IA",
     "ownership": "local",
     "waterfront": "not waterfront",
     "inclusion_evidence": "Woodbury County Parks operator page: 19 electric (20/30/50A) RV sites + 12 tent + 2 cabins, FCFS, not equestrian-only -> real RV campground",
-    "waterfront_evidence": "satellite at 42.2290,-95.9478 (agency address centroid): rolling Loess Hills timber, no campground loop resolvable at pin; agency page lists 2 stocked ponds + dock but no shoreline-pad confirmation -> default down",
+    "waterfront_evidence": "p3-246 (2026-11-02): at the pad rows: ponds ~1 ha, 400+ m away. Earlier read was at the park entrance, ~1 km off.",
     "website": "https://woodburyparks.org/southwood-conservation-area/",
     "phone": "712-889-2215",
-    "note": "Woodbury County Conservation Board. 19 electric sites (20/30/50A) + 12 tent + 2 cabins; primitive-to-50A. FCFS only, self-registration (no reservations). Dump station, modern showers/restrooms, two stocked ponds, boat ramp, trails. Open May 1-Oct 31. $25 elec / $17 tent. Has equestrian trails but general RV camping. --Claude",
+    "note": "Woodbury County Conservation Board, Loess Hills south-west of Smithland; the camp lies about a mile in from the entrance. Two stocked ponds, trails, 3D archery, equestrian trails; general RV camping, not horse-only. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": true
     },
     "sites": {
-      "count": 31
+      "count": 30,
+      "note": "19 electric, 10 tent or non-electric, 1 backcountry; two cabins besides. No length posted."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true
     },
     "season": {
       "year_round": false,
@@ -215900,40 +215940,60 @@
       "closes": "10-31"
     },
     "booking": {
-      "reservable": false,
-      "fcfs": "always"
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area",
+      "max_stay_nights": 14,
+      "note": "County notice: 'Effective July 15, 2026, all campsite reservations and payments must be made online' at MyCountyParks. Check-in 4pm to 10:30pm, check-out 2pm. After 14 days a unit must leave the site for 72 hours."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://woodburyparks.org/southwood-conservation-area/ ('19 electric (20/30/50 amp) campsites'; 'Electric & Water Sites'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://woodburyparks.org/southwood-conservation-area/ ('19 electric ... 10 tent or non-electric ... 1 backcountry campsite') + https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area (engine lists RV Sites 01E-20E, no 13E), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area (Dump station, Restroom, Shower facilities; pressurized water) + https://woodburyparks.org/southwood-conservation-area/, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://woodburyparks.org/southwood-conservation-area/ ('Campgrounds are open and pressurized water systems are available May 1 through October 31. Cabins are open year round.'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://woodburyparks.org/southwood-conservation-area/ ('NOTICE: Effective July 15, 2026, all campsite reservations and payments must be made online at www.mycountyparks.com/county/woodbury') + https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area/Facility/Southwood-RV-Site-01E/Availability (contract; 'Maximum stay on any single campsite is 14 consecutive days'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://woodburyparks.org/southwood-conservation-area/ ('Camping Rates: Electric & Water Sites $25/night; Non-Electric/Tent Sites $17/night') + https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area/Facility/Southwood-RV-Site-01E/Availability ('$25 /Night'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "3061239c2ddace68",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 25,
+      "nightly_high": 25,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Electric and water sites $25 a night; non-electric/tent $17."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://woodburyparks.org/southwood-conservation-area/ https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area https://www.mycountyparks.com/County/Woodbury/Park/Southwood-Conservation-Area/Facility/Southwood-RV-Site-01E/Availability https://woodburyparks.org/wp-content/uploads/2020/08/SouthwoodWebsiteMap2020_sm.pdf Esri World_Imagery at 42.22901,-95.94782 and 42.2185,-95.9525, read 2026-11-02",
+      "note": "Changed booking FCFS-only -> reservable online on MyCountyParks (county notice effective 2026-07-15), fcfs cleared. Count 31->30 (19 electric + 10 tent + 1 backcountry). Added $25 base, $17 non-electric, water, potable, 14-day limit. Confirmed 50-amp, showers, dump, season. Pin ~1 km off."
     }
   },
   {
@@ -220104,7 +220164,8 @@
     "facilities": {
       "showers": true,
       "flush_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "vault_toilets": true
     },
     "booking": {
       "reservable": false,
@@ -220117,18 +220178,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Decatur/Park/Slip-Bluff-Park ('A modern shower house ... allows for showers and flushable toilets. There are also pit toilets, potable water'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Decatur/Park/Slip-Bluff-Park ('We do not accept camping reservations. The campground is all first come first serve.'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mycountyparks.com/County/Decatur/Park/Slip-Bluff-Park (the county's Fees text on mycountyparks.com, and its site pages; audit/price_research/local_mycountyparks_2026-10-15/), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.mycountyparks.com/County/Decatur/Park/Slip-Bluff-Park ('Camping fees at Slip Bluff Park are $15 for a non-electric site and $20 for an electric site'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -220141,8 +220203,14 @@
       "nightly_high": 20,
       "currency": "USD",
       "checked": "2026",
-      "note": "Decatur County: electric $20 a night, non-electric $15; first come, first served. Read 2026-10-15."
-    }
+      "note": "Electric $20 a night; non-electric $15 (operator's description gives no year; read 2026-11-02)."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.mycountyparks.com/County/Decatur/Park/Slip-Bluff-Park https://www.mycountyparks.com/County/Decatur Esri World_Imagery at 40.65279,-93.84327, read 2026-11-02",
+      "note": "Confirmed $20 electric / $15 non-electric, FCFS only, showers, flush and pit toilets, water. Added nothing else; no count, length, amperage or campground season on the county's page. 'Rigs up to 50 ft' isn't on it, left."
+    },
+    "phone": "641-446-7307"
   },
   {
     "id": 3069,
@@ -220231,16 +220299,16 @@
     "id": 3070,
     "kind": "campground",
     "name": "Spring Lake Park",
-    "location": "42.06550,-94.28900",
-    "elevation_meters": 308.0,
+    "location": "42.0657,-94.2908",
+    "elevation_meters": 309,
     "state": "IA",
     "ownership": "local",
     "waterfront": "lakefront",
     "inclusion_evidence": "Greene County CCB mycountyparks page: 120 electric (50/30 amp) RV sites + primitive tent + 2 cabins, dump station, open all year",
-    "waterfront_evidence": "waterfront 'lakefront' assessed in commit 94f7ca6 (Add 57 IA local campgrounds, central Iowa (county conservation + city)); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-246 (2026-11-02): west row's spurs run toward the lake with the road behind them, ~10-20 m of open grass to the rip-rap shore. East row has the park road between pads and water. Site numbers unread.",
     "website": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park",
     "phone": "515-386-2313",
-    "note": "Greene County Conservation (CCB) park, 240 acres with a 50-acre lake NE of Jefferson. 120 electric sites (50/30 amp) - 16 reservable online via mycountyparks, ~98 FCFS, plus primitive tent sites. Electric $25, primitive $10. Two shower houses + dump station (open ~May 15-Oct 15, weather dependent); swimming beach, disc golf, paddle-craft rental. --Claude",
+    "note": "Greene County Conservation park, 240 acres with a 50-acre lake NE of Jefferson; the shoreline is nearly level with the water. Swimming beach, disc golf, roller rink and boat rental run by a separate concessionaire. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -220251,32 +220319,42 @@
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "note": "Shower houses and dump station May 15 to October 15, weather dependent.",
+      "potable_water": true
     },
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "url": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park",
+      "note": "'16 reserve online campsites - 98 first come first serve sites'. Online through MyCountyParks; no refunds on cancellation."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park ('120 electrical hookup campsites. Each with 50 amp, 30 amp, and 110 V.'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park ('Shower house: May 15th - October 15th weather dependent', 'Dump station: May 15th - October 15th weather dependent'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park (Facilities list: Campsite #5 ... #114; 'NO REFUND DUE TO CANCELLATION') + https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park/Facility/Campsite-107-Spring-Lake/Availability, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park (the county's Fees text on mycountyparks.com, and its site pages; audit/price_research/local_mycountyparks_2026-10-15/), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park ('Camping Fees: Camping - $25 electric site; $10 primitive') + https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park/Facility/Campsite-107-Spring-Lake/Availability ('$25 /Night'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park ('There are 120 electrical campsites and two shower houses'; Facilities list of reservable campsites), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -220289,7 +220367,16 @@
       "nightly_high": 25,
       "currency": "USD",
       "checked": "2026",
-      "note": "Greene County: $25 a night. Read 2026-10-15."
+      "note": "$25 electric site; primitive tent area $10 per tent. No refunds on cancelled reservations."
+    },
+    "sites": {
+      "count": 120,
+      "note": "120 electric sites plus a primitive tent area. The county's page also counts '16 reserve online campsites - 98 first come first serve sites' (114). Online sites: 5, 6, 11, 12, 17, 18, 23, 24, 107-114."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park https://www.mycountyparks.com/County/Greene/Park/Spring-Lake-Park/Facility/Campsite-107-Spring-Lake/Availability Esri World_Imagery at 42.0655,-94.289 and 42.0658,-94.2898, read 2026-11-02",
+      "note": "Confirmed $25 electric ($10 primitive), showers and dump with their dates, 16 reservable + 98 FCFS on MyCountyParks. Added count 120 electric. Park 'open all year' isn't a campground statement, so season left unset; 50-amp confirmed. Pin on the lake, ~150 m from each row."
     }
   },
   {
@@ -220397,10 +220484,10 @@
     "ownership": "local",
     "waterfront": "not waterfront",
     "inclusion_evidence": "mycountyparks.com (Polk County): Electric Sites 01-24 (24 numbered electric) + primitive camping, Book Now -> real drive-in RV campground",
-    "waterfront_evidence": "satellite at 41.6399,-93.3798: RV loop in woods on west side; Skunk River channel runs to the west but is screened by a continuous treeline buffer from the pads",
+    "waterfront_evidence": "p3-246 (2026-11-02): county's 2026 map draws Camp Creek behind sites 15-21, no road between; imagery shows a dark channel under canopy ~15-20 m behind one pad. Canopy hides the water, no campsite photo, so left down.",
     "website": "https://www.polkcountyiowa.gov/conservation/parks-trails/thomas-mitchell-park/",
-    "phone": "515-249-1753",
-    "note": "Polk County Conservation park on 197 acres along Camp Creek near Mitchellville, ~5 mi east of Des Moines off I-80. 23 electric sites (20/30/50-amp) plus 12 primitive; drive-in. Reservations required, bookable online via mycountyparks.com up to 1 yr ahead. Season Apr 1-Nov 30; electric $25, non-electric $20. Dump station, shower house, fire rings. --Claude",
+    "phone": "515-967-4889",
+    "note": "Polk County Conservation park on 197 acres along Camp Creek near Mitchellville, ~5 mi east of Des Moines off I-80. Construction to expand the campsites is under way (county notice, read 2026-11-02). --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -220410,11 +220497,13 @@
       "electric": 50
     },
     "sites": {
-      "count": 35
+      "count": 31,
+      "note": "31 numbered electric sites on the county's 2026 campground map; MyCountyParks lists Electric Sites 01-24 so far. Primitive campground closed while construction expands the campsites."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true
     },
     "season": {
       "year_round": false,
@@ -220424,39 +220513,59 @@
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "fcfs": "never"
+      "fcfs": "never",
+      "url": "https://www.mycountyparks.com/County/Polk/Park/Thomas-Mitchell-Park",
+      "max_stay_nights": 14,
+      "note": "14 days in any 17. $10 change fee."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.polkcountyiowa.gov/media/pcijo0ik/thomasmitchell_campgrounds_2026_final.pdf (legend 'ELECTRIC HOOKUP 20/30/50 AMP'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.polkcountyiowa.gov/media/pcijo0ik/thomasmitchell_campgrounds_2026_final.pdf (sites 1-31, 'ELECTRIC HOOKUP 20/30/50 AMP') + https://www.mycountyparks.com/County/Polk/Park/Thomas-Mitchell-Park + https://www.polkcountyiowa.gov/conservation/parks-trails/thomas-mitchell-park/ ('Construction to expand campsites is now underway, to complete these upgrades the primitive campground is closed'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.polkcountyiowa.gov/media/pcijo0ik/thomasmitchell_campgrounds_2026_final.pdf (legend: restroom, showers, water hydrant, dump station), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.polkcountyiowa.gov/conservation/parks-trails/thomas-mitchell-park/ ('Online reservations are available for camping between April 1 - November 30'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.polkcountyiowa.gov/media/pcijo0ik/thomasmitchell_campgrounds_2026_final.pdf ('All sites must be reserved at: MyCountyParks.com') + https://www.mycountyparks.com/County/Polk/Park/Thomas-Mitchell-Park/Facility/Thomas-Mitchell-Electric-Site-01/Availability ('more than 14 days out of any 17-day period'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.mycountyparks.com/County/Polk/Park/Thomas-Mitchell-Park/Facility/Thomas-Mitchell-Electric-Site-01/Availability ('$25 /Night'; change and cancellation terms), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "c01f6737c8cddc39",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 25,
+      "nightly_high": 25,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Electric site $25. The primitive campground is closed during construction; its rate wasn't posted. $10 to change a reservation; no refund within 7 days of arrival."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.polkcountyiowa.gov/conservation/parks-trails/thomas-mitchell-park/ https://www.mycountyparks.com/County/Polk/Park/Thomas-Mitchell-Park https://www.mycountyparks.com/County/Polk/Park/Thomas-Mitchell-Park/Facility/Thomas-Mitchell-Electric-Site-01/Availability https://www.polkcountyiowa.gov/media/pcijo0ik/thomasmitchell_campgrounds_2026_final.pdf Esri World_Imagery at 41.6399,-93.3798 and 41.6393,-93.3815, read 2026-11-02",
+      "note": "Changed count 35 -> 31 (2026 map), added $25 and the 14-in-17 limit. Confirmed 20/30/50 electric, showers, dump, Apr 1-Nov 30, reserve-only on MyCountyParks. Added potable water (hydrant). Pin ~135 m from the loop."
     }
   },
   {
@@ -220469,10 +220578,10 @@
     "ownership": "local",
     "waterfront": "lakeview",
     "inclusion_evidence": "Union County CCB mycountyparks page: ~80 electric RV sites across two campgrounds, accommodates RVs/trailers, open year-round",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 94f7ca6 (Add 57 IA local campgrounds, central Iowa (county conservation + city)); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-246 (2026-11-02): county: 'overlooking the lake'; south-end pads ~70 m from the top of the bank, ~90 m to the waterline across an open meadow; west pads 150 m+.",
     "website": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area",
     "phone": "641-347-5100",
-    "note": "Union County Conservation Board park 3 mi north of Hwy 34 at Afton, on Three Mile Lake. Two campgrounds overlooking the lake, ~80-100 sites; electric sites $20, non-electric $15. Electric pads graveled, 20/30/50 amp, big-rig friendly (RVs to ~60 ft). FCFS, no campsite reservations (the 9 log cabins are reservable). Open year-round with a heated year-round shower house; dump station in the south campground. --Claude",
+    "note": "Union County Conservation Board park 3 mi north of Hwy 34 at Afton, on Three Mile Lake (880 acres). --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -220482,11 +220591,16 @@
       "electric": 50
     },
     "sites": {
-      "max_rig_ft": 60
+      "max_rig_ft": 60,
+      "count": 80,
+      "note": "80 sites across two campgrounds; the county says each has electric yet also prices a non-electric site."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "note": "Heated year-round shower house; fish cleaning station."
     },
     "season": {
       "year_round": true
@@ -220502,28 +220616,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area ('The two campgrounds overlooking the lake have 80 sites to accommodate recreational vehicles, trailers and tent campers. Each site has electrical hookups'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area ('Water is available along with picnic sites, a fish cleaning station and dump station. Showers, sinks and flush toilets are available nearby at the year-around shower house'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area ('Three Mile Lake is open year-round'; 'heated year-around shower house'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://unioncountyiowa.gov/departments/conservation/ ('Campsites are not reservable and are on a first come-first served basis'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area (the county's Fees text on mycountyparks.com, and its site pages; audit/price_research/local_mycountyparks_2026-10-15/), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area ('The cost for an electric campsite is $20/night and for a non-electric campsite is $15/night'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -220536,7 +220651,12 @@
       "nightly_high": 20,
       "currency": "USD",
       "checked": "2026",
-      "note": "Union County: electric $20 a night, non-electric $15. Read 2026-10-15."
+      "note": "Electric $20 a night, non-electric $15."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.mycountyparks.com/county/union/Park/Three-Mile-Recreational-Area https://unioncountyiowa.gov/departments/conservation/ Esri World_Imagery at 41.0785,-94.2145, 41.0775,-94.2165 and 41.0772,-94.2143, read 2026-11-02",
+      "note": "Added count 80, flush toilets, water. Confirmed $20/$15, FCFS, year-round, showers, dump. Amperage and 60 ft not on the county's pages, left. Pin on the loop."
     }
   },
   {
@@ -227618,7 +227738,7 @@
     "waterfront_evidence": "satellite at 41.70530,-90.53350: RV loop inland surrounded by forest/field; small pond >300m east behind trees",
     "website": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground",
     "phone": "563-328-3282",
-    "note": "Scott County Conservation, Scott County Park near Eldridge (18850 270th St). Bald Eagle has full-hookup (electric/water/sewer, 50-amp) big-rig-friendly sites; restroom/shower building, some ADA sites. Open year-round (seasonal hours); limited sites reservable May-Sep (mycountyparks.com), FCFS otherwise. Inland wooded loop, no water adjacent. --Claude",
+    "note": "Scott County Conservation, Scott County Park near Eldridge (18850 270th St), one of the park's five campgrounds. Open grassy loop with no water adjacent; Pride Lake is across the park road to the east. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -227630,15 +227750,24 @@
       "sewer": true
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "dump": true,
+      "potable_water": true
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "Water at the sites only mid-April to mid-October, weather dependent; always available at the dump station."
     },
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "url": "https://iascottctyweb.myvscloud.com/webtrac/web/search.html?display=Graphical&module=RN&type=Campsites",
+      "season": {
+        "opens": "05-01",
+        "closes": "09-30"
+      },
+      "note": "Only some sites are reservable, May to September, on Scott County's own WebTrac; the rest register first come."
     },
     "provenance": {
       "hookups": {
@@ -227647,25 +227776,50 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground (Dump Station, Restrooms, Showers, Water; 'Water is always available at the dump station'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground ('open year round during season park hours. Due to weather conditions, water is available to the camp sites from mid April to mid October (weather dependent). Water is always available at the dump station.'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground ('Limited sites are reservable May - Sep'; link 'Reservations - limited sites from May - Sep'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.scottcountyiowa.gov/conservation/rates ('Electric/Water/Sewer: $30', 'Reservable Sites: $40') + https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "4240b16caa52e007",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 40,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "County camping rates: Electric/Water/Sewer $30 a night; Reservable Sites $40. Scott County resident $1 off; senior (62+) $1 off; 7 consecutive nights for the price of 6. The rates page does not name the campground for each type; this campground's own page gives electric, water and sewer."
+    },
+    "sites": {
+      "note": "Page: 'accommodates large Recreational Vehicles'. Select sites are fully accessible. No count or length posted."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/bald-eagle-campground https://www.scottcountyiowa.gov/conservation/rates https://www.scottcountyiowa.gov/conservation/information/rules/camping https://www.scottcountyiowa.gov/conservation/scott-county-park https://www.scottcountyiowa.gov/sites/default/files/document/20260310_QR_Brochure_16x24%20%281%29.pdf Esri World_Imagery at 41.7053,-90.5335, read 2026-11-02",
+      "note": "Confirmed e/w/s hookups, year-round, showers, dump, some sites reservable May-Sep. Added $30 base, $40 reservable (county rates page, resident and senior $1 off). Booking is on the county's WebTrac, not mycountyparks. Amperage (50) not on the operator's page, left; site count not posted. Pin within ~110 m of the loop."
     }
   },
   {
@@ -227681,7 +227835,7 @@
     "waterfront_evidence": "satellite at 41.71200,-90.53500: gridded RV lot inland in forest clearing; small pond >300m east behind treeline",
     "website": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground",
     "phone": "563-328-3282",
-    "note": "Scott County Conservation, Scott County Park near Eldridge (18850 270th St). Woodside has full-hookup (electric/water/sewer, 50-amp) big-rig-friendly back-in and pull-through pads; restroom/shower building, some ADA sites. Open mid-April to mid-October; reservable May-Sep (mycountyparks.com), FCFS otherwise. Inland wooded loop, no water adjacent. --Claude",
+    "note": "Scott County Conservation, Scott County Park near Eldridge (18850 270th St), one of the park's five campgrounds. Open grassy loop, no water adjacent. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -227693,18 +227847,26 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "note": "Page: 'accommodates large Recreational Vehicles'. Select sites are fully accessible. No count or length posted."
     },
     "facilities": {
       "showers": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Mid-April through mid-October, weather dependent."
     },
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "url": "https://iascottctyweb.myvscloud.com/webtrac/web/search.html?display=Graphical&module=RN&type=Campsites",
+      "season": {
+        "opens": "05-01",
+        "closes": "09-30"
+      },
+      "note": "Reservations for stays May to September on Scott County's own WebTrac; 'When not reserved, sites can be rented on a first-come-first-serve basis.'"
     },
     "provenance": {
       "hookups": {
@@ -227713,30 +227875,47 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground (Restrooms, Showers, Water), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground ('open mid-April through mid-October (weather dependent)'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground ('Reservations are accepted for stays from May - September. When not reserved, sites can be rented on a first-come-first-serve basis.'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.scottcountyiowa.gov/conservation/rates ('Electric/Water/Sewer: $30', 'Reservable Sites: $40') + https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "635db6b74c94e285",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 40,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "County camping rates: Electric/Water/Sewer $30 a night; Reservable Sites $40. Scott County resident $1 off; senior (62+) $1 off; 7 consecutive nights for the price of 6. The rates page does not name the campground for each type; this campground's own page gives electric, water and sewer."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.scottcountyiowa.gov/conservation/scott-county-park/campgrounds/woodside-campground https://www.scottcountyiowa.gov/conservation/rates https://www.scottcountyiowa.gov/conservation/information/rules/camping https://www.scottcountyiowa.gov/sites/default/files/document/20260310_QR_Brochure_16x24%20%281%29.pdf Esri World_Imagery at 41.712,-90.535, read 2026-11-02",
+      "note": "Confirmed e/w/s hookups, showers, reservations May-Sep with FCFS when not reserved, season mid-April to mid-October. Added $30 base, $40 reservable. Amperage (50) and pull-through not on the operator's page, left; no count posted; no dump listed on this page (Bald Eagle's is the map's). Pin within ~110 m of the loop."
     }
   },
   {
@@ -227802,16 +227981,16 @@
     "id": 3177,
     "kind": "campground",
     "name": "Sherman Park",
-    "location": "41.77501,-90.78221",
-    "elevation_meters": 220.0,
+    "location": "41.7757,-90.7855",
+    "elevation_meters": 204,
     "state": "IA",
     "ownership": "local",
     "waterfront": "not waterfront",
     "inclusion_evidence": "Clinton County Conservation Sherman Park page: 8 electrical + 8 primitive sites, open Apr 1-Oct 31, shower house, boat ramp -> real drive-in RV/electric campground",
-    "waterfront_evidence": "satellite at 41.77501,-90.78221: campground loop set back in forest; Wapsipinicon River >250m SW behind continuous woods",
+    "waterfront_evidence": "p3-246 (2026-11-02): electric loop ~140 m from the Wapsipinicon through woods; the open bank by the boat ramp is probably the primitive sites.",
     "website": "https://www.clintoncounty-ia.gov/conservation/parks/sherman_park/",
-    "phone": "563-357-4134",
-    "note": "Clinton County Conservation 233-acre park on the Wapsipinicon River near Calamus. 8 modern electric/water sites ($25) + 7 primitive ($15); modern restrooms, shower house, shelter, playground, boat ramp, observatory. Open Apr 1-Oct 31. Campsite loop sits in trees back from the river. --Claude",
+    "phone": "563-847-7202",
+    "note": "Clinton County Conservation 233-acre park on the Wapsipinicon River near Calamus; use the south entrance for the campground. Electric sites sit on a wooded loop back from the river. Shelter, playground, boat ramp, observatory. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -227821,10 +228000,14 @@
       "water": true
     },
     "sites": {
-      "count": 15
+      "count": 15,
+      "note": "8 electric/water + 7 primitive on MyCountyParks; the county's own page says 8 + 8; its older brochure 9 + 12. No length posted."
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "dump": true,
+      "potable_water": true,
+      "wifi": true
     },
     "season": {
       "year_round": false,
@@ -227833,28 +228016,34 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park ('8 modern campsites featuring electrical and water hookups'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park + https://www.clintoncounty-ia.gov/conservation/parks/sherman_park/ + https://www.clintoncounty-ia.gov/files/conservation/sherman_park_map_and_brochure_96994.pdf, read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park ('Modern restrooms, showers, and public WiFi'; features Dump station, Pressurized water, On-site resident host) + https://www.clintoncounty-ia.gov/files/conservation/sherman_park_map_and_brochure_96994.pdf (map marks D Dump Station), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.clintoncounty-ia.gov/conservation/parks/sherman_park/ ('The campground is open Annually April 1st through October 31st.'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.clintoncounty-ia.gov/conservation/parks/sherman_park/ (audit/price_research/local_ia_2026-10-15/ia_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park ('8 Electrical/Water Sites $25 per night / 7 Primitive Sites $15 per night') + https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park/Facility/Sherman-Park-Campsite-2-ADA-Reservable/Availability ('$30 /Night'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park ('A reservable shelter and ADA accessible site are available to rent online'; facilities listed: Campsite #2 ADA Reservable, Shelter) + https://www.clintoncounty-ia.gov/files/conservation/park_rules_and_regulations_15203.pdf (Section 8), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -227864,10 +228053,23 @@
     },
     "fees": {
       "nightly_low": 25,
-      "nightly_high": 25,
+      "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Clinton County Conservation: 8 electric sites $25 a night, 8 primitive $15. Read 2026-10-15."
+      "note": "Electric/water $25 a night; primitive $15; the one reservable ADA site (#2) $30 on MyCountyParks."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park/Facility/Sherman-Park-Campsite-2-ADA-Reservable/Availability",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "note": "Only ADA site #2 books online; the page lists no other campsite. Register within 1/2 hour of arrival. No more than 14 days in any 21."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.clintoncounty-ia.gov/conservation/parks/sherman_park/ https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park https://www.mycountyparks.com/County/Clinton/Park/Sherman-Park/Facility/Sherman-Park-Campsite-2-ADA-Reservable/Availability https://www.clintoncounty-ia.gov/files/conservation/sherman_park_map_and_brochure_96994.pdf https://www.clintoncounty-ia.gov/files/conservation/park_rules_and_regulations_15203.pdf Esri World_Imagery around 41.7752,-90.7866, read 2026-11-02",
+      "note": "Confirmed $25 electric/water ($15 primitive, $30 reservable ADA site #2), season Apr 1-Oct 31, showers; added dump, wifi, potable water, 14-day limit, some_sites booking. Site count 15 kept with the county's two tallies noted. Amperage not posted. Pin ~280 m off."
     }
   },
   {
@@ -227961,62 +228163,70 @@
     "ownership": "local",
     "waterfront": "lakefront",
     "inclusion_evidence": "Jackson County (mycountyparks.com): 39 sites with 50A electric+water, paved/gravel, showers/dump, open May-Oct -> real RV campground (rail bridge 12'8\" height limit, not a length/access disqualifier)",
-    "waterfront_evidence": "waterfront 'lakefront' assessed in commit dbf58c6 (Add 51 IA local campgrounds, E Iowa / Mississippi (county conservation); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-246 (2026-11-02): front row only: ~8 NW pads, ~10-15 m of open grass to the water, loop road behind; the rest sit inside the loop. Flood-prone; site numbers unread.",
     "website": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park",
     "phone": "563-652-3783",
-    "note": "Jackson County Conservation park on an island/spit in South Sabula Lake (Mississippi backwater) at the south end of South Ave, Sabula. 40 electric+water sites; max rig 35 ft. FCFS, no reservations. Open May-Oct (pending river levels). Showers/restrooms, trailer dump, boat ramp/dock. NOTE: only access road passes under a railroad bridge with 12'5\" clearance. --Claude",
+    "note": "Jackson County Conservation's 14-acre park surrounded by water on South Sabula Lake (Mississippi backwater), at the south end of South Ave, Sabula. The sites on the lake side back onto the shore. The only road in passes under a rail bridge; the county page gives its clearance as both 12 ft 5 in and 12 ft 8 in. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50
     },
     "sites": {
-      "count": 40,
-      "max_rig_ft": 35
+      "count": 39,
+      "max_rig_ft": 35,
+      "note": "Paved sites: 6-12, 14-20, 22, 23, 26, 27, 32, 35, 39; the rest gravel. Site 19 is ADA accessible."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-31",
+      "note": "May to October, pending weather and river levels at each end (2026 planned opening Friday May 1). Showers close by October 15 and water is off from then to April; attendants May to September."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park ('39 Campsites: all have 50 amp electric and water service'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park ('39 Campsites'; 'Paved sites: # 6, 7, 8 ...'; 'campsite #19 is ADA accessible'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park ('Modern shower and restroom facility', 'Dump station', 'Pressurized water'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park ('Park is open May - October (pending weather and river levels for opening/closing weekends)'; 'Shower building open May - and closes by October 15'; '2026 Camping Season - we are planning to open the park Friday, May 1'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park ('All campsites are first come first serve. No reservations for campsites.'; '2 week site occupation limit'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park (the county's Fees text on mycountyparks.com, and its site pages; audit/price_research/local_mycountyparks_2026-10-15/), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park ('Camping Fees: $25 per night'), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -228029,7 +228239,12 @@
       "nightly_high": 25,
       "currency": "USD",
       "checked": "2026",
-      "note": "Jackson County: $25 a night; 2-week limit. The rail bridge into the park clears 12 ft 8 in. Read 2026-10-15."
+      "note": "$25 a night."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.mycountyparks.com/county/jackson/Park/South-Sabula-Lake-Park Esri World_Imagery at 42.0562,-90.1729 and 42.0567,-90.1737, read 2026-11-02",
+      "note": "Changed site count 40->39 (county page). Confirmed $25, 50-amp + water, showers, dump, FCFS only, May-Oct; added 14-night limit, paved-site list, water-off date. Max 35 ft not on the page, left. Pin ~60 m from the loop centre."
     }
   },
   {
@@ -231361,7 +231576,7 @@
     "waterfront_evidence": "satellite at 42.9651,-94.4452: in-town residential/parish grounds, no lake/river/pond near sites",
     "website": "https://www.westbendgrotto.com/visit/campground/",
     "phone": "515-887-5591",
-    "note": "Operated by the Shrine of the Grotto of the Redemption (Catholic shrine nonprofit, not municipal). 53 sites, all pull-through grass/level, 30 & 50-amp electric, central water + dump station, showers; reviews say it accommodates rigs of all sizes. $20/night RV, FCFS, register at gift shop. Open ~April 15–Nov 1. 50-amp loop sits beside a lightly-used rail line. --Claude",
+    "note": "Run by the Shrine of the Grotto of the Redemption, a Catholic shrine nonprofit. The 50-amp loop sits beside a lightly-used rail line. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -231381,11 +231596,15 @@
       "dump": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-15",
+      "closes": "11-01",
+      "note": "Weather permitting at each end; call the Shrine for weather-related updates."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "Register at the Grotto Office/Gift Shop on arrival."
     },
     "provenance": {
       "hookups": {
@@ -231404,14 +231623,14 @@
         "method": "derived"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.westbendgrotto.com/visit/campground/ ('opens annually on April 15, weather permitting, and closes November 1, weather cooperating'), read 2026-10-15 (audit/price_research/note_priced_2026-10-15/pages.jsonl); page refused 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.westbendgrotto.com/visit/campground/ ('Availability is on a first-come, first-served basis'; 'register at the Grotto Office/Gift Shop'), read 2026-10-15 (audit/price_research/note_priced_2026-10-15/pages.jsonl); page refused 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.westbendgrotto.com/visit/campground/ (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
@@ -231429,6 +231648,11 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Grotto of the Redemption: campers $20 a night, tents $10. Read 2026-10-15."
+    },
+    "verify_scan": {
+      "checked": "2026-11-02",
+      "sources": "https://www.westbendgrotto.com/visit/campground/ (403 Cloudflare on 2026-11-02; text as read 2026-10-15 in audit/price_research/note_priced_2026-10-15/pages.jsonl) Google Maps panel \"The Grotto Campground\", read 2026-11-02 Esri World_Imagery at 42.96508,-94.44524 and 42.9642,-94.4465, read 2026-11-02",
+      "note": "Confirmed $20 ($10 tents), FCFS and Apr 15-Nov 1 from the operator text as read 2026-10-15 only: the page refused plain HTTP today (Cloudflare 403) and wasn't retried by another route. Added season dates. Sites, hookups and showers left unread. Google 4.9 (14). No gateway within 40 km; $20 is well under the gate."
     }
   },
   {
@@ -1049061,6 +1049285,77 @@
     },
     "note_scan": {
       "sig": "9b90768096abf262",
+      "checked": "2026-11-02",
+      "model": "claude-opus-5"
+    }
+  },
+  {
+    "id": 15599,
+    "kind": "campground",
+    "name": "South Shore Campground",
+    "location": "43.4326,-95.3403",
+    "elevation_meters": 446,
+    "state": "IA",
+    "ownership": "local",
+    "waterfront": "lakeview",
+    "inclusion_evidence": "City of Lake Park's camping page lists it with 2026 rates and 30-amp hookups, daily nights by phone; Esri shows RVs parked at the sites. Found while verifying 3011 (p3-246). Length limit not stated. --Claude",
+    "waterfront_evidence": "p3-246 (2026-11-02): Esri at 43.4326,-95.3403: rigs on a small point ~20-50 m from the lake through scattered trees; sand landing and dock just north. Pads not legible enough to call on-water.",
+    "website": "https://lakeparkia.com/explore/camping",
+    "phone": "712-320-3178",
+    "note": "City of Lake Park's second campground, on a small point on Silver Lake's south shore off Country Club Drive, with a boat ramp and dock at the point; tents also taken. --Claude",
+    "hookups": {
+      "electric": 30,
+      "water": false
+    },
+    "fees": {
+      "nightly_low": 25,
+      "nightly_high": 25,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Hookups $25 a day, $100 a week, $200 a month. No hookups $10."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve by phone with the hosts: Larry Dalton 712-540-2605 or Caren Dalton 712-541-1749; campground information 712-320-3178."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-15",
+      "closes": "10-15"
+    },
+    "facilities": {
+      "potable_water": true
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://lakeparkia.com/explore/camping ('South Shore Campground ... Address: 50 Country Club Drive'; '2026 Rates Hookups No Hookups Daily $25 $10 Weekly $100 Monthly $200'; 'Hookups: 30-amp'; 'Water is available at a central location in the campground, not at each individual site'; 'The camping season runs from April 15 to October 15'; reservations by phone), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://lakeparkia.com/explore/camping ('South Shore Campground ... Address: 50 Country Club Drive'; '2026 Rates Hookups No Hookups Daily $25 $10 Weekly $100 Monthly $200'; 'Hookups: 30-amp'; 'Water is available at a central location in the campground, not at each individual site'; 'The camping season runs from April 15 to October 15'; reservations by phone), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://lakeparkia.com/explore/camping ('South Shore Campground ... Address: 50 Country Club Drive'; '2026 Rates Hookups No Hookups Daily $25 $10 Weekly $100 Monthly $200'; 'Hookups: 30-amp'; 'Water is available at a central location in the campground, not at each individual site'; 'The camping season runs from April 15 to October 15'; reservations by phone), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://lakeparkia.com/explore/camping ('South Shore Campground ... Address: 50 Country Club Drive'; '2026 Rates Hookups No Hookups Daily $25 $10 Weekly $100 Monthly $200'; 'Hookups: 30-amp'; 'Water is available at a central location in the campground, not at each individual site'; 'The camping season runs from April 15 to October 15'; reservations by phone), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://lakeparkia.com/explore/camping ('South Shore Campground ... Address: 50 Country Club Drive'; '2026 Rates Hookups No Hookups Daily $25 $10 Weekly $100 Monthly $200'; 'Hookups: 30-amp'; 'Water is available at a central location in the campground, not at each individual site'; 'The camping season runs from April 15 to October 15'; reservations by phone), read 2026-11-02",
+        "checked": "2026-11-02",
+        "method": "manual"
+      }
+    },
+    "note_scan": {
+      "sig": "237f822ab8eaa461",
       "checked": "2026-11-02",
       "model": "claude-opus-5"
     }

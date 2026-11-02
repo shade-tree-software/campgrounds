@@ -28,6 +28,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3065 Roberts Creek East stored not waterfront: mycountyparks campsite photos for sites 37-41 unread; would show if lake is visible
 - 3126 Riverside Spillville stored creekside: channel straddles 30 m; a width measure could restore riverfront
 - 3005 Riverside Sac City stored not waterfront: south tip's pads maybe 25-30 m from the river through trees
+- 3073 Thomas Mitchell stored not waterfront, p3-246: county map draws Camp Creek behind sites 15-21; a campsite photo could make it creekside for that row
+- 3177 Sherman stored not waterfront: 'Camping' labelled by the ramp, open bank at 41.7743,-90.7866; if motorhomes use it, riverfront
+- 15599 South Shore (Lake Park) stored lakeview: legible pads or a photo could lift it
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
