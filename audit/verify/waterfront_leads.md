@@ -39,6 +39,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3093 Diamond Lake stored lakeview: gravel apron at 41.5912,-92.5452; a photo or site map could lift it
 - 3237 Buffalo Shores stored riverfront: goes to riverview if the public beach runs in front of the sites
 - 2898 Emerson Bay stored lakeview: a site photo showing open water from 2-15 could restore lakefront
+- 3100 Hannen Lake Park stored lakefront, p3-250: rests on 3-4 west-shore cove sites from imagery and map dots; a site check could send it to lakeview
+- 3160 Hubinger Landing stored riverview: if the electric boxes run on the river rim, the view is open and this could be riverfront
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
