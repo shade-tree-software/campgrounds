@@ -1,0 +1,73 @@
+{
+ "id": 2954,
+ "checked": "2026-11-02",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233565",
+  "https://www.recreation.gov/api/camps/campgrounds/233565/rates",
+  "https://www.recreation.gov/api/camps/campsites/ (all 52 sites)",
+  "Esri World_Imagery around 41.379,-92.970, read 2026-11-02"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233565 ('46 shady campsites with 50-amp electric hookups') + per-site records (electric_hookup 50 on all 46), read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 43,
+    "note": "43 public 50-amp sites; 3 more are management sites. The 6 walk-in tent sites don't count."
+   },
+   "source": "https://www.recreation.gov/api/camps/campsites/ per-site records for campground 233565 (43 STANDARD ELECTRIC, 3 MANAGEMENT, 6 TENT ONLY NONELECTRIC with hike_in_distance 50), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "showers": true,
+    "potable_water": true,
+    "dump": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233565 ('flush toilets, showers, drinking water and a dump station'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "never",
+    "max_stay_nights": 14
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233565 (notice 'You MUST have a reservation prior to occupying a site'; maxStay rule 14 nights, rolling 30 days), read 2026-11-02",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {
+    "military": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233565 (facility rule militaryDiscount: 1, 'Military Discount'), read 2026-11-02",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 20,
+    "nightly_high": 24,
+    "currency": "USD"
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233565/rates (2026 and 2027 peak: Standard Electric $20, Standard Electric 50 Amp $24), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Lake Red Rock campground, shaded. Swim beach about 1/4 mile from the camp. --Claude",
+ "summary": "rec.gov confirms 50A, flush toilets, showers, water, dump, reservation required. Count 52 -> 43 public RV sites, fcfs never, 14-night limit and military discount added; $20-24 confirmed. Season unstated, USACE page refused. Not waterfront holds. Phone flag.",
+ "flags": [
+  "WATERFRONT holds at not waterfront: every site is inside the wooded block, ringed by a road on the lake side; imagery shows no water in reach. Nearest water is about 200 m southwest of the nearest site, past the road and bare ground. Rec.gov's 'Hardwood forests cover the lake shore... scenic views' speaks to the area; no site carries a water tag.",
+  "PHONE: entry has none; rec.gov gives 641-828-7522 (facility, general) and 641-628-1701 (fee booth, local information). apply.py doesn't write phone.",
+  "RATE: the rate table carries two types for the same electric sites, $20 'STANDARD ELECTRIC' and $24 'Standard Electric 50 Amp', and every electric site is 50-amp in the catalog, so the true rate may be $24 throughout. Range kept; I couldn't see which a given site charges. Still under the gate.",
+  "SEASON: no statement read. Rate season 2026 is Apr 23-Oct 4, which is not a campground season; the USACE Rock Island district page answered 403 (Akamai denial) and I didn't try another route, so year_round stays as stored.",
+  "BOOKING: notice says 'North Overlook does not have a reservation window'; the inherited 180-day window stays, not verified. Same notice means a reservation first even when arriving at an empty site.",
+  "Pin ~110 m east of the 43 sites' centre (41.37916,-92.97031, mean of rec.gov coords): no move needed."
+ ]
+}

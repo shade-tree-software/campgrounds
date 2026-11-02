@@ -22,6 +22,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3203 Hutchinson stored riverfront, p3-243: the river field is mowed pasture; if electric sites are only along the lane (~80-120 m), the $30 sites are riverview at best
 - 3206 Ingebretson stored not waterfront: west row 25-40 m from a small branch of the creek across grass, reeds, brush; band not clearly open
 - 3044 Hickory Grove stored lakeview: county's park map and rules unread (Cloudflare); a photo would confirm
+- 3171 Osborne stored not waterfront, p3-244: Esri imagery predates the 2025 campground; county says the Volga runs through the park; no map found
+- 2994 Mill Creek stored not waterfront: a site map or photo could lift it; a view unproven under canopy
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
