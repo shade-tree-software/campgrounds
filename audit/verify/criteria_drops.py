@@ -330,6 +330,7 @@ DROPS = {
     1220: ("2026-10-21", "no posted nightly rate, workforce-leaning (AWH 2026-10-21: drop)", "p3-59, read 2026-10-21: sunnyglenfarmsrvpark.com has only a 'Get a Quote' form and 'City Utilities Included', with no posted nightly rate. Dropped by AWH. No stays."),
     1223: ("2026-10-21", "no posted nightly rate, workforce-leaning (AWH 2026-10-21: drop)", "p3-59, read 2026-10-21: triplelwv.com says 'Daily, Weekly, and Monthly rates available!' with no rate posted, and leads with 'Nurses welcome! ... close to both UHC & The VA Hospital' / 'Oil & Gas Workers Welcome'. Dropped by AWH. No stays."),
     440: ("2026-10-21", "4WD recommended on the access road (AWH 2026-10-21: drop)", "DWR Rapidan WMA page, read 2026-10-21: roads beyond the state-maintained portion 'are narrow and not maintained to VDOT standards and can be rough. A four-wheel drive vehicle recommended.' EKKO is not 4WD."),
+    3193: ("2026-11-02", "mostly long-term, no posted nightly rate, right on the price gate (on the fence + mostly seasonal + iffy = drop)", "p3-249, read 2026-11-02: operator's site says only 'Contact us for monthly, weekly and nightly rates', no booking site for RV sites; RV Life reviews 'Mostly long term campground' (11/2024), 'Mostly semi permanent campsites' (8/2026); reviewers paid $45-55, 2025-2026; imagery shows nearly every river pad filled. Google 4.8/340, 641-696-3413."),
 }
 
 if __name__ == "__main__":

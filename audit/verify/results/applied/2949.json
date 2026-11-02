@@ -1,0 +1,66 @@
+{
+ "id": 2949,
+ "checked": "2026-11-02",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233459",
+  "https://www.recreation.gov/api/camps/campgrounds/233459/rates",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233459 (per-site catalog with coordinates and site photos)",
+  "Esri World_Imagery at 41.45765,-90.8112, read 2026-11-02"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 26,
+    "nightly_high": 26,
+    "currency": "USD",
+    "checked": "2026"
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233459/rates (Peak Season 2026-05-01 to 2026-10-24 and 2027-05-01 to 2027-10-23: 'STANDARD ELECTRIC' 26), read 2026-11-02",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233459 ('50-amp electric hookups are provided at every campsite') + the campsite catalog, read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 42,
+    "max_rig_ft": 70,
+    "note": "Listed lengths run 31-70 ft, all back-in. Site 01's equipment list omits RV/Motorhome."
+   },
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233459 (42 overnight Standard Electric sites and one day-use shelter; Max Vehicle Length 31-70), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "dump": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233459 ('A boat ramp, dump station, and picnic shelter are also onsite'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "never",
+    "max_stay_nights": 14,
+    "note": "Self-service: without a reservation, reserve first from the QR code at the site or by phone."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233459 ('Campsites are by Reservation Only'; 'Campers Without a Reservation: MUST check for campsite availability and make reservation first'; rule maxStay 14 Rolling 30 Days), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Rock Island District campground on the Mississippi at Montpelier. Concrete pads under big trees; rail line and Hwy 22 run along the north edge. Open May 1 through the third Sunday in October. --Claude",
+ "summary": "Rate 26 and 50 amp confirmed; count 45 -> 42 overnight; max 43 -> 70; reservation only, 14 max. Pin fine. Waterfront lead UP: sites 10 and 12 are on the river side of the loop road, riverfront candidates.",
+ "flags": [
+  "WATERFRONT LEAD UP: riverview -> riverfront. For most of the campground the loop road runs between sites and river. But per-site coordinates plus imagery (0.16 m/px) put the pads of 10, 12, 14 and 15 on the RIVER side of that road. Site 10: about 15 m of open grass and riprap to the water. Site 12: about 20 m, same. 14 and 15 sit behind a wooded shoreline (about 35-50 m). No road or day use between any of them and the Mississippi, which is far over 30 m wide. rec.gov's site photos confirm: 10 (gravel pad, table and tent, the river right behind over a short lawn) and 12 (pad running straight at the river, table on the lawn beyond); 14 shows the river through trees. Listed lengths: 10, 12, 15 are 40 ft, 14 is 47 ft, all paved back-ins. Inner sites (08, 05, 45) have the view across the road, so riverview stands if four outer pads aren't enough.",
+  "PHONE: entry has none; rec.gov lists 563-419-7594. Add (apply.py doesn't write it).",
+  "NAME: rec.gov publishes 'CLARKS FERRY'; stored name with apostrophe and river in parentheses is fine, no change suggested.",
+  "SITE 01: permitted equipment omits RV/Motorhome (trailer, fifth wheel, camper van allowed), 47 ft; catalog quirk on one site. Site 05 is 31 ft, the shortest.",
+  "SEASON: note's 'through the third Sunday in October' (Oct 18, 2026) was from the district page, which refuses plain HTTP (403). rec.gov's rate season runs to 2026-10-24 and 2027-10-23, which is a rate range, not a season statement. Closing left unset; opens 05-01 stays derived.",
+  "SITE COUNT: stored 45 came from note prose; catalog has 42 overnight sites. The site numbers run to 45 with gaps."
+ ]
+}

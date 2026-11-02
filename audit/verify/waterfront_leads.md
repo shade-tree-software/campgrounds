@@ -35,6 +35,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3087 Big Woods stored lakeview on the dock gap; a site photo would confirm or undo it
 - 3190 Black Hawk stored not waterfront: spur at 42.5602,-92.4805 and pads at 42.5577,-92.4784 near the Cedar; a Cedar loop map would settle whether they are sites
 - 3141 Big Hollow, 2943 Acorn Valley stored not waterfront: a few sites by small ponds, too few for a value
+- 2946 Buck Creek stored lakeview, p3-249: B04, F07 at ~50 m could be lakefront
+- 3093 Diamond Lake stored lakeview: gravel apron at 41.5912,-92.5452; a photo or site map could lift it
+- 3237 Buffalo Shores stored riverfront: goes to riverview if the public beach runs in front of the sites
+- 2898 Emerson Bay stored lakeview: a site photo showing open water from 2-15 could restore lakefront
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 

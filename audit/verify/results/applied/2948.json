@@ -1,0 +1,45 @@
+{
+ "id": 2948,
+ "checked": "2026-11-02",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233455",
+  "https://www.recreation.gov/api/camps/campgrounds/233455/rates",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233455 (per-site catalog with coordinates and site photos)",
+  "Esri World_Imagery at 41.7299,-93.6808, read 2026-11-02"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 24, "nightly_high": 26, "currency": "USD", "checked": "2026", "note": "$24 at most sites; $26 at bookable sites 090 and 127. 2026 and 2027 rate seasons alike."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233455/rates (Peak Season 2026-04-15 to 2026-10-14 and 2027-04-15 to 2027-10-14: 'STANDARD ELECTRIC' 24, the u26 template 26) + the campsite catalog (116 sites on the $24 template; 9 on $26, of which 7 are not reservable), read 2026-11-02",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233455 (all 125 sites Electricity Hookup 50), read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 118, "max_rig_ft": null, "note": "118 bookable of the 125 family sites rec.gov lists (7 aren't reservable: 001, 002, 022, 068, 121, 122, 124). The catalog gives no vehicle length for 118 sites; it lists 28-53 ft on the other seven, 36 ft on the only bookable one (015)."},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233455 (118 reservable; Max Vehicle Length blank on 118) + https://www.recreation.gov/api/camps/campgrounds/233455 ('allows either 3 tents OR 1 RV and 2 tents'), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233455 ('Amenities include flush toilets, showers, drinking water and a dump station'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "max_stay_nights": 14, "note": "14 days within any 30-day period."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233455 (Saylorville Lake Campground Rules: 'Reservations must be made in advance before setting up camping equipment'; 'Camping is limited to 14 days within any 30-day period'), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Saylorville Lake, east side: 'the oldest and most popular campground on the lake', on a compact wooded ridge. --Claude",
+ "summary": "Rate 24 confirmed, high 24 -> 26; count 125 -> 118 bookable; derived max 72 cleared (catalog has no such length); 100% by reservation, 14 max; facilities confirmed. Pin fine. Waterfront lead UP to lakeview from official site photos.",
+ "flags": [
+  "WATERFRONT LEAD UP: not waterfront -> lakeview under the filtered-view rule (AWH 2026-11-01). rec.gov's site photos show open lake through the trees from 072, 074, 109, 111, and nearly unscreened from 039 and 041 at the campground's south tip. Imagery: pads about 150-230 m from the shoreline, through woods then a shoreline band of brush (scaled from plotted per-site coordinates), so not on-water. The note's 'set back from the water (not waterfront)' goes with this. Below-dam check: this is on the lake side, upstream of the dam.",
+  "MAX RIG: stored 72 (from note prose 'rec.gov per-site max length 40-72 ft') is not in today's catalog, which is blank for 118 sites. Cleared. No site's listed length is under 28 ft; fit for 23 ft is not in doubt on this data, but it rests on only 7 listed sites.",
+  "SEASON: nothing states one for the campground; only a rate season 04-15 to 10-14 (2026, 2027). USACE page refused (403), left absent.",
+  "WEBSITE: stored mvr.usace.army.mil/Missions/Recreation/Saylorville-Lake/ not read (403 to plain HTTP)."
+ ]
+}

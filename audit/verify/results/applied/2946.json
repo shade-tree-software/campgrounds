@@ -1,0 +1,46 @@
+{
+ "id": 2946,
+ "checked": "2026-11-02",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233438",
+  "https://www.recreation.gov/api/camps/campgrounds/233438/rates",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233438 (per-site catalog with coordinates and site photos)",
+  "Esri World_Imagery at 40.8440,-92.8726, read 2026-11-02"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 28, "currency": "USD", "checked": "2026", "note": "$25 at the 30-amp sites, $28 at the five 50-amp sites; 2026 and 2027 rate seasons alike."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233438/rates (Peak Season 2026-05-08 to 2026-09-29 and 2027-05-07 to 2027-09-29: 'STANDARD ELECTRIC' per_night 25, 'STANDARD ELECTRIC-106687' 28; the $28 template sits on the 5 sites listed at 50 amp in the campsite catalog), read 2026-11-02",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233438 (Electricity Hookup: 37 sites 30, 5 sites 50: A05, A20, B03, B06, F10), read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 42, "max_rig_ft": 96, "pull_through": true, "note": "All RV, tent or trailer; Max Vehicle Length 38-96 ft, 10 pull-throughs."},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233438 (42 Standard Electric sites, permitted RV/Tent/Trailer), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "vault_toilets": true, "showers": true, "potable_water": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233438 ('Amenities include flush and pit toilets, showers, drinking water, a dump station'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "note": "The 14 nights are per camping loop in any 30 nights; after that a camper must physically move to another loop."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233438 (notices: 'ALL campsites are 100% Reservable'; '14 Day Policy on Rathbun Lake: Campers are only allowed to camp at the same camping loop a maximum of 14 nights within a 30 night period'; rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 Rolling 30 Days), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Rathbun Lake campground on a point in three loops (A, B, F), open grassy areas dotted with trees. Open ~May 8-Sep 29. --Claude",
+ "summary": "Fees 22 -> 25-28 (rec.gov 2026 and 2027); max_rig 128 -> 96; 100% reservable, 14 per loop, 2/3-night minimums added; 50 amp and facilities confirmed. Pin 1.8 km off. Waterfront lead UP: official site photos show the lake across open grass.",
+ "flags": [
+  "WATERFRONT LEAD UP (stored 'not waterfront' and the note's 'wooded buffer' are wrong for the outer sites; stored call was made at a pin 1.8 km from the campground). rec.gov's own site photos show open water across mown grass from A12, A13, B04, F05, F06, F07 (also a filtered view from A11). That is at least lakeview under the floor rule. Measured from per-site coordinates on imagery (taken with the lake well down, a wide sand margin exposed): B04 about 50 m to the waterline, mown grass then brush then sand, no road between; F07 about 45 m to the brush edge and 60 m to the water, grass, no road in the frame; A12/A13 about 75-90 m, grass and brush. F06's photo shows the loop road or a path across the apron. Rec.gov overview calls it a 'lakefront campground' (marketing, no weight). Minimum move: not waterfront -> lakeview; B04 and F07 are the only candidates for lakefront, on the ~50 m bound and the open-apron rule. Rest of the loops are in trees.",
+  "PIN WRONG: stored 40.86000,-92.87100 is in woods north of the J5T arm, about 1.8 km from the campground (rec.gov's own facility point, 40.86278,-92.86778, is wrong too). Centroid of the 42 per-site coordinates, which land on the visible pads: 40.8440,-92.8726. Re-fetch elevation.",
+  "PHONE: rec.gov: 'FOR CAMPGROUND INQUIRIES DURING MAY- SEPTEMBER PLEASE CALL 641-724-3206. DURING CLOSED SEASON OCTOBER -APRIL PLEASE CALL 641-647-2464'. Stored is the off-season office number; give both (apply.py doesn't write it).",
+  "WEBSITE: the stored second line is Rock Island District (mvr.usace.army.mil), but Rathbun is Kansas City District: rec.gov's notice links http://www.nwk.usace.army.mil/Locations/District-Lakes/Rathbun-Lake/. Both answer 403 to plain HTTP, so neither page was read; suggest replacing mvr with the nwk URL.",
+  "SEASON: May 8-Sep 29 in the note is only a rate-season date range on rec.gov (2026-05-08 to 2026-09-29), and the phone line says May-September staffed. Left unset in the field; USACE page unread (403). Kept in the note as it stood."
+ ]
+}
