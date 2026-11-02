@@ -37,8 +37,8 @@ RV-fit determination (calibrated against RMNP data quirks):
     A pop-up, pickup camper or camper van alone does not count.
   - A site's length for EKKO is the shorter of Driveway Length and that posted
     cap (`ekko_length`). It "fits" when RV-capable AND that length >= --fit-ft
-    (default 25 = 23-ft rig + slack). 23-24 ft is "tight"; a cap under 23 ft is
-    "too_small" whatever the spur; missing length is reported as
+    (default 25 = 23-ft rig + slack). 21 ft up to that is "tight"; a cap under 21 ft
+    is "too_small" whatever the spur; missing length is reported as
     "unknown — verify", never silently counted as a fit.
   - The per-facility COVERAGE report prints how often each length field is
     populated, so a campground where even Driveway Length is sparse (making the
@@ -71,6 +71,7 @@ MOTORHOME_EQUIPMENT = {"RV", "RV/MOTORHOME"}
 # turned a "van" booking away, AWH 2026-10-24).
 EKKO_EQUIPMENT = MOTORHOME_EQUIPMENT | {"TRAILER", "FIFTH WHEEL"}
 DEFAULT_FIT_FT = 25  # 23-ft EKKO + slack for bumper/hitch and back-in maneuvering
+TIGHT_MIN_FT = 21    # within 2 ft of EKKO: posted figures run conservative, so worth a look (AWH 2026-11-02)
 
 
 def _get(path, params=None):
@@ -201,7 +202,7 @@ def classify_fit(site, fit_ft):
 
     Fit is judged on the shorter of Driveway Length and the posted equipment
     cap (see module docstring; Max Vehicle Length is not trusted). A cap under
-    23 ft is too small whatever the spur. 'unknown' means RV-plausible but
+    TIGHT_MIN_FT is too small whatever the spur. 'unknown' means RV-plausible but
     unconfirmed — either a STANDARD site with no equipment list, or an
     RV-capable site with no driveway length. Resolve those against the
     campground map; never assume they fit.
@@ -212,15 +213,16 @@ def classify_fit(site, fit_ft):
     if status == "empty":
         return "unknown"  # STANDARD but can't confirm RV equipment — verify
     cap = equipment_cap(site)
-    if cap is not None and cap < 23:
+    if cap is not None and cap < TIGHT_MIN_FT:
         return "too_small"
     dl = _num_attr(site, "Driveway Length")
     if dl is None or dl <= 0:
-        return "unknown"
+        # No spur listed: a posted cap in the tight band still says tight (Lake Conasauga).
+        return "tight" if cap is not None and cap < fit_ft else "unknown"
     dl = min(dl, cap) if cap is not None else dl
     if dl >= fit_ft:
         return "fits"
-    if dl >= 23:
+    if dl >= TIGHT_MIN_FT:
         return "tight"
     return "too_small"
 
@@ -464,7 +466,7 @@ def summarize(facility):
     print(hdr + ")")
     print(f"    By type: " + ", ".join(f"{k}={v}" for k, v in sorted(type_counts.items())))
     print(f"    EKKO fit (RV-capable, Driveway Length >= {fit_ft} ft):")
-    print(f"      fits>={fit_ft}ft={fit_counts['fits']}  tight(23-{fit_ft-1})={fit_counts['tight']}"
+    print(f"      fits>={fit_ft}ft={fit_counts['fits']}  tight({TIGHT_MIN_FT}-{fit_ft-1})={fit_counts['tight']}"
           f"  too_small(<23)={fit_counts['too_small']}  unknown(verify)={fit_counts['unknown']}")
     if rv_driveways:
         rv_driveways.sort()

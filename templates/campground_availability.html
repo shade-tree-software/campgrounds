@@ -224,7 +224,7 @@
     Search any recreation.gov (federal) campground, pick your dates, and see which
     sites have openings. Only sites EKKO fits are shown — drive-in sites that take a
     motorhome or trailer, with both the parking spur and recreation.gov's posted
-    length limit long enough for a 23-ft rig. Each column is one night; a green ✓ means available.
+    length limit long enough for a 23-ft rig. Sites within 2 ft of EKKO's length are flagged tight: check them before booking. Each column is one night; a green ✓ means available.
     Booking still happens on recreation.gov.
   </p>
 
@@ -276,6 +276,7 @@
   const searchInput = document.getElementById('cg-search');
   const resultsBox = document.getElementById('search-results');
   const selectedLabel = document.getElementById('selected-cg');
+  const TIGHT_MIN_FT = {{ tight_min_ft }};
   const fitEl = document.getElementById('fit-ft');
   const checkBtn = document.getElementById('check-btn');
   const statusEl = document.getElementById('avail-status');
@@ -626,14 +627,14 @@
     let html = '<p class="summary-line"><b>' + sites.length + '</b> site' +
       (sites.length !== 1 ? 's' : '') + ' EKKO fits have openings' +
       (data.fully_available ? ' — <b>' + data.fully_available + '</b> free every night' : '') +
-      ' at ' + escapeHtml(fac.name || '') + ' (at least ' + data.fit_ft + ' ft long). ' +
+      ' at ' + escapeHtml(fac.name || '') + '. ' +
       bookingLink(fac) + '</p>';
 
     html += '<div class="legend">' +
       '<span><span class="swatch open">✓</span> Available</span>' +
       '<span><span class="swatch closed">·</span> Reserved / not released / closed</span>' +
-      '<span><span class="verdict-tag verdict-fits">fits</span> long enough for EKKO</span>' +
-      '<span><span class="verdict-tag verdict-tight">tight</span> 23–24 ft</span>' +
+      '<span><span class="verdict-tag verdict-fits">fits</span> at least ' + data.fit_ft + ' ft</span>' +
+      (data.fit_ft > TIGHT_MIN_FT ? '<span><span class="verdict-tag verdict-tight">tight</span> ' + TIGHT_MIN_FT + '–' + (data.fit_ft - 1) + ' ft, close to EKKO\'s length — check before booking</span>' : '') +
       '<span><span class="verdict-tag verdict-unknown">unknown</span> length not listed — check before booking</span>' +
       '</div>';
 
@@ -644,7 +645,7 @@
     html += '<ul class="avail-cards">';
     sites.forEach(s => {
       const open = s.statuses.filter(st => st === 'Available').length;
-      const dl = s.length_ft ? Math.round(s.length_ft) + ' ft' : 'length unknown';
+      const dl = (s.length_ft ? Math.round(s.length_ft) + ' ft' : 'length unknown') + (s.verdict === 'tight' ? ' · tight' : '');
       html += '<li class="ac-item">' +
         '<div class="ac-head"><span class="ac-name">' + escapeHtml(s.name) + '</span>' +
         '<span class="verdict-tag verdict-' + s.verdict + '">' + dl + '</span></div>' +
@@ -667,7 +668,7 @@
 
     sites.forEach(s => {
       html += '<tr>';
-      const dl = s.length_ft ? Math.round(s.length_ft) + ' ft' : '—';
+      const dl = (s.length_ft ? Math.round(s.length_ft) + ' ft' : '—') + (s.verdict === 'tight' ? ' · tight' : '');
       const loop = s.loop ? ' · ' + escapeHtml(s.loop) : '';
       html += '<td class="site-col">' + escapeHtml(s.name) +
         ' <span class="verdict-tag verdict-' + s.verdict + '">' + dl + '</span>' + loop +

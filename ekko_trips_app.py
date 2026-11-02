@@ -21,7 +21,7 @@ from werkzeug.security import generate_password_hash, check_password_hash, safe_
 from werkzeug.utils import secure_filename
 
 from ridb.fetch_facility import (search_facilities, fetch_facility,
-                                 availability_matrix, DEFAULT_FIT_FT)
+                                 availability_matrix, DEFAULT_FIT_FT, TIGHT_MIN_FT)
 import weather_finder
 import campground_schema
 from trips import (
@@ -5181,7 +5181,8 @@ def campgrounds_availability():
     is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template('campground_availability.html',
                            title='Availability', active_nav='campavail',
-                           is_admin=is_admin, default_fit_ft=DEFAULT_FIT_FT)
+                           is_admin=is_admin, default_fit_ft=DEFAULT_FIT_FT,
+                           tight_min_ft=TIGHT_MIN_FT)
 
 
 # How many facilities to ask RIDB for, and how many to hand the picker. RIDB
