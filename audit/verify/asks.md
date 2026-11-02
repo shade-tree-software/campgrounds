@@ -437,13 +437,13 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 ## Also open, 2026-11-01 (raised in chat, logged here)
 - **1294 Shadow Lake (OH):** packed with parked rigs, nightly share unpublished, $45, Google 4.7/87; kept. **AWH 2026-11-01: keep.**
 - **15591 Maple Grove (OH):** reviewers say "space is tight", nobody reports a 23-ft rig, no limit posted; kept under the posted-limit rule. **AWH 2026-11-01: keep; overhead imagery and Google review photos show room for EKKO.**
-- **13347 Clendening / 1238 Pleasant Hill (OH):** reserve.mwcd.org captcha; saved pages would settle 93-99 nightly (lakefront) and Pleasant Hill's per-site tags.
-- **4671 Broad River / 14379 Clay Hill (GA):** Firefly "RV Site - Water Access" units behind reCAPTCHA; Broad River's fees also open.
+- **13347 Clendening / 1238 Pleasant Hill (OH):** reserve.mwcd.org captcha; saved pages would settle 93-99 nightly (lakefront) and Pleasant Hill's per-site tags. **AWH 2026-11-02 rule: both stay lakeview unless a page turns up.**
+- **4671 Broad River / 14379 Clay Hill (GA):** Firefly "RV Site - Water Access" units behind reCAPTCHA; Broad River's fees also open. **AWH 2026-11-02 rule: both stay not waterfront unless a page turns up.**
 - **4561 Lake Conasauga:** Availability page hides all sites on rec.gov's 21-ft motorhome limit; recommend leaving it, alternative is a "tight" flag within 2 ft.
 - **3900 Bond Falls (MI):** two areas ~4 km apart, pin below the dam; split? Held until answered.
 - **`header-icon-bar`:** merged branch only AWH can delete.
 
-- **2658 Molas Lake (CO), wf-co-4:** the town's site PDF calls P32 "waterfront... RVs up to 23 ft" under a header saying "under 23 ft", and says over 23 ft belongs in the view sites. If EKKO fits P32 it's lakefront (pad ~17 m over open shore); held at lakeview.
+- **2658 Molas Lake (CO), wf-co-4:** the town's site PDF calls P32 "waterfront... RVs up to 23 ft" under a header saying "under 23 ft", and says over 23 ft belongs in the view sites. If EKKO fits P32 it's lakefront (pad ~17 m over open shore); held at lakeview. **AWH 2026-11-02 rule: unsure goes down without asking. Stays lakeview.**
 - **2469 Cement Creek (CO), wf-co-7:** Campendium: "nothing larger than 20ish feet" (2022), a 25-ft trailer fit one site (2021), Loop 2 cars and vans only; no posted limit. Kept, tight; note now says so. Drop if that's too thin for EKKO. **AWH 2026-11-02: unclear pad size = keep with a caveat. Kept; caveat in the note.**
 - **2388 Elk Wallow (CO), wf-co-8:** Campendium and a Dyrt review (10/2020) give a 22-ft max vehicle; allstays says 30 ft. No agency figure read. Kept unless an agency source caps it. **AWH 2026-11-02: unclear pad size = keep with a caveat. Kept; caveat in the note.**
 - **2357 Blue River (CO), wf-co-16:** rec.gov says "tents and smaller trailers"; catalog driveways 10-20 ft on the river sites, only 009 lists 23 ft+, while imagery shows spurs ~15-20 m long. Kept, value held at riverview. Drop if the catalog lengths are right. **AWH 2026-11-02: unclear pad size = keep with a caveat. Kept; caveat in the note.**

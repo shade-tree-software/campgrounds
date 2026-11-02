@@ -42,6 +42,7 @@
 - [Re-audit contrary waterfront claims](feedback_reaudit_contrary_waterfront_claims.md) — AWH 10-14 #7: an operator/engine water claim that differs from ours triggers the gate, both ways; type-level tags prove nothing
 - [Below the dam is not on the lake](feedback_below_dam_not_lake.md) — AWH 2026-10-21: behind a dam berm / below pool = no lake value; imagery hides berms, compare DEM to pool
 - [Beware campground content farms](feedback_beware_campground_content_farms.md) — pinecliffresort.net fakes being a parent operator; check a domain's index before trusting it; no entry cites it (2026-10-11)
+- [Unsure on waterfront: downgrade](feedback_waterfront_unsure_downgrade.md) — AWH 2026-11-02: after every source, go down without asking and report it; --AWH values still asked
 - [Waterfront evidence in JSON](feedback_waterfront_evidence_in_json.md) — audit proof lives in the campgrounds.json waterfront_evidence field (non-empty=audited, --AWH note also=audited), not just
 - [URLs in website not notes](feedback_urls_in_website_not_notes.md) — reservation/official URLs go in the website field; keep website links out of note prose (negatives & source citations excepted)
 - [Run sweep agents sequentially AND tiny](feedback_sequential_sweep_agents.md) — one agent at a time, ONE candidate per batch; parallel only by explicit per-stage user exception
