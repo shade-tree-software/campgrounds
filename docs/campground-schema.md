@@ -360,7 +360,7 @@ flat `fcfs: true/false` cannot tell them apart — Iowa's FCFS *is what its cuto
 ```jsonc
 // reserve_until — when booking closes
 {"relative_to": "arrival", "at": "23:00"}            // IN: until 11pm on arrival night
-{"relative_to": "arrival", "offset_hours": -48}      // IA: closes 48h before arrival
+{"relative_to": "arrival", "offset_hours": -48}      // a cutoff hours before arrival (IA read this way until 2026-11-02)
 {"relative_to": "arrival", "at": "14:00"}            // MD: early afternoon day-of
 
 // min_stay — a LIST, because agencies run several rules at once
@@ -643,7 +643,7 @@ No `reserve_until` and no `fcfs`. Two Iowa DNR pages disagree — the overnight-
 says *"The last day to make a camping reservation, if paying by credit/debit card, is 2 days
 prior to arrival"* (matching the reported 48-hour rule), while the make-reservation page
 says *"up to the day of to the arrival date if paying by credit card"*. Neither is obviously
-stale. *(2026-11-02: the overnight-camping page now also says the day of arrival; the field stays unwritten against the 48-hour report until someone tests the engine.)* **And the FCFS half is unconfirmed by any official source**, which matters because it
+stale. *(2026-11-02: the overnight-camping page and about 20 ReserveAmerica park pages now say the day of arrival, until 10:00 pm. AWH could not say whether the reported 48 hours still holds, so `reserve_until` is written at 22:00 from the published text; the engine is untested, and `fcfs` stays unwritten.)* **And the FCFS half is unconfirmed by any official source**, which matters because it
 is the whole reason an Iowa park would answer a late-in-the-day query. Resolve by phone
 before writing either.
 

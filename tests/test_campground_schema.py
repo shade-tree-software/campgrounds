@@ -698,10 +698,12 @@ class TestShippedRegistry(unittest.TestCase):
         self.assertNotIn("reserve_until", md)
         self.assertIn("note", md)
 
-        # Iowa's pages say the day of arrival (2026-11-02); a reported 48-hour
-        # rule says otherwise and nobody has tested the engine. Stays unwritten.
+        # Iowa's pages say until 10 pm on the day of arrival (2026-11-02). AWH
+        # could not say whether the earlier 48-hour report still holds, so the
+        # published text stands. FCFS after the cutoff is still unconfirmed.
         ia = self.rows.get("state:IA", {}).get("booking", {})
-        self.assertNotIn("reserve_until", ia)
+        self.assertEqual(ia.get("reserve_until"),
+                         {"relative_to": "arrival", "at": "22:00"})
         self.assertNotIn("fcfs", ia,
                          "Iowa's post-cutoff FCFS is not confirmed by any "
                          "official source")
