@@ -10,6 +10,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4183 St. John River Campground (Madawaska) stored riverfront: pad tips ~20 m from the bank across grass with a thin brush band; riverview if the brush screens it
 - 4188 Sunset Point Campground stored bayfront: lower row ~35-60 m from tidal shore, loop road behind, open walk mid-row, brush at the ends; upper rows behind the loop; bayview if the brush is a buffer
 - 4204 Birch Point stored not waterfront: operator claims 'stunning lake views'; cottages hold the shore, RV spots ~100-250 m back, no site map (low confidence)
+- 4198 Keenes Lake stored lakefront: map has sites 509-521 backing on the lake, but sites sell by type and those may be seasonal; two campers had sites overlooking the lake; only nightly sites count
+- 4172 Lake St. George stored lakefront: of the lake-side spur only 30U (FCFS) both fits and is clearly on the water; main loop road ~25-60 m from shore, so lakeview unless one site carries it
+- 17 Sebago Lake stored not waterfront, --AWH note says some sites appear lakefront: west-end 201L-208M along a road 25-50 m from the sand; the road blocks on-water, filtered lakeview is the question (ask if it moves)
+- 4180 Mattawamkeag set to riverview 2026-11-02 from the map: confirm a real view from R1-R6, else not waterfront
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
