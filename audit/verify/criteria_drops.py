@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    4193: ('2026-11-02', 'Standing price gate: private, over US$50, no gateway, no Good Sam Park; not a family stay', "Operator's own season comparison ($10,137 for 30A, $11,772 for 50A, May 15-Oct 15, tax and electric included) works out to ~$61 and ~$71 before tax; 2026 campers $49, $55, $65, $65, $80; RV Life avg $41, tier $$$; 'Ask About Seasonal'. Read 2026-11-02, p3-238."),
     1341: ('2026-11-02', 'AWH 2026-11-02: drop Lake Waveland', 'Only rate an undated $30 camper report; the stored domain now serves ads; no operator site found'),
     2590: ('2026-11-02', 'AWH 2026-11-02 standing rule: private, under 4.0 on a review site with 25+ reviews = drop; Google 3.9/98', 'Rating and count as recorded in the entry when it was last vetted'),
     7565: ('2026-11-02', 'AWH 2026-11-02 standing rule: private, under 4.0 on a review site with 25+ reviews = drop; Google 3.2/69', 'Rating and count as recorded in the entry when it was last vetted'),

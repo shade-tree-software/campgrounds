@@ -90,3 +90,5 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 
 
 **RESUMED 2026-11-02 by AWH (session d7d0d5a8), pushed + deployed through 0436844a:** p3-236 (IN) running; the brief is saved as audit/verify/prompt_template_in.txt (11-01 and 11-02 rulings included); point its scratch paths at the new session's scratchpad.
+
+**2026-11-02:** p3-237 applied; splits done: 13345 Main Camp + 15596 Eagle Point, 3900 Bond Falls West + 15597 East; 4185 Big Eddy settled from AWH's map. p3-238 (ME) running. Next new id 15598.

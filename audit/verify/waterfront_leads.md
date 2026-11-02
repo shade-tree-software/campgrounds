@@ -4,6 +4,12 @@ A verifier's source (operator page or booking engine) claims water access that d
 the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, both ways; a
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
+## Open, Maine p3-238 (2026-11-02)
+
+- 4207 River Run Canoe & Campground stored not waterfront: reviews say 'one of the river front sites', 'right on the river'; Saco ~40 m wide; none names an RV, and which sites take one is unknown
+- 4183 St. John River Campground (Madawaska) stored riverfront: pad tips ~20 m from the bank across grass with a thin brush band; riverview if the brush screens it
+- 4188 Sunset Point Campground stored bayfront: lower row ~35-60 m from tidal shore, loop road behind, open walk mid-row, brush at the ends; upper rows behind the loop; bayview if the brush is a buffer
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft
