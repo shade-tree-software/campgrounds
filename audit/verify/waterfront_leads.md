@@ -19,6 +19,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3148 Eden Valley stored not waterfront: NE-end pads A, B and site 2 are 20-35 m from the 8-10 m creek, no road between; unclear if RV pads; sites 10-16 are 30-40 m of lawn then brush
 - 3042 Gotch stored not waterfront: a lane at 42.6778,-94.1995 runs within ~35 m of the river under canopy; only if a photo shows pads there
 - 3095 Fontana stored lakeview: unconfirmed that the lake shows from L01-L08
+- 3203 Hutchinson stored riverfront, p3-243: the river field is mowed pasture; if electric sites are only along the lane (~80-120 m), the $30 sites are riverview at best
+- 3206 Ingebretson stored not waterfront: west row 25-40 m from a small branch of the creek across grass, reeds, brush; band not clearly open
+- 3044 Hickory Grove stored lakeview: county's park map and rules unread (Cloudflare); a photo would confirm
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 

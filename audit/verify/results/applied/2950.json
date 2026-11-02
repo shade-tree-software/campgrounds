@@ -1,0 +1,71 @@
+{
+ "id": 2950,
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233516",
+  "https://www.recreation.gov/api/camps/campgrounds/233516/rates",
+  "recreation.gov campsite catalog for 233516 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+  "https://www.recreation.gov/api/camps/campsites/22458 (per-site records read for all 143 sites, 2026-11-02)"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233516 ('143 campsites with 50-amp electric hookups') + per-site records (every site electric_hookup 50), read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 135,
+    "max_rig_ft": 80,
+    "pull_through": false,
+    "note": "135 bookable, all back-in, RV/trailer/tent, max vehicle 43-80 ft; rec.gov's 143 includes 8 unbookable management sites."
+   },
+   "source": "recreation.gov campsite catalog for 233516 (135 STANDARD ELECTRIC reservable, 8 MANAGEMENT not; Max Vehicle Length 43-80; Driveway Entry Back-In), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "vault_toilets": true,
+    "showers": true,
+    "potable_water": true,
+    "dump": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233516 ('flush and pit toilets, showers, drinking water and two dump stations'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "never",
+    "max_stay_nights": 14,
+    "note": "'You MUST have a reservation prior to occupying a site.' 14 nights in a rolling 30 days. Check-in 3 pm, check-out 2 pm."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233516 (notices: 'Howell Station does not have a reservation window. You MUST have a reservation prior to occupying a site.'; rule maxStay 14, Rolling 30 Days), read 2026-11-02",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 24,
+    "nightly_high": 24,
+    "currency": "USD",
+    "checked": "2026"
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233516/rates (2026 and 2027 Peak Season 'Standard Electric 50 Amp' per_night 24) + per-site fee_templates (sampled 24 sites: public sites point Peak at that $24 template; the $22 'STANDARD ELECTRIC' template appeared only on a management site), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "USACE campground on the Des Moines River just below Red Rock dam. Gravel pads. --Claude",
+ "summary": "Confirmed 50A, facilities, reservable; fees corrected $22-24 -> $24 (the $22 template is the management sites'); count 143 -> 135 bookable, max rig 74 -> 80; FCFS never and 14-night max added. Riverview lead; pin 260 m off.",
+ "flags": [
+  "WATERFRONT LEAD, UP to riverview (stored 'not waterfront'), plotted from rec.gov per-site coordinates on Esri imagery: the west row (101-104, 107, 110) sits on open grass facing the Des Moines River tailwater, about 15-40 m pad to water over a riprap bank. A paved or gravel path or road runs along the bank between pads and water (imagery can't say which), so not riverfront under the no-driveways rule. The river is well over 30 m wide here. Pads below the dam get no lake value (rec.gov: 'just below the Red Rock Dam ... on the north side of the Des Moines River'), so the call is the river only. Rest of the 135 sites are inland under trees. No per-site water tag at Howell in rec.gov (Ivans has them).",
+  "PIN about 260 m off: stored 41.36480,-92.96850 is in the east end of the campground. Centroid of the 143 rec.gov site coordinates is 41.36503,-92.97161.",
+  "PHONE missing: rec.gov gives 641-828-7522 (general) and fee booth 641-620-1802 (local information). apply.py won't write it.",
+  "SEASON left unset: rates run 2026-04-16 to 2026-10-18 and 2027-04-15 to 2027-10-17, and the calendar file shows open sites through Oct 18 2026, but a rate season is not a campground season and no page states one. www.mvr.usace.army.mil answers 403 to plain HTTP, not retried, so the district's Lake Red Rock page stayed unread.",
+  "Rec.gov carries a militaryDiscount rule with value 1 here; nothing says what it gives, so discounts.military not written.",
+  "Rig: permitted equipment on every site includes RV; shortest listed 43 ft, all fit EKKO."
+ ],
+ "checked": "2026-11-02"
+}

@@ -1,0 +1,68 @@
+{
+ "id": 2952,
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/10038827",
+  "https://www.recreation.gov/api/camps/campgrounds/10038827/rates",
+  "recreation.gov campsite catalog for 10038827 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+  "https://www.recreation.gov/api/camps/campsites/10038839 (per-site records read for all 21 sites, 2026-11-02)"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038827 ('21 campsites with 50-amp electric hookups') + per-site records, read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 20,
+    "max_rig_ft": 60,
+    "pull_through": false,
+    "note": "20 bookable back-in sites, max vehicle 30-60 ft; rec.gov's 21 includes one management site (site 1)."
+   },
+   "source": "recreation.gov campsite catalog for 10038827 (20 RV ELECTRIC reservable, 1 MANAGEMENT not; Max Vehicle Length 30-60; Back-in), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "showers": true,
+    "potable_water": true,
+    "dump": false
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038827 ('flush toilets, showers and drinking water'; notice 'There is no water fill-up or dump station located at Ivans.'), read 2026-11-02",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "never",
+    "max_stay_nights": 14,
+    "note": "'You MUST have a reservation prior to occupying a site.' 14 nights in a rolling 30 days. Check-in 3 pm, check-out 2 pm."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038827 (notices: 'Ivans does not have a reservation window. You MUST have a reservation prior to occupying a site.'; rule maxStay 14, Rolling 30 Days), read 2026-11-02",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 24,
+    "nightly_high": 24,
+    "currency": "USD",
+    "checked": "2026"
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038827/rates (2026 and 2027 Peak Season 'Standard Electric 50 Amp' per_night 24) + per-site fee_templates (all 21: the 20 public sites point Peak at that $24 template; the $20 template is on the management site only), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Lake Red Rock, below the dam on the south side of the Des Moines River. No water fill-up at the campground. --Claude",
+ "summary": "Confirmed 50A, facilities, reservable; fees corrected $20-24 -> $24 (the $20 template is the management site's); count 21 -> 20 bookable, max rig 56 -> 60; no dump/water fill, FCFS never, 14-night max added. Riverfront holds; pin good.",
+ "flags": [
+  "Riverfront holds: rec.gov tags all 21 sites proximity_water 'Riverfront'. Plotted on Esri imagery, the shore row (5-8, 11, 13, 14, 16-18) sits about 10-25 m from a riprap bank with no road between; the main channel is over 30 m wide. At 16-18 a sand-and-willow bar lies between the bank and the main channel. Sites 2-4, 9, 10, 12, 15, 19-21 are behind that row under trees. Below the dam, so river only, no lake value.",
+  "Site 1 is management and has no coordinates. Shortest public listing 30 ft, so all 20 fit EKKO.",
+  "Pin 41.36038,-92.97287 is within about 30 m of the site centroid 41.36067,-92.97289: fine. Phone: entry has none; rec.gov gives 641-828-7522. apply.py won't write it.",
+  "SEASON left unset: rates run 2026-04-23 to 2026-10-04 and 2027-04-22 to 2027-10-03; no page states a campground season. USACE district page 403 to plain HTTP, not retried."
+ ],
+ "checked": "2026-11-02"
+}
