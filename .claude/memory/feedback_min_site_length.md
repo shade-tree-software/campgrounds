@@ -12,3 +12,5 @@ EKKO is a 23-ft RV. Don't add a campground when its largest drive-in sites top o
 **Why:** the family would rather not rely on barely-fitting. Confirmed when excluding the C&O Canal NPS campgrounds — McCoys Ferry and Spring Gap both cap drive-in sites at ~20 ft, so both were left out despite Spring Gap being a requested bonus find.
 
 **How to apply:** during the campground-data-curation site-size check, read the per-site max length (recreation.gov / NPS site pages); if no site fits a 23-ft rig, exclude. Relates to the [[reference-rvlife-price]] / Good Sam workflow and the general inclusion criteria in CLAUDE.md.
+
+**AWH 2026-11-02: when it is unclear whether the pads are large enough for EKKO, keep the campground with a caveat in the note.** This replaced the drop for vague agency wording with no qualifying review. A clear limit under 23 ft still excludes; 4WD/high-clearance statements are about the road and are unchanged. Not applied retroactively to earlier drops.

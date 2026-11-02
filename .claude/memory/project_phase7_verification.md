@@ -86,4 +86,7 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 
 **2026-11-01: phase 7 still paused at p3-235; AWH asked for the waterfront backlog first.** Leads from p3-186 on were split into per-entry lines in audit/verify/waterfront_leads.md (paragraphs archived there). Work with kit/mkwfbatch.py + mkwfbrief.py, 8 at a time, one agent: Georgia DONE (wf-ga-1..7), then IN, OH, MA, CO. Check every low-confidence upgrade yourself; AWH 2026-11-01: a loop road or driveway between site and water blocks on-water.
 
-**2026-11-01: WATERFRONT BACKLOG CLEARED** (GA, IN, OH, MA, CO wf-co-1..15; last commit f4d9d0fb, local, origin at 931cc073 and live site not updated). Phase 7 still paused at p3-235; resume only when AWH says. 2026-11-02: Colorado's width recheck done too (wf-co-16..18). Not done: the same size-rule check on other states' riverfront entries (not started; AWH's call), see criteria_followups.md.
+**2026-11-01: WATERFRONT BACKLOG CLEARED** (GA, IN, OH, MA, CO wf-co-1..15; last commit f4d9d0fb, local, origin at 931cc073 and live site not updated). Phase 7 still paused at p3-235; resume only when AWH says. 2026-11-02: Colorado's width recheck done too (wf-co-16..19). AWH 2026-11-02: do NOT do a separate pass on other states' riverfront entries (~719) or the 101 coastal woods entries; check them when each campground is next revisited for updates.
+
+
+**RESUMED 2026-11-02 by AWH (session d7d0d5a8), pushed + deployed through 0436844a:** p3-236 (IN) running; brief built from p3-235_prompt.txt in that session's scratchpad, with the 11-01 waterfront rulings added.

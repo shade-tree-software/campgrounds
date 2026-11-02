@@ -27,7 +27,7 @@
 - [PA SSH is key-only](reference_pa_ssh_keys.md) — two restricted keys (deploy forced-command / read-only rrsync); no PA password stored anywhere; password auth still open server-side
 - [Deploy to PythonAnywhere](project_deploy_to_pa.md) — ./deploy-to-pa.sh pulls + reloads the live app, with a data-file guard and a post-reload health check
 - [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — AWH 2026-10-14 five-test rule for long-stay parks that sell nights; on the fence + mostly seasonal + iffy = drop and report (10-31)
-- [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
+- [Min site length ~23 ft](feedback_min_site_length.md) — sites capped at ~20 ft = out; UNCLEAR pad size = keep with a caveat (AWH 2026-11-02)
 - [Trailer limits apply to EKKO](feedback_trailer_length_limits.md) — AWH 2026-10-20: a posted trailer length limit counts for the motorhome too unless the source says otherwise; under ~23 ft = drop
 - [Clean up notes you touch](feedback_clean_up_notes.md) — AWH 2026-10-21: ANY entry update cleans its note, --AWH text included: drop what the fields show (price, rating, FCFS...) and what is wrong; never add field facts to a note
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
