@@ -25,3 +25,5 @@ AWH 2026-10-31 dropped Clinton Lake (OH) on "so-so" reviews even at 4.6/175, on 
 **Standing call (AWH 2026-10-31):** "you can drop private campgrounds that are borderline in price and quality if they have questionable policies, unusual facility issues, or poor reviews." Drop and report; don't park these in asks.md. See [[feedback-exclude-seasonal-residential]].
 
 **Automatic drop (AWH 2026-11-01):** "You can automatically drop campgrounds with less than 4 stars on Google if the campground is already borderline due to mostly seasonal." Drop and report; first use AOK (IN), 3.7/219.
+
+**AWH 2026-11-02, standing rule:** private/hipcamp under 4.0 on RV Life, Campspot, Google, Campendium or The Dyrt with 25+ reviews on that site = drop and report, even if another site is higher; --AWH note excepted; Good Sam under 8.5 drops nothing. Applied as phase 7 reaches each private entry. In docs/campground-curation.md.
