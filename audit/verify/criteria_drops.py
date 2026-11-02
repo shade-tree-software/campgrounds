@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    1341: ('2026-11-02', 'AWH 2026-11-02: drop Lake Waveland', 'Only rate an undated $30 camper report; the stored domain now serves ads; no operator site found'),
     2590: ('2026-11-02', 'AWH 2026-11-02 standing rule: private, under 4.0 on a review site with 25+ reviews = drop; Google 3.9/98', 'Rating and count as recorded in the entry when it was last vetted'),
     7565: ('2026-11-02', 'AWH 2026-11-02 standing rule: private, under 4.0 on a review site with 25+ reviews = drop; Google 3.2/69', 'Rating and count as recorded in the entry when it was last vetted'),
     14513: ('2026-11-02', 'AWH 2026-11-02 standing rule: private, under 4.0 on a review site with 25+ reviews = drop; Google 3.8/39', 'Rating and count as recorded in the entry when it was last vetted'),

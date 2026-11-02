@@ -368,7 +368,7 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1299 Clinton Lake (OH, p3-220):** no posted rate, no booking engine; looks long-stay ('close-knit community', monthly and seasonal rates listed by others, packed settled rows, third-generation campers). If long-stay it fails test 2, and RV Life $$ doesn't stand in. Google 4.6/175; a call to 419-585-3331 would settle it. **AWH 2026-10-31: dropped, reviews so-so.**
 - **14297 Hickory Lakes (OH, p3-220):** $45 posted, but rules are written for seasonal owners (shed limits, 2014-or-newer) with ~150 packed units; nightly share may be under 1 in 10. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
-- **1244 Friendship Park (OH, p3-220):** its page also lists Sam Kerr RV Campground ($35, 30/50A, sewer; call for availability), not located. Can't tell which cluster the pin is on, so split undecided. Kept as one entry.
+- **1244 Friendship Park (OH, p3-220):** its page also lists Sam Kerr RV Campground ($35, 30/50A, sewer; call for availability), not located. Can't tell which cluster the pin is on, so split undecided. Kept as one entry. **AWH 2026-11-02: cannot find Sam Kerr either. One entry stays.**
 
 - **1266 Kenisee (OH, p3-221):** 300 sites; only ~12-25 appear sold nightly (4-8%, no published count), 'settle for a season', sells RVs set up on site, reviews mention long-term residents. $50 posted, Google 4.6/188. Test 4 looks failed; a call to 440-466-2320 would settle it. Kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
@@ -386,17 +386,17 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **14318 Big Bear Lake (OH, p3-225):** $40 posted, Google 4.7/187, but lease-based: numbered lease sites 1-335 with 'one camp site for the year', members sell campers and improvements on their lots, leaf-off shows packed trailers. Overnight blocks look like ~25-35 sites, near or under 1 in 10 by a rough map count. Recommend drop. Kept for now. **Dropped 2026-10-31 under AWH's standing calls.**
 
-- **13345 Charles Mill (OH, p3-225):** Eagle Point (electric with spigots, sites 400-612) and Main Camp (mostly full hookup) have own entrances either side of the causeway, ~800 m across the water, ~1 km by road: right at the split line. Per-area rates sit behind the captcha. Left as one entry; pages saved from a browser would allow a split.
+- **13345 Charles Mill (OH, p3-225):** Eagle Point (electric with spigots, sites 400-612) and Main Camp (mostly full hookup) have own entrances either side of the causeway, ~800 m across the water, ~1 km by road: right at the split line. Per-area rates sit behind the captcha. Left as one entry; pages saved from a browser would allow a split. **AWH 2026-11-02: saved the booking calendar: sites 400-612 $30-56, the rest $30-87; the engine doesn't name the areas. Split queued (split-9).**
 
 - **14307 Sandy Springs (OH, p3-226):** site is behind a bot check, so nothing was re-read. Stored $45 is an October rate, riverview $50, riverside $65; a summer rate over $50 wouldn't show. Google 4.9/207. A look at sandyspringscampground.com rates, or a saved page, would settle the gate and the riverside row. Kept for now. **AWH 2026-11-01: keep.**
 
 - **1373 AOK (IN, p3-226):** Google 3.7/219, well below RV Life 5*, and the only readable snippet says 'some maybe full time residents'. $35, daily/weekly/monthly. You judge reviews by what they say and most were blocked; drop if they read poorly. Kept for now. **AWH 2026-11-01: dropped, under 4 stars and borderline long-stay.**
 
-- **13346 Seneca Lake (OH, p3-226):** Marina Point (199 full-hookup sites, own gatehouse on SR 313, 1.3 km across the water) would be its own entry if it sells nights. Stored text says seasonal-only from a search excerpt; imagery fits; engine is behind the captcha. Left out.
+- **13346 Seneca Lake (OH, p3-226):** Marina Point (199 full-hookup sites, own gatehouse on SR 313, 1.3 km across the water) would be its own entry if it sells nights. Stored text says seasonal-only from a search excerpt; imagery fits; engine is behind the captcha. Left out. **AWH 2026-11-02: nothing called Marina Point on the engine, which lists the park as Senecaville Lake. Stays left out.**
 
 - **1371 Covered Bridge (IN, p3-228):** Google 3.9/61, mixed: small close sites, shower stalls without locks, 'need a mow', also 'peaceful, clean', 'inexpensive'. Rates page 404s; last posted 2021 $32 W/E, RV Life $$ avg $32. Kept; your call on the reviews. **Dropped 2026-10-31 under AWH's standing calls.**
 
-- **1318 Elkhart County Fairgrounds (IN, p3-228):** run by the Elkhart County 4H Fair association; no page says county-run. Stored local unconfirmed. About 3 months blacked out in 2026. Kept under the fairground rule.
+- **1318 Elkhart County Fairgrounds (IN, p3-228):** run by the Elkhart County 4H Fair association; no page says county-run. Stored local unconfirmed. About 3 months blacked out in 2026. Kept under the fairground rule. **AWH 2026-11-02: unknown, leave as is.**
 
 - **1086 Hardy Lake (IN, p3-228):** Wooster's on-water sites are $14 primitive, 'primarily to serve fishermen'; Shale Bluff is the main campground above the water. Does the entry's rating follow Wooster? **Resolved 2026-11-01 (wf-in-1): lakefront on site 155.**
 
@@ -412,9 +412,9 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **1369 Amishville (IN, p3-232):** no operator site (amishville.com parked), no operator rate, Good Sam 'from $31' undated. Recent reviews: 'very few full hook-up sites that aren't occupied by people living there full time'; 'monthly payers who live there'; 'Never, ever staying here again'. Google 4.3/259. If long-stay, test 2 fails. Recommend drop; kept for now. **Dropped 2026-10-31 under AWH's standing call (on the fence, mostly seasonal and iffy).**
 
-- **1320 Johnson County Fairgrounds (IN, p3-233):** run by a member Fair Association; no filing found and nothing says who holds the grounds. Stored local left, same question as 1318 Elkhart. $30 passes either way.
+- **1320 Johnson County Fairgrounds (IN, p3-233):** run by a member Fair Association; no filing found and nothing says who holds the grounds. Stored local left, same question as 1318 Elkhart. $30 passes either way. **AWH 2026-11-02: unknown, leave as is.**
 
-- **1341 Lake Waveland (IN, p3-233):** pin moved to the loops in wf-in-3 (2026-11-01), value not waterfront; still no operator rate (camper report $30, undated). A call to 765-435-2073 would settle both. Kept.
+- **1341 Lake Waveland (IN, p3-233):** pin moved to the loops in wf-in-3 (2026-11-01), value not waterfront; still no operator rate (camper report $30, undated). A call to 765-435-2073 would settle both. Kept. **AWH 2026-11-02: drop. Dropped.**
 
 ## 174 Blythe Island Regional Park (GA): your not waterfront, or lakeview? (wf-ga-1, 2026-11-01) — ANSWERED 2026-11-01: lakeview; RVs seen along the lakeshore in photos from across the lake (done)
 Stored not waterfront rests on your note ("some sites may hav a water view, but this is not confirmed"). The county prices sites 1-13 as "Lakeview" at $45 against $42 for the wooded sites. Canopy hides the sites on imagery, so nothing confirms or refutes it. Recommend lakeview if you recall a view at the low-numbered sites; otherwise it stays.
@@ -440,7 +440,7 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **13347 Clendening / 1238 Pleasant Hill (OH):** reserve.mwcd.org captcha; saved pages would settle 93-99 nightly (lakefront) and Pleasant Hill's per-site tags. **AWH 2026-11-02 rule: both stay lakeview unless a page turns up.**
 - **4671 Broad River / 14379 Clay Hill (GA):** Firefly "RV Site - Water Access" units behind reCAPTCHA; Broad River's fees also open. **AWH 2026-11-02 rule: both stay not waterfront unless a page turns up.**
 - **4561 Lake Conasauga:** Availability page hides all sites on rec.gov's 21-ft motorhome limit; recommend leaving it, alternative is a "tight" flag within 2 ft.
-- **3900 Bond Falls (MI):** two areas ~4 km apart, pin below the dam; split? Held until answered.
+- **3900 Bond Falls (MI):** two areas ~4 km apart, pin below the dam; split? Held until answered. **AWH 2026-11-02: Google reviews suggest EKKO fits both campgrounds. Split queued (split-10).**
 - **`header-icon-bar`:** merged branch only AWH can delete.
 
 - **2658 Molas Lake (CO), wf-co-4:** the town's site PDF calls P32 "waterfront... RVs up to 23 ft" under a header saying "under 23 ft", and says over 23 ft belongs in the view sites. If EKKO fits P32 it's lakefront (pad ~17 m over open shore); held at lakeview. **AWH 2026-11-02 rule: unsure goes down without asking. Stays lakeview.**
