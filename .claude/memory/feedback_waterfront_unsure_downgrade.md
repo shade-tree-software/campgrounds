@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-When still unsure whether a campground earns a waterfront value after checking every available source, downgrade it without asking and tell AWH what went down.
+When still unsure whether a campground earns a waterfront value after checking every available source, downgrade it without asking and tell AWH what went down. Go only as far down as the evidence requires: on-water to `*view` when a view is supported, otherwise `not waterfront`.
 
 **Why:** AWH has not been to most of these and can't settle them; the questions only held work up.
 
