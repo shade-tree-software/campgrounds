@@ -1,0 +1,62 @@
+{
+ "id": 2891,
+ "sources": [
+  "https://iowastateparks.reserveamerica.com/camping/bellevue-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610146",
+  "https://www.iowadnr.gov/places-go/state-parks/all-parks/bellevue-state-park",
+  "https://www.iowadnr.gov/media/6599/download?inline (campground map, 8/2025)",
+  "Esri World_Imagery at 42.2285,-90.4085, read 2026-11-02"
+ ],
+ "groups": {
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "reserveamerica",
+    "url": "https://iowastateparks.reserveamerica.com/camping/bellevue-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610146",
+    "fcfs": "never",
+    "window_opens_days": 90,
+    "note": "100% reservable, a reservation is required; bookable up to 10 pm on the day of arrival."
+   },
+   "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/bellevue-state-park ('The campground is 100% reservable and a reservation is required') + https://iowastateparks.reserveamerica.com/camping/bellevue-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610146 ('100 percent reservable ... until 10:00 pm CST the day of arrival'; 'up to 3 Month(s) in advance'), read 2026-11-02",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 44,
+    "max_rig_ft": 55,
+    "pull_through": true,
+    "note": "30 electric and 14 non-electric; host site and youth group site not counted."
+   },
+   "source": "https://www.iowadnr.gov/media/6599/download?inline + https://iowastateparks.reserveamerica.com/camping/bellevue-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610146 (site table, equipment lengths 30-55 ft on electric sites; 24-27 pull-through), read 2026-11-02",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "vault_toilets": true,
+    "potable_water": true,
+    "dump": true
+   },
+   "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/bellevue-state-park ('modern restrooms and showers, and a sanitary dump station') + https://www.iowadnr.gov/media/6599/download?inline (non-modern restrooms, water hydrants, dump at the park entrance), read 2026-11-02",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://www.iowadnr.gov/media/6599/download?inline ('Electric (20/30/50-amp)'), read 2026-11-02",
+   "method": "manual"
+  }
+ },
+ "note": "Bluff-top park above the Mississippi at Bellevue; camping is only at the Dyas Unit (the Nelson Unit is day-use). Campground is in upland timber, about a kilometre from the river with no view of it. No daily park-entry fee in Iowa. --Claude",
+ "summary": "Season NOT changed (stored manual) but booking site contradicts it, see flag; FCFS some -> never (100% reservable); count 44, 55 ft; facilities added. Fees of Feb 2026 sheet not rewritten. Pin about 1.7 km off.",
+ "flags": [
+  "SEASON CONFLICT, AWH to decide: stored season is manual (year_round true, water and showers off from mid-October, dump closes for winter), so I didn't overwrite it. ReserveAmerica now states 'The campground is closed each year from December 1 - March 31' and 'accepts reservations April 1 - November 30' (read 2026-11-02). Suggest opens 04-01, closes 11-30, note: water and showers generally May 1 to mid-October, dump closes with them.",
+  "PIN WRONG: stored 42.2333,-90.4249 is a farmyard with barns beside a farm pond, about 1.7 km WNW of the campground. Loops and pads are visible on imagery at about 42.2253,-90.4072 (road in from Hwy 52 at about 42.2235,-90.3985, past the park shop and lagoons). Suggest 42.2253,-90.4072 and re-fetch elevation (the stored 194 m is also suspect: the campground is on the hilltop, and RA describes it as 'at the top of the hill'). RA's own GPS, 42.24722,-90.42278, is about the Nelson Unit / town, not the campground.",
+  "WATERFRONT: stored evidence, if any, was read at the wrong pin. Re-read at the true loops: not waterfront stands. Campground sits in unbroken woods on the bluff, about 1 km from the Mississippi with the highway, railroad and forest between; no water at the sites. No lead.",
+  "PHONE: entry has none; park lists 563-872-4019. Add (apply.py doesn't write it).",
+  "FEES: Stored full_hookup surcharge rests on the booking site's Standard Full Hook-Up. The 8/2025 map's only full-hookup site is H22, the host site. So the public base is electric $20/$24, as stored; the surcharge looks like the host's rate. Left alone; say if you want it out. Note said ~5 non-electric; the map shows 14. RA's non-electric lengths (page 2 of the site table) stayed unread, since RA's paging didn't answer plain GET; stored fees note says they're too short or tent.",
+  "CLOSURE: RA notice 10/19/26: water off, shower building, fill station and dump closed for the season; pit latrine by site 13 open. Normal seasonal closure, covered in season.note."
+ ],
+ "checked": "2026-11-02"
+}

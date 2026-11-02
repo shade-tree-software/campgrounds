@@ -31,6 +31,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3073 Thomas Mitchell stored not waterfront, p3-246: county map draws Camp Creek behind sites 15-21; a campsite photo could make it creekside for that row
 - 3177 Sherman stored not waterfront: 'Camping' labelled by the ramp, open bank at 41.7743,-90.7866; if motorhomes use it, riverfront
 - 15599 South Shore (Lake Park) stored lakeview: legible pads or a photo could lift it
+- 2944 Bob Shetler stored riverview, p3-248: sites 12-20 ~15-25 m from a rock bank, no road; official photos show no water from the pad. A bank-side photo could make it riverfront
+- 3087 Big Woods stored lakeview on the dock gap; a site photo would confirm or undo it
+- 3190 Black Hawk stored not waterfront: spur at 42.5602,-92.4805 and pads at 42.5577,-92.4784 near the Cedar; a Cedar loop map would settle whether they are sites
+- 3141 Big Hollow, 2943 Acorn Valley stored not waterfront: a few sites by small ponds, too few for a value
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
