@@ -14,4 +14,5 @@ not stay there even though it fit the site.
 
 **How to apply:** only when AWH is certain the operator doesn't care may a van type count. A park
 with NO motorhome type at all (1518 Rancho Pines) is a question for AWH, not an automatic drop.
+**AWH 2026-11-02: a site an engine offers for a stated rig length is valid for price and waterfront decisions**, whatever the operator's wording says (Richmond KOA 15432, $45.89 "perfect for pop-ups", counts).
 Relates to [[feedback-price-gate-proximity-exceptions]].
