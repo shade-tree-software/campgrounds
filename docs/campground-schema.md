@@ -643,7 +643,7 @@ No `reserve_until` and no `fcfs`. Two Iowa DNR pages disagree — the overnight-
 says *"The last day to make a camping reservation, if paying by credit/debit card, is 2 days
 prior to arrival"* (matching the reported 48-hour rule), while the make-reservation page
 says *"up to the day of to the arrival date if paying by credit card"*. Neither is obviously
-stale. **And the FCFS half is unconfirmed by any official source**, which matters because it
+stale. *(2026-11-02: the overnight-camping page now also says the day of arrival; the field stays unwritten against the 48-hour report until someone tests the engine.)* **And the FCFS half is unconfirmed by any official source**, which matters because it
 is the whole reason an Iowa park would answer a late-in-the-day query. Resolve by phone
 before writing either.
 

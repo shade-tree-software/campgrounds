@@ -15,6 +15,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 17 Sebago Lake stored not waterfront, --AWH note says some sites appear lakefront: west-end 201L-208M along a road 25-50 m from the sand; the road blocks on-water, filtered lakeview is the question (ask if it moves)
 - 4180 Mattawamkeag set to riverview 2026-11-02 from the map: confirm a real view from R1-R6, else not waterfront
 - 3236 Bailey's Ford stored not waterfront: Maquoketa ~90 m wide, south sand loop's edge ~40-70 m back through trees and a day-use lawn; county's campground map PDF not found; riverview at most
+- 3033 Crystal Lake stored lakeview, p3-242: county puts sites 1-7 along the shore with fishing from the site, gravel strip 10-25 m from water; a photo separating pads from lane could make it lakefront
+- 3148 Eden Valley stored not waterfront: NE-end pads A, B and site 2 are 20-35 m from the 8-10 m creek, no road between; unclear if RV pads; sites 10-16 are 30-40 m of lawn then brush
+- 3042 Gotch stored not waterfront: a lane at 42.6778,-94.1995 runs within ~35 m of the river under canopy; only if a photo shows pads there
+- 3095 Fontana stored lakeview: unconfirmed that the lake shows from L01-L08
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 

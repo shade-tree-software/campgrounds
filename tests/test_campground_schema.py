@@ -698,8 +698,8 @@ class TestShippedRegistry(unittest.TestCase):
         self.assertNotIn("reserve_until", md)
         self.assertIn("note", md)
 
-        # Iowa's two official pages contradict each other on the cutoff (2 days
-        # prior vs up to the day of arrival). Unresolved stays unwritten.
+        # Iowa's pages say the day of arrival (2026-11-02); a reported 48-hour
+        # rule says otherwise and nobody has tested the engine. Stays unwritten.
         ia = self.rows.get("state:IA", {}).get("booking", {})
         self.assertNotIn("reserve_until", ia)
         self.assertNotIn("fcfs", ia,
