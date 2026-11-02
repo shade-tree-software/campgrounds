@@ -14,6 +14,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4172 Lake St. George stored lakefront: of the lake-side spur only 30U (FCFS) both fits and is clearly on the water; main loop road ~25-60 m from shore, so lakeview unless one site carries it
 - 17 Sebago Lake stored not waterfront, --AWH note says some sites appear lakefront: west-end 201L-208M along a road 25-50 m from the sand; the road blocks on-water, filtered lakeview is the question (ask if it moves)
 - 4180 Mattawamkeag set to riverview 2026-11-02 from the map: confirm a real view from R1-R6, else not waterfront
+- 3236 Bailey's Ford stored not waterfront: Maquoketa ~90 m wide, south sand loop's edge ~40-70 m back through trees and a day-use lawn; county's campground map PDF not found; riverview at most
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
