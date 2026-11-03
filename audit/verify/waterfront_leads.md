@@ -68,6 +68,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14515 Bluffton Resort stored not waterfront, p3-267: Campspot sells a 'Waterfront Campsite' type; river lane at 43.4022,-91.9158 ~20-40 m from a 25-30 m Upper Iowa - a site photo or map could support riverview/riverfront
 - 3143 Bloody Run stored not waterfront, p3-267: sites 13-16 may be creekview (creek 30-60 m behind trees and lane)
 - 3092 Deerwood Park stored lakeview, p3-268: the east row's open grass runs to the lake shore; if the 4-7 m shore strip is a path (not the beach-house swim beach) it reads lakefront
+- 3155 Frieden's Park stored not waterfront, p3-269: NAIP shows the clearing open to a ~30 m Turkey 8-10 m away but the county aerial puts site 3 behind trees; a site photo would settle riverview/riverfront
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
