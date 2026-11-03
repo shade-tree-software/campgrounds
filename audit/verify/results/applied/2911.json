@@ -1,0 +1,76 @@
+{
+  "id": 2911,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-keomah-state-park (Iowa DNR park page: 'an 84-acre lake', 'Sites include electrical hookups, modern showers, restrooms and a trailer dump station', 'The campground is 100% reservable and a reservation is required', phone 641-673-6975), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/lake-keomah-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610143 (operations, closure and shower-building bulletins, site list) and all 45 Lake Keomah Campground campsiteDetails.do pages (GIS, length, amps, entry), read 2026-11-03",
+    "USGS NAIP imagery at 41.28400,-92.54170 (220 m) with the RA site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50
+      },
+      "source": "ReserveAmerica Lake Keomah site list ('Electric Hookup available: 20/30/50 amp' x37, '50 amp' x1) and campsiteDetails, read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 44,
+        "max_rig_ft": 40,
+        "pull_through": false,
+        "note": "35 electric sites (15-40 ft), 2 electric buddy sites (31 and 40 ft) and 7 non-electric 20-ft sites, all back-in; a 23-ft rig fits 28 of the electric sites and both buddy sites. Host site H41 is the only pull-through."
+      },
+      "source": "ReserveAmerica Lake Keomah site list and campsiteDetails pages ('Max Vehicle Length' 15-40, 'Back-In'; buddy sites 001/002 and 012/013; host H41 'Pull-Through'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "dump": true,
+        "note": "The shower building is closed from October 15, 2026 until spring 2027."
+      },
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-keomah-state-park ('modern showers, restrooms and a trailer dump station') + RA bulletin ('Shower Building closed for season: Starting October 15th 2026 until spring 2027 shower building will be closed for the season'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "03-01",
+        "closes": "11-30"
+      },
+      "source": "https://iowastateparks.reserveamerica.com/camping/lake-keomah-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610143 ('Campground Closed: The campground is closed each year from December 1 - February 28.'; 'Status: Open through Mon Nov 30 2026'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://iowastateparks.reserveamerica.com/camping/lake-keomah-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610143",
+        "fcfs": "never",
+        "reserve_until": {
+          "relative_to": "arrival",
+          "at": "22:00"
+        },
+        "season": {
+          "opens": "03-01",
+          "closes": "11-30"
+        }
+      },
+      "source": "https://iowastateparks.reserveamerica.com/camping/lake-keomah-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610143 ('This campground is 100 percent reservable and accepts reservations March 1 - November 30 until 10:00 pm CST the day of arrival.') + DNR park page ('The campground is 100% reservable and a reservation is required.'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Iowa DNR state park on 84-acre Lake Keomah, ~4 mi E of Oskaloosa; the campground is in woods well back from the lake, and short trails connect it to the 3-mile trail around the lake. No daily Iowa park-entry fee, camping fee only. --Claude",
+  "summary": "Confirmed 20/30/50A, showers, dump, 100% reservable. Season year-round -> Mar 1-Nov 30; fcfs some_sites -> never; sites 63 -> 44 (all back-in, 15-40 ft; 28 electric + 2 buddy fit 23 ft). Not waterfront confirmed. Pin ~285 m off: corrected.",
+  "flags": [
+    "SEASON: stored year_round=true (note prose) is contradicted: RA 'The campground is closed each year from December 1 - February 28.' Written Mar 1-Nov 30.",
+    "BOOKING: stored fcfs 'some_sites' (note prose 'plus FCFS sites') is contradicted: 'The campground is 100% reservable and a reservation is required.' Written fcfs never.",
+    "PIN (~285 m off): stored 41.28632,-92.54253 is in the woods north of the campground. The 45 RA site points centre on 41.28385,-92.54173. Proposed location 41.28385,-92.54173.",
+    "WATERFRONT: not waterfront confirmed. Every RA site is tagged 'Near Water - no'; on NAIP no water lies within 220 m of any site, all in closed woods.",
+    "FIT: 7 of the 35 electric sites (003-007, 009, 010) are 15-20 ft and the 7 non-electric sites are 20 ft; 28 electric sites (23-40 ft) and both buddy sites fit EKKO, so the $18/$22 electric base stands.",
+    "Note: corrected 83 -> 84 acres (DNR page) and removed the site, hookup, length, booking, FCFS and year-round text.",
+    "PHONE missing: the park office number on the DNR park page is 641-673-6975 (https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-keomah-state-park (also the group-camp line on the RA page)); apply.py does not write phone."
+  ]
+}

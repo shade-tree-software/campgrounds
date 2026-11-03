@@ -1,0 +1,76 @@
+{
+  "id": 2908,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-ahquabi-state-park (Iowa DNR park page: 'Camp in the lakeshore campground, offering both full hook-up and electric campsites, modern restrooms, showers and a dump station', '100% of the campsites are reservable and a reservation is required', 'accepts reservations March - November and is closed December - February', phone 515-961-7101), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/lake-ahquabi-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610149 (operations and status text, '115 acre man-made lake', site list) and all 89 Lake Ahquabi Campground campsiteDetails.do pages (GIS, length, amps), plus photos of sites 47, 67, 87, 88, 89, 93, read 2026-11-03",
+    "USGS NAIP imagery at 41.29560,-93.59300 (300 m) with the RA site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "ReserveAmerica Lake Ahquabi site list ('Electric Hookup available: 20/30/50 amp' x88, 'Full Hookup available' x49) and campsiteDetails, read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 86,
+        "max_rig_ft": 155,
+        "pull_through": true,
+        "note": "47 full-hookup and 39 electric sites (all 20/30/50 A), mostly pull-throughs of 65-105 ft; the shortest is a 50-ft back-in. Besides these, two host sites (H01, H49) and a youth group area outside the campground."
+      },
+      "source": "ReserveAmerica Lake Ahquabi site list and campsiteDetails pages ('Max Vehicle Length' 50-155, 74 'Pull-Through'; host sites H01, H49; 'Youth Group Only' Y115), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "dump": true
+      },
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-ahquabi-state-park ('modern restrooms, showers and a dump station'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "03-01",
+        "closes": "11-30"
+      },
+      "source": "https://iowastateparks.reserveamerica.com/camping/lake-ahquabi-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610149 ('Campground Closed: The campground is closed each year from December 1 - February 28.'; 'Status: Open through Mon Nov 30 2026') + DNR park page ('closed December - February'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://iowastateparks.reserveamerica.com/camping/lake-ahquabi-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610149",
+        "fcfs": "never",
+        "reserve_until": {
+          "relative_to": "arrival",
+          "at": "22:00"
+        },
+        "season": {
+          "opens": "03-01",
+          "closes": "11-30"
+        }
+      },
+      "source": "https://iowastateparks.reserveamerica.com/camping/lake-ahquabi-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610149 ('This campground is 100 percent reservable and accepts reservations March 1 - November 30 until 10:00 pm CST the day of arrival.') + DNR park page ('100% of the campsites are reservable and a reservation is required'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Iowa DNR park on 115-acre Lake Ahquabi south of Indianola, with a sandy beach, a CCC stone lodge and a trail around the lake; the campground sits north-east of the lake. No daily park-entry fee in Iowa. --Claude",
+  "summary": "Confirmed 20/30/50A, 47 FHU + 39 electric (86 public sites, 50-155 ft, mostly pull-through), showers, dump, 100% reservable to 10 pm day of arrival, season Mar 1-Nov 30. Sites 96 -> 86, max 85 -> 155. Not waterfront confirmed. Pin ~875 m off: corrected.",
+  "flags": [
+    "PIN (~875 m off): stored 41.28917,-93.58750 is south-east of the campground, beyond the lake. The 89 RA site points centre on 41.29589,-93.59291. Proposed location 41.29589,-93.59291.",
+    "WATERFRONT: not waterfront confirmed. Every RA site is tagged 'Near Water - no' and 'Proximity to Water' is blank; on NAIP the nearest sites (87, 88, 93 at the south-west corner) are ~60-70 m from the lake behind the loop road, wetland and trees, and RA photos of 47, 67, 87, 88, 89 and 93 show lawn and woods, no water.",
+    "SITES: stored 96 was RA's total listing count (including the lodge, shelter, youth area and two host sites); 86 public campsites. Stored max 85 ft ignored the longer pull-throughs (up to 155).",
+    "Fees left as stored (Iowa DNR rate sheet updated February 15, 2026, read 2026-10-12).",
+    "Note: removed the site-count, hookup, length, season and booking text the fields now hold.",
+    "PHONE missing: the park office number on the DNR park page is 515-961-7101 (https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-ahquabi-state-park); apply.py does not write phone."
+  ]
+}

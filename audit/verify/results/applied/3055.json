@@ -1,0 +1,72 @@
+{
+  "id": 3055,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.madisoncountyfair.net/non-fair-camping (Madison County Fair and Livestock Association: 'We have 28 beautiful campsites available ... You can easily reserve 10 of our sites online, while the remaining sites can be reserved with a quick phone call.'; rates 'Tent: $15 Per Night/$85 per week', 'Electric Only: $17 Per Night/$100 per week', 'Full Water/Electric/Sewer: $20 per night/$120 per week/ $480 per month'; 'Camping Season April 1st through November 1st *Weather Permitting* (no outside campers week of fair)'; 'If you don't see any available spots online reach out to us at 515-478-0292 or email us at mcfcampgroundhost@gmail.com'; 'We do not offer any year round camping.'), read 2026-11-03",
+    "https://parkwith.us/camps/madison-county-fairgrounds (the page's 'Reserve' link; camp settings season_start_mm_dd '04-01', season_end_mm_dd '11-01', minimum_bookable_nights 1, allow_same_day_reservations true, checkin 13:00, checkout 11:00, max_length 50), read 2026-11-03",
+    "https://www.causeiq.com/organizations/madison-county-livestock-and-fair-association,421088535/ (Madison County Livestock and Fair Association, nonprofit, EIN 42-1088535), Google Maps 'Madison County Fair - Campground' (4.9, 8 reviews, phone 515-478-0292), https://campgrounds.rvlife.com/api/reviews/park/249481 (2 reviews, 3/2023 and 6/2015), read 2026-11-03",
+    "python3 audit/price_research/gateways.py 41.33027,-94.02866 ('none within 40 km'), USGS NAIP imagery at 41.33027,-94.02866 (250 m), read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://www.madisoncountyfair.net/non-fair-camping (rate rows 'Electric Only' and 'Full Water/Electric/Sewer'; amperage not stated), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 28
+      },
+      "source": "https://www.madisoncountyfair.net/non-fair-camping ('We have 28 beautiful campsites available'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "11-01"
+      },
+      "source": "https://www.madisoncountyfair.net/non-fair-camping ('Camping Season April 1st through November 1st *Weather Permitting* (no outside campers week of fair)', 'We do not offer any year round camping.') + parkwith.us camp settings 04-01 / 11-01, read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://parkwith.us/camps/madison-county-fairgrounds",
+        "fcfs": "never",
+        "note": "10 of the 28 sites book online (Park With Us, one-night minimum, same-day allowed); the rest by phone with the campground host. No outside campers during fair week. Check in with the host on arrival; after hours go straight to the reserved site."
+      },
+      "source": "https://www.madisoncountyfair.net/non-fair-camping ('You can easily reserve 10 of our sites online, while the remaining sites can be reserved with a quick phone call.'; 'If you don't see any available spots online reach out to us at 515-478-0292') + https://parkwith.us/camps/madison-county-fairgrounds (minimum_bookable_nights 1, allow_same_day_reservations true, checkin_policy 'Please check in with the campground host upon arrival. If arriving after hours, you may proceed directly to your reserved site.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 17,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026-11-03",
+        "note": "Electric-only $17, full hookup $20; tents $15. Weekly $100 (electric) / $120 (full); full hookup $480 a month."
+      },
+      "source": "https://www.madisoncountyfair.net/non-fair-camping ('Tent: $15 Per Night/$85 per week', 'Electric Only: $17 Per Night/$100 per week', 'Full Water/Electric/Sewer: $20 per night/$120 per week/ $480 per month'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "The Madison County Fair and Livestock Association's campground at the fairgrounds in Winterset, closed to outside campers during fair week. --Claude",
+  "summary": "Rate now written: $17 electric / $20 full hookup (was unstored). 28 sites, Apr 1-Nov 1 confirmed. Booking fcfs always -> reservable (10 sites on Park With Us, the rest by phone). Ownership local -> private (Madison County Livestock and Fair Association, nonprofit). Website URL changed. Keep.",
+  "flags": [
+    "OWNERSHIP local -> private: the campground is the Madison County Fair and Livestock Association's (named on the camping page's footer and the About Us page, 'The Madison County Livestock and Fair Association provides a safe, welcoming environment...'); CauseIQ lists it as a nonprofit, EIN 42-1088535 (secondary; IRS record not read). Under the nonprofit rule that is private. No county page names the campground.",
+    "NIGHTLY OUTSIDE FAIR WEEK: yes, stated outright: 'Camping Season April 1st through November 1st ... (no outside campers week of fair)', nightly rates posted, 10 sites bookable online. RV Life campers stayed 3/2023 ($20, 'Fairgrounds are deserted in March') and 6/2015.",
+    "BOOKING: stored fcfs 'always' (derived from the old note's 'FCFS in non-fair season') is contradicted; the page sells online and phone reservations. Written as reservable / operator (Park With Us) / fcfs never. The page does not say walk-ups are turned away, so fcfs 'never' rests on 'reserve' wording only; reconsider if you prefer unknown.",
+    "WEBSITE: stored https://madisoncountyfair.net/non-fair-camping.php now returns HTTP 400; the live page is https://www.madisoncountyfair.net/non-fair-camping (Wix). apply.py does not write website.",
+    "PHONE: stored 515-468-5129 is not on the site. The camping page gives 515-478-0292 (the campground host, also Google's number for 'Madison County Fair - Campground'); the association's office is 515-468-5997. Suggest 515-478-0292. apply.py does not write phone.",
+    "GATE FACTS (private): posted $17-$20 (operator page); no Good Sam; gateways.py: none within 40 km (not needed); presence: working website with booking link, Google 4.9 (8 reviews, under 25 so no review gate), RV Life 4 stars $ (2 reviews).",
+    "LONG-STAY: (1) $20 passes; (2) nightly booking online with no application, pass; (3) one-night minimum, pass; (4) 28 sites with no seasonal split published, a $480 monthly rate offered but 'We do not offer any year round camping', pass; (5) fairgrounds, no homes or lots, pass. Keep.",
+    "HOOKUPS: water/sewer re-sourced to the operator's rate rows; amperage is not stated, so electric left unset. An RV Life camper (3/2023) at a back-in site reported power and water, no sewer, consistent with the electric-only tier.",
+    "PIN: stored pin sits on W Summit St at the north edge of the fairgrounds; the campground's two gravel loops are ~150 m SSE (about 41.32907,-94.02786 on NAIP). Under 250 m, so not changed. Park With Us's own pin (41.32771,-94.02748) is ~300 m S of the stored one and lands south of the loops, not used. WATERFRONT: not waterfront confirmed (no water on imagery).",
+    "Note: removed the site, hookup, season, FCFS and rate text (now in fields; FCFS was wrong) and the 'county fair board' wording (the association runs it)."
+  ]
+}

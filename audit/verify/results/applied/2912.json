@@ -1,0 +1,56 @@
+{
+  "id": 2912,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-macbride-state-park (Iowa DNR park page: two units, 'A modern campground is located in the northern unit of the park with full and electric hookups, a shower and restroom, and a trailer dump station. One non modern campground can be found in the southern unit', '100% of the campsites are reservable and a reservation is required', 'accepts reservations from April 1 - November 15 and is closed November 16 - March 31', office 319-624-2200), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/lake-macbride-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610119 (bulletins, operations, site list) and all 42 Modern Campground-North and 53 Primitive Campground-South campsiteDetails.do pages (GIS, length, amps), plus RA photos of six South sites, read 2026-11-03",
+    "audit/state_park_fees/ia_rate_sheet_2026-10-12.txt (Iowa DNR 'Camping Rates', updated February 15, 2026: 'Lake Macbride North Modern' and 'Lake Macbride South Nonmodern' rows), read 2026-10-12",
+    "USGS NAIP imagery at both campgrounds with the RA site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "ReserveAmerica Lake Macbride site list ('Electric Hookup available: 20/30/50 amp' x42, 'Full Hookup available' x10, all in Modern Campground-North), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 42, "max_rig_ft": 85, "pull_through": false, "note": "Modern north campground: 32 electric and 10 full-hookup sites (all 20/30/50 A), back-ins of 35-85 ft. The primitive south campground (53 non-electric back-ins of 20-30 ft) is in a separate unit of the park in Solon."},
+      "source": "ReserveAmerica Lake Macbride site list and campsiteDetails pages (loop 'Modern Campground-North', 'Max Vehicle Length' 35-85, all 'Back-In'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "note": "Showers and modern restrooms closed for the season (fall 2026); hydrants stay on until November 15."},
+      "source": "DNR park page ('full and electric hookups, a shower and restroom, and a trailer dump station') + RA bulletin ('Shower facility/modern restrooms at both North (modern) campground and South (primiitive) campground are CLOSED for the season. Hydrants will remain on until November 15th.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "11-15"},
+      "source": "https://iowastateparks.reserveamerica.com/camping/lake-macbride-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610119 ('Campground Closed: The campground is closed each year from November 16 - March 31.') + DNR park page ('closed November 16 - March 31'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://iowastateparks.reserveamerica.com/camping/lake-macbride-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610119",
+        "fcfs": "never",
+        "reserve_until": {"relative_to": "arrival", "at": "22:00"},
+        "season": {"opens": "04-01", "closes": "11-15"}
+      },
+      "source": "https://iowastateparks.reserveamerica.com/camping/lake-macbride-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610119 ('Both campgrounds are 100 percent reservable and accepts reservations April 1 - November 15 until 10:00 pm CST the day of arrival.') + DNR park page ('100% of the campsites are reservable and a reservation is required'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Iowa DNR state park on Lake Macbride near Solon; the modern campground is in the wooded northern unit near the dam, at the end of County Road F-16 west of Solon. No daily Iowa park-entry fee, camping fee only. --Claude",
+  "summary": "Confirmed 20/30/50A (north), water/sewer, showers, dump, 100% reservable to 10 pm day of arrival, Apr 1-Nov 15 season. Added electric 50, 42 sites (35-85 ft back-ins). Not waterfront confirmed for the north campground. SPLIT proposed: the south primitive campground is 3.3 km away with its own entrance. Pin ~570 m off: corrected to the north campground.",
+  "flags": [
+    "SPLIT CANDIDATE (measured): Modern Campground-North (42 RA sites, centroid 41.79764,-91.57425; entrance at the end of County Road F-16, 4 mi W of Solon) and Primitive Campground-South (53 RA sites, centroid 41.79449,-91.53484; entrance 'off County Road F-28 by Fifth Street in Solon') are 3.3 km apart with separate entrances (DNR: 'Lake Macbride is split into two units'). This result describes the north campground, where the stored fees and hookups belong. Proposed new entry: 'Lake Macbride State Park - South Campground', state, IA, location 41.79449,-91.53484, same DNR page and RA link, phone 319-624-2200; 52 non-electric back-ins of 20-30 ft (45 fit 23 ft: 7 are 20 ft) plus one youth group site; 'Standard Non-Electric', no hookups; $14 a night both seasons (DNR rate sheet row 'Lake Macbride South Nonmodern', $14 off-season and peak, tax included); same season, 100% reservable to 10 pm day of arrival; RA bulletin names modern restrooms/showers there too (closed for the season). Its waterfront would need its own call: see the lead below.",
+    "WATERFRONT LEAD (south campground, if split): lakeview supported. RA tags all 53 South sites 'Near Water - no', but six official RA photos show the lake across open lawn or through bare trees; the sign posts in them read 48/49, 50/51, 56/57, which do not match the RA site numbers they are filed under (84, 85, 92), so the views cannot be tied to particular sites. On NAIP the southern row (89-96) is ~25-60 m from the lake arm behind the campground's own loop road, and the east end (83-85) ~30 m through a tree belt and shrubs; on-water is not established (own loop road, day-use pier lawn at the shore).",
+    "WATERFRONT: north campground not waterfront confirmed. All 42 RA sites 'Near Water - no'; on NAIP the loops run along a wooded ridge with no lake within ~250 m, only a small pond south of site 27.",
+    "PIN (~570 m off): stored 41.80278,-91.57417 is north of the north campground in woods. Proposed location 41.79764,-91.57425 (centroid of the 42 RA north sites).",
+    "SEASON: RA status line reads 'Open through Mon Nov 30 2026' while the same page and the DNR page say closed November 16 - March 31; written 04-01/11-15 from the stated closure.",
+    "FEES: left as stored (North Modern row: electric $20/$26, full hookups $20/$38). If the entry is not split, the cheapest site EKKO fits is South's $14 non-electric and nightly_low would be 14.",
+    "PHONE missing: park office 319-624-2200 (DNR park page); apply.py does not write phone.",
+    "Note: removed the hookup, facilities, booking and season text the fields now hold; the south campground goes to its own entry if split."
+  ]
+}

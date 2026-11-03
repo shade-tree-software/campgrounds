@@ -56,6 +56,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3232 KJ's Campground stored not waterfront, p3-255: north loop's east end ~20 m from a 1-1.5-acre pond; a site map would settle it
 - 3040 Eldred Sherwood stored lakefront, p3-257: granted on ~4-6 pads at ~35-50 m over open lawn; site numbers not tied to pads, a shore path runs between
 - 3048 Joe Sheldon stored not waterfront, p3-258: the lower 14-pad campground by the ramp, 20-30 m from the river behind a wooded strip, may see it
+- 2986 Koser Spring Lake stored not waterfront, p3-259: city page Cloudflare-blocked; a site photo showing the lake from the west row would make it lakeview
+- 3166 Massey Marina stored riverview: no official photo shows the river; if none turns up, not waterfront
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
