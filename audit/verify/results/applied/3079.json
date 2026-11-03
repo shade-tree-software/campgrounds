@@ -1,0 +1,71 @@
+{
+  "id": 3079,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://winterset.gov/247/City-Park-Campground (facilities, reservation rules, rates, season), read 2026-11-03",
+    "https://winterset.gov/DocumentCenter/View/743/City-Park-Campground-Policies-and-Procedures ('CITY PARK CAMPGROUND POLICIES AND GUIDELINES', revised 12/12/24), read 2026-11-03",
+    "https://winterset.bookmysites.com/reservations/checkout-availability (city's online booking engine; JS app, site list not read), read 2026-11-03",
+    "Esri World_Imagery at 41.33100,-94.00050 (200 m) and 41.3312,-94.0030 (130 m), read 2026-11-03"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "reservation_fee": 5,
+        "checked": "2026",
+        "note": "City of Winterset: RV sites 1-40 $25 a night; tent sites $15; $5 reservation fee. Stays of 7 nights or more $20 a night, booked by phone and paid in full up front; groups of 6+ sites $22 a site. Firewood $5 a bundle. Read 2026-11-03."
+      },
+      "source": "https://winterset.gov/247/City-Park-Campground ('$25 per night for sites 1 to 40', '$15 per night per Tent Sites', '$5 Reservation Fee', 'Long Term/Extended Stay Maximum stay is 30 days (in some cases may be extended) $20 for 7 nights or more (must call the office to reserve and determine availability)', 'Groups must reserve 6 or more sites - call the office to make a reservation $22 per site') + policies PDF ('$20/Night (Must pay full amount upon reservation, all nights being reserved.)'), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://winterset.gov/247/City-Park-Campground ('40 RV sites with 15/30/50 amp service and shared water hookups', 'Sites without sewer (dump station onsite) 1, 2, 3, 18 to 24, 39, 40') + policies PDF ('40 sites with 50/30/15amp electric service', 'Water is shared between two sites', 'Sewer is available at the majority but not all of the sites'), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 40, "max_rig_ft": null, "note": "Level gravel back-in RV sites; sewer at 28 of the 40 (not 1-3, 18-24, 39, 40); water shared between pairs of sites. Plus 5 tent sites."},
+      "source": "https://winterset.gov/247/City-Park-Campground ('40 RV sites', 'Level gravel RV sites', 'Sites without sewer (dump station onsite) 1, 2, 3, 18 to 24, 39, 40'; no site length posted), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://winterset.gov/247/City-Park-Campground ('shower/restroom building', 'dump station onsite') + policies PDF ('Dump Station available onsite', 'Shower house available to registered campers', 'Camp Host onsite'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "11-15", "note": "Weather dependent."},
+      "source": "https://winterset.gov/247/City-Park-Campground ('Camping Season is from April 1st through November 15th (weather dependent).') + policies PDF ('Campground is open, weather dependent from April 1st – November 15th.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://winterset.bookmysites.com/reservations/checkout-availability",
+        "fcfs": "some_sites",
+        "max_stay_nights": 30,
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "note": "Online on Bookmysites from January 1 (up to 6 consecutive nights, at least 2 days ahead); otherwise by phone, Parks & Recreation 515-462-3258, Mon-Fri 8-4:30, same-day if sites are free. A Friday or Saturday booking must take both nights; holidays 3 nights; Covered Bridge Festival weekend (2nd weekend of October) 4 nights. Stays of 7+ nights and groups by phone; max 30 days (sometimes extended). Unreserved sites first come, first served."
+      },
+      "source": "https://winterset.gov/247/City-Park-Campground ('Online Reservations (Open January 1st)', 'Minimum 2 days in advance, otherwise must call the office during business hours', 'If reserving a Friday or Saturday, you must reserve both days', 'The holiday will require a 3-night minimum reservation', 'Covered Bridge Festival weekend (2nd weekend in October) requires a minimum of 4 nights', 'First come first serve may be available unless reserved', 'Reservations over the phone can be made on the day of a visit if sites are available', 'Maximum stay is 30 days') + policies PDF ('Online reservations can only be made for 6 consecutive nights'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "City of Winterset Parks & Recreation campground beside historic Winterset City Park, with a camp host on site; water is shared between pairs of sites and tents are limited to two per site. --Claude",
+  "summary": "$25 and $5 reservation fee confirmed (7+ nights $20); 15/30/50 amp, water, sewer confirmed (no sewer at 12 sites); 40 sites, max rig 50 cleared (no length posted); showers/dump; season Apr 1 - Nov 15 confirmed; booking phone -> online Bookmysites + phone, weekend 2 / holiday 3 / festival 4-night minimums, 30-night max.",
+  "flags": [
+    "FIT: no site length posted anywhere (the old note's 'Rigs up to 50 ft' had no source; max_rig_ft cleared). On imagery the 40 pads are angled gravel back-ins off one long loop, roughly 12-14 m (40-45 ft) long; a 23-ft rig fits. The Bookmysites site list (which may give lengths) is a JS app and was not read.",
+    "BOOKING CHANGED: stored platform 'phone'; the city now books online through Bookmysites (winterset.bookmysites.com) from January 1 as well as by phone.",
+    "MINIMUMS: Friday+Saturday must be booked together, 3 nights on holidays, 4 nights on Covered Bridge Festival weekend (2nd weekend of October) - all time-of-year rules, not standing minimums. The festival rule is in booking.note (no 'applies' value fits).",
+    "PIN: stored 41.33100,-94.00050 is ~160 m east of the campground loop, on the rim of the quarry east of the park; within 250 m but off the campground. Suggest 41.3312,-94.0024 (middle of the pad loop).",
+    "WATERFRONT 'not waterfront' STANDS: no water near the pads (the quarry pond east is off-limits and ~250 m away).",
+    "PHONE: stored 515-462-3258 is Winterset Parks & Recreation's reservation line - confirmed.",
+    "NOTE: dropped the hookups, facilities, rig length, season, prices and reservation text (fields carry them)."
+  ]
+}

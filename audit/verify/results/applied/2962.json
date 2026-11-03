@@ -1,0 +1,65 @@
+{
+  "id": 2962,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233663 (facility record: description, notices, rules, phone 641-828-7522), read 2026-11-03",
+    "https://www.recreation.gov/api/camps/campgrounds/233663/rates (Peak Season 2026-04-23 to 2026-10-18, 2027-04-22 to 2027-10-17), read 2026-11-03",
+    "recreation.gov public search API, per-site catalog for 233663 (79 sites: equipment, Max Vehicle Length, Electricity Hookup, fee templates, coordinates, preview photos of sites 28-30 and 33-35), read 2026-11-03",
+    "Esri World_Imagery at 41.39844,-92.99314 (400 m half-width) with rec.gov site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 22,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Peak season: 30-amp sites $22 a night, 50-amp sites $24 (same in 2027); every site is on one of those two rates. Read 2026-11-03."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233663/rates (Peak Season 2026-04-23 - 2026-10-18 and 2027-04-22 - 2027-10-17 price map: '5830529a-...': 22, '0d882f49-...': 24, 'PeakSTANDARD ELECTRIC': 20) + per-site catalog fee_templates (59 sites with 'Electricity Hookup' 30 on the $22 template, 19 50-amp sites and site 01 on the $24 template; no site on the $20 'PeakSTANDARD ELECTRIC' template), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "recreation.gov per-site catalog 233663 ('Electricity Hookup': 30 on 60 sites, 50 on 19; no 'Water Hookup' values), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 79, "max_rig_ft": 71, "pull_through": false},
+      "source": "recreation.gov per-site catalog 233663 (79 sites, all 'STANDARD ELECTRIC', all permit RV/Tent/Trailer, all 'Back-In'; 'Max Vehicle Length' 32-71 ft, site 57 71 ft; none under 23 ft), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233663 ('Amenities include flush and pit toilets, showers, drinking water and a dump station'; amenities list 'Dump Station', 'Showers'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-22", "closes": "10-17", "note": "2027 season April 22 - October 17 (2026 ran April 23 - October 18): the Thursday before the last full week of April to the third weekend of October."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233663/rates ('Peak Season' 2026-04-23T00:00:00Z - 2026-10-18T00:00:00Z; 2027-04-22T00:00:00Z - 2027-10-17T00:00:00Z; no other seasons loaded), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233663",
+        "max_stay_nights": 14,
+        "note": "A reservation is required before occupying a site (no walk-up). Check-in 3 pm, check-out 2 pm. Fee booth (641) 628-1397."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233663 (notices 'Wallashuck does not have a reservation window. You MUST have a reservation prior to occupying a site.', 'Check-in time is 3:00 p.m. and check-out time is 2:00 p.m.', 'Fee Booth phone number: (641) 628-1397'; rule maxStay 14 nights 'Rolling 30 Days'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Lake Red Rock campground (Rock Island District) on wooded high ground above the lake's south shore, 4 miles west of Pella: three loops (Wood, PGRO, Wallashuck) set back from the water, with a boat ramp below. --Claude",
+  "summary": "Fees corrected $20-24 -> $22-24 (no site is on the $20 template); 30/50 amp; 79 back-in sites (was 83), max rig 62 -> 71; facilities confirmed; season Apr 22 - Oct 17 2027 added; booking: reservation required, 14-night max; 'not waterfront' stands; pin ~340 m off.",
+  "flags": [
+    "FEES: stored nightly_low 20 was the rate table's 'PeakSTANDARD ELECTRIC' default; every one of the 79 sites is on the $22 (30 amp) or $24 (50 amp) template, so low is $22.",
+    "SITE COUNT: rec.gov's description says '83 campsites with electric hookups' but its catalog lists 79 reservable sites (all open); used 79.",
+    "WATERFRONT 'not waterfront' STANDS (checked): rec.gov gives no 'Proximity to Water' on any site. On imagery the nearest pads (29, 30, 33, 34) are ~175-200 m from the shoreline, with the boat-ramp lot and woods between; the official photos of sites 28-30 and 33-35 show lawn and trees, no water.",
+    "PIN: stored 41.39633,-92.99020 is ~340 m SE of the sites' centre, in woods off the loops. The rec.gov site points average 41.39844,-92.99314 - use that.",
+    "PHONE: entry has no phone; rec.gov gives 641-828-7522 (general) and (641) 628-1397 (fee booth/local). Suggest 641-828-7522 (apply.py does not write phone).",
+    "UNREAD: the USACE Lake Red Rock page (mvr.usace.army.mil) refuses plain HTTP; not retried.",
+    "NOTE: dropped site count, amps, max length, facilities, reservability and season text (fields carry them)."
+  ]
+}

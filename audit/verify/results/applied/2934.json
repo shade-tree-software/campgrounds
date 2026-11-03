@@ -1,0 +1,52 @@
+{
+  "id": 2934,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/union-grove-state-park (park page: 110-acre lake, 'the campground contains full hookup sites, electric sites, modern restrooms and showers, and a dump station', '100% reservable and a reservation is required', phone 641-473-2556), read 2026-11-03",
+    "https://www.iowadnr.gov/media/1221/download?inline (Union Grove State Park campground map, 9/2025), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/union-grove-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610126 (site list) and every campsiteDetails.do page (Max Vehicle Length, GIS coordinates, 'Near Water'), read 2026-11-03",
+    "https://www.iowadnr.gov/media/6743/download (Camping Rates, updated February 15, 2026: Union Grove peak $34 full hookup / $22 electric, off-season $18 / $18), read 2026-11-03",
+    "https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (Union Grove, effective 10/15/2026), read 2026-11-03",
+    "Esri World_Imagery at 42.1265,-92.7240 (450 m half-width), read 2026-11-03"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 18,
+        "nightly_high": 22,
+        "currency": "USD",
+        "reservation_fee": 4.5,
+        "surcharges": {"full_hookup": 12, "weekend": 0},
+        "checked": "2026",
+        "note": "Off-season (October 16 - April 30) / peak (May 1 - October 15) prices, sales tax included: electric $18 / $22; full hookups $18 / $34. Plus $4-5 a night on Memorial Day, July 4th and Labor Day weekends. Iowa DNR's camping rates (updated February 15, 2026), read 2026-11-03."
+      },
+      "source": "https://www.iowadnr.gov/media/6743/download ('Camping Rates', 'Updated February 15, 2026', 'PEAK SEASON RATES (May 1 - October 15)' row 'Union Grove $34 -- $22'; 'OFF-SEASON RATES (October 16 - April 30)' row 'Union Grove $18 -- $18'; 'Rates are per night and include sales tax'; 'A $4-$5/night fee applies to holiday weekend stays during Memorial Day, Labor Day and 4th of July holiday weekends'), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://iowastateparks.reserveamerica.com (parkId 610126 site list: every site 'Electric Hookup available: 20/30/50 amp'; sites 002-007 and 008/009 'Full Hookup available') + campground map 9/2025 ('Full Hook-up (20/30/50-amp)' sites 2-9, 'Electric (20/30/50-amp)' 10, 11), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 10, "max_rig_ft": 35, "pull_through": false, "note": "Sites 2-9 full hookups, 10 and 11 electric only; 8/9 and 10/11 are buddy pairs booked together. All back-in, driveways 32-35 ft."},
+      "source": "campground map 9/2025 (sites 2-11, 'Buddy Sites', H = host) + ReserveAmerica campsiteDetails for every site (002, 005, 006, 007, 008/009 'Max Vehicle Length: 32'; 003, 004, 010/011 '35'; types 'Back-In' / 'Buddy'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/union-grove-state-park ('modern restrooms and showers, and a dump station') + campground map 9/2025 ('Dump Station', 'Restrooms\\Showers'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Small modern campground in the woods on the peninsula south of 110-acre Union Grove Lake, plus two modern cabins; the lake is 150-250 m from the sites through forest. --Claude",
+  "summary": "Fees confirmed ($18-22 electric, +$12 full hookup peak); 20/30/50 amp added; 10 back-in sites to 35 ft (2 buddy pairs); showers/dump confirmed; pin moved ~690 m to the campground; waterfront lead lakeview -> not waterfront.",
+  "flags": [
+    "WATERFRONT DOWN (lead, lakeview -> not waterfront): ReserveAmerica tags every site 'Near Water - no'. On imagery the loop sits in dense forest on the peninsula south of the lake; the nearest open water is ~150 m north or west of sites 10/11 and ~170-250 m east of the loop, all through unbroken woods, so no view from any pad. No official photo seen that shows water. The stored 'lakeview' is not supported; down to not waterfront.",
+    "PIN: stored 42.13050,-92.72180 is ~690 m NE of the sites, out in the lake. ReserveAmerica's GIS points for sites 2-11 and H1 average 42.12502,-92.72517 - use that.",
+    "SEASON CONFLICT (season is manual, not overwritten): stored season note says 'the dump station closes for the winter', but the DNR alert for Union Grove (effective 10/15/2026) says 'All of the modern restroom and shower facilities are closed for the season. RV dump station and water hydrants will remain on. Pit latrines are available in the campground.' year_round true stands.",
+    "SITE COUNT: small campground - 10 numbered RV sites (2-11) per the 9/2025 map, of which 8/9 and 10/11 are booked as buddy pairs, so 8 reservable RV units plus host H1. The stored note's 'level full-hookup sites in the middle (6,8,10,11)' does not match the map (10 and 11 are electric-only) and its 'tent sites sloping on the grassy hillside' are not on the map; dropped.",
+    "FIT: driveways 32-35 ft on every public site; all fit 23 ft.",
+    "NOTE: dropped hookups, showers/dump, reservability, season and entry-fee text (fields and the state:IA policy carry them) and the site-number claims the map contradicts."
+  ]
+}

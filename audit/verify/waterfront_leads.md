@@ -53,6 +53,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3069 Smith Lake stored lakeview, p3-254: North 61-64 lakefront-grade but seasonal-lottery first; if leftovers count as nightly, lakefront
 - 3010 Schildberg stored lakeview: pads ~55-65 m behind a trail; a site-level map could place some closer
 - 2959 Sugar Bottom stored lakeview: west-shore 030, 047, 100, 101 at ~50-90 m through brush
+- 3232 KJ's Campground stored not waterfront, p3-255: north loop's east end ~20 m from a 1-1.5-acre pond; a site map would settle it
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
