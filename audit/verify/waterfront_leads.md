@@ -44,6 +44,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2910 Lake Darling stored lakefront, p3-251: if the shoreline fishing trail and piers count as day use, sites 1-6 and 62 drop to view; 63-66 still open lawn
 - 2914 Lake Wapello stored lakefront: rests on 3-4 east-loop sites matched from the map layout; a per-site check could confirm or send it to lakeview
 - 2913 Lake Manawa stored lakefront: pad ends 35-50 m of open grass, near the bound; lakeview if the apron is read as over the line
+- 3209 Lakeshore RV Resort stored lakeview, p3-252: a shore row of ~25 pads NW (42.6505,-91.9205) not on the operator's map; if it is Lakeshore's, on-water candidates
+- 2917 Lewis & Clark stored lakeview: north-shore pad row (42.049,-96.165) with no RA site; if bookable, lakefront candidates unless the shoreline track blocks
+- 2991 Littlefield stored not waterfront: east loop's north end may see the east arm across a lawn
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 

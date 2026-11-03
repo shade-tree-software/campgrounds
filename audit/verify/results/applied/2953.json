@@ -1,0 +1,63 @@
+{
+ "id": 2953,
+ "checked": "2026-11-03",
+ "sources": [
+  "https://www.recreation.gov/camping/campgrounds/272091",
+  "https://www.recreation.gov/api/camps/campgrounds/272091 (facility description, notices, rules)",
+  "https://www.recreation.gov/api/camps/campgrounds/272091/rates",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:272091 (per-site catalog with coordinates) + trip_data/ridb_campsites.json (RIDB catalog fetched 2026-10-20)",
+  "https://www.recreation.gov/api/camps/availability/campground/272091/month (October 2026)",
+  "Esri World_Imagery at 41.7253,-91.5410 (250 m) with the rec.gov site points plotted, read 2026-11-03"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "recreation.gov campsite catalog for 272091 (Electricity Hookup 50 on L04, L05, L07, L08; 20/30/50 on L13-L16; Water Hookup and Sewer Hookup 'Y' on L04, L05, L07, L08), read 2026-11-03",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 14,
+    "max_rig_ft": 85,
+    "pull_through": false,
+    "note": "14 bookable electric sites, all back-in, 58-85 ft; four more (L01-L03, L06) are management sites the public can't book. Four (L04, L05, L07, L08) have water and sewer too."
+   },
+   "source": "recreation.gov campsite catalog for 272091 (14 public sites L04-L18, all 'STANDARD ELECTRIC', 'Driveway Entry: Back-in', Max Vehicle Length 58-85) + RIDB catalog (L01, L02, L03, L06 type MANAGEMENT, not reservable), read 2026-11-03",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true
+   },
+   "source": "recreation.gov facility description ('Amenities include a modern restroom and shower facility'), read 2026-11-03",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/272091",
+    "max_stay_nights": 14,
+    "note": "Register at the West Overlook Campground fee booth before setting up. Bookable up to the day of arrival. 14 nights in any 30 days."
+   },
+   "source": "recreation.gov rules (maxStay 14 nights, 'Rolling 30 Days'; reservationCutOff 0 days) + notice ('Visitors shall register for their campsite at the West Overlook Campground Fee Booth prior to setting up'), read 2026-11-03",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Coralville Lake campground in the wooded dam complex just north of Iowa City, on the west side of the dam; no shoreline. The dump station and drinking water are just outside the nearby West Overlook Campground, where campers register. Woodpecker Nature Trail, the Devonian Fossil Gorge and disc golf nearby. --Claude",
+ "summary": "Sites 18 -> 14 bookable (4 are management), max 64 -> 85, all back-in; hookups confirmed (50 amp; water/sewer at 4 public sites); flush toilets added; booking rec.gov, 14-night max. Not waterfront stands. Pin ~260 m off.",
+ "flags": [
+  "NOT WATERFRONT STANDS: all 14 site points sit on a wooded ridge north of West Overlook Rd with no water within ~250 m on imagery; rec.gov: 'lies among a heavily wooded forest ... on the west side of the dam'. No below-dam tailwater frontage either.",
+  "PIN: stored 41.72448,-91.54323 is rec.gov's facility point, on the road by the parking area south-west of the loop; the sites centre on ~41.7254,-91.5404 (~260 m). Suggest 41.7254,-91.5404.",
+  "HOOKUPS: confirmed from the catalog (electric 50; water and sewer at 4 public sites, L04, L05, L07, L08; the others 30 or 20/30/50 amp, electric only). No non-electric site is bookable any more, so the old note's 'non-electric to full hookup' and its 18-site count are wrong.",
+  "SEASON not written: rec.gov's phone line says 'MAY 1 - OCTOBER 31 CAMPGROUND ENTRANCE STATION' (staffing, not a campground statement), the peak rate season runs 2026-05-01 to 2026-10-17, and the 2026 calendar shows sites Reserved through October 17 and 'Not Available' from October 18. Recgov_calendar.py (not run: it writes the tracked audit/recgov_calendar.json) can settle opens/closes.",
+  "DUMP / WATER: at the West Overlook Campground, not in this one (rec.gov notice), so facilities.dump and potable_water left unset.",
+  "FEES stand: $30 a night (rec.gov 'STANDARD ELECTRIC 30', 2026 season); the table also carries an unlabeled $26 variant of the same site type. Phone: stored 319-338-3543 is the off-season project office; rec.gov gives '(319) 338-3685' May 1-Oct 31 at the entrance station. The USACE Coralville Lake page refused (403), unread.",
+  "militaryDiscount rule present on rec.gov: not a discount claim, no discount written."
+ ]
+}

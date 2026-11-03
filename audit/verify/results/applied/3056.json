@@ -1,0 +1,55 @@
+{
+ "id": 3056,
+ "checked": "2026-11-03",
+ "sources": [
+  "https://www.masoncity.net/pview.aspx?id=48657&catid=0 (refused: Cloudflare challenge, HTTP 403, 2026-11-03; not retried)",
+  "https://macnider.campgroundonline.org/ (the city's reservations link, per Modern Campground 2024-04-18) -> https://letscamp.ca/camps/macnider-campgrounds",
+  "https://letscamp.ca/api/camps/macnider-campgrounds?locale=en (the campground's Let's Camp record: bio, rules, site search criteria, max RV length), read 2026-11-03",
+  "https://moderncampground.com/usa/iowa/mason-city-introduces-online-reservation-system-for-macnider-campground/ (2024-04-18, background only)",
+  "Esri World_Imagery at 43.1580,-93.1835 (250 m) and 43.1567,-93.1836 (80 m), read 2026-11-03"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://letscamp.ca/api/camps/macnider-campgrounds (bio: '30 full hookups including water, sewer and electrical; 45 hookups for water & electrical'; site search criteria 'electrical': [30, 50, 20], 'water': true, 'sewer': true), read 2026-11-03",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 90,
+    "max_rig_ft": 80,
+    "pull_through": true,
+    "note": "30 full-hookup and 45 water/electric RV sites plus 15 tent sites with water only; no tents on the full-hookup sites."
+   },
+   "source": "https://letscamp.ca/api/camps/macnider-campgrounds (bio: '15 tent camping sites with water only for a total of 90 camping sites'; rules: 'No tenting will be allowed on full hookup sites'; site search criteria 'pullThrough': true; maxRVLength 80 ft), read 2026-11-03",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true},
+   "source": "https://letscamp.ca/api/camps/macnider-campgrounds (bio: 'The MacNider Campground offers water service, sanitary sewer service, electrical service, dump station, ... tornado shelter/bathhouse, picnic shelters and office/camp store'), read 2026-11-03",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://letscamp.ca/camps/macnider-campgrounds",
+    "max_stay_nights": 14,
+    "note": "Booked online through the city's Let's Camp page. Full refund if cancelled 7+ days out, 90% within 7 days, none within 2 days. Longer than 14 days at one site only by the manager's approval."
+   },
+   "source": "https://letscamp.ca/api/camps/macnider-campgrounds (allowOnlineBookings true; refund policies 'A full refund will be provided if canceled 7 days in advance', '90% refund ...', 'No refund if canceled within 2 days'; rules 'Camping at one site is limited to 14 days. Any request for a stay beyond 14 days will be considered on a case by case basis'), read 2026-11-03",
+   "method": "manual"
+  }
+ },
+ "note": "Mason City municipal campground in Margaret MacNider Park on the Winnebago River, next to the city Aquatic Center, run by Mason City Parks and Recreation. Herringbone gravel pad rows in an open grove, set back from the river behind a riparian treeline, with a tornado shelter/bathhouse, picnic shelters and an office/camp store; the campground manager sells reduced-price pool passes. --Claude",
+ "summary": "Sites 95 -> 90 (30 FHU, 45 W/E, 15 tent), max 80, pull-throughs; electric 50 added; dump confirmed; booking on the city's Let's Camp page, 14-night limit. No rate found. Not waterfront stands (river ~40 m wide = riverfront class, but pads sit ~45 m back behind trees and a riverside trail).",
+ "flags": [
+  "FEES: no rate stated anywhere I could read. The city page (masoncity.net) refused with a Cloudflare 403, so it stays unread; Let's Camp shows the camp 'closed' for the season and posts no minimumPrice. Aggregators only (Campendium $29 4/2025), not used. Rate still missing.",
+  "NOT WATERFRONT STANDS: the Winnebago River here is ~40 m wide on imagery (over the ~30 m line, so riverfront class, not creek). The southernmost herringbone pads end ~40-50 m from the north bank, across a band of grass, a riverside trail and a dense riparian tree belt (leaf-off imagery shows it continuous); a dam/riffle sits just upstream. No open ground from any pad to the water. A filtered riverview from the south pads in leaf-off season is possible but unshown in operator photos, so it stays down.",
+  "PHONE: stored null; the campground's Let's Camp record gives (641) 421-3679 and macnidercampground@gmail.com. WEBSITE: the stored masoncity.net page refused me; Let's Camp lists https://www.masoncity.net/pView.aspx?id=18109 as the city page and the booking page is https://letscamp.ca/camps/macnider-campgrounds. apply.py writes neither.",
+  "SEASON (derived, not touched): stored year_round false; Let's Camp is 'closed' now (November) but posts no dates. Old note's 'mid-Apr to mid-Oct' dropped as unsourced.",
+  "FACILITIES: derived showers and laundry not stated by the operator record (only 'tornado shelter/bathhouse'); left as they are, unconfirmed.",
+  "PIN 43.15800,-93.18350 sits on the campground (Let's Camp 43.15790,-93.18361); fine.",
+  "NOTE: dropped the counts, hookup split, season, 'Reservable' and the RV Life rating line (fields carry them)."
+ ]
+}
