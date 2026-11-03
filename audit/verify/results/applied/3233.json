@@ -1,0 +1,48 @@
+{
+  "id": 3233,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.whitesriversidecampground.com/ ('Please call to book your stay! Phone: (563) 735-5738'; 'Now Taking Reservations for 2026 Camping Season!'; 'We take 10 reservations per week, anything after that is first come first serve basis.'; 'Check Out is Noon'; 'Camping Fees - Per Night': 'Designated Tenting Areas ... $20.00 per Tent', 'Tents with Electrical on the River $30.00 per tent', 'Campers, Popups, Trailers & RV's $30.00 per unit (30 amp service)', '$35.00 per unit (50 amp service)'; 'a serene riverside campground in Bluffton, IA, offering camping facilities, heated showers, RV hookups, and fishing spots'), read 2026-11-03",
+    "https://www.blufftonresort.com/ ('Bluffton Resort is proud to announce the purchase of White's Campground! As we work through the transition, call (563) 735-5738 to book a spot in the new \"Kenny's Corner\" at Bluffton Resort.'), read 2026-11-03",
+    "https://www.blufftonresort.com/rv-park/ (Bluffton Resort's own RV park, id 14515: 'full hookup RV sites, riverside RV sites, and pull-through spaces'; 'Long-Term RV Camping'; 'on-site RV dump station' - describes the resort's side, not stated for Kenny's Corner), read 2026-11-03",
+    "Google Maps 'White's Riverside Bluffton Campground' (4.6 stars, 105 reviews; +1 563-735-5633; 2633 W Ravine Rd, Decorah; website whitesriversidecampground.com; place 43.40422,-91.91618) and 'Bluffton Resort & Bar' (4.4 stars, 258 reviews; +1 563-735-5738; 43.40260,-91.91375), read 2026-11-03",
+    "https://campgrounds.rvlife.com/api/reviews/park/252704 (RV Life: 4 stars, price level 2, avg $30; 5/2024 fifth wheel $40 a night 'Spots along the river are very unlevel and hard to figure out where you should be, all grass spots so if it rains'; 8/2018 travel trailer $20 'situated along the Upper Iowa River and has direct access to the river'), read 2026-11-03",
+    "python3 audit/price_research/gateways.py 43.4042,-91.9168 ('none within 40 km; nearest: Wisconsin Dells 175 km; St. Paul 196 km; family home 201 km'), run 2026-11-03",
+    "Esri World Imagery at 43.4038,-91.9158 (400 m) and 43.4045,-91.9162 (220 m): the campground is on the west/north bank inside a gravel loop; campers sit on grass between an inner lane and the river, ~20-30 m from the bank with open grass and scattered trees between; the Upper Iowa is ~40-45 m wide here, read 2026-11-03 (Overpass down; widths are imagery estimates)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 35, "currency": "USD", "checked": "2026", "note": "RVs, trailers and pop-ups $30 a night with 30-amp service, $35 with 50-amp; tents $20, or $30 with electric on the river. Posted for the 2026 season, read 2026-11-03."},
+      "source": "https://www.whitesriversidecampground.com/ ('Now Taking Reservations for 2026 Camping Season!'; 'Campers, Popups, Trailers & RV's $30.00 per unit (30 amp service)', '$35.00 per unit (50 amp service)'), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://www.whitesriversidecampground.com/ ('$35.00 per unit (50 amp service)'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true},
+      "source": "https://www.whitesriversidecampground.com/ ('offering camping facilities, heated showers, RV hookups'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.whitesriversidecampground.com/", "fcfs": "some_sites", "note": "Book by phone or email; only 10 reservations are taken a week and the rest is first come, first served. Check-out noon."},
+      "source": "https://www.whitesriversidecampground.com/ ('Please call to book your stay!'; 'We take 10 reservations per week, anything after that is first come first serve basis.'; 'Check Out is Noon'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Grassy riverside campground on the Upper Iowa River at Bluffton, about 12 miles from Decorah, with sites along the bank; a canoe livery. Bought in 2026 by Bluffton Resort & Bar (id 14515), across the river, and being renamed Kenny's Corner. RV reviewers say the river sites are unlevel and the grass gets soft in rain. --Claude",
+  "summary": "Fees $30-35 confirmed from the operator's 2026 rate table; electric 50 confirmed; showers added; booking now platform operator, url, fcfs some_sites (10 reservations a week, rest first come). Private gate passes ($35 under US$50, no gateway needed), presence passes, long-stay passes, Google 4.6/105. Riverfront kept. Note cleaned.",
+  "flags": [
+    "PRIVATE GATE: dated rate $30 (30A) / $35 (50A) a night on the operator's own page for the '2026 Camping Season' - passes the US$50 gate outright (no gateway within 40 km; nearest Wisconsin Dells 175 km, family home 201 km). Camper report $40 a night 5/2024 (RV Life).",
+    "PRESENCE: passes - operator website with the posted rate table, phone and email booking, Google Maps listing.",
+    "LONG-STAY (five tests pass): nightly rates posted, nights reservable (10 a week) plus first come, a canoe-livery transient clientele; no seasonal, monthly or membership pricing on White's own page. (Bluffton Resort's RV page advertises 'Long-Term RV Camping' for the resort side.)",
+    "REVIEWS: Google 4.6 stars from 105 reviews; RV Life 4 stars (2 reviews). Passes the review rule.",
+    "WATERFRONT (riverfront kept): Upper Iowa River ~40-45 m wide at the campground (over the ~30 m creek/river line). Imagery shows campers on grass between the inner lane and the bank, ~20-30 m from the water with only open grass and scattered trees between; the operator sells 'Tents with Electrical on the River' and a 2024 RV reviewer describes 'Spots along the river'. Which numbered sites are RV-river sites isn't published.",
+    "RENAME / OWNERSHIP: Bluffton Resort & Bar says it bought White's Campground and is calling it 'Kenny's Corner'; White's own site is still up under the old name with the same phone. Name left as stored; may want 'Kenny's Corner' once the resort publishes it.",
+    "PHONE: stored 563-735-5738 matches both operator pages (and Bluffton Resort's Google listing); Google's White's listing still shows the older 563-735-5633.",
+    "HOOKUPS: water/sewer not stated for White's (the resort's 'full hookup RV sites' are its own side); left unknown. Season dates not posted.",
+    "PIN: stored 43.40420,-91.91680 sits on the west lawn of the campground loop, ~50 m west of Google's 43.40422,-91.91618 and ~100 m from the river-bank camper row; fine."
+  ]
+}

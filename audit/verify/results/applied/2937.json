@@ -1,0 +1,43 @@
+{
+  "id": 2937,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://iowastateparks.reserveamerica.com/camping/walnut-woods-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610133 ('Status: Open year round.'; 'Campground Operations: This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival.'; 'Walnut Woods Seasonal Closures.: Campground restrooms are closed for the season. Dump station is closed for the season. All water is turned off for the season.'; 'No showers in the park or campground.'; 'The campground has modern restrooms and a sanitary dump station but no showers. The shady campsites have concrete pads and electrical service or full hook-ups (electric, water, sewer) and all campsites are available by reservation only.'), read 2026-11-03",
+    "ReserveAmerica site list for parkId 610133 (22 of 23 rows: 11 Standard Electric, 8 Standard Full Hook-Up, 2 RV Only, 1 Youth Group; all Back-In, 31-71 ft; 'Electric Hookup available: 20/30/50 amp' on 13, '20/30 amp' on 8; 'Full Hookup available' on 7; 'Near Water - no' on all 22), read 2026-11-03",
+    "ReserveAmerica per-site GIS for parkId 610133 (11 sites sampled: centroid 41.54204,-93.74001; 'Proximity to Water' blank on all), read 2026-11-03",
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/walnut-woods-state-park ('All campsites have electric features and 8 sites have water/sewer/electric hookups. The campground does not have showers, but it does contain modern restrooms and a sanitary dump station.'; 'Since the park elevation is not much higher than the normal river level, the water level is constantly changing.'; 'trails flood periodically and may remain wet and muddy following rains'; phone 515-285-4502), read 2026-11-03",
+    "https://www.iowadnr.gov/search?keys=Walnut+Woods+flood (no matching news releases returned), read 2026-11-03",
+    "Esri World Imagery at 41.5420,-93.7400 (700 m frame, leaf-off) with RA site points plotted: the campground loop sits in bottomland forest ~100-130 m south of the Raccoon River, read 2026-11-03 (Overpass down; distances are imagery estimates)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "ReserveAmerica site list, parkId 610133 ('Electric Hookup available: 20/30/50 amp' on 13 sites, 8 'Standard Full Hook-Up') + DNR park page ('8 sites have water/sewer/electric hookups'), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "max_rig_ft": 71, "pull_through": false, "note": "22 sites on concrete pads (11 electric, 8 full hookup, 2 RV-only), all back-in, 31-71 ft, plus a youth group site."},
+      "source": "ReserveAmerica site list, parkId 610133 (23 sites, one a Youth Group site; all 'Back-In', 31-71 ft) + RA description ('concrete pads'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": false, "flush_toilets": true, "dump": true},
+      "source": "https://iowastateparks.reserveamerica.com/camping/walnut-woods-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610133 ('No showers in the park or campground.'; 'modern restrooms and a sanitary dump station but no showers') + DNR park page, read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://iowastateparks.reserveamerica.com/camping/walnut-woods-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610133", "fcfs": "never"},
+      "source": "ReserveAmerica park page ('This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival'; 'all campsites are available by reservation only'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Iowa DNR state park in the Raccoon River bottomland on the edge of West Des Moines, close to I-35 and the Highway 5 bypass; the shaded campground sits in the woods about 100 m from the river. The park is barely above normal river level and its riverside trails flood periodically. 1930s limestone-and-timber day-use lodge; the Athene pedestrian bridge crosses to Raccoon River Park. --Claude",
+  "summary": "Sites 25 -> 22 (11 electric, 8 full hookup, 2 RV-only; all back-in, 31-71 ft), pull-through false, max rig 71 added. Hookups 50/water/sewer, no showers, dump and reservation-only (fcfs never) confirmed; flush toilets added. Season year_round (manual) agrees with RA 'Open year round'. Not waterfront kept: no site on or viewing the river. Note cleaned.",
+  "flags": [
+    "WATERFRONT (not waterfront kept): RA tags all 22 sites 'Near Water - no' and GIS 'Proximity to Water' is blank. On leaf-off imagery the loop is ~100-130 m south of the Raccoon River through dense bottomland forest; no site on or viewing the river.",
+    "FLOOD HISTORY: DNR says the park 'elevation is not much higher than the normal river level' and its trails 'flood periodically'. I found no dated flood-closure notice (DNR search returned nothing; RA shows no closure). Not open now as a closure; the current RA alert is only the seasonal shut-off ('restrooms are closed for the season. Dump station is closed ... All water is turned off').",
+    "SEASON: RA 'Status: Open year round', so the manual year_round true agrees.",
+    "PIN: stored 41.54180,-93.74000 vs RA GIS centroid 41.54204,-93.74001 (~25 m); fine.",
+    "PHONE: 515-285-4502 matches the DNR page (DNR also lists 515-285-7476)."
+  ]
+}

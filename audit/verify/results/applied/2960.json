@@ -1,0 +1,49 @@
+{
+  "id": 2960,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/156340 (TAILWATER EAST CAMPGROUND: 'located on the east bank of the Iowa River below the Coralville Lake Dam. The campground offers 28 campsites to include full hook-up campsites, standard electric campsites, and non-electric walk-to tent campsites. Amenities include a modern restroom and shower facility, fish cleaning station, and a boat ramp for accessing the Iowa River. The campground fee booth is located in the West Overlook Campground.'; phone 'MAY 1 - OCTOBER 31 CAMPGROUND FEE BOOTH (319) 338-3685 NOVEMBER 1 - APRIL 30 CORALVILLE LAKE PROJECT OFFICE (319) 338-3543 X.6300'; amenities incl. Drinking Water, Dump Station, Electricity, Flush Toilets, River Access, Showers; rules maxStay 14 nights, 'Rolling 30 Days'; notices 'Check-In Time: 2:00 P.M.', 'Check-Out Time: 12:00 P.M.', 'Visitors shall register for their campsite at the West Overlook Campground Fee Booth prior to setting up'; rate table Peak Season 2026-05-01 to 2026-10-17 and 2027-05-01 to 2027-10-17: STANDARD ELECTRIC $22 / $24 / $26, WALK TO $14), read 2026-11-03",
+    "trip_data/ridb_campsites.json facility 156340 (RIDB catalog fetched 2026-10-20: 22 reservable STANDARD ELECTRIC sites E06-E10, E12-E28, all Back-in, Max Vehicle Length 42-68 ft, Electricity 20/30 on 17 and 20/30/50 on E20-E24; Water/Sewer Hookup only on E11, a non-reservable MANAGEMENT site; E01-E05 MANAGEMENT, tent only, not reservable), read 2026-11-03",
+    "https://www.recreation.gov/api/camps/campsites/<id> for E06-E10, E12-E28 (per-site coordinates; Peak fee template: E06-E09, E27, E28 'PeakSTANDARD ELECTRIC' = $22; E10, E12-E19, E25, E26 template 132aec7c = $24; E20-E24 'u22' template = $26; no waterfront attribute on any site), read 2026-11-03",
+    "https://campgrounds.rvlife.com/api/reviews/park/252799 (RV Life, 6/2026-9/2026 reviews: site E28 'Great river view: Cute little campground right on the river. Lots of boat traffic especially next to the last little loop. Last loop gravel and shade trees with room between sites.'; E21 'Beautiful trees, nice views ... Fossil gorge across the river ... Low branches coming in either direction.'; 9/2026 'There are some steep narrow roads as you go into the campground'; water no / sewer no on E21, E24, E28), read 2026-11-03",
+    "Esri World Imagery at 41.7200,-91.5285 (400 m frame) with the rec.gov site coordinates plotted, read 2026-11-03 (Overpass down; distances are imagery estimates)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 22, "nightly_high": 26, "currency": "USD", "checked": "2026", "note": "Recreation.gov peak season May 1-Oct 17 (2026 and 2027): standard electric $22 (sites E06-E09, E27, E28), $24 (E10, E12-E19, E25, E26), $26 for the 50-amp sites E20-E24; walk-to tent $14. Read 2026-11-03."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/156340 rate table + per-site fee templates (https://www.recreation.gov/api/camps/campsites/667634 etc.), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": null, "sewer": null},
+      "source": "RIDB catalog (trip_data/ridb_campsites.json, fetched 2026-10-20): 20/30/50 electric on public sites E20-E24; water and sewer hookups listed only on E11, a non-reservable management site, so no public water/sewer is shown (cleared, not set false). Read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "max_rig_ft": 68, "pull_through": false, "note": "22 reservable electric sites, all back-in, 42-68 ft; the five walk-to tent sites are no longer reservable."},
+      "source": "RIDB catalog (trip_data/ridb_campsites.json, fetched 2026-10-20): 22 reservable STANDARD ELECTRIC sites, Driveway Entry 'Back-in' on all, Max Vehicle Length 42-68 ft (E27 68 ft), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/156340 ('a modern restroom and shower facility'; amenities 'Drinking Water', 'Dump Station', 'Flush Toilets', 'Showers'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/156340", "max_stay_nights": 14, "note": "Register at the West Overlook Campground fee booth before setting up. Check-in 2 pm, check-out noon. 14 nights in a rolling 30 days."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/156340 (maxStay 14 nights 'Rolling 30 Days'; check-in/out and fee-booth notices), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Coralville Lake campground on the east bank of the Iowa River below the dam, in hardwood woods; the west row backs onto the river bank. Fish-cleaning station and boat ramp to the river; the Devonian Fossil Gorge is across the river. Campers mention steep, narrow roads and low branches on the way in. --Claude",
+  "summary": "Fees 22-24 -> 22-26 (50-amp sites E20-E24 are $26). Sites 28 -> 22 public RV sites (the 5 walk-to tent sites and the host site aren't reservable), max rig 50 -> 68, all back-in. Water/sewer cleared: the catalog shows them only on the host site. Added flush toilets, potable water, url, 14-night max. Riverfront kept: E10 and E12-E19 back onto the Iowa River bank. Note cleaned.",
+  "flags": [
+    "WATERFRONT (riverfront kept): rec.gov carries no per-site waterfront attribute. Plotted rec.gov coordinates put the west row (E10, E12-E19; 42-50 ft, all fit 23 ft) ~15-25 m from the Iowa River's riprap bank with no road between (the campground road runs between the west and east rows); the river is ~120-130 m wide here, well over the creek line. The east row E20-E24 is across the road (view), the north loop E06-E09/E27/E28 is ~40-60 m from the bank (camper at E28: 'Great river view ... right on the river'). The below-dam rule doesn't apply: the value is the river's own.",
+    "HOOKUPS CONFLICT: rec.gov's description says 'full hook-up campsites', but the RIDB catalog lists water and sewer only on E11 (MANAGEMENT, not reservable); three 2026 camper reports (E21, E24, E28) say water no, sewer no. Water/sewer cleared to unknown (the host-site rule).",
+    "SEASON (not written): rec.gov peak rates run May 1-Oct 17 (2026 and 2027) and the fee booth is staffed May 1-Oct 31; no off-season rate rows, so the campground probably closes mid/late October, but no page states open/close dates.",
+    "PHONE: entry has no phone; rec.gov gives the campground fee booth (319) 338-3685 (May 1-Oct 31) and the Coralville Lake Project Office (319) 338-3543 x6300 (Nov 1-Apr 30).",
+    "ACCESS: 9/2026 camper: 'There are some steep narrow roads as you go into the campground'; 8/2026 (E21, motorhome): 'Low branches coming in either direction.' Not a stated limit; motorhomes stay there routinely. A note caveat is included.",
+    "MILITARY: rec.gov's militaryDiscount rule value is present but not written (not a discount claim).",
+    "PIN: stored 41.71990,-91.52850 sits in the middle of the two rows (sites' centre ~41.7201,-91.5285); fine. rec.gov's facility point (41.72438,-91.52606) is ~530 m north-east, at the dam."
+  ]
+}

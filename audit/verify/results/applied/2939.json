@@ -1,0 +1,44 @@
+{
+  "id": 2939,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://iowastateparks.reserveamerica.com/camping/waubonsie-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610131 ('Status: Open year round.'; 'Campground Operations: This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival.'; 'Modern Facilities closed for winter season: Modern Facilities including restrooms and shower house are now closed for the winter season. Pit latrines and frost free hydrants are still available for use.'), read 2026-11-03",
+    "ReserveAmerica site list for parkId 610131 (77 of 86 rows; loop 'Waubonsie Campground': 24 Standard Electric, 9 Standard Non-Electric, 8 Tent Only, 1 Youth Group; loop 'Equestrian Campground': 35 Equestrian non-electric; Waubonsie Campground RV sites 27-75 ft, back-ins mostly 35 ft, pull-throughs 50-75 ft; 'Electric Hookup available: 20/30/50 amp' on 23 and '50 amp' on 1; 'Full Hookup - no' and 'Near Water - no' on all 77), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/waubonsie-state-park/r/campsiteDetails.do?contractCode=IA&siteId=2567&parkId=610131 (site 1: 'Standard Electric', 'Max Vehicle Length: 35', 'Back-In', 'Camp Pad Composition: Gravel', 'Electricity Hookup: 20/30/50', no water hookup listed; 'This is a modern campground. Modern campgrounds have water hydrants, showers and flush toilets.') + siteId=2583 (site 17: 'Max Vehicle Length: 75', 'Pull-Through', 'Electricity Hookup: 20/30/50') + siteId=2596 (site 30: non-electric, 'Max Vehicle Length: 50', 'Pull-Through', grass), read 2026-11-03",
+    "ReserveAmerica per-site GIS for parkId 610131 (16 sampled; Waubonsie Campground sites 40.67115-40.67404, -95.68697 to -95.68835, centroid 40.67292,-95.68773; equestrian sites ~40.683-40.686,-95.679 to -95.682), read 2026-11-03",
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/waubonsie-state-park ('The park also contains a modern campground with non-electric and electric campsites, modern showers, restrooms and a sanitary dump station. The more primitive equestrian campground contains ...'; '7-acre lake'; phone 712-382-2786), read 2026-11-03",
+    "Esri World Imagery at 40.6745,-95.6880 (900 m frame) with the RA site points plotted: the campground is strung along a wooded valley road from ~40.6740 south to ~40.6711; the stored pin is ~600 m north-west of it in forest, read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": null},
+      "source": "ReserveAmerica site list + campsite details, parkId 610131 ('Electricity Hookup: 20/30/50' on electric sites; no water hookup listed on any site, 'Full Hookup - no' on all), read 2026-11-03. The stored water hookup came from note prose with no source and is cleared.",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 33, "max_rig_ft": 75, "pull_through": true, "note": "33 RV sites in the modern campground (24 electric, 9 non-electric), gravel or grass, mostly 35-ft back-ins with pull-throughs of 50-75 ft; 8 more are tent-only. The equestrian campground is separate."},
+      "source": "ReserveAmerica site list + campsite details, parkId 610131 (Waubonsie Campground loop: 24 Standard Electric, 9 Standard Non-Electric; 'Max Vehicle Length' 27-75; site 17 '75 Pull-Through'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "ReserveAmerica campsite details ('This is a modern campground. Modern campgrounds have water hydrants, showers and flush toilets.') + DNR park page ('modern showers, restrooms and a sanitary dump station'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://iowastateparks.reserveamerica.com/camping/waubonsie-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610131", "fcfs": "never"},
+      "source": "ReserveAmerica park page ('This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival.'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Iowa DNR state park in the Loess Hills near Hamburg, known for its vistas over the Missouri River valley; on the Lewis and Clark Historic Trail. The modern campground runs along a wooded valley road; a separate, more primitive equestrian campground sits to the north-east. Trails for hiking, mountain biking and horses; 7-acre Lake Virginia (electric motors only); eight cabins. --Claude",
+  "summary": "Hookups electric 50 confirmed, water hookup cleared (no site lists one); sites count 33 (24 electric + 9 non-electric) and max rig 75 ft added, pull-through confirmed; flush toilets and potable water added, showers/dump confirmed; booking reservation-only confirmed, url added. Fees $12-16 (non-electric, the cheapest site a 23-ft rig fits) left as stored. Season year_round (manual) agrees with RA 'Open year round'. Not waterfront kept. PIN ~600 m off. Note cleaned.",
+  "flags": [
+    "PIN (~600 m off): stored 40.67750,-95.69167 is in forest north-west of the campground; the modern campground's RA GIS sites centre on 40.67292,-95.68773 (sites run 40.6711-40.6740 along the valley road). Suggest 40.6730,-95.6877.",
+    "HOOKUPS: the old note's '24 electric sites (20/30/50-amp) with water' is not borne out: RA lists electricity only (no water hookup on any site; 'Full Hookup - no' on all). Water hookup cleared to unknown, not set false.",
+    "FIT: no fit problem in the Loess Hills loops: 35-ft back-ins and 50-75-ft pull-throughs on gravel or grass, mostly 'Level' or 'Slight' slope. Shortest RV site 27 ft (site 36).",
+    "SEASON: RA 'Status: Open year round' agrees with the manual year_round true; RA's winter alert: restrooms and shower house closed, 'Pit latrines and frost free hydrants are still available for use.'",
+    "FEES: left as stored ($12/$16 non-electric off-season/peak; electric $20/$24, the electric surcharge 8). Not re-read this pass (DNR rates PDF read 2026-10-12).",
+    "PHONE: 712-382-2786 matches the DNR page."
+  ]
+}
