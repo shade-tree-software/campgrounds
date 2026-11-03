@@ -65,6 +65,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3084 Beaver Meadows stored not waterfront: a campsite photo across open grass to Beaver Creek (~35 m) would support riverview
 - 3078 Wilkinson Pioneer stored not waterfront, p3-265: a county photo of the Shell Rock from a site would support riverview
 - 3026 Bessman-Kemp stored riverview, p3-266: county says sites 2-4 are 'along the Iowa River', spurs end ~15-20 m from water behind bank trees; a site photo showing an open apron would support riverfront
+- 14515 Bluffton Resort stored not waterfront, p3-267: Campspot sells a 'Waterfront Campsite' type; river lane at 43.4022,-91.9158 ~20-40 m from a 25-30 m Upper Iowa - a site photo or map could support riverview/riverfront
+- 3143 Bloody Run stored not waterfront, p3-267: sites 13-16 may be creekview (creek 30-60 m behind trees and lane)
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
