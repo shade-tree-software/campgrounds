@@ -1,0 +1,51 @@
+{
+ "id": 2920,
+ "checked": "2026-11-03",
+ "sources": [
+  "https://iowastateparks.reserveamerica.com/camping/mcintosh-woods-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610112 (alerts, booking window, season dates, description), read 2026-11-03",
+  "iowastateparks.reserveamerica.com parkId 610112 site list (49 campsite rows of 53 items: type, driveway length, amenity icons) + 13 sampled campsiteDetails pages (no GIS coordinates), read 2026-11-03",
+  "https://www.iowadnr.gov/places-go/state-parks/all-parks/mcintosh-woods-state-park + https://www.iowadnr.gov/media/1223/download (campground map, 1/2024), read 2026-11-03",
+  "Esri World_Imagery at 43.1248,-93.4575 (400 m), read 2026-11-03"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 30},
+   "source": "ReserveAmerica parkId 610112 site list ('Electric Hookup available: 20/30 amp' on 41 sites, 'Electric Hookup available: 30 amp' on 3; 'Full Hookup - no' on all) + DNR campground map legend ('Electric (20/30-amp)'), read 2026-11-03",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 49,
+    "max_rig_ft": 82,
+    "pull_through": true,
+    "note": "45 electric and 4 non-electric sites in the pre-renovation catalog, 30-82 ft (one 20 ft), three pull-throughs (56, 65, 72 ft); plus two yurts. The campground is being rebuilt, so the layout may change when it reopens."
+   },
+   "source": "ReserveAmerica park page ('Standard Electric (45)', 'Standard Non-Electric (4)') + site list (driveways '30 Back-In' to '82 Back-In', one '20 Back-In', '56/65/72 Pull-Through'), read 2026-11-03",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "dump": true, "potable_water": true},
+   "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/mcintosh-woods-state-park ('Modern restrooms, showers and a trailer dump station are also available') + campground map legend ('Water Hydrant', 'Dump Station', 'Restrooms\\Showers'), read 2026-11-03",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "reserveamerica",
+    "url": "https://iowastateparks.reserveamerica.com/camping/mcintosh-woods-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610112",
+    "note": "The DNR page says both 'The campground is 100% reservable and a reservation is required' and 'One fourth of the campsites are available on a first-come, first-serve basis'; the 1/2024 map marks about a quarter of the sites non-reservable. While closed, the booking site shows electric and non-electric sites bookable from 2 days to 3 months ahead."
+   },
+   "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/mcintosh-woods-state-park (both quoted statements) + ReserveAmerica booking window ('Standard Electric ... Reservations must be made 2 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance'), read 2026-11-03",
+   "method": "manual"
+  }
+ },
+ "note": "On the NW shore of Clear Lake near Ventura; a shaded loop in the woods, with the park's boat ramp, fish cleaning station and an unsupervised beach on the point. Iowa's only two yurts are here (both closed by storm damage, posted 5/18/2026). No daily Iowa park-entry fee. --Claude",
+ "summary": "Closure for total renovation (reopen spring 2027) still posted. Electric 30 amp added; sites 53 -> 49 (45 E + 4 NE; yurts excluded), max 65 -> 82, pull-throughs added; flush toilets and water added, showers/dump confirmed. Fees stand. Not waterfront stands. Season conflict flagged (manual group).",
+ "flags": [
+  "STATUS STILL CURRENT: ReserveAmerica alert 'The McIntosh Woods campground is closed due to a total renovation with plans to reopen spring 2027'; 'Status: Closed through Wed Mar 31 2027'. Not rewritten (manual group, same values).",
+  "SEASON CONFLICT (manual group, not overwritten): stored season year_round true rests on the DNR's general winterizing release. This park's ReserveAmerica 'Season Dates' state 'McIntosh Woods Campground 2026 season: Closed: January 1 - March 31 ... Closed: November 1 - December 31' and '2027 season: Closed: January 1 - March 31; Off Peak: April 1 - April 30; Peak: May 1 - October 15; Off Peak: October 16 - November 30; Closed: December 1 - December 31'. Suggest season year_round false, opens 04-01, closes 10-31 (2026) / 11-30 (2027), and drop the winterizing-release note.",
+  "BOOKING CUTOFF: this park's ReserveAmerica booking window says electric and non-electric sites 'must be made 2 Day(s) ahead of arrival' (Maquoketa Caves and others read 'can be made for today'); may be an artifact of the closure. Not written to reserve_until; noted in booking.note. The DNR page contradicts itself on FCFS (100% reservable vs one fourth first-come); fcfs some_sites (derived) left as it is.",
+  "NOT WATERFRONT STANDS: RA tags all 49 sites 'Near Water - no'. On imagery the loop sits in continuous woods ~350 m north of the Clear Lake shore (boat ramp and parking lot in between) and ~150 m east of the Mallard Marsh pond, park road between. Inland lake, no dunes, so coastal woods does not apply. RA gives no GIS points for this park; pin 43.1248,-93.4575 is on the loop (matches the DNR map).",
+  "NOTE: dropped the site counts, restroom/shower/dump text, the FCFS share and the ~65 ft length (fields carry them); added the yurt storm closure from RA (dated)."
+ ]
+}

@@ -47,6 +47,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3209 Lakeshore RV Resort stored lakeview, p3-252: a shore row of ~25 pads NW (42.6505,-91.9205) not on the operator's map; if it is Lakeshore's, on-water candidates
 - 2917 Lewis & Clark stored lakeview: north-shore pad row (42.049,-96.165) with no RA site; if bookable, lakefront candidates unless the shoreline track blocks
 - 2991 Littlefield stored not waterfront: east loop's north end may see the east arm across a lawn
+- 15601 Prairie Ridge A Loop stored lakeview, p3-253: west row A01-A12 ~50-60 m to the waterline through a brush band; A01, A09 photos look open
+- 3172 Pollmiller stored not waterfront: sites 6, 8, 9, 10 may see the 16-acre lake through the belt
+- 3168 Morgan Creek stored not waterfront: east-end pads ~20-25 m from a 6-8 m creek through a wooded bank
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
