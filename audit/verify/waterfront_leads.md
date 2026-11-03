@@ -41,6 +41,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2898 Emerson Bay stored lakeview: a site photo showing open water from 2-15 could restore lakefront
 - 3100 Hannen Lake Park stored lakefront, p3-250: rests on 3-4 west-shore cove sites from imagery and map dots; a site check could send it to lakeview
 - 3160 Hubinger Landing stored riverview: if the electric boxes run on the river rim, the view is open and this could be riverfront
+- 2910 Lake Darling stored lakefront, p3-251: if the shoreline fishing trail and piers count as day use, sites 1-6 and 62 drop to view; 63-66 still open lawn
+- 2914 Lake Wapello stored lakefront: rests on 3-4 east-loop sites matched from the map layout; a per-site check could confirm or send it to lakeview
+- 2913 Lake Manawa stored lakefront: pad ends 35-50 m of open grass, near the bound; lakeview if the apron is read as over the line
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
