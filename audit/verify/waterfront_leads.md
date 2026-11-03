@@ -58,6 +58,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3048 Joe Sheldon stored not waterfront, p3-258: the lower 14-pad campground by the ramp, 20-30 m from the river behind a wooded strip, may see it
 - 2986 Koser Spring Lake stored not waterfront, p3-259: city page Cloudflare-blocked; a site photo showing the lake from the west row would make it lakeview
 - 3166 Massey Marina stored riverview: no official photo shows the river; if none turns up, not waterfront
+- 3226 Skip-A-Way stored lakeview, p3-261: ~30 RVs 10-20 m from Quarry Lake across open grass on the SE shore; lakefront if those rows include nightly sites (site 961 'backed onto the lake')
+- 3224 Scales Pointe stored lakeview: nightly E38-E39 ~15 m from the reservoir under a tree fringe; lakefront if a photo shows them open to the water
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
