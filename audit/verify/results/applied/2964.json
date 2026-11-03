@@ -1,0 +1,43 @@
+{
+  "id": 2964,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233413 ('This large campground offers 132 campsites and two group sites, all with either 30 or 50-amp electric hookups. Amenities include flush and pit toilets, showers, drinking water, a dump station and boat ramp.'; 'Hardwood forests cover the lake shore at Whitebreast, offering shade and scenic views.'; notices: 'Whitebreast does not have a reservation window. You MUST have a reservation prior to occupying a site.', 'Check-in time is 3:00 p.m. and check-out time is 2:00 p.m.', 'Fee Booth phone number: (641) 842-2969'; facility phone 641-828-7522; rules maxStay 14 nights 'Rolling 30 Days', reservationCutOff 0, no minimum-stay rule), read 2026-11-03",
+    "https://www.recreation.gov/api/camps/campgrounds/233413/rates (Peak Season 2026-04-23 to 2026-10-04: STANDARD ELECTRIC $20, other individual site rates $22 and $24; same table for 2027 and 2028), read 2026-11-03",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233413 (107 listed: 105 STANDARD ELECTRIC + 2 GROUP STANDARD ELECTRIC, all permitting RV/Tent/Trailer; Max Vehicle Length 24-65 ft, every site 24+; Electricity Hookup 30 on 77, 50 on 30; no water/sewer hookups; no shoreline/water attribute on any site; per-site coordinates for loops MEAD 56, COAL 28, PONC 21, HEIG 2) + RIDB catalog cache trip_data/ridb_campsites.json (132 records incl. 19 non-reservable standard electric and 6 management), read 2026-11-03",
+    "recreation.gov site preview photos for sites 059-064, 068-071, 076, 093-095, 001, 002, 046, 052 (069, 070 and 076 show open lake through the trees; the rest show lawn and woods), read 2026-11-03",
+    "Esri World Imagery centred 41.3867,-93.0305 (1.4 km frame) with the rec.gov site points plotted: every loop sits inside the peninsula's woods; nearest pads (68-70, 59-64 on the NE side) are ~110-120 m from the shore through continuous tree cover, read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233413 ('all with either 30 or 50-amp electric hookups') + rec.gov campsite catalog (Electricity Hookup 50 on 30 sites), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 132, "max_rig_ft": 65},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233413 ('132 campsites and two group sites') + rec.gov campsite catalog (Max Vehicle Length 24-65 ft), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233413 ('flush and pit toilets, showers, drinking water, a dump station and boat ramp'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233413", "fcfs": "never", "max_stay_nights": 14},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233413 (notice 'You MUST have a reservation prior to occupying a site.'; rules maxStay 14 nights, Rolling 30 Days), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground on a wooded peninsula of Lake Red Rock, Iowa's largest lake, 10 minutes from Pella and 15 from Knoxville; shaded gravel pads among hardwoods. Sites 69, 70 and 76 look out to the lake through the trees. Whitebreast Beach and a boat ramp nearby. --Claude",
+  "summary": "Hookups electric 50, sites 132, facilities (showers, drinking water, dump) confirmed from rec.gov; flush/pit toilets and max rig 65 ft added; booking reservation-only (fcfs never), 14-night max and url added. Fees $20-24 unchanged (2026 rate table). Season left as stored (rec.gov states none). Note cleaned. Waterfront lead up to lakeview (official photos of 69, 70, 76).",
+  "flags": [
+    "WATERFRONT LEAD (not waterfront -> lakeview): official rec.gov site photos of 069, 070 and 076 show the open lake through the trees (AWH 2026-11-01: a filtered view from even a few RV sites in official photos earns *view). No site is on-water: imagery puts every loop inside the peninsula's woods, the nearest pads (68-70 and 59-64) ~110-120 m from the shore through continuous canopy, and no site carries a shoreline attribute.",
+    "PHONE: entry has none. rec.gov gives the fee booth (641) 842-2969 ('For local information') and (641) 828-7522 for general information - suggest 641-842-2969 (apply.py does not write phone).",
+    "SEASON: no statement on rec.gov; the Peak Season rate dates (2026-04-23 to 2026-10-04) are a rate season, not stated as the campground season. Stored derived year_round false left alone. The 2027 calendar is all 'Closed' (season not released), 2026-11/12 'Not Available'.",
+    "FIT: no problem - every listed site allows RV/Tent/Trailer with Max Vehicle Length 24 ft or more (most 44-55 ft).",
+    "PIN: stored 41.38350,-93.02580 sits in the MEAD loop (MEAD centroid 41.38344,-93.02757, ~150 m); whole-campground centroid 41.38575,-93.02861. Fine.",
+    "militaryDiscount rule value on rec.gov not written (not a discount claim)."
+  ]
+}

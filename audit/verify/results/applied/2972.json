@@ -1,0 +1,54 @@
+{
+  "id": 2972,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://claycountyfair.com/plan-an-event/off-season-camping/ ('Non-Fair Time Camping'; 'From April through October, the Clay County Fairgrounds offers approximately 15 acres of camping space, accommodating 800+ campers.'; 'Rates: $50 per 24 hours with utilities and sewer, $35 per 24 hours with utilities, $20 per 24 hours without utilities'; 'No reservations accepted.'; 'Camping is available on a first-come, first-served basis.'; 'Call 712-580-3000 to make payment by phone OR Stop by the Administration Office'; 'Open campfires are prohibited.'), read 2026-11-03",
+    "https://projects.propublica.org/nonprofits/api/v2/search.json?q=clay%20county%20fair&state[id]=IA (Clay County Fair Association, Spencer, EIN 42-0185302, tax-exempt under 501(c)(5)), read 2026-11-03",
+    "Google Maps 'Clay County Fairgrounds campground Spencer IA' (resolves to the fairgrounds: 4.6 stars, 1,126 reviews, +1 712-580-3000, 800 W 18th St, place 43.15612,-95.15291), read 2026-11-03",
+    "RV Life 'Clay County Fair' (id 7816: 3.5 stars, price level 1, avg $15), read 2026-11-03",
+    "python3 audit/price_research/gateways.py 43.1553,-95.1555 (none within 40 km); trips.campground_references(2972) = [], run 2026-11-03",
+    "Esri World Imagery at 43.1553,-95.1555 (1.2 km frame): the camping fields are the open gridded lots north of 18th Street; no water anywhere near, read 2026-11-03"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 50, "currency": "USD", "checked": "2026", "note": "Outside fair time: $20 per 24 hours without utilities, $35 with utilities, $50 with utilities and sewer; pay by phone or at the Events Center office. Clay County Fair, read 2026-11-03."},
+      "source": "https://claycountyfair.com/plan-an-event/off-season-camping/ ('$50 per 24 hours with utilities and sewer', '$35 per 24 hours with utilities', '$20 per 24 hours without utilities'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "https://claycountyfair.com/plan-an-event/off-season-camping/ ('No reservations accepted.', 'Camping is available on a first-come, first-served basis.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Non-fair camping April through October."},
+      "source": "https://claycountyfair.com/plan-an-event/off-season-camping/ ('From April through October, the Clay County Fairgrounds offers approximately 15 acres of camping space'), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": null, "sewer": true},
+      "source": "https://claycountyfair.com/plan-an-event/off-season-camping/ ('$50 per 24 hours with utilities and sewer'), read 2026-11-03. The stored 50-amp came only from directory text and is cleared; the page says 'utilities' without naming amperage.",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": null, "pull_through": null},
+      "source": "No operator page states site lengths or pull-throughs; the stored 35-ft / no-pull-through values came from directory text and are cleared. Read 2026-11-03.",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": null, "dump": null},
+      "source": "The operator's camping page names neither showers nor a dump station; the stored values came from directory text and are cleared. Read 2026-11-03.",
+      "method": "manual"
+    }
+  },
+  "note": "Camping on about 15 acres of open, gridded fields at the Clay County Fairgrounds in Spencer, open to travelers outside fair time. Pay after arriving, by phone or at the Events Center office (weekdays). Open campfires prohibited. Run by the Clay County Fair Association. --Claude",
+  "summary": "Fees $20-50 added (operator page, no rate stored); FCFS and April-October season confirmed; sewer true; directory-only 50-amp, 35-ft limit, pull-through, showers and dump cleared. Ownership should be private (501(c)(5) fair association). Private gate passes. Note cleaned.",
+  "flags": [
+    "OWNERSHIP: local -> private. The operator is the Clay County Fair Association (Spencer), a 501(c)(5) tax-exempt organization (EIN 42-0185302, ProPublica), not the county; per the brief a nonprofit operator means private.",
+    "PRIVATE GATE: posted rates $20 (no utilities) / $35 (utilities) / $50 (utilities and sewer) per 24 hours; the base is $20, under US$50 (the $50 sewer site sits at the gate). No gateway within 40 km; never stayed. Presence: operator website with phone 712-580-3000; Google listing 4.6 stars / 1,126 reviews with the same phone. Price: posted rate. RV Life 3.5 stars ($, avg $15) - its review count wasn't returned; Google is well over 4.0.",
+    "NON-FAIR NIGHTS: the operator's own 'Non-Fair Time Camping' page sells ordinary nights April-October to anyone, first-come, separately from its Fair Time Camping page - passes the fairgrounds test.",
+    "LONG-STAY: no monthly or seasonal rate, no residents described; transient 24-hour pricing; passes the five tests.",
+    "HOOKUPS: 'utilities' is not broken out; water left as stored (true), electric amperage cleared to unknown.",
+    "PIN: stored 43.15530,-95.15551 is at the north gate on 18th Street between the camping fields and the track; Google's place is 43.15612,-95.15291 (~230 m). Fine."
+  ]
+}

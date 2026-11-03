@@ -60,6 +60,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3166 Massey Marina stored riverview: no official photo shows the river; if none turns up, not waterfront
 - 3226 Skip-A-Way stored lakeview, p3-261: ~30 RVs 10-20 m from Quarry Lake across open grass on the SE shore; lakefront if those rows include nightly sites (site 961 'backed onto the lake')
 - 3224 Scales Pointe stored lakeview: nightly E38-E39 ~15 m from the reservoir under a tree fringe; lakefront if a photo shows them open to the water
+- 2974 Crawford Creek stored not waterfront, p3-263: the county's script-loaded campsite photos unread; a photo of the lake from the lower loop would make it lakeview
+- 3036 Dakota City Memorial Park stored not waterfront: city site 403; an official photo of the river from a site would support riverview
+- 3084 Beaver Meadows stored not waterfront: a campsite photo across open grass to Beaver Creek (~35 m) would support riverview
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 

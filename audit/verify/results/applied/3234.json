@@ -1,0 +1,47 @@
+{
+  "id": 3234,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.emmetsburg.wildroseresorts.com/ (301 to https://www.wildroseresorts.com/, the corporate home page) and https://wildroseresorts.com/locations/emmetsburg (rendered in a browser: casino, promotions, entertainment, Lucky's Sports Grill, 7's Casino Bar, '777 Main Street Emmetsburg, 50536', '712-852-3400'; no mention of an RV park, campground or camping anywhere on the page or in its links), read 2026-11-03",
+    "https://campgrounds.rvlife.com/api/reviews/park/11478 (RV Life 'Wild Rose Casino & Resort', 4 stars, price level 1, avg $20, 5 reviews: 8/2025 fifth wheel $25 a night 'Sites only have elec, you have to fill water on arrival at the dump station from a spigot'; 6/2024 travel trailer $25 'The slabs are a bit short and all back in but very manageable', tip 'it is only electric'; 7/2022 motorhome site 67 $25 'They have 20, 30 and 50 amp hookups. There is a dump site available. There are two restrooms/showers'; 5/2022 motorhome site 60 $28 'no water or sewer at sites (water and dump station available along with nice rest rooms and showers)'), read 2026-11-03",
+    "https://thedyrt.com/camping/iowa/wild-rose-casino-rv-park (directory text: 'RV Park will be open for the season from April to October. Weather permitting'; 'Rates: $25.00 per night and also includes breakfast in the hotel lobby'; 0 reviews), read 2026-11-03",
+    "Google Maps 'Wild Rose RV Park Emmetsburg IA' (no separate RV-park place; resolves to 'Wild Rose Casino & Hotel Emmetsburg', 3.7 stars, 1,520 reviews, +1 712-852-3400, 777 Main St, place 43.11509,-94.66142), read 2026-11-03",
+    "python3 audit/price_research/gateways.py 43.1164,-94.6635 ('none within 40 km; nearest: Minneapolis 235 km; St. Paul 240 km'); trips.campground_references(3234) = [] (never stayed), run 2026-11-03",
+    "Esri World Imagery at 43.1153,-94.6623 (800 m frame) and 43.1164,-94.6630 (300 m frame): the RV park is two herringbone rows of concrete back-in pads on the lake's west side, north of the hotel; the east row's pads end ~10-30 m from the west shore with only open mown grass between, no road or driveway; the lake (with an island) measures roughly 290 x 300 m, consistent with the stated 12.5 acres, read 2026-11-03 (Overpass timed out; sizes are imagery estimates)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "RV Life camper reviews, park 11478 (7/2022 motorhome: 'They have 20, 30 and 50 amp hookups'; 5/2022 motorhome: 'no water or sewer at sites'; 8/2025: 'Sites only have elec'), read 2026-11-03. Camper-reported: the operator publishes nothing about the RV park.",
+      "method": "reported"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true, "dump": true, "wifi": null},
+      "source": "RV Life camper reviews, park 11478 (5/2022: 'water and dump station available along with nice rest rooms and showers'; 7/2022: 'There is a dump site available. There are two restrooms/showers'; 8/2025: 'fill water on arrival at the dump station from a spigot'), read 2026-11-03. Camper-reported. The note-derived wifi rested only on a directory and is cleared (The Dyrt says campers report none; the operator is silent).",
+      "method": "reported"
+    },
+    "sites": {
+      "values": {"count": null},
+      "source": "No operator page states a site count; the stored 75 came from note prose sourced to directories (Travel Iowa / RV Life / AllStays), and is cleared. Read 2026-11-03.",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": null},
+      "source": "No operator page states a season; the stored derived value rested on directory text only (The Dyrt 'open for the season from April to October') and is cleared. Read 2026-11-03.",
+      "method": "manual"
+    }
+  },
+  "note": "RV park on the Wild Rose Casino grounds on the east edge of Emmetsburg, behind the hotel: two herringbone rows of concrete back-in pads beside the casino's lake, the east row along the shore. Water fill at the dump station. The casino's own website does not mention the RV park; call the casino. A 2024 RV Life reviewer found the slabs 'a bit short' but manageable. --Claude",
+  "summary": "Operator site has no RV park page; no fees written (camper reports $25 8/2025, RV Life $ tier). Hookups electric 50 kept and water/sewer false added, showers/potable water/dump set, all camper-reported; directory-only wifi, site count and season cleared. Lakefront kept on imagery. DROP CANDIDATE on presence/reviews (see flags). Note cleaned.",
+  "flags": [
+    "DROP CANDIDATE (private, never stayed): the operator does not publish the RV park at all - wildroseresorts.com/locations/emmetsburg (and the stored emmetsburg.wildroseresorts.com, now a 301 to the corporate root) never mentions an RV park, campground or rates. The only Google place is the casino-hotel's: 'Wild Rose Casino & Hotel Emmetsburg' 3.7 stars from 1,520 reviews (+1 712-852-3400) - under 4.0 with 25+ reviews if that listing is taken as the park's (AWH 2026-11-02 rule); no separate RV-park Google listing was found. RV Life 4 stars from 5 reviews. Hipcamp listing says contact for pricing; RoverPass page is an unclaimed directory.",
+    "PRIVATE GATE: no operator rate. Camper reports: $25 a night (RV Life 8/2025 and 6/2024), $28 (5/2022). RV Life price level 1 ($, avg $20) stands in for price. Well under US$50; no gateway within 40 km (Minneapolis 235 km).",
+    "PRESENCE: weak - a working casino website with phone 712-852-3400, but it doesn't mention the RV park; Google listing is the casino's (3.7/1,520). No booking engine.",
+    "LONG-STAY: nothing seasonal or residential - reviewers describe an empty overnight stop ('Hidden gem for over nights', 'at one point we were the one ones there'). Tests pass apart from no posted nightly rate (not a long-stay park, so test 2 doesn't apply).",
+    "CASINO CRITERION: this is a developed RV park (paved herringbone pads, electric at sites, bathhouse with showers, dump), not a casino overnight lot - passes on that test.",
+    "WATERFRONT (lakefront kept): imagery shows the east row's pads ending ~10-30 m from the lake's west shore across open mown grass with no road or driveway between; the lake is ~290 x 300 m with an island, consistent with the stated 12.5 acres (well over the 5-acre pond line). The west row sits behind the spine road (lakeview at best for those). No official site photos exist.",
+    "FIT: a 6/2024 RV Life reviewer: 'The slabs are a bit short and all back in but very manageable'; motorhomes stayed in 2022 (sites 60 and 67); a fifth wheel in 8/2025. No stated length. Proposed note carries the caveat.",
+    "WEBSITE: stored https://www.emmetsburg.wildroseresorts.com/ redirects to the corporate home; the Emmetsburg page is https://wildroseresorts.com/locations/emmetsburg (it doesn't mention the RV park). apply.py does not write website. Phone 712-852-3400 matches the operator page.",
+    "PIN: stored 43.11530,-94.66230 is on the hotel's north edge at the lake; the pad rows centre ~43.11642,-94.66350 (~160 m NW). Under 250 m; optional move."
+  ]
+}
