@@ -1,0 +1,40 @@
+{
+  "id": 2889,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/backbone-state-park (camping section, amenities list, phone 563-924-2527), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/backbone-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610105 (alerts; site listing: 98 South Lake Campground sites) and the campsiteDetails.do page of all 98 South Lake sites (type, Max Vehicle Length, electricity, GIS coordinates, Proximity to Water), read 2026-11-03",
+    "https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (Backbone alerts effective 10/29/2026 and the Dec 5-6 deer hunt), read 2026-11-03",
+    "Esri World_Imagery at 42.6035,-91.5420 (450 m half-width) with the 98 RA site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 98, "max_rig_ft": 120, "note": "47 electric sites (25 at 20/30/50-amp, 22 at 20/30-amp; listed 45-120 ft, most 60-90), 39 non-electric (no length listed), 10 tent-only and 2 youth-group-only sites."},
+      "source": "https://iowastateparks.reserveamerica.com/camping/backbone-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610105 (site listing: 98 sites in 'South Lake Campground': 47 'Standard Electric', 39 'Standard Non-Electric', 10 'Tent Only', 2 'Youth Group Only') + each site's campsiteDetails.do 'Max Vehicle Length' (site 051: 120; others 45-90) and 'Electricity Hookup', read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ReserveAmerica campsiteDetails.do for the South Lake electric sites ('Electricity Hookup: 20/30/50' on 25 sites, '20/30' on 22), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "note": "Two shower buildings (ADA accessible), playground. The shower buildings, dump station and modern facilities close for the season (2026: from Oct 29); pit toilets stay open."},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/backbone-state-park ('Non-electric and electric sites are located in the South Lake Campground along with two shower buildings, a playground and a dump station.'; amenities 'Modern/non modern restrooms', 'Showers; ADA accessible', 'Dump station') + https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (Backbone, effective 10/29/2026: 'The shower buildings, dump station and modern facilities are closed throughout the park for the season. Pit toilets are still available.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "fcfs": "never", "reserve_until": {"relative_to": "arrival", "at": "22:00"}},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/backbone-state-park ('The campgrounds are 100% reservable and a reservation is required.') + https://iowastateparks.reserveamerica.com/camping/backbone-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610105 ('All campgrounds are 100 percent reservable and accept reservations until 10:00 pm CST the day of arrival.'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Modern campground at Iowa's oldest state park, in the Maquoketa River valley; wooded loops on the ridge above the south end of Backbone Lake, with a beach, boat rentals and the CCC-era lodge nearby. --Claude",
+  "summary": "Confirmed 98 sites (47 electric 30/50-amp, 39 non-electric, 10 tent, 2 youth group), 50-amp, showers/flush toilets/dump (off for the season from Oct 29, 2026), 100% reservable on ReserveAmerica to 10 pm day of arrival. Fees left as recorded (DNR 2026 sheet). Manual season left alone (RA agrees: South Lake open year round). Pin ~215 m from the site centroid (fine). Not waterfront confirmed: no RA site carries a Proximity to Water tag, and the nearest pads (17-20) sit ~120 m from Backbone Lake through continuous forest on the slope.",
+  "flags": [
+    "Missing phone: the DNR park page gives 563-924-2527. apply.py doesn't write phone.",
+    "Status (informational, no group written): the park is closed to the public Dec 5-6, 2026 for a controlled deer hunt, reopening Dec 7 (DNR park alerts). The cabins and Beach Lodge can't be reserved Jan 4 - May 31, 2027 (wastewater project); the campground isn't named in that alert.",
+    "max_rig_ft 120 comes from a single site (051); every other electric site lists 45-90 ft.",
+    "Note: the stored '49 electric and 49 non-electric sites' was wrong (47 electric, 39 non-electric, 10 tent, 2 youth); the booking and park-fee lines repeated the fields. Cleaned."
+  ]
+}

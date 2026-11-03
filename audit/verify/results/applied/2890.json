@@ -1,0 +1,44 @@
+{
+  "id": 2890,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/beeds-lake-state-park (camping section, amenities, phone 641-456-2047), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/beeds-lake-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610145 (operations, status, booking windows; site listing) and the campsiteDetails.do page of all 134 sites (type, Max Vehicle Length, electricity, GIS, Proximity to Water, photos of 071-075 and H77), read 2026-11-03",
+    "https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (Beeds Lake, effective 10/15/2026), read 2026-11-03",
+    "Esri World_Imagery at 42.7690,-93.2370 (400 m) and 42.7695,-93.2372 (170 m) with the 134 RA site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 134, "max_rig_ft": 65, "note": "91 electric (50-amp) and 2 full-hookup sites, listed 40-65 ft; 40 tent-only sites and 1 youth-group site. No non-electric RV sites."},
+      "source": "https://iowastateparks.reserveamerica.com/camping/beeds-lake-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610145 (134 sites: 91 'Standard Electric', 2 'Standard Full Hook-Up' (117, H77), 40 'Tent Only', 1 'Youth Group Only') + each site's 'Max Vehicle Length' (electric/full-hookup 40-65), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "ReserveAmerica campsiteDetails.do ('Electricity Hookup: 20/30/50' on all 91 electric sites; 'Standard Full Hook-Up' sites 117 and H77), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "note": "Two modern restrooms with showers. All park water is shut off for the winter (2026: from Oct 15, back on by May 1, 2027)."},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/beeds-lake-state-park ('offering electrical hookups, two modern restrooms, showers and a sanitary dump station') + https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (Beeds Lake, 10/15/2026: 'Water Off: All water facilities in the park have been shut-off for the winter. We plan to have them back on by May 1, 2027.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open and reservable year round; the water (and with it showers and modern restrooms) is off from mid-October to about May 1."},
+      "source": "https://iowastateparks.reserveamerica.com/camping/beeds-lake-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610145 ('Campground Operations: This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival.' 'Status: Open year round.') + DNR park alert of 10/15/2026 (water off until May 1, 2027), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "fcfs": "never", "window_opens_days": 90, "reserve_until": {"relative_to": "arrival", "at": "22:00"}},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/beeds-lake-state-park ('The campground is 100% reservable and a reservation is required.') + https://iowastateparks.reserveamerica.com/camping/beeds-lake-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610145 ('accepts reservations year round until 10:00 pm CST the day of arrival'; Standard Electric/Full Hook-Up 'Reservations can be made for today and can be made up to 3 Month(s) in advance.'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Campground on the south shore of 99-acre Beeds Lake near Hampton, beside the CCC-built dam and spillway; grassy shaded loops with the tent sites along the shore, and a beach and the stone beach building nearby. --Claude",
+  "summary": "Season year_round false -> true (RA: open and reservable year round; water off mid-Oct to ~May 1). Sites -> 134 (91 electric 50-amp, 2 full hookup, 40 tent, 1 youth), max 65 ft. Confirmed showers/flush toilets/dump, 100% reservable on ReserveAmerica, 3-month window. Fees left as recorded (DNR 2026 sheet). Pin ~230 m from the site centroid (42.76828,-93.23626; inside the limit). Lakeview confirmed: the official photo of site 71 shows the lake across open lawn and 73/74 show it through the trees; the campground's own loop road and the shoreline tent sites lie between the RV pads and the water, so not on-water. The campground sits beside the lake at pool level, not below the dam.",
+  "flags": [
+    "Missing phone: the DNR park page gives 641-456-2047. apply.py doesn't write phone.",
+    "Full-hookup site H77's number suggests a host pad, though it is listed as reservable; the other full-hookup site (117) is a plain public site, so water/sewer stay true.",
+    "Note: the stored '~99 electric and 43 non-electric sites plus 2 full-hookup' and 'Open ~Apr 1-Oct 31' were wrong (91 electric, 40 tent-only, no non-electric RV sites; open year round), and the booking and park-fee lines repeated the fields. Cleaned."
+  ]
+}

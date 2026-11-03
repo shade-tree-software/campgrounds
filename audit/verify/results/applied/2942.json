@@ -1,0 +1,45 @@
+{
+  "id": 2942,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-forests/yellow-river-state-forest (camping section, phone 563-586-2254), read 2026-11-03",
+    "https://www.iowadnr.gov/media/7727/download?inline (Yellow River State Forest Campground Map, Little Paint page, 7/2025), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/yellow-river-state-forest/r/campgroundDetails.do?contractCode=IA&parkId=610130 (alerts, booking windows) and the campsiteDetails.do page of every Little Paint site 060-133 (Max Vehicle Length, GIS coordinates, site photos of 088, 095-097, 110, 113), read 2026-11-03",
+    "https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (no Yellow River alert), read 2026-11-03",
+    "OpenStreetMap API map call for the campground bbox (Little Paint Creek centreline) + Esri World_Imagery at 43.1840,-91.2355 (260 m) and 43.1858,-91.2352 (120 m), read 2026-11-03"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 74, "max_rig_ft": 80, "note": "Sites 60-133 on the DNR map, all reservable non-electric; site 118 is tent only, the other 73 are RV/tent/trailer sites listing 25-80 ft (only 6 at 25 ft; most 40-55). Plus two youth-group sites (YA, YB) for chaperoned organized youth groups only."},
+      "source": "https://www.iowadnr.gov/media/7727/download?inline (Little Paint map: sites 60-133, YA/YB 'Youth Group Sites') + ReserveAmerica campsiteDetails for all 74 numbered sites ('Max Vehicle Length' 25-80 on 73 RV sites; site 118 'Tent Only', 20), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "No drinking water in the campgrounds; it is at the A-frame information center on State Forest Road near Big Paint Campground."},
+      "source": "https://www.iowadnr.gov/places-go/state-forests/yellow-river-state-forest ('All sites are non-modern with vault toilets', 'Drinking water is available near the office complex') + ReserveAmerica park description ('There is no drinking water located in the campgrounds at Yellow River State Forest but it is available at the A-frame information center located on State Forest Road near Big Paint Campground'), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://iowastateparks.reserveamerica.com/camping/yellow-river-state-forest/r/campgroundDetails.do?contractCode=IA&parkId=610130 ('The Big Paint and Little Paint campgrounds are non-modern and have nonelectric campsites') + DNR map legend 'Non Electric' on every Little Paint site, read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Sites 60-92 are open year round; sites 93-118 close from the Friday after Thanksgiving to March 31."},
+      "source": "https://iowastateparks.reserveamerica.com/camping/yellow-river-state-forest/r/campgroundDetails.do?contractCode=IA&parkId=610130 ('Campgrounds Closed: The Big Paint, Creekside, and Frontier campgrounds and campsites 93 - 118 in the Little Paint campground will be closed starting the Friday after Thanksgiving - March 31.' 'Exception: Little Paint Campground sites 60 - 92 are open year round.' 'Status: Open year round.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "fcfs": "never", "window_opens_days": 90, "reserve_until": {"relative_to": "arrival", "at": "22:00"}, "note": "The forest's campgrounds are 100% reservable and a reservation is required; they take reservations April 1 - October 31 until 10 pm Central on the day of arrival, except Little Paint sites 60-92, which are open year round. Standard sites book from today up to 3 months ahead."},
+      "source": "https://www.iowadnr.gov/places-go/state-forests/yellow-river-state-forest ('The campgrounds are 100% reservable and a reservation is required.') + https://iowastateparks.reserveamerica.com/camping/yellow-river-state-forest/r/campgroundDetails.do?contractCode=IA&parkId=610130 ('All four campgrounds are 100 percent reservable and accepts reservations April 1 - October 31 until 10 pm CST the day of arrival. Exception: Little Paint Campground sites 60 - 92 are open year round.'; Standard Non-Electric booking window 'Reservations can be made for today and can be made up to 3 Month(s) in advance.'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Primitive drive-in campground in the Paint Creek Unit of Yellow River State Forest, strung for about a kilometre along Little Paint Creek (a stocked trout stream); grassy sites with tables and fire rings. --Claude",
+  "summary": "Sites 80 -> 74 (73 RV sites 25-80 ft + tent site 118, plus 2 youth-group sites); confirmed non-electric, vault toilets, no drinking water, year-round for sites 60-92 (93-118 close late Nov-Mar 31), 100% reservable on ReserveAmerica, 3-month window, 10 pm cutoff. Fees left as recorded (DNR 2026 sheet, $12/$16). Pin ~610 m off the site centroid. Waterfront lead creekside -> not waterfront.",
+  "flags": [
+    "WATERFRONT DOWN (lead, creekside -> not waterfront, by the unsure-downgrade rule): Little Paint Creek is a small trout stream (well under 30 m; not visible as open water anywhere on imagery), so creekside is the right class if any pad earns it. The closest pads to OSM's (coarse) creek line are 097 (15 m), 110 (16 m), 096 (18 m), 113 (22 m), 095 (23 m). Their official ReserveAmerica photos show mowed lawn running back to a continuous strip of tall brush and trees, with no water visible in any of them (088, 095, 096, 097, 110, 113 checked); the creek is under canopy on Esri imagery. With a vegetated screen and no confirmed open bank, the creekside call is unearned. The stored waterfront_evidence is only a pointer to a 2026-06 sweep commit.",
+    "PIN (~610 m off): stored 43.18123,-91.23274 sits at the registration booth at the south end. The 74 sites' ReserveAmerica GIS points average 43.18594,-91.23632 (the campground runs ~1.1 km from site 61 at 43.1815,-91.2332 to site 126 at 43.1910,-91.2389).",
+    "Note: the stored note's '~80 sites', '~$9-12/night' and 'open year-round' were inexact (74 numbered sites; DNR 2026 $12 off-season / $16 peak; only sites 60-92 stay open year round). Cleaned."
+  ]
+}
