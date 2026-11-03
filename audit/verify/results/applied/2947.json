@@ -1,0 +1,52 @@
+{
+  "id": 2947,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10172129 (USACE, Mississippi River Project / Thomson Ranger Station; 'Bulger's Hollow Recreation Area offers 23 non-reservable campsites, 14 RV sites and 9 tent camping sites, primitive amenities, such as drinking water, vault toilets, and a dump station'; Recreation text: 'With 23 non-reservable campsites, 17 RV sites and 9 tent camping sites ... campers have a 14-day camping limit, within a 30-day period. The camping area is open from May 15-October 15.'; notices: 'all campsites are on a First-Come First-Serve basis. Visitors are required to physically arrive at the campground to purchase and claim a site. (Cash will no longer be accepted for payment. Credit Card Only.)', payment by scanning the site-post QR code with the Recreation.gov mobile app; 'You'll have to travel about 1 mile on a gravel road to get here'; amenities incl. Drinking Water, Vault Toilets, Dump Station, Boat Ramp; phone 815-259-3628; rules maxStay 14 nights rolling 30 days, reservationCutOff 'Not Reservable'), read 2026-11-03",
+    "https://www.recreation.gov/api/camps/campgrounds/10172129/rates ('First-come, First-served Season' May 15 - Oct 14 for 2024 through 2028: 'Campsites' STANDARD NONELECTRIC $14 per night), read 2026-11-03",
+    "trip_data/ridb_campsites.json facility 10172129 (RIDB catalog fetched 2026-10-20: 24 records, all 'STANDARD NONELECTRIC', not reservable, named Campsite 1-23 plus one unnamed; no attributes or lengths; equipment listed on one record only)",
+    "Esri World Imagery at 41.9352,-90.1830 (700 m frame) and 41.9365,-90.1815 (300 m frame), read 2026-11-03",
+    "https://www.mvr.usace.army.mil/Missions/Recreation/Mississippi-River-Project/Recreation/Bulgers-Hollow/ answered 403 to plain HTTP; not read"
+  ],
+  "groups": {
+    "facilities": {
+      "values": {"dump": true, "potable_water": true, "vault_toilets": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10172129 ('primitive amenities, such as drinking water, vault toilets, and a dump station'; amenities list 'Dump Station', 'Drinking Water', 'Vault Toilets'), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 23, "note": "23 first-come sites; recreation.gov's own text says 14 RV and 9 tent sites in one paragraph and 17 RV and 9 tent in another. No site lengths are published."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10172129 ('23 non-reservable campsites, 14 RV sites and 9 tent camping sites' / '23 non-reservable campsites, 17 RV sites and 9 tent camping sites') + RIDB catalog Campsite 1-23, read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10172129/rates (only rate 'Campsites', STANDARD NONELECTRIC) + RIDB catalog (all 24 records STANDARD NONELECTRIC), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "10-15"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10172129 ('The camping area is open from May 15-October 15. The boat ramp and day use areas are open year-round.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "max_stay_nights": 14, "note": "First come, first served: claim a site in person and pay by scanning the site post's QR code in the Recreation.gov mobile app (credit card only, no cash; the website cannot be used). 14 nights within any 30 days."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10172129 (notices: 'all campsites are on a First-Come First-Serve basis. Visitors are required to physically arrive at the campground to purchase and claim a site. (Cash will no longer be accepted for payment. Credit Card Only.)'; 'You cannot use Recreation.gov the website, to secure your site; you must use the Recreation.gov mobile APP and be at the campground'; rules maxStay 14 nights 'Rolling 30 Days'), read 2026-11-03",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 14, "nightly_high": 14, "currency": "USD", "checked": "2026"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10172129/rates (2026 'First-come, First-served Season' May 15 - Oct 14: Campsites STANDARD NONELECTRIC $14; same for 2027 and 2028), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Mississippi River (Pool 13) recreation area about 7 mi north of Clinton, reached by a mile of gravel road off Hwy 67. The camp area sits in trees west of a road that skirts a broad marsh; the open backwater channel lies beyond the marsh (not waterfront). Boat ramp, playground and picnic shelter. --Claude",
+  "summary": "Facilities dump false -> true (rec.gov lists a dump station); sites 26 -> 23; season set May 15-Oct 15; FCFS scan-and-pay and 14-night limit confirmed; non-electric and $14 (2026-28) confirmed. Not waterfront confirmed. Pin fine. Note rewritten (old '3 mi N', 'no dump', counts and price were wrong or redundant).",
+  "flags": [
+    "WATERFRONT: not waterfront confirmed. Imagery shows the sites under trees west of a gravel road that runs along the edge of a ~150 m wide emergent marsh; the open backwater channel (lily pads) is beyond the marsh. Road plus marsh between the sites and open water. Rec.gov's 'one of the best views of the Mississippi' and 'Directly in front of the campground is a field of lily pads' are marketing; no site photos are published, so no view is shown either. RIDB gives no per-site coordinates.",
+    "FIT: recreation.gov publishes no site lengths, and the RIDB catalog lists permitted equipment on only one of 24 records (that one allows RV, trailer, fifth wheel). Its own text says 14 or 17 RV sites (two paragraphs disagree). Nothing states a limit under 23 ft; no caveat proposed.",
+    "SITE COUNT: stored 26 (17 RV + 9 tent) came from one rec.gov paragraph; the same page says 23 sites twice and the catalog has Campsite 1-23. Written 23.",
+    "PIN: stored 41.93520,-90.18150 sits at the south end of the camp area near the entrance road (~170 m from the loops' centre around 41.9366,-90.1822); rec.gov's facility point 41.93513,-90.18422 is on the entrance road west of the railroad. No change proposed; the pads are under canopy and can't be located exactly.",
+    "WEBSITE: the stored USACE district page answers 403 to plain HTTP (Akamai); not read. Phone 815-259-3628 matches recreation.gov."
+  ]
+}

@@ -63,6 +63,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2974 Crawford Creek stored not waterfront, p3-263: the county's script-loaded campsite photos unread; a photo of the lake from the lower loop would make it lakeview
 - 3036 Dakota City Memorial Park stored not waterfront: city site 403; an official photo of the river from a site would support riverview
 - 3084 Beaver Meadows stored not waterfront: a campsite photo across open grass to Beaver Creek (~35 m) would support riverview
+- 3078 Wilkinson Pioneer stored not waterfront, p3-265: a county photo of the Shell Rock from a site would support riverview
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
