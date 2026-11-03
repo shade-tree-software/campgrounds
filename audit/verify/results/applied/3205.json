@@ -1,0 +1,50 @@
+{
+  "id": 3205,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://indianhillsinn.com/rvpark (Indian Hills Inn RV Park page: 20 full-hookup pull-through sites over 65 ft, 20/30/50 electric, WiFi, laundry, dump, rates $45+tax nightly, $245/week, long-term metered sites; page footer 'Copyright © 2017', booking widget years 2020-2022, COVID restaurant notice), read 2026-11-03",
+    "https://live.ipms247.com/booking/book-rooms-indianhillsinnrvpark (the page's 'Reserve an RV Spot' eZee booking engine, rendered for Nov 3-4 2026: 'RV Parking ... $45.00 Total for 1 Night + $5.40 Taxes & fees, Total for stay $50.40 incl. taxes & fees', 'Showing 14 of 14', 'Only 4 rooms left'), read 2026-11-03",
+    "Google Maps listing 'Indian Hills Inn' (100 US-34, Albia; 3.8 from 183 reviews; '2-star hotel'; the RV park has no listing of its own), read 2026-11-03",
+    "https://campgrounds.rvlife.com/api/reviews/park/6306 (RV Life, 5 reviews: $45 9/2025, $40 2/2025, $30 weekly 8/2023, $40 3/2023), read 2026-11-03",
+    "https://maps.campendium.com/us/albia-ia/accommodation/indian-hills-rv-park-albia (Campendium 3.0 from 4 reviews), read 2026-11-03",
+    "audit/price_research/gateways.py 41.01573,-92.80408 ('none within 40 km'); trip_data/goodsam_parks.json (no Albia park), run 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://indianhillsinn.com/rvpark ('20 sites are available and all sites offer full hook-ups', '20/30/50 Electric', 'Full sewer and water'), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 20, "pull_through": true, "max_rig_ft": 65, "note": "The inn's page says all sites are over 65 ft ('Big Rig Room')."},
+      "source": "https://indianhillsinn.com/rvpark ('20 sites are available', 'Pull through convenience', 'Big Rig Room -all sites over 65 feet'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"laundry": true, "wifi": true, "dump": true, "note": "Guests use the inn's indoor pool, spa and sauna; the dump station charges non-guests."},
+      "source": "https://indianhillsinn.com/rvpark ('Wireless Internet', 'Indoor pool, spa, sauna', 'Laundry facilities', 'Non-guest dump station ($)'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://live.ipms247.com/booking/book-rooms-indianhillsinnrvpark"},
+      "source": "https://indianhillsinn.com/rvpark ('Reserve an RV Spot' -> eZee booking engine, which books 'RV Parking' online), read 2026-11-03",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "checked": "2026-11-03", "note": "Indian Hills Inn: $45 a night plus tax ($50.40 with taxes and fees on the booking engine for a November 2026 night); $245 a week; long-term metered sites $136.50 + tax a week plus electric."},
+      "source": "https://live.ipms247.com/booking/book-rooms-indianhillsinnrvpark ('$45.00 Total for 1 Night + $5.40 Taxes & fees, Total for stay $50.40') + https://indianhillsinn.com/rvpark ('$45.00+tax, per night', '$245.00 per week'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "RV park at the Indian Hills Inn on US-34 at the east edge of Albia, about 15 minutes from Rathbun Lake; guests use the inn's indoor pool, spa and sauna. --Claude",
+  "summary": "Confirmed 20 pull-through full-hookup 50A sites over 65 ft, $45 + tax ($50.40 total on the booking engine, Nov 2026), $245/week, eZee online booking, laundry, WiFi, dump. Over the US$50 gate with tax, no gateway, not a Good Sam Park; Google 3.8/183 (inn listing). Drop candidate.",
+  "flags": [
+    "PRICE GATE (likely DROP): the operator's booking engine quotes 'RV Parking $45.00 ... + $5.40 Taxes & fees, Total for stay $50.40 incl. taxes & fees' for a Nov 3-4 2026 night, over US$50. gateways.py: 'none within 40 km' (nearest Kansas City 261 km). Not in the Good Sam directory cache (no Albia park), so there is no GS 10%. The weekly rate is $35/night ($245/week).",
+    "RATINGS (likely DROP): the only Google listing is the hotel, 'Indian Hills Inn', 3.8 from 183 reviews ('2-star hotel'). The RV park has no separate listing, and the newest reviews are about the rooms ('Bugs bugs bugs' ... 'room reaked of smoke', 10 months ago; 'Dated but still comfortable'). Under 4.0 with 25+ reviews; whether a hotel listing counts for its RV lot is AWH's call. RV Life: 4 stars, 5 reviews (ratings 6-10). Campendium: 3.0 from 4.",
+    "LONG-STAY: mixed. The page offers 'LONG TERM SITES Weekly metered sites $136.50 + tax a week, plus electric' beside nightly and weekly rates, all within 20 sites, and the engine sells nights online. RV Life stays are nightly or weekly (2023-2025). I read it as transient-first with some long-term sites, passing the five tests, unconfirmed how many sites are long-term.",
+    "PRESENCE: passes (own page with rates and phone 641-932-7181 / 1-800-RATHBUN; online booking live). The inn page itself is stale: 'Copyright © 2017', booking widget years 2020-2022, and 'Restaurant and bar have been closed due to COVID-19 pandemic'. The rates match a 9/2025 RV Life stay at $45.",
+    "SEASON: stored year_round=true rests on note prose; the inn's page states no season. An RV Life stay in 2/2025 and an available night in November 2026 support year-round. Left alone.",
+    "LOCATION: the entry and Google put it in Albia (100 US-34), not Centerville.",
+    "Note: removed the hookups, site count, pull-through, season and rate details the fields now hold."
+  ]
+}

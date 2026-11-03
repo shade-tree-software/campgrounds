@@ -1,0 +1,58 @@
+{
+  "id": 2901,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/geode-state-park (Iowa DNR park page: campground facilities, 100% reservable, season, phone), read 2026-11-03",
+    "https://programs.iowadnr.gov/parkforms/pages/ViewParkAlerts (Geode alerts posted 8/14, 10/2 and 10/30/2026), read 2026-11-03",
+    "https://iowastateparks.reserveamerica.com/camping/geode-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610124 (operations text, site list with types, lengths and amenity tags) and all 81 Geode Campground campsiteDetails.do pages (GIS, length, amps), read 2026-11-03",
+    "USGS NAIP imagery at 40.8237,-91.3827 (450 m) with the RA site points plotted, read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "ReserveAmerica Geode site list (51 'Standard Electric' and 12 'Standard Full Hook-Up' sites, tags 'Electric Hookup available: 20/30/50 amp' x63, 'Full Hookup available' x12), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 81,
+        "max_rig_ft": 85,
+        "pull_through": true,
+        "note": "63 RV sites (51 electric, 12 full hookup; 40-85 ft, about half pull-through) and 18 tent-only sites on the spur south of the main loops, plus a youth group site and a host site. Every RV site is 40 ft or longer. Sites 11-13 and 27-29 are closed September 20, 2026 - May 31, 2027 for repaving."
+      },
+      "source": "ReserveAmerica Geode site list and campsiteDetails pages (Geode Campground: 51 Standard Electric, 12 Standard Full Hook-Up, 18 Tent Only; Max Vehicle Length 40-85; 'Pull-Through' and 'Back-In') + DNR alert posted 8/14/2026 ('Camspites 11-13 and 27-29 are closed September 20, 2026-May 31, 2027 due to repaving'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/geode-state-park ('two modern shower buildings, a modern restroom, sewage dump station') + DNR alert 10/30/2026 ('A pit latrine is available in the center of the campground for winter use'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "12-14", "note": "The DNR park page says the campground 'accepts reservations April 1 - December 14 and is closed December 15 - March 31'; the ReserveAmerica page says 'closed each year from December 1 - March 14' and takes reservations March 15 - November 30."},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/geode-state-park ('The campground accepts reservations April 1 - December 14 and is closed December 15 - March 31.') + ReserveAmerica parkId 610124 ('Campground Closed: The campground is closed each year from December 1 - March 14.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://iowastateparks.reserveamerica.com/camping/geode-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610124",
+        "fcfs": "never",
+        "reserve_until": {"relative_to": "arrival", "at": "22:00"}
+      },
+      "source": "https://iowastateparks.reserveamerica.com/camping/geode-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610124 ('This campground is 100 percent reservable and accepts reservations March 15 - November 30 until 10:00 pm CST the day of arrival.') + DNR park page ('100% of the campsites are reservable and a reservation is required'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded campground on the ridge northeast of Lake Geode; the tent-only sites run down a spur toward the lake. No daily park-entry fee in Iowa. --Claude",
+  "summary": "Confirmed 20/30/50A, full hookups at 12 sites, showers, dump, 100% reservable. Sites corrected 167 -> 81 (63 RV + 18 tent; 40-85 ft, pull-throughs). Season conflict DNR (Apr 1-Dec 14) vs RA (Mar 15-Nov 30) recorded. Not waterfront confirmed. Pin fine (~150 m).",
+  "flags": [
+    "SITES: stored count 167 (from note prose: '~86 electric, ~81 non-electric') is not supported. ReserveAmerica lists 81 sites in Geode Campground (51 Standard Electric, 12 Standard Full Hook-Up, 18 Tent Only) plus youth group site Y and 'Campground Host 24'. There are no non-electric RV sites; every RV site is 40-85 ft, so all 63 fit a 23-ft motorhome.",
+    "SEASON (two official pages disagree): DNR park page 'accepts reservations April 1 - December 14 and is closed December 15 - March 31'; ReserveAmerica 'closed each year from December 1 - March 14', reservations 'March 15 - November 30'. DNR dates kept in the fields, both in season.note.",
+    "PARTIAL CLOSURE: DNR alert (posted 8/14/2026) 'Camspites 11-13 and 27-29 are closed September 20, 2026-May 31, 2027 due to repaving'. Recorded in sites.note, not a status.",
+    "WATERFRONT (not waterfront confirmed): all 82 RA sites tagged 'Near Water - no'. On NAIP the RV loops sit under canopy on the ridge 300+ m from Lake Geode; only the tent-only spur (sites 70-84) runs toward the lake and it stays in woods. The small ponds east of the campground are under 5 acres (one is a pair of treatment cells).",
+    "PIN fine: RA site points centre on 40.82365,-91.38265, ~150 m from the stored pin.",
+    "Note: the stored note repeated site counts, showers, dump, booking and season (and its counts were wrong). Cleaned."
+  ]
+}
