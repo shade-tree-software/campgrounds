@@ -1,0 +1,47 @@
+{
+  "id": 2923,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://iowastateparks.reserveamerica.com/camping/pikes-peak-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610141 (Pikes Peak Campground: 'Status: Open year round.', 'Season Dates ... Pikes Peak Campground: Off Peak: January 1 - April 30 Peak: May 1 - October 15 Off Peak: October 16 - December 31', 'Pikes Peak State Park will close all modern facilities to include restrooms and shower buildings on October 16th for winterization. Water hydrant's will remain on in the campground and dump-station until October 26th 2026. All water and facilities will be off for the season on October 26th 2026. (posted 7-22-2026)', 'This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival'; site list: 57 campsites, 51 Standard Electric, 4 Standard Full Hook-Up, 2 Youth Group Only, every site 'Near Water - no'), read 2026-11-03",
+    "ReserveAmerica campsiteDetails for all 57 Pikes Peak Campground sites (GIS latitude/longitude, Max Vehicle Length 30-55 ft, 'Electricity Hookup: 20/30/50', no 'Proximity to Water' attribute on any site; site photos of the six easternmost sites 47-53), read 2026-11-03",
+    "https://www.iowadnr.gov/places-go/state-parks/all-parks/pikes-peak-state-park ('The campground contains both full hook-up and electric campsites, modern restrooms, showers and a trailer dump station'), read 2026-11-03",
+    "USGS NAIP imagery at 42.9940,-91.1640 (660 m frame), read 2026-11-03"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://iowastateparks.reserveamerica.com/camping/pikes-peak-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610141 (55 sites 'Electric Hookup available: 20/30/50 amp'; 4 'Standard Full Hook-Up' sites 'Full Hookup available'), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 57, "max_rig_ft": 55, "pull_through": true, "note": "51 electric and 4 full-hookup sites (17 pull-throughs) plus 2 youth-group sites; posted vehicle lengths 30-55 ft."},
+      "source": "https://iowastateparks.reserveamerica.com/camping/pikes-peak-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610141 (site list: 51 Standard Electric, 4 Standard Full Hook-Up, 2 Youth Group Only; '55 Pull-Through' x15, '40 Pull-Through' x2; Max Vehicle Length 30-55 ft), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "https://www.iowadnr.gov/places-go/state-parks/all-parks/pikes-peak-state-park ('modern restrooms, showers and a trailer dump station'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open year round. Restrooms and showers close for winter in mid-October and water and the dump station are shut off in late October (October 16 and 26 in 2026)."},
+      "source": "https://iowastateparks.reserveamerica.com/camping/pikes-peak-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610141 ('Status: Open year round.'; 'accepts reservations year round'; 'will close all modern facilities to include restrooms and shower buildings on October 16th for winterization ... All water and facilities will be off for the season on October 26th 2026.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica"},
+      "source": "https://iowastateparks.reserveamerica.com/camping/pikes-peak-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610141 ('This campground is 100 percent reservable and accepts reservations year round until 10:00 pm CST the day of arrival'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded campground on the bluff top at Pikes Peak State Park near McGregor, inland from the overlook where the Mississippi and Wisconsin rivers meet; no river view from the sites. No daily Iowa park-entry fee. --Claude",
+  "summary": "Not waterfront confirmed: no Near Water tag on any of the 57 sites, the loops sit in forest ~400 m inland from the bluff edge, and RA photos of the easternmost sites (47-53) show only woods. Changed sites 77 -> 57 (RA list), season year_round false -> true (RA 'Open year round'), added 50 A, 55-ft max, pull-throughs. Pin ~440 m off: moved to the GIS centroid.",
+  "flags": [
+    "WATERFRONT: not waterfront confirmed. Every RA site is tagged 'Near Water - no' and none has a Proximity to Water attribute. NAIP shows the campground loops ~400-500 m west of the Mississippi through dense forest on a 500-ft bluff. RA photos of the six easternmost sites (47, 48, 49, 51, 52, 53, at about -91.1641 to -91.1645) show only trees and lawn; no river is visible. The river views are at the overlook and trails, not the campsites.",
+    "PIN (~440 m off): stored 42.99750,-91.16333 is north-east of the campground in the woods. The RA GIS centroid of all 57 sites is 42.99375,-91.16513 (range 42.99245-42.99577, -91.16702 to -91.16409), which matches the paved loops and pads on NAIP. Proposed location 42.99375,-91.16513.",
+    "SEASON: stored year_round false rested on note prose ('~March 1 - Nov'); the RA page says 'Status: Open year round' with peak/off-peak pricing covering all of January-December. Water and modern facilities shut off in late October.",
+    "SITE COUNT: stored 77 rested on note prose; RA lists 57 campsites (the page's '62 site(s) found' includes 5 non-campsite rows). The DNR amenity list still names 'Non-electric campsites', but RA lists none and the rate sheet has no non-electric price for Pikes Peak.",
+    "FEES: stored $20/$26 base and full-hookup $38 match the Iowa DNR rate sheet (updated Feb 15 2026); not changed.",
+    "Note: removed the site, hookup, facilities, season and reservation text (now in fields); kept the no-entry-fee line."
+  ]
+}
