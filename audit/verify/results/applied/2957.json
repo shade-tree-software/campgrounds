@@ -1,0 +1,61 @@
+{
+  "id": 2957,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233618 (facility description, notices, rules), read 2026-11-03",
+    "https://www.recreation.gov/api/camps/campgrounds/233618/rates (rate table through 2028), read 2026-11-03",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233618 (56 public sites: type, equipment, lengths, electric, coordinates, preview photos), read 2026-11-03",
+    "Esri World_Imagery at 41.8140,-91.5960 (250 m) with the catalog's site coordinates plotted, read 2026-11-03",
+    "recreation.gov site preview photos for 010, 011, 033, 034, 037, 038, read 2026-11-03",
+    "https://www.mvr.usace.army.mil/Missions/Recreation/Coralville-Lake/ refused (403 Access Denied); not read"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 22,
+        "nightly_high": 22,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Standard electric sites $22; walk-to tent sites $14. Cancellation $10 service fee (plus the first night if cancelled the day before or day of arrival); no-show $20 service fee plus the first night."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233618/rates (Peak Season 2026-05-01 to 2026-09-29: 'STANDARD ELECTRIC': 22, 'WALK TO': 14) and the facility notices (cancellation/no-show), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": null, "sewer": null},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:233618 (48 STANDARD ELECTRIC sites 'Electricity Hookup': '30', 'Electric Hookup': '20/30'; no water or sewer attribute on any public site; the only water/sewer sites are 020 and 021, type MANAGEMENT, not reservable), read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 56, "max_rig_ft": 66, "pull_through": false, "note": "48 back-in standard electric sites (gravel, 40-66 ft except site 009 at 20 ft) and 8 walk-to tent sites; two more are management (host) sites. One RV and two tents, or three tents, per site; up to 6 people."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:233618 ('Driveway Entry': 'Back-in' on all 48 electric sites; 'Max Vehicle Length' 20-66) and facility notices ('Three camping units are permitted per site: One RV and two tent, or three tents per site.'; 'Up to 6 occupants are permitted per site.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233618 ('Amenities include modern restroom and shower facilities, playground, dump station, drinking water, and entrance station.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-30"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233618 (facility phone: 'MAY 1 - SEPTEMBER 30 SANDY BEACH CAMPGROUND (319) 848-4400 OCTOBER 1 - APRIL 30 CORALVILLE LAKE PROJECT OFFICE'; rates Peak Season 05-01 to 09-29 nights), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "14 nights in a rolling 30 days. Register at the entrance station 2-8 pm; check-in 2 pm, check-out noon."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233618 (rules maxStay 14 nights, 'Rolling 30 Days'; notices 'Visitors shall register for their campsite at the Sandy Beach Campground Entrance Station from 2:00 P.M. - 8:00 P.M.', 'Check-Out Time is 12:00 P.M.', 'Check-In Time is 2:00 P.M.'), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Coralville Lake campground (Rock Island District) in hardwood woods on the north shore of the lake, beside the Sandy Beach day-use area (picnic sites, group shelter, boat ramp, fish cleaning station, lake access). No boats moored on the shore overnight. --Claude",
+  "summary": "rec.gov catalog read: 56 public sites (48 back-in 30-amp electric, 8 walk-to tent), lengths 40-66 ft; water/sewer cleared (only the two management/host sites have them); max rig 48 -> 66; fees $22 confirmed; season May 1 - Sept 30, 14-night max, potable water added.",
+  "flags": [
+    "WATERFRONT RE-AUDIT LEAD (up, 'not waterfront' -> lake view): official rec.gov preview photos for sites 010, 011, 034, 037 and 038 show Coralville Lake through the trees behind the pads (filtered view; 033's photo shows a glimpse at the left edge). On imagery the nearest pads (033/034, 009-011) sit ~70-120 m from the shore across a wooded/brushy slope, so no on-water candidate; about 6-8 view candidates along the south/east edge of the loops (009-011, 033-039). The stored evidence ('continuous treeline screen') was read at the pin ~330 m west of the RV loops.",
+    "HOOKUPS: stored water/sewer true (note prose from rec.gov's 'full hook-up campsites') rest only on the two MANAGEMENT sites 020/021 (not reservable, host pads); no public site carries a water or sewer attribute. Cleared to null (unknown), not false.",
+    "SITE 009: 20 ft max vehicle length; the other 47 electric sites are 40 ft or more.",
+    "PIN ~330 m OFF: stored 41.81453,-91.59956 sits west of the walk-to tent sites near the road; the RV loops' centroid from the catalog is 41.81381,-91.59572. Suggest 41.8138,-91.5960 (the entrance/loop junction).",
+    "DISCOUNTS: rec.gov rules carry 'militaryDiscount' for this facility; not written (no discount group asked; federal policy row covers the interagency passes).",
+    "USACE district page refused (403); the season rests on rec.gov's phone block and rate seasons.",
+    "NOTE: dropped the site count, hookup types, rig lengths, facilities, rec.gov and season text (fields carry them)."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": 3010,
+  "checked": "2026-11-03",
+  "sources": [
+    "https://cityofatlantic.com/parks-recreation/parks/schildberg-recreation-area/ refused (Cloudflare security block); not read",
+    "https://www.campspot.com/api/gator-core/v2/parks/slug/schildberg-recreation-area-campground (park record: description, terms and conditions, cancellation and refund policy, check-in/out, phone), read 2026-11-03",
+    "Campspot availability for 2026-11-10 (one category, 'Standard Full Hookup RV Site', 38 sites, each 'rvLengthMax' 55, amenities 30-Amp, 50-Amp, Back-In, Sewer Hook-Up, Water Hook-Up, Private Shower) and quotes for 1 and 2 nights from 2026-11-10, 2 adults; 2027-06-15 returned no categories (not yet open for booking), read 2026-11-03",
+    "Esri World_Imagery at 41.4140,-95.0150 (450 m) and 41.4146,-95.0148 (130 m), read 2026-11-03"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "reservation_fee": 2,
+        "checked": "2026",
+        "note": "Standard full-hookup site $25 a night before the $2 booking/registration fee, which is charged once per stay and to walk-ins as well. Cancel at least 48 hours ahead; under 24 hours forfeits the stay; a $15 minimum cancellation fee applies. Read 2026-11-03."
+      },
+      "source": "Campspot quote, Standard Full Hookup RV Site, 2026-11-10 to 11-11 and 11-10 to 11-12, 2 adults ('averagePricePerNightBeforeTaxesFeesAndDiscounts': 25.0; 'itemizedCampgroundFees': 'Booking Fee' 2.0 on both trips), and the park's terms ('All camping sites include a $2.00 registration fee regardless of payment option.'; cancellation policy 'notify us at least 48 Hours prior ... a minimum $15.00 cancellation fee will apply'), read 2026-11-03",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "Campspot availability 2026-11-10, every site: amenities '30-Amp', '50-Amp', 'Electricity', 'Water Hook-Up', 'Sewer Hook-Up', read 2026-11-03",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 38, "max_rig_ft": 55, "pull_through": false, "note": "38 back-in gravel full-hookup sites on Campspot (numbered to 47; the camp host is in site 2)."},
+      "source": "Campspot availability 2026-11-10 with includeUnavailable (38 sites in 'Standard Full Hookup RV Site', each 'rvLengthMax': 55, 'Back-In', 'Gravel Pad'), and the terms ('Please see the Camp Host in campsite 2'), read 2026-11-03",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true},
+      "source": "Campspot park description ('The campground is open with a full functioning bathhouse and full hookups.'), read 2026-11-03",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "note": "Unreserved arrivals register and pay in full on arrival with the camp host in site 2. Check-in 2 pm, check-out 11 am."},
+      "source": "Campspot park record (terms: 'Campers who have not reserved their campsites will need to do so immediately upon arrival & pay the fees for the selected site(s) in full.'; checkinTime 2:00pm, checkoutTime 11:00am), read 2026-11-03",
+      "method": "manual"
+    }
+  },
+  "note": "City of Atlantic campground in a reclaimed quarry with three fishing lakes, on the northwest edge of town: rows of back-in sites in open grass east of the south lake, a trail around the lakes, a fishing dock, playground and dog park. --Claude",
+  "summary": "Campspot read: $25 + $2 booking fee confirmed; 38 back-in full-hookup sites (30/50 amp, 55 ft) -> count 35 -> 38, electric 50 and max rig 55 added; bathhouse; reservable with walk-in registration at the host. City page blocked. Lakes are 7+ ha (not ponds) but the nearest pads are ~60 m back behind a trail and shore shrubs: lakefront looks like lakeview (lead).",
+  "flags": [
+    "WATERFRONT RE-AUDIT LEAD (down, lakefront -> lakeview): the three quarry lakes are well over 5 acres (the south lake ~450 x 200 m on imagery), so they are lakes, not ponds. The campground's rows sit in open grass east of the south lake; on 0.37 m/px imagery (41.4146,-95.0148) the westmost pads are ~55-65 m from the water, with the lake trail (a gravel path) and a continuous shrub/tree fringe along the shore between them, and the fishing dock and playground (day use) to the north. Beyond the ~50 m bound and screened at the edge: open view across the grass, so lakeview at best. The stored value had no per-entry evidence (commit-level only).",
+    "CITY PAGE UNREAD: cityofatlantic.com returned a Cloudflare security block; not retried. Season (stored year_round true, note prose) stays unconfirmed: Campspot sells November nights but returned nothing for June 2027 (not yet bookable), and states no season.",
+    "SITE COUNT: Campspot lists 38 sites (numbers 1-47 with gaps; host in 2); imagery shows ~45 pads, so a few may be seasonal or held back.",
+    "PIN fine: stored 41.41357,-95.01496 sits at the west end of the site rows.",
+    "NOTE: added the layout; nothing dropped but restrooms (the bathhouse is in facilities)."
+  ]
+}

@@ -50,6 +50,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 15601 Prairie Ridge A Loop stored lakeview, p3-253: west row A01-A12 ~50-60 m to the waterline through a brush band; A01, A09 photos look open
 - 3172 Pollmiller stored not waterfront: sites 6, 8, 9, 10 may see the 16-acre lake through the belt
 - 3168 Morgan Creek stored not waterfront: east-end pads ~20-25 m from a 6-8 m creek through a wooded bank
+- 3069 Smith Lake stored lakeview, p3-254: North 61-64 lakefront-grade but seasonal-lottery first; if leftovers count as nightly, lakefront
+- 3010 Schildberg stored lakeview: pads ~55-65 m behind a trail; a site-level map could place some closer
+- 2959 Sugar Bottom stored lakeview: west-shore 030, 047, 100, 101 at ~50-90 m through brush
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
