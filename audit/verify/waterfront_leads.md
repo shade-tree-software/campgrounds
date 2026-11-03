@@ -64,6 +64,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3036 Dakota City Memorial Park stored not waterfront: city site 403; an official photo of the river from a site would support riverview
 - 3084 Beaver Meadows stored not waterfront: a campsite photo across open grass to Beaver Creek (~35 m) would support riverview
 - 3078 Wilkinson Pioneer stored not waterfront, p3-265: a county photo of the Shell Rock from a site would support riverview
+- 3026 Bessman-Kemp stored riverview, p3-266: county says sites 2-4 are 'along the Iowa River', spurs end ~15-20 m from water behind bank trees; a site photo showing an open apron would support riverfront
 
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
