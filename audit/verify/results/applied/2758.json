@@ -1,0 +1,55 @@
+{
+  "id": 2758,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233551",
+    "https://www.recreation.gov/api/camps/campgrounds/233551/rates",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 99 catalog sites (coordinates, lengths, hookups)",
+    "https://www.recreation.gov/api/camps/availability/campground/233551/month (Oct 2026, Nov 2026, Apr 2027, May 2027)",
+    "Esri World Imagery with the rec.gov site coordinates plotted (40.0856,-99.3222 at ~1.6 m/px; shore close-ups at ~0.2-0.35 m/px)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 34, "currency": "USD", "checked": "2026", "note": "Peak season (May-Sept): non-electric $18, 50-amp electric $30-34."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233551/rates (Peak Season 2026-05-01 to 2026-09-30: STANDARD NONELECTRIC 18, Peak50AmpReservable 30, STANDARD ELECTRIC 34; same table for 2027), read 2026-11-04",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "recreation.gov campsite records for 233551 (62 sites 'Electricity Hookup 50'; 35 bookable electric sites 'Water Hookup Yes'; 32 bookable electric sites 'Sewer Hookup Y'), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 133, "note": "recreation.gov's catalog lists 91 bookable sites (61 electric, 29 non-electric, 1 group shelter) plus 8 management sites; every bookable site takes 45 ft or more, all back-in, gravel spurs."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233551 ('Methodist Cove Park offers 133 campsites, including a variety of individual, group, electric and non-electric sites') + campsite records (Max Vehicle Length 45-120 ft, Driveway Entry Back-In, Driveway Surface Gravel), read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233551 ('One large heated shower house with flush toilets ... several vault toilets ... Other amenities include a dump station, drinking water, playground and boat ramp'), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "season": {"opens": "05-01", "closes": "09-30"},
+        "note": "Site-specific bookings on recreation.gov through the day of arrival (cutoff 0), May 1 - Sept 30 only; no dates are listed outside that. 2-night minimum on weekends and 3 on holiday weekends (recreation.gov minimums, which may be relaxed for a same-day booking). 14 nights in any rolling 30 days. Every camper checks in on arrival; one camping unit and six people per site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233551 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days', reservationCutOff 0; notices 'All campers must check in when arriving at park', 'Only one camping unit allowed per site', 'Maximum of six people allowed per site') + rates (Peak Season 05-01 to 09-30, 2026-2028) + availability (Oct/Nov 2026 and Apr 2027 no dates; May 2027 listed), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "USACE park on the west side of 13,000-acre Harlan County Lake, 2.5 mi east of Alma. Mostly shaded; paved main road, gravel back-in spurs. The west non-electric loop sits on open lawn at the shore; the electric loops are behind the shore road. Attendant on duty May-Sept; boat ramp, fish-cleaning station by the entrance, two marinas on the lake's east end. --Claude",
+  "summary": "Confirmed on recreation.gov: $18 non-electric / $30-34 50-amp electric (2026 peak), 133 sites with 91 bookable in the catalog (all take 45 ft+), 50-amp + water + sewer sites, showers, flush and vault toilets, water, dump. Added the weekend 2 / holiday 3-night minimums, the 14-in-30 limit and the May 1 - Sept 30 booking season. Lakefront confirmed from plotted site coordinates. Note cleaned. Campground season outside the booking window not stated.",
+  "flags": [
+    "Waterfront (no change, lakefront confirmed): rec.gov site coordinates on imagery put the west non-electric loop's sites 006, 007, 009, 015 and 017 on open mowed lawn running straight to the riprap shore, 20-40 m from the water with no road, driveway or day-use area between (015 sits at the base of the jetty). The shore-row electric sites 039-056 are lakeview only: the paved shore road runs between their pads and the riprap. Sites 057/058 sit south of that road on the point by the fishing pier.",
+    "Pin OK: stored 40.0850,-99.3280 is inside the west loop by sites 003/005; rec.gov's facility point is 40.0869,-99.3156 (east end); the site centroid is 40.0844,-99.3247.",
+    "Phone 308-799-2105 matches recreation.gov's facility phone.",
+    "Season: recreation.gov prices and books only May 1 - Sept 30 (2026-2028; a one-off April 2024 'Transition' season existed). Whether the park is open first-come outside that is not stated; the Corps' own Harlan County pages (nwk.usace.army.mil) returned 'Access Denied' and were not retried. Campground season left unset.",
+    "recreation.gov lists a militaryDiscount rule (value 1) for this facility; not written (discounts not in this result).",
+    "The 2024+ lake level looks normal on imagery: water at the riprap along the whole campground shore."
+  ]
+}

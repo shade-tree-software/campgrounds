@@ -1,0 +1,56 @@
+{
+  "id": 2760,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://www.fs.usda.gov/r02/nebraska/recreation/red-cloud-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/10315092",
+    "https://www.recreation.gov/api/camps/campgrounds/10315092/rates",
+    "trip_data/ridb_campsites.json (10315092, fetched 2026-10-20)",
+    "https://campgrounds.rvlife.com/api/reviews/park/13404",
+    "Esri World Imagery at 42.6950,-103.0032 (~0.44 m/px)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 10, "currency": "USD", "checked": "2026", "note": "$10 a night, one vehicle included; extra vehicle $5. Pay on site (recreation.gov Scan & Pay). Senior/Access pass holders pay half for their own site."},
+      "source": "https://www.fs.usda.gov/r02/nebraska/recreation/red-cloud-campground ('Single Site: $10 per night (1 vehicle included per site) Additional Vehicle Fee: $5 per night'; '$10/vehicle/night. Please pay onsite'; last updated March 20, 2025) + https://www.recreation.gov/api/camps/campgrounds/10315092/rates ('First-come, First-served Season' 2026 and 2027, WalkInScanPay1 10), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "platform": "none",
+        "fcfs": "always",
+        "max_stay_nights": 14,
+        "note": "First-come, first-served; no reservations. Pay on site, by recreation.gov Scan & Pay at the campground."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10315092/rates (only rate season 'First-come, First-served Season', WalkInScanPay rates) + RIDB catalog (no reservable campsite; the one site record is 'reservable: false') + https://www.fs.usda.gov/r02/nebraska/recreation/red-cloud-campground ('Please pay onsite'; 'Stay limit is 14 days'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.fs.usda.gov/r02/nebraska/recreation/red-cloud-campground (Operational Hours: 'Open year-round'; status 'Site Open'), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13},
+      "source": "https://www.fs.usda.gov/r02/nebraska/recreation/red-cloud-campground ('The campground has 13 sites with picnic tables, parking pads, pedestal grills, fire rings, and a vault toilet'), read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "https://www.fs.usda.gov/r02/nebraska/recreation/red-cloud-campground (Restrooms 'Vault toilet(s)'; Water 'Potable water is not available at this site'), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "Nebraska NF, Pine Ridge District, 8 mi south of Chadron on the west side of US-385 (1 mi south of Chadron State Park), in ponderosa pine. Gravel pads, mostly short back-ins; a 2025 reviewer says only 2 sites take a 40-ft rig, with a tight turnaround at the end. Picnic tables, pedestal grills, fire rings. Pine Ridge Trail via the Outrider and Strong Canyon trailheads. Heavy US-385 truck noise. --Claude",
+  "summary": "Booking corrected: recreation.gov lists Red Cloud only as a first-come Scan & Pay site, not reservable (reservable true / recreation.gov -> false / none, fcfs always). $10 a night confirmed on the FS page and rec.gov rate table; FS says open year-round, 13 sites, vault toilet, no potable water (added), 14-day limit. Note cleaned. Not waterfront stays.",
+  "flags": [
+    "BOOKING CHANGE: the entry says reservable on recreation.gov, but recreation.gov's only rate season is 'First-come, First-served Season' (WalkInScanPay $10), and the RIDB catalog has no reservable campsite. The FS page says 'Please pay onsite'. The recreation.gov link in `website` is the Scan & Pay page, not a booking page; worth keeping only as the payment link.",
+    "Fee conflict on recreation.gov: its fee description still says '$15/night/vehicle. $7.50/extra vehicle', but its rate table charges $10 and the FS page (updated March 2025) says $10 + $5 extra vehicle. Went with $10.",
+    "Fit: no length posted. RV Life 7/2025 (motorhome, paid $10): 'Nice RV sites only 2 will handle a 40' tight turnaround at the end'; 2012: 'Not big rig friendly'. A 23-ft motorhome should fit; kept.",
+    "Pin OK: stored 42.69455,-103.00282 sits at the entrance off US-385; the FS/rec.gov point 42.69583,-103.00361 is ~155 m NW along the campground road.",
+    "Phone 308-432-0300 is the Pine Ridge Ranger District / Supervisor's Office (matches the FS page).",
+    "The 'two pull-throughs' (sites.pull_through true, derived from the old note) are not stated on the FS or rec.gov pages; left as it was. A 2025 RV Life reviewer logged a pull-through site.",
+    "Forest alerts listed on the FS page (none for Red Cloud): 'Prohibits Camping more than 14 days', USFS Road 7055 intermittent closure, Railroad Buttes shooting prohibition."
+  ]
+}

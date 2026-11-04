@@ -1,0 +1,41 @@
+{
+  "id": 2721,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099",
+    "https://nebraskastateparks.reserveamerica.com/campsiteDetails.do?siteId=40829&contractCode=NE&parkId=230099 (BEACH AREA 1, the beach-area product's alerts and footnotes)",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf + ne_booking_check_2026-10-12.jsonl (beach areas quoted $20 Tue / $25 Sat for June 2027)",
+    "Google Maps panels: 'North Shore Lodge' (1 N Shore Rd, Lemoyne) and 'Lake McConaughy State Recreation Area Visitor Center'",
+    "Esri World Imagery at 41.26471,-101.78471 (~3.3 m/px and ~0.67 m/px) and the beach at 41.2610,-101.7815 (~1 m/px)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099",
+        "fcfs": "never",
+        "window_opens_days": 30,
+        "note": "All camping at Lake McConaughy is by advance reservation only. Beach camping books 30 days ahead by beach area, not by site ('When you reserve a beach site it will not be site-specific, but rather area specific'); check in with staff at a fee booth or the Visitor Center, 2-9 pm MST, before driving to the beach. One camper plus one tent, or two tents, and 8 people per booking."
+      },
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099 ('all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only. Reservations are available 180 days in advance for designated camp sites and 30 days in advance for beach camping') + campsiteDetails.do?siteId=40829 ('Site Reserve Type: Non Site-Specific'; 'Campers with reservations must check in with staff either at a kiosk (fee booth) or at the Visitor Center. Check-In time is from 2 pm MST to 9 pm MST'; 'Occupancy for overnight camping is 8 people and 2 tents or 1 camper+1 tent'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099 ('Status: Open year round') + NGPC rates grid (beach camping $15 outside May 21 - Sept 12), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "Game and Parks beach camping on Lake McConaughy's north shore at Lemoyne, past North Shore Lodge: sand tracks through the dunes lead onto a wide open beach, and you camp anywhere in the booked beach area. Low water can leave a beach area without waterfront access. Pay showers. No alcohol, glass, fireworks, UTVs, ATVs or golf carts; fires in rings or on the camping beach (not the day-use beach). Park office and check-in at the Visitor Center below Kingsley Dam. --Claude",
+  "summary": "Booking confirmed and filled from ReserveAmerica: reservation-only, area-specific beach camping booked 30 days ahead (platform changed operator -> reserveamerica, with the park link), check-in at a fee booth or the Visitor Center; park listed open year-round. Fees ($15 off-season, $20/$25 in season) already match the NGPC grid and the booking site, left. Note cleaned (the old 'peak season only' reservation wording is out of date). Weak spots: stored pin is on the private North Shore Lodge, 2WD access over the sand tracks could not be read, facilities unconfirmed.",
+  "flags": [
+    "PIN (~360 m): stored 41.26471,-101.78471 is in North Shore Lodge, a private RV/cabin development at 1 N Shore Rd, Lemoyne (Google: 'North Shore Lodge', 4.3 from 107 reviews, 308-355-2222), not the state beach. The beach camping is the open sand south-east of it; suggest ~41.2615,-101.7840, where the dune tracks reach the beach. RV Life's point for 'North Shore - Lake McConaughy' (258583) is 41.26888,-101.79586, by the highway north-west of the lodge, also off the beach.",
+    "CRITERIA (2WD, unverified): the beach is reached only by unpaved sand two-tracks through the dunes (imagery). Whether NGPC warns of soft sand or recommends 4WD for North Shore could not be read: outdoornebraska.gov is blocked to plain HTTP, and visitkeithcounty.com / ilovelakemac.com returned Akamai 'Access Denied'; not retried. Worth a human check before trusting this entry for a 23-ft motorhome.",
+    "Waterfront (no change, lakefront kept with a caveat): beach camping is on open sand with nothing between the camp and the water; imagery shows a beach ~100-200 m wide, open to the waterline. The booking site's own footnote warns 'Due to low water levels, not all beach areas guarantee waterfront access', now in the note.",
+    "Which of ReserveAmerica's 16 bookable beach areas (BEACH AREA 01-14, 16, 17) are 'North Shore' is not stated on any page I could read; the NGPC map is on the blocked site.",
+    "PHONE: the entry has none. Lake McConaughy park office / Visitor Center: 308-284-8800 (ReserveAmerica description 'call the Park Office at 308-284-8800'; Google's Visitor Center panel matches). apply.py does not write phones.",
+    "Facilities (potable_water, showers: derived from the old note, which came from NGPC) not re-confirmed: the booking pages list only park-wide amenities (restrooms, comfort station, dump station). Left as they were.",
+    "Beach-area alerts: 'The use of UTVs, ATVs and/or golf carts is prohibited'; alcohol and glass prohibited; check-out noon MST."
+  ]
+}
