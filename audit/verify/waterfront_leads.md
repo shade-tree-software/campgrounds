@@ -84,6 +84,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **2768 Arnold Lake RA (NE, p3-277):** lakefront rests on the village map (sites 10, 11, 13-15 on shore); canopy hides the pads on NAIP - a site photo would confirm.
 - **2778 Recharge Lake (NE, p3-277):** set to lakeview; if the wooded bank blocks the view from the west row, not waterfront.
 
+- **2818 Mill Race Park, Atkinson (NE, p3-281):** the 14-acre lake is 65-70 m from the north row across a road and trees; lakeview for 2-3 sites if a photo shows the lake from them. Held at not waterfront.
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft

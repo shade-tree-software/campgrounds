@@ -1,0 +1,87 @@
+{
+  "id": 2706,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://lpnnrd.org/outdoor-recreation/lake-wanahoo/ (Lower Platte North NRD: 'Lake Wanahoo NRD Recreation Area'; 'The camping area on the West side offers 95 gravel camper pads with electrical hookups, 34 primitive non-electric tent sites, 6 primitive cabins and a shower house'; 'Half of the camping sites are reservable'; 'Camping with electrical hookup: $25/night | Tent camping: $8/night | Cabins: $50/night'; 'Dump Station is available on the East side of the lake.'; 'Permit prices: Day Pass $5. Annual permit for LPNNRD residents ... $15. Annual permit for non-LPNNRD residents: $25'; 'Campsite reservations for the following calendar year will be accepted beginning October 1 of the current year'; office 402-443-4675), read 2026-11-04",
+    "https://portal.setyoursites.com/reservation/8025e8e7-aab1-4b6e-9e7d-ac127f6fb113 via api.setyoursites.com (campground 'Lake Wanahoo Eagle View': 135 sites; 95 Electric at $25 (75 with 30 A, 40 with 50 A, every site water:false, sewer:false), 32 Primitive at $8, 2 Group Primitive at $15, 6 Cabins at $50; maxNights 14; 'R'-suffixed sites reservable, the rest walk-up; calendar 2026-11-04..2027-11-04 shows sites available every day of the year), read 2026-11-04",
+    "https://digital.outdoornebraska.gov/nebraskaland-magazine/lower-platte-north-nrd-to-assume-management-of-lake-wanahoo-recreation-area (title, search index 2026-11-04; not opened, outdoornebraska.gov is Cloudflare-blocked)",
+    "audit/state_park_fees/README.md (2026-10-12: Lake Wanahoo is not on the NGPC 2025 camping rates grid)",
+    "Esri World Imagery and USGS NAIP at 41.2440,-96.6180, 2026-11-04"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "entrance": {
+          "resident": 5,
+          "nonresident": 5,
+          "per": "vehicle_day",
+          "name": "park permit"
+        },
+        "note": "Electric gravel pads $25 a night (tent sites $8, cabins $50). A park permit is required for every vehicle: $5 a day, or $15 a year for district residents and $25 for others."
+      },
+      "source": "https://lpnnrd.org/outdoor-recreation/lake-wanahoo/ ('Camping with electrical hookup: $25/night'; 'Permit prices: Day Pass $5. Annual permit for LPNNRD residents ... $15. Annual permit for non-LPNNRD residents: $25') + Set Your Sites prices (95 Electric sites at 25), read 2026-11-04",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": null
+      },
+      "source": "https://lpnnrd.org/outdoor-recreation/lake-wanahoo/ ('95 gravel camper pads with electrical hookups'; water only at the shower house) + Set Your Sites site records (40 Electric sites has50Amp, 75 has30Amp; water:false on all 135), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 95,
+        "note": "95 gravel electric pads, plus 34 non-electric tent sites and 6 primitive cabins."
+      },
+      "source": "https://lpnnrd.org/outdoor-recreation/lake-wanahoo/ ('95 gravel camper pads with electrical hookups, 34 primitive non-electric tent sites, 6 primitive cabins'), read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true
+      },
+      "source": "https://lpnnrd.org/outdoor-recreation/lake-wanahoo/ ('a shower house (on the southwest end of the RV area)'; 'Dump Station is available on the East side of the lake.'), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://portal.setyoursites.com/reservation/8025e8e7-aab1-4b6e-9e7d-ac127f6fb113",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "note": "Half the sites reservable through Set Your Sites; the rest walk-up (pay by envelope or phone). Next year's dates open October 1. Reservations are non-refundable; dates can be moved up to 7 days before arrival."
+      },
+      "source": "https://lpnnrd.org/outdoor-recreation/lake-wanahoo/ ('Half of the camping sites are reservable'; 'Envelopes are provided at the camping entrance'; 'All camping reservations are final'; 'Reservations cannot be cancelled within 7 days'; 'Campsite reservations for the following calendar year will be accepted beginning October 1') + Set Your Sites (maxNights 14; disclaimer 'Walk-up sites must be occupied immediately ... Reservations are non-refundable'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true
+      },
+      "source": "Set Your Sites calendar for 8025e8e7-aab1-4b6e-9e7d-ac127f6fb113, 2026-11-04..2027-11-04 (sites available every day, December-March included), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "Lower Platte North NRD recreation area on 662-acre Lake Wanahoo, ~2 mi N of Wahoo on Hwy 77 (formerly run as a state SRA). Campground on the west shore: herringbone gravel electric pads off two park roads, the eastern row facing the lake; tent sites, primitive cabins, shower house at the southwest end. Little shade. No-wake boating; three-lane boat ramp; hike/bike trail round the lake. Generators until 10 p.m. --Claude",
+  "summary": "Lake Wanahoo is now run by the Lower Platte North NRD, not Nebraska Game and Parks (it is off the NGPC grid and books through Set Your Sites, not ReserveAmerica). The NRD page and booking engine confirm 95 electric gravel pads (30/50 A) at $25, a shower house, a dump station on the east side, half the sites reservable, a 14-night limit and a $5 day park permit; all written. No site has a water hookup in the booking engine and the NRD names only electric, so the derived water value is cleared. Lakefront holds for the east row of the eastern road on imagery. Ownership, name, website and phone need changing (flags).",
+  "flags": [
+    "OWNERSHIP state -> local: the Lower Platte North Natural Resources District runs it ('Lake Wanahoo NRD Recreation Area'; Nebraskaland: 'Lower Platte North NRD to assume management of Lake Wanahoo recreation area'). An NRD is a regional authority, so `local` under the curation doc. It is not on NGPC's 2025 grid nor on nebraskastateparks.reserveamerica.com. apply.py doesn't write ownership.",
+    "RENAME: suggest 'Lake Wanahoo NRD Recreation Area' (the operator's name; the booking engine calls the campground 'Lake Wanahoo Eagle View').",
+    "WEBSITE: stored https://outdoornebraska.gov/location/lake-wanahoo/ is the former manager's page (and blocked). Suggest https://lpnnrd.org/outdoor-recreation/lake-wanahoo/.",
+    "PHONE: stored 402-443-1037 does not appear on the NRD page; the NRD office (reservations, rescheduling, Pork Chop Island bookings) is 402-443-4675. Suggest replacing.",
+    "WATERFRONT lakefront KEPT: NAIP shows two herringbone rows of gravel pads; the eastern road's east-side pads end ~25-40 m from the shoreline across open mown grass, with only a narrow mown hike/bike trail along the bank, no road, driveway or day-use area between. The western road's pads are behind the eastern row (lakeview at most). Weak spot: the shoreline trail between pads and water.",
+    "HOOKUPS: water (derived from the old note's '30 & 50 amp, water') cleared to null. Set Your Sites marks water:false on all 135 sites and the NRD names electrical hookups only, with water at the shower house. Not written as false, since the engine's booleans may be defaults.",
+    "SEASON year_round written from the booking engine selling winter nights; no page states winter services (shower house water likely off). Weak spot.",
+    "PIN (optional, ~90 m): stored 41.2440,-96.6170 is on the shoreline east of the pads. The pad rows centre near 41.2440,-96.6181.",
+    "Set Your Sites gives every site a placeholder siteLength of 60, so no max_rig_ft was written. The NRD says the gravel pads are camper pads; big-rig friendly per the old note.",
+    "NOTE CLEANED: dropped the site counts, amperage/water, showers, reservable split and park-permit text held in fields; the 'run as a state SRA' claim is replaced by the NRD operator."
+  ]
+}
