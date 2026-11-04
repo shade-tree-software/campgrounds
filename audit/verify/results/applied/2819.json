@@ -1,0 +1,73 @@
+{
+  "id": 2819,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://www.cozadne.net/page/camping (City of Cozad, Parks and Recreation > Camping: 'Muny Park | Campground offers 12 spaces with RV hookup and tent area for $25/night. Pay at the site with QR code. The campground is on a first come first serve basis. If you have questions, please call the City Office at 308-784-3907.'; 'View Availability' links to Set Your Sites), read in the headless browser 2026-11-04 (plain HTTP gets a client challenge)",
+    "https://portal.setyoursites.com/explore/campground/city-of-cozad-muny-park via https://api.setyoursites.com/api/campgrounds/city-of-cozad-muny-park ('City of Cozad Muny Park', 12 sites, each price 25, minNights 1, maxNights 14; announcement 'Due to freezing temperatures, campsite and campground water and dump station services may be unavailable after mid-October and will remain closed during the off-season.'), /availability?targetStart=2027-06-08 (every site has30Amp and has50Amp true, has20Amp false, water true, sewer true, siteLength 60 on all 12) and /calendar?startDate=2026-11-04&days=365 (12 available, 0 reservable, every day of the year), read 2026-11-04",
+    "Esri World Imagery at 40.86595,-99.99767 and 40.86536,-99.99559, 2026-11-04"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026"
+      },
+      "source": "https://www.cozadne.net/page/camping ('12 spaces with RV hookup and tent area for $25/night') + Set Your Sites (all 12 sites price 25), read 2026-11-04",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "Set Your Sites site records for City of Cozad Muny Park (all 12 has30Amp and has50Amp true, water true), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 12,
+        "max_rig_ft": null
+      },
+      "source": "https://www.cozadne.net/page/camping ('Campground offers 12 spaces with RV hookup'); max_rig_ft 50 came from directory prose, and Set Your Sites gives every site the placeholder length 60, read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "dump": true
+      },
+      "source": "Set Your Sites announcement for City of Cozad Muny Park ('campsite and campground water and dump station services may be unavailable after mid-October'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Open all year, but site water and the dump station may be shut off from mid-October through the off-season."
+      },
+      "source": "Set Your Sites calendar 2026-11-04..2027-11-03 (12 sites available every day) + announcement ('water and dump station services may be unavailable after mid-October and will remain closed during the off-season'), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always",
+        "max_stay_nights": 14,
+        "note": "No reservations; pay at the site by QR code (Set Your Sites)."
+      },
+      "source": "https://www.cozadne.net/page/camping ('Pay at the site with QR code. The campground is on a first come first serve basis.') + Set Your Sites (maxNights 14; reservableSiteCount 0 every day), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "City of Cozad campground in Muny Park, 1401 Ave O: a row of concrete back-in pads along the gravel lot by the ballfield, trees along the back, a big lawn and playground beside; swimming pool next door. Railroad tracks nearby. Tent area too. --Claude",
+  "summary": "The City of Cozad's camping page and its Set Your Sites listing confirm 12 RV spaces at $25 a night, first come first served with pay-by-QR, 30/50 A and water at every site, a 14-night limit, a dump station and sites available all year (water and dump shut off after mid-October); all written. The directory-derived 50-ft max length is cleared. Website should be the city's page; the pin is ~195 m off at the park entrance.",
+  "flags": [
+    "WEBSITE: stored https://visitnebraska.com/cozad/muny-park is a tourism directory (and blocked). Suggest the city's page https://www.cozadne.net/page/camping. The Set Your Sites listing (https://portal.setyoursites.com/explore/campground/city-of-cozad-muny-park) is pay-on-site only, so no booking.url was written. apply.py doesn't write website.",
+    "PIN (~195 m): stored 40.86536,-99.99559 is at the park entrance on Ave O. Esri imagery shows ~13 concrete back-in pads along the SW edge of the gravel lot west of the ballfield; their centre is about 40.8660,-99.9978. Suggest moving.",
+    "SEWER: Set Your Sites marks sewer true on all 12 sites, but the city says only 'RV hookup' and the note/directories say partial hookups with a dump station. Engine booleans can be defaults (every site also carries the placeholder length 60), so sewer was not written.",
+    "max_rig_ft 50 (derived from directory prose) cleared to null; pads are ordinary back-ins off a large lot, so a 23-ft rig is not in doubt.",
+    "flush_toilets true (derived) left: not stated by the city or the engine.",
+    "PHONE 308-784-3907 matches the City Office on the city page.",
+    "NOTE CLEANED: dropped the site count, hookups, fit claim, dump/restrooms, year-round, FCFS and price text now in fields; the 'not on any water' line held in waterfront."
+  ]
+}
