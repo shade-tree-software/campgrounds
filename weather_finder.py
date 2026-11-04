@@ -21,7 +21,9 @@ the first search of the hour it comes straight out of the cache below.
 """
 
 import json
+import logging
 import math
+import sqlite3
 import time
 import urllib.error
 import urllib.parse
@@ -137,22 +139,92 @@ def haversine_miles(lat1, lng1, lat2, lng2):
 #
 # An hour matches how often the upstream models actually refresh, so this
 # doesn't serve anything staler than the API would.
+#
+# Two tiers. The in-process dict is the fast path; CACHE_PATH, when the caller
+# sets it, is a SQLite file every PROCESS shares. The second tier is not
+# optional on a multi-worker host (PythonAnywhere): with the dict alone, each
+# web worker had its own cache, so a re-search that landed on a different
+# worker re-fetched the very cells the first search had bought — "search again
+# to widen it" did nothing on the second try and only worked on the third
+# (AWH 2026-11-04), while spending a second full budget against the shared
+# per-IP rate limit. The app points CACHE_PATH into trip_data/; the CLI leaves
+# it None and runs in-process only. Any SQLite failure degrades to the dict
+# rather than failing the search — a cache must never be why a search breaks.
 FORECAST_TTL_S = 3600
+CACHE_PATH = None
 _forecast_cache = {}
+_log = logging.getLogger(__name__)
+_db_warned = False
 
 
-def _cache_get(key, now):
-    hit = _forecast_cache.get(key)
-    if hit is None:
-        return None
-    fetched_at, daily = hit
-    if now - fetched_at > FORECAST_TTL_S:
-        _forecast_cache.pop(key, None)
-        return None
-    return daily
+def _db_key(key):
+    (lat_idx, lng_idx), days = key
+    return f"{lat_idx},{lng_idx},{days}"
 
 
-def _cache_put(key, daily, now):
+def _db_connect():
+    """A fresh connection per call: cheap, and sidesteps sqlite3's one-thread
+    rule under a threaded server. The default rollback journal rather than WAL,
+    because WAL needs shared memory that network filesystems (PA's) don't give."""
+    con = sqlite3.connect(CACHE_PATH, timeout=10)
+    con.execute("CREATE TABLE IF NOT EXISTS forecast ("
+                "key TEXT PRIMARY KEY, fetched_at REAL NOT NULL, daily TEXT NOT NULL)")
+    con.execute("CREATE INDEX IF NOT EXISTS forecast_fetched_at ON forecast (fetched_at)")
+    return con
+
+
+def _db_failed(e):
+    global _db_warned
+    if not _db_warned:
+        _db_warned = True
+        _log.warning("weather_finder: shared forecast cache at %s unavailable (%s); "
+                     "using the in-process cache only", CACHE_PATH, e)
+
+
+def _cache_get_many(keys, now):
+    """{key: daily} for every key with a fresh cached forecast; misses are absent."""
+    out, misses = {}, []
+    for key in keys:
+        hit = _forecast_cache.get(key)
+        if hit is not None and now - hit[0] <= FORECAST_TTL_S:
+            out[key] = hit[1]
+        else:
+            if hit is not None:
+                _forecast_cache.pop(key, None)
+            misses.append(key)
+    if not misses or not CACHE_PATH:
+        return out
+
+    by_db = {_db_key(k): k for k in misses}
+    db_keys = list(by_db)
+    try:
+        con = _db_connect()
+        try:
+            # Chunked under SQLite's bound-parameter limit (999 on old builds).
+            for i in range(0, len(db_keys), 500):
+                chunk = db_keys[i:i + 500]
+                rows = con.execute(
+                    "SELECT key, fetched_at, daily FROM forecast WHERE fetched_at >= ? "
+                    f"AND key IN ({','.join('?' * len(chunk))})",
+                    [now - FORECAST_TTL_S, *chunk]).fetchall()
+                for db_key, fetched_at, daily_json in rows:
+                    key = by_db[db_key]
+                    daily = json.loads(daily_json)
+                    # Keep the ORIGINAL fetch time, so the TTL measures the
+                    # forecast's age, not how long this process has held it.
+                    _forecast_cache[key] = (fetched_at, daily)
+                    out[key] = daily
+        finally:
+            con.close()
+    except (sqlite3.Error, OSError, ValueError) as e:
+        _db_failed(e)
+    return out
+
+
+def _cache_put_many(items, now):
+    """Store [(key, daily), ...] in both tiers."""
+    if not items:
+        return
     # Cheap bounded-growth guard: when the cache gets large, drop what's expired
     # before adding more. Entries are small (16 days × 5 arrays), so this only
     # needs to stop unbounded accumulation over a long uptime.
@@ -160,7 +232,33 @@ def _cache_put(key, daily, now):
         for k, (t, _) in list(_forecast_cache.items()):
             if now - t > FORECAST_TTL_S:
                 _forecast_cache.pop(k, None)
-    _forecast_cache[key] = (now, daily)
+    for key, daily in items:
+        _forecast_cache[key] = (now, daily)
+    if not CACHE_PATH:
+        return
+    try:
+        con = _db_connect()
+        try:
+            with con:
+                con.executemany(
+                    "INSERT OR REPLACE INTO forecast (key, fetched_at, daily) VALUES (?, ?, ?)",
+                    [(_db_key(k), now, json.dumps(d, separators=(",", ":")))
+                     for k, d in items])
+                # The file's own growth guard: anything past its TTL is dead.
+                con.execute("DELETE FROM forecast WHERE fetched_at < ?",
+                            (now - FORECAST_TTL_S,))
+        finally:
+            con.close()
+    except (sqlite3.Error, OSError) as e:
+        _db_failed(e)
+
+
+def _cache_get(key, now):
+    return _cache_get_many([key], now).get(key)
+
+
+def _cache_put(key, daily, now):
+    _cache_put_many([(key, daily)], now)
 
 
 class RateLimited(RuntimeError):
@@ -173,13 +271,19 @@ class RateLimited(RuntimeError):
 
 
 def fetch_daily_forecasts(points, *, forecast_days=FORECAST_DAYS, batch_size=BATCH_SIZE,
-                          timeout=30, user_agent=None, progress=None):
+                          timeout=30, user_agent=None, progress=None, on_batch=None):
     """Daily forecast for each (lat, lng) in `points`, in the same order.
 
     Returns a list the same length as `points`; an entry is None where the API
     gave us nothing usable for that location. An ordinary failed batch degrades
     to Nones for its members rather than sinking the whole search, but a 429 is
     raised — see RateLimited.
+
+    `on_batch(offset, dailies)` is called as each batch lands, before the next
+    is requested. Callers cache from it rather than from the return value, so a
+    429 partway through keeps the batches that already succeeded — the provider
+    billed them either way, and the retry then starts where this one stopped
+    instead of re-buying them.
     """
     out = [None] * len(points)
     if not points:
@@ -221,6 +325,8 @@ def fetch_daily_forecasts(points, *, forecast_days=FORECAST_DAYS, batch_size=BAT
             daily = (loc or {}).get("daily") or {}
             if daily.get("time"):
                 out[offset + i] = daily
+        if on_batch:
+            on_batch(offset, out[offset:offset + len(batch)])
         done += len(batch)
         if progress:
             progress(done, len(points))
@@ -400,38 +506,43 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     # Cached cells are free, so they never compete for the budget. That gives
     # the budget a useful property: a radius too big to cover in one search
     # fills in over the next couple of searches instead of being permanently
-    # truncated to the same 500 points every time.
+    # truncated to the same 500 points every time. That holds across web
+    # workers only because the cache's SQLite tier is shared (see CACHE_PATH).
     now = time.time()
     ck = lambda key: (key, forecast_days)
+    home_key = (round(home_lat / GRID_DEG), round(home_lng / GRID_DEG))
+    hits = _cache_get_many([ck(c["key"]) for c in cells.values()]
+                           + ([ck(home_key)] if needs_home else []), now)
     cached, uncached = [], []
     for cell in cells.values():
-        cell["daily"] = _cache_get(ck(cell["key"]), now)
+        cell["daily"] = hits.get(ck(cell["key"]))
         (cached if cell["daily"] is not None else uncached).append(cell)
 
     need = _select_cells(uncached, mode, forecast_budget)
     selected = cached + need
     covered = sum(len(c["members"]) for c in selected)
 
-    home_key = (round(home_lat / GRID_DEG), round(home_lng / GRID_DEG))
-    home_daily = _cache_get(ck(home_key), now) if needs_home else None
+    home_daily = hits.get(ck(home_key)) if needs_home else None
     fetch_home = needs_home and home_daily is None
 
+    point_keys = [ck(c["key"]) for c in need]
     points = [(c["lat"], c["lng"]) for c in need]
     if fetch_home:
+        point_keys.insert(0, ck(home_key))
         points.insert(0, (home_lat, home_lng))
 
+    def cache_batch(offset, dailies):
+        _cache_put_many([(point_keys[offset + i], d)
+                         for i, d in enumerate(dailies) if d is not None], time.time())
+
     fetched = fetch_daily_forecasts(points, forecast_days=forecast_days,
-                                    progress=progress, **fetch_kw)
+                                    progress=progress, on_batch=cache_batch, **fetch_kw)
     offset = 0
     if fetch_home:
         home_daily = fetched[0]
         offset = 1
-        if home_daily is not None:
-            _cache_put(ck(home_key), home_daily, now)
     for cell, daily in zip(need, fetched[offset:]):
         cell["daily"] = daily
-        if daily is not None:
-            _cache_put(ck(cell["key"]), daily, now)
 
     home_by_date = {}
     if needs_home:
@@ -676,11 +787,11 @@ def forecast_for_point(lat, lng, home=None, *, forecast_days=FORECAST_DAYS, **fe
             if want == "point":
                 daily = value
                 if value is not None:
-                    _cache_put(key, value, now)
+                    _cache_put(key, value, time.time())
             else:
                 home_daily = value
                 if value is not None:
-                    _cache_put(home_key, value, now)
+                    _cache_put(home_key, value, time.time())
 
     if daily is None:
         return None
