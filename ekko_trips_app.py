@@ -5352,6 +5352,12 @@ def api_ridb_availability():
 # too long to read.
 WEATHER_MAX_MILES = 500
 
+# The forecast cache's cross-process tier. Without it each web worker kept its
+# own cache, so "search again to widen it" only widened when the retry happened
+# to reach the worker that ran the first search. A per-host cache, not data:
+# sync-from-pa.sh excludes it and backup.sh's *.json globs never match it.
+weather_finder.CACHE_PATH = os.path.join(TRIP_DATA_DIR, "forecast_cache.sqlite")
+
 
 @app.route('/campgrounds/weather')
 def campgrounds_weather():
