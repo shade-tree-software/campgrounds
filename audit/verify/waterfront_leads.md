@@ -80,6 +80,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **13490 Walnut Grove, Clinton County (IA, p3-276):** east-lane sites 15-35 m from the 45-90 m Wapsipinicon behind trees; the county says 'along the bank'. Held at not waterfront.
 - **3186 Welter (IA, p3-276):** set to riverview; the county map draws sites 4, 8, 13 and 15 on the river side of the bank lane - riverfront if those pads sit on open bank.
 
+- **2692 Enders Reservoir SRA (NE, p3-277):** a 2018 review says Area A site #23 'paralleled the water'; the NGPC Area A map (Cloudflare-blocked) could earn lakeview. Held at not waterfront.
+- **2768 Arnold Lake RA (NE, p3-277):** lakefront rests on the village map (sites 10, 11, 13-15 on shore); canopy hides the pads on NAIP - a site photo would confirm.
+- **2778 Recharge Lake (NE, p3-277):** set to lakeview; if the wooded bank blocks the view from the west row, not waterfront.
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft
