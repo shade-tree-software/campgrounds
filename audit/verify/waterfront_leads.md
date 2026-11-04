@@ -70,6 +70,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3092 Deerwood Park stored lakeview, p3-268: the east row's open grass runs to the lake shore; if the 4-7 m shore strip is a path (not the beach-house swim beach) it reads lakefront
 - 3155 Frieden's Park stored not waterfront, p3-269: NAIP shows the clearing open to a ~30 m Turkey 8-10 m away but the county aerial puts site 3 behind trees; a site photo would settle riverview/riverfront
 
+- **13474 Kendallville (IA, p3-271):** sites 17-21 are 30-40 m from the ~30 m Upper Iowa with the loop road and a mostly open 12-20 m grass strip between; a site photo showing the river would make them riverview. Held at not waterfront.
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft

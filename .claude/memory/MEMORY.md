@@ -11,8 +11,8 @@
 - [RV Life's index has gaps](reference_rvlife_index_has_gaps.md) — MEASURED 2026-09-21: ~585 federal campgrounds absent (CA/OR/CO/MT/ID heaviest); "sweep COMPLETE" = complete against RV Life
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check in file
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
-- [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
-- [Phase 7 verification](project_phase7_verification.md) — IN PROGRESS: PAUSED after p3-270 (IA) 2026-11-03, next p3-271; splits 13345, 3900 done; ONE verifier at a time; resume point in file
+- [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts; decides fit, open/closed, inclusion_evidence), then per-site coords
+- [Phase 7 verification](project_phase7_verification.md) — IN PROGRESS (IA, p3-271 running 2026-11-04); ONE verifier at a time; resume point in file
 - [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way; next id 15603 (2026-11-03)
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
@@ -29,7 +29,7 @@
 - [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — AWH 2026-10-14 five-test rule for long-stay parks that sell nights; on the fence + mostly seasonal + iffy = drop and report (10-31)
 - [Min site length ~23 ft](feedback_min_site_length.md) — sites capped at ~20 ft = out; UNCLEAR pad size = keep with a caveat (AWH 2026-11-02)
 - [Trailer limits apply to EKKO](feedback_trailer_length_limits.md) — AWH 2026-10-20: a posted trailer length limit counts for the motorhome too unless the source says otherwise; under ~23 ft = drop
-- [Clean up notes you touch](feedback_clean_up_notes.md) — AWH 2026-10-21: ANY entry update cleans its note, --AWH text included: drop what the fields show (price, rating, FCFS...) and what is wrong; never add field facts to a note
+- [Clean up notes you touch](feedback_clean_up_notes.md) — AWH 10-21: any entry update cleans its note (--AWH text too): drop what the fields show and what is wrong
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
 - [Waypoints are orientation, not clutter](feedback_waypoints_are_orientation.md) — minor stops (gas, rest areas) are how AWH navigates a trip; don't fold/hide low-content timeline items to reduce density
 - [Summaries should say less](feedback_summaries_say_less.md) — every correction AWH made to generated prose was "cut this"; never set a word floor, never remark on the record or gloss a small distance
@@ -48,7 +48,7 @@
 - [Run sweep agents sequentially AND tiny](feedback_sequential_sweep_agents.md) — one agent at a time, ONE candidate per batch; parallel only by explicit per-stage user exception
 - [Roadside notes direction-neutral](feedback_roadside_direction_neutral.md) — don't word roadside-stop notes for one travel direction (route may be driven either way)
 - [Write JSON ensure_ascii=False](feedback_json_ensure_ascii.md) — app must write campgrounds.json with ensure_ascii=False so UI edits don't re-escape note em-dashes/stars to \uXXXX; _save_json fixed 2026-07-16
-- [Inclusion backfill — DONE/CLOSED](project_inclusion_backfill_remaining.md) — 2026-07-23 inclusion 100% AND waterfront 100% across the WHOLE legacy DB (12261/12261); reusable backfill method + tooling notes in the file
+- [Inclusion backfill — DONE/CLOSED](project_inclusion_backfill_remaining.md) — 2026-07-23 inclusion + waterfront 100% on the legacy DB; reusable method in file
 - [Inclusion review queue — CLOSED](project_inclusion_review_queue.md) — all held "review" entries resolved. Lesson: a dead website ≠ closed; check the pin before concluding a campground is gone
 - Coverage status: **geographic sweeps COMPLETE** (US lower 48 + every province); AK/HI/YT/NT/NU OUT OF SCOPE (AWH 2026-09-18), never list as remaining; whole DB waterfront + inclusion audited.
 - US sweeps COMPLETE (waterfront+inclusion 100%; detail in project_<st>_sweep_handoff.md): FL AL MS AR CO IA MO WI KY IN NE IL TN NY; MI in [project_mi_local_stage_handoff.md](project_mi_local_stage_handoff.md)
@@ -81,7 +81,7 @@
 - [Pre-playbook private-stage gap — DONE/CLOSED](project_pre_playbook_private_gap.md) — 39 adds 2026-09-07..15; method: research inline, probe for parked domains, skip reasons say which kind of no
 - [On-the-road photo cards](project_road_photos.md) — shipped 2026-09-10; keyed by DATE (never renumbers), one card per driving leg, position + place from EXIF vs the GPS track with zone resolved by convergence
 - [Rollup examples come from the day notes](project_rollup_examples_from_notes.md) — 39 hand-written notes over drafts, diffed 2026-09-13: few-shot selected per day from day_notes
-- [Never open a rollup with "Away"](feedback_dont_open_with_away.md) — the drafter's tic (84 of 327 entries); AWH drops the departure and lets the direction be the verb, or names the drive ("an evening drive after work")
+- [Never open a rollup with "Away"](feedback_dont_open_with_away.md) — the drafter's tic; AWH lets the direction be the verb, or names the drive
 - [Time for short drives, miles for long](feedback_drive_figures_time_vs_miles.md) — duration under ~130 mi, mileage over ~300; a figure is only worth printing when the distance was the day's achievement
 - [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
 - [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1-6 done (registry: every agency, QC added 2026-10-20 from one approved SEPAQ read); left: phase 7
@@ -127,9 +127,9 @@
 - [Hold asks for later](feedback_hold_asks_offline.md) — AWH 2026-10-17 (weak internet): keep logging questions in asks.md, keep working, present them when AWH is ready
 - [Published info supersedes old --AWH text](feedback_published_info_supersedes_awh.md) — AWH 2026-10-20: operator/agency's own clear statement may replace outdated --AWH note text; not silence/aggregators
 - [One verifier at a time](feedback_one_verifier.md) — AWH 2026-10-22: phase 7 back to a single verifier; next batch only after applying the last
-- [Agency boilerplate is silent](feedback_agency_boilerplate_silent.md) — rig-length rule: wording on most of an agency's pages (MI DNR "tent and small trailer", 99/115) = silent, keep; vague = singled out (AWH 2026-10-22)
+- [Agency boilerplate is silent](feedback_agency_boilerplate_silent.md) — rig-length wording on most of an agency's pages = silent, keep; singled out = counts (AWH 10-22)
 - [Split multi-campground parks](feedback_split_multi_campground_parks.md) — only when phase 7 runs into one, and only campgrounds at separate places (~1 km+, own entrance); no DB-wide hunt (AWH 2026-10-22)
 - [EKKO model year](user_ekko_model_year.md) — 2023 (AWH 2026-10-22); a 10-year rig-age rule passes until 2033
 - [Book EKKO as a motorhome](feedback_book_as_motorhome.md) — AWH 2026-10-24: where an engine offers van AND motorhome types, price the motorhome type (Fort DeSoto turned a "van" booking away)
-- [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — AWH 2026-10-30: very poor reviews dropped Sugar Mill; on a borderline price I may let reviews decide (Blackwater 5.0/48 kept at $52.79); 10-31: borderline private + bad policies/facilities/reviews = drop and report; 11-01: under 4 stars + borderline seasonal = auto drop
+- [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — very poor reviews drop; reviews may decide a borderline price; under 4 stars + borderline seasonal = auto drop (AWH 10-30..11-01)
 - [Florida Keys price re-screen — DONE](project_keys_rescreen.md) — 2026-10-30: +14 (15574-15587), 12 skips; Keys rules: owner-lot w/ booking site OK, RV Life $$$+ = price
