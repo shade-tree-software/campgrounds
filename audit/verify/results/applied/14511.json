@@ -1,0 +1,57 @@
+{
+  "id": 14511,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://www.loesshillshideaways.com/rates ('2025 Rates  All rates are based on occupancy of 1-2 adults. Each additional person 3 years of age or older is $15/night. Each pet $10/night. Each visitor $5/day.'; 'CAMPGROUND RATES RV/Tent $45/night  Sales tax is included. A 3% credit card processing fee will be applied.'; 'For same-day reservations, please call (531) 444-7069'), read 2026-11-04",
+    "https://www.loesshillshideaways.com/the-campground ('There are six grassy RV/tent sites with gravel pads and 35-amp hook-ups. They can accommodate 32' campers comfortably, though not all sites are equally level. ... Due to the limited water supply, we do not have water to fill RV tanks or sewage hookups. The nearest potable water and dump station is located at the Pisgah City Park, Pisgah, IA 51564, which is approximately 15 minutes away from the Hideaway. ... There is no wifi and extremely limited cell service.'), read 2026-11-04",
+    "https://www.loesshillshideaways.com/bath-house ('Our heated shower house is equipped with flush toilets, hot showers, and a washer and dryer.'), read 2026-11-04",
+    "https://www.loesshillshideaways.com/about ('along the three-mile stretch of gravel road that leads from Peach Ave to the entrance of our property across from Savery Pond'; 'open all year 'round'; 'Steve Gallucci and Lacy Arteaga assumed ownership in January 2025.'), read 2026-11-04",
+    "https://www.loesshillshideaways.com/new-page-1 (Campground Rules: visitors $5/day approved by email, max 1 RV + 2 vehicles per site; no length or rig-age rule), read 2026-11-04",
+    "CampLife booking API for https://www.camplife.com/6355727/reservation/step1 (the site's 'Click for Reservations' link), read in the browser 2026-11-04: RV Site 1-6, type 'Back In', maxLength 32, width 50, amenity 30-Amp; all six open for one night on Tue 2027-01-26, Sat 2027-01-30, Tue 2027-06-08 and Sat 2027-06-12; one-night estimate $46.35 on every site and date, two nights from 2027-01-26 $91.35; Oct 2026 dates answered 'Please call for same or next day availability'. The step-1 page shows 'Warning: 2 Night Minimum Stay' for Fri 2026-11-13, Tue 2026-11-17 and Tue 2027-01-26 arrivals.",
+    "Google Maps panel 'Loess Hills Hideaway Cabins and Campground', 33774 Plum Ave, Moorhead, IA 51558: 4.8 stars (77 reviews), +1 531-444-7069, website loesshillshideaways.com, read 2026-11-04",
+    "Esri World Imagery at 41.8664,-95.8490 (350 m half-width) and 41.8657,-95.8510 (120 m half-width), read 2026-11-04",
+    "audit/price_research/gateways.py 41.8656,-95.8513: none within 40 km (nearest Kansas City 326 km)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "checked": "2026", "note": "RV/tent site $45 a night for 1-2 adults, sales tax included; each extra person 3+ $15 a night, each pet $10 a night, visitors $5 a day; 3% card processing fee. CampLife quoted $46.35 for one night and $91.35 for two (January 2027)."},
+      "source": "https://www.loesshillshideaways.com/rates ('2025 Rates'; 'RV/Tent $45/night'; 'Sales tax is included. A 3% credit card processing fee will be applied.') + CampLife estimate API (camplife.com/6355727), read 2026-11-04",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": false, "sewer": false},
+      "source": "https://www.loesshillshideaways.com/the-campground ('35-amp hook-ups' - snapped down to 30; 'we do not have water to fill RV tanks or sewage hookups'); CampLife site records list amenity '30-Amp', read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 6, "max_rig_ft": 32, "pull_through": false},
+      "source": "https://www.loesshillshideaways.com/the-campground ('six grassy RV/tent sites ... can accommodate 32' campers comfortably') + CampLife siteMap (RV Site 1-6, all type 'Back In', maxLength 32), read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true, "dump": false, "potable_water": false, "wifi": false},
+      "source": "https://www.loesshillshideaways.com/bath-house ('heated shower house is equipped with flush toilets, hot showers, and a washer and dryer') + /the-campground ('The nearest potable water and dump station is located at the Pisgah City Park ... approximately 15 minutes away'; 'There is no wifi'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.loesshillshideaways.com/about ('open all year 'round') + CampLife park description ('Open all year around'); CampLife sells all six RV sites for January 2027 nights, read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.camplife.com/6355727/reservation/step1", "min_stay": [{"nights": 2, "applies": "always"}], "note": "Booked online through CampLife ('Click for Reservations'); same-day reservations by phone. CampLife's booking page shows 'Warning: 2 Night Minimum Stay' on every arrival tried (weekdays included), but its availability search still offered all six RV sites for single nights and quoted one night at $46.35, so a one-night stay may be accepted. Refunds for cancellations at least 10 days out."},
+      "source": "https://www.loesshillshideaways.com/rates ('Click for Reservations' -> camplife.com/6355727; 'For same-day reservations, please call (531) 444-7069'; 'Refunds may be issued for any reservation canceled at least 10 days prior') + CampLife step-1 page ('Warning: 2 Night Minimum Stay', Nov 13 and Nov 17 2026, Jan 26 2027), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "Cabins and a six-site campground on 32 acres of Loess Hills woodland, across Plum Ave from Savery Pond and minutes from Preparation Canyon State Park. Grassy back-in sites with gravel pads, not all equally level; the nearest water fill and dump station are at Pisgah City Park, about 15 minutes away. Reached by about three miles of gravel road from Peach Ave (signed from Hwy 183 four miles north of Pisgah); very limited cell service. --Claude",
+  "summary": "Confirmed $45 (1-2 adults, tax included; CampLife quotes $46.35 one night with the card fee), six back-in 30-amp sites fitting 32 ft, no water/sewer, year-round. Added showers/flush toilets/laundry, no on-site dump/potable water/WiFi, CampLife deep link, and the engine's posted 2-night minimum. Not waterfront stands.",
+  "flags": [
+    "PRIVATE GATE: passes. Posted rate $45/night for 1-2 adults, sales tax included ('2025 Rates', still the posted table on 2026-11-04); CampLife's estimate for one night is $46.35 on every RV site in January and June 2027, weekday and Saturday alike (the 3% card fee), two nights $91.35. Under $50 with no gateway needed (none within 40 km; nearest Kansas City 326 km). Extra persons 3+ are $15/night and pets $10/night (not mandatory for two adults). Good Sam: none stated. Family has not stayed here.",
+    "PRESENCE: passes. Working operator site loesshillshideaways.com with phone (531) 444-7069 and email; online booking engine (CampLife, all six RV sites sold by the night); Google Maps 'Loess Hills Hideaway Cabins and Campground' 4.8 stars from 77 reviews, phone +1 531-444-7069. New owners since January 2025 (about page). RV sites are a separate online-bookable site type ('Back In', RV Site 1-6) beside the cabins, not cabin-only. Nothing long-stay in character: no monthly/seasonal rates, rules cap one RV per site.",
+    "MIN STAY: CampLife's step-1 page shows 'Warning: 2 Night Minimum Stay' for every arrival tried (Fri 2026-11-13, Tue 2026-11-17, Tue 2027-01-26), but its availability API returned all six RV sites for one-night stays and its estimate priced one night. Recorded as a standing 2-night minimum with that caveat in booking.note; the operator's own rates page is silent. AWH: a 2-night standing minimum stays if marked.",
+    "ACCESS: about three miles of gravel road from Peach Ave to the entrance (about page). No 4WD or big-rig warning; 'not all sites are equally level'.",
+    "WATERFRONT: not waterfront stands. Imagery shows the RV loop on a hillside lawn in woodland ~500 m west of Plum Ave; Savery Pond lies east of the road, out of view behind the woods.",
+    "PIN OK: the stored 41.8656,-95.8513 sits inside the gravel loop, ~90 m east of the west-side pads (where an RV is parked, ~41.8656,-95.8521). Google's pin (41.86667,-95.84758) is the entrance on Plum Ave. Phone and website confirmed."
+  ]
+}

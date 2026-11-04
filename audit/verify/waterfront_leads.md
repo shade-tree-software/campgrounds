@@ -72,6 +72,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 - **13474 Kendallville (IA, p3-271):** sites 17-21 are 30-40 m from the ~30 m Upper Iowa with the loop road and a mostly open 12-20 m grass strip between; a site photo showing the river would make them riverview. Held at not waterfront.
 
+- **13503 Mac Coon Access (IA, p3-272):** the Riverside road runs ~30 m from the ~90 m Skunk across lawn with open gaps; a site photo or a summer frame with rigs parked would place the pads (river side of the road = riverfront, inland = riverview). Held at not waterfront.
+- **13501 Mallory Park (IA, p3-272):** pads 6-12 and 14-18 back toward ~7 m Maynes Creek, 15-35 m over lawn with a bank tree fringe and cut banks; a site photo would settle creekside. Held at not waterfront.
+- **13509 Manteno Park (IA, p3-272):** south and east pads 15-30 m over open lawn from the 12-acre lake, set to lakeview; lakefront if the arm is open water at normal pool.
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft
