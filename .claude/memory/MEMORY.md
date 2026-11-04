@@ -129,6 +129,7 @@
 - [One verifier at a time](feedback_one_verifier.md) — AWH 2026-10-22: phase 7 back to a single verifier; next batch only after applying the last
 - [Agency boilerplate is silent](feedback_agency_boilerplate_silent.md) — rig-length wording on most of an agency's pages = silent, keep; singled out = counts (AWH 10-22)
 - [Split multi-campground parks](feedback_split_multi_campground_parks.md) — only when phase 7 runs into one, and only campgrounds at separate places (~1 km+, own entrance); no DB-wide hunt (AWH 2026-10-22)
+- [EKKO: no sand or open beach](user_ekko_no_sand.md) — AWH 2026-11-04: camping that means driving onto sand/open beach = drop and report; a developed loop that also offers beach camping stays
 - [EKKO model year](user_ekko_model_year.md) — 2023 (AWH 2026-10-22); a 10-year rig-age rule passes until 2033
 - [Book EKKO as a motorhome](feedback_book_as_motorhome.md) — AWH 2026-10-24: where an engine offers van AND motorhome types, price the motorhome type (Fort DeSoto turned a "van" booking away)
 - [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — very poor reviews drop; reviews may decide a borderline price; under 4 stars + borderline seasonal = auto drop (AWH 10-30..11-01)
