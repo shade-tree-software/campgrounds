@@ -1,0 +1,50 @@
+{
+  "id": 2683,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/camping/chadron-sp/r/campgroundDetails.do?contractCode=NE&parkId=230042 (NGPC ReserveAmerica park page, read 2026-11-04)",
+    "ReserveAmerica RV-site search for parkId 230042 (50 sites found, 46 rows parsed) and per-site details for 17 sites (001-014, 021, 035, 044, 060, 070; GIS points), read 2026-11-04 - RA throttled to ~20 s a page, so the other sites were not opened",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 camping rates grid, row 'Chadron SP* NW 308-432-6167')",
+    "Esri World Imagery around 42.7152,-103.0135 with the RA site points plotted"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ReserveAmerica per-site details, Chadron Modern Campground (every one of 17 sites opened: 'Electricity Hookup: 50'; the 46-row list: 'Electric Hookup available: 50 amp' on all 46, 'Full Hookup - no'), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 65},
+      "source": "ReserveAmerica RV-site list, Chadron Modern Campground (Max Vehicle Length 65 ft Back-In at 3 sites, 50 ft at 33, 40-55 ft at the rest; all 46 back-in), read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/chadron-sp/r/campgroundDetails.do?contractCode=NE&parkId=230042 ('Campers will enjoy their stay at Chadron at the modern campground, complete with electrical hookups, showers, picnic tables, grills, a playground for the kids and a dump station.'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/chadron-sp/r/campgroundDetails.do?contractCode=NE&parkId=230042 ('Status: Open year round.'; Electric Plus booking window 'Thu Nov 05 2026 - Mon May 03 2027'), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "window_opens_days": 180},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/chadron-sp/r/campgroundDetails.do?contractCode=NE&parkId=230042 ('Electric Plus ... Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance.'; cabins and shelters 12 months), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "Nebraska's oldest state park, in the Pine Ridge ~9 mi S of Chadron on Hwy 385. The reservable pads are in the modern campground; the park also has primitive sites, first come. --Claude",
+  "summary": "ReserveAmerica park page and RV-site list read: one RV campground (Chadron Modern Campground), 50 reservable Electric Plus sites, all 50 A back-ins to 65 ft, no full hookups, 'Near Water - no' on all; showers and dump; reservable 180 days out; status 'Open year round'. Electric 30 -> 50, max length 65, season now year-round (was year_round false from note prose), booking platform/window recorded. Pin is ~870 m SE of the campground; move proposed. Phone found. Note cleaned.",
+  "flags": [
+    "PIN MOVE: stored 42.70849,-103.00706 is ~870 m SE of the campground (near the park's cabin/pond area by Hwy 385). The 17 RA GIS site points centre at 42.71501,-103.01294, on the campground loops visible on Esri imagery west of the highway. Suggest 42.7150,-103.0130.",
+    "PHONE: none stored. RA park page: 'Project Office: (308)432-6167'; the NGPC grid row gives the same number. apply.py does not write phone - set by hand.",
+    "SPLIT: not a split candidate on what I can see - ReserveAmerica lists one RV campground ('Chadron Modern Campground') plus cabins and shelters; the primitive sites are not on RA and I could not read outdoornebraska.gov (Cloudflare) to locate them.",
+    "ELECTRIC: stored 30 A (note prose) contradicted - every RA site read is 50 A ('Electric Plus' in NGPC's grid = '20/30 amp connection with dedicated water hookup or a 50-amp connection'). RA marks no water hookup at the sites.",
+    "SITES: count 88 (70 electric + 18 primitive, note prose) not confirmed: RA's RV-site search finds 50 reservable sites; NGPC's own page (blocked) would say how many are non-reservable. Left derived.",
+    "SEASON: stored year_round false came from the sweep note's 'Open ~Apr 15-Nov 15'; RA says 'Status: Open year round' and takes Electric Plus bookings through the winter. Written as year-round; the note's dates dropped. (Showers/water may well be seasonal, but no page I could read says so.)",
+    "WATERFRONT: not waterfront stays - RA 'Near Water - no' on all 46 listed sites; Chadron Creek runs in the trees east of the loops.",
+    "FEES: left as recorded (NGPC 2025 grid). The base $10-15 is the grid's Basic rate; the reservable sites here are all Electric Plus ($30 in season per the grid).",
+    "LAUNDRY: stored facilities.laundry true (note prose) - RA's description does not mention laundry; left."
+  ]
+}

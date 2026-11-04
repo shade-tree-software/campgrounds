@@ -1,0 +1,90 @@
+{
+  "id": 5771,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233467 (facility description, notices, facility_rules), read 2026-11-04",
+    "https://www.recreation.gov/api/camps/campgrounds/233467/rates (2026-04-16..2026-10-18 and 2027-04-15..2027-10-17: STANDARD ELECTRIC 24, PRIME CAMPSITES 26), read 2026-11-04",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 77 sites (per-site lat/lng, loops NLOO 34 / SLOO 43), read 2026-11-04; plotted on Esri World Imagery and USGS NAIP",
+    "RIDB campsite catalog trip_data/ridb_campsites.json (fetched 2026-10-20): 74 reservable + 2 non-reservable STANDARD ELECTRIC, 1 MANAGEMENT (site 73); all 50 A"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233467 ('All 77 campsites have electric hookups') + RIDB catalog (Electricity Hookup 50 on all 77; no water hookups; one site tagged sewer), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 77,
+        "pull_through": true,
+        "note": "77 electric sites in two loops; one (site 73) is the campground host's. Pull-throughs along the lake edge; catalog vehicle lengths mostly 41-76 ft."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233467 ('All 77 campsites ... all sites are reservable') + RIDB catalog (72 Back-in, 5 Pull-through; site 73 MANAGEMENT), read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233467 ('Two modern shower houses with flush toilets'; 'A RV dump station is located just north of Cottonwood Campground off of Toe Road'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-16",
+        "closes": "10-18",
+        "note": "recreation.gov season mid-April to mid-October (2026: April 16 - October 18; 2027: April 15 - October 17)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233467/rates (Peak Season 2026-04-16..2026-10-18, 2027-04-15..2027-10-17) + availability calendar (open nights end October 18, 2026), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233467",
+        "max_stay_nights": 14,
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "note": "All sites reservable on recreation.gov (or 877-444-6777), up to the day of arrival; the park office (402-667-2546) cannot take reservations. Two-night weekend and three-night holiday-weekend minimums. 14 nights in any rolling 30 (15 consecutive days). Check-in 4 p.m., check-out 2 p.m.; register with the host."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233467 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 rolling 30 days, maxConsecutiveStay 15, reservationCutOff 0; notices 'Check-In Time is 4:00 P.M. / Check-Out Time is 2:00 P.M.', 'Reservations can not be made at this number'), read 2026-11-04",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 26,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "recreation.gov rate table: standard electric $24, prime (lakeside) sites $26, 2026 and 2027 seasons."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233467/rates (Peak Season 2026-04-16..2026-10-18: STANDARD ELECTRIC 24, PRIME CAMPSITES 26; 2027 the same), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground at the toe of Gavins Point Dam on the west shore of Lake Yankton, the ~250-acre lake below the dam (Lewis and Clark Lake lies behind the dam embankment, out of sight). 77 50-amp electric sites in two wooded loops; a row of pull-throughs along the open, mowed lake edge. Two shower houses; dump station just north off Toe Road; adjacent day-use area with boat ramp and fishing dock. --Claude",
+  "summary": "Recreation.gov confirms 77 50-amp sites, showers and a dump nearby. The current rate table is $24 standard and $26 prime, so the stored $20 changes to 24-26. Season is mid-April to mid-October. Weekends need 2 nights and holiday weekends 3. Sites plotted from rec.gov: the east-edge pull-throughs (02P-09P in the north loop, 53P-66P in the south) sit 15-30 m from Lake Yankton across open mowed grass, with no road or day use between. Lakefront is confirmed, on Lake Yankton (~250 acres), not Lewis and Clark Lake. The name needs a human decision.",
+  "flags": [
+    "WATERFRONT CONFIRMED lakefront (on Lake Yankton): rec.gov per-site points on Esri imagery put about 12 pull-throughs (north loop 02P, 04P, 06P, 08P, 09P; south loop 53P, 57P, 59P, 60P, 62P, 64P, 66P) 15-30 m from the shore. The ground between is open mowed grass with scattered single trees; the loop roads run behind (west of) the pads. Lake Yankton is ~250 acres per rec.gov, well over the pond line. Lewis and Clark Lake is behind the dam embankment, so the below-dam rule gives it no value. The 'prime campsites' $26 rate tier matches the lake row.",
+    "FEES CHANGED 20 -> 24-26: rec.gov rates 2026 and 2027 are STANDARD ELECTRIC $24 and PRIME CAMPSITES $26. The stored $20 is stale.",
+    "NAME: recreation.gov publishes 'COTTONWOOD (NE)'; USACE prose calls it 'Cottonwood Recreation Area'. The stored 'Cottonwood - Lewis and Clark Lake' names the wrong lake: the campground sits on Lake Yankton below the dam. Suggest 'Cottonwood Recreation Area' (or 'Cottonwood - Lake Yankton').",
+    "PIN (optional, ~200 m): stored 42.85945,-97.48388 is on the entrance road at the dam-toe road. The centroid of the 77 rec.gov sites is 42.85910,-97.48148. Under the 250 m line, but a move to 42.8591,-97.4815 would put it on the campground.",
+    "NOTE CLEANED: the old note said 'between the Missouri River and Lake Yankton' and 'odd-numbered pull-throughs'. Neither matches the catalog: the P sites are both odd and even, and the open river below the dam lies north, at Training Dike. Replaced.",
+    "SEASON written mid-April to mid-October from the rec.gov season; there is no separate USACE statement.",
+    "PHONE (402) 667-2546 confirmed (rec.gov contact). Website fine (rec.gov + NWO lake page; NWO page not re-read).",
+    "SITES: rec.gov says all 77 are reservable, but RIDB marks site 73 MANAGEMENT (host) and 2 others non-reservable. Count left at 77 per rec.gov's own text, with the host site noted."
+  ]
+}
