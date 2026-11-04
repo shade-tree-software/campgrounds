@@ -76,6 +76,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **13501 Mallory Park (IA, p3-272):** pads 6-12 and 14-18 back toward ~7 m Maynes Creek, 15-35 m over lawn with a bank tree fringe and cut banks; a site photo would settle creekside. Held at not waterfront.
 - **13509 Manteno Park (IA, p3-272):** south and east pads 15-30 m over open lawn from the 12-acre lake, set to lakeview; lakefront if the arm is open water at normal pool.
 
+- **13469 Twin Bridges, Delaware County (IA, p3-276):** the map puts sites 1B-5B 15-25 m from 10-13 m Elk Creek; tree cover hides them. A site photo would settle creekside. Held at not waterfront.
+- **13490 Walnut Grove, Clinton County (IA, p3-276):** east-lane sites 15-35 m from the 45-90 m Wapsipinicon behind trees; the county says 'along the bank'. Held at not waterfront.
+- **3186 Welter (IA, p3-276):** set to riverview; the county map draws sites 4, 8, 13 and 15 on the river side of the bank lane - riverfront if those pads sit on open bank.
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft
