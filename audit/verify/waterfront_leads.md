@@ -86,6 +86,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 - **2818 Mill Race Park, Atkinson (NE, p3-281):** the 14-acre lake is 65-70 m from the north row across a road and trees; lakeview for 2-3 sites if a photo shows the lake from them. Held at not waterfront.
 
+- **2791 Crawford City Park (NE, p3-285):** 2025-26 Campendium reviewers say four hookup sites back directly onto the White River (a 3-7 m stream); creekside if a site map or photo places the pads at the bank. Held at not waterfront.
+
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft

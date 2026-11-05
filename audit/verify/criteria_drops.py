@@ -360,6 +360,7 @@ DROPS = {
     11415: ('2026-11-04', 'dispersed camping on the sandy reservoir shore, no designated sites (AWH 2026-11-04: driving on sand or open beach is not safe for EKKO)', 'Tonto NF SB Cove: drive-in dispersed camping on the sandy shore near the waterline.'),
     7110: ('2026-11-04', 'RVs park on a sandy lakeshore flat, no designated sites (AWH 2026-11-04: driving on sand or open beach is not safe for EKKO)', 'NPS Lake Meredith Cedar Canyon: paved road down to a sandy lakeshore flat where RVs park.'),
     7655: ('2026-11-04', 'drive-on open beach camping (AWH 2026-11-04: driving on sand or open beach is not safe for EKKO)', 'Calhoun County Magnolia Beach: RVs drive onto and park on the open shell beach of Matagorda Bay.'),
+    2855: ('2026-11-04', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule)', 'p3-285, read 2026-11-04: RV Life cg_avg_rating 7.68/10 = 3.84/5 over 41 ratings (its rounded star shows 4); Google 4.3/138. No --AWH note, no trip references.'),
 }
 
 if __name__ == "__main__":
