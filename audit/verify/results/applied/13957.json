@@ -1,0 +1,45 @@
+{
+  "id": 13957,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/camping/branched-oak-sra/r/campgroundDetails.do?contractCode=NE&parkId=230034 (NGPC park page on its booking site, read 2026-11-05)",
+    "ReserveAmerica per-site details for the 78 SOUTH SHORE sites (Max Vehicle Length, Distance from Shoreline, Proximity to Water, hookups, GIS lat/lng; read 2026-11-04 in p3-279, reused) + 1-night quotes and availability calendars for sites 021 (Electric), 044 (Electric Plus), 071 (Full Hookup), read 2026-11-05",
+    "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (repo copy audit/state_park_fees/ne_camping_rates_grid_2025.pdf: 'Branched Oak SRA* SE 402-783-3400')",
+    "Esri World Imagery around the RA site points (whole campground at 1 px/m; east loop at 3.75 px/m; west point at 3.2 px/m)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"max_rig_ft": 100, "note": "78 South Shore sites are on the booking site (35 Electric, 31 Electric Plus, 12 Full Hookup), Max Vehicle Length 40-100 ft; imagery shows a further herringbone loop of about 30 pads between the two booked loops that the booking site does not list."},
+      "source": "ReserveAmerica site list and per-site details for park 230034, loop SOUTH SHORE (Max Vehicle Length 40-100 ft, site 098 100 ft), read 2026-11-04/05",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "potable_water": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/branched-oak-sra/r/campgroundDetails.do?contractCode=NE&parkId=230034 ('South Shore Campground (Area #1) ... Access to 2 coin-operated shower buildings, 2 dump stations, playground, shelter'; 'The campgrounds have restrooms, showers, drinking water, and 4 dump stations'), read 2026-11-05",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/branched-oak-sra/r/campgroundDetails.do?contractCode=NE&parkId=230034 ('Status: Open year round'); South Shore site calendars show 'First Come, First Served Availability' every night from 2026-11-05 to 2027-04-11, read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://nebraskastateparks.reserveamerica.com/camping/branched-oak-sra/r/campgroundDetails.do?contractCode=NE&parkId=230034", "window_opens_days": 180, "fcfs": "some_sites", "note": "On 2026-11-05 the booking site's window ran to May 4, 2027 (180 days). South Shore site calendars show every night first come, first served through April 11, 2027, and reservable from April 12, 2027."},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/branched-oak-sra/r/campsiteDetails.do?contractCode=NE&parkId=230034&siteId=2726 ('Max Reservation Window: Tue May 04 2027'; calendar 'W First Come, First Served Availability' 2026-11-05..2027-04-11, 'Available' from 2027-04-12; same on sites 2846 and 2577), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Nebraska Game and Parks, Area 1 on the south shore of Branched Oak Lake northwest of Lincoln; Middle Oak Creek (Area 4) is a separate entry. Paved herringbone loops on an open grassy point and the shore: the east loop's front row (sites 43-49) ends about 20 m from the water across grass and a sandy strip, and the point's outer pads are 25-60 m from the riprapped shore. A middle loop of pads between the two is not on the booking site. --Claude",
+  "summary": "RA park page, 78 South Shore site records, quotes and calendars read. Confirmed 30/50-amp + 12 full-hookup sites, showers and dumps, rigs to 100 ft, open year round (FCFS through 2027-04-11, reservable from 2027-04-12, 180-day window). Quotes: Electric $25, Electric Plus $30, Full Hookup $35 for May/June 2027 nights; basic $15 stays. Lakefront confirmed on imagery (front-row sites 43-49 ~20 m from the water). Phone (402) 783-3400 missing from the entry.",
+  "flags": [
+    "PHONE missing: (402) 783-3400 ('Phone Number: (402)783-3400' on the RA park page; 'Branched Oak SRA* SE 402-783-3400' on the 2025 NGPC rates grid). apply.py does not write phone - set it by hand.",
+    "WATERFRONT lakefront CONFIRMED (no change): RA tags all 78 South Shore sites 'Proximity to Water: Lakefront' / 'Shoreline site Y' with Distance from Shoreline 50 ft (7 sites: 043-049), 200 ft (32), 300 ft (11) and 400 ft (28). Tags are claims, so checked on Esri imagery with the RA GIS points plotted: the east loop's front-row pads 043-049 are spurs pointing north off the loop road, ending ~15-20 m from a natural sandy shoreline strip and ~20-25 m from the water; nothing between but open grass and brush, the loop road is behind them. On the west point the outer pads (076-083) end 25-60 m from the riprapped shore across open grass with scattered trees, also with no road between. I see no developed swim beach or day-use facility in front of the east loop. The rest (200-400 ft) are view sites.",
+    "PIN: stored 40.95936,-96.87478 sits on the west point loop; the centroid of the 78 RA sites is 40.95948,-96.87214 (~220 m E). Under the ~250 m line; no move needed.",
+    "OTHER BRANCHED OAK ENTRIES: only 2677 (now 'Middle Oak Creek Campground', 40.97178,-96.88748). The RA page says 'Camping is permitted in nine public use areas around the lake' with 'ample space for primitive camping' and 'an area where camping is allowed with horses'; RA books only Middle Oak, South Shore and one site in Area 2 (Homestead, site 001 at 40.95890,-96.87445, inside this entry's footprint). The other seven use areas are primitive camping with no site list I could read (outdoornebraska.gov blocked) - no further developed campground found that lacks an entry; the equestrian camp would be a horse camp.",
+    "UNBOOKED LOOP: imagery shows a third herringbone loop of ~30 paved pads between the east and west booked loops (around 40.9595,-96.8715) with no RA site points. It is probably where the non-reservable sites (and the 'Basic campsites' the NGPC page names) are; not verified.",
+    "FEES left alone (human-checked 2026-10-11, no method): RA quotes 2026-11-05: site 021 Electric $25, 044 Electric Plus $30, 071 Full Hookup $35 a night for 2027-05-04 and 2027-06-15; site 021 also $25 for 2027-04-20 and 2027-10-26, so the booking site does not apply the grid's '$5 less' off-season price to those nights. Shape note: nightly_high 35 is the full-hookup price, not the base rate (schema: low/high are the base); a human may prefer low 15 / high 15 with electric +10 / full_hookup +20 surcharges like the other NE grid entries.",
+    "PULL_THROUGH (derived from earlier note prose) left alone: the RA park page lists the amenity 'Pull-through driveway' park-wide, but the South Shore pads on imagery are angled spurs off the loops (back-in style) and RA gives 'Back-In' for 18 of the 78 and nothing for the rest. Unconfirmed either way.",
+    "SAND RULE: not applicable - all South Shore pads are paved ('Driveway Surface: Paved' on all 78 RA records).",
+    "WEBSITE https://outdoornebraska.gov/location/branched-oak/ (stored) unread: Cloudflare-blocked to plain HTTP."
+  ]
+}
