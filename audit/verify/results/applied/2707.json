@@ -1,0 +1,52 @@
+{
+ "id": 2707,
+ "checked": "2026-11-05",
+ "sources": [
+  "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230101 ('Burbach Area Campground is next to the Weigand campground and it provides campers with nice summer shade. This areas has camping pads with electricity, non-electrical gravel pad sites, coin operated shower house, a playground, picnic shelter, swimming beach, and RV dump station'; 'Burbach Area has 10 fully furnished cabins'; 'Status: Open through Sun Oct 31 2027'; Booking Window Basic/Electric 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; 'Project Office: (402)388-4169'), read 2026-11-05",
+  "ReserveAmerica loop search, parkId 230101 loop 230872 BURBACH CAMPGROUND: 61 reservable sites, 34 'Electric Plus' ('Electric Hookup available: 50 amp', 'Full Hookup - no'), 27 'Electric' ('Electric Hookup available: 30 amp', 'Full Hookup - no'), 59 '50 Back-In' and 2 with no length shown, read 2026-11-05; GIS points of the same 61 sites centred 42.83668,-97.59136 (read 2026-11-04 for entry 2750)",
+  "ReserveAmerica campsiteDetails quotes, parkId 230101, one night from 4/20/2027 (Weigand sites, same park and grid): Electric '$25.00 Per Night', Electric Plus '$30.00 Per Night', read 2026-11-04 (entry 2750)",
+  "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Lewis and Clark SRA* NE 402-388-4169': Full Hookup, Electric Plus, Electric marked, Basic; Basic $15) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+  "USGS NAIP at 42.8370,-97.5915 (800 m) and Esri World Imagery at 42.8400,-97.6050 (3 km) with both pins, 2026-11-05"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 10, "nightly_high": 30, "currency": "USD", "checked": "2026",
+              "surcharges": {"weekend": 0, "electric": null, "full_hookup": null},
+              "note": "In season: non-electric gravel pad $15, electric $25, electric plus $30 a night; $5 less in the off-season. Plus tax."},
+   "source": "ReserveAmerica campsiteDetails quotes, parkId 230101, 4/20/2027: Electric '$25.00 Per Night', Electric Plus '$30.00 Per Night' (read 2026-11-04); audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Lewis and Clark SRA*': Basic $15) + NGPC park-pricing text in audit/state_park_fees/ne_build.py (off-season $5 less except primitive); park page 'non-electrical gravel pad sites' at Burbach, read 2026-11-05",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "sewer": false},
+   "source": "ReserveAmerica loop search, parkId 230101 loop BURBACH CAMPGROUND: 34 'Electric Plus' ('Electric Hookup available: 50 amp', 'Full Hookup - no'), 27 'Electric' ('Electric Hookup available: 30 amp', 'Full Hookup - no'); the park page lists only electric and non-electrical gravel pads at Burbach, read 2026-11-05",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": 50, "note": "61 reservable electric sites (34 electric plus 50 A, 27 electric 30 A), all 50-ft back-ins, plus non-electric gravel pads and 10 cabins."},
+   "source": "ReserveAmerica loop search, parkId 230101 loop BURBACH CAMPGROUND: 61 sites, 59 '50 Back-In', read 2026-11-05",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "dump": true},
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230101 (Burbach: 'coin operated shower house ... swimming beach, and RV dump station'), read 2026-11-05",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "reserveamerica", "fcfs": "some_sites", "window_opens_days": 180,
+              "url": "https://nebraskastateparks.reserveamerica.com/camping/lewis-and-clark-sra/r/campgroundDetails.do?contractCode=NE&parkId=230101"},
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230101 (Booking Window Basic/Electric 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; loop BURBACH CAMPGROUND 61 reservable sites) + state:NE policy (non-reservable sites first-come), read 2026-11-05",
+   "method": "manual"
+  }
+ },
+ "note": "Burbach camping area of Lewis and Clark SRA, next to Weigand on the south shore of Lewis and Clark Lake (the Missouri River reservoir behind Gavins Point Dam) north of Crofton: shaded back-in electric pads on two loops, plus non-electric gravel pads and 10 cabins. Coin showers, swim beach, playground and picnic shelter; the lake is behind a belt of shoreline trees. --Claude",
+ "summary": "Re-scoped to Burbach (Weigand is entry 2750). RA: 61 reservable sites, 34 EP 50 A + 27 Electric 30 A, 50-ft back-ins, plus non-electric gravel pads; showers, dump, swim beach. Fees 10-15 -> 10-30 (basic off-season to EP in season), electric/full_hookup surcharges cleared. Hookups water/sewer -> electric 50, sewer false (no full hookups here). Pin moves 1.9 km to the Burbach sites. Lakeview -> not waterfront. Phone (402) 388-4169 to add; name to change.",
+ "flags": [
+  "RENAME: 'Lewis and Clark State Recreation Area (Weigand-Burbach)' duplicates entry 2750 (Weigand, applied 2026-11-04). Suggest 'Lewis and Clark State Recreation Area - Burbach Campground'; this result is written for Burbach only. apply.py doesn't write names.",
+  "PIN: stored 42.8410,-97.6140 is on the lakeshore by the private lot subdivision about 1.9 km west of any campground. Move to the GIS centre of Burbach's 61 reservable sites, 42.83668,-97.59136 (ReserveAmerica GIS points, read 2026-11-04 for 2750).",
+  "WATERFRONT lakeview -> not waterfront: on NAIP (leaf-on) Burbach's west loop sits 40-80 m back from the shore behind a continuous belt of shoreline trees, and the east loop faces an open field 150-250 m wide with the same tree belt beyond it; neither has an open view of the lake. ReserveAmerica tags no Burbach site lakefront, though it tags 14 at Weigand. The stored evidence is only a pointer to commit 3126a2b, read at the old pin.",
+  "PHONE: add (402) 388-4169 (park page 'Project Office: (402)388-4169'; NGPC grid). apply.py doesn't write phones.",
+  "WEBSITE: stored website has two lines (outdoornebraska.gov/location/lewis-and-clark/ and https://www.reserveamerica.com/explore/lewis-and-clark-sra/NE/230101); the booking.url written here is the NE ReserveAmerica page.",
+  "SAND RULE: passes - developed loops with pads; the swim beach is day use.",
+  "UNVERIFIED: how many non-electric gravel pads Burbach has (not on ReserveAmerica, so first come), and whether the electric plus sites have water (EP is 20/30 A with water or 50 A; all 34 here are 50 A). No count or water written."
+ ]
+}

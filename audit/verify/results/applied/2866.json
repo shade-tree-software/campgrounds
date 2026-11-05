@@ -1,0 +1,35 @@
+{
+ "id": 2866,
+ "checked": "2026-11-05",
+ "sources": [
+  "https://auburninnmotel.com/longscreekrv/ (operator page, Auburn Inn Motel; header phone 402-274-3143, 517 J Street; (c) 2025), read 2026-11-05",
+  "https://resnexus.com/resnexus/reservations/book/14204FCA-2FE6-4F1D-B222-28E8D80DDA5A (the page's 'Book Now' link): Incapsula challenge, empty in plain HTTP and in a headless browser, 2026-11-05 - unread",
+  "Google Maps place panel 'Long's Creek RV Park', 513 J St, Auburn: 2.0 stars, 2 reviews, +1 402-274-3143, read 2026-11-05",
+  "https://campgrounds.rvlife.com/api/reviews/park/265304: 8.04/10 from 5 reviews (10/2026 $52 and $40, 7/2025 $25, 6/2024 $30 and $35), read 2026-11-05",
+  "trip_data/goodsam_parks.json (Good Sam directory, fetched 2026-10-02): 'Long's Creek RV & Auburn Inn Motel', isGsPark false, military true, phone 4022743143",
+  "OpenStreetMap way 208648089 (Optimist Lake pond) 4.76 acres; Esri World Imagery at 40.4004,-95.8380 (440 m frame), 2026-11-05"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"water": true, "sewer": true},
+   "source": "https://auburninnmotel.com/longscreekrv/ ('Full hookups with water, electricity, and sewer access'), read 2026-11-05",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "url": "https://resnexus.com/resnexus/reservations/book/14204FCA-2FE6-4F1D-B222-28E8D80DDA5A"},
+   "source": "https://auburninnmotel.com/longscreekrv/ ('Book your RV Spot' / 'Book Now' -> ResNexus; 'Reservations paid in full at the time of booking-no refunds'), read 2026-11-05",
+   "method": "manual"
+  }
+ },
+ "note": "Private RV park behind the Auburn Inn Motel on US-75 at the north edge of Auburn, run with the motel. Gravel pull-through rows with concrete pads, laundry room, little shade; a rail line runs along the east side. Optimist Lake, a small pond with a fishing pier and trail, is across the street to the south. Takes overnight travelers and long-term stays. --Claude",
+ "summary": "Operator page confirms full hookups and online booking (ResNexus, which was unreadable behind Incapsula). Phone 402-274-3900 -> 402-274-3143 (operator, Google, Good Sam). Not waterfront confirmed (pond 4.8 acres across a street). Rate unread from the operator; camper reports $40-52 in 10/2026. Gate passes on ratings (RV Life 8.04/5; Google 2.0 from only 2).",
+ "flags": [
+  "PHONE: stored 402-274-3900 does not appear anywhere; the operator page header, Google and the Good Sam directory all give 402-274-3143. Replace it (apply.py does not write phones).",
+  "RATE NOT READ: the operator page posts no price and its ResNexus booking engine is behind Incapsula (empty page in curl and in the headless browser; not retried). RV Life reports 10/2026: $52 (motorhome, pull-through) and $40 (travel trailer); earlier $25-35. The operator HAS a web page, so a camper report cannot price it; fees left absent. If the true nightly rate is over $50, it fails the price gate (no gateway within 40 km; nearest Kansas City 180 km).",
+  "PRIVATE GATE: presence = operator page + booking engine + phone (pass); Google 2.0 from 2 reviews (too few to count); RV Life 8.04/10 from 5 (pass). Long-stay: the page courts 'long-term residents' and 'extended stay' and one review stayed 'a few weeks while in town for work', but recent reviews are overnight stays and it books by the night, so it keeps.",
+  "DISCOUNTS: Good Sam military true kept (positive claim from the directory); good_sam false stays.",
+  "WATERFRONT not waterfront confirmed: the park is the gravel lot east of the motel; Optimist Lake (OSM 4.76 acres, under the pond line) is south across the street and a trail. A 2025 review's 'nice view of the lake' is the pond.",
+  "PIN OK: stored 40.40045,-95.8377 is at the north-west corner of the park rows, ~100 m from their centre (~40.39965,-95.83712).",
+  "UNVERIFIED: sites.count 37 (the old note; inclusion_evidence says ~31, a 6/2024 review says '31 pull through hook ups') and electric 50 amp - the operator page names neither; left as stored. facilities.laundry is supported by reviews and the operator's own review quotes."
+ ]
+}

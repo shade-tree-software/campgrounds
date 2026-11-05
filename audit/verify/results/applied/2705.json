@@ -1,0 +1,58 @@
+{
+ "id": 2705,
+ "checked": "2026-11-05",
+ "sources": [
+  "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230100 ('Lake Ogallala East Campground – Located at the East Entrance of Lake Ogallala off the Keystone Lake Road, this area features hard surfaced roads and pads with 82 Electric Plus sites, water available throughout the area and a restroom and shower facility'; 'Lake Ogallala West Campground – Located at the West Entrance of Lake Ogallala off the Keystone Lake Road, this Campground is spread across multiple locations on the west side of Lake Ogallala and includes many lake front sites. All sites are grass'; 'all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only'; 'Status: Open year round.'; 'small, gentle and sedate at 320 acres'), read 2026-11-05",
+  "ReserveAmerica loop search, parkId 230100: East Campground 82 sites, all 'Electric Plus' ('Electric Hookup available: 50 amp', 'Water Hookup'), 81 '45 Back-In'; WEST CAMPGROUND 100 'Basic' sites; campsiteDetails on every 5th site (17 East: paved, 45 ft, water Y, back-in; GIS centre 41.22641,-101.66212; 20 West spread 41.2131-41.2342, centre 41.22387,-101.66742), read 2026-11-05",
+  "audit/state_park_fees/ne_booking_check_2026-10-12.jsonl (parkId 230100 East Campground sites 001 and 002, Electric Plus, 50 A, water Y, 45 ft: 6/15/2027 '$30.00 Per Night', 6/19/2027 '$35.00 Per Night')",
+  "audit/state_park_fees/ne_build.py, NGPC park-pricing text ('Lake McConaughy and Lake Ogallala: May 21 - September 12 Thursday-Saturday ... $35 ... Sunday-Wednesday ... $30 ... September 13 - May 20 ... $25' for electric plus)",
+  "USGS NAIP at 41.2255,-101.6620 (800 m and 1.3 km) with the GIS points, 2026-11-05"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 30, "currency": "USD", "checked": "2026",
+              "surcharges": {"weekend": 5},
+              "note": "Electric plus $30 Sunday-Wednesday, $35 Thursday-Saturday (May 21 - September 12), $25 the rest of the year. Plus tax."},
+   "source": "audit/state_park_fees/ne_booking_check_2026-10-12.jsonl (ReserveAmerica parkId 230100 East Campground sites 001/002 Electric Plus: 6/15/2027 '$30.00 Per Night', 6/19/2027 '$35.00 Per Night') + NGPC Lake McConaughy/Ogallala seasonal rates quoted in audit/state_park_fees/ne_build.py (September 13 - May 20 electric plus $25)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230100 ('Status: Open year round.'), read 2026-11-05",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true},
+   "source": "ReserveAmerica loop search + campsiteDetails, parkId 230100 East Campground: all 82 'Electric Plus' ('Electric Hookup available: 50 amp', 'Water Hookup'), 17 sampled sites 'Water Hookup: Y', read 2026-11-05",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 82, "max_rig_ft": 45, "note": "82 paved electric plus back-ins, 45 ft."},
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230100 ('82 Electric Plus sites') + ReserveAmerica loop search ('45 Back-In' on 81 of 82), read 2026-11-05",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "potable_water": true},
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230100 ('water available throughout the area and a restroom and shower facility'), read 2026-11-05",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "reserveamerica", "fcfs": "never", "window_opens_days": 180,
+              "url": "https://nebraskastateparks.reserveamerica.com/camping/lake-ogallala-sra/r/campgroundDetails.do?contractCode=NE&parkId=230100",
+              "note": "All camping at Lake McConaughy and Lake Ogallala is by advance reservation only."},
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230100 ('all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only'; all 82 East sites on the booking site) + state:NE policy (180-day window), read 2026-11-05",
+   "method": "manual"
+  }
+ },
+ "note": "East Campground of Lake Ogallala SRA, on the wooded peninsula at the east entrance off the Keystone Lake road, just below Kingsley Dam: paved electric plus back-ins with water, many along the shore of the 320-acre Lake Ogallala. Restroom and shower building. A trout fishery; the West Campground (grass basic sites) is across the lake by the west entrance. --Claude",
+ "summary": "RA: 82 paved EP sites, 50 A + water, 45-ft back-ins; showers; reservation only. Fees 25-30 +5 weekend confirmed (June 2027 quotes $30/$35). Booking platform operator -> reserveamerica, fcfs never, window 180, url. Season year_round true added. Hookups gain electric 50, sites count 82 added. Lakefront confirmed. Pin 252 m from the site centre; move suggested. Phone 308-284-8800 confirmed.",
+ "flags": [
+  "WATERFRONT confirmed lakefront: on NAIP the peninsula's perimeter pads (GIS 007, 037, 042, 067, 062) sit 10-30 m from the Lake Ogallala shore with open, lightly treed ground between, and no road between pad and water. ReserveAmerica's list shows 'Near Water - no' on every site, but that is the list's default at every NE park, so it does not count against. Below Kingsley Dam, but the campground is on Lake Ogallala itself, the water it is judged against (stored dam screen agrees).",
+  "PIN: stored 41.22852,-101.66105 is at the peninsula's north neck by site 001, 252 m from the GIS centre of the sampled East sites, 41.22641,-101.66212. Just over the 250 m line; move if wanted.",
+  "SPLIT CANDIDATE: Lake Ogallala West Campground - 100 reservable 'Basic' grass sites (RA loop 'WEST CAMPGROUND', W1-W100), 'spread across multiple locations on the west side of Lake Ogallala and includes many lake front sites', at its own West Entrance off the Keystone Lake road. Sampled GIS centre 41.22387,-101.66742, 745 m west of the stored pin across the lake and spread 2.3 km north-south (41.2131-41.2342); it is a separate drive, not reachable through the East Campground. Not in the database. Basic $15 Sun-Wed / $20 Thu-Sat in season (2026-10-12 quotes on W1/W2), $10 off-season. RA posts no lengths or surfaces for its sites.",
+  "BOOKING: stored platform 'operator' -> 'reserveamerica' (NGPC books through nebraskastateparks.reserveamerica.com); fcfs 'never' from the RA text 'all camping ... by advanced reservation only'.",
+  "SAND RULE: passes - paved roads and pads.",
+  "PHONE: stored 308-284-8800 (Lake McConaughy/Ogallala office) confirmed on the NGPC grid row for Lake Ogallala; not printed on the RA page I read.",
+  "WEBSITE: stored website carries two lines (outdoornebraska.gov/location/lake-ogallala/ and the RA URL); fine."
+ ]
+}

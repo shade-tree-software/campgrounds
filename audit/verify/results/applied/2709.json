@@ -1,0 +1,73 @@
+{
+ "id": 2709,
+ "checked": "2026-11-05",
+ "sources": [
+  "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230099 ('Status: Open year round.'; 'all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only. Reservations are available 180 days in advance for designated camp sites and 30 days in advance for beach camping'; 'At 30,000 surface acres it is Nebraska' largest reservoir'), read 2026-11-05",
+  "ReserveAmerica loop search, parkId 230099 loop LONE EAGLE: 84 sites, all 'Full Hookup' ('Electric Hookup available: 50 amp', 'Full Hookup available'), '60 Back-In'; campsiteDetails on every 4th site (21: paved, 60 ft, water Y, sewer Y, back-in; GIS centre 41.25539,-101.75900), read 2026-11-05",
+  "audit/state_park_fees/ne_booking_check_2026-10-12.jsonl (parkId 230099 LONE EAGLE Full Hookup 004/005: 6/15/2027 '$35.00 Per Night', 6/19/2027 '$40.00 Per Night')",
+  "audit/state_park_fees/ne_build.py (NGPC Lake McConaughy/Ogallala seasonal rates quoted in audit/state_park_fees/ne_build.py ('May 21 - September 12 Thursday-Saturday $40 / $35 ... Sunday-Wednesday $35 / $30 ... September 13 - May 20 $30 / $25' full / electric plus))",
+  "USGS NAIP at 41.2535,-101.7560 (1.4 km) and 41.2540,-101.7585 (600 m) with the GIS points, 2026-11-05"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 30,
+    "nightly_high": 35,
+    "currency": "USD",
+    "checked": "2026",
+    "surcharges": {
+     "weekend": 5
+    },
+    "note": "Full hookup $35 Sunday-Wednesday, $40 Thursday-Saturday (May 21 - September 12), $30 the rest of the year. Plus tax."
+   },
+   "source": "audit/state_park_fees/ne_booking_check_2026-10-12.jsonl (ReserveAmerica parkId 230099 LONE EAGLE Full Hookup 004/005: 6/15/2027 '$35.00 Per Night', 6/19/2027 '$40.00 Per Night') + NGPC Lake McConaughy/Ogallala seasonal rates quoted in audit/state_park_fees/ne_build.py ('May 21 - September 12 Thursday-Saturday $40 / $35 ... Sunday-Wednesday $35 / $30 ... September 13 - May 20 $30 / $25' full / electric plus)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true
+   },
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230099 ('Status: Open year round.'), read 2026-11-05",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "ReserveAmerica loop search + campsiteDetails, parkId 230099 LONE EAGLE: all 84 'Full Hookup', 'Electric Hookup available: 50 amp'; sampled sites 'Water Hookup: Y', 'Sewer Hookup: Y', read 2026-11-05",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 84,
+    "max_rig_ft": 60,
+    "note": "84 full hookup sites, 50 A, paved 60-ft back-ins."
+   },
+   "source": "ReserveAmerica loop search, parkId 230099 loop LONE EAGLE: 84 sites, '60 Back-In', read 2026-11-05",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "reserveamerica",
+    "fcfs": "never",
+    "window_opens_days": 180,
+    "url": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099",
+    "note": "All camping at Lake McConaughy is by advance reservation only: 180 days ahead for designated sites, 30 days for beach camping."
+   },
+   "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230099 ('Status: Open year round.'; 'all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only. Reservations are available 180 days in advance for designated camp sites and 30 days in advance for beach camping'; 'At 30,000 surface acres it is Nebraska' largest reservoir'), read 2026-11-05",
+   "method": "manual"
+  }
+ },
+ "note": "Lone Eagle campground of Lake McConaughy SRA, on the north shore off Shoreline Road (Arthur Bay Gate 2 or Sandy Beach Gate 4 off Highway 92): a paved loop of full hookup back-ins, its south-west row behind a line of trees above the wide sand beach. Beach camping on the sand is separate and booked 30 days ahead. --Claude",
+ "summary": "RA: 84 FH sites, 50 A, paved 60-ft back-ins; reservation only. Fees 30-35 +5 weekend confirmed (June 2027 quotes $35/$40). Hookups gain electric 50; count 84 / max_rig 60 confirmed. fcfs never and window 180 added (the note's off-season FCFS claim dropped). Season year_round true. Lakeview confirmed. Pin 252 m from the site centre; move suggested. Phone 308-284-8800 confirmed.",
+ "flags": [
+  "WATERFRONT lakeview confirmed (weakly): on NAIP the loop's south-west row (039-069) backs onto a single row of trees with gaps, then 150-300 m of open sand beach to the current waterline; the beach is used drive-on beach camping. Set back, with the lake visible through the gaps. If the tree row screens the view at most pads, this is not waterfront.",
+  "PIN: stored 41.25523,-101.75601 is the entrance junction on Shoreline Road, 252 m east of the GIS centre of the sampled sites, 41.25539,-101.75900. Just over the 250 m line; move if wanted.",
+  "SAND RULE: passes - paved loop on a paved road; the adjacent beach camping is separate.",
+  "BOOKING: the stored note said 'FCFS Sept 11-May 19'; the current RA page says all camping is by advance reservation only, with no seasonal exception. Dropped from the note; fcfs 'never'.",
+  "PHONE: stored 308-284-8800 confirmed on the NGPC grid (Lake McConaughy SRA row)."
+ ]
+}
