@@ -467,3 +467,5 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **Rosebud Casino RV Park (2876, SD, p3-288, 2026-11-05):** the RV park has no Google listing of its own; the casino's listing is 3.8 over 864 reviews (gaming, hotel, restaurant). I kept it, reading that as the casino's rating rather than the park's. RV Life 7.75 over only 8. Drop it on the casino's rating?
 
 - **Tuxedo Park, Crete (2841, p3-290, 2026-11-05):** the city page says the main entrance crosses a '3 ton bridge'. A new concrete bridge opened in 2021, so the posting may be out of date, and there is a back entrance off Idaho Road. Kept, with a note line sending EKKO in the back way. OK, or drop?
+
+- **Battle Creek Municipal Park (2772, p3-292, 2026-11-05):** the city's parks page doesn't mention camping, and a Cowboy Trail site says 'two campsites' against our ~18 electric sites; only a tourism stub lists it. Kept for now. Drop, or keep until someone rings City Hall (402-675-2165)?
