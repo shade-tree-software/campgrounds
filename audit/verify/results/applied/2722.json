@@ -1,0 +1,64 @@
+{
+  "id": 2722,
+  "checked": "2026-11-05",
+  "sources": [
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Olive Creek SRA  SE  402-796-2362', Basic only (ne_build.py: 'Olive Creek': 'B'), no '*' ('*Reservations accepted.'); Basic $15, off-season $5 less",
+    "nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no Olive Creek facility",
+    "NGPC campsite inventory (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Basic_ONLY/FeatureServer/8), read 2026-11-05: '131R-Olive Creek Campground-2' to '-6', typed Basic, at 40.57916-40.57963,-96.84808..-96.84844; no other Olive Creek site in any camping layer (the one other row tagged Olive Creek SRA, '170R-Area 3-1' at 40.59972,-96.64729, is 14 km east, a different area number)",
+    "NGPC Parks_Locations layer (.../Parks_Locations/FeatureServer/0), read 2026-11-05: 'Olive Creek SRA', Status 'Active', ParkStatus 'Open', 612 acres, PrimitiveCampingOnly 'Yes', NonpadswithoutElectric 'Yes', Water 'Yes', VaultPitToilet 'Yes', Showers 'No', DumpStation 'No', BoatRamp 'Yes', phone (402) 796-2362, physical address '24100 SW 100th St, Hallam'",
+    "NGPC Lake_Shapes layer: Olive Creek Lake ~118 acres (shoelace of the polygon)",
+    "Google Maps place panel 'Olive Creek Lake State Recreation Area', read 2026-11-05: 1.0 from 1 review, no phone, website outdoornebraska.gov/location/olive-creek/, point 40.57670,-96.84314",
+    "Esri World Imagery at 40.5795,-96.8470 (900 m) and 40.5800,-96.8475 (300 m, 3 px/m) with the inventory site points, plus NAIP of the 300 m frame, 2026-11-05"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 15,
+        "currency": "USD",
+        "checked": "2026",
+        "surcharges": {
+          "weekend": 0
+        },
+        "note": "In season: basic $15 a night; $5 less mid-October through April. Plus tax. First come, so no reservation fee."
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Olive Creek SRA': Basic; Basic $15) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always"
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Olive Creek SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no Olive Creek facility",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": true,
+        "showers": false,
+        "dump": false
+      },
+      "source": "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), 'Olive Creek SRA': Water 'Yes', VaultPitToilet 'Yes', Showers 'No', DumpStation 'No'; read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": null
+      },
+      "source": "NGPC campsite inventory (Camping_Facility_Basic_ONLY/FeatureServer/8), read 2026-11-05: only '131R-Olive Creek Campground-2' to '-6' are mapped; imagery shows ~5-6 gravel pull-ins there. The stored 28 came from note prose and nothing NGPC publishes supports it",
+      "method": "manual"
+    }
+  },
+  "note": "NGPC recreation area on 118-acre Olive Creek Lake, between Kramer and Hallam, SW of Lincoln. A handful of basic gravel pull-in sites with tables off the west side of the entrance road, north of the boat-ramp lot; no electric. Water and vault toilets, boat ramp and fishing jetties. --Claude",
+  "summary": "Still NGPC (2025 grid row, Parks_Locations 'Active'/'Open'), basic only, first-come. Fees 10/15 confirmed; fee note's online reservation fee removed (no reservations). Facilities now sourced. SITES 28 -> null (NGPC maps only sites 2-6). WATERFRONT DOWN lakefront -> not waterfront: the 'pads at the end of finger jetties' are rock fishing jetties; the inventory's sites sit ~100-130 m from the lake behind the entrance road, lawn and a shoreline tree belt. Pin ~180 m off (optional move). Note corrected.",
+  "flags": [
+    "WATERFRONT lakefront -> not waterfront (down; contrary to the stored evidence, which read the jetties as pads). NGPC's own campsite inventory puts the campground (sites 2-6) at 40.5792-40.5796,-96.8481..-96.8484, gravel pull-ins on the WEST side of the entrance road. Between them and the 118-acre lake: the road, ~60-90 m of mown lawn/day-use with scattered trees, then a continuous shoreline tree belt; ~100-130 m to the water. The rock structures the old evidence called 'finger jetties with pull-in pads' are fishing jetties (one carries the path north from the boat-ramp lot); none is a campsite in the inventory. The tree belt screens the lake in NAIP summer imagery, so no lakeview either.",
+    "PIN (optional, under the 250 m line): stored 40.58100,-96.84800 is in the trees beside the north cove, ~180 m north of the sites. Sites centroid is 40.57940,-96.84825 (visible gravel pull-ins). Move if you want it on the loop.",
+    "PHONE missing -> 402-796-2362 (2025 grid row 'Olive Creek SRA'; NGPC Parks_Locations; it is the Pawnee SRA office). Google shows no phone. apply.py does not write phones.",
+    "SITES 28 -> null: the inventory maps sites 2-6 only (site 1 not mapped), imagery agrees with ~5-6 pull-ins; RV Life says 50. Parks_Locations calls it 'PrimitiveCampingOnly', so camping off the numbered sites may exist; no count can be sourced.",
+    "NOTE: 'near Kramer/Wilber' corrected to Kramer and Hallam (NGPC's physical address is Hallam; Wilber is a county south). The 'park entry permit required' line was dropped as general to all NGPC areas.",
+    "WEBSITE https://outdoornebraska.gov/location/olive-creek/ unread (domain blocked); Google links the same page. SAND: not applicable. FIT: gravel pull-ins look ~10-15 m long on imagery, fine for 23 ft. Google 1.0 from 1 review."
+  ]
+}

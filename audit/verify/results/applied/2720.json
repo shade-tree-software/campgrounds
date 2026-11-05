@@ -1,0 +1,57 @@
+{
+  "id": 2720,
+  "checked": "2026-11-05",
+  "sources": [
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'North Loup SRA  SW  308-346-4715', Primitive only (ne_build.py: 'North Loup': 'P'), no '*' ('*Reservations accepted.'); Primitive $10, 'except primitive' from the off-season $5 discount",
+    "nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no North Loup facility",
+    "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), read 2026-11-05: 'North Loup SRA', Status 'Active', ParkStatus 'Open', 19.56 acres, Howard County, point 41.26383,-98.45435, PrimitiveCampingOnly 'Yes', NonpadswithoutElectric 'Yes', VaultPitToilet 'Yes', RiverAccess 'Yes', Water 'No', Showers 'No', DumpStation 'No', phone (308) 385-6211, physical address '1755 US Hwy 281, Saint Paul'",
+    "NGPC Park_Areas layer (.../Park_Areas/FeatureServer/0, edited 2026-03): North Loup SRA polygon 41.26294-41.2652, -98.45897..-98.45045",
+    "Google Maps place panel 'North Loup State Recreation Area', read 2026-11-05: 3.5 from 2 reviews, no phone, no website, point 41.26347,-98.45441",
+    "RV Life park 'North Loup SRA' point 41.26391,-98.45458 (10 sites)",
+    "Esri World Imagery at 41.2641,-98.4547 (800 m) and 41.2638,-98.4555 (320 m, 2.8 px/m), and NAIP at the same 320 m frame, 2026-11-05; stored pin 41.20900,-98.45300 imaged (600 m frame)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 10,
+        "currency": "USD",
+        "checked": "2026",
+        "surcharges": {
+          "weekend": 0
+        },
+        "note": "Primitive camping $10 a night all year. Plus tax. First come, so no reservation fee."
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'North Loup SRA': Primitive only; Primitive $10) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always"
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (North Loup SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no North Loup facility; NGPC Parks_Locations has no Reservations flag for it",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": false,
+        "showers": false,
+        "dump": false
+      },
+      "source": "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), 'North Loup SRA': VaultPitToilet 'Yes', Water 'No', Showers 'No', DumpStation 'No', PrimitiveCampingOnly 'Yes'; read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Small (20-acre) NGPC recreation area on the north bank of the North Loup River off US 281, ~4 mi north of St. Paul. Primitive camping only, no pads, at the gravel turnaround in the trees; backwater ponds and the river lie south behind the trees. Pit toilet, picnic tables, grills, playground; no water. --Claude",
+  "summary": "Still NGPC (2025 grid row, Parks_Locations 'Active'/'Open', Park_Areas 2026), primitive only, first-come. Fees 10/10 confirmed; the fee note's online reservation fee was wrong (no reservations) and is removed. Facilities (vault toilets yes; water, showers, dump no) now sourced to NGPC. PIN MOVE ~6 km: stored point is in downtown St. Paul, not the SRA. Not waterfront kept. Phone conflict flagged. Note corrected (it said 'just south of St. Paul').",
+  "flags": [
+    "PIN MOVE 41.20900,-98.45300 -> 41.26400,-98.45570 (elevation 547 -> 544 m, Open-Meteo DEM). The stored point is on the rail line in downtown St. Paul (~6.1 km south). NGPC's Park_Areas polygon (41.26294-41.2652, -98.45897..-98.45045), Parks_Locations (41.26383,-98.45435), Google (41.26347,-98.45441) and RV Life (41.26391,-98.45458) all put the SRA on the north bank of the North Loup River ~4 mi north of town. On imagery the only drivable open area is the gravel turnaround loop at ~41.2640,-98.4557, off the park road that enters from US 281 to the east; no pads are visible (primitive, non-pad camping), so the turnaround is the best camp point.",
+    "WATERFRONT not waterfront kept: south of the turnaround is ~40-60 m of trees, then a backwater oxbow pond (~100 x 40 m, about 1 acre, a pond) and another tree belt before the main North Loup channel (~150-200 m wide braided river) ~110-130 m from the turnaround. Trees screen both; no site on the water.",
+    "PHONE: stored 308-385-6211 is the Mormon Island/Cheyenne district office number (grid rows 'Mormon Island SRA' and 'Cheyenne SRA'; also NGPC's old Parks_Locations row for North Loup). The 2025 grid lists North Loup at 308-346-4715. Suggest 308-346-4715. Google shows no phone. apply.py does not write phones.",
+    "WEBSITE https://outdoornebraska.gov/location/north-loup/ not checked (outdoornebraska.gov blocked); Google shows none.",
+    "SITES count 10 and hookups electric 0 left as stored (derived from note prose): primitive-only is confirmed by the grid and Parks_Locations, so electric 0 holds; the 10 is RV Life's figure and no NGPC source gives a count.",
+    "FIT: no length limit published; a gravel turnaround in the trees, tight-looking for a 23-ft rig turning but no source says so. SAND: not applicable. Google 3.5 from 2 reviews, a thin web presence; it rests on NGPC's grid."
+  ]
+}

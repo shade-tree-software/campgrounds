@@ -1,0 +1,47 @@
+{
+  "id": 2715,
+  "checked": "2026-11-05",
+  "sources": [
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Memphis SRA  SW  402-471-5497' with Electric Plus, Basic and Primitive marked (ne_build.py: 'Memphis': 'EP B P') and no '*' ('*Reservations accepted.'); statewide rates Electric Plus $30, Basic $15, Primitive $10; off-season $5 less except primitive",
+    "nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no Memphis facility",
+    "NGPC campsite inventory (ArcGIS, owner NGPC.GISAdmin): https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Basic_ONLY/FeatureServer/8 and .../Camping_Facilities_Electric_Plus_ONLY/FeatureServer/8, read 2026-11-05: '114R-Memphis Lake Campground-1' to '-80' - 60 typed Basic (1-31, 33-53, 73-80) and 18 typed Electric-Plus (54-70, 72), each with a point",
+    "NGPC Parks_Locations layer (.../Parks_Locations/FeatureServer/0), read 2026-11-05: 'Memphis Lake SRA', Status 'Active', 166 acres, DumpStation 'Yes', Water 'Yes', VaultPitToilet 'Yes'",
+    "Google Maps place panel 'Memphis Lake State Recreation Area', read 2026-11-05: 4.4 from 240 reviews, +1 402-471-5497, website outdoornebraska.gov/memphis/, point 41.10252,-96.43899",
+    "Esri World Imagery at 41.1010,-96.4385 (800 m frame) and the shore rows 41.1013,-96.4380 (3.2 px/m) with the inventory's site points overlaid, 2026-11-05; Overpass did not answer, distances are imagery estimates"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 30,
+        "currency": "USD",
+        "checked": "2026",
+        "surcharges": {
+          "weekend": 0,
+          "electric": null
+        },
+        "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax. First come, so no reservation fee."
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Memphis SRA': Electric Plus, Basic, Primitive; Electric Plus $30, Basic $15, Primitive $10) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always"
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Memphis SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no Memphis facility",
+      "method": "manual"
+    }
+  },
+  "note": "Small SRA on Memphis Lake, a 48-acre no-wake lake ~20 mi W of Omaha. NGPC's site inventory shows 18 Electric Plus sites (54-72) north of the shore rows and 60 basic sites, plus primitive camping; basic sites 1-10 line the east shore. Water, primitive toilets, playground, dump/fill station. Self-pay iron ranger (cash or check). --Claude",
+  "summary": "Still NGPC (grid row + phone 402-471-5497, no '*' so first-come only; not on ReserveAmerica). Fees 10-15 -> 10-30 (electric plus $30), electric surcharge cleared; booking confirmed. NGPC's GIS inventory: 18 Electric-Plus + 60 Basic sites mapped. WATERFRONT LEAD: not waterfront -> lakefront for the east-shore basic sites 1-10 (open lawn ~15-40 m to the water, road behind them). Pin fine. Phone added (flag). Note cleaned.",
+  "flags": [
+    "WATERFRONT not waterfront -> lakefront (lead, contrary to the 2026-06 sweep, so it needs the gate): NGPC's own per-site points put basic sites 1-10 along the east shore of the 48-acre lake (e.g. site 1 at 41.10081,-96.43661, site 5 at 41.10129,-96.43712). On imagery they sit on the lake side of the gravel loop road; between them and the waterline is open mown grass with scattered trees, ~15-40 m, no road, parking or building in between. That is the open-apron case within ~50 m. Sites 13-23 on the north side are ~45-60 m back behind a shoreline tree belt (view at best); the Electric Plus loop (54-72) and sites 24-53, 73-80 are 100 m+ back. The sites are at lake level on the open shore, not behind a berm.",
+    "PHONE missing -> 402-471-5497 (NGPC 2025 grid row 'Memphis SRA'; Google panel matches). apply.py does not write phones.",
+    "OWNERSHIP state confirmed: on the 2025 grid, in NGPC's Park_Areas (2026) and Parks_Locations; Google links outdoornebraska.gov/memphis/.",
+    "SITES: NGPC's inventory maps 78 numbered sites (60 Basic + 18 Electric-Plus; numbers 32 and 71 absent); the grid also lists Primitive, which no inventory layer maps, so no total is written. RV Life shows 72. HOOKUPS left absent: 'Electric Plus' is either 20/30 A with its own water hookup or 50 A (grid key), so neither the amperage nor water at the site can be pinned down.",
+    "PIN fine: stored 41.10250,-96.43898 is among Electric-Plus sites 62-72 (~20 m from site 69).",
+    "SAND: not applicable (gravel loops). FIT: no length posted; open grass sites. Google 4.4 from 240."
+  ]
+}

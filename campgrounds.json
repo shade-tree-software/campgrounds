@@ -193435,18 +193435,15 @@
     "ownership": "state",
     "waterfront": "not waterfront",
     "inclusion_evidence": "VisitNebraska/NGPC: 25 electric 50-amp all-weather pads + 15 basic + 10 primitive, FCFS, reopened June 2023 -> real RV campground",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-294 (2026-11-05): the park ponds are 1-2 acres; Bone Creek is behind trees. Stands.",
     "website": "https://outdoornebraska.gov/location/keller-park/",
-    "note": "SRA on Bone Creek NE of Ainsworth. 25 electric all-weather pads (50-amp) plus 15 basic and 10 primitive sites. Fire grate and picnic table per site; water pump and primitive restrooms. All first-come, first-served (register fees at the Iron Ranger, cash/check only); 14-day limit. NE park entry permit required. --Claude",
+    "note": "SRA on Bone Creek off US 183 north of Long Pine, NE of Ainsworth. 25 electric pads (sites 1-25) in two rows off the park road, plus 10 basic sites (26-35) in the south-west loop and primitive camping. Fire grates and picnic tables; water pump, primitive restrooms and a dump station. Stocked ponds in the park. Self-pay iron ranger (cash or check). --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
     },
     "hookups": {
       "electric": 50
-    },
-    "sites": {
-      "count": 50
     },
     "facilities": {
       "potable_water": true
@@ -193463,9 +193460,9 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NGPC campsite inventory (see sources), read 2026-11-05: 25 Electric sites (1-25) and 10 Basic sites (26-35); the stored 50 rested on the note's '15 basic and 10 primitive', and the primitive count is not mapped anywhere I could read",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -193473,13 +193470,14 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Keller Park SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no Keller Park facility",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'Keller Park', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Keller Park SRA': Electric Plus, Basic, Primitive; Electric Plus $30, Basic $15, Primitive $10) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -193489,15 +193487,20 @@
     },
     "fees": {
       "nightly_low": 10,
-      "nightly_high": 15,
+      "nightly_high": 30,
       "currency": "USD",
       "surcharges": {
-        "weekend": 0,
-        "electric": 15
+        "weekend": 0
       },
       "checked": "2026",
-      "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
-    }
+      "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax. First come, so no reservation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Keller Park SRA  NW  402-684-2921' with Electric Plus, Basic and Primitive marked (audit/state_park_fees/ne_build.py: 'Keller Park': 'EP B P') and no '*' ('*Reservations accepted.'); statewide rates Electric Plus $30, Basic $15, Primitive $10; park-pricing text quoted in ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive') nebraskastateparks.reserveamerica.com park directory (audit p3-293 ra_dir_NE.json, 37 parks): no Keller Park facility Google Maps place panel 'Keller Park State Recreation Area', 88637 US-183, Long Pine: 4.5 from 13 reviews, +1 402-684-2921, website outdoornebraska.gov/location/keller-park/, read 2026-11-05 RV Life park 258531 'Keller Park State Rec Area' (geoloc 42.66745,-99.77465 = the stored pin) Esri World Imagery at 42.6685,-99.7705 (1.4 km frame), the pond area 42.6713,-99.7688 and the south-west loop 42.6683,-99.7755 (~4 px/m), 2026-11-05; Overpass did not answer NGPC campsite inventory (ArcGIS feature services Camping_Facility_Electric_ONLY / Camping_Facility_Basic_ONLY, owner NGPC.GISAdmin, https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Electric_ONLY/FeatureServer/8 and .../Camping_Facility_Basic_ONLY/FeatureServer/8, edited 2026-01), read 2026-11-05: '250R-Keller Park SRA-1' to '-25' typed Electric, '-26' to '-35' typed Basic, each with a point NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), read 2026-11-05: 'Keller Park SRA', Status 'Active', Reservations 'No', DumpStation 'Yes', Water 'Yes', VaultPitToilet 'Yes'",
+      "note": "Still NGPC (2025 grid row, Parks_Locations 'Active', phone 402-684-2921, no '*' so first-come only; not on ReserveAmerica). Fees 10-15 -> 10-30, electric surcharge cleared; booking confirmed FCFS. NGPC's own site inventory: 25 electric + 10 basic (not the note's 15 basic) -> count 50 cleared. Not waterfront kept. Pin fine (inside the electric rows). Note cleaned."
+    },
+    "phone": "402-684-2921"
   },
   {
     "id": 2703,
@@ -194146,66 +194149,6 @@
     }
   },
   {
-    "id": 2710,
-    "kind": "campground",
-    "name": "Long Lake State Recreation Area",
-    "location": "42.29324,-100.14125",
-    "elevation_meters": 857.0,
-    "state": "NE",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "VisitNebraska/NGPC: 10 primitive drive-in tent/RV sites, tables/grills/water/pit toilets, FCFS sandhills SRA reachable by county road -> real primitive drive-in campground",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://outdoornebraska.gov/location/long-lake/",
-    "phone": "402-684-2921",
-    "note": "Remote NGPC SRA in the sandhills, ~22 mi south of Johnstown via county road, on a 50-acre natural sandhill lake. Primitive drive-in camping only (~10 sites, no electric): tables, grills, water, pit toilets. Limited maintenance. FCFS, no reservations. State park entry permit required. --Claude",
-    "rating": {
-      "price_tier": 1,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 0
-    },
-    "sites": {
-      "count": 10
-    },
-    "facilities": {
-      "vault_toilets": true,
-      "potable_water": true
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "4a470d78b43de20a",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    }
-  },
-  {
     "id": 2711,
     "kind": "campground",
     "name": "Long Pine State Recreation Area",
@@ -194475,11 +194418,11 @@
     "elevation_meters": 342.0,
     "state": "NE",
     "ownership": "state",
-    "waterfront": "not waterfront",
+    "waterfront": "lakefront",
     "inclusion_evidence": "NGPC/VisitNebraska: 18 Electric Plus + numerous Basic/Primitive tent & RV sites, dump-and-fill, FCFS Iron Ranger -> real drive-in RV campground",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-294 (2026-11-05): basic sites 1-10 on the east shore of the 48-acre lake have 15-40 m of open lawn to the water, with the park road behind them, not between. Not waterfront -> lakefront.",
     "website": "https://outdoornebraska.gov/location/memphis/",
-    "note": "Small SRA (163 acres, 48-acre no-wake lake) ~20 mi W of Omaha. 18 Electric Plus sites plus numerous basic and primitive sites; drive-in RV and tent camping. Water, primitive toilets, playground, dump/fill station. All first-come, first-served (Iron Ranger, cash/check). NE park entry permit required. --Claude",
+    "note": "Small SRA on Memphis Lake, a 48-acre no-wake lake ~20 mi W of Omaha. NGPC's site inventory shows 18 Electric Plus sites (54-72) north of the shore rows and 60 basic sites, plus primitive camping; basic sites 1-10 line the east shore. Water, primitive toilets, playground, dump/fill station. Self-pay iron ranger (cash or check). --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -194499,13 +194442,14 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Memphis SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no Memphis facility",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'Memphis', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Memphis SRA': Electric Plus, Basic, Primitive; Electric Plus $30, Basic $15, Primitive $10) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -194515,15 +194459,20 @@
     },
     "fees": {
       "nightly_low": 10,
-      "nightly_high": 15,
+      "nightly_high": 30,
       "currency": "USD",
       "surcharges": {
-        "weekend": 0,
-        "electric": 15
+        "weekend": 0
       },
       "checked": "2026",
-      "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
-    }
+      "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax. First come, so no reservation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Memphis SRA  SW  402-471-5497' with Electric Plus, Basic and Primitive marked (ne_build.py: 'Memphis': 'EP B P') and no '*' ('*Reservations accepted.'); statewide rates Electric Plus $30, Basic $15, Primitive $10; off-season $5 less except primitive nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no Memphis facility NGPC campsite inventory (ArcGIS, owner NGPC.GISAdmin): https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Basic_ONLY/FeatureServer/8 and .../Camping_Facilities_Electric_Plus_ONLY/FeatureServer/8, read 2026-11-05: '114R-Memphis Lake Campground-1' to '-80' - 60 typed Basic (1-31, 33-53, 73-80) and 18 typed Electric-Plus (54-70, 72), each with a point NGPC Parks_Locations layer (.../Parks_Locations/FeatureServer/0), read 2026-11-05: 'Memphis Lake SRA', Status 'Active', 166 acres, DumpStation 'Yes', Water 'Yes', VaultPitToilet 'Yes' Google Maps place panel 'Memphis Lake State Recreation Area', read 2026-11-05: 4.4 from 240 reviews, +1 402-471-5497, website outdoornebraska.gov/memphis/, point 41.10252,-96.43899 Esri World Imagery at 41.1010,-96.4385 (800 m frame) and the shore rows 41.1013,-96.4380 (3.2 px/m) with the inventory's site points overlaid, 2026-11-05; Overpass did not answer, distances are imagery estimates",
+      "note": "Still NGPC (grid row + phone 402-471-5497, no '*' so first-come only; not on ReserveAmerica). Fees 10-15 -> 10-30 (electric plus $30), electric surcharge cleared; booking confirmed. NGPC's GIS inventory: 18 Electric-Plus + 60 Basic sites mapped. WATERFRONT LEAD: not waterfront -> lakefront for the east-shore basic sites 1-10 (open lawn ~15-40 m to the water, road behind them). Pin fine. Phone added (flag). Note cleaned."
+    },
+    "phone": "402-471-5497"
   },
   {
     "id": 2716,
@@ -194913,16 +194862,16 @@
     "id": 2720,
     "kind": "campground",
     "name": "North Loup State Recreation Area",
-    "location": "41.20900,-98.45300",
-    "elevation_meters": 547.0,
+    "location": "41.264,-98.4557",
+    "elevation_meters": 544,
     "state": "NE",
     "ownership": "state",
     "waterfront": "not waterfront",
     "inclusion_evidence": "NGPC/VisitNebraska: ~10 primitive drive-in campsites adjacent Loup River, some electric near lake, reservable + FCFS -> real drive-in campground",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-294 (2026-11-05): the oxbow is ~1 acre and the North Loup is 110-130 m off behind trees (pin moved ~6 km from downtown St. Paul onto the area). Stands.",
     "website": "https://outdoornebraska.gov/location/north-loup/",
-    "phone": "308-385-6211",
-    "note": "Small NGPC recreation area on the North Loup River just south of St. Paul, with two small ponds. ~10 non-pad primitive campsites, no electric; first-come first-served. Pit toilet, picnic tables and grills; no potable water, no showers, no dump station. Nebraska park entry permit required. --Claude",
+    "phone": "308-346-4715",
+    "note": "Small (20-acre) NGPC recreation area on the north bank of the North Loup River off US 281, ~4 mi north of St. Paul. Primitive camping only, no pads, at the gravel turnaround in the trees; backwater ponds and the river lie south behind the trees. Pit toilet, picnic tables, grills, playground; no water. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -194955,18 +194904,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), 'North Loup SRA': VaultPitToilet 'Yes', Water 'No', Showers 'No', DumpStation 'No', PrimitiveCampingOnly 'Yes'; read 2026-11-05",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (North Loup SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no North Loup facility; NGPC Parks_Locations has no Reservations flag for it",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'North Loup', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'North Loup SRA': Primitive only; Primitive $10) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -194982,7 +194932,12 @@
         "weekend": 0
       },
       "checked": "2026",
-      "note": "In season: primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
+      "note": "Primitive camping $10 a night all year. Plus tax. First come, so no reservation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'North Loup SRA  SW  308-346-4715', Primitive only (ne_build.py: 'North Loup': 'P'), no '*' ('*Reservations accepted.'); Primitive $10, 'except primitive' from the off-season $5 discount nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no North Loup facility NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), read 2026-11-05: 'North Loup SRA', Status 'Active', ParkStatus 'Open', 19.56 acres, Howard County, point 41.26383,-98.45435, PrimitiveCampingOnly 'Yes', NonpadswithoutElectric 'Yes', VaultPitToilet 'Yes', RiverAccess 'Yes', Water 'No', Showers 'No', DumpStation 'No', phone (308) 385-6211, physical address '1755 US Hwy 281, Saint Paul' NGPC Park_Areas layer (.../Park_Areas/FeatureServer/0, edited 2026-03): North Loup SRA polygon 41.26294-41.2652, -98.45897..-98.45045 Google Maps place panel 'North Loup State Recreation Area', read 2026-11-05: 3.5 from 2 reviews, no phone, no website, point 41.26347,-98.45441 RV Life park 'North Loup SRA' point 41.26391,-98.45458 (10 sites) Esri World Imagery at 41.2641,-98.4547 (800 m) and 41.2638,-98.4555 (320 m, 2.8 px/m), and NAIP at the same 320 m frame, 2026-11-05; stored pin 41.20900,-98.45300 imaged (600 m frame)",
+      "note": "Still NGPC (2025 grid row, Parks_Locations 'Active'/'Open', Park_Areas 2026), primitive only, first-come. Fees 10/10 confirmed; the fee note's online reservation fee was wrong (no reservations) and is removed. Facilities (vault toilets yes; water, showers, dump no) now sourced to NGPC. PIN MOVE ~6 km: stored point is in downtown St. Paul, not the SRA. Not waterfront kept. Phone conflict flagged. Note corrected (it said 'just south of St. Paul')."
     }
   },
   {
@@ -194993,11 +194948,11 @@
     "elevation_meters": 410.0,
     "state": "NE",
     "ownership": "state",
-    "waterfront": "lakefront",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "OutdoorNebraska/VisitNebraska + rec.gov gateway 295: ~28 drive-in non-pad basic sites (RV & tent), water/vault toilets, FCFS iron-ranger -> real primitive RV/tent SRA",
-    "waterfront_evidence": "not waterfront -> lakefront satellite at 40.581,-96.848: multiple sandy peninsula/finger jetties each end in a vehicle turnaround/pull-in pad surrounded by reservoir water on three sides - RV pads at the waterline",
+    "waterfront_evidence": "p3-294 (2026-11-05): the sites are 100-130 m from Olive Creek Lake behind the road, lawn and trees; the 'jetties' are rock fishing jetties, not campsites. Lakefront -> not waterfront.",
     "website": "https://outdoornebraska.gov/location/olive-creek/",
-    "note": "SRA on Olive Creek Lake near Kramer/Wilber. Drive-in camping (RV and tent) on ~28 basic non-pad sites, no electric. Water and vault restrooms; picnic tables and grills. First-come, first-served. NE park entry permit required. --Claude",
+    "note": "NGPC recreation area on 118-acre Olive Creek Lake, between Kramer and Hallam, SW of Lincoln. A handful of basic gravel pull-in sites with tables off the west side of the entrance road, north of the boat-ramp lot; no electric. Water and vault toilets, boat ramp and fishing jetties. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -195005,12 +194960,11 @@
     "hookups": {
       "electric": 0
     },
-    "sites": {
-      "count": 28
-    },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "showers": false,
+      "dump": false
     },
     "booking": {
       "reservable": false,
@@ -195023,23 +194977,24 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NGPC campsite inventory (Camping_Facility_Basic_ONLY/FeatureServer/8), read 2026-11-05: only '131R-Olive Creek Campground-2' to '-6' are mapped; imagery shows ~5-6 gravel pull-ins there. The stored 28 came from note prose and nothing NGPC publishes supports it",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), 'Olive Creek SRA': Water 'Yes', VaultPitToilet 'Yes', Showers 'No', DumpStation 'No'; read 2026-11-05",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Olive Creek SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no Olive Creek facility",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'Olive Creek', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Olive Creek SRA': Basic; Basic $15) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -195055,8 +195010,14 @@
         "weekend": 0
       },
       "checked": "2026",
-      "note": "In season: basic $15 a night; $5 less mid-October through April. Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
-    }
+      "note": "In season: basic $15 a night; $5 less mid-October through April. Plus tax. First come, so no reservation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Olive Creek SRA  SE  402-796-2362', Basic only (ne_build.py: 'Olive Creek': 'B'), no '*' ('*Reservations accepted.'); Basic $15, off-season $5 less nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no Olive Creek facility NGPC campsite inventory (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Basic_ONLY/FeatureServer/8), read 2026-11-05: '131R-Olive Creek Campground-2' to '-6', typed Basic, at 40.57916-40.57963,-96.84808..-96.84844; no other Olive Creek site in any camping layer (the one other row tagged Olive Creek SRA, '170R-Area 3-1' at 40.59972,-96.64729, is 14 km east, a different area number) NGPC Parks_Locations layer (.../Parks_Locations/FeatureServer/0), read 2026-11-05: 'Olive Creek SRA', Status 'Active', ParkStatus 'Open', 612 acres, PrimitiveCampingOnly 'Yes', NonpadswithoutElectric 'Yes', Water 'Yes', VaultPitToilet 'Yes', Showers 'No', DumpStation 'No', BoatRamp 'Yes', phone (402) 796-2362, physical address '24100 SW 100th St, Hallam' NGPC Lake_Shapes layer: Olive Creek Lake ~118 acres (shoelace of the polygon) Google Maps place panel 'Olive Creek Lake State Recreation Area', read 2026-11-05: 1.0 from 1 review, no phone, website outdoornebraska.gov/location/olive-creek/, point 40.57670,-96.84314 Esri World Imagery at 40.5795,-96.8470 (900 m) and 40.5800,-96.8475 (300 m, 3 px/m) with the inventory site points, plus NAIP of the 300 m frame, 2026-11-05",
+      "note": "Still NGPC (2025 grid row, Parks_Locations 'Active'/'Open'), basic only, first-come. Fees 10/15 confirmed; fee note's online reservation fee removed (no reservations). Facilities now sourced. SITES 28 -> null (NGPC maps only sites 2-6). WATERFRONT DOWN lakefront -> not waterfront: the 'pads at the end of finger jetties' are rock fishing jetties; the inventory's sites sit ~100-130 m from the lake behind the entrance road, lawn and a shoreline tree belt. Pin ~180 m off (optional move). Note correc"
+    },
+    "phone": "402-796-2362"
   },
   {
     "id": 2723,
@@ -195150,10 +195111,10 @@
     "ownership": "state",
     "waterfront": "lakefront",
     "inclusion_evidence": "NGPC McConaughy SRA reservation system: Otter Creek 10 basic sites + open beach camping, reservable peak season -> real drive-in RV camping area",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-294 (2026-11-05): no designated sites found: the only camping is the open sand beach south of the ramp road at the lake's edge, plus a dirt clearing under cottonwoods north of Otter Creek. Stands pending the sand-rule question.",
     "website": "https://outdoornebraska.gov/location/lake-mcconaughy/\nhttps://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099",
     "phone": "308-284-8800",
-    "note": "West end of Lake McConaughy off Hwy 92 near Lewellen, by the Otter Creek concession/boat ramps. Sandy-beach camping area: 10 Basic sites (water at nearby fish-cleaning station, primitive restrooms) plus open beach camping. Peak season (May 20-Sep 10) advance-reservation only via NGPC system; beach camping books 30 days out. State park entry permit required. --Claude",
+    "note": "Otter Creek area at the west end of Lake McConaughy off Hwy 92 near Lewellen: boat ramp and fish-cleaning station, with the Otter Creek inlet and open sand beach to the south. All camping at Lake McConaughy is by advance reservation; neither NGPC's booking site nor its site inventory lists designated sites here, so which camping it offers is unconfirmed (2026-11). --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -195163,7 +195124,9 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "reserveamerica",
+      "fcfs": "never",
+      "url": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099"
     },
     "provenance": {
       "facilities": {
@@ -195172,13 +195135,18 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099 ('all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only. Reservations are available 180 days in advance for designated camp sites and 30 days in advance for beach camping'), read 2026-11-05",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
         "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (Lake McConaughy and Lake Ogallala seasonal rates) + nebraskastateparks.reserveamerica.com (Otter Creek site types; June 2027 quotes), read 2026-10-12",
         "checked": "2026-10-12"
+      },
+      "season": {
+        "source": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099 ('Status: Open year round'), read 2026-11-05",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -195195,6 +195163,14 @@
       },
       "checked": "2026",
       "note": "Lake McConaughy / Ogallala rates: beach camping $20 Sunday-Wednesday, $25 Thursday-Saturday (May 21 - September 12), $15 the rest of the year. Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099, read 2026-11-05: 'all camping at Lake McConaughy and Lake Ogallala State Recreation Areas will be by advanced reservation only. Reservations are available 180 days in advance for designated camp sites and 30 days in advance for beach camping'; 'The area has three fish cleaning stations located at Martin Bay, Otter Creek and Cedar View'; 'Status: Open year round'; park office 308-284-8800. Its loop list: BEACH AREA 01-14, 16, 17, CEDAR VIEW CAMPGROUND, Cedar View Beach, LITTLE THUNDER, LONE EAGLE, MARTIN BAY CAMPGROUND, SANDY BEACH CAMPGROUND - no Otter Creek loop ReserveAmerica campsite search (all types) and campsiteDetails.do for siteIds 40823-40900, read 2026-11-05: Sandy Beach Campground = 16 Basic sites; beach areas are titled only 'BEACH AREA n'; no page names Otter Creek NGPC campsite inventory (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Basic_ONLY/FeatureServer/8 and the Electric/Electric-Plus/Full-Service layers), read 2026-11-05: McConaughy clusters are Cedar View (41.2924-41.2958,-101.9423..-101.9339), Lone Eagle, Little Thunder, Martin Bay and '99R-Sandy Beach Campground' (16 Basic at 41.2574-41.2588,-101.7711..-101.7678, ~12 km east, by Lemoyne); none at Otter Creek Google Maps place panel 'Otter Creek Campground', Lewellen, read 2026-11-05: 4.3 from 4 reviews (6-7 years old: 'Nice cabin rentals for cheap! Great fishing Cove', 'Nice camping'), (308) 284-8800, website outdoornebraska.gov, point 41.29721,-101.92462 RV Life park 258580 'Otter Creek - Lake McConaughy State Rec Area', 'Otter Creek Ct.', point 41.2974,-101.92354, no sites/reviews Esri World Imagery at 41.2940,-101.9290 and 41.2930,-101.9180 (1.4 km frames), 41.2972,-101.9230 (400 m, 2.3 px/m) and 41.2910,-101.9235 (500 m) plus NAIP of the last, 2026-11-05",
+      "note": "State (NGPC) Otter Creek area of Lake McConaughy. Booking platform operator -> reserveamerica with fcfs never (park-wide 'reservation only'); season year_round added. The note's '10 Basic sites' and 'peak season only' wording are not supported: ReserveAmerica has no Otter Creek loop and NGPC's inventory maps no sites here (its 16-site Sandy Beach Campground is at Lemoyne, 12 km east). Fees left. Waterfront lakefront left with a caveat. Sand report below; no drop proposed (AWH already asked)."
     }
   },
   {
@@ -195298,15 +195274,15 @@
     "id": 2727,
     "kind": "campground",
     "name": "Pelican Point State Recreation Area",
-    "location": "41.83520,-96.07600",
-    "elevation_meters": 314.0,
+    "location": "41.8338,-96.1123",
+    "elevation_meters": 315,
     "state": "NE",
     "ownership": "state",
     "waterfront": "not waterfront",
     "inclusion_evidence": "NGPC outdoornebraska.gov: 6 primitive drive-in camping pads on Missouri River, vault toilets -> real primitive drive-in campground",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-294 (2026-11-05): a tree belt along the Missouri channel, broken only at the ramp, lies between the pads and the river (pin moved ~2.8 km from Iowa farm fields onto the area). Stands.",
     "website": "https://outdoornebraska.gov/location/pelican-point/",
-    "note": "Small (36-acre) NGPC recreation area on the Missouri River east of Tekamah. 6 primitive non-electric camping pads under big cottonwoods, all first-come first-served. Pit toilets, picnic shelter, boat ramp and dock; no electric, no dump station. Nebraska park entry permit required. --Claude",
+    "note": "Small (36-acre) NGPC recreation area on the Missouri River, ~4 mi east of Tekamah via County Road KL. Basic camping under cottonwoods around a gravel loop by the boat ramp; no electric or water. Vault toilet, picnic shelter, boat ramp and dock. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -195319,7 +195295,9 @@
     },
     "facilities": {
       "vault_toilets": true,
-      "dump": false
+      "dump": false,
+      "potable_water": false,
+      "showers": false
     },
     "booking": {
       "reservable": false,
@@ -195337,18 +195315,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), 'Pelican Point SRA': VaultPitToilet 'Yes', Water 'No', Showers 'No', DumpStation 'No'; read 2026-11-05",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Pelican Point SRA carries no '*', the grid's mark for '*Reservations accepted.'); NGPC Parks_Locations Reservations 'No'; nebraskastateparks.reserveamerica.com lists no Pelican Point facility",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'Pelican Point', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Pelican Point SRA': Basic; Basic $15) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -195364,8 +195343,14 @@
         "weekend": 0
       },
       "checked": "2026",
-      "note": "In season: basic $15 a night; $5 less mid-October through April. Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
-    }
+      "note": "In season: basic $15 a night; $5 less mid-October through April. Plus tax. First come, so no reservation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Pelican Point SRA  NE  402-468-5611', Basic only (ne_build.py: 'Pelican Point': 'B'), no '*' ('*Reservations accepted.'); Basic $15, off-season $5 less nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no Pelican Point facility NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), read 2026-11-05: 'Pelican Point SRA', Status 'Active', ParkStatus 'Open', 36.41 acres, Burt County, point 41.83355,-96.11292, PadswithoutElectric 'Yes', PrimitiveCampingOnly 'Yes', Water 'No', Showers 'No', DumpStation 'No', VaultPitToilet 'Yes', BoatRamp/BoatDock/RiverAccess 'Yes', Reservations 'No', phone (402) 468-5611, physical address '4699 County Road KL, Tekamah' NGPC Park_Areas layer (.../Park_Areas/FeatureServer/0, edited 2026-03): Pelican Point SRA polygon 41.8301-41.83664, -96.1144..-96.11072 Google Maps place panel 'Pelican Point State Recreation Area', read 2026-11-05: 4.8 from 5 reviews, +1 402-468-5611, website outdoornebraska.gov/location/pelican-point/, point 41.83655,-96.11438 RV Life point 41.83517,-96.11325 (17 sites) Esri World Imagery at 41.8335,-96.1125 (900 m) and 41.8340,-96.1120 (260 m, 3.5 px/m), NAIP of the 260 m frame, and the stored pin 41.83520,-96.07600 (600 m frame), 2026-11-05",
+      "note": "Still NGPC (2025 grid row, Parks_Locations 'Active'/'Open', Park_Areas 2026), basic only, first-come. Fees 10/15 confirmed; fee note's online reservation fee removed. Facilities now sourced (vault toilet yes; water, showers, dump no). PIN MOVE ~3 km: stored point is in farm fields across the river in Iowa. Not waterfront kept. Phone added (flag). Note cleaned."
+    },
+    "phone": "402-468-5611"
   },
   {
     "id": 2728,
@@ -195536,15 +195521,15 @@
     "id": 2730,
     "kind": "campground",
     "name": "Pressey State Wildlife Area",
-    "location": "41.1832,-99.7020",
-    "elevation_meters": 740.0,
+    "location": "41.1912,-99.7152",
+    "elevation_meters": 729,
     "state": "NE",
     "ownership": "state",
-    "waterfront": "riverfront",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "OutdoorNebraska/VisitNebraska: drive-in gravel WMA along South Loup R., ~6 electric sites + primitive drive-in sites, tables/fire rings/vault toilets, FCFS free -> real drive-in RV camping",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'riverfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-294 (2026-11-05): the South Loup is ~15-22 m wide here (creek-sized) and the sites sit under canopy in the river bend (pin moved ~1.4 km from the south-access pond lot onto Pressey Park). Riverfront -> not waterfront.",
     "website": "https://outdoornebraska.gov/location/pressey/",
-    "note": "NGPC wildlife area along the South Loup River near Oconto, reached by ~4 mi of gravel. Designated campsites near the entrance (about 6 with 30-amp electric) plus extensive free primitive camping strung along the river; gravel loop, max RV ~35 ft, picnic tables, fire rings, vault toilets. 14-day limit, FCFS, no reservations. State park entry permit required. --Claude",
+    "note": "NGPC wildlife management area on the South Loup River north of Oconto. The campground (Google's 'Pressey Park') sits in a bend of the river west of NE 21, reached by about 1 km of gravel from the highway north of the bridge: a few designated electric sites at the entrance turnaround by the picnic shelter, then free primitive spots with tables and fire rings strung along the river road through the trees. Vault toilets, playground. A shooting range on the WMA can be noisy (camper reports). State park entry permit required. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -195580,14 +195565,14 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Camper review on https://thedyrt.com/camping/nebraska/nebraska-pressey-wildlife-management-area-south-access (Joseph G., Aug 19 2023: 'Signs posted stated free camping for up to 14 days'; Amber P. 2021: electric spots 'fill out fast'); https://maps.campendium.com/us/oconto-ne/nature/pressey-swa-campground ('Max stay: 14', 'Reservations: No'); not on the NGPC rates grid or ReserveAmerica. Secondary sources: NGPC's own page is blocked",
+        "checked": "2026-11-05",
+        "method": "reported"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.brokenbow-ne.com/water-recreation ('Camping at the park is free and features electrical hookups and restroom facilities'), read 2026-11-05; corroborated by the 2023 camper review on thedyrt.com ('Signs posted stated free camping') and freecampsites.net 2016 ('Electricity is free'). Secondary sources: NGPC's own page is blocked",
+        "checked": "2026-11-05",
+        "method": "reported"
       }
     },
     "note_scan": {
@@ -195596,9 +195581,17 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 0
+      "nightly_low": 0,
+      "nightly_high": 0,
+      "currency": "USD",
+      "note": "Free, electric sites included."
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "https://outdoornebraska.gov/location/pressey/ (stored website) not read: outdoornebraska.gov is blocked for this pass NGPC campsite inventory and Parks_Locations ArcGIS layers (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0 and the Camping_Facility_*_ONLY/FeatureServer/8 layers), read 2026-11-05: no Pressey record (park layers cover parks/SRAs, not WMAs); NGPC Properties layer: Pressey WMA, Active, 1578.6 acres, Custer County, extent 41.16174..41.20578, -99.73058..-99.68728; not on the NGPC 2025 camping rates grid https://www.brokenbow-ne.com/water-recreation (Broken Bow Chamber of Commerce), read 2026-11-05: 'Located just 5 miles north of Oconto on Highway 21 is the beautiful Pressey Park State Wildlife Management Area'; 'Today, Pressey Park features fishing, camping, hunting, and shooting facilities'; 'Camping at the park is free and features electrical hookups and restroom facilities' https://nebraskapassport.com/callaway/pressey-park, read 2026-11-05: 'A Nebraska State Wildlife Management Area running along the South Loup River'; 'Located on both the east and west side of Highway 21 just 5 miles north of Oconto' https://thedyrt.com/camping/nebraska/nebraska-pressey-wildlife-management-area-south-access, read 2026-11-05: review Joseph G., Aug 19 2023: 'almost all \"primitive\" camping spots are right along the water', 'saw two spots with electricity', 'two outhouse style bathrooms, a swing set, merry-go-round and monkey bars', 'Signs posted stated free camping for up to 14 days'; review Amber P., Jul 11 2021: 'A few designated spots at beginning with electric, not many and they fill out fast' https://freecampsites.net/?_escaped_fragment_=34119&query=sitedetails, read 2026-11-05: listing (updated 2016-04-04) '6-15 sites', 'maximum RV length 35 feet', 14-day limit, gravel road 4 miles from pavement, at 41.182462,-99.697032; review Cubey, Oct 13 2018: 'This is NOT the map location of the campground with the electric', places it ~2 mi NW, and calls the listed point the shooting range parking lot; review Idiotvilleusa, May 22 2016: 'the area has 6 electrical hookups', 'Electricity is free' https://maps.campendium.com/us/oconto-ne/nature/pressey-swa-campground, read 2026-11-05: 'Max stay: 14', 'Reservations: No', last nightly rate $0, point 41.182856,-99.702510 Google Maps place panels read 2026-11-05: 'Pressey State Wildlife Management Area' (wildlife refuge, 4.7 from 3, point 41.17962,-99.69819, no phone/website; review Timothy, ~Oct 2026: 'about 7 parking spots ... lots of pull offs but short n tight') and 'Pressey Park' (campground, 4.5 from 13, point 41.19358,-99.71040, no phone/website; Nathan Klaus ~2022: 'The shooting range on the WMA makes a real racket') RV Life park 257774 'Pressey State Wildlife Area' (park_type state, 30 sites, price_level 1, geoloc 41.17974,-99.69877) Esri World Imagery at the stored pin (900 m, 240 m frames), the RV Life/Google points, 41.1890,-99.7120 (1.4 km), 41.1903,-99.7160 and 41.1925,-99.7185; NAIP at 41.1912,-99.7150 (240 m) and 41.1918,-99.7138 (160 m), 2026-11-05; Open-Meteo elevation 729 m at 41.1912,-99.7152",
+      "note": "Still an NGPC WMA (state, agency-signed designated camping; NGPC Properties: Active, 1578.6 ac). NGPC's page is blocked, so everything rests on secondary sources: free (Broken Bow chamber), 14-night limit and FCFS (2023 camper review of the posted signs; campendium) -> fees and booking re-sourced as reported. PIN MOVE ~1.4 km: the stored pin is the south access by a pond; the campground is the river-bend area at 41.1912,-99.7152. WATERFRONT riverfront -> not waterfront (South Loup ~15-22 m wide"
+    }
   },
   {
     "id": 2731,
@@ -201796,11 +201789,11 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 41.9364,-96.4806: full-hookup sites on Logan Creek oxbow island, but continuous wooded bank fringe screens pads from creek and canopy hides pad-to-water relation; no per-site map authority (FCFS city park) - default down",
+    "waterfront_evidence": "p3-294 (2026-11-05): the oxbow beside the sites is ~2 acres (a pond) and Logan Creek is 150-250 m off. Stands.",
     "inclusion_evidence": "Operator lyonsne.com: full hookups (30/50amp electric, water, sewer, dump, bathhouse), $25/night FCFS, open Apr 15-Oct 15 -> real RV campground",
     "website": "https://lyonsne.com/camping-1",
     "phone": "402-687-2485",
-    "note": "City of Lyons park on an island in Logan Creek's oxbow. 14 sites with full hookups - electric (30 & 50 amp), water, sewer, plus a dump station and an on-site bathhouse. Open Apr 15-Oct 15, FCFS (no advance reservations). $25/night, $150/week, $500/30 days. Pool and fishing within walking distance. RV Life 0 stars (unrated) / $. --Claude",
+    "note": "City of Lyons campground in Island Park, beside a Logan Creek oxbow on the west edge of town. Gravel sites with hookup pedestals; bathhouse on site. Municipal pool and fishing within walking distance. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -201809,9 +201802,6 @@
       "electric": 50,
       "water": true,
       "sewer": true
-    },
-    "sites": {
-      "count": 14
     },
     "season": {
       "year_round": false,
@@ -201824,33 +201814,34 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lyonsne.com/camping-1, read 2026-11-05: 'Full Hookups - Electric (30&50 Amp), water, sewer and dump station.'",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "cleared: the 14 came from old note prose; the city's camping page (read 2026-11-05) gives no site count and no other city page was found",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lyonsne.com/camping-1, read 2026-11-05: 'Island Park Campground OPEN: April 15 - October 15'",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lyonsne.com/camping-1, read 2026-11-05: 'Campsites are first come, first serve; no reservations will be taken.'",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lyonsne.com/camping-1, read 2026-11-05: 'Full Hookups - Electric (30&50 Amp), water, sewer and dump station.'",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://lyonsne.com/camping-1 (audit/price_research/local_ne_2026-10-15/ne_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://lyonsne.com/camping-1, read 2026-11-05: 'Camping rates are $25 per night, $150 per week, or $500 for 30 consecutive days.'",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -201866,7 +201857,12 @@
       "nightly_high": 25,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of Lyons: $25 a night, $150 a week. Read 2026-10-15."
+      "note": "$25 a night, $150 a week, or $500 for 30 consecutive days."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "https://lyonsne.com/camping-1 (City of Lyons 'Camping' page, footer (c)2026), read 2026-11-05 https://lyonsne.com/images/images_mi/mi_490_IMG_5155_1352902479_4032.jpg (the page's 'Campsites' photo: gravel strip with pedestals beside a paved road) Google Maps place panel 'Island Park Campground' (5.0 from 1 review, website lyonsne.com/camping-1, point 41.93615,-96.48082), read 2026-11-05 Esri World Imagery and USGS NAIP at the pin and the oxbow (2.8 and ~1 px/m), 2026-11-05; Overpass mirrors did not answer, so distances are imagery estimates",
+      "note": "City page re-read 2026-11-05 (live, (c)2026): $25/night ($150/week, $500/30 days), FCFS no reservations, Apr 15-Oct 15, full hookups 30/50 A + dump, bathhouse - all confirmed as manual. Site count 14 is not on any city page: cleared. Not waterfront kept. Sites could not be located on imagery (both mosaics predate or hide the gravel strip in the city's photo); pin ~145 m from Google's point, no move. Note cleaned of the restated fields."
     }
   },
   {
@@ -202294,12 +202290,12 @@
     "elevation_meters": 478.0,
     "state": "NE",
     "ownership": "local",
-    "waterfront": "lakefront",
+    "waterfront": "lakeview",
     "inclusion_evidence": "Little Blue NRD (farmprogress/nrdnet): electrical RV camper pads (7 electric/6 non), $20/night, boat ramp, opened as NRD rec area -> real drive-in RV campground",
-    "waterfront_evidence": "waterfront 'lakefront' assessed in commit 9af42bc (Add 83 NE local-government campgrounds (city/county/NRD)); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-294 (2026-11-05): the pads sit behind the park road, lawn and swim beach, 80-110 m from the 75-acre lake. Lakefront -> lakeview.",
     "website": "https://littlebluenrd.org/recreation/",
     "phone": "402-364-2145",
-    "note": "Little Blue NRD recreation area on a 75-acre spring-fed lake, 4 mi east + 1/4 mi south of Ohiowa. 19 electric RV camper pads (lakeside), plus free tent camping anywhere; primitive restrooms, no showers, no on-site dump (nearest ~6 mi north at Milligan). Swimming beach, boat ramp (no-wake lake), floating dock, fishing pier, trails. Power/water Apr 1-Dec 1. $20/night electric. Big-rig friendly. Contact NRD for booking; otherwise FCFS. RV Life unrated (0 stars) / $. --Claude",
+    "note": "Little Blue NRD recreation area on a 75-acre spring-fed no-wake lake, 4 mi east + 1/4 mi south of Ohiowa. The electric back-in pads line the west side of the park road, ~80-110 m from the water across the road, lawn and day-use area. Three restrooms (primitive), water wells, storm shelters; nearest dump ~6 mi north at Milligan. Swimming beach, boat ramp, floating dock, fishing pier, trails. Power/water Apr 1-Dec 1. Big-rig friendly. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -202312,13 +202308,15 @@
       "dump": false
     },
     "booking": {
-      "reservable": true
+      "reservable": false,
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://littlebluenrd.org/recreation/ (Lone Star), read 2026-11-05: 'Nineteen electrical ($20 per night fee effective May 1, 2021) RV Camper pads'; '19 electrical camper pads'",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -202326,13 +202324,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://littlebluenrd.org/wp-content/uploads/Final-07_14_2026-Park-Rules-Regulations.pdf, read 2026-11-05: '01.05C Campsites are provided on a first-come, first-served basis.'; '01.05I Camping is permitted for a maximum of fourteen (14) consecutive days on any single area during any thirty (30) - day period.'",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://littlebluenrd.org/recreation/ (audit/price_research/local_ne_2026-10-15/ne_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://littlebluenrd.org/wp-content/uploads/Daily_Camper_Fees_Schedule_2021.pdf, read 2026-11-05: 'Lone Star Recreation Area, Fillmore County $20.00 per night for 30/50 Amp Electrical Camper Sites. (Tents may be erected at such sites without additional charges.)'; 'No Annual Park Permits are Required.'",
+        "checked": "2026-11-05",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://littlebluenrd.org/wp-content/uploads/Daily_Camper_Fees_Schedule_2021.pdf, read 2026-11-05: '$20.00 per night for 30/50 Amp Electrical Camper Sites'",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -202345,7 +202349,15 @@
       "nightly_high": 20,
       "currency": "USD",
       "checked": "2026",
-      "note": "Little Blue NRD: nineteen electric RV pads, $20 a night (effective May 1, 2021). Read 2026-10-15."
+      "note": "$20 a night for a 30/50-amp electric camper site (schedule effective May 1, 2021, still the one linked in 2026); tents on those sites at no extra charge. Pay within 30 minutes of set-up; permits expire 6 pm the next day. No annual park permit required."
+    },
+    "hookups": {
+      "electric": 50
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "https://littlebluenrd.org/recreation/ (Lone Star section), read 2026-11-05 https://littlebluenrd.org/wp-content/uploads/Daily_Camper_Fees_Schedule_2021.pdf ('Effective May 1, 2021', adopted April 13, 2021), read 2026-11-05 https://littlebluenrd.org/wp-content/uploads/Final-07_14_2026-Park-Rules-Regulations.pdf (general park regulations, July 2026), read 2026-11-05 https://littlebluenrd.org/wp-content/uploads/07_14_2026-Lone-Star-SSR.pdf (Lone Star site-specific rules, 'Updated: July 2026'), read 2026-11-05 Google Maps place panel 'Lone Star Recreation Area': 4.4 from 116 reviews, +1 402-364-2145, website littlebluenrd.org/recreation/, read 2026-11-05 Esri World Imagery at 40.4145,-97.3800 (1 km frame) and the pad row 40.41468,-97.38130 (3.5 px/m), 2026-11-05; Overpass did not answer, distances are imagery estimates",
+      "note": "NRD page + July 2026 rules + 2021 fee schedule: 19 electric pads (30/50 A), $20/night, FIRST-COME only with a 14-day limit (stored reservable: true was wrong -> false, fcfs always). Pads sit behind the park road ~80-110 m from the lake: lakefront -> lakeview lead. Pin ~45 m from the pad row, fine. Phone 402-364-2145 matches Google. Note cleaned ('contact NRD for booking' and 'free tent camping anywhere' contradicted)."
     }
   },
   {
@@ -203069,11 +203081,11 @@
     "elevation_meters": 613.0,
     "state": "NE",
     "ownership": "local",
-    "waterfront": "lakefront",
-    "waterfront_evidence": "satellite at 41.756,-98.532 + LLNRD page: primitive RV camping on west shore with open grass apron to waterline and peninsula loop at the lake edge",
+    "waterfront": "lakeview",
+    "waterfront_evidence": "p3-294 (2026-11-05): the camp loops are in the trees 30-70 m back from the 24-acre lake with the park drive and a day-use fishing-pier peninsula between. Lakefront -> lakeview.",
     "inclusion_evidence": "NRD nrdnet.org Pibel Lake page: RVs are permitted, primitive drive-in sites, restrooms, drinking water -> real FCFS RV-capable campground",
-    "website": "https://www.nrdnet.org/rec-area/pibel-lake\nhttps://www.llnrd.org/recreation/pibel-lake-recreation-area",
-    "note": "Operated by the Lower Loup NRD (a Natural Resources District, not NGPC), 9 mi south of Bartlett in Wheeler County on a 26-acre lake. 30 primitive sites - RVs permitted (reported up to ~50 ft) but no pads, water or electric hookups. Restrooms, picnic shelter, boat dock (small boats), pedestrian bridge, ADA fishing piers. Free, FCFS, open year-round. RV Life 0*/$ (unrated). --Claude",
+    "website": "https://www.llnrd.org/recreation/pibel-lake-recreation-area",
+    "note": "Lower Loup NRD recreation area (NGPC until 2012) on 24-acre Pibel Lake in south-west Wheeler County, ~9 mi south of Bartlett. Camping in the trees on the west side of the lake, no pads. Vault toilet, picnic shelter at the south end, pedestrian bridge at the north end, two ADA fishing piers, boat ramp. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -203091,13 +203103,14 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.llnrd.org/recreation/pibel-lake-recreation-area ('RVs are welcome, but there are no electrical hookups or dump station at Pibel Lake'), read 2026-11-05; the stored water: false is carried from the old note, which this page does not address",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -203110,14 +203123,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.llnrd.org/sites/default/files/file_upload/Rec-Area-Rules-Regs.pdf ('001.05C Camping is permitted for a maximum of 14 consecutive days on any single recreation area during any 30-day period'), read 2026-11-05; the stored reservable false / fcfs always are carried from the old note (no booking channel is offered for Pibel; LLNRD's online booking covers Davis Creek only)",
+        "checked": "2026-11-05",
+        "method": "manual"
       },
       "fees": {
         "source": "note prose",
         "checked": "2026-10-09",
         "method": "derived"
+      },
+      "facilities": {
+        "source": "https://www.llnrd.org/recreation/pibel-lake-recreation-area ('there are no electrical hookups or dump station at Pibel Lake'), read 2026-11-05",
+        "checked": "2026-11-05",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -203128,7 +203146,16 @@
     "fees": {
       "nightly_low": 0,
       "nightly_high": 0
-    }
+    },
+    "facilities": {
+      "dump": false
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "https://www.llnrd.org/recreation/pibel-lake-recreation-area, read 2026-11-05 (browser): 'The Lower Loup Natural Resources District owns and operates the Pibel Lake Recreation Area in southwest Wheeler County after a transfer of ownership from the Nebraska Game and Parks Commission'; 'There are campgrounds on the west side of the lake. RVs are welcome, but there are no electrical hookups or dump station at Pibel Lake.'; 'a new picnic shelter on the south end of the lake, a pedestrian bridge across the north end of the lake, two ADA compliant fishing piers'; 'Pibel Lake Recreation Area is a 72-acre facility, including the 24-acre lake'; 'the NRD taking ownership in May, 2012'; LLNRD office 308-728-3221 https://www.llnrd.org/sites/default/files/file_upload/Rec-Area-Rules-Regs.pdf (LLNRD Recreation Area Rules & Regulations, linked from https://www.llnrd.org/resources/recreation-area-rules-and-regulations, published April 25 2024), read 2026-11-05: '001.05B Camping and the use of trailers or other camping unit is permitted only at designated locations'; '001.05C Camping is permitted for a maximum of 14 consecutive days on any single recreation area during any 30-day period'; '001.05F The reservation of campsites by leaving a vehicle or other property unattended is prohibited'; no fee is stated https://www.llnrd.org/sites/default/files/pibellakemap.pdf (2003 bathymetric map: 'PIBEL LAKE 9S, 1E of Bartlett', boat ramp and roads on the west side), read 2026-11-05 https://www.nrdnet.org/rec-area/pibel-lake returned 404 (2026-11-05) Google Maps place panel 'Pibel Lake Recreation Area', read 2026-11-05: 4.4 from 5 reviews, no phone, website https://www.llnrd.org/recreation/pibel-lake-recreation-area, point 41.75684,-98.53178 Esri World Imagery at 41.7577,-98.5310 (660 m) and 41.7572,-98.5325 (280 m, 3.2 px/m), NAIP of both frames, 2026-11-05",
+      "note": "Still Lower Loup NRD (local), its page read: campgrounds on the west side, RVs welcome, no electric or dump. Hookups electric 0 and facilities dump false now sourced; 14-night limit added from the NRD's rules. WATERFRONT DOWN lakefront -> lakeview: the camp loops are in the trees 30-70 m back; the shore strip is the park drive and day-use fishing peninsula. Dead nrdnet.org website line should go. Note corrected (24-acre lake, not 26). Fees 'free' and the 50-ft rig claim remain unsourced."
+    },
+    "phone": "308-728-3221"
   },
   {
     "id": 2826,
@@ -937602,7 +937629,7 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "Esri z17: gravel pads along a wooded lane south of the road; Lake Babcock marsh ~100 m south behind trees --Claude",
+    "waterfront_evidence": "p3-294 (2026-11-05): the Loup canal is 120-150 m off behind trees and Lake Babcock 250-300 m behind marsh. Stands.",
     "inclusion_evidence": "Loup Power District (public power district): Loup Park at Lake Babcock north of Columbus - free electric hookups on gravel pads plus tent area, potable water May-Sept, no dump, no water/sewer at sites, FCFS, 7 days per 30, May 1-Nov 1",
     "website": "https://loup.com/recreation/loup-park-lake-babcock/",
     "note": "Loup Power District park at Lake Babcock, just north of Columbus. Free camping: electric-only gravel pads (big-rig friendly) plus a tent area; potable water in summer, no dump station. First come first served, 7-day limit. May-October. --Claude",
@@ -937649,6 +937676,11 @@
       "nightly_high": 0,
       "currency": "USD",
       "note": "Loup Power District: 'Electrical hook-ups and primitive camping available during the summer at no charge.' No reservations; 7 days per month limit in the Loup Park system."
+    },
+    "verify_scan": {
+      "checked": "2026-11-05",
+      "sources": "https://loup.com/recreation/loup-park-lake-babcock/ and https://loup.com/recreation/ - Cloudflare 'Sorry, you have been blocked' (WP Engine) to plain HTTP and to the headless browser, 2026-11-05; UNREAD this pass Earlier dated read in the repo: audit/price_research/public_57_2026-10-11.json + the stored fees provenance ('https://loup.com/recreation/loup-park-lake-babcock/ (read 2026-10-11)'): 'Electrical hook-ups and primitive camping available during the summer at no charge.' No reservations; 7 days per month limit in the Loup Park system Google Maps place panel 'Loup Park', read 2026-11-05: point 41.49621,-97.38171, no phone, no website, no rating RV Life park 11246 'Loup Power Campground/Park': geoloc 41.49597,-97.38172, 3.5 stars from 4 ratings, $ Esri World Imagery at 41.4960,-97.3820 (1.2 km frame) and the camp loop 41.4960,-97.3825 (2.7 px/m), 2026-11-05; Overpass did not answer, distances are imagery estimates",
+      "note": "Operator page blocked (Cloudflare) by both HTTP and browser; nothing new confirmed. The 2026-10-11 read (free electric + primitive camping in summer, FCFS, 7 days a month) stands. Not waterfront kept: Lake Babcock is ~250-300 m SE across marsh and woods, the power canal ~120-150 m S behind trees. Pin fine (stored point on the park's own loop road, ~165 m west of the occupied pads Google marks)."
     }
   },
   {

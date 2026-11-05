@@ -1,0 +1,42 @@
+{
+  "id": 2727,
+  "checked": "2026-11-05",
+  "sources": [
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Pelican Point SRA  NE  402-468-5611', Basic only (ne_build.py: 'Pelican Point': 'B'), no '*' ('*Reservations accepted.'); Basic $15, off-season $5 less",
+    "nebraskastateparks.reserveamerica.com park directory (p3-293 ra_dir_NE.json, 37 parks): no Pelican Point facility",
+    "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), read 2026-11-05: 'Pelican Point SRA', Status 'Active', ParkStatus 'Open', 36.41 acres, Burt County, point 41.83355,-96.11292, PadswithoutElectric 'Yes', PrimitiveCampingOnly 'Yes', Water 'No', Showers 'No', DumpStation 'No', VaultPitToilet 'Yes', BoatRamp/BoatDock/RiverAccess 'Yes', Reservations 'No', phone (402) 468-5611, physical address '4699 County Road KL, Tekamah'",
+    "NGPC Park_Areas layer (.../Park_Areas/FeatureServer/0, edited 2026-03): Pelican Point SRA polygon 41.8301-41.83664, -96.1144..-96.11072",
+    "Google Maps place panel 'Pelican Point State Recreation Area', read 2026-11-05: 4.8 from 5 reviews, +1 402-468-5611, website outdoornebraska.gov/location/pelican-point/, point 41.83655,-96.11438",
+    "RV Life point 41.83517,-96.11325 (17 sites)",
+    "Esri World Imagery at 41.8335,-96.1125 (900 m) and 41.8340,-96.1120 (260 m, 3.5 px/m), NAIP of the 260 m frame, and the stored pin 41.83520,-96.07600 (600 m frame), 2026-11-05"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 15, "currency": "USD", "checked": "2026",
+                 "surcharges": {"weekend": 0},
+                 "note": "In season: basic $15 a night; $5 less mid-October through April. Plus tax. First come, so no reservation fee."},
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Pelican Point SRA': Basic; Basic $15) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Pelican Point SRA carries no '*', the grid's mark for '*Reservations accepted.'); NGPC Parks_Locations Reservations 'No'; nebraskastateparks.reserveamerica.com lists no Pelican Point facility",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "showers": false, "dump": false},
+      "source": "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), 'Pelican Point SRA': VaultPitToilet 'Yes', Water 'No', Showers 'No', DumpStation 'No'; read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Small (36-acre) NGPC recreation area on the Missouri River, ~4 mi east of Tekamah via County Road KL. Basic camping under cottonwoods around a gravel loop by the boat ramp; no electric or water. Vault toilet, picnic shelter, boat ramp and dock. --Claude",
+  "summary": "Still NGPC (2025 grid row, Parks_Locations 'Active'/'Open', Park_Areas 2026), basic only, first-come. Fees 10/15 confirmed; fee note's online reservation fee removed. Facilities now sourced (vault toilet yes; water, showers, dump no). PIN MOVE ~3 km: stored point is in farm fields across the river in Iowa. Not waterfront kept. Phone added (flag). Note cleaned.",
+  "flags": [
+    "PIN MOVE 41.83520,-96.07600 -> 41.83380,-96.11230 (elevation 314 -> 315 m, Open-Meteo DEM). The stored point is beside grain bins in crop fields ~2.8 km EAST of the Missouri River (the Iowa side). NGPC's Park_Areas polygon (41.8301-41.83664,-96.1144..-96.11072), Parks_Locations (41.83355,-96.11292), Google and RV Life all put the SRA on the Nebraska bank. Imagery shows the camp: a gravel teardrop loop with a vault toilet at ~41.8339,-96.1120, the boat ramp just south-east, and open mown ground with tables under cottonwoods along the west track and south of the loop; the new pin is in the loop/camp area.",
+    "WATERFRONT not waterfront kept: the Missouri here is a ~250 m channel (river, not creek). The loop's east side is ~40-60 m from the bank, but a continuous belt of riverbank trees stands between, broken only at the boat ramp and its approach (day use). The table sites west and south of the loop are ~80-150 m back in the trees. No open apron, and no official site photos to support a filtered riverview.",
+    "PHONE missing -> 402-468-5611 (2025 grid row 'Pelican Point SRA'; Parks_Locations; Google panel matches). apply.py does not write phones.",
+    "SITES count 6 and hookups electric 0 left as stored (derived from note prose): basic-only is confirmed by the grid, so electric 0 holds; NGPC's GIS site inventory does not map Pelican Point, so no count can be sourced (RV Life says 17).",
+    "NOTE: 'east of Tekamah' kept with the road (NGPC's address is 4699 County Road KL, Tekamah); 'park entry permit required' dropped as general to all NGPC areas. FLOOD: no closure seen on Google (no 'closed' marker; 4.8 from 5 reviews); NGPC's own alerts page is blocked, so a current flood closure could not be ruled out.",
+    "WEBSITE https://outdoornebraska.gov/location/pelican-point/ unread (domain blocked); Google links the same page. SAND: not applicable (gravel loop). FIT: open gravel loop, fine for 23 ft on imagery."
+  ]
+}

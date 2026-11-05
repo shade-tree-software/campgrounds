@@ -1,0 +1,56 @@
+{
+  "id": 2702,
+  "checked": "2026-11-05",
+  "sources": [
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates Grid, linked from outdoornebraska.gov/parks/park-pricing/ when read 2026-10-12): row 'Keller Park SRA  NW  402-684-2921' with Electric Plus, Basic and Primitive marked (audit/state_park_fees/ne_build.py: 'Keller Park': 'EP B P') and no '*' ('*Reservations accepted.'); statewide rates Electric Plus $30, Basic $15, Primitive $10; park-pricing text quoted in ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+    "nebraskastateparks.reserveamerica.com park directory (audit p3-293 ra_dir_NE.json, 37 parks): no Keller Park facility",
+    "Google Maps place panel 'Keller Park State Recreation Area', 88637 US-183, Long Pine: 4.5 from 13 reviews, +1 402-684-2921, website outdoornebraska.gov/location/keller-park/, read 2026-11-05",
+    "RV Life park 258531 'Keller Park State Rec Area' (geoloc 42.66745,-99.77465 = the stored pin)",
+    "Esri World Imagery at 42.6685,-99.7705 (1.4 km frame), the pond area 42.6713,-99.7688 and the south-west loop 42.6683,-99.7755 (~4 px/m), 2026-11-05; Overpass did not answer",
+    "NGPC campsite inventory (ArcGIS feature services Camping_Facility_Electric_ONLY / Camping_Facility_Basic_ONLY, owner NGPC.GISAdmin, https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Electric_ONLY/FeatureServer/8 and .../Camping_Facility_Basic_ONLY/FeatureServer/8, edited 2026-01), read 2026-11-05: '250R-Keller Park SRA-1' to '-25' typed Electric, '-26' to '-35' typed Basic, each with a point",
+    "NGPC Parks_Locations layer (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Parks_Locations/FeatureServer/0), read 2026-11-05: 'Keller Park SRA', Status 'Active', Reservations 'No', DumpStation 'Yes', Water 'Yes', VaultPitToilet 'Yes'"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 30,
+        "currency": "USD",
+        "checked": "2026",
+        "surcharges": {
+          "weekend": 0,
+          "electric": null
+        },
+        "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax. First come, so no reservation fee."
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Keller Park SRA': Electric Plus, Basic, Primitive; Electric Plus $30, Basic $15, Primitive $10) + NGPC park-pricing text in audit/state_park_fees/ne_build.py ('Camping rates during the off-season are $5 less per night for all site types, except primitive')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always"
+      },
+      "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (Keller Park SRA carries no '*', the grid's mark for '*Reservations accepted.'); nebraskastateparks.reserveamerica.com lists no Keller Park facility",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": null
+      },
+      "source": "NGPC campsite inventory (see sources), read 2026-11-05: 25 Electric sites (1-25) and 10 Basic sites (26-35); the stored 50 rested on the note's '15 basic and 10 primitive', and the primitive count is not mapped anywhere I could read",
+      "method": "manual"
+    }
+  },
+  "note": "SRA on Bone Creek off US 183 north of Long Pine, NE of Ainsworth. 25 electric pads (sites 1-25) in two rows off the park road, plus 10 basic sites (26-35) in the south-west loop and primitive camping. Fire grates and picnic tables; water pump, primitive restrooms and a dump station. Stocked ponds in the park. Self-pay iron ranger (cash or check). --Claude",
+  "summary": "Still NGPC (2025 grid row, Parks_Locations 'Active', phone 402-684-2921, no '*' so first-come only; not on ReserveAmerica). Fees 10-15 -> 10-30, electric surcharge cleared; booking confirmed FCFS. NGPC's own site inventory: 25 electric + 10 basic (not the note's 15 basic) -> count 50 cleared. Not waterfront kept. Pin fine (inside the electric rows). Note cleaned.",
+  "flags": [
+    "PHONE missing -> 402-684-2921 (NGPC 2025 rates grid row 'Keller Park SRA'; Google panel matches). apply.py does not write phones.",
+    "OWNERSHIP state confirmed: Keller Park is still on NGPC's 2025 rates grid and Google links outdoornebraska.gov/location/keller-park/; no sign of a conveyance.",
+    "WATERFRONT not waterfront kept: the two ponds in the north of the park (~42.6713,-99.7688) are ~200 x 35 m and ~170 x 30 m on imagery (each ~1-2 acres, ponds under the ~5-acre line). Bone Creek is a ~10-15 m channel; the loop with picnic tables at ~42.6684,-99.7755 sits ~40-60 m from it behind a belt of trees. Nothing supports a water value.",
+    "PIN fine: NGPC's inventory places electric sites 19-25 at 42.6670-42.6674,-99.7742..-99.7753 and sites 2-18 at 42.6677-42.6691,-99.7749..-99.7757; the stored 42.66745,-99.77465 is ~25 m from sites 23-24. Basic sites 26-35 are the south-west loop at ~42.6664,-99.7767 (~200 m). No move.",
+    "SITES count 50 -> null: NGPC's GIS campsite inventory maps 25 Electric (1-25) and 10 Basic (26-35), contradicting the note's '15 basic'; primitive sites are not in any inventory layer (the Primitive layer is empty statewide), so no total can be sourced. Note now says 10 basic. DUMP: NGPC's Parks_Locations layer says DumpStation 'Yes' (not written; facilities.dump left absent, the layer is an old attribute table). Still unverified from old prose: hookups.electric 50, the 14-night limit (outdoornebraska.gov blocked).",
+    "SAND: not applicable (gravel park roads). Google 'Keller Park State Recreation Area' 4.5 from 13 reviews.",
+    "SITE TYPE conflict (fees weak spot): the 2025 rates grid (as transcribed in audit/state_park_fees/ne_build.py) marks Keller Electric Plus ($30: 20/30 A with its own water, or 50 A), but NGPC's GIS inventory files all 25 electric sites in its 'Electric ONLY' layer (CampsiteType 'Electric': 20/30 A, near a hydrant, $25). If the inventory is right, nightly_high is 25 and the 50-amp claim in hookups is wrong. I kept the grid (the published price document); outdoornebraska.gov's park page, which would settle it, is blocked."
+  ]
+}
