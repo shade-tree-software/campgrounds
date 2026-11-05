@@ -1,0 +1,48 @@
+{
+  "id": 2204,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://www.cityofliberal.org/407/Arkalon-Park (City of Liberal), read 2026-11-05: 'Camphost: (620) 391-2318'; 'Visiting the park is free, but overnight tent and RV camping fees do apply. Fishing requires a Kansas state fishing license.'; 'Overnight stays can be booked online at our RoverPass profile.'; 'Camping Fees: $20.00 per night with electricity (30 amp & 50 amp electrical hookups), $5.00 per additional RV air conditioner, due in advance, $5.00 per night without electricity, due in advance.'; 'Camping is permitted for a maximum of 14 consecutive days, thereafter, all persons/property must be removed for an additional 7-day period before camping can resume.'; 'Park Hours: 7:00 a.m. to 10:00 p.m., 7 days a week; Check-out time is 4:00 p.m.'; 'The fish in the Arkalon Ponds ... Catch and Release Only - Not for Consumption, as the ponds contain wastewater effluent.'",
+    "https://www.cityofliberal.org/DocumentCenter/View/3094 (Arkalon Park map, linked from that page), read 2026-11-05: page 1 shows the campground in the park's NE corner north of the entry, the fishing ponds and marsh to the SW; page 2 'Campground Features: Camp Host Office, Restrooms & Showers, Covered Event Pavilion, RV & Tent Camping, ... Storm Shelters', trails incl. a 2-mile 'River Walk'",
+    "https://www.roverpass.com/c/arkalon-park-liberal-ks/booking (RoverPass booking API, the city's claimed listing: isBookable true, systemType CRS, advancedMonths 18; closeSeasonDates 2026-11-01..2027-03-31 and 2027-11-01..2028-03-31, 'Campground is closed' on Nov 2026 and Jan 2027 dates), read 2026-11-05: Tue 2027-06-08 and Sat 2027-06-12 one night: 'RV Sites - Water & Electric Sites for RVs with (1) AC Unit.' $20.00, 'Water & Electric Sites for a RV with (2) AC Units' $25.00, 'Primitive Tent Sites' $5.00; amenities amps_20/30/50, water_hookups, pull_through, back_in (no sewer tag); 15 RV sites open (A3-A6, B1-B5, C1-C6), max lengths 30-45 ft, A3-A5 pull-through; cart for one night $20.00 site + RoverPass platform/processing fees; rule 'No long-term camping over 14 days.'",
+    "Esri World Imagery at the stored pin 37.1466,-100.7619 (400 m half), 2026-11-05: the pin is on the entry road's turnaround south of the campground; the RV loops with parked RVs run ~110-320 m north of it, centre ~220 m N"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026-11", "note": "City of Liberal: $20 a night for a 30/50-amp water/electric RV site, $5 more for each additional RV air conditioner (RoverPass sells it as a $25 '2 AC units' rate); non-electric $5. RoverPass adds its own platform and processing fees online."},
+      "source": "https://www.cityofliberal.org/407/Arkalon-Park ('$20.00 per night with electricity (30 amp & 50 amp electrical hookups), $5.00 per additional RV air conditioner ... $5.00 per night without electricity') + RoverPass booking API quotes for 2027-06-08 and 2027-06-12 ($20.00 / $25.00), read 2026-11-05",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": null},
+      "source": "https://www.cityofliberal.org/407/Arkalon-Park ('30 amp & 50 amp electrical hookups') + RoverPass booking API (rates named 'Water & Electric Sites', amenities amps_50 and water_hookups, no sewer on any site), read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true, "max_rig_ft": 45},
+      "source": "RoverPass booking API, the city's own listing (sites A3-A5 pull_through; site max lengths 30-45 ft), read 2026-11-05",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true},
+      "source": "https://www.cityofliberal.org/DocumentCenter/View/3094 (park map p.2: 'Camp Host Office, Restrooms & Showers'), read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "roverpass", "url": "https://www.roverpass.com/c/arkalon-park-liberal-ks/booking", "max_stay_nights": 14, "season": {"opens": "04-01", "closes": "10-31"}, "note": "Booked online through the city's RoverPass listing, up to 18 months ahead; no online bookings November through March. All campers must check in with the camp host on arrival (office 8 am-noon and 4-8 pm); check-out 4 pm. After 14 days a 7-day absence is required."},
+      "source": "https://www.cityofliberal.org/407/Arkalon-Park ('Overnight stays can be booked online at our RoverPass profile'; 'maximum of 14 consecutive days, thereafter ... removed for an additional 7-day period') + RoverPass booking API (advancedMonths 18; closeSeasonDates 11-01..03-31; rule 'All Campers MUST check in with Camp Host when arriving'), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "City of Liberal park ~10 mi NE of Liberal on Hwy 54 near the Cimarron River, with fishing ponds (catch-and-release only: the ponds hold wastewater effluent), nature trails, a covered event pavilion and storm shelters. Concrete-pad sites; the park is gated at night (hours 7 am-10 pm). --Claude",
+  "summary": "City page + its RoverPass engine: $20 water/electric (30/50 amp; +$5 per extra A/C = $25 rate), $5 non-electric, 14-night max, showers; booked on RoverPass (18 months out, closed to booking Nov-Mar). Changed sewer true (derived) -> cleared: every rate is 'Water & Electric' with no sewer tag. Added booking platform/url/max stay/booking season, max_rig_ft 45, pull_through. Pin ~220 m south of the loops (optional move). Not waterfront kept.",
+  "flags": [
+    "HOOKUPS: stored sewer true (derived from the note's 'water and sewer') cleared to unknown: the city's RoverPass rates are 'Water & Electric Sites' and no site carries a sewer tag; the city page names only electricity. The stored note's 'water and sewer' line dropped.",
+    "SEASON: RoverPass (the city's own claimed listing) marks the campground closed 2026-11-01 to 2027-03-31 and the same each winter; I recorded it as booking.season (04-01..10-31) only, since the city page says nothing about the campground closing. Season left absent.",
+    "SITES: stored count 16 (derived from the note) left; RoverPass shows 15 RV sites open on 2027-06-08 (A3-A6, B1-B5, C1-C6), so A1/A2 may be host or held sites. Not changed.",
+    "FEES: base $20 kept (the $5 'without electricity' rate is sold on RoverPass only as 'Primitive Tent Sites'). The old note's '$10 hookup/$5 without' was outdated and is dropped.",
+    "PIN: stored 37.1466,-100.7619 is on the entry-road turnaround ~220 m south of the RV loops (under the 250 m threshold). Optional move to the loop centre about 37.1486,-100.7617.",
+    "WATERFRONT not waterfront kept: the fishing ponds are SW of the campground across the park (small effluent ponds, under the pond threshold anyway), and the Cimarron lies north beyond the campground (reached by the 2-mile 'River Walk' trail; not in my 400 m frame). No lead.",
+    "PHONE 620-391-2318 is the camp host's (city page and RoverPass). City Parks phone on the page footer is 620-626-2201. WEBSITE correct. Inclusion: city-run, bookable online - fine. SAND: none."
+  ]
+}

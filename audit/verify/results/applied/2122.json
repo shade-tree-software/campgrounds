@@ -1,0 +1,45 @@
+{
+  "id": 2122,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233449 (USACE Canning Creek), read 2026-11-05: 'Canning Creek Campground offers 43 reservable campsites, including three group sites ... Electric hookups, flush toilets'; 'located on the 3,310-acre Council Grove Lake'; 'two boat ramps are located in the campground'; notices 'Campsite must be reserved prior to setting up camping equipment', 'Two camping units are allowed per campsite ... Only one camping unit may be plugged into the electric service', 'New for 2024, check-out time is 3PM and check-in time is 4PM'; rules maxStay 14 nights (rolling 30 days), maxConsecutiveStay 14, minWeekendStay 2, reservationCutOff 0; phone 620-767-5195.",
+    "https://www.recreation.gov/api/camps/campgrounds/233449/rates, read 2026-11-05: Peak Season 2026-04-01..2026-10-30 (same for 2027 and 2028): STANDARD ELECTRIC $27 (default template), $26 (template u19), $22 (template u18); STANDARD NONELECTRIC $17; volunteer-loop template $29; group sites $120-$225.",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 44 sites, read 2026-11-05: sites 01-17 and 25-35 default $27, 18-19 $26, 20-23 $22 (Max Vehicle Length 35/46/41/29), 24 non-electric (10-ft camper van/tent), 36 (VOL loop) $29; 'Proximity to Water: Lakefront' on 01-19, 26-27 and 32-35 (25 of 35 standard sites); per-site coordinates.",
+    "trip_data/ridb_campsites.json (RIDB catalog for 233449, fetched 2026-10-20): 35 STANDARD ELECTRIC (all reservable), 1 STANDARD NONELECTRIC, 6 group, 2 day-use shelters, 1 management; RV/trailer equipment on 40; electric 20/30/50 on most; Water Hookup 'Yes' on 35; Sewer Hookup 'Y' only on site 36, the four group pods and the management site; 3 pull-throughs.",
+    "https://www.recreation.gov/api/camps/availability/campground/233449/month for Oct 2026 and Nov 2026-May 2027, read 2026-11-05: standard sites carry calendar dates through 2026-10-30 then no dates at all November-March; April 2027 opens 04-01 (514 Available).",
+    "Esri World Imagery with rec.gov per-site coordinates overlaid (38.6975,-96.5375 at 170 m half; 38.6902,-96.5305 at 140 m half), 2026-11-05: north cluster sites 05-16 sit on pull-ins on the lake side of the loop road, 15-35 m from the shore, with a strip of shore trees and open riprap between; south peninsula sites 26-28 and 32-35 sit 15-30 m from the water on the point and along its shore, no road between."
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 22, "nightly_high": 29, "currency": "USD", "checked": "2026-11", "note": "Electric sites $27 a night; sites 18-19 $26, sites 20-23 $22; site 36 (with sewer) $29."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233449/rates + per-site fee templates (Peak Season 2026-04-01..10-30: STANDARD ELECTRIC 27/26/22, VOL $29), read 2026-11-05",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-30"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233449/rates (Peak Season 04-01..10-30, 2026-2028) + availability calendar (dates through 2026-10-30, none November-March, open 2027-04-01), read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233449", "fcfs": "never", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}], "note": "A site must be reserved before setting up; same-day booking is allowed on recreation.gov (no cutoff). The 2-night weekend minimum is a recreation.gov rule and may be relaxed for a same-day booking. 14 nights in any 30 days."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233449 (notice 'Campsite must be reserved prior to setting up camping equipment'; rules minWeekendStay 2, maxStay 14 'Rolling 30 Days', reservationCutOff 0), read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 36, "max_rig_ft": 120},
+      "source": "recreation.gov per-site records for 233449 (35 STANDARD ELECTRIC + 1 STANDARD NONELECTRIC individual sites besides 6 group sites; longest 120 ft at site 28), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Council Grove Lake campground on a shoreline peninsula, with two boat ramps; many sites sit right along the shore. Sites 20-23 and the lone non-electric site are short (29-46 ft and 10 ft). --Claude",
+  "summary": "rec.gov: 35 electric + 1 non-electric individual sites (plus 6 group), reservation required, same-day allowed, 2-night weekend minimum, 14-night limit, season Apr 1-Oct 30 (calendar empty Nov-Mar). Fees re-dated 22-29 (was 27-29; sites 20-23 are $22). Count 43 (incl. group) -> 36 individual. Lakefront kept: 25 of 35 sites tagged Lakefront, imagery 15-35 m from shore.",
+  "flags": [
+    "SITES: stored count 43 (derived) is rec.gov's total including 3 group camps + 4 group pods; I wrote 36 individual sites (35 electric, 1 non-electric). Revert to 43 if the DB counts group sites.",
+    "FEES changed 27-29 -> 22-29: the per-site fee templates put sites 20-23 at $22 (sites 20-22 are 35-46 ft and fit EKKO; 23 is 29 ft). Sites 18-19 $26, default $27, site 36 $29.",
+    "SITE 36 is in a 'VOL' loop with sewer at $29 - reservable on rec.gov, but the loop name suggests volunteer pads; it is the only standard site with sewer, so sewer stays unknown.",
+    "HOOKUPS left as derived (electric 50, water true from RIDB): catalog agrees (20/30/50 on most sites, water 'Yes' on 35).",
+    "MIN STAY: 2-night weekend minimum recorded; recreation.gov may relax it for same-day booking. FCFS: never ('Campsite must be reserved prior to setting up').",
+    "WATERFRONT lakefront kept: rec.gov tags 'Lakefront' on sites 01-19, 26-27, 32-35. Imagery with the per-site coordinates shows sites 05-16 on pull-ins on the lake side of the loop road, 15-35 m from the shore (shore trees and open riprap, no road or day use between), and peninsula sites 26-28/32-35 15-30 m from the water. A 3,310-acre lake.",
+    "PIN fine: 38.694,-96.5345 sits by sites 20-22 at the middle of the campground. PHONE 620-767-5195 matches rec.gov. WEBSITE https://www.recreation.gov/camping/campgrounds/233449 correct. SAND: none."
+  ]
+}
