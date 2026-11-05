@@ -1,0 +1,42 @@
+{
+  "id": 2742,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/camping/swanson-sra/r/campgroundDetails.do?contractCode=NE&parkId=234151 ('Status: Open year round'; 'Booking Window Fri Nov 06 2026 - Tue May 04 2027 Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; '59 campsites with 50 amp capabilities, 3 showerhouse/modern restrooms. 20 designated basic sites with vault toilets'; 'Phone Number: Information: (308)334-5493'; loops Lake View, Macklin Bay, Spring Canyon), read 2026-11-05",
+    "ReserveAmerica site list + per-site pages, loop Macklin Bay: sites 004, 005, 006, 007, 009, all 'Electric Plus', 'Electric Hookup available: 50 amp', 'Full Hookup - no', 'Near Water - no', Driveway Surface Gravel, Back-In, Driveway Length 40; GIS points 40.1739-40.1742, -101.0978 to -101.0992, read 2026-11-05",
+    "ReserveAmerica calendars for site 004: 'W' (First Come, First Served Availability) every night Nov 10-23 2026 and Jan 12-25 2027, 'W' Apr 27-30 2027 and 'A' (Available) from May 1 2027; quote $30.00 Per Night for 5/3/2027 (site 004, Electric Plus), read 2026-11-05",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 grid): row 'Swanson Lake SRA SW 308-334-5493', no asterisk (reservations not accepted in 2025)",
+    "Esri World Imagery (1200 m frame) and USGS NAIP (400 m frame) with the ReserveAmerica GIS points, 2026-11-05"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": null, "sewer": null},
+      "source": "ReserveAmerica Macklin Bay sites 004-009: 'Electric Hookup available: 50 amp' and 'Full Hookup - no' on every listed site, with no Water Hookup or Sewer Hookup attribute (other NE parks' RA pages tag water hookups where they exist); the note's 'water and sewer hookups' is contradicted, read 2026-11-05",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "ReserveAmerica's Swanson SRA facility (Lake View, Macklin Bay and Spring Canyon loops) says 'Open year round'; Macklin Bay sites show as first-come through November and January and are reservable from May 1. Winter water and showerhouse service is not stated."},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/swanson-sra/r/campgroundDetails.do?contractCode=NE&parkId=234151 ('Status: Open year round. Season Dates'; site 004 calendar 'W' Nov 2026 and Jan 2027), read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://nebraskastateparks.reserveamerica.com/camping/swanson-sra/r/campgroundDetails.do?contractCode=NE&parkId=234151", "window_opens_days": 180, "fcfs": "some_sites", "note": "ReserveAmerica lists five Macklin Bay sites (004, 005, 006, 007, 009, all Electric Plus); outside the reservation season (May 1 on in 2027) they show as first-come. Reservations must be made at least a day ahead (read 2026-11-05)."},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/swanson-sra/r/campgroundDetails.do?contractCode=NE&parkId=234151 ('Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; Macklin Bay loop: 5 sites listed; site 004 calendar W through Apr 30 2027, A from May 1), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Macklin Bay is one of the camping areas at Swanson Reservoir SRA, about 4.5 mi west of Trenton: a small electric loop on the slope north of the railroad, about 220 m from the Macklin Bay arm and 300 m from the main lake. --Claude",
+  "summary": "ReserveAmerica (now booking Swanson, which the 2025 grid listed as walk-up only) confirms 50 A Electric Plus at Macklin Bay; 5 sites listed (004-009), reservable May 1 on and first-come otherwise; facility 'Open year round', so season changed false -> year_round. Water/sewer cleared (RA: 'Full Hookup - no', no water/sewer tag). Not waterfront stands (~220 m to the bay arm across the loop road, rail line between the loop and the lake). Pin 175 m south on the rail crossing; optional re-pin. Phone differs.",
+  "flags": [
+    "PHONE: stored 308-276-2671 is not on any page read; ReserveAmerica 'Information: (308)334-5493' and the NGPC 2025 grid row 'Swanson Lake SRA ... 308-334-5493' agree. Suggest 308-334-5493 (also flagged on 2741 Spring Canyon). apply.py doesn't write phone.",
+    "FEES question (not changed; fees provenance is a 2026-10-12 human read): stored low $10 / high $15 + electric $15 is the statewide grid (primitive $10, basic $15, Electric Plus $30). ReserveAmerica lists only Electric Plus sites at Macklin Bay ($30.00 for 5/3/2027, site 004), and no page shows a basic or primitive site in this loop, so the base for this entry may be $30 rather than $10. The basic sites ReserveAmerica lists are in Spring Canyon (020, 021, $15.00 for 5/3/2027) and Lake View.",
+    "SITE COUNT not changed: stored 17 (2026-09 note prose). ReserveAmerica lists 5 Macklin Bay sites; on NAIP the loop holds roughly 10-17 pads, so the rest are presumably first-come. No page gives the loop total.",
+    "MAX LENGTH not written: every Swanson site on ReserveAmerica reads 'Driveway Length: 40 / Max Vehicle Length: 40', which looks like a park-wide default (2741's verifier read it the same way). It fits EKKO either way.",
+    "WATERFRONT not waterfront stands (lead, no change): ReserveAmerica 'Near Water - no' on all five sites. On Esri/NAIP with the GIS points the loop (40.1739-40.1742, -101.0978 to -101.0992) sits on an open slope with the loop road around it; the Macklin Bay arm is ~220 m west past the shower building and park road, and the main lake ~300 m south beyond the BNSF rail line and a wooded/grassy slope. At most a distant view; nothing supports *view from the pads, so no change.",
+    "PIN: stored 40.17295,-101.09985 is on the rail-line crossing ~175 m south of the loop (under the 250 m line). Optional re-pin to the site centroid 40.17406,-101.09840.",
+    "SAND RULE passes: pads 'Driveway Surface: Gravel'. ReserveAmerica also carries a 'Beach Camping (Trail 3)-old' nonspecific basic unit at Swanson; it is not this loop.",
+    "LEAD (other Swanson areas): the DB has Macklin Bay (2742) and Spring Canyon (2741). ReserveAmerica's third loop, Lake View (8 grass Basic sites 045-052, 40.1505-40.1513, -101.0673 to -101.0697), sits ~400 m NE of Spring Canyon's north end and ~400 m W of 2741's pin, and is not in the DB by name; it may be meant as part of 2741. The beach/primitive camping on the south shore below Macklin Bay (loops by the shore visible on imagery at ~40.168,-101.096) is not in the DB and would be a sand-rule question if anyone proposed it.",
+    "NOTE CLEANED: dropped 'water and sewer hookups' (contradicted), '17 sites with 30/50-amp electric', 'modern restrooms, showers, dump station' (sites/hookups/facilities), 'Seasonal (roughly May-September)' (contradicted by RA 'Open year round') and 'NE park entry permit required' (fees.entrance, inherited). Corrected '~3 mi SW of Trenton' to about 4.5 mi west (measured).",
+    "AGENCY PAGE UNREAD: outdoornebraska.gov is Cloudflare-blocked (not tried, per brief)."
+  ]
+}

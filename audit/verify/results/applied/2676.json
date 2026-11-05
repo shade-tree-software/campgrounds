@@ -1,0 +1,39 @@
+{
+  "id": 2676,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/camping/box-butte-reservoir-sra/r/campgroundDetails.do?contractCode=NE&parkId=234051 (park page: 'Project Office: (308) 665-2900'; site list loop Box Butte: 44 reservable sites, 25 Electric Plus 50 A and 19 Basic, all 60 ft, back-in, pull-through and one parallel; per-site 'Near Water - no', 'Full Hookup - no'), read 2026-11-05",
+    "ReserveAmerica campsiteDetails GIS points for all 44 sites (gis_234051.json in the verifier scratch), read 2026-11-05",
+    "ReserveAmerica calendars: site 04 (Electric Plus) and site 20 (Basic) show W (first-come) every night 2026-11-10..23 and 2027-01-12..25 with 'No pricing information available'; 2027-05-04 quotes $30.00 (Electric Plus) and $15.00 (Basic) per night, reservation fee $8.50, read 2026-11-05",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 grid): Box Butte row, phone 308-665-2900",
+    "Esri World Imagery and USGS NAIP of the campground with the RA site points plotted; USGS 3DEP point elevations (EPQS) at sites 08, 10, 13, 16, 27, 28, 31 and on the open water, 2026-11-05"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ReserveAmerica site list for parkId 234051: every Electric Plus site 'Electric Hookup available: 50 amp', every site 'Full Hookup - no', read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://nebraskastateparks.reserveamerica.com/camping/box-butte-reservoir-sra/r/campgroundDetails.do?contractCode=NE&parkId=234051", "window_opens_days": 180, "fcfs": "some_sites"},
+      "source": "ReserveAmerica parkId 234051: 44 sites bookable for 2027-05-04 (code A); in the off season the same sites show W (first-come) with no online price. 180-day window from the state:NE policy row and NGPC's 2025 grid ('*Reservations accepted ... up to 180 days in advance'), read 2026-11-05",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "ReserveAmerica calendars for sites 04 and 20: W (first-come available) on every night 2026-11-10..23 and 2027-01-12..25; NGPC grid prices the mid-October-April off-season, read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Reservoir SRA 9 mi N of Hemingford (1,600-acre lake), on a paved road. The campground is newer (opened about 2023): an Electric Plus loop and a row of pull-throughs on the bank above the north shore, and basic sites strung along the shore road to the boat ramp. In the off season the sites are first-come only. --Claude",
+  "summary": "Lakeview confirmed: sites sit on a bank 4-7 m above the water with open views, not on-water. Phone to add 308-665-2900 (flag). Booking changed platform operator -> reserveamerica (url, 180-day window) with off-season first-come; season year_round added; 50 A confirmed. Fees left (human read 2026-10-12, matches $30/$15 May 2027 quotes). Pin confirmed (at the loop entrance). Site count 86 and max 50 ft unverified.",
+  "flags": [
+    "WATERFRONT lakeview confirmed (no change): RA per-site GIS on Esri + NAIP puts Electric Plus 07/08/10/13 and Basic 16/17/19/27-31 30-45 m from the waterline on the open bank above the north shore, but 3DEP has those pads 4-7 m above the lake (water 1217.5 m; site 10 1221.2, 13 1222.0, 08 1222.2, 28 1223.9, 16 1224.6, 31 1227.4) with an eroded cut bank down to a narrow sandy beach, and a band of cottonwoods along the bank at 07-13: a bench above a climb-down, which the gate resolves to lakeview. The open view over the lake from the loop and the shore row holds. RA marks every site 'Near Water - no'. Not near the dam (dam ~1 km SE).",
+    "SAND RULE passes: every site is gravel or paved on RA; nothing requires driving onto the beach.",
+    "SITE COUNT 86 unverified: RA sells 44 (25 Electric Plus, 19 Basic) numbered 01-60 with gaps; the note's '60 Electric Plus pads plus 26 Basic' and '~30 reservable' don't match RA. Possibly unlisted first-come sites; left count as is. Suggest 44+ or null if AWH prefers.",
+    "MAX RIG 50 ft (derived) left: RA gives 60 ft on every site, which looks like a default.",
+    "PHONE to add (top-level, by hand): 308-665-2900 (RA 'Project Office' and the NGPC 2025 grid). The entry had none.",
+    "PIN OK: stored 42.46560,-103.08400 is at the Electric Plus loop entrance beside site 01; RA's directory park point (42.4625,-103.0947) is ~900 m W across the inlet and is not the campground.",
+    "NOTE CLEANED: dropped '60 Electric Plus pads (30/50-amp) plus 26 Basic non-pad sites' (hookups/sites, and contradicted by RA), 'new shower house, modern restrooms, drinking water' (facilities), 'Sites fit RVs up to ~50 ft' (sites), '~30 sites reservable in peak season via NGPC reservation system, remainder FCFS' (booking) and 'State park entry permit required' (fees.entrance); added where the loops are and off-season first-come. Showers/potable water facilities group left as stored (not re-read; outdoornebraska.gov blocked)."
+  ]
+}

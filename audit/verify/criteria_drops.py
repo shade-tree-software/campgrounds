@@ -365,6 +365,7 @@ DROPS = {
     2871: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule)', "p3-287, read 2026-11-05: RV Life 7.76/10 = 3.88/5 over 57 ratings; Google 4.1/132; a 4/2026 review: 'The showers and restrooms had not been cleaned since the previous year'. $40 (ResNexus, Nov 2026). No --AWH note, no trip references."),
     2879: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule) and a failed transient-share test', "p3-288, read 2026-11-05: RV Life 7.61/10 = 3.81/5 over 127 ratings; Google 4.1/151; a 7/2026 review: 'mostly full time, about 4 sites ... short term'; weekly $180, monthly $550. No --AWH note, no trip references."),
     14517: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule)', 'p3-289, read 2026-11-05: RV Life 7.63/10 = 3.82/5 over 97 ratings; Google 4.1/288. No --AWH note, no trip references.'),
+    2689: ('2026-11-05', 'state wayside permanently closed to camping', "p3-291, read 2026-11-05: RV Life reviewer Feb 2026 'Permanently CLOSED due to State of Nebraska Budget Cuts - Approximately 2020', 'all signage has been removed', 'not been maintained since 2020'; June 2026 update: a chain across the road ~100 yards in, tree limbs added. Absent from NGPC's 2025 camping rates grid (~60 areas). outdoornebraska.gov unreadable (Cloudflare). No --AWH note, no trip references."),
 }
 
 if __name__ == "__main__":
