@@ -195302,27 +195302,29 @@
     "id": 2733,
     "kind": "campground",
     "name": "Rock Creek Station State Recreation Area",
-    "location": "40.11400,-97.05600",
-    "elevation_meters": 415.0,
+    "location": "40.1116,-97.0652",
+    "elevation_meters": 421,
     "state": "NE",
     "ownership": "state",
     "waterfront": "not waterfront",
     "inclusion_evidence": "NGPC/VisitNebraska: 25 paved electric pads, modern shower/restroom, dump; ReserveAmerica campgroundDetails parkId=230150 -> real RV campground",
-    "waterfront_evidence": "audited 2026-06 (NE state evidence-gate sweep, commit 3126a2b); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "p3-283 (2026-11-04): Rock Creek is a small creek away from the paved loop on imagery (pin moved ~840 m onto the loop). Stands.",
     "website": "https://outdoornebraska.gov/location/rock-creek-station-sra/",
     "phone": "402-729-5777",
-    "note": "NGPC recreation area at the historic Rock Creek Station / Oregon Trail site SE of Fairbury. 25 paved back-in pads with 30-amp electric (20A duplex outlets); about half reservable, the rest first-come first-served (iron ranger). Modern shower/restroom building, drinking water, dump/fill station. Nebraska park entry permit required. --Claude",
+    "note": "NGPC recreation area beside Rock Creek Station State Historical Park (Oregon Trail and Pony Express site) SE of Fairbury: a wooded paved loop of back-in electric pads; primitive horse camp with corrals and trails. Park entry permit required. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 30
+      "electric": 50
     },
     "sites": {
       "count": 25,
-      "pull_through": false
+      "pull_through": false,
+      "max_rig_ft": 58,
+      "note": "13 reservable paved back-in electric pads of 42-58 ft on ReserveAmerica (site numbers run to 025); a primitive first-come horse camp besides."
     },
     "facilities": {
       "showers": true,
@@ -195332,32 +195334,41 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "reserveamerica",
+      "url": "https://nebraskastateparks.reserveamerica.com/camping/rock-creek-station-shp/r/campgroundDetails.do?contractCode=NE&parkId=230150",
+      "window_opens_days": 180
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica campsiteDetails, parkId 230150 ('Electricity Hookup: 50' on all 13 sites; 'Full Hookup - no'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica loop list + campsiteDetails, parkId 230150 (Max Vehicle Length 42-58, Driveway Entry Back-In, Surface Paved), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230150 ('modern shower/latrine building'; amenities 'Showers', 'Dump Station, Camper'; 'Water is available for both campers and horses'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230150 ('Electric Plus ... can be made up to 180 Day(s) in advance'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'Rock Creek Station', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Rock Creek Station SRA': Electric $25, Basic marked hollow; Electric Plus $30) + ReserveAmerica campsiteDetails, parkId 230150 (all 13 sites 'Electric Plus', 50 A) + RA campground notes ('The horse camp is primitive first-come, first serve camping'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230150 ('Camping is available year-round, including campsites with electricity. When modern facilities are closed, a winter rate camping fee is charged.'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -195366,15 +195377,20 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 10,
-      "nightly_high": 15,
+      "nightly_low": 20,
+      "nightly_high": 30,
       "currency": "USD",
-      "surcharges": {
-        "weekend": 0,
-        "electric": 10
-      },
       "checked": "2026",
-      "note": "In season: basic $15, electric $25 a night; $5 less mid-October through April. Equestrian sites $5 more. Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
+      "note": "Every RV pad has electric; the basic rate on the grid is the horse camp. NGPC's 2025 grid lists Rock Creek Station's pads as Electric ($25 in season, $5 less mid-October through April), but ReserveAmerica types all 13 reservable sites 'Electric Plus' (50 A), the grid's $30 class; no night could be quoted to settle it. Plus tax, the $8.50 reservation fee when booked online, and a park entry permit."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Camping, electric sites included, all year; modern facilities about May to mid-October, with a winter rate when they are closed."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230150 (Rock Creek Station SHP: 'Status: Closed through Wed Nov 04 2026'; booking window 'Electric Plus Fri Nov 06 2026 - Mon May 03 2027 Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; 'Rock Creek Station Recreation Area is a 40-acre campground adjacent to the Rock Creek Station State Historical Park'; 'The campground at Rock Creek Station SRA has electrical camper pads with a modern shower/latrine building'; amenities 'Dump Station, Camper', 'Showers'; 'Water is available for both campers and horses'; 'The horse camp is primitive first-come, first serve camping with a vault toilet, water'; 'Modern camping facilities are open (depending on weather conditions) beginning in May and normally through mid October. Camping is available year-round, including campsites with electricity. When modern facilities are closed, a winter rate camping fee is charged.'; 'Check in time is 4 p.m. and check out time is 2 p.m.'; 'Project Office: (402) 729-5777'), read 2026-11-04 ReserveAmerica loop search + campsiteDetails, parkId 230150, loop 'Rock Creek Campground' (13 sites 001, 002, 009-011, 014-016, 018, 019, 023-025: all 'Electric Plus', 'Electricity Hookup: 50', 'Full Hookup - no', Max Vehicle Length 42-58, Back-In, Paved, GIS points), read 2026-11-04 ReserveAmerica campsiteDetails quote attempts for sites 001, 011, 014 on 11/17/2026, 11/20/2026, 12/8/2026, 3/16/2027, 4/13/2027, 4/20/2027, 4/27/2027, 5/1/2027 and 6/15/2027: every night 'X Not avail.' (window ends May 3, 2027), so no price quoted, read 2026-11-04 audit/state_park_fees/ne_camping_rates_grid_2025.pdf (NGPC 2025 Camping Rates grid: columns Full Hookup $35, Electric Plus $30, Electric $25, Basic $15, Primitive $10; row 'Rock Creek Station SRA* SE 402-729-5777' marks Electric with a solid dot and Basic with a hollow one; 'Add $5 per night for equestrian sites') Esri World Imagery at 40.1116,-97.0652 (400 m frame) with the 13 RA site points and the stored pin, 2026-11-04",
+      "note": "ReserveAmerica confirms 13 reservable paved back-in Electric Plus pads (50 A, 42-58 ft), showers, water and a dump, camping all year (modern facilities May to mid-October), 180-day booking; written. Fees re-based from the basic (horse camp) $10/15 to the electric pads: $20-30 (grid Electric $25 in season / $20 off; RA's Electric Plus typing implies $30) - no night could be quoted. Electric 30 -> 50. Not waterfront stands. The stored pin is ~840 m east of the campground."
     }
   },
   {
@@ -195533,15 +195549,15 @@
     "id": 2737,
     "kind": "campground",
     "name": "Sherman Reservoir State Recreation Area",
-    "location": "41.2950,-98.8974",
-    "elevation_meters": 656.0,
+    "location": "41.2893,-98.8972",
+    "elevation_meters": 677,
     "state": "NE",
     "ownership": "state",
-    "waterfront": "lakefront",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "NGPC ReserveAmerica campgroundDetails parkId=233962: West/Middle Ridge electric pads + 300+ primitive drive-in sites",
-    "waterfront_evidence": "lakeview -> lakefront satellite at 41.2950,-98.8974: open graded camp loop occupies a small peninsula ringed by water on N/W/E with a boat ramp/dock; pads sit at the waterline with no tree buffer on the lake",
+    "waterfront_evidence": "p3-283 (2026-11-04): scoped to West Ridge, the only electric campground (29 Electric Plus sites): ReserveAmerica tags every site 'Near Water - no', and imagery puts the ridge well back from the shore (old pin was on a lakeshore point by a ramp; moved ~630 m). Lakefront -> not waterfront.",
     "website": "https://outdoornebraska.gov/location/sherman-reservoir/\nhttps://nebraskastateparks.reserveamerica.com/camping/sherman-reservoir-state-recreation-area/r/campgroundDetails.do?contractCode=NE&parkId=233962",
-    "note": "Large NGPC SRA on Sherman Reservoir NE of Loup City. New/expanded West Ridge and Middle Ridge campgrounds offer 61 electric pads (30/50-amp; West Ridge sites fit rigs to ~60 ft) plus 300+ primitive non-pad sites around the lake; modern restrooms, dump station, coin showers, four boat ramps. Electric pads FCFS. State park entry permit required. --Claude",
+    "note": "NGPC recreation area on 2,845-acre Sherman Reservoir NE of Loup City: the West Ridge electric campground sits on a ridge south of the lake, with small Middle and East Ridge basic loops and primitive camping along the shore; three boat ramps and a marina. Park entry permit required. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -195551,41 +195567,51 @@
       "electric": 50
     },
     "sites": {
-      "max_rig_ft": 60
+      "max_rig_ft": 60,
+      "pull_through": false,
+      "note": "West Ridge: 29 back-in 50 A pads, 50-60 ft, mostly gravel. Middle Ridge and East Ridge: 4 basic back-in sites each. Primitive camping around the lake besides."
     },
     "facilities": {
       "flush_toilets": true,
       "showers": true,
-      "dump": true
+      "dump": true,
+      "vault_toilets": true,
+      "potable_water": true
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "The sites are listed on ReserveAmerica, but every night shown is first-come, first-served."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica campsiteDetails, parkId 233962 (all 29 West Ridge sites 'Electric Hookup available: 50 amp'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica loop list + campsiteDetails, parkId 233962, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=233962 ('water, dump station, modern restrooms, vault toilets ... coin-operated showers'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica site calendars, parkId 233962 (West Ridge 002, East Ridge 007: every night 'W' = 'First Come, First Served Availability', November 2026 and April 2027), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
         "source": "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf (row 'Sherman Reservoir', linked from https://outdoornebraska.gov/parks/park-pricing/) + nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), read 2026-10-12",
         "checked": "2026-10-12"
+      },
+      "season": {
+        "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=233962 ('Status: Open year round'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -195603,7 +195629,16 @@
       },
       "checked": "2026",
       "note": "In season: basic $15, electric plus $30, primitive $10 a night; $5 less mid-October through April (primitive $10 all year). Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are consistent across all parks'), matched on its booking site for June 2027 nights, read 2026-10-12."
-    }
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=233962 ('Status: Open year round'; Booking Window Basic and Electric Plus 'Fri Nov 06 2026 - Mon May 03 2027 Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; 'a 2,845-acre lake and 4,721 land acres'; 'three ramps and three boat docks'; 'Facilities include: picnic tables, shelters, water, dump station, modern restrooms, vault toilets, boat ramps, fish cleaning stations, coin-operated showers and concession. Cabin rental and RV camping pads are available through the local concessionaire.'; loops East Ridge, Middle Ridge, West Ridge; GPS 41.28526,-98.89972; Information (308)745-0230), read 2026-11-04 ReserveAmerica loop search + campsiteDetails, parkId 233962: West Ridge 29 sites (001-013, 028, 030-035, 053-061) 'Electric Plus', 'Electric Hookup available: 50 amp', 'Full Hookup - no', 'Near Water - no', back-in, 60 ft (two 50 ft), gravel (two paved), with GIS points; Middle Ridge 4 and East Ridge 4 'Basic' back-in sites, 'Near Water - no', no length or GIS point, read 2026-11-04 ReserveAmerica site calendars for West Ridge 002 and East Ridge 007, nights from 11/17/2026 and 4/13/2027: every night 'W' = 'First Come, First Served Availability', read 2026-11-04 audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Sherman Reservoir SRA* SW 308-745-0230': Electric Plus, Basic and Primitive marked) Esri World Imagery at 41.2893,-98.8972 (500 m, with the 29 West Ridge GIS points), 41.2955,-98.8955 (900 m) and 41.2950,-98.8900 (3 km), 2026-11-04 audit/dam_screen/flags.json (stored pin 14 m from the reservoir pool)",
+      "note": "RA confirms year-round operation; West Ridge has 29 back-in 50 A Electric Plus pads of 50-60 ft and Middle and East Ridge have 4 basic sites each. All sites are first-come, first-served: every RA night shows 'W' (the stored fcfs always is confirmed). Facilities were confirmed from RA and written. The pin sits on a lakeshore point by a boat ramp, 632 m north of the pad campground. Scoped to West Ridge, the waterfront call goes lakefront -> not waterfront ('Near Water - no' on every site). The pho"
+    },
+    "phone": "(308) 745-0230"
   },
   {
     "id": 2738,
@@ -202139,12 +202174,12 @@
     "elevation_meters": 439.0,
     "state": "NE",
     "ownership": "local",
-    "waterfront": "lakeview",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "City of Wayne park page: 17 full-service camper pads (electric/water/sewer), reservable via Rec1 portal -> real local-gov RV campground",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 9af42bc (Add 83 NE local-government campgrounds (city/county/NRD)); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-283 (2026-11-04): the pond is ~2.1 acres on imagery, under the ~5-acre line (no pond-view), and the loop road runs between the pads and the water. Lakeview -> not waterfront.",
     "website": "https://www.cityofwayne.org/840/Prairie-Park\nhttps://secure.rec1.com/NE/wayne-ne/catalog",
-    "phone": "402-375-1733",
-    "note": "City of Wayne park opened 2025 on a reclaimed sewage-lagoon site; 17 full-service camper pads (electric/water/sewer) arrayed along a stocked 4-acre fishing lake with pier and kayak launch; large angled pull-in/back-in pads fit a 23-ft Class C and bigger rigs. Bathhouse with showers on site. Reservable online (City of Wayne Rec1 portal). --Claude",
+    "phone": "402-375-4803",
+    "note": "City of Wayne park opened 2025 on a reclaimed sewage-lagoon site at the SE edge of town, beside the Summer Sports Complex. The pull-through pads are angled in one row along the south side of a stocked fishing pond (the city calls it a four-acre lake; pier, kayak launch, walking trail around it), across the campground road from it. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -202152,44 +202187,77 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "count": 17
+      "count": 17,
+      "pull_through": true,
+      "note": "17 drive-through pads; 15 (Pad 01-11, 14-17) are listed for online booking."
     },
     "facilities": {
       "showers": true
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://secure.rec1.com/NE/wayne-ne/catalog",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "Book on the City of Wayne's Rec1 catalog (tab 'Prairie Park Campgrounds'); full payment at booking, fully refundable 7+ days before check-in. Up to 14 days in any 30. Check-in 4 pm, check-out 2 pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/NE/wayne-ne/catalog ('17 drive-through sites with full utility hookups, including water, sewer, and 50/30-amp service'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/NE/wayne-ne/catalog ('17 drive-through sites'; facility list Pad 01-11, 14-17) + https://www.cityofwayne.org/840/Prairie-Park ('17 full-service camper pads'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/NE/wayne-ne/catalog ('Bathroom and shower house'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://secure.rec1.com/NE/wayne-ne/catalog ('Bookings open 180 days in advance and require full payment at the time of booking. Cancellations are fully refundable if made at least seven days before check-in. Campers can reserve up to 14 days within a 30-day period.'; 'Check-in: 4:00 PM Check-out: 2:00 PM'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://secure.rec1.com/NE/wayne-ne/catalog (Prairie Park Campground facilities Pad 01-17: 'Day Rate' $35, '$35/Multi-Day', 2026 rate from 2026-04-01), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://secure.rec1.com/NE/wayne-ne/catalog ('Prairie Park is open from April 1st through October 31st each year'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "c50f38e99e853678",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 35,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Every pad $35 a night (2026)."
+    },
+    "season": {
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://www.cityofwayne.org/840/Prairie-Park ('Prairie Park was developed in 2025 and is located in the southeastern edge of Wayne. It features a four-acre lake that is stocked with more than 3,000 bass and bluegill ... includes a fishing pier and kayak launch'; 'bath/shower facilities ... and 17 full-service camper pads'; 'Phone: 402-375-1733'), read 2026-11-04 https://secure.rec1.com/NE/wayne-ne/catalog (City of Wayne / Wayne Community Activity Center booking catalog, tab 'Prairie Park Campgrounds': 'RV Pads: 17 drive-through sites with full utility hookups, including water, sewer, and 50/30-amp service'; 'Bathroom and shower house, picnic tables, and fire pits'; 'Bookings open 180 days in advance and require full payment at the time of booking'; 'Campers can reserve up to 14 days within a 30-day period'; 'Prairie Park is open from April 1st through October 31st each year'; 'Check-in: 4:00 PM Check-out: 2:00 PM'; 'Phone: 402-375-4803'; facility list Pad 01-11 and 14-17, each 'Day Rate' base_fee 35, '$35/Multi-Day', 2026 rate period from 2026-04-01), read 2026-11-04 Esri World Imagery at 42.2275,-97.0094 (500 m frame), 2026-11-04; OpenStreetMap (overpass.private.coffee, data to 2026-05-31) has no water mapped here yet",
+      "note": "Rec1 booking catalog confirms 17 drive-through full-hookup pads (50/30 A), shower house, 180-day booking, 14 days in 30, open April 1-October 31, $35 a night (2026); written. Waterfront: the city's own figure is a four-acre lake (imagery ~2-3 acres of water), under the 5-acre pond line, and the campground road runs between the pads and the shore: lakeview -> not waterfront (lead)."
     }
   },
   {
@@ -202439,11 +202507,11 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 41.811,-103.676: in-park RV loop, only a wet marsh/meadow to the south set back across a lot, no open-water frontage",
+    "waterfront_evidence": "p3-283 (2026-11-04): at the foot of Scotts Bluff; no water near. Stands.",
     "inclusion_evidence": "City of Gering page: 42 concrete RV pads with full hookups, open year-round, reservable via Campspot -> real municipal RV park",
     "website": "https://www.gering.org/locations/robidoux-rv-park\nhttps://www.campspot.com/book/robidoux-rv-park",
     "phone": "308-436-2046",
-    "note": "City of Gering RV park at the foot of Scotts Bluff National Monument, with concrete pads and a view of the monument.  Monthly stays are sold only from November 1 to March 31; the dump station is closed November 1 to May 1. --Claude",
+    "note": "City of Gering RV park at the foot of Scotts Bluff National Monument, with concrete pads and a view of the monument; multi-purpose room on site. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -202462,29 +202530,34 @@
     "facilities": {
       "showers": true,
       "laundry": true,
-      "dump": true
+      "dump": true,
+      "wifi": true,
+      "note": "Dump station closed November 1 to May 1."
     },
     "season": {
       "year_round": true
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/robidoux-rv-park",
+      "note": "Check-in 1 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "https://www.campspot.com/book/robidoux-rv-park (Campspot park record and RV site types' amenities: 30-Amp, 50-Amp, Sewer Hook-Up, Water Hook-Up), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.gering.org/locations/robidoux-rv-park ('42 concrete RV pads equipped with picnic tables and electrical, water, and sewer hookups'; rate classes Full Hook-Up (E/W/S) and Electric/Water), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gering.org/locations/robidoux-rv-park ('There are 42 sites ... Each campsite includes paved drives and patios'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gering.org/locations/robidoux-rv-park ('shower and laundry facilities'; 'Dump Station - $10 (Only applies to non-guests)', 'Dump station is closed November 1 - May 1'; 'Free Wireless Internet Access Available'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "season": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -202492,18 +202565,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gering.org/locations/robidoux-rv-park ('Make A Reservation' links to https://www.campspot.com/book/robidoux-rv-park; 'Check-in time is 1:00 p.m. and check-out time is 11:00 a.m.'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://www.gering.org/locations/robidoux-rv-park ('- Good Sam Discount'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/robidoux-rv-park (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.gering.org/locations/robidoux-rv-park (Robidoux RV Rates: Full Hook-Up (E/W/S) $46.00 daily, Electric/Water $41.00 daily, monthly '(Nov. 1 - March 31 Only)'; 'Prices do not include taxes or fees'), read 2026-11-04; fees itemized from the earlier Campspot read (2026-10-13)",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -202521,7 +202595,12 @@
       "currency": "USD",
       "reservation_fee": 3,
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (30/50 Amp RV Site-no sewer, OVERFLOW 30/50 Amp RV Site and 30/50 Amp FHU RV Site). October 2026: $41-46, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $3 'Booking Fee', once per stay. The park adds 3.5% of the site charge as a 'CC Fee'. The park adds 4% of the site charge as a 'City Occupancy Tax'. Read 2026-10-13."
+      "note": "Electric/water sites $41, full hookup $46 a night, before taxes and fees. On Campspot (read 2026-10-13) the park adds a $3 'Booking Fee' once per stay, 3.5% 'CC Fee' and 4% 'City Occupancy Tax'. Weekly and monthly rates posted; monthly only November 1 to March 31."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://www.gering.org/locations/robidoux-rv-park (City of Gering: '42 concrete RV pads equipped with picnic tables and electrical, water, and sewer hookups'; rates table 'Prices do not include taxes or fees' - Full Hook-Up (E/W/S) daily $46.00, weekly $276.00, monthly $644.00; Electric/Water $41.00 / $246.00 / $574.00; monthly column '(Nov. 1 - March 31 Only)'; Tent with E/W $17, dry tent $15; 'Dump Station is closed November 1 - May 1'; 'Free Wireless Internet Access Available', 'Good Sam Discount'; 'shower and laundry facilities'; 'Check-in time is 1:00 p.m. and check-out time is 11:00 a.m.'; 'Make A Reservation' -> https://www.campspot.com/book/robidoux-rv-park; 'the Robidoux RV office number is (308)436-2046'), read 2026-11-04 Esri World Imagery at 41.8112,-103.6762 (500 m frame), 2026-11-04",
+      "note": "City page confirms 42 concrete pads with water and sewer, $41 electric/water and $46 full hookup a night, showers, laundry, free Wi-Fi, a Good Sam discount, Campspot booking, office (308) 436-2046; monthly rates only November 1-March 31 (most of the year is nightly/weekly). Written. Not waterfront stands. Campspot API refused plain HTTP (403), so per-site lengths/amps stay as stored."
     }
   },
   {
@@ -202763,11 +202842,11 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.3000,-99.8953: comb RV loop in Arapahoe town park; only floodplain woods to the east, no water in or near the loop",
+    "waterfront_evidence": "p3-283 (2026-11-04): city park in Arapahoe; no water near. Stands.",
     "inclusion_evidence": "City of Arapahoe parks page + Campendium: 9 camper pads (7 W/E, 2 full-hookup), dump, showers, FCFS -> real municipal RV park",
     "website": "https://www.arapahoenebraska.com",
     "phone": "308-962-7445",
-    "note": "City of Arapahoe municipal RV park in South Park; 9 concrete pull-through pads, 7 with water+electric (30/50-amp) and 2 full-hookup, 2 ADA-accessible. Fits big rigs (34-ft reported). FCFS, no reservations; 10-night limit (longer by arrangement with city office). Dump station, restrooms with showers, free WiFi; walking trail with exercise stations, disc golf, playground. Adjacent to railroad tracks (train noise noted). $15-$20/night. --Claude",
+    "note": "City of Arapahoe RV park in South Park, with a walking trail, disc golf and a playground; the pads sit about 100 m north of the BNSF main line, so expect train noise. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -202780,18 +202859,16 @@
     },
     "sites": {
       "count": 9,
-      "max_rig_ft": 34,
       "pull_through": true
     },
     "facilities": {
       "showers": true,
-      "wifi": true,
       "dump": true
     },
     "booking": {
       "reservable": false,
       "fcfs": "always",
-      "max_stay_nights": 10
+      "note": "First come, first served; campers pay on the city's online form (site number, arrival date, length of stay)."
     },
     "provenance": {
       "hookups": {
@@ -202800,25 +202877,42 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "the stored 34 ft is a camper's reported rig on Campendium, not a posted limit; imagery shows long concrete pull-through lanes, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "WiFi rests only on aggregator listings; the city's pages are login-walled, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://otc.cdc.nicusa.com/Public2.aspx?portal=nebraska&organization=City+of+Arapahoe ('Campers to pre-pay online but campsites are first-come, first-serve'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://otc.cdc.nicusa.com/Public2.aspx?portal=nebraska&organization=City+of+Arapahoe (item 'South Park', unit price $15.00), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "1ab18526f3d81036",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 15,
+      "nightly_high": 15,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Pre-paid on the city's online payment form, which prices a 'South Park' night at $15.00 (plus a $0.37 portal fee); campers reported $20 in 2022-2023."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "http://www.ne.gov/go/arapahoe -> https://otc.cdc.nicusa.com/Public2.aspx?portal=nebraska&organization=City+of+Arapahoe (City of Arapahoe online payment portal: transaction item 'South Park', unit price '$ 15.00', fields Phone Number / Arrival Date / Length of Stay / camp site#, text 'Campers to pre-pay online but campsites are first-come, first-serve'; plus a $0.37 portal fee), read 2026-11-04 https://www.arapahoenebraska.com (city site: the Things to Do / Entertainment & Parks and Accommodations pages redirect to 'Attempted to access private content, log in as a user with access to continue'), read 2026-11-04 https://www.arapahoe-ne.com/about-the-city (Arapahoe Chamber: 'The city entities include: ... Arapahoe South Park'), read 2026-11-04 https://maps.campendium.com/us/arapahoe-ne/nature/arapahoe-south-park-campground (aggregator: 9 sites, 30/50 A full hookups, max stay 10, no reservations, pay online at ne.gov/go/arapahoe; $20 reported 4/21/23, $15 reported 6/26/21; train noise), read 2026-11-04 Google Maps panel 'Arapahoe South Park RV Park', 505 Oak St, 4.6 (65 reviews), no phone listed, read 2026-11-04 Esri World Imagery at 40.30002,-99.89531 (300 m), 2026-11-04",
+      "note": "City payment portal confirms the park (item 'South Park'), $15.00 a night pre-paid online, first come first served; written. The city's own pages are login-walled, so hookups, count, showers and dump rest on aggregators (kept as stored, flagged); the reported-rig 34 ft, aggregator-only 10-night limit and WiFi cleared. Not waterfront confirmed. Pin OK at the entrance (~60 m from pads)."
     }
   },
   {
@@ -202829,12 +202923,12 @@
     "elevation_meters": 290.0,
     "state": "NE",
     "ownership": "local",
-    "waterfront": "lakeview",
-    "waterfront_evidence": "satellite at 40.070,-95.613 + Falls City operator page (water/elec/sewer hookups): paved RV lot along Stanton Lake east shore, set back ~25-40m across grass with scattered shoreline trees, water visible -> lakeview not lakefront",
+    "waterfront": "not waterfront",
+    "waterfront_evidence": "p3-283 (2026-11-04): Stanton Lake is ~4.6 acres on imagery, under the ~5-acre line (no pond-view), and the pads are 100-200 m from it behind trees. Lakeview -> not waterfront.",
     "inclusion_evidence": "Good Sam/Campendium + Falls City: 11 full-hookup paved sites (30/50-amp), bath house, dump, reserve via city office -> real RV campground",
-    "website": "https://www.fallscitynebraska.org/news/p/item/20505/stanton-lake-park",
+    "website": "https://www.fallscitynebraska.org/parks-and-recreation/parks",
     "phone": "402-245-2851",
-    "note": "City of Falls City park on the NW edge of town. ~11 full-hookup RV spots (30/50 amp, water, sewer); some sources count up to 15 with a mix of full-hookup and electric/water sites. Paved loop; big-rig friendly - reviewers parked 36-37 ft rigs. Bath house with showers, dump available. Reservable via the city office (402-245-2851) or the city's online Parks & Rec portal, not FCFS. ~$30/night camper, $5 tent. Fishing lake, walking path, disc golf, dog park, volleyball, playground. Active rail line nearby - reviewers note trains at night. --Claude",
+    "note": "City of Falls City park on West 25th Street at the NW edge of town, next to the Itha-Krumme Arboretum: a small fishing lake with a walking trail, disc golf, dog park and playground. An active rail line runs along the west side. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -202846,43 +202940,62 @@
       "sewer": true
     },
     "sites": {
-      "max_rig_ft": 37
+      "count": 11,
+      "pull_through": true,
+      "note": "8 back-in and 3 pull-through full-hookup sites."
     },
     "facilities": {
-      "showers": true,
-      "dump": true
+      "showers": true
     },
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "fcfs": "never"
+      "url": "https://fcpr.recdesk.com/Community/Facility?type=4",
+      "note": "Reserve a numbered site online on the city's RecDesk portal or by calling the city office."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fallscitynebraska.org/parks-and-recreation/parks ('Eleven full hook-up camper spots that include water, electricity (30 & 50 amp), and sewer'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fcpr.recdesk.com/Community/Facility?type=4 (sites 1-8 Back-In, 9-11 Pull-Thru) + https://www.fallscitynebraska.org/parks-and-recreation/parks ('Eleven full hook-up camper spots'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fallscitynebraska.org/parks-and-recreation/parks ('a bath house'; no dump station listed), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fallscitynebraska.org/parks-and-recreation/parks ('call the City office at 402.245.2851 or reserve online') + https://fcpr.recdesk.com/Community/Facility?type=4, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.fallscitynebraska.org/parks-and-recreation/parks ('Campers are $30.00 per day'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "08eeb044207639de",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Campers $30 a day; tents $5."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://www.fallscitynebraska.org/parks-and-recreation/parks ('Stanton Lake Park - West 25th Street: Eleven full hook-up camper spots that include water, electricity (30 & 50 amp), and sewer; also features a bath house, lake fishing, picnic areas, sandlot volleyball courts, disc golf, dog park, walking trail and a playground area ... Tents are $5.00 per day. Campers are $30.00 per day. For hookup reservations and information, call the City office at 402.245.2851 or reserve online through our Parks, Culture and Recreation website link.'; button 'Reserve a Camper/RV Site' -> https://fcpr.recdesk.com/Community/Facility?type=4), read 2026-11-04 https://fcpr.recdesk.com/Community/Facility?type=4 (City of Falls City RecDesk, 'Campsites' 11: 'Camper/RV Site 1 (Back-In) - Stanton Lake' through 8 back-in, sites 9, 10, 11 '(Pull-Thru)', each with Reserve), read 2026-11-04 https://www.fallscitynebraska.org/news/p/item/20505/stanton-lake-park (2016 city news item: 'trailer hookups for water, electricity, and sewer ... a bath house'), read 2026-11-04 Esri World Imagery at 40.0710,-95.6150 (360 m; pond pixel count ~18,700 m2 = 4.6 acres, ~96 x 245 m) and 40.0700,-95.6130 (260 m), 2026-11-04 Google Maps panel 'Stanton Lake Park' 4.6 (243 reviews), phone +1 402-245-2851, read 2026-11-04",
+      "note": "City parks page confirms 11 full-hookup sites (30/50 A), a bath house, $30 a day ($5 tents), and booking by phone or online. The city's RecDesk portal lists 11 bookable sites: 8 back-in, 3 pull-through. Waterfront lakeview -> not waterfront: the lake is ~4.6 acres on imagery, under the 5-acre line, and the pads sit 100-200 m east behind trees and the shelter. Pin OK (~120 m). The phone is confirmed. Cleared max_rig 37 (reviewers' rigs), dump (not on the city's list) and fcfs 'never' (unstated)."
     }
   },
   {
@@ -202954,22 +203067,20 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.8732,-98.0028 (leaf-off, legible): wooded city park loop with ballfields in Aurora; no lake or river at the sites",
+    "waterfront_evidence": "p3-283 (2026-11-04): wooded city park four blocks from downtown Aurora; no water near. Stands.",
     "inclusion_evidence": "Campendium/Good Sam: 18 gravel sites w/ 30-amp electric + water (rigs to 35 ft), free dump, FCFS donation -> real municipal RV campground",
     "website": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/",
     "phone": "402-694-2992",
-    "note": "City of Aurora municipal campground in wooded Streeter Park, ~4 blocks from downtown. ~10-12 level back-in sites (some lists say 18) with 30-amp electric and water; free dump station; free water. FREE camping, donations requested via box at the shelter near the entrance. FCFS, no reservations; 4-night max stay. Showers are in the adjacent city pool building (seasonal). Most sites suit small-to-medium rigs; a 23-ft Class C fits easily and a few sites reportedly take rigs up to ~35 ft. A creek and walking paths run through the park but sites do not front water. Open year-round. Trains pass nearby at night. --Claude",
+    "note": "City of Aurora campground on a wooded drive in Streeter Park, about four blocks from downtown, beside the aquatic center, tennis courts and ballfields. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 30,
       "water": true
     },
     "facilities": {
-      "showers": true,
       "potable_water": true,
       "dump": true
     },
@@ -202983,29 +203094,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/ ('FREE electrical hookups', 'FREE water'; no amperage stated), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/ ('FREE water', 'FREE waste water dumpsite'; no showers listed for the campground), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/ ('available year round to the public'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/ ('First-come, first-serve basis'; 'Four nights per stay'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/ ('FREE Camping, donations requested'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -203015,7 +203126,15 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Free; donations requested (drop box under the shelter at the campground entrance)."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://aurorane.gov/departments/parks-and-recreation/streeter-park/ (also served at https://cityofaurora.org/departments/parks-and-recreation/streeter-park/): 'Campgrounds: The Streeter Park campgrounds are conveniently located near downtown Aurora and are available year round to the public. 1. First-come, first-serve basis. 2. Four nights per stay. 3. FREE Camping, donations requested. 4. Donation drop box located under the shelter at campground entrance. 5. FREE electrical hookups 6. FREE water 7. FREE waste water dumpsite'; the Aquatic Facility 'is open during the summer months from approximately Memorial Day (end of May) up to the start of the school year in August', read 2026-11-04 Google Maps panel 'Streeter Park Campground', 1225 Q St, 4.7 (165 reviews), read 2026-11-04 Esri World Imagery at 40.8731,-98.0024 (320 m), 2026-11-04",
+      "note": "City page (aurorane.gov, mirrored at cityofaurora.org) confirms: free with donations, first come first served, 4 nights per stay, year round, free electric, water and dump; written as manual. Electric 30 A cleared because the city gives no amperage; showers cleared because the city lists none for the campground. Not waterfront stands. Pin OK at the campground entrance. Presence: Google 4.7 (165 reviews)."
     }
   },
   {
@@ -203099,11 +203218,11 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 42.6803,-102.6924: comb RV loop in Hay Springs city park beside ballfields/woods; no water body",
+    "waterfront_evidence": "p3-283 (2026-11-04): city park beside the pool in Hay Springs; no water near. Stands.",
     "inclusion_evidence": "RoverPass/RVparky + RV Life: city-owned unstaffed RV park, ~15 full-hookup 30/50A pull-through/back-in sites, drop-box payment",
     "website": "",
     "phone": "308-638-7275",
-    "note": "City of Hay Springs municipal RV park (formerly Hay Springs City Park), on S. Post St across from City Hall. ~10 sites with full hookups (electric/water/sewer). FCFS, no reservable sites; honor-system payment. ~$25/night or $450/month. Close to city park, pool, ball fields. --Claude",
+    "note": "City of Hay Springs RV park (formerly Hay Springs City Park) on S. Post St, across from City Hall, next to the city pool and ball field; self check-in with honor-system payment. Reported $25 a night or $450 a month (county tourism listing, undated). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -203141,6 +203260,11 @@
       "sig": "f82f63fd039190ad",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "Google Maps panel 'Sunset RV Park', 201 S Post St, Hay Springs, 4.0 (13 reviews), phone +1 308-638-7275, no website, read 2026-11-04 https://www.visitsheridancounty.com/?p=850 (Sheridan County tourism listing 'Sunset RV Park'): refused ('Not Acceptable! ... Mod_Security', HTTP 406) to plain HTTP and to the headless browser, so it stayed unread; a web-search summary of it gave '10 full-hookup spaces', '$25.00 per night or $450.00 per month' and 'contact the city office', undated, 2026-11-04 Web search 2026-11-04: no City of Hay Springs website found; aggregators only (Campendium: city run, self check-in, honor system, $25 reported 2023, no reservations) Esri World Imagery at 42.6803,-102.6925 (260 m), 2026-11-04",
+      "note": "No operator page exists. The city has no website I could find, and the Sheridan County tourism listing (the only official-ish page) blocks bots with a 406 error. So nothing could be confirmed or written. Google confirms the place and phone (308-638-7275, the city office; 4.0, 13 reviews). Imagery shows ~8-10 angled pads beside the pool, with no residential look. Pin OK. Not waterfront."
     }
   },
   {
@@ -203152,66 +203276,68 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 41.4044,-99.6486: herringbone RV pads in Broken Bow park set back ~60-100m across a road/grass from a narrow grass-lined creek (Mud Creek); beyond bound, minor channel",
+    "waterfront_evidence": "p3-283 (2026-11-04): Mud Creek, a ditch-scale channel, is ~60 m south. Stands.",
     "inclusion_evidence": "Campgroundviews/Campendium + city of Broken Bow: municipal full-hookup RV park, ~16-20 pull-through sites, showers/dump, reserve by phone",
     "website": "https://cityofbrokenbow.org/parks-and-recreation/",
     "phone": "308-872-1249",
-    "note": "City of Broken Bow municipal RV park (Streets/Parks dept); the two RV Life 'Tomahawk City/Municipal Park' listings are the same place. ~25 full-hookup sites (30/50-amp electric, water, sewer); mostly level pull-throughs on gravel with some concrete pads, big-rig friendly (to ~50 ft). Dump station, showers/restrooms on site. Reservable by phone; ~$20/night, monthly rates available. Open all year. Separate from Melham Park's fishing lake. --Claude",
+    "note": "City of Broken Bow RV park in Tomahawk Park on the west side of town, a block north of Highway 2 at 15th Street, beside ballfields and tennis courts; the main line runs just north of the park. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50,
       "water": true,
       "sewer": true
     },
     "sites": {
       "count": 25,
-      "max_rig_ft": 50,
       "pull_through": true
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true
     },
     "season": {
       "year_round": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/cityofbrokenbow-tomahawk-rv-park",
+      "note": "Book on Campspot, or call or text the city."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofbrokenbow.org/parks-and-recreation/ ('Includes water, electricity, and sewer'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofbrokenbow.org/parks-and-recreation/ (no length limit stated; the stored 50 ft came from aggregator-sourced note prose), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofbrokenbow.org/parks-and-recreation/ ('Showers', 'Restrooms', 'Dump station for RV's'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofbrokenbow.org/parks-and-recreation/ ('popular spot all year round'; monthly rates for October-March), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofbrokenbow.org/parks-and-recreation/ ('Campsite Reservations' link; 'To Make an RV park Reservation or to check availability call or text') + https://www.campspot.com/book/cityofbrokenbow-tomahawk-rv-park, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://cityofbrokenbow.org/parks-and-recreation/ (audit/price_research/local_ne_2026-10-15/ne_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://cityofbrokenbow.org/parks-and-recreation/ ('Tomahawk RV Park Rates: $35/day'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -203224,7 +203350,12 @@
       "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of Broken Bow: $35 a day. Read 2026-10-15."
+      "note": "$35 a day with water, electric and sewer; monthly $750 April-September, $600 October-March."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://cityofbrokenbow.org/parks-and-recreation/ ('Tomahawk Park: Located one block North of the intersection of Highway 2 and 15th Street on the west side of Broken Bow, this park is popular spot all year round ... RV hook-ups, Showers, Restrooms, Dump station for RV's'; 'Tomahawk RV Park Rates: $35/day; April 1 to September 30: $750/month, October 1 to March 31: $600/month; Includes water, electricity, and sewer'; 'To make RV Park reservations call 308-872-1249'; 'To Make an RV park Reservation or to check availability call or text: Regular Business Hours: (308) 872-1249 After Hours: (308) 870-3421'; header link 'Campsite Reservations' -> https://www.campspot.com/book/cityofbrokenbow-tomahawk-rv-park; the linked 'RV Park Usage Policies' PDF returns 404), read 2026-11-04 https://www.campspot.com/book/cityofbrokenbow-tomahawk-rv-park ('City of Broken Bow, a(n) NE Government Entity, d/b/a City of Broken Bow - Tomahawk RV Park', 1620 South B Street, Phone (308) 872-1249; search for 6/15-6/16/2027: 'All Sites 21 / RV Sites 21', 'no sites available matching your current search'), read 2026-11-04 Esri World Imagery at 41.40435,-99.64855 (360 m), 2026-11-04",
+      "note": "City page confirms $35/day (monthly $750 in summer, $600 in winter), water/electric/sewer, showers, restrooms and dump, and year-round use; written. Booking is now Campspot (21 RV sites listed; city-run), not phone only: platform phone -> campspot. Pin OK at the entrance. Not waterfront stands. Electric amperage and max_rig 50 cleared (aggregator only); count 25 left vs Campspot's 21."
     }
   },
   {
@@ -205925,11 +206056,11 @@
     "state": "NE",
     "ownership": "local",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.1639,-97.5826: town-park sites by ballfields; Little Blue River is a wooded corridor ~250m south, tree-screened",
+    "waterfront_evidence": "p3-283 (2026-11-04): the Little Blue River is 142-237 m from the pads. Stands.",
     "inclusion_evidence": "City of Hebron hebronnebraska.us/293: 15 50amp utility hookups + 10 cement + 6 grass camper pads, $25/night updated 3/2025 -> real RV campground",
     "website": "https://www.hebronnebraska.us/293/Riverside-Park",
     "phone": "402-768-6322",
-    "note": "City of Hebron municipal park. 15 utility hookup sites (50-amp; 10 cement pads + 6 grass pads), water, restrooms/showers, dump station at south end, picnic shelter. $25/night (3/2025), 2-week stay limit. Reservations by phone (402-768-6322); some directories list it as FCFS. Near the Little Blue River and Hebron Sports & Rec complex. --Claude",
+    "note": "City of Hebron municipal park at Euclid Ave and 7th St: a shaded strip of pads between the ballfields and a hay meadow, near the pool and the Hebron Sports & Rec complex. The Little Blue River is ~150 m south beyond a wooded bottom, not in view; a walking trail follows it. Picnic shelter. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -205940,7 +206071,8 @@
       "water": true
     },
     "sites": {
-      "count": 15
+      "count": 15,
+      "note": "15 hookups; 10 cement pads with picnic tables and awnings, 6 grass pads."
     },
     "facilities": {
       "showers": true,
@@ -205953,28 +206085,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hebronnebraska.us/293/Riverside-Park ('15 - 50 amp Utility Camper Hookups'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hebronnebraska.us/293/Riverside-Park ('15 - 50 amp Utility Camper Hookups', '10 Cement Pads', '6 Grass Pads'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hebronnebraska.us/293/Riverside-Park ('Restrooms with Showers'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hebronnebraska.us/293/Riverside-Park ('CALL 402-768-6322 for RESERVATIONS'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hebronnebraska.us/293/Riverside-Park (audit/price_research/local_ne_2026-10-15/ne_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.hebronnebraska.us/293/Riverside-Park ('NEW PRICES as of 3/3/25-$25.00 for Motor Homes and Campers'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -205987,7 +206120,12 @@
       "nightly_high": 25,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of Hebron (prices as of 3/3/25): motor homes and campers $25. Read 2026-10-15."
+      "note": "Motor homes and campers $25 a night (city prices as of 3/3/25)."
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://www.hebronnebraska.us/293/Riverside-Park (City of Hebron: 'NEW PRICES as of 3/3/25-$25.00 for Motor Homes and Campers'; '15 - 50 amp Utility Camper Hookups', '10 Cement Pads', '6 Grass Pads', 'Cement Pads with Picnic Tables and Awnings', 'Restrooms with Showers', 'Fabulous view of the Ballpark', 'Walking Trail along Little Blue River'; 'CALL 402-768-6322 for RESERVATIONS'), read 2026-11-04 OpenStreetMap via overpass.private.coffee (Little Blue River way 192278136), read 2026-11-04 Esri World Imagery at 40.16385,-97.58258 (400 m frame) and 40.1615,-97.5815 (800 m frame), 2026-11-04",
+      "note": "City page confirms $25 a night (prices as of 3/3/25), 15 50-amp hookups on 10 cement and 6 grass pads, restrooms with showers, reservations by phone at 402-768-6322; written. Not waterfront confirmed: the pads sit ~140-240 m from the Little Blue behind a wooded bottom. Page silent on dump, water at the site and the 2-week limit (left as stored)."
     }
   },
   {
@@ -205998,12 +206136,12 @@
     "elevation_meters": 332.0,
     "state": "NE",
     "ownership": "local",
-    "waterfront": "riverfront",
-    "waterfront_evidence": "satellite at 42.4858,-96.4008: north fishbone loop pads back onto open grass bank to the Missouri River, ~30-50m, no treeline screen",
+    "waterfront": "riverview",
+    "waterfront_evidence": "p3-283 (2026-11-04): the loop roads run between the river-side pads (9-21, 105-117) and the bank, across a 30-60 m strip with riprap, open to the Missouri. Riverfront -> riverview.",
     "inclusion_evidence": "City of South Sioux City page + VisitNebraska/Good Sam: 135 RV sites electric to full-hookup with pull-throughs along Missouri River, reserve by phone 402-494-7531 -> real city RV campground",
     "website": "https://www.southsiouxcity.org/department/division.php?structureid=54",
     "phone": "402-494-7531",
-    "note": "City-owned (South Sioux City) year-round campground in a 133-acre riverfront park along the Missouri River, across from Sioux City IA. ~135 RV sites from electric to full-hookup, pull-throughs available, plus cabins/tent sites. Full park amenities (pool, YMCA, trails, ballfields). Reserve by phone, no online booking. --Claude",
+    "note": "City-owned (South Sioux City) campground in a 133-acre park on the Missouri River across from Sioux City IA; the park has the YMCA, a pool, ballfields and riverside trails. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -206011,7 +206149,8 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "note": "Electric-only, electric and water, and full-hookup sites."
     },
     "sites": {
       "count": 135,
@@ -206022,32 +206161,39 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Online reservations are not accepted; call the campground. 48 hours' notice to cancel."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.southsiouxcity.org/department/division.php?structureid=54 (rate list) + campground map legend, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.southsiouxcity.org/department/division.php?structureid=54 ('135 R.V. sites'; 'including pull through') + campground map (sites 1-135), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.southsiouxcity.org/department/division.php?structureid=54 ('a full service, year around campground'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.southsiouxcity.org/department/division.php?structureid=54 ('Online reservations are NOT accepted, please call 402-494-7531'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.southsiouxcity.org/department/division.php?structureid=54 (audit/price_research/local_ne_2026-10-15/ne_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.southsiouxcity.org/department/division.php?structureid=54, read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.southsiouxcity.org/egov/images/1741209540_16762_o.jpg (map: 'Rest Rooms' R/R buildings, 'Dump Station'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -206060,7 +206206,16 @@
       "nightly_high": 37,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of South Sioux City: electric $28 a day, with water $30, full hookup $33, pull-through $37. Read 2026-10-15."
+      "note": "Electric $28 a day, with water $30, full hookup $33, full-hookup pull-through $37; weekly is six nights' price (7th night free). Monthly sites $750 (limited)."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://www.southsiouxcity.org/department/division.php?structureid=54 ('Our campground is a full service, year around campground ... Scenic Park Campground offers 135 R.V. sites. We are located along the Missouri River in a 133-acre park'; 'spacious sites available that offer everything from electric to full service including pull through'; 'Online reservations are NOT accepted, please call 402-494-7531 to make a reservation'; 'Electric - $28.00 a day $168.00 weekly / Electric, Water, - $30.00 a day $180.00 weekly / Electric, Water, Sewer, - $33.00 a day $198.00 weekly / Pull-Thru -$37.00 a day $222.00 weekly / Monthly Sites - $750.00 per month (Limited Site Availability)'; 'Pay for 6 days at once, receive the 7th day free'; 'requires 48 hour notice of cancellation'; 'GPS Coordinates 42.483483 N 96.404772 W'; Business (402) 494-7531), read 2026-11-04 https://www.southsiouxcity.org/egov/images/1741209540_16762_o.jpg (campground map linked from that page: sites 1-135, legend Electric Only / Electric & Water Only / Full Hook Up Back In / Full Hook Up Pull Thru, Dump Station, Rest Rooms, Storm Shelter; the river-side rows 9-21 and 105-117 sit inside loop roads that run between them and the Missouri River, with a bike trail along the bank on the east loop), read 2026-11-04 Esri World Imagery at 42.4830,-96.4030 (700 m) and 42.4855,-96.4010 (320 m), 2026-11-04",
+      "note": "City page confirms 135 sites (electric to full hookup, pull-throughs), year-round, phone-only booking, 2026 rates $28-37 a day (unchanged), weekly/monthly terms; map confirms rest rooms and dump. Waterfront riverfront -> riverview: every river-side pad sits inside a campground loop road that runs between it and the bank. Pin OK (~185 m S of the centre, at the entrance); phone confirmed."
     }
   },
   {
@@ -1055282,6 +1055437,69 @@
       "checked": "2026-11-04",
       "sources": "ReserveAmerica parkId 230143 loop and site pages; Esri World Imagery + NAIP",
       "note": "Split from 2729 in p3-282."
+    }
+  },
+  {
+    "id": 15605,
+    "kind": "campground",
+    "name": "Fred Penn Park",
+    "location": "42.126,-98.0361",
+    "elevation_meters": 527,
+    "state": "NE",
+    "ownership": "local",
+    "waterfront": "lakeview",
+    "waterfront_evidence": "p3-283 (2026-11-04): Esri World Imagery and USGS NAIP, 2026-11-04. The RV row at about 42.1260,-98.0361 sits ~60 m east of a ~9-acre sandpit lake (a pixel count puts it at 8.9 acres, above the pond threshold). Open mown grass lies between, but the park's own gravel access road runs along the west side of the row, so it can't be frontage: lakeview. The Elkhorn River is ~80 m south, beyond a dirt track, a berm and trees, so no river value. The small ponds by the Google pin (42.12512,-98.03902) are ~400 m WSW and under 5 acres. --Claude",
+    "inclusion_evidence": "p3-283 (2026-11-04): https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping, read 2026-11-04 (City of Neligh, maintained by the Neligh Economic Development Office): 'Fred Penn Park Camping ... RV Camping Pads $20 per day | First-come, first-served Includes: Electric and water hookups, Wi-Fi availability'; tent camping $5 per day with 'Access to electricity, Tornado shelter bath house'; 'For additional information, please call (402) 887-4066.' Imagery (Esri + NAIP, 2026-11-04) shows a row of ~8 travel trailers and motorhomes on a gravel drive. It is a drive-in, open site where a 23-ft rig fits. Google Maps lists 'Fred Penn Park' (5.0, 1 review). --Claude",
+    "website": "https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping",
+    "phone": "402-887-4066",
+    "note": "City of Neligh camping area in Fred Penn Park on the west edge of town, between a sandpit lake and the Elkhorn River, with fishing nearby and a tornado-shelter bath house. --Claude",
+    "provenance": {
+      "fees": {
+        "source": "https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping ('RV Camping Pads $20 per day'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping ('Electric and water hookups'; no amperage stated), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping ('Wi-Fi availability'; 'Tornado shelter bath house'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping ('First-come, first-served'), read 2026-11-04",
+        "checked": "2026-11-04",
+        "method": "manual"
+      }
+    },
+    "fees": {
+      "nightly_low": 20,
+      "nightly_high": 20,
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "hookups": {
+      "water": true
+    },
+    "facilities": {
+      "wifi": true
+    },
+    "booking": {
+      "reservable": false,
+      "fcfs": "always"
+    },
+    "verify_scan": {
+      "checked": "2026-11-04",
+      "sources": "https://www.neligh.org/vnews/display.v/SEC/Visit%7CCamping; Esri World Imagery + USGS NAIP; Google Maps",
+      "note": "Added in p3-283 (lead from p3-282). Pin on the RV row seen on imagery; site count, amperage, sewer, dump and season unstated."
+    },
+    "note_scan": {
+      "sig": "de11abe9bc3e10cf",
+      "checked": "2026-11-04",
+      "model": "claude-opus-5"
     }
   }
 ]

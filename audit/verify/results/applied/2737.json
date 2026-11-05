@@ -1,0 +1,52 @@
+{
+  "id": 2737,
+  "checked": "2026-11-04",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=233962 ('Status: Open year round'; Booking Window Basic and Electric Plus 'Fri Nov 06 2026 - Mon May 03 2027 Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance'; 'a 2,845-acre lake and 4,721 land acres'; 'three ramps and three boat docks'; 'Facilities include: picnic tables, shelters, water, dump station, modern restrooms, vault toilets, boat ramps, fish cleaning stations, coin-operated showers and concession. Cabin rental and RV camping pads are available through the local concessionaire.'; loops East Ridge, Middle Ridge, West Ridge; GPS 41.28526,-98.89972; Information (308)745-0230), read 2026-11-04",
+    "ReserveAmerica loop search + campsiteDetails, parkId 233962: West Ridge 29 sites (001-013, 028, 030-035, 053-061) 'Electric Plus', 'Electric Hookup available: 50 amp', 'Full Hookup - no', 'Near Water - no', back-in, 60 ft (two 50 ft), gravel (two paved), with GIS points; Middle Ridge 4 and East Ridge 4 'Basic' back-in sites, 'Near Water - no', no length or GIS point, read 2026-11-04",
+    "ReserveAmerica site calendars for West Ridge 002 and East Ridge 007, nights from 11/17/2026 and 4/13/2027: every night 'W' = 'First Come, First Served Availability', read 2026-11-04",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (row 'Sherman Reservoir SRA* SW 308-745-0230': Electric Plus, Basic and Primitive marked)",
+    "Esri World Imagery at 41.2893,-98.8972 (500 m, with the 29 West Ridge GIS points), 41.2955,-98.8955 (900 m) and 41.2950,-98.8900 (3 km), 2026-11-04",
+    "audit/dam_screen/flags.json (stored pin 14 m from the reservoir pool)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ReserveAmerica campsiteDetails, parkId 233962 (all 29 West Ridge sites 'Electric Hookup available: 50 amp'), read 2026-11-04",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 60, "pull_through": false, "note": "West Ridge: 29 back-in 50 A pads, 50-60 ft, mostly gravel. Middle Ridge and East Ridge: 4 basic back-in sites each. Primitive camping around the lake besides."},
+      "source": "ReserveAmerica loop list + campsiteDetails, parkId 233962, read 2026-11-04",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "showers": true, "potable_water": true, "dump": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=233962 ('water, dump station, modern restrooms, vault toilets ... coin-operated showers'), read 2026-11-04",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=233962 ('Status: Open year round'), read 2026-11-04",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": null, "fcfs": "always", "note": "The sites are listed on ReserveAmerica, but every night shown is first-come, first-served."},
+      "source": "ReserveAmerica site calendars, parkId 233962 (West Ridge 002, East Ridge 007: every night 'W' = 'First Come, First Served Availability', November 2026 and April 2027), read 2026-11-04",
+      "method": "manual"
+    }
+  },
+  "note": "NGPC recreation area on 2,845-acre Sherman Reservoir NE of Loup City: the West Ridge electric campground sits on a ridge south of the lake, with small Middle and East Ridge basic loops and primitive camping along the shore; three boat ramps and a marina. Park entry permit required. --Claude",
+  "summary": "RA confirms year-round operation; West Ridge has 29 back-in 50 A Electric Plus pads of 50-60 ft and Middle and East Ridge have 4 basic sites each. All sites are first-come, first-served: every RA night shows 'W' (the stored fcfs always is confirmed). Facilities were confirmed from RA and written. The pin sits on a lakeshore point by a boat ramp, 632 m north of the pad campground. Scoped to West Ridge, the waterfront call goes lakefront -> not waterfront ('Near Water - no' on every site). The phone (308) 745-0230 was found. Fees are left as stored.",
+  "flags": [
+    "PIN (632 m): the stored pin 41.29500,-98.89740 is on the tip of a lakeshore point (a road and parking by the water, 14 m from the pool), not at a campground. The 29 West Ridge GIS points centre at 41.28932,-98.89723. Suggest 41.2893,-98.8972. RA's own park GPS is 41.28526,-98.89972, near the park road ~450 m south of West Ridge.",
+    "WATERFRONT lakefront -> not waterfront (scoped to the pad campground): RA tags every West Ridge, Middle Ridge and East Ridge site 'Near Water - no'. On imagery West Ridge is an open grassed ridge-top; the nearest water is a narrow (~30 m) cove arm 150-250 m NE, behind a wooded draw and out of sight of the pads. The stored lakefront fits only the primitive non-pad camping on the shore, which is not bookable, has no pads and is not on RA. Imagery shows vehicles on grass above an exposed sandy drawdown beach on the east peninsula (41.2975,-98.8930); I could not tell whether that camping involves driving on sand. If AWH wants the entry to stand for the primitive shore, lakefront could return, but the sand question would then need checking under the 2026-11-04 rule.",
+    "SPLIT check: only West Ridge has GIS points. Middle Ridge (4 basic) and East Ridge (4 basic) have no coordinates on RA and are not visible as separate signed loops at any imagery scale I read. Their distance from West Ridge is unknown (Overpass was down), so I cannot call a split. The primitive shore areas lie 0.5-1.5 km from West Ridge along separate park roads, but they are non-pad camping, not campgrounds. No split proposed.",
+    "PHONE missing -> (308) 745-0230 (RA 'Information' and the NGPC grid row). apply.py does not write phone.",
+    "BOOKING confirmed FCFS: RA shows Basic and Electric Plus booking windows ('up to 180 Day(s) in advance'), yet every night on the West Ridge and East Ridge calendars reads 'W' (First Come, First Served Availability). Written as manual, reservable false, fcfs always. RA's description also says 'RV camping pads are available through the local concessionaire'; this is older text and no concessionaire booking channel was found.",
+    "FEES left as stored (10/15 + electric 15, grid 2025). RA calendars are all FCFS, so they give no quote. The 8 Basic sites are the cheapest a 23-ft rig fits; their length is not posted.",
+    "SITE COUNT: the old note's '61 electric pads (30/50-amp)' is contradicted. RA has 29 electric sites, numbered up to 061. sites.count was left unset because the primitive shore camping is uncounted.",
+    "WEBSITE: outdoornebraska.gov not read (blocked); the RA link works.",
+    "NOTE CLEANED: dropped the pad count, amps, rig length, '300+ primitive', facilities, FCFS and 'four boat ramps' (RA: three), all now in fields or contradicted."
+  ]
+}
