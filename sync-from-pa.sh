@@ -199,6 +199,8 @@ if [ $DO_DATA -eq 1 ]; then
   # trips.json by backfill_place_context.py and is likewise per-host — without
   # these excludes a --delete sync wipes whichever ones this machine built and
   # PA happens not to have, which is exactly what happened the first time.
+  # forecast_cache.sqlite is the Weather Finder's shared forecast cache: an hour
+  # of Open-Meteo answers, worthless anywhere but the host that fetched them.
   #
   # day_rollups.json used to be excluded here, and that inverted on 2026-09-11.
   # It was written only on whichever host held the API key — never PA — so a
@@ -209,7 +211,7 @@ if [ $DO_DATA -eq 1 ]; then
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/' \
     --exclude 'models/' --exclude 'geonames/' --exclude 'place_context.json' \
-    --exclude '*.corrupt-*' --exclude '*.tmp'
+    --exclude '*.corrupt-*' --exclude '*.tmp' --exclude 'forecast_cache.sqlite*'
 
 fi
 
