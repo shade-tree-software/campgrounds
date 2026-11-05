@@ -1,0 +1,36 @@
+{
+  "id": 2745,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://outdoornebraska.gov/location/verdon/ via its Wayback capture https://web.archive.org/web/20260818210943/https://outdoornebraska.gov/location/verdon/ (outdoornebraska.gov itself is blocked to this pass), read 2026-11-05: 'Verdon State Recreation Area offers a 45-acre lake and 30 acres of land ... the spring-fed lake'; 'Only electric-motor and non-powered boating is permitted at Verdon. No docks or ramps are available.'; 'Verdon offers 20 Basic campsites in its shady campground. Primitive restrooms are available.'; 'All campsites at Verdon SRA are first-come, first-served. Campers must register their nightly camping fees in a raised, locked box called an Iron Ranger. Self-service envelopes are provided at each station and accept cash or checks only.'; contact 64530 712 Rd., Verdon, 402-883-2575",
+    "NGPC campsite inventory layer Camping_Facility_Basic_ONLY (https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Camping_Facility_Basic_ONLY/FeatureServer/8), read 2026-11-05: 'Verdon SRA Campground' sites 1-20, all Reservable 'No', no pad length given; sites 1-15 along the west shore (40.14895,-95.72747 to 40.14579,-95.72569), sites 16-20 along the east bank (40.14647,-95.72176 to 40.14817,-95.72244)",
+    "NGPC 2025 camping rates grid (audit/state_park_fees/ne_camping_rates_grid_2025.pdf): Verdon Lake row, 402-883-2575; NGPC Parks_Locations: Verdon SRA Active, NGPC-managed",
+    "Esri World Imagery at 40.1472,-95.7247 (330 m half) and 40.1472,-95.7268 (110 m half) with the 20 NGPC site points overlaid, plus a NAIP near-infrared water mask, 2026-11-05: on the west shore, sites 9-15 lie on a grass strip between the gravel campground road and the lake, ~10-25 m from the water; at 13-15 the strip runs to the shoreline with only scattered trees, and at 7-12 a fringe of trees lines the shore. Sites 16-20 are on the land side of the east-bank road. The stored pin is on the paved county road south of the park"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 20},
+      "source": "https://web.archive.org/web/20260818210943/https://outdoornebraska.gov/location/verdon/ ('Verdon offers 20 Basic campsites in its shady campground') and NGPC's Camping_Facility_Basic_ONLY layer (sites 1-20), read 2026-11-05",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://web.archive.org/web/20260818210943/https://outdoornebraska.gov/location/verdon/ ('20 Basic campsites'; NGPC's Basic class is the non-electric site type on its 2025 rates grid, and the sites are in its Basic-only layer), read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "note": "Self-register at the iron ranger; envelopes take cash or checks only."},
+      "source": "https://web.archive.org/web/20260818210943/https://outdoornebraska.gov/location/verdon/ ('All campsites at Verdon SRA are first-come, first-served ... Iron Ranger ... accept cash or checks only'), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Small SRA on a 45-acre spring-fed lake near Verdon in SE Nebraska (electric-motor and non-powered boats only, no ramp or dock). Shady campground: sites 1-15 along the west shore, several on the grass between the campground road and the water; sites 16-20 along the east bank. Picnic tables; reported to accommodate larger rigs. --Claude",
+  "summary": "Still NGPC (Active SRA, on the 2025 grid). 20 Basic sites, no electric, FCFS iron ranger confirmed (Aug 2026 capture + NGPC site layer). Fees left; facilities left (page says only 'primitive restrooms'). PIN ~210 m off, on the county road: move. WATERFRONT not waterfront -> lakefront proposed (NGPC per-site points + legible imagery). Lake is 45 acres, not 50.",
+  "flags": [
+    "WATERFRONT not waterfront -> lakefront (UPGRADE, re-audit). NGPC's own per-site layer puts sites 9-15 on the lake side of the west-shore campground road, on a mowed grass strip ~10-25 m from the 45-acre lake. At sites 13-15 the strip runs open to the shoreline with only scattered trees: an open, unused apron inside the distance bound, with no road or day-use area between. Sites 7-12 have a tree fringe on the shore (filtered views, lakeview). Sites 16-20 are on the land side of the east-bank road (lakeview). The June 2026 sweep's 'not waterfront' bucket gave no per-site detail. If the shoreline strip at 13-15 is a used path, the call falls to lakeview, which every site supports.",
+    "PIN MOVE: stored 40.14543,-95.72618 is on the paved road south of the park, ~210 m from the site centroid. Move to 40.14700,-95.72670 (between sites 9 and 10, the middle of the west-shore group that holds 15 of the 20 sites). The all-site centroid (40.14731,-95.72565) falls in the lake, so don't use it.",
+    "PHONE missing on the entry: 402-883-2575 (NGPC page and 2025 grid); apply.py doesn't write phone.",
+    "FACILITIES not confirmed: the stored potable_water true and vault_toilets true (derived from the note) are not on NGPC's page, which says only 'Primitive restrooms are available'. Left alone.",
+    "NOTE: corrected '50-acre' to NGPC's '45-acre' lake; dropped '20 Basic (non-electric) sites', 'FCFS with Iron Ranger self-pay', 'Drinking water, primitive/vault restrooms' (fields) and 'Park entry permit required' (fees.entrance). Google: 'Verdon Lake SRA' 4.0 from 6."
+  ]
+}
