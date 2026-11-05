@@ -1,0 +1,46 @@
+{
+  "id": 2743,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230175 (NGPC ReserveAmerica park page: description, booking windows, reservation period, office phone), read 2026-11-05",
+    "ReserveAmerica per-loop site lists (loops COTTONWOOD 230901, FAWN MEADOWS 230902, GOLDENROD 230903, LAKESIDE 230905, OAK GROVE 230906, RIVERSIDE 230907) and all 102 campsiteDetails pages (GIS lat/lng, type, amps, length, Driveway Surface, Proximity to Water), read 2026-11-05",
+    "ReserveAmerica one-night quotes for 5/2/2027 and 4/18/2027 at sites 122 (Electric Plus), 038 (Full Hookup), 171 (Basic), read 2026-11-05",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf + ne_build.py GRID ('Two Rivers': F EP E Bq)",
+    "Esri World Imagery (leaf-off) and USGS NAIP (leaf-on) with the RA site points; NAIP NIR flood-fill lake areas, 2026-11-05"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230175", "window_opens_days": 180, "season": {"opens": "04-15", "closes": "09-30"}, "note": "Reservations April 15 to the end of September, up to 180 days ahead (ReserveAmerica's site-type windows say at least 1 day ahead; the park notes say 3). Cabooses book up to 12 months ahead."},
+      "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230175 ('Basic ... Electric Plus ... Full Hookup ... Reservations must be made 1 Day(s) ahead of arrival and can be made up to 180 Day(s) in advance.'; 'Reservation period is April 15th to the end of September.'; 'Camping reservations may be made a minimum of three days in advance of arrival and a maximum of 180 days in advance of arrival.'), read 2026-11-05",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "ReserveAmerica Two Rivers SRA campsite catalog: every Electric Plus and Full Hookup site 'Electric Hookup available: 50 amp'; FAWN MEADOWS Full Hookup sites (e.g. 038) 'Water Hookup: Y', 'Sewer Hookup: Y'; park page '113 pads with hookups (30 amp and 50 amp). Some have water hookups.', read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 209, "pull_through": true, "max_rig_ft": 77},
+      "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230175 ('With seven camping areas and 209 padded sites'; amenity 'Pull-through driveway'); per-site catalog: 79 of 102 reservable sites carry no Back-In tag, Riverside basic site lengths to 77 ft, read 2026-11-05",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://nebraskastateparks.reserveamerica.com/campgroundDetails.do?contractCode=NE&parkId=230175 ('Modern restrooms, showers, drinking water, and a dump station are conveniently located.'), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "Busy NGPC SRA near Waterloo set among seven sandpit lakes (320 acres of water) and the Platte River, with a put-and-take trout lake, a swim beach and 10 caboose cabins. Seven camping areas; Cottonwood's west row backs onto the Platte, Lakeside's east row faces the lake. --Claude",
+  "summary": "RA page and all 102 reservable sites read: 74 Electric Plus (50 A), 6 Full Hookup (Fawn Meadows), 22 Basic (Riverside); 209 padded sites per the park text, all paved; booking (RA, 180 days, Apr 15-Sep 30), hookups, sites, showers/dump now manual. Quotes $30 EP / $35 full / $15 basic match the grid. Pin is off every loop (237 m+). Split candidate: Lakeside + Fawn Meadows ~1.2-1.7 km south of the northern loops. Waterfront: suggest lakefront -> riverfront (Cottonwood west row on the Platte bank).",
+  "flags": [
+    "PIN OFF-LOOP: stored 41.22233,-96.35659 is at the office/entrance area beside the west lake, not on a camping loop: 237 m from Riverside's centre, 492-581 m from Goldenrod/Oak Grove/Cottonwood, 1.0-1.2 km from Lakeside/Fawn Meadows. Suggest Cottonwood's centre 41.22742,-96.35815 (largest electric loop, 23 reservable EP sites) or Goldenrod 41.22579,-96.35292 if the entry stays whole; if split, see below.",
+    "SPLIT CANDIDATE: loop centres from RA GIS: Cottonwood 41.22742,-96.35815 (23 reservable EP, 50 A); Oak Grove 41.22672,-96.35498 (8 EP); Goldenrod 41.22579,-96.35292 (25 EP); Riverside 41.22022,-96.35695 (22 Basic, back-in to 77 ft); Lakeside 41.21406,-96.34787 (18 EP); Fawn Meadows 41.21554,-96.34934 (6 Full Hookup). The north group (Cottonwood/Oak Grove/Goldenrod, 200-470 m apart) and Riverside (700-800 m S) are reached from the park road by the office; Lakeside + Fawn Meadows (206 m apart) lie 1.2-1.7 km SE of the north group, south of the east-west road, reached by their own spur off it ~190 m east of the main park road's junction (imagery; whether that road is public I could not confirm). Counts above are the RA-reservable half only.",
+    "WATERFRONT (suggest lakefront -> riverfront): Cottonwood's west row (sites 154, 156, 158, 160, 162, 164; Electric Plus, paved) sits on the Platte's east bank: NAIP 2026-11-05 puts the site points ~6-12 m from the water across a bank with scattered cottonwoods and gaps, the loop road behind (east of) the sites, no driveway or day use between; the Platte is ~300 m wide (river). Lakeside's east row (012, 014, 016, 018) is ~15-25 m from a ~6.5-acre lake (NAIP NIR fill, over the 5-acre line) but a gravel shore path and a tree belt run between - lakeview at best. Goldenrod 057/058, the only sites RA tags 'Proximity to Water: Lakefront' (all others 'Near Water - no'), face the swim-beach lake, which fills to only ~3.2 acres on NAIP (under 5 acres = pond, no view value) with the loop road between - no value. West lake by the office ~8.3 acres, no sites on it. If AWH judges Cottonwood's bank trees a screen, the entry goes to lakeview/riverview.",
+    "SAND RULE: every reservable site's Driveway Surface is 'Paved' (Cottonwood, Fawn Meadows, Lakeside, Oak Grove, Riverside); Goldenrod's pages give no surface. Not a candidate.",
+    "FEES CONFIRMED / ONE ODDITY: RA quotes $30 Electric Plus (site 122), $35 Full Hookup (038), $15 Basic (171) a night for 5/2/2027, matching the grid; but 4/18/2027 quotes the same in-season figures, not the grid's '$5 less mid-October through April'. Stored fees (grid-sourced, nightly_low 10) left alone; worth one more check before trusting the off-season low.",
+    "PHONE MISSING: add (402) 359-5165 ('Office phone number is (402) 359-5165'); email ngpc.two.rivers@nebraska.gov.",
+    "SEASON not written: RA shows 'Status: Open year round.' as a park-level status, not a campground statement; reservation period Apr 15 - Sep 30 is in booking.season.",
+    "FCFS left inherited (state row some_sites): the RA page does not say how many sites are walk-up; 102 sites are on RA out of the 209 the description gives.",
+    "NOTE CLEANED: dropped the pad/amp/full-hookup counts, the pull-through count, restrooms/showers/dump, the reservable-half/FCFS line and the entry-permit line (held in fields or the state row)."
+  ]
+}
