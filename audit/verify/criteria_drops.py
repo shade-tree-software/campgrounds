@@ -364,6 +364,7 @@ DROPS = {
     2865: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule), with long-stay signals', "p3-286, read 2026-11-05: RV Life 7.78/10 = 3.89/5 over 36 ratings; Google 4.4/211; weekly $175 / monthly $350, 'Stay a night or stay the season', a 7/2026 review: 'a mixture of short and long term residents', 'junky rvs'; its only near-site pond is 4.19 acres. No --AWH note, no trip references."),
     2871: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule)', "p3-287, read 2026-11-05: RV Life 7.76/10 = 3.88/5 over 57 ratings; Google 4.1/132; a 4/2026 review: 'The showers and restrooms had not been cleaned since the previous year'. $40 (ResNexus, Nov 2026). No --AWH note, no trip references."),
     2879: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule) and a failed transient-share test', "p3-288, read 2026-11-05: RV Life 7.61/10 = 3.81/5 over 127 ratings; Google 4.1/151; a 7/2026 review: 'mostly full time, about 4 sites ... short term'; weekly $180, monthly $550. No --AWH note, no trip references."),
+    14517: ('2026-11-05', 'RV Life average under 4.0 over 25+ ratings (AWH 2026-11-02 review rule)', 'p3-289, read 2026-11-05: RV Life 7.63/10 = 3.82/5 over 97 ratings; Google 4.1/288. No --AWH note, no trip references.'),
 }
 
 if __name__ == "__main__":

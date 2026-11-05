@@ -1,0 +1,37 @@
+{
+  "id": 2682,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099 (loops incl. CEDAR VIEW CAMPGROUND 230851 and 'Cedar View Beach' 235101), read 2026-11-05",
+    "ReserveAmerica site list + per-site campsiteDetails, park 230099 loop CEDAR VIEW CAMPGROUND: 85 'Electric Plus' (50 amp, water hookup) + 17 'Basic', 101 at 45 ft and 1 at 35 ft back-in, Driveway Surface 'Paved' on every site that lists one (97 of 102); 'Cedar View Beach' = one 'Nonspecific+' Primitive unit; read 2026-11-05",
+    "audit/state_park_fees/ne_booking_check_2026-10-12.jsonl (ReserveAmerica quotes, Cedar View: Basic 001/003 '$15.00 Per Night' Tue 6/15/2027 and '$20.00 Per Night' Sat 6/19/2027; Electric Plus 008/009 '$30.00 Per Night' 6/15/2027)",
+    "audit/state_park_fees/ne_camping_rates_grid_2025.pdf (saved copy of https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf: Lake McConaughy 308-284-8800, reservations required May 21 - Sep 12) + Lake McConaughy rate text in audit/state_park_fees/ne_build.py",
+    "USGS NAIP + Esri World Imagery around 41.2940,-101.9380 (450 m frames) with the RA site points; USGS 3DEP elevations via https://epqs.nationalmap.gov/v1/json at sites 013/040/044/055/062/101 and two transects to the water, 2026-11-05"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "ReserveAmerica per-site campsiteDetails, park 230099 loop CEDAR VIEW CAMPGROUND: 85 'Electric Plus' sites 'Electricity Hookup 50', 'Water Hookup Y'; the 17 Basic sites have none; read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 102, "max_rig_ft": 45},
+      "source": "ReserveAmerica site list, park 230099 loop CEDAR VIEW CAMPGROUND: 85 Electric Plus + 17 Basic (plus one primitive unit); per-site 'Max Vehicle Length' 45 on 101 sites, 35 on one; read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "window_opens_days": 180, "note": "Reservations are required May 21 - September 12; the beach camping areas book separately."},
+      "source": "https://nebraskastateparks.reserveamerica.com/camping/lake-mcconaughy-sra/r/campgroundDetails.do?contractCode=NE&parkId=230099 (Cedar View's 102 sites bookable; 'can be made up to 180 Day(s) in advance'), read 2026-11-05; NGPC 2025 rates grid (audit/state_park_fees/ne_camping_rates_grid_2025.pdf), Lake McConaughy row: reservations required May 21 - Sep 12",
+      "method": "manual"
+    }
+  },
+  "note": "West end of Lake McConaughy off Hwy 92 near Lewellen: paved back-in loops of Electric Plus (with water) and basic sites on a wooded bench 6-8 m above the sand beach. Central shower/restroom; fire ring and table at each site. The lake's open beach camping (Cedar View Beach) is on the sand below and books separately. --Claude",
+  "summary": "Hookups (50 A + water), count 102 and max 45 ft now manual from ReserveAmerica; booking platform corrected operator -> reserveamerica. Fees already match the McConaughy grid and the saved 2027 quotes ($10 off-season, $15/$20 basic). Waterfront lead DOWN, lakefront -> lakeview. Not a sand-rule drop. Pin ~320 m from the loops' centre.",
+  "flags": [
+    "SAND RULE: the RV campground stays. ReserveAmerica gives 'Driveway Surface: Paved' for 97 of the 102 Cedar View sites (the other 5 list no surface), on paved loops in pine and cedar. The open beach camping is a separate RA unit, 'Cedar View Beach' (one 'Nonspecific+' Primitive unit), on the sand below the bench. A developed loop that also offers beach camping stays; the beach unit itself is a sand-driving area.",
+    "WATERFRONT LEAD (down, lakefront -> lakeview): the pads sit on a vegetated bench at 998-1002 m (3DEP: site 013 1001.6, 040 1001.5, 044 1001.1, 055 1001.7, 062 998.8, 101 998.1). Below them a 6-8 m slope drops to the sand beach: south of site 040 the DEM reads 1001.3 m at 41.2922, then 993.0 at 41.2920 and 990.3 at 41.2915, reaching the flattened water surface of 988.2 m at ~41.2912. Today's water on NAIP and Esri is ~150-400 m away across open sand, the beach-camping area, with exposed flats and the North Platte channel at this west end. Full pool (3,265 ft, ~995 m) would put the waterline ~20-30 m below the south row (040-046) and ~60-70 m below the west row (099-102), but still at the foot of the bank, and the strip between is the used beach-camping area. Either way this is a bench above the water with a used strip between, so it does not earn on-water. Some pads look over open sand to the lake, so lakeview stands. The stored evidence is only the 2026-06 sweep commit pointer. (The NIR water-mask distances of 23-250 m picked up shadow, not water, and are not used.)",
+    "PIN (move proposed): stored 41.29258,-101.93461 is at site 013 at the east end of the campground, ~320 m from the centre of the 102 RA site points. Suggest 41.2940,-101.9380.",
+    "FEES: no change. The stored low $10 (Basic, September 13 - May 20) and high $15 (Basic Sunday-Wednesday in season) with a $5 Thursday-Saturday surcharge and a $15 electric add-on match the McConaughy grid and the saved 6/15 and 6/19/2027 quotes. Basic sites are 45 ft, so EKKO fits the base type. Their provenance carries no method (built by ne_build.py).",
+    "WEBSITE: outdoornebraska.gov line unchanged (blocked to me); the ReserveAmerica deep link is current."
+  ]
+}
