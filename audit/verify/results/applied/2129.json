@@ -1,0 +1,58 @@
+{
+ "id": 2129,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233603 (read 2026-11-06): 'Riverside West Campground features 25 campsites, along with one large reservable picnic shelter.'; 'Riverside West Campground is located on the west bank of the Neosho River ... This 168-acre park is part of the John Redmond Reservoir ... Camping along the river or wingwall is not permitted.'; 'From Burlington, Kansas, take US 75 north for about 3.5 miles, then turn west onto Embankment Road and continue for 2.5 miles'; notices 'Three camping units are allowed per campsite, only one may be an RV/Camper unit OR 3 tents. Only one camping unit may be plugged into the electric service.', 'Quiet hours are from 10 p.m. to 6 a.m.'; rule maxStay 14 nights 'Rolling 30 Days'; amenities 'Accessible Showers', 'Dump Station', 'Electric Hookups', 'Flush Toilets (Seasonal)', 'Vault Toilets', 'Water (Seasonal)', 'River Access'; phone 620-364-8613",
+  "https://www.recreation.gov/api/camps/campgrounds/233603/rates (read 2026-11-06): only a 'Peak Season' each year, 2026-05-01..2026-09-30 and 2027-05-01..2027-09-30: site rates 20 and 22 (an 18 rate attaches to no current site), 'PeakGROUP SHELTER ELECTRIC' 25",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233603 (read 2026-11-06): 25 STANDARD ELECTRIC sites in loops OCHA (001-006), MAIN (007-020) and RWES (021-025), all reservable, gravel; 'Electric Hookup' 50 on sites 009-020, 30 on the rest; water on every site but 009 ('Water hookup is across the road for this site.'); $20 for the 30-amp sites, $22 for the 50-amp; three pull-throughs (003, 015, 019); RV equipment lengths posted only on OCHA 001-006 (40-60 ft); 'Day Use Shelter 6'",
+  "RIDB campsite cache trip_data/ridb_campsites.json, facility 233603 (fetched 2026-10-20): 33 records = the 25 bookable STANDARD ELECTRIC sites + 7 'MANAGEMENT' sites (not reservable) + the shelter; driveway lengths 30-175 ft",
+  "https://www.recreation.gov/api/camps/availability/campground/233603/month for 2026-09, 2026-10, 2026-11, 2026-12, 2027-02, 2027-04, 2027-05 (read 2026-11-06): nights through 2026-09-27 in September; no nights at all October-April; bookable again from 2027-05-01",
+  "Esri World Imagery 330 m and 110 m frames with the rec.gov per-site points, 2026-11-06. Overpass did not answer today; distances are imagery estimates"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 20, "nightly_high": 22, "currency": "USD", "note": "$20 for 30-amp sites, $22 for 50-amp; the group shelter is $25."},
+   "source": "recreation.gov rates API, facility 233603, Peak Season 2026-05-01..09-30: site rates 20 and 22, PeakGROUP SHELTER ELECTRIC 25; per-site prices from the campsite search. Read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "14 nights in any rolling 30 days. One RV per site (up to three camping units, or three tents); only one unit on the electric."},
+   "source": "recreation.gov facility API 233603: maxStay 14 nights 'Rolling 30 Days'; notice 'Three camping units are allowed per campsite, only one may be an RV/Camper unit OR 3 tents. Only one camping unit may be plugged into the electric service.'; all 25 sites reservable. Read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true},
+   "source": "recreation.gov campsite search, facility 233603: 'Electric Hookup' 50 on bookable sites 009-020, 30 on the others; 'Water Hookup' on 24 of 25. Read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 25, "pull_through": true, "max_rig_ft": null},
+   "source": "recreation.gov facility API 233603: 'features 25 campsites'; campsite search: 25 bookable STANDARD ELECTRIC sites, 003/015/019 pull-through. The 7 other RIDB records are MANAGEMENT sites, not reservable. Read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-01", "closes": "09-30"},
+   "source": "recreation.gov rates API 233603: a single Peak Season 05-01..09-30 in 2025, 2026 and 2027; availability calendar: no nights October 2026-April 2027, bookable from 2027-05-01. Read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true},
+   "source": "recreation.gov facility API 233603 amenities: 'Accessible Showers', 'Flush Toilets (Seasonal)', 'Vault Toilets', 'Dump Station', 'Water (Seasonal)'. Read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Corps of Engineers campground on the west bank of the Neosho River just below John Redmond Dam, 3.5 miles north of Burlington off US-75 and Embankment Road. Gravel electric sites in three loops under elm, walnut and cottonwood, the southern row along the river; no camping on the riverbank or wingwall outside the sites. Reservable picnic shelter, fishing dock, playground, horseshoes and trails. --Claude",
+ "summary": "rec.gov API (2026-11-06): 25 bookable electric sites (50 A on 12, 30 A on 13; water on 24), $20/$22, shelter $25, 14 nights per rolling 30, showers/flush+vault toilets/dump/water, season 05-01..09-30 (rates + calendar). Count 32 -> 25 (the 7 extra RIDB records are management sites); max_rig_ft 120 removed (it was a tent-length field); pull_through true, season, facilities, max_stay added. Waterfront lead: not waterfront -> riverview.",
+ "flags": [
+  "SITE COUNT 32 -> 25: rec.gov says 'features 25 campsites'; RIDB's 33 records include 7 MANAGEMENT sites that can't be booked (staff/host) plus the shelter. The stored note's '25 of 32 sites have electric' is wrong - all 25 public sites are electric.",
+  "MAX_RIG_FT 120 removed: the 120 traces to a 'Tent' equipment length on pull-throughs 015/019. Posted RV/trailer lengths exist only on OCHA 001-006 (40-60 ft); driveways run 30-175 ft (site 007 is the short one at 30). A 23-ft motorhome fits every site.",
+  "WATERFRONT LEAD: stored 'not waterfront' (note said 'no camping at the river bank'). That rec.gov line bans camping on the bank outside the sites; it doesn't keep the sites off the river. Imagery: the Neosho here is ~50-60 m wide (river, not creek), and the south row - 004, 014, 015, 017, 018, 020-025 - sits 5-25 m from the water behind a tree fringe; 020 and 021 are right at the bank with patchy open ground to the water. Filtered view, so propose 'riverview' (matches Riverside East 2128 next door, riverview). Riverfront only if the 020-022 banks are confirmed open. Tailwater below the dam - river value only, no lake value.",
+  "SEASON: written 05-01..09-30 from the single Peak rate season and the empty Oct-Apr calendar (same method as Dam Site 2127 / Riverside East 2128, whose season is 04-01..10-30). Off-season walk-in camping isn't mentioned anywhere.",
+  "MILITARY: rec.gov's facility rules carry 'militaryDiscount: 1'. Not written (no stated discount amount); for the discounts pass if wanted.",
+  "PHONE 620-364-8613 confirmed (rec.gov). WEBSITE https://www.recreation.gov/camping/campgrounds/233603 confirmed.",
+  "PIN 38.2356,-95.7584 is between MAIN sites 013 and 016; site centroid 38.23563,-95.75836. Confirmed.",
+  "NOTE: rewritten; dropped 'sites up to 120 ft', '25 of 32 sites have electric' and 'Reservable online'.",
+  "NEARBY: Riverside East 2128 (~0.62 km, across the river) and Dam Site 2127 (~1.15 km) - separate campgrounds, already separate entries.",
+  "SAND: none."
+ ]
+}
