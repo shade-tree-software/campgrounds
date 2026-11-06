@@ -1,0 +1,55 @@
+{
+ "id": 2127,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233481 (read 2026-11-06): 'Dam Site Campground features 21 individual campsites, a playground, two day use shelter houses, a shower house and two CXTs. Also at Dam Site are two boat ramps'; 'located on the upstream side of John Redmond Dam and Reservoir'; amenities 'Dump Station', 'Flush Toilets (Seasonal)', 'Showers (Seasonal)', 'Vault Toilets', 'Drinking Water (peak season)'; fee text 'QR Code Scan, Phone R1S, Reserve Online.'; phone 620-364-8613; rules maxStay 14 nights 'Rolling 30 Days', militaryDiscount (a rec.gov rule, not a discount claim)",
+  "https://www.recreation.gov/api/camps/campgrounds/233481/rates (read 2026-11-06): one Peak Season per year, 04-01 to 10-30 (2026, 2027, 2028 the same): electric sites $19, the non-electric site $15, day-use shelters $25",
+  "live recreation.gov catalog https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233481&size=1000 (read 2026-11-06): loop DNOR sites 1-10 and loop DSOU sites 11-21; 20 STANDARD ELECTRIC 'Electric Hookup 20/30', 'Water Hookup Yes'; site 14 STANDARD NONELECTRIC (permitted equipment tent/vehicle/car only, no RV); 2 GROUP SHELTER ELECTRIC (day use); Driveway Length 40-99 (1, 3, 4, 11 at 99); 6 'Pull-through' (1, 4, 8, 11, 12, 13); all gravel",
+  "recreation.gov availability calendar for 233481 (read 2026-11-06): sites reservable through 2026-10-26, 'Not Reservable' 10-27 to 10-30, no entries for November 2026 or March 2027, all 23 'Available' from 2027-04-01",
+  "Esri World Imagery (450 m, 200 m) and USGS NAIP (200 m) with the catalog's per-site coordinates, 2026-11-06"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 19, "nightly_high": 19, "currency": "USD", "checked": "2026", "note": "recreation.gov rates, the same 2026-2028: 30 A electric sites with water $19. The one non-electric site ($15) takes tents and cars only. Pay by QR code or phone on site, or reserve online."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233481/rates (electric 19, non-electric 15) + live catalog (site 14 permits no RV), read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30, "water": true},
+   "source": "live recreation.gov catalog for 233481 ('Electric Hookup 20/30', 'Water Hookup Yes' on all 20 electric sites), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 21, "max_rig_ft": 99, "pull_through": true, "note": "20 electric sites in two loops (north 1-10, south 11-21) plus one tent/car site (14); day-use shelters not counted. Driveway lengths 40-99 ft; 6 pull-throughs."},
+   "source": "live recreation.gov catalog for 233481 (20 STANDARD ELECTRIC + 1 STANDARD NONELECTRIC, 2 group shelters excluded; 'Driveway Length' 40-99; 'Driveway Entry'), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233481 ('a shower house and two CXTs'; amenities 'Showers (Seasonal)', 'Flush Toilets (Seasonal)', 'Vault Toilets', 'Dump Station'), read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-01", "closes": "10-30"},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233481/rates (single Peak Season 04-01 to 10-30 every year 2026-2028) + availability calendar (no November-March entries; all sites available from 2027-04-01), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "recreation.gov rules: 14 nights in any rolling 30 days. Every site is reservable; an unreserved site can be paid for on arrival by QR code or phone."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233481 (rules maxStay 14 'Rolling 30 Days'; 'QR Code Scan, Phone R1S, Reserve Online.') + live catalog (all sites reservable), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE John Redmond Reservoir campground on the upstream side of the dam: a wooded north loop and an open south loop above the boat ramps, with a playground and day-use shelters between. --Claude",
+ "summary": "rec.gov 233481: 20 electric (30 A + water) + 1 tent/car site, shelters excluded; $19 (the $15 site takes no RV, so base 19, was 15-19); 40-99 ft, 6 pull-throughs; showers/flush/vault/dump; season Apr 1-Oct 30 (rate season + calendar); 14 in 30. Lakeview stands (south loop). Pin is in the empty field between loops -> move.",
+ "flags": [
+  "WATERFRONT: stored LAKEVIEW stands. On Esri/NAIP with the catalog coordinates, the south loop (11-21, ~38.2457,-95.7557) sits 60-90 m from the reservoir across the park road and an open grass strip with scattered trees - a clear lake view but not on-water (road between). The north loop (1-10) is in trees 300+ m from the water with no view. No catalog 'Proximity to Water' tags.",
+  "PIN 38.2488,-95.7562 is in the open field between the loops, ~330 m from the south loop and ~250-480 m from the north loop's sites. Propose 38.2457,-95.7557 (the south loop: 11 of the 21 sites and the lakeview ones).",
+  "SPLIT: no - the two loops are ~600-800 m apart on the same park road and one rec.gov facility.",
+  "FEES: base raised 15 -> 19 because the $15 site (14) permits only tents/vehicles/cars on recreation.gov, so it is not a site a 23-ft motorhome fits.",
+  "MAX RIG: 99 ft is the catalog's Driveway Length on sites 1, 3, 4 and 11 (Site Length there 35-70); the per-equipment max lengths are blank (0). The stored 60 came from note prose. A placeholder-looking 99 is possible; the next longest are 90 (8, 9, 10, 12).",
+  "SEASON: written Apr 1-Oct 30 from the rate season and the calendar; no page states the season in words. Flush toilets, showers and drinking water are listed as seasonal.",
+  "PHONE 620-364-8613 confirmed (rec.gov facility phone). Website (rec.gov) as stored.",
+  "SAND: none - gravel sites; the exposed shore below the south loop is the reservoir's drawdown apron, not camping."
+ ]
+}

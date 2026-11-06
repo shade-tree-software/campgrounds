@@ -1,0 +1,54 @@
+{
+ "id": 13677,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/10038712 (read 2026-11-06): 'There are 15 electric campsites and 5 primitive campsites. There is one shower building restroom and one vault toilet. There is a boat ramp and a dump station.'; 'Card Creek Campground is located along Card Creek which flows into Elk City Lake.'; 'Camping is available year round.'; 'Card Creek only accepts credit/debit cards via Recreation.gov.'; notice 'Campsite 14 is closed for maintenance until further notice.'; facility_phone 620-336-2741, org USACE, not commercially managed; rules maxStay 14 nights 'Rolling 30 Days', maxConsecutiveStay 14, minHolidayWeekendStay 0 'soft' (no rule)",
+  "https://www.recreation.gov/api/camps/campgrounds/10038712/rates (read 2026-11-06): Peak Season 2026-01-01 to 2026-12-31 (same 2027, 2028): PeakNonelectric $12, PeakElectric $16, the electric/water type $18, PeakShelter $30",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A10038712 (live catalog, read 2026-11-06): 19 campsites + 1 group shelter, all reservable, all back-in gravel; 15 STANDARD ELECTRIC 30 A (sites 2-8, 13, 14 with water), 4 STANDARD NONELECTRIC (16-19); RV, Fifth Wheel, Caravan and Tent permitted on every site; Max Vehicle Length 23-89 ft (site 8: 23, site 4: 25, longest site 20: 89); no 'Proximity to Water' attribute; site centroid 37.25664,-95.85002. Cached RIDB catalog (fetched 2026-10-20) agrees",
+  "Esri World Imagery 160 m and 700 m half-width frames with every catalog site plotted, 2026-11-06"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 12, "nightly_high": 18, "currency": "USD", "checked": "2026", "note": "recreation.gov rates, the same all year 2026-2028: non-electric sites $12, 30 A electric $16, electric with water $18. Card only, through recreation.gov."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038712/rates (PeakNonelectric 12, PeakElectric 16, electric/water 18) + live catalog prices, read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30, "water": true},
+   "source": "live recreation.gov catalog for 10038712 ('Electricity Hookup 30' on all 15 electric sites; 'Water Hookup Yes' on 2-8, 13, 14), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 19, "max_rig_ft": 89, "pull_through": false},
+   "source": "live recreation.gov catalog for 10038712 (15 STANDARD ELECTRIC + 4 STANDARD NONELECTRIC, group shelter excluded; Max Vehicle Length up to 89 at site 20; every site 'Back-In'), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "vault_toilets": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038712 ('one shower building restroom and one vault toilet ... a boat ramp and a dump station'), read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038712 ('Camping is available year round.'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "recreation.gov rules: 14 consecutive nights, and 14 nights in any rolling 30 days. Every site is reservable; payment by card through recreation.gov only."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10038712 (facility_rules maxStay 14 'Rolling 30 Days', maxConsecutiveStay 14; fee text) + live catalog (all sites reservable), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Corps of Engineers campground on Card Creek just above where it enters Elk City Lake, 5 miles west of Independence off US-160 (paved to the park). One gravel row along the creek: 15 electric sites (9 with water too) and 4 without; the sites on the creek side of the road (about 8-14) sit on open grass above the bank. Boat ramp; the Elk River Hiking Trail is adjacent. Site 14 closed for maintenance until further notice (recreation.gov notice, read 2026-11-06). --Claude",
+ "summary": "rec.gov API + live catalog: 19 back-in sites (15 at 30 A, 9 with water; 4 non-electric), 23-89 ft (max 99 -> 89), rates $12/$16/$18 2026-2028, showers, vault toilet, dump; open year round (now stated); 14-night max. Riverfront stands (channel ~50 m, open bank at sites 8-14). Pin fine.",
+ "flags": [
+  "WATERFRONT 'riverfront' stands: imagery (160 m frame) shows the gravel row on the east bank of the Card Creek channel, which is ~45-60 m wide at the sites (over the ~30 m creek line, so riverfront rather than creekside; rec.gov calls it 'along Card Creek which flows into Elk City Lake'). Sites 8, 10-14 have their pads on the creek side of the camp road with open grass and a sparse line of bank trees, ~20-35 m to the water and no road or day use between. Sites 1-7 and 16-20 are on the inland side or at the north end. It is the creek arm, not the open lake (the main lake is out of the 1.4 km frame).",
+  "MAX RIG 99 -> 89: no catalog site lists 99; the longest Max Vehicle Length is 89 (site 20). Site 8 is posted at 23 ft and site 4 at 25 ft, tight for EKKO; the rest are 32 ft+.",
+  "SITE COUNT 19 kept: rec.gov's description says '15 electric campsites and 5 primitive', the catalog has 15 + 4 (and a group shelter).",
+  "SEASON newly written year_round from the facility description ('Camping is available year round'); rates run all year too.",
+  "PARTIAL CLOSURE: rec.gov notice 'Campsite 14 is closed for maintenance until further notice' - one site only, put in the note, no status.",
+  "PIN 37.25672,-95.850012 is ~10 m from the live catalog centroid (37.25664,-95.85002); fine. Phone 620-336-2741 = rec.gov facility_phone; website (rec.gov page) fine. USACE-operated, not a concession.",
+  "AMPERAGE checked live: 30 A on all 15 electric sites (no 50 A in live or cached catalog). minHolidayWeekendStay is 0/soft = no rule.",
+  "SAND: none (gravel pads, paved access)."
+ ]
+}

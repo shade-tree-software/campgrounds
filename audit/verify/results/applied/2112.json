@@ -1,0 +1,54 @@
+{
+ "id": 2112,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.campitks.gov/camping/cross-timbers-state-park/r/campgroundDetails.page?parkID=519121 (read 2026-11-06 in batch p3-299; copy reused read-only): 'Open year round.'; 2027 campsite holiday minimum (3 nights, Memorial Day / July 4th / Labor Day weekends); '14 days maximum consecutive stay rule ... up to 14 consecutive nights within a single campground'; loop 'Mann's Cove'",
+  "campitks.gov campsiteDetails.page for Mann's Cove 401-415, parkID 519121 (read 2026-11-06 in batch p3-299, reused read-only): all 15 'Primitive Site', gravel, 'Back-In', 'Maximum Vehicle Length' 36-80, 'Looking For Category: Tent Site', 'Proximity to Water: Within 1/8 Mile', 'River/Lake View: Y', 'Vault Toilet: Within 1/4 Mile', 'Shower House with Restrooms: None', 'Modern Restrooms: None', 'Self Reg Allowed: Y', 'Site-Specific'; site 404 'Prime Site: Y'",
+  "https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/cross-timbers (as quoted in applied result 2110, read in a browser 2026-11-06): 'All park campgrounds are served by modern bathroom and shower facilities, with the exception of Mann's Cove Loop that has a vault toilet.'",
+  "KDWP fee schedule https://ksoutdoors.gov/licenses-permits-fees/kansas-state-park-entrance-and-camping-fees (read 2026-10-15, as recorded on the entry)",
+  "Esri World Imagery and USGS NAIP, 220 m frames with the campitks per-site coordinates, 2026-11-06"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "campitks.gov campsiteDetails, Mann's Cove 401-415 all 'Primitive Site' with no electricity, water or sewer hookup, read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 15, "max_rig_ft": 80, "pull_through": false},
+   "source": "campitks.gov site list and campsiteDetails for loop Mann's Cove ('Maximum Vehicle Length' 36-80, all 'Back-In'), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "showers": false, "flush_toilets": false},
+   "source": "KDWP park page ('with the exception of Mann's Cove Loop that has a vault toilet'); campitks campsiteDetails ('Shower House with Restrooms: None', 'Modern Restrooms: None'), read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://www.campitks.gov/camping/cross-timbers-state-park/r/campgroundDetails.page?parkID=519121 ('Open year round.'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "reserveamerica", "url": "https://www.campitks.gov/camping/cross-timbers-state-park/r/campgroundDetails.page?parkID=519121", "max_stay_nights": 14, "min_stay": [{"nights": 3, "applies": "holiday", "season": "Memorial Day, Independence Day and Labor Day weekends (2027 rule)"}], "note": "Every site reserves site-specific on Kansas's ReserveAmerica site (campitks.gov); unreserved sites allow self-registration on arrival. Up to 14 consecutive nights in one campground. 2027 holiday minimum 3 nights."},
+   "source": "https://www.campitks.gov/camping/cross-timbers-state-park/r/campgroundDetails.page?parkID=519121 (holiday minimum and 14-night rule) and campsiteDetails ('Site-Specific', 'Self Reg Allowed: Y' on all 15), read 2026-11-06",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 17.75, "nightly_high": 17.75, "currency": "USD", "surcharges": {"premium_site": 2}, "checked": "2026", "note": "KDWP's statewide schedule from November 1, 2026: a daily camping permit of $17.75 a night per camping unit, and $2 a night more for a designated prime site April-September (one here, site 404). No utilities. A $2.75 processing fee per stay and a vehicle permit ($7 a day) are charged on top. Read 2026-10-15 and 2026-11-06."},
+   "source": "KDWP fee schedule (https://ksoutdoors.gov/licenses-permits-fees/kansas-state-park-entrance-and-camping-fees, read 2026-10-15) with the campitks.gov site list for Mann's Cove (15 primitive, 404 'Prime Site: Y'; read 2026-11-06)",
+   "method": "manual"
+  }
+ },
+ "note": "Primitive area in a wooded point between two coves on Toronto Lake's northeast shore, off K-105; gravel drive-in sites. A firsthand review notes trees screen the lake from the sites. --Claude",
+ "summary": "campitks per-site: 15 primitive gravel back-ins, 36-80 ft, vault toilet only; open year round; 14-night/2027 holiday rule; fees reshaped (prime site 404 +$2, stray electric:0 surcharge removed). Not waterfront kept (campitks Lake View tags vs canopy). Website: swap reserveamerica link for campitks.",
+ "flags": [
+  "WATERFRONT: stored NOT WATERFRONT kept. campitks tags all 15 'River/Lake View: Y' and 'Within 1/8 Mile', but on imagery (Esri leaf-off and NAIP summer, per-site coordinates) the sites sit on the spine of a wooded point 45-100 m from either cove through continuous trees, and the existing note cites a firsthand review saying the trees screen the lake. A leaf-off winter view from 404-406 at the west end is possible; LAKEVIEW is the most it could be, and I would not raise it on a booking-site tag.",
+  "WEBSITE (apply.py doesn't write it): replace 'https://www.reserveamerica.com/explore/cross-timbers-state-park/KS/519121/overview' with 'https://www.campitks.gov/camping/cross-timbers-state-park/r/campgroundDetails.page?parkID=519121'.",
+  "FEES: the recorded surcharges held {electric: 0} (no such add-on); replaced with premium_site +$2 for the one prime site (404).",
+  "SITE CATEGORY: campitks lists all 15 under 'Looking For Category: Tent Site' only, but they are gravel back-in pads with listed vehicle lengths 36-80 ft and the stored note says drive-in gravel access. Treated as drive-in; a human may want to confirm RV use is allowed (no page says tents only).",
+  "PIN 37.7720,-95.9090 sits among the sites (centroid 37.77196,-95.90892); fine.",
+  "PHONE 620-637-2213 confirmed (KDWP park office).",
+  "SAND: none - gravel pads in woods."
+ ]
+}
