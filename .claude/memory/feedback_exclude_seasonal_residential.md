@@ -27,3 +27,5 @@ When vetting private (and any) campgrounds, EXCLUDE parks that are predominantly
 AWH 2026-10-30 (River Bend, OH 1300): "tent sites can count toward the nightly number" - test 4 (1 site in 10 sold nightly) counts ALL nightly sites, tent sites included, not only RV sites (16 of 231 RV sites + ~25 tent = 16%, kept).
 
 **On the fence = drop (AWH 2026-10-31, rest of phase 7):** "if you are on the fence about a mostly seasonal campground that looks iffy, just go ahead and drop it and let me know." Don't park these in asks.md; drop and report. Applied that day to 9 open asks.
+
+**Resident-style rules page alone is not a drop (AWH 2026-11-06, Jayhawker RV Park KS 14543: "keep jayhawker"):** a park that sells daily stays with a normal check-out, has a decent Google rating (4.1/65), and only reads residential in its rules (P.O.-box mail, held deliveries, liability insurance, "lessee") stays. Judge by what it sells, not the tone of its rules page.
