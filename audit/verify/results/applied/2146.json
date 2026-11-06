@@ -1,0 +1,47 @@
+{
+  "id": 2146,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233552 (USACE Michigan Valley, Pomona Lake), read 2026-11-05: 'Michigan Valley Campground offers 87 campsites, 51 of which have electric and water hookups. Three additional group picnic shelters have electric hookups. Other amenities include flush and vault toilets, a shower building, playground, basketball court, swim beach and dump station'; 'located in eastern Kansas on the shores of Pomona Lake ... The reservoir covers 4,000 acres'; rules maxStay 14 nights 'Rolling 30 Days', minHolidayWeekendStay 3, reservationCutOff 0; phone 785-453-2201; no first-come statement.",
+    "https://www.recreation.gov/api/camps/campgrounds/233552/rates, read 2026-11-05: Peak Season 2026-05-01..2026-09-29 (2027 and 2028 the same; 2025 ran to 10-31): STANDARD NONELECTRIC 'Primitive' $18; STANDARD ELECTRIC '50amp / Water' $26; STANDARD ELECTRIC template u22 '50amp / Water / Sewer' $32; group shelters $30-60, group nonelectric $60. No off-peak season priced.",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233552 (81 records), read 2026-11-05: 52 STANDARD ELECTRIC (A 25 at 50 A incl. pull-throughs A12-19 at 96-114 ft and sewer at A23-31; C 13 and G 14 at 30 A), 25 STANDARD NONELECTRIC (B 4, D 4, E 5, F 12; 30-55 ft), all permitting RV/Trailer/Tent; 1 group nonelectric (Wigger) and 3 group shelters; G 08 'Not Available'; no 'Proximity to Water' tags; per-site coordinates.",
+    "https://www.recreation.gov/api/camps/availability/campground/233552/month for 2026-09 through 2027-05, read 2026-11-05: dates through 2026-09-29, none October 2026-April 2027, 2027-05-01 opens (76 Available).",
+    "Esri World Imagery with the rec.gov per-site coordinates overlaid (38.6588,-95.5525 at 260 m half; D loop 38.6598,-95.5534 at 110 m; F loop 38.6572,-95.5530 at 130 m), 2026-11-05: campground on the lake's east shore just north of the dam; C/A/G loops set back 100 m+ behind the park roads; primitive D1 and D3 sit ~30-45 m from the grass/sand edge (exposed drawn-down shore beyond) with open grass between and no road; F06/F08 on a wooded point near the south-west shore (edge of frame)."
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 32, "currency": "USD", "checked": "2026-11", "note": "Primitive (non-electric) sites $18; 50/30-amp with water $26; 50-amp water/sewer and the long pull-throughs (A12-19, A23-31) $32."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233552/rates (Peak Season 2026-05-01..09-29: STANDARD NONELECTRIC $18, STANDARD ELECTRIC $26, u22 template $32) + per-site fee templates, read 2026-11-05. The non-electric sites permit RVs of 30-55 ft, so they set the base.",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-29"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233552/rates (Peak Season 05-01..09-29 for 2026, 2027 and 2028) + availability calendar (dates through 2026-09-29, none Oct 2026-Apr 2027, open 2027-05-01), read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233552", "max_stay_nights": 14, "min_stay": [{"nights": 3, "applies": "holiday"}], "note": "Same-day booking allowed on recreation.gov (no cutoff). 14 nights in any 30 days; 3-night minimum on holiday weekends."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233552 rules (maxStay 14 'Rolling 30 Days', minHolidayWeekendStay 3, reservationCutOff 0), read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 77, "max_rig_ft": 114, "pull_through": true},
+      "source": "recreation.gov per-site records for 233552 (52 STANDARD ELECTRIC + 25 STANDARD NONELECTRIC individual sites besides 1 group site and 3 group shelters; A12-19 pull-through, longest 114 ft at A19), read 2026-11-05",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233552 ('flush and vault toilets, a shower building ... swim beach and dump station'), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Pomona Lake campground on the lake's east shore by the dam, heavily shaded; gravel pads, swim beach. --Claude",
+  "summary": "rec.gov: 77 individual sites (52 electric, 25 primitive, all RV-permitted, 30-114 ft) plus 4 group units; season May 1-Sep 29 (2026-2028 rate seasons; calendar empty Oct-Apr); same-day booking, 3-night holiday minimum, 14 nights in 30. Fees 14-22 -> 18-32 (primitive $18, electric $26, sewer/pull-through $32). Count 78 -> 77. Facilities added. Lakeview kept, with an upward lead on the D loop.",
+  "flags": [
+    "FEES changed 14-22 -> 18-32: the stored 14-22 matches no rec.gov rate in any season listed 2019-2028 (primitive $18, 50amp/water $26, 50amp/water/sewer and the A12-19 pull-throughs $32).",
+    "SITES: stored 78 (derived) -> 77 individual sites (52 electric + 25 non-electric); rec.gov's own description says '87 campsites, 51 of which have electric', which counts group units/shelters. Revert to 78 if the DB counts the Wigger group site.",
+    "SEASON May 1-Sep 29 written from the 2026-2028 rate seasons and calendar; the 2025 season ran to Oct 31, so a later close may be announced some years.",
+    "WATERFRONT lead (up): lakeview stored. No rec.gov proximity tags. Imagery with per-site coordinates: primitive D1 and D3 (30-ft RV sites) sit ~30-45 m from the grass/sand edge with open grass and exposed shore between and no road - an open apron within the distance bound, so lakefront is arguable for those 2-4 primitive sites; F06/F08 sit on a wooded point by the shore (frame edge, not judged). The electric loops (A/C/G) are 100 m+ back behind park roads = view at best. Not changed.",
+    "PIN fine: 38.659,-95.552 is 21 m from the centroid of the 75 plotted sites. PHONE 785-453-2201 matches rec.gov. WEBSITE correct. FCFS not stated by rec.gov (left unset). SAND: none (pads are gravel; the D-loop sand is drawn-down shore, not camping)."
+  ]
+}

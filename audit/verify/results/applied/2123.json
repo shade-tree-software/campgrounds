@@ -1,0 +1,46 @@
+{
+  "id": 2123,
+  "checked": "2026-11-05",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233599 (USACE Richey Cove, Council Grove Lake), read 2026-11-05: 'Richey Cove Campground offers 43 reservable campsites, including one group camping area that can accommodate up to 40 guests. Electric hookups, flush toilets and other modern amenities are provided'; 'located on the 3,310-acre Council Grove Lake'; 'a boat ramp is located in the campground'; notices 'Campsite must be reserved prior to setting up camping equipment', 'New for 2024, check-out time is 3PM and check-in time is 4PM'; rules maxStay 14, maxConsecutiveStay 14, minWeekendStay 2, reservationCutOff 0; phone 620-767-5195.",
+    "https://www.recreation.gov/api/camps/campgrounds/233599/rates, read 2026-11-05: Peak Season 2026-04-01..2026-10-30 (2025, 2027, 2028 the same): 'ELECTRIC-30 Amp Site' $23; 'ELECTRIC-50 Amp Site' $25; 'ELECTRIC-50 Amp W/Water' $27; 'PREMIUM ELECTRIC-50 Amp W/Water' $28; 'ELECTRIC-50 Amp Full Service' $29; 'GROUP Camp 8 50 Amp Sites' $130.",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233599 (39 records), read 2026-11-05: 38 STANDARD ELECTRIC (RCOV 21, RCI 9, RCB 7, RVOL 1) + 1 group; 30-amp sites 001-004 and 037 at $23 (001-003 are 35-50 ft; 004 is 20 ft); 50-amp sites 25-95 ft; water on most; sewer only on RVOL site 038 ($29); 'Lakefront' proximity tags on sites 005-025; per-site coordinates.",
+    "https://www.recreation.gov/api/camps/availability/campground/233599/month for 2026-10 through 2027-04, read 2026-11-05: dates through 2026-10-31, none November-March, 2027-04-01 onward.",
+    "Esri World Imagery 38.7018,-96.4990 at 230 m half-width with the rec.gov site coordinates, 2026-11-05: sites 006-010 sit on the lake side of the loop road 10-30 m from the shore (scattered trees and a sand edge, the buoyed swim area is further north by 003-005); 011-013 and 021-024 on the cove shore to the south-west within ~10-25 m; 026-037 inland behind the road."
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 23, "nightly_high": 29, "currency": "USD", "checked": "2026-11", "note": "30-amp sites $23; 50-amp $25; 50-amp with water $27 (premium $28); the one full-service site (038) $29."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233599/rates + per-site fee templates (Peak Season 2026-04-01..10-30: $23/$25/$27/$28/$29), read 2026-11-05. The $23 sites 001-003 are 35-50 ft and fit EKKO.",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-30"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233599/rates (Peak Season 04-01..10-30, 2025-2028) + availability calendar (dates through 2026-10-31, none Nov-Mar, open 2027-04-01), read 2026-11-05",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233599", "fcfs": "never", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}], "note": "A site must be reserved before setting up; same-day booking is allowed on recreation.gov (no cutoff). The 2-night weekend minimum is a recreation.gov rule and may be relaxed for a same-day booking. Check-in 4 pm, check-out 3 pm."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233599 (notice 'Campsite must be reserved prior to setting up camping equipment'; rules minWeekendStay 2, maxStay 14, reservationCutOff 0; notice 'check-out time is 3PM and check-in time is 4PM'), read 2026-11-05",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 38, "max_rig_ft": 95},
+      "source": "recreation.gov per-site records for 233599 (38 STANDARD ELECTRIC individual sites besides 1 group camp; longest 95 ft), read 2026-11-05",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233599 ('Electric hookups, flush toilets and other modern amenities are provided'), read 2026-11-05",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Council Grove Lake campground on a small shoreline peninsula by the dam, with a boat ramp and swim area; plenty of shade. The shore sites are 006-013 and 021-025. Site 004 is only 20 ft. --Claude",
+  "summary": "rec.gov: 38 individual electric sites + 1 group camp; season Apr 1-Oct 30; reserve before setting up, same-day booking, 2-night weekend minimum, 14-night max. Fees 27-27 -> 23-29; count 39 -> 38; flush toilets added. Lakefront kept (rec.gov tags 005-025, imagery confirms 006-013/021-024 at the shore). Pin fine.",
+  "flags": [
+    "FEES 27-27 -> 23-29: the per-site fee templates put the 30-amp sites (001-004, 037) at $23 (001-003 are 35-50 ft and fit EKKO), 50-amp $25, 50-amp/water $27, premium $28, full service $29.",
+    "SITES 39 (derived) -> 38 individual sites, excluding the group camp ('GROUP Camp 8 50 Amp Sites', $130). Includes RVOL site 038 (the only sewer site, 50 A, $29) - 'VOL' suggests a volunteer pad, but it is reservable; sewer left unwritten (one site). rec.gov's '43 reservable campsites' counts group pods.",
+    "WATERFRONT lakefront kept: rec.gov 'Lakefront' tags on 005-025; imagery with site coordinates shows 006-010 on the lake side of the loop road 10-30 m from the shore (sand edge, scattered trees; the buoyed swim area is north by 003-005, not in front of them) and 011-013/021-024 on the cove shore within ~10-25 m. A 3,310-acre lake.",
+    "HOOKUPS left as derived (electric 50, water true from RIDB): catalog agrees (50 A on 33 sites, water on most). PIN fine (10 m from the site centroid). PHONE 620-767-5195 matches rec.gov. WEBSITE correct. SAND: none (the sand is the shore/swim beach, not the pads)."
+  ]
+}
