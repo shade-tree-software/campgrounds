@@ -1,0 +1,47 @@
+{
+ "id": 15433,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://koa.com/campgrounds/goodland/ (read 2026-11-06 in a headless browser): '100' Max Length', '50 Max Amp', Wi-Fi, Pool (4/1 - 10/31), pull-thru RV sites with full hookups and 30/50-amp service, 'pull-thru lengths up to 95 feet', Extended Stays offered; Reserve 1-785-890-5701; camper reviews dated 10/18-10/31/2026",
+  "https://koa.com/campgrounds/goodland/reserve/ (koa.py, read 2026-11-06; RV, 2 adults, a 23-ft motorhome, one night, prices before tax): 2026-11-17 only 4 of 9 types open, $60 (Pull Thru 50/30 Full Hookups) to $75; 2027-03-16 4 of 9 open, $45 (Pull Thru 50/30 Full Hookups and Pull Thru 50/30/20 Full Hookups) to $59; 2027-04-13 all 9, $47 (Back In 30 A Water/Electric) to $87; 2027-07-13 and 2027-09-21 all 9, $50 (Back In 30 A Water/Electric) to $90",
+  "Google Maps (gm.py, 2026-11-06): 'Goodland KOA Journey' 4.7 over 829 reviews, phone +1 785-890-5701, website koa.com/campgrounds/goodland/, 1114 US-24, pin 39.33788,-101.69757",
+  "python3 audit/price_research/gateways.py 39.33845,-101.69798: none within 40 km (Denver 286 km)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 45.0, "nightly_high": 90.0, "currency": "USD", "checked": "2026-11-06", "note": "Before tax, one night, 23-ft motorhome: $45 (full-hookup pull-through, off-season, March 2027) to $90 (patio pull-through with a paw pen, summer). In season the cheapest is a $47-50 back-in 30-amp water/electric site."},
+   "source": "https://koa.com/campgrounds/goodland/reserve/ (koa.py quotes for 2026-11-17, 2027-03-16, 2027-04-13, 2027-07-13, 2027-09-21; RV, 2 adults, 23-ft motorhome), read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://koa.com/campgrounds/goodland/ ('50 Max Amp'; full-hookup and water/electric site types on the booking form), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"pull_through": true, "max_rig_ft": 100},
+   "source": "https://koa.com/campgrounds/goodland/ ('100' Max Length'; Pull Thru site types), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/goodland/reserve/"},
+   "source": "https://koa.com/campgrounds/goodland/reserve/, read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"wifi": true},
+   "source": "https://koa.com/campgrounds/goodland/ (amenities: Wi-Fi), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "KOA Journey at 1114 East US Highway 24, Goodland, a mile off I-70: full-hookup and water/electric RV sites, many pull-throughs; pool April-October. --Claude",
+ "summary": "Re-quoted as asked: the cheapest real RV night is $45 (full-hookup pull-through, 2027-03-16, off season) and $47-50 in season for the back-in 30-amp water/electric type; the dearest is $90. That's under the $50 gate, so it passes (no gateway within 40 km needed). Google 4.7 over 829. Hookups, max length, Wi-Fi and the booking link are now read from KOA's own page.",
+ "flags": [
+  "PRICE: passes the $50 gate. In season (April, July, September 2027) the cheapest type is 'Back In, 30 Amps, Water/Electric' at $47-50 (up to 50 ft deep, so a 23-ft rig fits). Off season (Nov 2026, Mar 2027) only 4 of 9 types are open, and the cheapest is $45-60 for a full-hookup pull-through. The earlier $50 low (May 2027 weeknight) was the in-season water/electric rate. No gateway within 40 km.",
+  "Presence: KOA's own site plus phone 785-890-5701 (matches the stored phone). Google 'Goodland KOA Journey' 4.7 over 829 reviews (RV Life 4.5 over 448).",
+  "Long-stay tests: transient I-70 stop. Nightly booking is open to the public, it sells single nights, there are camper reviews from overnighters dated Oct 2026, and nothing says it is mostly seasonal or residential. 'Extended Stays' are offered as a side line, and no age or rig-age rule was seen. Passes.",
+  "Season lead: KOA's booking form sells nights on 2026-11-17 and 2027-03-16 (4 of 9 types), so it looks year-round with reduced winter capacity, but the page doesn't state a season, so season was left unset. Pool 4/1-10/31.",
+  "Not waterfront: confirmed (no water nearby). The pin 39.33845,-101.69798 is ~65 m from Google's 39.33788,-101.69757, which is fine.",
+  "Discounts: stored good_sam false / military true from the Good Sam directory, left as is."
+ ]
+}
