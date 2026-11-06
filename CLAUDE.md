@@ -245,6 +245,8 @@ All Leaflet maps offer a satellite layer that includes three Esri tile layers: W
 
 **No map anywhere carries Leaflet's +/− zoom control** — every `L.map()` call passes `zoomControl: false`. Wheel, pinch, double-click and the keyboard +/− all zoom, so the buttons only spent map area (worst on the small map-picker popup and on phones). Keep new maps consistent.
 
+**Leaflet's controls are restyled once, in `base.html`** (the "Map controls" CSS block): borderless rounded 40px buttons, an SVG layers icon, a slim frosted scale bar, and the attribution prefix without its flag. A new map button should be a `leaflet-bar` control holding an SVG line icon, and it inherits all of that. Don't add a hover/focus rule there — it would outrank page states like the campground map's `.rs-add a.active`.
+
 ### Responsive / Mobile Design
 
 Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-width: 900px` breakpoint for filmstrip reflow. Each template owns its own mobile rules — see those CSS blocks for specifics. Notable behaviors:

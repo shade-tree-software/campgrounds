@@ -1701,7 +1701,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const div = L.DomUtil.create('div', 'leaflet-bar trip-fit-control');
     const a = L.DomUtil.create('a', '', div);
     a.href = '#';
-    a.innerHTML = '&#10064;';
+    // Four frame corners around a short route line: "frame the whole trip".
+    // Stroked like the nav icons; inherits the bar button's navy.
+    a.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M7.5 15.5 10.5 11l3 3 3-5"/></svg>';
     a.title = 'Fit the whole trip';
     a.setAttribute('aria-label', 'Fit the whole trip');
     L.DomEvent.disableClickPropagation(div);

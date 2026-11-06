@@ -37,6 +37,38 @@
   }
   .controls button:disabled:hover { background: var(--gray-light); }
 
+  /* Year arrows: round, outlined chevron buttons. These were solid red
+     blocks holding a text ←/→ — the heaviest thing on the page, and the only
+     text-glyph arrows left beside the nav's SVG line icons. Now quiet like
+     the trip page's ‹ › chevrons; the year itself is the focal point. */
+  .controls .year-step {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--gray-light);
+  }
+  .controls .year-step:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .controls .year-step:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+  .controls .year-step:disabled,
+  .controls .year-step:disabled:hover {
+    background: transparent;
+    border-color: transparent;
+    color: var(--gray);
+    opacity: .3;
+  }
+  .controls .year-step svg { display: block; }
+
   .controls .year-label {
     font-size: 1.3rem;
     font-weight: 700;
@@ -268,6 +300,7 @@
     cursor: pointer;
   }
   .month-pager button:disabled { opacity: .3; }
+  .month-pager button svg { display: block; }
 
   .month-card table {
     width: 100%;
@@ -489,7 +522,7 @@
 
   .tooltip.visible { display: block; }
 
-  /* "All years" toggle, beside the year arrows. Quieter than the red arrows
+  /* "All years" toggle, beside the year arrows. Quiet like the year arrows
      until it's on — it's a mode switch, not the primary control. */
   .controls .btn-all-years {
     background: var(--white);
@@ -519,9 +552,9 @@
 
 {% block content %}
 <div class="controls" id="controls">
-  <button id="prev-year-btn" onclick="prevYear()">&larr;</button>
+  <button id="prev-year-btn" class="year-step" onclick="prevYear()" aria-label="Previous year" title="Previous year"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
   <div class="year-label" id="year-label"></div>
-  <button id="next-year-btn" onclick="nextYear()">&rarr;</button>
+  <button id="next-year-btn" class="year-step" onclick="nextYear()" aria-label="Next year" title="Next year"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
   {# List view only: the list paged one year at a time with no way to see the
      whole record at once. Meaningless for the calendar grid, so JS hides it
      there. #}
@@ -918,14 +951,14 @@ function buildMonthCard(m, withPager) {
     if (withPager) {
       header.classList.add('month-pager');
       const prev = document.createElement('button');
-      prev.innerHTML = '&larr;';
+      prev.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
       prev.setAttribute('aria-label', 'Previous month');
       prev.disabled = (m === 0 && currentYear <= minYear);
       prev.addEventListener('click', prevMonth);
       const label = document.createElement('span');
       label.textContent = MONTH_NAMES[m];
       const next = document.createElement('button');
-      next.innerHTML = '&rarr;';
+      next.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>';
       next.setAttribute('aria-label', 'Next month');
       next.disabled = (m === 11 && currentYear >= maxYear);
       next.addEventListener('click', nextMonth);
