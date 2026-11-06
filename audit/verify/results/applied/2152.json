@@ -1,0 +1,40 @@
+{
+ "id": 2152,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233554 (MINOOKA PARK, USACE, read 2026-11-06): 'Minooka Park Campground offers 159 reservable modern campsites, along with 12-site group camp area'; 'Campsites offer sweeping views of the lake'; notices 'Sites may be available on a first come, first served basis outside of the reservation window'; rules maxConsecutiveStay 14, maxStay 14 'Rolling 30 Days', minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3; no facility phone.",
+  "https://www.recreation.gov/api/camps/campgrounds/233554/rates (read 2026-11-06): Peak Season 2026-05-15 to 2026-09-15 and 2027-05-15 to 2027-09-15: STANDARD NONELECTRIC 18, STANDARD ELECTRIC 24, STANDARD ELECTRIC (water+electric template) 26; 'First-come, First-served Season' 2026-09-16 to 2026-12-31 and 2027-01-01 to 2027-05-14: Walk In STANDARD NONELECTRIC 8, STANDARD ELECTRIC 20.",
+  "https://www.recreation.gov/api/camps/campsites/<id> for all 147 catalogued units (read 2026-11-06): 117 STANDARD ELECTRIC + 28 STANDARD NONELECTRIC individual sites + 2 group units; Electricity Hookup 50 on 35 sites (FENC, BLUE, ARRO, MPAR loops; 25 of them bookable online, none accessible-only), 30 on the rest; Water Hookup Y on 57; no sewer; Driveway Surface Gravel; 17 Pull-Through; Max Vehicle Length 32-107 ft (non-electric 35-69 ft); permitted equipment RV/Trailer/Tent on every site; fee templates show the electric-only sites on the $24 rate and the water-and-electric sites on the $26 rate; no 'Proximity to Water' attribute on any site.",
+  "Esri World Imagery 2026-11-06 with every site's catalog coordinates plotted (1,500 m frame at 38.9395,-98.5735 and 460 m frame at 38.9420,-98.5710)."
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 8, "nightly_high": 26, "currency": "USD", "checked": "2026", "note": "May 15-Sep 15: non-electric $18, electric $24, water and electric $26. The rest of the year sites are walk-in only at $8 non-electric and $20 electric."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233554/rates (2026 and 2027 Peak and 'First-come, First-served Season' tables) and per-site fee_templates, read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true},
+   "source": "recreation.gov campsite records for facility 233554 ('Electricity Hookup' 50 on 25 bookable non-accessible sites; 'Water Hookup' Y on 57 sites; no sewer attribute on any site), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 145, "max_rig_ft": 107, "pull_through": true},
+   "source": "recreation.gov campsite records for facility 233554 (145 individual sites plus 2 group units; 'Max Vehicle Length' to 107; 17 'Pull-Through'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "fcfs": "some_sites", "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "note": "Reserved site-specific on recreation.gov in the peak season (May 15-Sep 15); outside the reservation window sites are first come, first served at walk-in rates. Weekends 2 nights, holiday weekends 3. Up to 14 nights in any 30 days."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233554 (notice 'Sites may be available on a first come, first served basis outside of the reservation window'; rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days') and /rates ('First-come, First-served Season'), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Wilson Lake campground on a peninsula on the south shore; gravel pads, many along the shoreline. --Claude",
+ "summary": "Confirmed 50 A, water, reservable; $8 low is the off-season walk-in non-electric rate (peak $18-26); count 146 -> 145; added pull-throughs, weekend/holiday minimums, 14-in-30 limit, some FCFS. Lakefront confirmed on imagery.",
+ "flags": [
+  "FEES: the stored $8 low is real but off-season: it is the 'First-come, First-served Season' walk-in rate for a non-electric site (Sep 16-May 14). Non-electric sites take RVs and run 35-69 ft, so $8 stands as the base; peak May 15-Sep 15 is $18 non-electric, $24 electric, $26 water and electric (2026 and 2027 tables). A $52 'u40' electric template appears in the rate table but no catalogued site uses it.",
+  "WATERFRONT (stored lakefront) confirmed on imagery with the catalog's per-site coordinates: the outer rows of the D and F loops on the peninsula's east shore (D05-D17, F07-F11) and the C loop's west-shore sites sit on pads outside the loop road with open mown grass running 20-40 m to the shoreline, and the north tip's E/F sites are likewise open to the water. No road or day use between those pads and the lake.",
+  "Count: the catalog holds 145 individual sites (117 electric, 28 non-electric) plus 2 group units; the rec.gov description says '159 reservable modern campsites'. Recorded 145. The Walk-In-only fee season and 22 catalog sites flagged not reservable online make this fcfs some_sites.",
+  "Phone 785-658-2551 not confirmed: recreation.gov's record carries no phone and the USACE Kansas City District pages refuse plain HTTP. Pin fine (~30 m from the all-site centroid 38.94087,-98.57170). Season not stated by rec.gov (rate seasons are not a campground season); left unset. militaryDiscount rule present but not a discount claim; not written."
+ ]
+}
