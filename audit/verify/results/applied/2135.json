@@ -1,0 +1,51 @@
+{
+ "id": 2135,
+ "checked": "2026-11-06",
+ "sources": [
+  "recreation.gov facility 233418 (https://www.recreation.gov/camping/campgrounds/233418, API read 2026-11-06): 'The campground offers 33 campsites, 19 of which have electric and water hookups.' 'Amenities include flush and vault toilets, showers, drinking water and a dump station.' Contact '(785) 549-3318'. Rules: maxStay 14 nights 'Rolling 30 Days'; minHolidayWeekendStay 0. Notice: 'Generators are allowed on nonelectric sites until quiet hours begin at 10 PM.'",
+  "recreation.gov rate table (https://www.recreation.gov/api/camps/campgrounds/233418/rates), read 2026-11-06: 'Peak Season' 2026-05-01..2026-09-29 (and 2027-05-01..2027-09-29): 'STANDARD ELECTRIC 30 Amp / Water' $24, 'STANDARD NONELECTRIC' $20; no other season listed",
+  "recreation.gov campsite catalog (https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233418), read 2026-11-06: 33 sites, 19 STANDARD ELECTRIC (30 A + water) and 14 STANDARD NONELECTRIC (site 15 'Not Reservable'); all paved; max vehicle length 45-78 ft (site 03 78 ft pull-through, site 08 75 ft pull-through); numbers run 01-45 with gaps (13, 18-19, 35-43 absent)",
+  "recreation.gov availability calendar, read 2026-11-06: nothing bookable Nov 2026-Apr 2027; May 2027 'Available'/'Open' on 32 sites from 2027-05-01",
+  "USACE Kansas City District, Arrow Rock Park page, Wayback 2026-02-09 (https://web.archive.org/web/20260209143710/https://www.nwk.usace.army.mil/Locations/District-Lakes/Melvern-Lake/Arrow-Rock-Park/; live page 403): 'Located about halfway up the south side of the lake, Arrow Rock is perhaps our most scenic park. There are 43 campsites: 19 with water/30 amp electric hookups, and 24 basic campsites.' 'trailhead behind the shower facilities'; 'During the recreation season, the entrance booth is open'",
+  "Esri World Imagery with the catalog's site coordinates plotted, 220 m and 140 m frames, 2026-11-06"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 20, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "recreation.gov 2026 peak season (May 1-Sep 29): $24 for 30-amp electric and water, $20 basic."},
+   "source": "recreation.gov rate table for 233418, read 2026-11-06 (the stored $16/$22 matches no rate on it)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30, "water": true},
+   "source": "recreation.gov catalog + USACE page ('19 with water/30 amp electric hookups'), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 43, "max_rig_ft": 78, "pull_through": true, "note": "19 sites with 30-amp electric and water, 24 basic. recreation.gov lists 33 (all 19 electric plus 14 basic); the rest are not on it. Paved pads; sites 03 and 08 are long pull-throughs."},
+   "source": "USACE Arrow Rock page (Wayback 2026-02-09) for the 43; recreation.gov catalog for lengths and pull-throughs, read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+   "source": "recreation.gov facility description for 233418, read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233418", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Bookable on recreation.gov for the May 1-Sep 29 season; 33 of the 43 sites are listed there and the rest are first-come. Stays are limited to 14 nights in any 30 days at the lake."},
+   "source": "recreation.gov facility rules, rate seasons and calendar for 233418 + USACE page count, read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Melvern Lake park halfway along the south shore, on a point. 43 paved sites: 19 with 30-amp electric and water, 24 basic. Showers, flush and vault toilets, drinking water, a dump station, boat ramp and dock; the Tallgrass Heritage Trail starts here. Booked on recreation.gov for May 1-Sep 29. Generators are allowed on basic sites until 10 PM. --Claude",
+ "summary": "rec.gov + USACE page: fees 16/22 -> 20/24 (2026 peak rates); 30 A/water, 43 sites (rec.gov lists 33), 78 ft max confirmed; pull-throughs, showers, flush/vault toilets, water and dump added; booking on rec.gov, some sites FCFS, 14 nights in 30. Lakefront stands (west-rim sites 09/10/14, 40-55 m across open shore). Pin OK.",
+ "flags": [
+  "FEES CHANGE 16/22 -> 20/24: recreation.gov's rate table shows $24 electric / $20 basic for every peak season 2019-2028, with no off-peak rate. The stored $16/$22 matches nothing I could find.",
+  "SITE COUNT: the USACE page says 43 (19 + 24 basic); recreation.gov's description and catalog say 33 (19 + 14). I kept 43. The catalog skips numbers 13, 18-19 and 35-43, which fits about 10 off-system basic sites, so fcfs is 'some_sites'.",
+  "SEASON not written: recreation.gov books only May 1-Sep 29 (nothing on the calendar Nov-Apr), and USACE mentions a 'recreation season' with booth hours but gives no dates. Whether the campground stays open first-come off-season is unknown.",
+  "WATERFRONT 'lakefront' stands. Sites 09 and 10 (NW spur) and 14 sit on the west rim of the point with no road on the lake side: 09 is about 40 m from the water and 14 about 55 m, across open grass and a pale exposed-shore apron with a few trees. Sites 12 and 07 have more tree cover. The wide pale band is exposed lakebed at low pool, so the water is closer at normal pool.",
+  "PIN 38.4903,-95.7617 is about 30 m from the catalog centroid (38.49058,-95.76161), between the two loops. OK.",
+  "PHONE 785-549-3318 confirmed (recreation.gov and USACE). WEBSITE recreation.gov fine. Military and interagency discounts not written (recreation.gov flags militaryDiscount; brief says leave it).",
+  "UNREAD live: nwk.usace.army.mil (403 to plain HTTP), so I read the 2026-02-09 Wayback capture.",
+  "SAND: none (paved pads)."
+ ]
+}
