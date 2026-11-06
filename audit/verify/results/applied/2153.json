@@ -1,0 +1,47 @@
+{
+ "id": 2153,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233896 (read 2026-11-06): 'Sylvan Park Campground is located below the dam at Wilson Lake ... A few campsites overlook the Saline River exiting the dam, while a handful of other sites overlook the Old Saline River channel'; 'offers 27 reservable modern campsites, along with an 8-site group camp area and large group picnic shelter ... Most campsites offer sweeping views of the surrounding prairie, in addition to a handful of sites which offer a beautiful view of the Saline River'; amenities Entrance Station, Flush Toilets, Playground, Showers; facility_phone 785-658-2551; rules maxStay 14 'Rolling 30 Days', minWeekendStay 2 ('Ignore Holidays'), minHolidayWeekendStay 3, reservationCutOff 0; notice 'Sites may be available on a first come, first served basis outside of the reservation window'.",
+  "https://www.recreation.gov/api/camps/campgrounds/233896/rates (read 2026-11-06): Peak Season 2026-05-15..2026-09-15 STANDARD ELECTRIC $26, electric+water+sewer $28, STANDARD NONELECTRIC $18; 'First-come, First-served Season Walk In' 2026-01-01..05-14 and 2026-09-16..12-31 STANDARD ELECTRIC $20, STANDARD NONELECTRIC $10 (same pattern 2027).",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233896&size=1000 (read 2026-11-06): 25 family sites 01-25 (24 standard electric, 09 non-electric), all reservable, paved, 60-137 ft, pull-throughs 02-08 and 14-25; 30 A on 01-13, 50 A on 14-25 (accessible); water on every electric site; sewer on 12 and 13 ($28); group site GS2 (8 sites) and day-use shelter GS1.",
+  "Esri World Imagery 2026-11-06 (400 m and 900 m frames with the rec.gov site points) and USGS NAIP 2026-11-06 (200 m frame at 38.9693,-98.4905): the campground is downstream of the Wilson Dam embankment; the Saline River leaves the stilling basin in a straight riprapped outlet channel whose water is only ~10-13 m wide; the east-side pads (01, 03, 08, 09) are ~40-60 m from it behind the park road, a tree line and the riprap bank."
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 10, "nightly_high": 28, "currency": "USD", "checked": "2026", "note": "May 15-Sep 15 (reservation season): electric sites $26, the two sewer sites $28, non-electric site $18. Rest of the year first-come: electric $20, non-electric $10."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233896/rates (2026 Peak and Walk In seasons) and per-site prices in recreation.gov's campsite search for asset 233896, read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "note": "50 A on sites 14-25, 30 A on 1-13; site 9 has none. Sites 12 and 13 have sewer."},
+   "source": "recreation.gov campsite records for asset 233896 ('Electric Hookup' 30 on 01-13, 50 on 14-25, all reservable; 'Water Hookup' on every electric site; 'Sewer Hookup' on 12 and 13), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 25, "max_rig_ft": 137, "pull_through": true},
+   "source": "recreation.gov campsite records for asset 233896 (25 family sites 01-25 plus group site GS2 and day-use shelter GS1; 'Max Vehicle Length' 137 on 23 and 25; pull-throughs 02-08, 14-25), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233896 (amenities 'Flush Toilets', 'Showers'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "note": "Site-specific on recreation.gov May 15-Sep 15, bookable up to the day of arrival; the rest of the year sites go first-come. Weekends 2 nights, holiday weekends 3. Up to 14 nights in any 30 days."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233896 (rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days', reservationCutOff 0; first-come notice) and /rates (Walk In seasons Jan 1-May 14 and Sep 16-Dec 31), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Wilson Lake campground below the dam, on prairie beside the Saline River's riprapped outlet channel; boat ramp, hiking trails, volleyball court and playground nearby. --Claude",
+ "summary": "rec.gov: 25 paved sites (24 electric 30/50 A + water, 2 with sewer, 1 non-electric), $26-28 reserved May 15-Sep 15, first-come $20 / $10 non-electric off-season (the $10 low is the off-season non-electric walk-in), 2-night weekends. Waterfront DOWN riverview -> not waterfront: the outlet channel is ~10-13 m wide (creek size) behind the road, trees and riprap.",
+ "flags": [
+  "WATERFRONT DOWNGRADE (riverview -> not waterfront; apply.py does not write waterfront): the campground is below Wilson Dam (no lake value). The water it 'overlooks' is the Saline River's straight riprapped outlet channel, ~10-13 m of water on NAIP at 38.9693,-98.4905 (4.5 px/m), so it is creek-size by the ~30 m rule and riverview does not apply (no creek-view value exists). The nearest pads (01 38.968663,-98.491493; 03 38.968981,-98.491307; 08 38.969459,-98.491412; 09 38.969650,-98.491262) are ~40-60 m from it behind the park road, a tree line and the riprap bank. rec.gov's 'a few campsites overlook the Saline River' is the only support and is operator prose. The 'Old Saline River channel' lies north-west by the group area, well away from the family sites. Suggested waterfront_evidence: 'rec.gov per-site coords on Esri+NAIP 2026-11-06: below Wilson Dam; outlet channel ~10-13 m wide (creek size), 40-60 m from pads 01/03/08/09 behind park road, trees and riprap; not waterfront'.",
+  "FEES: the stored $10 low is real: the off-season (Sep 16-May 14) first-come rate for the one non-electric site (09, 70 ft, fits). Reservation-season low is $18 (non-electric) / $26 (electric). Rate seasons not written as a campground season.",
+  "SITES: count 25 family sites (rec.gov's '27 reservable' counts GS1 day-use shelter and GS2 group site). Stored 26 corrected.",
+  "PIN: stored 38.9695,-98.4921 is at the site centroid (38.96954,-98.49212). Fine.",
+  "Phone 785-658-2551 confirmed (rec.gov facility_phone). Website https://www.recreation.gov/camping/campgrounds/233896 confirmed.",
+  "militaryDiscount rule value 1 present; not a discount claim."
+ ]
+}

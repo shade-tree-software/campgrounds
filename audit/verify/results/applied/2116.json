@@ -1,0 +1,48 @@
+{
+ "id": 2116,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 (read 2026-11-06): 'Open year round.'; '2027 CAMPSITES Holiday Minimum Stay Rule: Memorial Day: 3 night minimum ... Independence Day: 3 night minimum ... Labor Day: 3 night minimum'; '14 days maximum consecutive stay rule: A guest may reserve and occupy a campsite for up to 14 consecutive nights within a single campground. After 14 consecutive nights, a guest wishing to remain in the state park must relocate to a different campground within the park'; loops include Rocky Ford (loopID 510654) and River Pond (510332) as separate campgrounds; 'calling the state park office ... 785.539.7941'.",
+  "campitks.gov site list for loop Rocky Ford (41 sites, 119-159) and campsiteDetails.page?parkID=519132&siteID=<id> for each (read 2026-11-06): all 'Standard with Water and Electric', 'Electricity Hookup: 50/30/20', 'Water Hookup: Y', 'Number of Utilities: 2', 'Site Reserve Type: Site-Specific', 'Self Reg Allowed: Y', 'Driveway Entry: Back-In', 'Maximum Vehicle Length' 47-89, 'Site Surface: Gravel', 'Shade: Ample', 'Shower House with Restrooms: Within 1/4 Mile', 'Modern Restrooms: Within 1/4 Mile'; 'Prime Site: Y' on 119-130; 'Proximity to Water' Y on 21 (119, 120, 122, 124, 126, 128, 130-144), 'Across Road' on 5, None on 15 (145-159); 'River/Lake View: Y' on 119-144; GIS coordinates per site.",
+  "Esri World Imagery and USGS NAIP 2026-11-06 with the campitks site coordinates plotted (2.2 km, 800 m and 220 m frames).",
+  "Not read: https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/tuttle-creek (KDWP answers 403 to plain HTTP; the Wayback capture of 2026-07-14 was refused with a bot block, not retried)."
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true},
+   "source": "campitks.gov campsiteDetails.page for parkID 519132, loop Rocky Ford ('Standard with Water and Electric', 'Electricity Hookup: 50/30/20', 'Water Hookup: Y' on all 41), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 41, "max_rig_ft": 89, "pull_through": false},
+   "source": "campitks.gov site list and campsiteDetails.page for parkID 519132, loop Rocky Ford (41 sites; 'Maximum Vehicle Length' 47-89; 'Driveway Entry: Back-In' on all), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true},
+   "source": "campitks.gov campsiteDetails.page for parkID 519132, loop Rocky Ford ('Shower House with Restrooms: Within 1/4 Mile', 'Modern Restrooms: Within 1/4 Mile'), read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 ('Open year round.'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "reserveamerica", "url": "https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132", "max_stay_nights": 14, "min_stay": [{"nights": 3, "applies": "holiday", "season": "Memorial Day, Independence Day and Labor Day weekends (2027 rule)"}], "note": "Every site reserves site-specific on Kansas's ReserveAmerica site (campitks.gov); unreserved sites allow self-registration on arrival. 2027 holiday minimum: 3 nights over Memorial Day, July 4th and Labor Day weekends. Up to 14 consecutive nights in one campground, then move to another campground in the park."},
+   "source": "https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 ('2027 CAMPSITES Holiday Minimum Stay Rule'; '14 days maximum consecutive stay rule') and campsiteDetails ('Site Reserve Type: Site-Specific', 'Self Reg Allowed: Y' on all 41), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Tuttle Creek State Park campground below the dam on the south shore of River Pond, the dam's outlet pool; sites under mature shade, the north row along the shore and the south loop back in the woods. --Claude",
+ "summary": "campitks 519132 loop Rocky Ford: 41 back-in W/E sites (50/30/20 A), 47-89 ft, gravel, 12 prime (119-130); showers within 1/4 mi; open year round; site-specific reservable, self-reg allowed; 2027 holiday 3-night minimum, 14-night cap. Waterfront pond -> lakeview proposed (River Pond is far over 5 acres; shore row under canopy). Pin ~300 m off (in the water). Fees as stored match the KDWP shape.",
+ "flags": [
+  "WATERFRONT (apply.py doesn't write it): stored 'pond' -> propose LAKEVIEW. River Pond is the outlet pool below Tuttle Creek dam, so it has no Tuttle Creek LAKE value, but River Pond itself is far over ~5 acres (imagery: ~900 x 500 m of open water, tens of hectares), so 'pond' is the wrong class. The shore row 130-144 sits ~10-25 m from the water edge and 119-129 ~20-40 m, but entirely under summer tree canopy on both Esri and NAIP, so the open-apron rule cannot be confirmed: lakefront is not earned, go down. campitks tags 'Proximity to Water: Y' on 21 sites and 'River/Lake View: Y' on 26 (119-144); the south loop 145-159 (15 sites, 'None') is ~60-110 m back in woods. 'About half on the shoreline' matches the operator tags (21 of 41) but is a claim the imagery can't check. If AWH knows the bank is open, 130-144 would be lakefront.",
+  "STORED EVIDENCE WAS READ AT THE WRONG PLACE: waterfront_evidence describes 'the west-pond-shore camping where spurs sit ~15-25m from the water' - that is the River Pond campground (a separate campitks loop, west shore), not Rocky Ford on the south shore. Replace it with the read above.",
+  "PIN MOVE: stored 39.2480,-96.5860 sits at/in River Pond's water ~300 m NW of the sites; campitks site centroid 39.24539,-96.58465. Move to 39.2455,-96.5847.",
+  "WEBSITE (apply.py doesn't write it): replace https://www.reserveamerica.com/explore/tuttle-creek-state-park/KS/519132/overview with https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 (keep https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/tuttle-creek).",
+  "Phone 785-539-7941 confirmed (campitks park page '785.539.7941'). KDWP's park page could not be read (403; Wayback refused), so the KDWP site-mix count and the stored dump station are not re-confirmed; stored facilities.dump (derived from note prose 'own dual dump station') left alone.",
+  "FEES: stored fees already carry the 2114/2107 shape (permit $17.75 + electric $11 + water $2, prime $2); campitks confirms the mix (41 water-and-electric, no sewer, 12 prime sites 119-130), so no fee change.",
+  "FCFS: all 41 sites reserve site-specific and allow self-registration; KDWP's reservable/not-reservable split could not be read, so fcfs left unset."
+ ]
+}

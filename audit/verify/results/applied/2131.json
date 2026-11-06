@@ -1,0 +1,42 @@
+{
+ "id": 2131,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233659 (read 2026-11-06): 'Venango Park offers a total of 132 faciltites. There are 126 campsites, 5 day use shelters, and 1 group camp. The 126 campsites are a mixture of electric with water, electric only, primitive, and double sites. Other amenities include flush toilets, drinking water, showers, a dump station, boat ramp, beach, playground and nature trail'; 'located on the eastern shores of Kanopolis Lake'; 'situated on the shady tree-dotted shoreline. Sandstone bluffs ...'; amenities incl. Dump Station, Flush Toilets (Seasonal), Showers (Seasonal), Vault Toilets, Drinking Water (peak season), Electric Hookups, Water Hookups, Waterfront Sites; facility_phone 785-546-2294; rules maxStay 14 nights 'Rolling 30 Days', maxConsecutiveStay 14, minWeekendStay 2, minHolidayWeekendStay 3.",
+  "https://www.recreation.gov/api/camps/campgrounds/233659/rates (read 2026-11-06): Peak Season 2026-05-01..2026-09-30 (same 2027): STANDARD ELECTRIC $24 (50 A + water) / $22 (electric only), STANDARD NONELECTRIC $18, double sites $27-36, group camp $75, shelters $20.",
+  "recreation.gov campsite search for asset 233659 (read 2026-11-06): 86 reservable STANDARD ELECTRIC and 32 reservable STANDARD NONELECTRIC sites in loops A, B, C, D, E, K, plus 5 non-reservable ADMIN sites, 5 shelters ('NOT A CAMPSITE') and Redwood Group Camp; 50 A + water on A01-A11D, D03/05/10/12/14/43-48, E02-E16; 50 A electric only on K01-K07; 30 A electric only on A13-A20, B, C, and the rest of D; 'Max Vehicle Length' up to 65 (B20, C41), electric up to 62 (B12); pull-through D21, D23, D49, D50; 'Proximity to Water: Lakefront' on A16-A18, A29, B14, B20, D10, D24-D26, D28, D35, E08D, E10, K04-K07; per-site coordinates.",
+  "Esri World Imagery 2026-11-06 with the per-site coordinates plotted (1.4 km frame; 220-280 m frames on loops A, B, K and D)."
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 18, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "May 1-Sep 30 (2026-2027 tables): non-electric $18, electric only $22, 50 A electric with water $24; double sites $27-36."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233659/rates (Peak Season STANDARD NONELECTRIC $18, STANDARD ELECTRIC $22/$24) and per-site prices in recreation.gov's campsite search for asset 233659, read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 118, "max_rig_ft": 65, "pull_through": true},
+   "source": "recreation.gov campsite records for asset 233659 (86 + 32 reservable standard sites, excluding 5 admin sites, shelters and the group camp; 'Max Vehicle Length' up to 65; pull-through D21, D23, D49, D50), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233659 ('flush toilets, drinking water, showers, a dump station'; amenities 'Vault Toilets'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233659", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "note": "Site-specific on recreation.gov. 2-night weekend and 3-night holiday-weekend minimums on advance bookings; recreation.gov may relax them for a same-day booking. Up to 14 nights in any 30 days."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233659 (rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days'), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Kanopolis Lake campground spread over an open, lightly treed headland on the east shore below sandstone bluffs; several loops reach the shoreline, the rest sit on the upland behind. --Claude",
+ "summary": "rec.gov 233659: 118 reservable sites (non-electric $18, electric $22, 50 A W/E $24, May-Sep tables), max 65 ft, showers, flush/vault toilets, dump; weekend 2 / holiday 3 minimums, 14-night cap. Waterfront: lakeview -> LAKEFRONT proposed on a per-site check (D24-D28, K05-K07, A17-A18 open to the water). Stored max 80 ft corrected to 65.",
+ "flags": [
+  "WATERFRONT UPGRADE PROPOSED (apply.py doesn't write it): stored lakeview -> LAKEFRONT. Per-site check, rec.gov coordinates on Esri imagery: D24, D25, D26, D28 (non-electric) sit ~15-30 m from the south-tip shore across open mown grass with only a post fence at the edge; K05-K07 (50 A electric) ~25-40 m from the rocky west shore across open grass, no road between; A17-A18 (30 A) at the bluff edge ~15-25 m above the shore with scattered trees. Not confirmed: A16, A29, B14, B20 (40-80 m, scrub), D10, D35, E08D, E10 (east shore, ~30-50 m through trees). So about 9 of 118 sites are lakefront by the open-apron rule (rec.gov tags 18 'Lakefront', a claim); the C and E loops and most of A/B/D are upland lakeview or no view. Lake level fluctuates (exposed sand/rock apron at the imagery date). If AWH prefers the bulk value, lakeview stays.",
+  "Stored waterfront_evidence (\"RV finger-pad loops on open upland 150-400m from the lake\") was a whole-park read; per the brief it may share the 2084 Horsethief mix-up, so it is replaced by the per-site read above rather than reused.",
+  "sites: stored max_rig_ft 80 (note prose) is wrong: 80 is a tent-pad figure on K01; RV max is 65 (B20, C41 non-electric), 62 on electric (B12). Count 118 excludes 5 admin sites, 5 shelters and the group camp (rec.gov's own description says 126 campsites).",
+  "hookups (RIDB-derived 50 A / water) confirmed by the bookable sites; left alone. No sewer.",
+  "No campground season stated (only a May 1-Sep 30 rate season); season left alone. The off-season notice is about Riverside Park, a different Kanopolis campground.",
+  "PIN: stored 38.6302,-97.9823 = the site centroid (38.63021,-97.98233), which falls in the open middle of the headland between loops; fine. Phone 785-546-2294 confirmed. A militaryDiscount rule is present on rec.gov (not written)."
+ ]
+}

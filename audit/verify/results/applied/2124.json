@@ -1,0 +1,46 @@
+{
+ "id": 2124,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233621 (SANTA FE TRAIL, USACE, read 2026-11-06): 'Santa Fe Trail Campground offers 35 reservable campsites, including one group camping area'; 'Electric hookups, flush toilets and other modern amenities are provided'; amenities Boat Ramp, Dump Station, Showers, Vault Toilets; notice 'Campsite must be reserved prior to setting up camping equipment'; rules maxConsecutiveStay 14, maxStay 14 'Rolling 30 Days', minWeekendStay 2 (no soft/secondary value); facility_phone 620-767-5195.",
+  "https://www.recreation.gov/api/camps/campgrounds/233621/rates (read 2026-11-06): Peak Season 2026-04-01 to 2026-10-30 and 2027-04-01 to 2027-10-30: electric-only template (u18) $22, water-and-electric (u22) $27, sewer template $29, tent-only nonelectric (u14) $17, group $240; no walk-in or off-season rate after 2021.",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:233621 (all 33 units, read 2026-11-06): 31 STANDARD ELECTRIC + 1 TENT ONLY NONELECTRIC (014) + 1 group area (S-1); Electric Hookup 50 on sites 018-032 (all bookable, none accessible-only), 30 on 001-017; Water Hookup Yes on all electric sites except 015-017; Sewer only on 023 (sites 001/002 notice 'This site no longer has sewer hookups available'); Max Vehicle Length 39-102 ft (009 pull-through 102); pull-throughs 009, 015, 016; per-site 'Proximity to Water: Lakefront' on most sites; sites 001-017 and 023 carry a campsite rule reservationWindow 4 Days; July 2026 site prices $22 (015-017), $27, $29 (023).",
+  "Esri World Imagery 2026-11-06 with every site's catalog coordinates plotted (660 m frame at 38.6845,-96.5262; 220 m frames at 38.6858,-96.5285 and 38.6829,-96.5236)."
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 22, "nightly_high": 29, "currency": "USD", "checked": "2026", "note": "Apr 1-Oct 30 (2026 and 2027): electric-only sites $22, water and electric $27, the one sewer site $29. Tent-only site $17."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233621/rates (2026 and 2027 Peak Season tables) and per-site prices in recreation.gov's campsite search for asset 233621, read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "note": "50 A at sites 18-32, 30 A at 1-17; sites 15-17 have electric only. One site (23) has sewer."},
+   "source": "recreation.gov campsite records for asset 233621 ('Electric Hookup' 15/20/30/50 on 018-032, all bookable and none accessible-only; 'Water Hookup' Yes on 28 sites; Sewer only on 023), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 32, "max_rig_ft": 102, "pull_through": true},
+   "source": "recreation.gov campsite records for asset 233621 (31 standard electric + 1 tent-only site, plus group area S-1; 'Max Vehicle Length' to 102 on pull-through 009; pull-throughs 009, 015, 016), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233621 (amenities 'Showers', 'Vault Toilets', 'Dump Station'; description 'flush toilets'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "min_stay": [{"nights": 2, "applies": "weekend"}], "max_stay_nights": 14, "note": "Site-specific on recreation.gov; 'Campsite must be reserved prior to setting up camping equipment.' Sites 1-17 and 23 can be booked only 4 days ahead. Weekends 2 nights. Up to 14 nights in any 30 days. Check-in 4 PM, check-out 3 PM."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233621 (notices; rules minWeekendStay 2, maxStay 14 'Rolling 30 Days') and campsite records (reservationWindow 4 Days on 001-017 and 023), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Council Grove Lake campground on two points along the south shore; the lake-side sites in the northwest loop sit behind a strip of shoreline trees. --Claude",
+ "summary": "Confirmed 50 A, water, reservable; fees $26-29 -> $22-29 (electric-only $22); count 33 -> 32 (excl. group); added pull-throughs, showers/flush/vault/dump, weekend 2-night minimum, 14-in-30 max. Lakeview confirmed (tree fringe on the shore).",
+ "flags": [
+  "WATERFRONT (stored lakeview) confirmed on imagery with catalog coordinates: rec.gov tags most sites 'Lakefront' (a claim). Northwest loop (018-032): the lake-side pads (025, 026, 028, 030, 031) are 20-35 m from the shoreline across a continuous strip of shoreline trees and a sand strip, so filtered views, not open ground. Southeast point (001-013): the gravel cul-de-sac sites 004-007 sit 10-20 m from a cove with a tree fringe along most of the shore; 010-013 sit above the cove behind trees. Canopy can't confirm open apron; lakeview stays. Possible lakefront lead only for 005/006 on the point tip, where an RV pad appears to sit at the cove's edge, but the edge is partly treed.",
+  "Count: rec.gov description says '35 reservable campsites, including one group camping area'; the catalog holds 31 standard electric sites, 1 tent-only (014) and the group area S-1 (16 group sites 'New for 2026' per its notice). Recorded 32 individual sites (31 RV).",
+  "Fees: stored low $26 is a template no site uses in 2026; the electric-only sites 015-017 are $22. Off-season: no rate after Oct 30 in the 2026-2028 tables (no walk-in season since 2021); season left unset (rate seasons are not a campground season).",
+  "Sewer: one site (023) has sewer; sites 001/002 carry notice 'This site no longer has sewer hookups available'. hookups.sewer not written (one site).",
+  "Phone 620-767-5195 confirmed (recreation.gov facility_phone). Pin 38.6845,-96.5264 is ~5 m from the all-site centroid 38.68450,-96.52637 (between the two loops, on the group area): fine. militaryDiscount rule present but not a discount claim; not written."
+ ]
+}

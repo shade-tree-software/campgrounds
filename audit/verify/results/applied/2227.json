@@ -1,0 +1,48 @@
+{
+ "id": 2227,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://triplejrvpark.com/ (read 2026-11-06): 'We are \"Big Rig\" friendly with 70′ level pull-thrus! New fully furnished rental cabins and tent sites available'; amenities '30/50 Amp service, Pull-thrus, Level sites, Water, Sewer, Free Wi-Fi, Cable, Hot Showers, Clean Restrooms, Clean Modern Laundry Facility ... Convenience Store, Clubhouse / Meeting Room, Storm Shelter ... Good Sam Discount, Military Discount, Senior Citizen Discount, AAA Discount, Extended Stay Discounts'; RATES 'Full Hook-up RV Pull Thru – Daily Electric, Water, and Sewer $52.80 / night (50 Amp) 10% discount for Good Sam, Vets, and AARP ($48.00 per night)'; 'Weekly $250 / weekly (30 Amp) $275 / weekly (50 Amp)'; 'Monthly $650 / monthly'; 'Tent Site $30 / night'; '70 level & spacious RV sites with FREE Wi-Fi and cable'; 'Reserve Now' links https://app.fireflyreservations.com/Kiosk/Property/TripleJRVPark.",
+  "Good Sam directory cache trip_data/goodsam_parks.json (fetched 2026-10-02): \"Triple 'J' RV Park\", Russell KS, gs true, military true, phone 7854834826.",
+  "Google Maps (headless browser, 2026-11-06): 'Triple-J Camper Park' 4.4 stars from 449 reviews, +1 785-483-4826, triplejrvpark.com, 187 E Edward Ave, Russell; place pin 38.86660,-98.85775.",
+  "audit/price_research/gateways.py 38.8664,-98.8573 -> none within 40 km.",
+  "The Firefly booking kiosk was not queried: it sits behind a reCAPTCHA, which the private-gap README says not to automate."
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 52.8, "nightly_high": 52.8, "currency": "USD", "checked": "2026", "note": "Full-hookup 50 A pull-through $52.80 a night; Good Sam members, veterans and AARP $48. Weekly $250 (30 A) / $275 (50 A), monthly $650. Tent sites $30."},
+   "source": "https://triplejrvpark.com/ (RATES: '$52.80 / night (50 Amp) 10% discount for Good Sam, Vets, and AARP ($48.00 per night)'), read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://triplejrvpark.com/ ('30/50 Amp service', 'Water', 'Sewer'; 'Full Hook-up ... Electric, Water, and Sewer'), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 70, "pull_through": true},
+   "source": "https://triplejrvpark.com/ ('70 level & spacious RV sites', '70′ level pull-thrus'), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "laundry": true, "wifi": true, "camp_store": true},
+   "source": "https://triplejrvpark.com/ (amenities 'Hot Showers', 'Clean Modern Laundry Facility', 'Free Wi-Fi', 'Convenience Store'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://app.fireflyreservations.com/Kiosk/Property/TripleJRVPark", "note": "Book online through the park's Firefly page or by phone."},
+   "source": "https://triplejrvpark.com/ ('Reserve Now' -> https://app.fireflyreservations.com/Kiosk/Property/TripleJRVPark; 'Questions? Call Now'), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Private travel park off I-70 in Russell, a few minutes from downtown restaurants; level 70-ft pull-throughs with cable, rental cabins, clubhouse and storm shelter. Older park with interstate noise. --Claude",
+ "summary": "Operator site (live 2026-11-06): $52.80 a night (50 A full hookup), $48 Good Sam/veteran/AARP; 70 sites, 70-ft pull-throughs, 30/50 A full hookups, showers, laundry, Wi-Fi, store. Over $50 but a Good Sam Park whose posted member rate is $48, so it passes the gate (AWH 2026-10-14 rule; 2227 was restored on it). Google 4.4/449.",
+ "flags": [
+  "PRICE GATE: cheapest RV night is the only posted daily rate, $52.80 (50 A full-hookup pull-through; no 30 A or back-in daily rate is posted; tax not stated). Over US$50 and no gateway (gateways.py: none within 40 km), BUT it is a Good Sam Park (directory gs true; the site posts a '$48.00 per night' Good Sam rate). Under the AWH 2026-10-14 rule (test the posted Good Sam rate) it passes at $48, and 2227 was one of the four entries restored on that rule. NOT a drop candidate. No dated engine quote: the Firefly kiosk has a reCAPTCHA (not automated).",
+  "WEBSITE FIELD MALFORMED (apply.py does not write it): stored website is two URLs joined by a newline ('https://triplejrvpark.com/\\nhttps://app.fireflyreservations.com/Kiosk/Property/TripleJRVPark'). Set website to https://triplejrvpark.com/; the Firefly link now sits in booking.url.",
+  "Phone 785-483-4826 confirmed (operator, Good Sam directory, Google).",
+  "PRESENCE: website + phone; Google 4.4 from 449 reviews. LONG-STAY: monthly $650 and extended-stay discounts offered, but it is an I-70 overnight park with 449 Google reviews; not long-stay in character.",
+  "Not waterfront confirmed (stored evidence: town rows, small pond ~400 m SE). PIN: stored 38.8664,-98.8573 vs Google 38.86660,-98.85775, ~45 m. Fine.",
+  "discounts.good_sam / military (derived from the directory) are also stated on the operator page ('Good Sam Discount', 'Military Discount'); left as stored."
+ ]
+}

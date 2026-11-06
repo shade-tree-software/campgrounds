@@ -1,0 +1,53 @@
+{
+ "id": 2232,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://sycamorespringswhitetails.com/ (read 2026-11-06): '785-285-8800'; 'Reserve a RV site'; 'Campground is Open Seasonally From May 1st to November 1st'; 'Camping Electric, water and Sewer $50/night, Electric and Water $45/night, Electric only $30/night, Non Electric Tent (3 tent) $25/night'; 'Do NOT follow your gps or phone guidance they will take you on gravel roads'.",
+  "https://sycamorespringswhitetails.com/camping (read 2026-11-06): 'Book and RV or Tent site' (links https://www.roverpass.com/c/sycamore-springs-whitetail-ranch-rv-park-sabetha-ks/booking/); 'Camping 120 sites'; 'Check-in time: 12:00pm Check-out time: 12:00pm'; 'Electric Only 20amp, 110v ........$33.00, Rv electric only-30amp.......$33.00; RV Partial Water and electric only - 30amp ... $44.00; RV Full Hookup Sewer, Water & Electric - 30 & 50 amp ... $55.00; Deluxe Private Rv Site Water, Sewer, Electric 30 & 50 Concrete Patio........$66.00'; 'Weekly Rate ....... $300.00 (Weekly activity pass $35/person) Monthly Rate ........ $850 Season Rate ........ $3000 (6 Months) New Larger Sites With Cement Patios Season Rate ... $4200 (6 Months)'; 'Daily Activity Pass $12.00/person'.",
+  "https://sycamorespringswhitetails.com/daily-activity-pass (read 2026-11-06): 'Camping May 1st-November 1st: Electric, water and Sewer $50/night, Electric and Water $40/night, Electric only $30/night'; 'Daily Activity Pass $12/ person ... This pass is for all park activities all day long except kayak rental.' https://sycamorespringswhitetails.com/fishing: 'Come Fish in our new Fishing pond'.",
+  "RoverPass booking engine via audit/private_gap_browser/roverpass_api.py (read 2026-11-06): 'Sycamore Springs Whitetail Ranch RV Park', 3126 Bittersweet Rd., phone +1 785285-8800, isBookable true (instant), closeSeasonDates 2026-11-03..2027-04-29; Tue 2027-06-08: Electric Only $30, Water & Electric (30 Amp) $40, Full Hook-up (30/50 Amp) $50, Full Hookup with Patio $60, Primitive $25; Sat 2027-06-12: Electric Only $33 (one rate $30), W&E $45, Full $55, Patio $60. One-night Electric Only quote: $30 + $3.50 platform fee + $1.09 processing = $34.59, tax $0; no activity-pass line item. 90 RV sites listed across the four RV rates, maxLength 20-55 ft, 57 pull-throughs.",
+  "Google Maps (headless browser, 2026-11-06): 'Sycamore Springs Whitetail Ranch' 4.8 stars from 144 reviews, +1 785-285-8800, website sycamorespringswhitetails.com, 3126 Bittersweet Rd, Sabetha.",
+  "audit/price_research/gateways.py 39.9618,-95.7501 -> none within 40 km.",
+  "Esri World Imagery 2026-11-06 (two 700 m frames): pin at the entrance off Bittersweet Rd; camp loops run east under trees along Pony Creek (a narrow wooded creek, far under 30 m); no fishing pond is visible in the imagery (the 'new' pond postdates it or is hidden)."
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 30, "nightly_high": 60, "currency": "USD", "checked": "2026", "note": "RoverPass engine (June 2027 quotes): electric only $30 weekdays / $33 Saturdays, water and electric $40/$45, full hookup $50/$55, full hookup with patio $60; $3.50 booking fee plus processing. Weekly $300, monthly $850, 6-month season $3,000-4,200. Optional $12/person daily activity pass."},
+   "source": "RoverPass booking engine for sycamore-springs-whitetail-ranch-rv-park-sabetha-ks (rates for 2027-06-08 and 2027-06-12, one-night quote $34.59 with no activity-pass line), read 2026-11-06; weekly/monthly/season from https://sycamorespringswhitetails.com/camping",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://sycamorespringswhitetails.com/camping ('RV Full Hookup Sewer, Water & Electric - 30 & 50 amp'), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": 55, "pull_through": true},
+   "source": "RoverPass booking engine site records (maxLength to 55 on full-hookup sites, 57 of 90 RV sites pull-through), read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"opens": "05-01", "closes": "11-01"},
+   "source": "https://sycamorespringswhitetails.com/ ('Campground is Open Seasonally From May 1st to November 1st'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "roverpass", "url": "https://www.roverpass.com/c/sycamore-springs-whitetail-ranch-rv-park-sabetha-ks/booking/", "note": "Instant online booking on RoverPass from the park's own site, or by phone. Check-in and check-out noon."},
+   "source": "https://sycamorespringswhitetails.com/camping (booking link, check-in/out times) and RoverPass park record isBookable true, read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Private family resort on a whitetail-deer ranch near Sabetha with RV loops under trees along Pony Creek, a stocked catch-and-release fishing pond, petting zoo and Kansas's largest wooden-floor roller rink (closed Sundays); mini-golf, splash pad and courts on a $12 daily activity pass. The operator warns not to follow GPS routing, which uses gravel roads. --Claude",
+ "summary": "Operator site + RoverPass engine: $30-60 nightly (electric only $30 weekday), 30/50 A full hookups, rigs to 55 ft, open May 1-Nov 1, instant RoverPass booking. Google 4.8/144 with phone 785-285-8800 (stored entry has none). Not waterfront kept (creek bottom under canopy).",
+ "flags": [
+  "PHONE (apply.py does not write it): add 785-285-8800, on the operator's site, RoverPass and Google Maps. The entry has no phone now.",
+  "WEBSITE: stored https://sycamorespringswhitetails.com confirmed live (operator, GoDaddy site).",
+  "PRIVATE GATE FACTS: cheapest RV night $30 (Electric Only, Tue 2027-06-08 on the operator's RoverPass engine; $33 Saturdays; total $34.59 with booking/processing fees, no tax shown). The operator pages disagree among themselves ($30/$45/$50 on the home page, $30/$40/$50 on the activity page, $33/$44/$55/$66 on the camping page); the engine is the live figure. Under $50; gateways.py none within 40 km (moot). Presence passes: working website + phone, Google 4.8 from 144 reviews. RV Life 4.5, $$.",
+  "ENTRY FEES: the $12/person Daily Activity Pass is for the park's activities (rink, mini-golf, etc.) and does not appear in the RoverPass quote; nothing says campers must buy it, so it is not counted toward the nightly rate. Weakly read: no page says outright that it is optional.",
+  "LONG-STAY: weekly $300, monthly $850 and 6-month 'Season Rate' $3,000 (cement-patio sites $4,200) are sold. Test 1: no sites are said to be seasonal-only, and every RV rate books nightly; test 2: nightly rates posted and instantly bookable; test 3: no lots for sale; test 4: share of seasonals unknown, but 90 RV sites were open for a June 2027 night; test 5: no approval rule. A family activity resort, not long-stay in character.",
+  "SITES: camping page says 'Camping 120 sites'; the RoverPass engine lists 90 RV sites (plus primitive/tent). Count not written. Some Oak T-sites are grass-pad 'HOBO camping' areas; Electric Only includes 20 A sites of 20 ft, but most sites are 30-55 ft.",
+  "WATERFRONT: not waterfront kept. Pony Creek runs through the wooded creek bottom, far narrower than ~30 m, and the sites are under canopy; the 'new fishing pond' is not visible in Esri imagery and its acreage is unknown (any pond under ~5 acres earns nothing anyway; a pond-view value does not exist).",
+  "PIN: stored 39.9618,-95.7501 is at the entrance on Bittersweet Rd (Google 39.96177,-95.75009); the RV loops start ~50 m east and spread ~400 m east along the creek, so the centroid is roughly 39.9612,-95.7480 (~200 m), under the 250 m threshold. Fine.",
+  "ACCESS: operator warns GPS routes use gravel roads; follow the posted directions."
+ ]
+}
