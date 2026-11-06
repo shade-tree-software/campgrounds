@@ -271,13 +271,21 @@
     color: var(--navy);
   }
 
+  /* Collapse chevron: an SVG line chevron used as a mask, so it takes the
+     grey from background-color (it was a text ▾ / ▸). Rotates to point
+     right while collapsed, as the trips map's legend does. */
   .map-legend .legend-header::after {
-    content: '\25BE';
-    font-size: .9rem;
-    color: var(--gray);
+    content: '';
+    flex: none;
+    width: 14px;
+    height: 14px;
+    background-color: var(--gray);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform .15s ease;
   }
 
-  .map-legend.collapsed .legend-header::after { content: '\25B8'; }
+  .map-legend.collapsed .legend-header::after { transform: rotate(-90deg); }
   .map-legend.collapsed .legend-rows { display: none; }
   .map-legend.collapsed .legend-color-by { display: none; }
   .map-legend.collapsed .legend-count { display: none; }
