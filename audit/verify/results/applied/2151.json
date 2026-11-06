@@ -1,0 +1,67 @@
+{
+ "id": 2151,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233547 (USACE Lucas Park, read 2026-11-06): 'Lucas Park Campground offers 98 modern campsites, including a large group site that offers 15 campsites with electric and water hookups'; 'Campsites offer sweeping views of the lake'; amenities 'Dump Station', 'Flush Toilets', 'Showers', 'Vault Toilets', 'Water Spigot', 'Swimming', 'Boat Ramp'; facility_rules maxStay 14 nights ('Rolling 30 Days'), minWeekendStay 2 ('Ignore Holidays'), minHolidayWeekendStay 3, militaryDiscount 1; notices 'Park Attendants may not be present', 'Limit of one wheeled camping unit and two tents or three tents per camp pad'; facility_phone blank.",
+  "https://www.recreation.gov/api/camps/campgrounds/233547/rates (read 2026-11-06): 'Peak Season' 2026-05-15 to 2026-09-15: STANDARD NONELECTRIC $18, STANDARD ELECTRIC $24 (one electric template $26), TENT ONLY $18, GROUP $350; 'First-come, First-served Season' 2026-09-16 to 2026-12-31 and 2027-01-01 to 2027-05-14: STANDARD ELECTRIC $20, tent $12, group $225; the same pattern is loaded through 2028.",
+  "https://www.recreation.gov/api/search/campsites?start=0&size=300&fq=asset_id%3A233547 (read 2026-11-06): 93 units: 70 STANDARD ELECTRIC (62 'Electricity Hookup: 30', 8 '50'), 20 bookable STANDARD NONELECTRIC plus 1 'Not Available', 1 tent-only, 1 group; 'Water Hookup: Y' on 18; no sewer; 25 pull-through and 60 back-in; Max Vehicle Length up to 148 ft; per-site coordinates. Cached RIDB catalog (trip_data/ridb_campsites.json, fetched 2026-10-20) lists 96 sites.",
+  "Esri World Imagery 2026-11-06 with rec.gov per-site coordinates: the SW point at 38.9475,-98.5195 (170 m), the NE area at 38.9555,-98.5130 (170 m), a 750 m overview at 38.9505,-98.5190, and the south primitive point at 38.9290,-98.5315 (200 m). The USACE Wilson Lake page (nwk.usace.army.mil) returned 403 and was not retried."
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 18,
+    "nightly_high": 26,
+    "currency": "USD",
+    "checked": "2026",
+    "note": "Recreation.gov, peak season May 15-September 15: $18 non-electric, $24-26 electric. First-come season September 16-May 14: $20 electric."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233547/rates (2026 Peak Season and First-come, First-served Season rows), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "max_stay_nights": 14,
+    "season": {"opens": "05-15", "closes": "09-15"},
+    "min_stay": [
+     {"nights": 2, "applies": "weekend"},
+     {"nights": 3, "applies": "holiday"}
+    ],
+    "note": "Reservable on recreation.gov for the May 15-September 15 peak season; first come, first served September 16-May 14. 2-night weekend and 3-night holiday-weekend minimums on reservations; 14 nights in a rolling 30 days."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233547 (facility_rules maxStay, minWeekendStay, minHolidayWeekendStay) and /rates (Peak Season 05-15 to 09-15; 'First-come, First-served Season' 09-16 to 05-14), read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Reservations May 15-September 15; first come, first served the rest of the year at off-season rates; attendants may not be present."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233547/rates (rates loaded for every date: Peak 05-15 to 09-15, First-come 09-16 to 12-31 and 01-01 to 05-14), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 90, "pull_through": true, "max_rig_ft": 148},
+   "source": "https://www.recreation.gov/api/search/campsites?start=0&size=300&fq=asset_id%3A233547 (70 STANDARD ELECTRIC + 20 open STANDARD NONELECTRIC; 'Driveway Entry: Pull-Through' on 25; Max Vehicle Length to 148), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233547 (amenities 'Showers', 'Flush Toilets', 'Vault Toilets', 'Water Spigot', 'Dump Station'), read 2026-11-06",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {"military": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233547 (facility_rules 'militaryDiscount': value 1, 'Military Discount'), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Wilson Lake campground on the open north shore, spread over a grassy point, a middle loop and a north-east area, plus a few primitive sites on a point 2 km south; 30- and 50-amp electric sites, some with water, gravel pads, showers and a dump station; swim area and boat ramp. --Claude",
+ "summary": "Rates updated to $18-26 (2026 peak), off-season first-come $20 electric. Added the reservation season (May 15-Sep 15), 14-night limit and weekend/holiday minimums. Year-round with off-season first-come. Count 96 -> 90 RV sites, pull-through. Added showers, flush and vault toilets, water and dump, and the military discount. Hookups (50 A, water) confirmed. Lakefront stands.",
+ "flags": [
+  "WATERFRONT (stored lakefront) holds on the per-site coordinates. SW point: sites 010, 011, 013, 014 and 016 sit 10-20 m from the riprap shoreline across open grass, with the loop road inland of them and no day use between. NE area: sites 066, 068, 069 and 070 are 10-20 m from the shore across open ground. The middle loop (040-057) is 20-60 m back.",
+  "Phone: rec.gov lists none; the stored 785-658-2551 (presumably the Wilson Lake project office) is unconfirmed this pass because the USACE Wilson Lake page returned 403 and was not retried. Website stands (https://www.recreation.gov/camping/campgrounds/233547).",
+  "Split question: rec.gov carries 7 primitive non-electric units (096-102, plus tent site 105) on a separate point ~2.1 km south (centroid ~38.9292,-98.5310), reached by its own gravel road. They are primitive with no posted length and part of the same rec.gov facility, so the default is no split; flag for AWH if he wants that point separate. The NE area is ~1 km from the SW point but on the same internal park road, so no split.",
+  "Fees: the walk-in season lists STANDARD NONELECTRIC at $0 (probably a placeholder, though non-electric may be free off-season), so nightly_low stays at the $18 peak non-electric rate. Stored 'sites up to 148 ft' comes from the catalog's Max Vehicle Length and is kept as stated.",
+  "Pin 38.948,-98.519 is on the SW point's shore ~15 m from site 013; fine. No sand issue (riprap and grass shore)."
+ ]
+}
