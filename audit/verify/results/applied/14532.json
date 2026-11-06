@@ -1,0 +1,39 @@
+{
+ "id": 14532,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://sundownrvpark.net/ (read 2026-11-06, 'Copyright © 2026'): 'Click below to make your reservation and receive a PIN for the gate.'; 'Military & senior discount click here'; 'Check out our awesome rates, $45 a night or $250 a week (includes electricity). Call for monthly rates.'; 'Sundown RV Park can be found right off I-70 exit 244'; '2089 North Hedville Road, Salina'; '785-251-8175'. Both buttons link to https://www.camplife.com/1000/reservation/step1?checkinDate=9-30-2019&checkoutDate=10-01-2019",
+  "https://www.camplife.com/1000/reservation/step1 in a headless browser (2026-11-06): page title 'null - Online Reservations - Site Details', no date pickers, no sites - not a live park listing",
+  "RV Life reviews API https://campgrounds.rvlife.com/api/reviews/park/255327 (read 2026-11-06): stays 9/2026 and 10/2026 at '$45 USD a night' (one 10/2026 at $41); 9/2026 'Online booking only great overnight stop: Huge gravel lot water electric and dump station'; 10/2026 (rating 2, did not stay) 'This is a gravel parking lot, right next to the highway. Supposed to have a security gate and the email (everything is done by email, no person involved) sends an entrance code.'; RV Life park record: 4.0 stars over 47 reviews, $$, avg_rate 40",
+  "Google Maps (gm.py, 2026-11-06): 'Sundown RV Park', 4.5 over 98 reviews, phone +1 785-251-8175, website sundownrvpark.net, 2089 N Hedville Rd, Salina, KS 67401, at 38.876068,-97.762235",
+  "python3 audit/price_research/gateways.py 38.8761,-97.7622: none within 40 km"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "checked": "2026", "note": "$45 a night including electricity; $250 a week; monthly rates by phone. Read 2026-11-06."},
+   "source": "https://sundownrvpark.net/ ('$45 a night or $250 a week (includes electricity). Call for monthly rates.'), read 2026-11-06; RV Life campers paid $45 in 9/2026 and 10/2026",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {"military": true},
+   "source": "https://sundownrvpark.net/ ('Military & senior discount'), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": null},
+   "source": "https://sundownrvpark.net/ states no site count; the stored 17 came from note prose, and an RV Life camper reported staying at site 27 (10/2026), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Newer gravel-lot park northwest of Salina just off I-70 exit 244 (2089 N Hedville Rd), behind an automated gate whose PIN comes with the booking; a travel plaza is within walking distance. $250 a week with electricity, monthly by phone. --Claude",
+ "summary": "Operator site (c) 2026: $45/night incl. electricity, $250/week, military & senior discount; $45 corroborated by Sept-Oct 2026 camper reports. Price gate passes ($45 < $50, no gateway needed). Military discount added; note-derived site count 17 cleared (camper reported site 27). Website's booking button points at an empty CampLife page (id 1000, 2019 dates).",
+ "flags": [
+  "GATE FACTS (private): posted rate $45 a night incl. electricity (operator site, (c) 2026; RV Life campers paid $45 in 9/2026 and 10/2026) - under US$50; no gateway within 40 km (not needed). Not a Good Sam Park per stored data (no discounts.good_sam stored). PRESENCE passes: working website with phone 785-251-8175; Google Maps 'Sundown RV Park' 4.5 over 98 reviews with the same phone. RV Life 4.0 over 47 reviews, $$.",
+  "BOOKING LINK BROKEN: both 'make your reservation' and 'Military & senior discount click here' on sundownrvpark.net link to https://www.camplife.com/1000/reservation/step1?checkinDate=9-30-2019&checkoutDate=10-01-2019, which in a browser on 2026-11-06 loads as 'null - Online Reservations - Site Details' with no park, dates or sites. Campers still book: 9/2026 'Online booking only', 10/2026 'everything is done by email, no person involved'. booking.reservable left true; platform/url not written.",
+  "LONG-STAY TESTS: (1) no seasonal-only sites mentioned; (2) nightly rate posted ($45); (3) no homes/lots for sale; (4) the five newest RV Life reviews are all overnight/short stops (9-10/2026); (5) weekly $250 and monthly by phone offered beside the nightly rate. Passes; not long-stay in character.",
+  "REVIEWS: Google 4.5/98, RV Life 4.0/47 - not poor. The newest RV Life review (10/2026, rating 2, did not stay): 'This is a gravel parking lot, right next to the highway ... everything is done by email, no person involved'; another (10/2026, rating 6): 'We could not walk our dogs due to the sand burrs in the gravel.'",
+  "HOOKUPS (not written, camper reports only): RV Life campers in 9-10/2026 report power and water at the site, no sewer, and a dump station ('Huge gravel lot water electric and dump station'). The operator site says only 'includes electricity'.",
+  "PHONE 785-251-8175 confirmed (site, Google). WEBSITE https://sundownrvpark.net/ confirmed live.",
+  "PIN 38.8761,-97.7622 matches Google's place point (38.87607,-97.76223); fine."
+ ]
+}

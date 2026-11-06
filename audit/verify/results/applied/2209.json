@@ -1,0 +1,54 @@
+{
+ "id": 2209,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.coffeyville.com/139/Walter-Johnson-Park-Campground (City of Coffeyville; plain HTTP 403, read in a headless browser 2026-11-06): 'There are 118 spaces available all on a first-come basis. The campgrounds are open year around.'; 'The Woods Campground / Located at 701 Hargis, the Woods Campground has 56 spaces available. / $15 per night - water and electric / $90 per week - water and electric / Dump station available / 15 spaces have 50 amp plugs (2, 5, 9, 11, 16, 18, 20, 23, 24, 28, 31, 34, 45, 50, 55) / 41 spaces have 30 amp plugs'; 'Rivercrest Campground / Located at 600 Wood, the Rivercrest Campground has 62 spaces available. / $25 per night - water, electric and sewer / $150 per week ... / $600 per month ... / 53 spaces have 50-amp plugs / 9 spaces have 30-amp plugs'; 'For additional information or if you have questions about Walter Johnson Park call 620-252-6106.'",
+  "https://www.coffeyville.com/140/Camping-at-Walter-Johnson-RV-Park (browser, 2026-11-06): 'Reservations are not taken for campsites at Walter Johnson Park. There are 118 sites are available on a first come basis. Upon arrival at Walter Johnson Park, you pick your site and get hooked up.'; 'There are payment boxes conveniently located at the entrance to the park. Place your payment in the envelopes provided; please include your site number.'; 'The Woods is located at the first street north. To reach the Rivercrest, you will go north at the first street east of the ballfield.'; City Clerk '620-252-6108'",
+  "Not read: the campground map (https://www.coffeyville.com/DocumentView.aspx?DID=159) and RV Park Rule Sheet (https://www.coffeyville.com/DocumentCenter/View/2933) - the site answered 403 to plain HTTP and to a second fresh browser session, so not retried further",
+  "RV Life reviews API https://campgrounds.rvlife.com/api/reviews/park/10238 (read 2026-11-06): latest stay 10/2022 at $15, site 22 pull-through; 8/2015 'Only thing they had was water and electric, no facilities'",
+  "Esri World Imagery 1.2 km frame plus 320 m frames of both loops, 2026-11-06"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 15, "nightly_high": 25, "currency": "USD", "checked": "2026", "note": "City of Coffeyville: The Woods $15 a night ($90 a week) with water and electric; Rivercrest $25 a night ($150 a week, $600 a month) with full hookups. Pay at the entrance boxes. Read 2026-11-06."},
+   "source": "https://www.coffeyville.com/139/Walter-Johnson-Park-Campground ('$15 per night - water and electric'; '$25 per night - water, electric and sewer'), read 2026-11-06",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://www.coffeyville.com/139/Walter-Johnson-Park-Campground ('53 spaces have 50-amp plugs' at Rivercrest, 'water, electric and sewer'), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 118, "pull_through": true},
+   "source": "https://www.coffeyville.com/139/Walter-Johnson-Park-Campground ('118 spaces': Woods 56 + Rivercrest 62), read 2026-11-06; pull-throughs from imagery (both loops are drive-through stall rows) and a 10/2022 camper's 'site 22 pull_through'",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true, "showers": null, "laundry": null},
+   "source": "https://www.coffeyville.com/139/Walter-Johnson-Park-Campground ('Dump station available'), read 2026-11-06. The city names no showers or laundry; the note-derived values are cleared (an 8/2015 camper: 'no facilities').",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://www.coffeyville.com/139/Walter-Johnson-Park-Campground ('The campgrounds are open year around.'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "fcfs": "always", "note": "No reservations: pick a site on arrival and pay in an envelope at the entrance boxes, with the site number."},
+   "source": "https://www.coffeyville.com/140/Camping-at-Walter-Johnson-RV-Park ('Reservations are not taken for campsites at Walter Johnson Park.'), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "City of Coffeyville's Walter Johnson Park, two loops of drive-through stalls on the east edge of town: The Woods (water and electric under big trees, dump station) and Rivercrest (open full-hookup grid against the Verdigris River levee). --Claude",
+ "summary": "City pages (browser) confirm 118 FCFS sites: Woods 56 W/E $15 (15 at 50 A), Rivercrest 62 FHU $25 (53 at 50 A), weekly/monthly rates, open year round, dump. Fees 15/25 and electric 50 set; showers and laundry cleared (unsourced). Not waterfront stands. Split not recommended (~500 m apart).",
+ "flags": [
+  "WATERFRONT: stored 'not waterfront' stands. Rivercrest (the open grid, centre ~37.0379,-95.5897) sits ~70-100 m from the Verdigris River, but behind the river levee (a raised embankment carrying a road between the grid and the channel), which blocks both the walk and the sightline, so no river value. The Woods (~37.0362,-95.5948) is ~600 m from the river among buildings and trees.",
+  "SPLIT: The Woods vs Rivercrest is NOT recommended. They have separate street addresses (701 Hargis / 600 Wood) and separate access streets per the city's directions, but the loop centroids are only ~510 m apart inside the same city park, under the ~1 km line. Per area, for the record: The Woods - 56 W/E spaces, 15 at 50 A (sites 2, 5, 9, 11, 16, 18, 20, 23, 24, 28, 31, 34, 45, 50, 55) and 41 at 30 A, $15/night, $90/week, dump station, angled drive-through stalls under trees, centre ~37.0362,-95.5948, not waterfront. Rivercrest - 62 full-hookup spaces, 53 at 50 A and 9 at 30 A (118, 142, 143, 145, 150-154), $25/night, $150/week, $600/month, open gravel drive-through grid, centre ~37.0379,-95.5897, behind the levee so not waterfront. Shower count unknown for both (city silent).",
+  "PIN 37.0369,-95.595 sits at the north edge of The Woods loop (~80 m from its centre); OK. Rivercrest is ~500 m ENE.",
+  "PHONE: none stored. The park line on the city page is 620-252-6106; City Clerk 620-252-6108; City Hall 620-252-6100 (also Google's number). Suggest 620-252-6106.",
+  "WEBSITE (apply.py doesn't write it): stored https://www.coffeyville.com/140/Camping-at-Walter-Johnson-RV-Park is live (browser) but the rates and amperage are on https://www.coffeyville.com/139/Walter-Johnson-Park-Campground; suggest the /139/ page (or both). Google lists /139/.",
+  "MONTHLY RATE: Rivercrest offers $600 a month. No recent review mentions residents (latest RV Life stay 10/2022; Google 3.9 from 17 reviews, 'Walter Jonson Park RV Campground'). Long-stay tests not triggered on this evidence, but the city's rule sheet (unread, 403) may say more.",
+  "WEAK SPOTS: campground map and rule sheet PDFs unread (403). Assignment of The Woods vs Rivercrest to the two imaged loops rests on the city's driving directions and the open-grid/full-hookup vs wooded/dump-station descriptions."
+ ]
+}
