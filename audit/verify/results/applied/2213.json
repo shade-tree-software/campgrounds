@@ -1,0 +1,80 @@
+{
+ "id": 2213,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://chapmancreekrvpark.com/, read 2026-11-06: 'We have 23 RV sites open year-round, 2 RV's to Rent on site and 6 tent sites'; 'give us a call at 785-922-CAMP (785-922-2267)'; '2701 North Marshall, Chapman, Kansas 67431'; 'We are open year round'; 'Check-In After: 1:00 PM Check-Out: 11:00 AM'.",
+  "https://chapmancreekrvpark.com/rates%2Famenities, read 2026-11-06: 'Price Includes Water, Sewer, 30/50 AMP and WIFI'; 'Additional persons ... $5.00 daily'; 'Reservations online with Camplife.com will charge $3.50 service fee. Call 785-922-2267 to save.'; 'Sites 1-9, BACK-IN SITES *Normally Reserved for Extended Stay $40.00 Nightly / $235.00 Weekly *$450.00 plus Electric Monthly*'; 'Sites 10 ... Premium ... $45.00 Nightly'; 'Sites 11-13 Big Rig Sites $45.00 Nightly'; 'Sites 14-19, Pull-Thru Sites $40.00 Nightly'; 'Site 20, Pull-Thru Site $35.00 Nightly ... (Max length of 45 ft)'; 'Site 21, Pull-Thru Site $35.00 Nightly ... (Max length of 30 ft)'; '22 & 23, BACK-IN SITES $40.00 Nightly ... $450.00 plus Electric Monthly'; amenities: clubhouse, 'Handicap accessible shower stalls', 'Laundry Room ... Commercial Grade Washers and Dryers', kids playground, dog park, community grill/firepit. Page footer 'Copyright © 2026'; the rates themselves carry no date.",
+  "https://chapmancreekrvpark.com/camplife-com-reservations -> https://www.camplife.com/357/reservation/step1 (the park's CampLife booking page); CampLife's API answered 403 to an automated read 2026-11-06, so no dated quote.",
+  "Google Maps 'Chapman Creek Rv Park', 2701 N Marshall St, Chapman, KS 67431: 4.6 stars, 216 reviews, phone +1 785-922-2267, website chapmancreekrvpark.com, place at 38.98829,-97.02490 (read 2026-11-06).",
+  "audit/price_research/gateways.py 38.9878,-97.0244: no gateway within 40 km (not needed: cheapest night $35). trips.campground_references(2213): none."
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 45,
+    "currency": "USD",
+    "checked": "2026-11",
+    "note": "Full hookup with 30/50 A and WiFi for 2 adults and 2 children: $35 for the two smaller pull-throughs (site 21 takes rigs to 30 ft, site 20 to 45 ft), $40 back-ins and pull-throughs, $45 premium and big-rig sites. Extra persons $5 a night. Weekly $200-265."
+   },
+   "source": "https://chapmancreekrvpark.com/rates%2Famenities (rates as quoted in sources), read 2026-11-06; undated, page copyright 2026",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "https://chapmancreekrvpark.com/rates%2Famenities ('Price Includes Water, Sewer, 30/50 AMP'), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 23,
+    "pull_through": true,
+    "note": "23 RV sites: 12 back-ins (1-10, 22-23; most normally let for extended stays), 3 big-rig sites (11-13) and 8 pull-throughs (14-21). Plus 6 tent sites and 2 RVs for rent."
+   },
+   "source": "https://chapmancreekrvpark.com/ ('We have 23 RV sites open year-round') and https://chapmancreekrvpark.com/rates%2Famenities (site table), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "laundry": true,
+    "wifi": true,
+    "flush_toilets": true,
+    "dump": null
+   },
+   "source": "https://chapmancreekrvpark.com/rates%2Famenities ('Handicap accessible shower stalls', 'Laundry Room', 'FREE WIFI', 'Bathrooms'), read 2026-11-06; no dump station named on the park's pages",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true
+   },
+   "source": "https://chapmancreekrvpark.com/ ('We are open year round'; '23 RV sites open year-round'), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://www.camplife.com/357/reservation/step1",
+    "note": "Book on CampLife (US$3.50 online fee) or by phone at 785-922-2267, or send the request form on the park's site. Cancel 10+ days out for a full refund less the online fee; 9 days or less forfeits one night. Check-in after 1 pm, check-out 11 am."
+   },
+   "source": "https://chapmancreekrvpark.com/rv-park-rules and https://chapmancreekrvpark.com/rates%2Famenities (cancellation policy, CampLife link), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Private park just off I-70 exit 286 on the north edge of Chapman: grass sites with picnic tables, clubhouse with TV and games, playground, off-leash dog park. Popular cross-Kansas overnight stop. --Claude",
+ "summary": "Confirmed $35-45 (operator's own rate table), full hookups to 50 A, showers, laundry, pull-throughs, private, not waterfront. Corrected sites 21 -> 23 (8 pull-throughs, not 11); added WiFi, flush toilets, open year round, CampLife booking. Cleared dump (only in our old note prose; the park names none). Google 4.6 / 216 reviews; presence passes (own site + engine + phone). Price gate passes ($35 < $50).",
+ "flags": [
+  "Phone missing on the entry: add 785-922-2267 (park site and Google). apply.py does not write phones.",
+  "Website: add the booking engine as a second line, https://www.camplife.com/357/reservation/step1.",
+  "Rate dating (weak spot): the operator's rate table is undated (page footer 'Copyright © 2026'); CampLife refused an automated quote (403). The rates match the 2026-10-16 read.",
+  "Long-stay tests: 12 of 23 RV sites (1-10, 22-23) are 'Normally Reserved for Extended Stay' at $450 + electric monthly; 11 sites (11-21) are sold nightly - passes test 4 (well over 1 in 10). Google 4.6 with 216 reviews, nightly rates posted, booking engine - no drop.",
+  "Good Sam: discounts.good_sam false stays (directory-derived; private park).",
+  "Pin fine (Google place ~60 m away). No sand. Not waterfront kept (I-70 edge of town)."
+ ]
+}
