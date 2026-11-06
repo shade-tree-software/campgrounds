@@ -1,0 +1,47 @@
+{
+ "id": 2134,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233512, read 2026-11-06: 'The campground offers 51 individual sites and one group camping area with a large shelter. The group camping area holds up to 80 people. The individual sites have tables, grills, sun shelters, electric hookups, and a boat ramp.'; 'It's known for water front camping sites and a readily accessible boat ramp for fishermen.'; 'Completed in 1968, Marion Reservoir encompasses 6,200 acres of water'; notices 'One RV and two tents or three tents per site', 'First-come, first-served sites are available'; rules maxStay 14 nights 'Rolling 30 Days' (2018-10-01 to 2028-09-30), militaryDiscount; minWeekendStay/minHolidayWeekendStay dated 2023-04-01 to 2023-10-31 (expired); amenities Boat Ramp, Dump Station, Playground, Showers, Vault Toilets, Water; facility_phone 620-382-2101.",
+  "https://www.recreation.gov/api/camps/campgrounds/233512/rates, read 2026-11-06: Peak Season 2026-04-01 to 2026-10-31 and 2027-04-01 to 2027-10-31 at $18 (electric, no water), $19 (electric + water) and $21 (the six electric + water sites with the higher template), group $80; Non-Peak Season 2026-11-01 to 2026-12-31 and 2027-01-01 to 2027-03-31 at $16 / $17 / $19, group $70.",
+  "recreation.gov per-site API for asset 233512 (all 52 campsites), read 2026-11-06: 51 STANDARD ELECTRIC (001-052, no 020; 021 not reservable) + GS1 group; 'Electricity Hookup: 30' at all 52; water 'Y'/'Yes' at 37; 'Max Vehicle Length' 30-50 (26 at 50); 8 pull-through; 'Proximity to Water: Lakefront' at 013-019, 021-025, 031, 033, 035, 044-052; per-site GIS coordinates. (The RIDB catalog cached 2026-10-20 still lists 7 sites at 50 A and one 70-ft site, including a MANAGEMENT host site.)",
+  "Esri World Imagery with the 52 rec.gov site coordinates plotted (330 m and two 110 m frames), 2026-11-06."
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 30, "water": true},
+   "source": "recreation.gov per-site API for asset 233512 ('Electricity Hookup: 30' at all 52 campsites; 'Water Hookup: Y/Yes' at 37), read 2026-11-06",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 51, "max_rig_ft": 50, "pull_through": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233512 ('51 individual sites and one group camping area') and per-site API ('Max Vehicle Length' up to 50; 'Driveway Entry: Pull-Through' at 8 sites), read 2026-11-06",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "vault_toilets": true, "potable_water": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233512 amenities ('Showers', 'Vault Toilets', 'Water', 'Dump Station'), read 2026-11-06",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 16, "nightly_high": 21, "currency": "USD"},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233512/rates (Non-Peak 2026-11-01 to 2027-03-31: $16 electric / $17 electric + water / $19; Peak 2026-04-01 to 2026-10-31 and 2027-04-01 to 2027-10-31: $18 / $19 / $21), read 2026-11-06",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233512", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Most sites reserve site-specific on recreation.gov; first-come, first-served sites are available (site 021 is not reservable). Stay limit 14 nights in a rolling 30 days."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233512 (rule maxStay 14 nights 'Rolling 30 Days'; notice 'First-come, first-served sites are available'; per-site reservable flags), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "USACE Marion Reservoir campground off US 56 between Marion and Hillsboro: 51 electric sites (30-amp; water at most) on two gravel loops either side of a cove, the north point's row and the east loop's shoreline row backing onto the lake; group area with shelter, boat ramp, showers. --Claude",
+ "summary": "rec.gov API read today: 51 individual sites + group, all 30-amp (stored 50 A was the RIDB catalog's, now superseded), max length 50 (not 70), fees $16-21 for 2026-27, 14 nights in rolling 30, some FCFS. Lakefront confirmed (rec.gov per-site 'Lakefront' + imagery). Pin is in the cove water; proposed move.",
+ "flags": [
+  "HOOKUPS electric 50 -> 30: the live rec.gov per-site API (2026-11-06) gives 'Electricity Hookup: 30' at all 52 campsites; the RIDB catalog cached 2026-10-20 (source of the derived 50) listed 7 at 50 A and a MANAGEMENT site. Current rec.gov outranks the cache (AWH rule). recgov_hookups.py may re-derive 50 from the stale cache unless the cache is refreshed.",
+  "SITES count 53 -> 51 (rec.gov description '51 individual sites and one group camping area'; the 53 counted the group site and the host site); max_rig_ft 70 -> 50 (the 70 is the host/management site; the longest public site is 50).",
+  "FEES 17-21 -> 16-21: off-peak (Nov-Mar) electric-only sites are $16 per the rate table and per-site prices.",
+  "WATERFRONT lakefront confirmed: rec.gov tags 24 sites 'Lakefront'. On Esri imagery the north point's row (014-019) backs onto the shore with only a ~10-15 m fringe of shoreline trees and no road between, and the east loop's 044-051 pads end ~5-15 m from the water behind a thin tree line with gaps; the description says 'known for water front camping sites'. 6,200-acre reservoir.",
+  "PIN MOVE: stored 38.3639,-97.1018 sits in the cove's water between the two loops (the sites' centroid falls there too). Proposed 38.3632,-97.1000 (middle of the east loop, ~170 m from the stored pin); the north loop at 38.3655,-97.1040 is the alternative.",
+  "PHONE 620-382-2101 confirmed (rec.gov). WEBSITE https://www.recreation.gov/camping/campgrounds/233512 as stored. Military discount rule present on rec.gov (not written; discounts group not part of this check). SAND: none."
+ ]
+}
