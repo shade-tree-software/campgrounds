@@ -31,7 +31,7 @@ GROUPS = {
     "booking": ["reservable", "window_opens_days", "reserve_until", "fcfs",
                 "min_stay", "max_stay_nights", "season"],
     "fees": ["nightly_low", "nightly_high", "currency", "reservation_fee",
-             "nonresident", "prereq_pass", "entrance", "surcharges"],
+             "nonresident", "prereq_pass", "entrance", "surcharges", "extra_person"],
     "discounts": ["good_sam", "military", "interagency_senior_access"],
 }
 
@@ -280,6 +280,46 @@ class ChipPhrasingTest(unittest.TestCase):
             ["annual park pass $15 resident, $40 non-resident"])
         self.assertEqual(self.chips("fees", {"entrance": {"per": "person_day"}}),
                          ["park entry fee (per person/day)"])
+
+    def test_extra_person_charge_says_when_it_starts(self):
+        self.assertEqual(
+            self.chips("fees", {"extra_person": {"included": 2, "amount": 5, "per": "night"}}),
+            ["+$5/night each person over 2"])
+        self.assertEqual(
+            self.chips("fees", {"extra_person": {"amount": 3}}),
+            ["+$3/night each extra person"])
+        # Children priced apart make the per-head amount an adult's.
+        self.assertEqual(
+            self.chips("fees", {"extra_person": {"included": 2, "amount": 5, "per": "night",
+                                                 "child": 0, "child_max_age": 12}}),
+            ["+$5/night each adult over 2, children 12 and under free"])
+        self.assertEqual(
+            self.chips("fees", {"currency": "CAD",
+                                "extra_person": {"included": 4, "amount": 8, "per": "stay",
+                                                 "child": 3, "max_people": 8}}),
+            ["+C$8/stay each adult over 4, children C$3, 8 people max"])
+        self.assertEqual(self.chips("fees", {"extra_person": {"included": 6}}),
+                         ["rate covers 6 people"])
+        # "2 adults and 4 children" counts the two apart.
+        self.assertEqual(
+            self.chips("fees", {"extra_person": {"included": 2, "included_children": 4,
+                                                 "amount": 10, "child": 5}}),
+            ["+$10/night each adult over 2, each child over 4 $5"])
+        self.assertEqual(
+            self.chips("fees", {"extra_person": {"included": 2, "included_children": 2,
+                                                 "amount": 11}}),
+            ["+$11/night each person over 2 adults and 2 children"])
+        # Only children priced.
+        self.assertEqual(self.chips("fees", {"extra_person": {"child": 2}}),
+                         ["+$2/night each extra child"])
+        self.assertEqual(self.chips("fees", {"extra_person": {"included": 4, "child": 1}}),
+                         ["rate covers 4 people, +$1/night each extra child"])
+
+    def test_extra_person_follows_the_base_rate(self):
+        self.assertEqual(
+            self.chips("fees", {"reservation_fee": 8, "nightly_low": 30,
+                                "extra_person": {"included": 2, "amount": 5}}),
+            ["$30/night", "+$5/night each person over 2", "+$8 booking fee"])
 
     def test_a_named_entrance_charge_uses_its_name(self):
         """Virginia WMAs: a per-person access permit, not a park gate fee."""

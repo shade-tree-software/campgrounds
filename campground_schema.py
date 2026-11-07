@@ -214,6 +214,21 @@ SCHEMA = {
         "surcharges": OBJ(electric=NUM, water=NUM, sewer=NUM, full_hookup=NUM,
                           waterfront=NUM, oceanfront=NUM, weekend=NUM,
                           premium_site=NUM, pet=NUM),
+        # People beyond the ones the base rate covers (AWH 2026-11-07). The base
+        # is what two adults pay (doc §4.2), but parks price the night for 2, 4
+        # or 6 people and charge for each one past that, so the amount alone
+        # cannot say when it starts: `included` is the count it starts after.
+        # `child` prices a child differently from an adult (0 = children free),
+        # and `child_max_age` is the oldest age that rate covers ("12 and under"
+        # is 12). `max_people` is a posted cap per site. A park that charges
+        # EVERY person (per-person pricing) is not this: its base is already the
+        # two-adult total, and the per-person figure goes in the note.
+        # `included_children` is for a rate stated as "2 adults and 4 children":
+        # `included` then counts the adults, and the children past it pay `child`.
+        "extra_person": OBJ(included=INT(), included_children=INT(), amount=NUM,
+                            per=ENUM("night", "stay"),
+                            child=NUM, child_max_age=INT(),
+                            max_people=INT()),
         "checked": STR,
         "note": STR,
     },
@@ -745,6 +760,13 @@ FIELD_LABELS = {
     "booking_within_days": "Waived if booking within (days)",
     "waived_if": "Waiver",
     "entrance": "Park entrance fee",
+    "extra_person": "Extra-person charge",
+    "included": "People the base rate covers (adults, if children are counted apart)",
+    "included_children": "Children the base rate also covers",
+    "amount": "Amount",
+    "child": "Per child (0 = free)",
+    "child_max_age": "Child rate up to age",
+    "max_people": "Max people per site",
     "surcharges": "Per-night amenity surcharges",
     "full_hookup": "Full hookup",
     "premium_site": "Premium/flagship site",

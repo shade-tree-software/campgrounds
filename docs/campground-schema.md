@@ -485,6 +485,34 @@ the honest presentation is not a stored tier but **effective cost for this stay*
 at query time from `home.json` residency, the number of nights, and whether the pass is
 already held.
 
+**People past the ones the base covers are `fees.extra_person`** (AWH 2026-11-07). Parks price
+a night for 2, 4 or 6 people and charge for each one past that, so the amount alone cannot
+say when the charge starts; AWH's first question was "how many people cause it to kick in",
+and that count is `included`:
+
+```jsonc
+"extra_person": {"included": 2, "amount": 5, "per": "night",   // "$5 per extra adult a night"
+                 "child": 0, "child_max_age": 12,               // "children 12 and under free"
+                 "max_people": 8}                               // "8 at most"
+```
+
+A rate stated for "2 adults and 4 children" (about a fifth of the notes) sets `included: 2,
+included_children: 4`: `included` then counts adults, and `child` is what each child past the
+fourth pays (chip: `+$10/night each adult over 2, each child over 4 $5`).
+`amount` is per extra person, or per extra adult once `child` prices children apart (`0` =
+free); `child_max_age` is the oldest age the child rate covers ("12 and under" is 12; "free
+under 5" is 4). Every key is optional and absent is unknown (§2.1): "$5 per extra person"
+with no count stores no `included`, and the chip says "each extra person" rather than
+guessing two. The chip reads `+$5/night each person over 2`, or `each adult over 2,
+children 12 and under free`.
+
+It is not per-person PRICING. A park that charges every head (Bass' River Resort: $14.50-20.50
+per adult plus the site) has a base that is already the two-adult total (`nightly_low` is
+"one night for two adults", per the price gate), and the per-person figure belongs in
+`fees.note`. A per-person gate or access fee is `entrance` with `per: person_day`. The
+policy registry can carry the field too: Vermont State Parks' rate covers 4 people, $8 for
+each extra, 8 at most, on every park.
+
 ### 4.3 Do not fold fees into `rating.price_tier`
 
 `price_tier` is RV Life's number, computed on a raw nominal average rate. It is already

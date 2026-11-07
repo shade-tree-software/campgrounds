@@ -63,7 +63,7 @@ const SF_FEE_PER = {
 // An add-on reads as money on top of the base, never as a label with a sum
 // beside it: "electric +$7/night" next to "$33-37/night" left AWH unable to
 // tell whether the $7 was inside the range or extra (2026-10-12).
-const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'surcharges', 'nonresident',
+const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'surcharges', 'extra_person', 'nonresident',
                        'reservation_fee', 'prereq_pass', 'entrance'];
 
 const SF_SURCHARGE_PHRASES = {
@@ -246,6 +246,46 @@ function sfChip(groupKey, field, value, cur) {
   // The name is what the reader has to go and get ("WMA camping authorization",
   // "Green Key"); a price alone read as an anonymous surcharge. A free pass
   // says free, and one with no stored price just names itself.
+  // The amount alone cannot say when it starts: a $5 charge on a rate for two
+  // and one on a rate for six are different nights for a family of four, so
+  // the count the base covers is said with it. Once children are priced apart,
+  // the per-head amount is an ADULT's, and the chip says so.
+  if (k === 'fees.extra_person') {
+    const v = value || {};
+    const who = v.child != null ? 'adult' : 'person';
+    let chip;
+    // A rate for "2 adults and 4 children" counts the two apart, and so must
+    // the chip, or a family of six reads as four people over the limit.
+    const kids = v.included != null && v.included_children != null;
+    const head = v.amount != null
+      ? '+' + sfMoney(v.amount, cur) + (v.per === 'stay' ? '/stay' : '/night') : null;
+    if (head && kids && v.child != null) {
+      chip = head + ' each adult over ' + v.included + ', each child over '
+        + v.included_children + (v.child === 0 ? ' free' : ' ' + sfMoney(v.child, cur));
+    } else if (head && kids) {
+      chip = head + ' each person over ' + v.included + ' adults and '
+        + v.included_children + ' children';
+    } else if (head) {
+      chip = head + (v.included != null ? ' each ' + who + ' over ' + v.included
+                                         : ' each extra ' + who);
+    } else if (kids) {
+      chip = 'rate covers ' + v.included + ' adults and ' + v.included_children + ' children';
+    } else if (v.included != null) {
+      chip = 'rate covers ' + v.included + (v.included === 1 ? ' person' : ' people');
+    } else {
+      chip = 'extra-person charge';
+    }
+    if (v.child != null && v.child !== 0 && !head) {
+      // Only children are priced: "$1 a day for each extra child".
+      const each = '+' + sfMoney(v.child, cur) + (v.per === 'stay' ? '/stay' : '/night') + ' each extra child';
+      chip = chip === 'extra-person charge' ? each : chip + ', ' + each;
+    } else if (v.child != null && !(kids && head)) {
+      chip += ', children' + (v.child_max_age != null ? ' ' + v.child_max_age + ' and under' : '')
+        + (v.child === 0 ? ' free' : ' ' + sfMoney(v.child, cur));
+    }
+    if (v.max_people != null) chip += ', ' + v.max_people + ' people max';
+    return chip;
+  }
   if (k === 'fees.prereq_pass') {
     const name = value && value.name;
     const price = value && value.price != null
