@@ -1,0 +1,54 @@
+{
+  "id": 672,
+  "checked": "2026-11-07",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232656 (read 2026-11-07): 'Old Highway 86 Campground offers 71 reservable campsites ... hot showers, drinking water, a dump station and electric hookups'; 'Many campsites are adjacent to the waters edge ... Built on a peninsula, this park has water on three sides'; notices 'All checkout times are at 3:00 p.m.', 14 days in any 30; rules maxStay 14 nights 'Rolling 30 Days', minHolidayWeekendStay 3, minWeekendStay 0, reservationCutOff 0; amenities incl. 'Showers', 'Flush Toilets', 'Dump Station', 'Host'; phone 417-779-5376; USACE, not commercially managed",
+    "https://www.recreation.gov/api/camps/campgrounds/232656/rates (read 2026-11-07): Peak Season 2026-04-01..2026-10-31 and 2027-04-01..2027-10-30, 'PeakSTANDARD ELECTRIC' 25",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232656 (read 2026-11-07): 77 STANDARD ELECTRIC overnight sites + 1 group shelter, all site-specific reservable; 'Electric Hookup' 50 and 'Water Hookup' Yes; per-site coordinates; check-in 4 pm, check-out 3 pm; equipment RV/Trailer/Tent",
+    "RIDB campsite cache trip_data/ridb_campsites.json, facility 232656 (fetched 2026-10-20): 77 STANDARD ELECTRIC + 1 GROUP SHELTER ELECTRIC; max vehicle 34-66 ft; 73+2 back-in, 2 pull-through",
+    "https://www.recreation.gov/api/camps/availability/campground/232656/month for 2026-10, 2026-11, 2027-03, 2027-04 (read 2026-11-07): sites reserved through 2026-10-31; no nights in November 2026 or March 2027; 2027-04-01 bookable",
+    "Esri World Imagery (leaf-off) 640 m frame and four 170 m frames with every rec.gov site point, 2026-11-07"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232656/rates: 'PeakSTANDARD ELECTRIC' 25 for the 2026 and 2027 Peak Seasons, read 2026-11-07",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232656: 'Electric Hookup' 50 and 'Water Hookup' Yes on all 77 overnight sites (RIDB cache the same), read 2026-11-07",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 77, "pull_through": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232656: 77 reservable STANDARD ELECTRIC overnight sites (the facility text still says 71); RIDB 'Driveway Entry' Pull-through on 2 sites, read 2026-11-07",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232656 ('hot showers, drinking water, a dump station'; amenities 'Showers', 'Flush Toilets', 'Dump Station'), read 2026-11-07",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "04-01", "closes": "10-31"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232656/rates (Peak Season 2026-04-01..10-31) and the availability calendar (sites reserved on 2026-10-31, no nights November 2026 or March 2027, bookable 2027-04-01), read 2026-11-07",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "min_stay": [{"nights": 3, "applies": "holiday"}], "note": "14 nights in any rolling 30 days. Check-in 4 pm, check-out 3 pm; gate booth staffed 8-10 am and 2-6 pm. Gate staff cannot take reservations."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232656: maxStay 14 nights 'Rolling 30 Days', minHolidayWeekendStay 3, minWeekendStay 0; notices on booth hours and 3 pm checkout; site attributes check-in 04:00 PM; fee description 'cannot make reservations over the phone', read 2026-11-07",
+      "method": "manual"
+    }
+  },
+  "summary": "rec.gov 232656: confirmed $25 (2026 and 2027), 50 A + water on all 77 overnight sites (facility text says 71), 2 pull-throughs; added showers/flush/water/dump, season 04-01..10-31, 14-night max, 3-night holiday minimum. --AWH lakefront CONFIRMED on imagery (east tip and north-shore pads with open bank to the water). Note unchanged. Phone missing.",
+  "flags": [
+    "WATERFRONT (--AWH value 'lakefront'): CONFIRMED, no ask needed. Leaf-off imagery with rec.gov's site points shows pads with open, road-free ground to the shoreline: the east-tip sites 19-24 (spurs pointing toward the water, ~20-35 m of open wooded bank to the waterline, loop road inland of them), north-shore 28-32 (pads between the loop road and a ~25-35 m open rocky bank) and 72-74 at the west end (~20-40 m open bank to the beach). Interior sites (35-60 etc.) are inland. rec.gov: 'Many campsites are adjacent to the waters edge'.",
+    "PHONE missing: the entry has none; recreation.gov's facility phone is 417-779-5376. apply.py does not write phone - add by hand.",
+    "Operator: USACE Little Rock District (Table Rock Lake), not commercially managed; federal stands. Website stays the rec.gov campground page.",
+    "Sites: the facility description says '71 reservable campsites' but the catalog has 77 overnight STANDARD ELECTRIC sites (all reservable) plus a group shelter; count written as 77. Every site fits EKKO: max vehicle lengths 34-66 ft, driveways 38-99 ft. max_rig_ft left unset.",
+    "Season: no statement; written from the rate season and the calendar (open nights 2026-10-31 and 2027-04-01, none in November or March). Other years' rate seasons end 10-30.",
+    "Pin 36.5594,-93.3194 (rec.gov's facility point) is ~175 m WSW of the 77-site centroid (36.56034,-93.31782), at the entrance end of the peninsula. Under 250 m; no move.",
+    "DISCOUNTS: rec.gov carries a 'militaryDiscount' rule value; not a discount claim, nothing written. Sewer: no sewer attribute on any site; left unset."
+  ]
+}

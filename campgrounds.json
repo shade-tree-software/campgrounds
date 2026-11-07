@@ -53862,20 +53862,73 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232656: 'Electric Hookup' 50 and 'Water Hookup' Yes on all 77 overnight sites (RIDB cache the same), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232656/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232656/rates: 'PeakSTANDARD ELECTRIC' 25 for the 2026 and 2027 Peak Seasons, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232656: 77 reservable STANDARD ELECTRIC overnight sites (the facility text still says 71); RIDB 'Driveway Entry' Pull-through on 2 sites, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232656 ('hot showers, drinking water, a dump station'; amenities 'Showers', 'Flush Toilets', 'Dump Station'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232656/rates (Peak Season 2026-04-01..10-31) and the availability calendar (sites reserved on 2026-10-31, no nights November 2026 or March 2027, bookable 2027-04-01), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232656: maxStay 14 nights 'Rolling 30 Days', minHolidayWeekendStay 3, minWeekendStay 0; notices on booth hours and 3 pm checkout; site attributes check-in 04:00 PM; fee description 'cannot make reservations over the phone', read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
       "currency": "USD"
-    }
+    },
+    "sites": {
+      "count": 77,
+      "pull_through": true
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "season": {
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "14 nights in any rolling 30 days. Check-in 4 pm, check-out 3 pm; gate booth staffed 8-10 am and 2-6 pm. Gate staff cannot take reservations."
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232656 (read 2026-11-07): 'Old Highway 86 Campground offers 71 reservable campsites ... hot showers, drinking water, a dump station and electric hookups'; 'Many campsites are adjacent to the waters edge ... Built on a peninsula, this park has water on three sides'; notices 'All checkout times are at 3:00 p.m.', 14 days in any 30; rules maxStay 14 nights 'Rolling 30 Days', minHolidayWeekendStay 3, minWeekendStay 0, reservationCutOff 0; amenities incl. 'Showers', 'Flush Toilets', 'Dump Station', 'Host'; phone 417-779-5376; USACE, not commercially managed https://www.recreation.gov/api/camps/campgrounds/232656/rates (read 2026-11-07): Peak Season 2026-04-01..2026-10-31 and 2027-04-01..2027-10-30, 'PeakSTANDARD ELECTRIC' 25 https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232656 (read 2026-11-07): 77 STANDARD ELECTRIC overnight sites + 1 group shelter, all site-specific reservable; 'Electric Hookup' 50 and 'Water Hookup' Yes; per-site coordinates; check-in 4 pm, check-out 3 pm; equipment RV/Trailer/Tent RIDB campsite cache trip_data/ridb_campsites.json, facility 232656 (fetched 2026-10-20): 77 STANDARD ELECTRIC + 1 GROUP SHELTER ELECTRIC; max vehicle 34-66 ft; 73+2 back-in, 2 pull-through https://www.recreation.gov/api/camps/availability/campground/232656/month for 2026-10, 2026-11, 2027-03, 2027-04 (read 2026-11-07): sites reserved through 2026-10-31; no nights in November 2026 or March 2027; 2027-04-01 bookable Esri World Imagery (leaf-off) 640 m frame and four 170 m frames with every rec.gov site point, 2026-11-07",
+      "note": "rec.gov 232656: confirmed $25 (2026 and 2027), 50 A + water on all 77 overnight sites (facility text says 71), 2 pull-throughs; added showers/flush/water/dump, season 04-01..10-31, 14-night max, 3-night holiday minimum. --AWH lakefront CONFIRMED on imagery (east tip and north-shore pads with open bank to the water). Note unchanged. Phone missing."
+    },
+    "phone": "417-779-5376"
   },
   {
     "id": 673,
@@ -137458,7 +137511,7 @@
     "waterfront_evidence": "satellite at 36.8918,-94.4266: RV pad rows in open field; nearest farm ponds ~300m off; no water at sites",
     "website": "https://www.stagestopcamp.com/",
     "phone": "417-455-1221",
-    "note": "Campground 1 mi off I-49 near Neosho with 13 full-hookup sites (20/30/50A), shower house and laundry; reservable. --Claude",
+    "note": "Family-run park 1 mi off I-49 near Neosho; the four pull-throughs (13-16) are the nightly sites, the back-ins are let to monthly tenants. Two cabins and a community room. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -137471,35 +137524,39 @@
       "sewer": true
     },
     "sites": {
-      "count": 13
+      "count": 13,
+      "pull_through": true
     },
     "facilities": {
       "showers": true,
-      "laundry": true
+      "laundry": true,
+      "wifi": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "note": "Book online or by phone. Cancel fee $20; 50% refund within 14 days of the stay; none within 7 days; or move the dates to a free one-year park credit if you call within a day of booking."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stagestopcamp.com/rv ('13 spacious full-hookup sites. Enjoy 20/30/50-amp service, water, sewer, and Wi-Fi'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stagestopcamp.com/rv ('our 13 spacious full-hookup sites'; pull-through sites 13-16), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stagestopcamp.com/ ('Free WiFi ✦ Shower House & Laundry'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stagestopcamp.com/rv (own booking calendar) + https://www.stagestopcamp.com/rules (Cancellation Policy), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -137507,8 +137564,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.stagestopcamp.com/rv ('Rates start at $35 per night for two guests', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.stagestopcamp.com/rv ('Rates start at $35 per night for two guests'; one-night quotes for 2026-11-17, 2027-01-12 and 2027-06-08 all 'price_per_night:35'; rvPerExtra 5), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.stagestopcamp.com/rv (one-night quotes sold for November, January and June) + /rules ('heated hose during winter months'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -137524,7 +137587,15 @@
       "nightly_low": 35,
       "nightly_high": 35,
       "currency": "USD",
-      "note": "Rates from $35 for two guests."
+      "note": "$35 for two guests, $5 per extra guest."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.stagestopcamp.com/ ('13 Full Hookup Sites ✦ 20/30/50 Amp Power ✦ Free WiFi ✦ Shower House & Laundry'; 'Call us at 417-455-1221 or book online') https://www.stagestopcamp.com/rv (own booking calendar; 'Rates start at $35 per night for two guests, with small additional fees for extra guests'; page data rvBasePrice 35, rvPerExtra 5; siteGrid of 12 RV sites: back-ins 4-11 'is_full_timer: true', pull-throughs 13-16 'is_full_timer: false') https://www.stagestopcamp.com/rv?checkin=2026-11-17&checkout=2026-11-18&guests=2 (and 2027-01-12, 2027-06-08): 'available_count:4,total_sites:4,price_per_night:35,nights:1,total:35' https://www.stagestopcamp.com/rv/42n7u9uwk3hoyht and the other back-in site pages ('Currently Occupied - This site is reserved for a monthly tenant ... Fill out an application') https://www.stagestopcamp.com/rules (cancellation policy; 'All RV's must have a heated hose during winter months') Google Maps listing 'Stage Stop Campground', 12201 Hammer Rd, Neosho (4.7 from 169 reviews, (417) 455-1221) RV Life park 8136 (5 stars from 69 reviews, $$, avg_rate $34) Esri World Imagery around 36.8918,-94.4266",
+      "note": "Confirmed $35 (two guests) on the operator's own engine in Nov/Jan/Jun, 50A full hookups, 13 sites with pull-throughs, showers/laundry/wifi; added year-round season, booking + cancellation terms; passes gates and long-stay tests (4 of 12 RV sites nightly)."
     }
   },
   {
@@ -138037,8 +138108,8 @@
     "inclusion_evidence": "Operator site rockandrollrvpark.com: 41 full-hookup RV sites (20/30/50A), accommodates RVs/vans/tents for the night or longer, dog park + shower house operational -> transient RV park",
     "waterfront_evidence": "satellite at 38.0392,-92.7840: cleared lot/sites along highway in forest; only a small pond at far edge, not adjacent to pads",
     "website": "https://www.rockandrollrvpark.com",
-    "phone": "573-304-1020",
-    "note": "Family-owned park on 11 wooded acres near Camdenton/Lake of the Ozarks with 41 full-hookup sites (20/30/50A); reservable. --Claude",
+    "phone": "573-200-6634",
+    "note": "New family-owned park on 11 wooded acres near Camdenton, about a mile from the Ozarks Amphitheater; a camp store and laundry were still 'coming soon' (2026-11). --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -138051,26 +138122,31 @@
       "sewer": true
     },
     "sites": {
-      "count": 41
+      "count": 41,
+      "pull_through": true,
+      "max_rig_ft": 58
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "roverpass",
+      "url": "https://www.roverpass.com/c/rock-n-roll-rv-park-camdenton-mo/booking/",
+      "note": "Full refund until 14 days before check-in, 50% until 7 days, none within 6 days. No office: check in at your site; the camp host is in site #3."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.rockandrollrvpark.com/sites-rates ('full hookups, including 50/30/20-amp electric, water, sewer'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.rockandrollrvpark.com/ ('All 41 RV sites are currently open') + RoverPass engine ('RV Sites - Pull Through' and 'Back-In' rates, maxLength 58 ft) + sites-rates page ('average size = 30' x 58''), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "RoverPass booking engine, claimed listing (campgroundCancellationPolicy and checkInProcedure fields) + https://www.rockandrollrvpark.com/policies, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -138078,8 +138154,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.rockandrollrvpark.com/sites-rates ('RV Sites | Nightly: $45', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://www.rockandrollrvpark.com/sites-rates ('RV Sites Nightly: $45', tax and platform fees not included) + RoverPass booking engine, one-night quotes for 2026-11-17, 2026-12-08 and 2027-05-11 all $45.00, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.rockandrollrvpark.com/amenities ('A brand-new bathhouse with modern restrooms and hot showers'; 'fast, free Wi-Fi available at every site'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.rockandrollrvpark.com/policies ('Full hookups available year-round') + RoverPass engine selling nights in November, December and May, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -138097,6 +138184,18 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Nightly $45 plus tax and platform fees."
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.rockandrollrvpark.com/ ('All 41 RV sites are currently open with full hookups and complimentary Wi-Fi. Our shower house is now open'; phone (573) 200-6634) https://www.rockandrollrvpark.com/sites-rates ('(Tax and platform fees not included in prices shown) RV Sites Nightly: $45 Weekly: $270 Monthly: Oct-Mar $400, Apr-May $500, Jun-Aug $700, Sep $500 Yearly: $500 / Month'; 'Spacious gravel RV site (average size = 30' x 58') with full hookups, including 50/30/20-amp electric, water, sewer, and WiFi') https://www.rockandrollrvpark.com/amenities ('A brand-new bathhouse with modern restrooms and hot showers'; 'Camp Store + Laundry Facility (Coming Soon)') https://www.rockandrollrvpark.com/policies ('Full hookups available year-round'; check-in 1:00 PM, check-out 11:00 AM; camp hosts in site #3; 'Monthly and yearly guests must submit a photo of their unit before booking') RoverPass booking API, claimed bookable listing rock-n-roll-rv-park-camdenton-mo (read 2026-11-07): one-night searches 2026-11-17, 2026-12-08 and 2027-05-11 all sell 'RV Sites - Pull Through' and 'RV Sites - Back-In' at $45.00/night, minNightsRequired 1, maxLength 58 ft; 19 / 22 / 24 RV sites free on those weeknights; cancellation '100% refund until 14 days prior to check-in. 50% percent refund 7 days prior, then 6 days prior the reservation is no longer refundable'; phone '+1 573200-6634' Google Maps listing \"Rock'n'Roll RV Park\", 3336 Old Route 5, Camdenton (4.6 from 26 reviews, (573) 200-6634) RV Life park 267937 (4 stars from 4 reviews, $$, avg_rate $38) Esri World Imagery around 38.0392,-92.7840 (imagery predates the park)",
+      "note": "Confirmed $45 nightly (engine sells single nights Nov/Dec/May), 50A full hookups, 41 sites up to 58 ft with pull-throughs; added showers/wifi, year-round season, RoverPass booking and cancellation; phone on file is not the park's; passes gates and long-stay tests."
     }
   },
   {
@@ -139481,7 +139580,7 @@
     "waterfront_evidence": "satellite at 37.4605,-91.6328: wooded campground loops; small pond is SW of cluster, sites not on water",
     "website": "https://www.pinecrestcampground.com/",
     "phone": "573-548-3322",
-    "note": "General Ozarks campground near Salem with 60+ water/electric sites and 24 full-hookups plus cabins; reservable by phone/email. --Claude",
+    "note": "General Ozarks campground near Salem, the Current River and Montauk State Park that caters to trail riders as well as RVers (horse stalls, wash station and trails), with cabins and rental travel trailers. VisitMO lists 60+ water/electric sites and 24 full hookups; the operator gives no count. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -139494,22 +139593,29 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reserve by phone or by email/web form (give your rig size); a request is not a guarantee of a site. RVs pay the first night as a deposit. Within 10 days of arrival a cancellation forfeits the deposit; with more notice it may be transferred once to another stay the same year. No refunds."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.pinecrestcampground.com/price-list ('WATER & ELECTRIC', 'FULL HOOKUPS' site classes), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.pinecrestcampground.com/reservations ('Please include your name, phone number, address, and the size of your rig ... This is not a gurantee that we have a site available') + https://www.pinecrestcampground.com/rules-regulations ('we take the first night for deposit on all rvs and cabins. Our cancellation policy is 10 days or less will not be eligible for a transfer ... No refunds will be issued!!!'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.pinecrestcampground.com/price-list ('FULL HOOKUPS........................... $35.00', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.pinecrestcampground.com/price-list ('RV's & Horse Trailer Sites ... WATER & ELECTRIC....$30.00 ... FULL HOOKUPS.... $35.00 ... HORSE STALLS.... $10.00'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.pinecrestcampground.com/rules-regulations ('NO Smoking in Cabins, Store, or shower houses') + https://www.pinecrestcampground.com/services1 ('PINECREST GENERAL STORE ... Misc. Rv supplies'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -139521,7 +139627,16 @@
       "nightly_low": 30,
       "nightly_high": 35,
       "currency": "USD",
-      "note": "RV and horse-trailer sites: water + electric $30, full hookups $35."
+      "note": "RV and horse-trailer sites: water + electric $30, full hookups $35; horse stalls $10 a night extra."
+    },
+    "facilities": {
+      "showers": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.pinecrestcampground.com/ https://www.pinecrestcampground.com/price-list (undated Wix page, read live 2026-11-07) https://www.pinecrestcampground.com/reservations https://www.pinecrestcampground.com/rules-regulations https://www.pinecrestcampground.com/services1 Google Maps listing 'Pinecrest Campground & Cabins', 5466 Hwy YY, Salem (4.9, 269 reviews, (573) 548-3322) RV Life park 266667 (Algolia index: 5 stars from 2 reviews, price_level 3, avg_rate $44) Esri World Imagery around 37.4605,-91.6328",
+      "note": "Operator site: confirmed $30-35 RV rates and water/sewer hookups; added showers/store, phone/email booking with first-night deposit and no-refund terms; note cleaned. Passes private gates; not waterfront stands."
     }
   },
   {
@@ -141229,7 +141344,7 @@
     "waterfront_evidence": "satellite at 36.6181,-93.8469: wooded RV/camping loops, no water body adjacent",
     "website": "https://oakhillcourt.com/",
     "phone": "417-847-0291",
-    "note": "Family-owned wooded park and cabins near Cassville and Roaring River with full-hookup pull-through sites (30/50A, to 40 ft) and a pool; reservable. --Claude",
+    "note": "Veteran-owned wooded park with cabins and rental houses just north of Roaring River State Park near Cassville; pool (Memorial Day to Labor Day), game room and playground. The RV loop sits behind the cabins, off State Hwy 112. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -141243,30 +141358,41 @@
     },
     "sites": {
       "max_rig_ft": 40,
-      "pull_through": true
+      "pull_through": true,
+      "count": 22,
+      "note": "The 14 pull-throughs (B1-B10, C1-C4) are sold by the night, week or month; the 8 back-in A sites are annual rentals only."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.resontheweb.com/NavigationServlet?HotelCode=21598",
+      "note": "Books online (ResOnTheWeb) or by phone. RV sites cancel free 48+ hours out (monthly sites 2 weeks; bookings made the previous year 1 month). RV check-in 1 pm, check-out noon. Monthly stays on select sites, 2 months at most."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://oakhillcourt.com/campground/rv-park/ ('14 Pull-through full hook-up sites with water, sewer and electric (30 & 50 amp; C4 30 amp only)'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://oakhillcourt.com/campground/rv-park/ ('14 Pull-through full hook-up sites ... 8 Back-in sites ... which are now only annual vacation site rentals'; 'Maximum RV length is 40 feet') + park map Site-Map.jpg (A1-A8 annual, B1-B10 and C1-C4 pull-through), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://oakhillcourt.com/campground/rv-park/ ('Check Availability' form posting to resontheweb.com HotelCode=21598; 'Monthly rates available on select sites. Max rental 2 months') + https://oakhillcourt.com/policies/ ('Small cabins and RV Sites — 48 hours; large cabins, houses and monthly sites — 2 weeks; reservations made the previous year— 1 month'; 'CHECK IN: 1:00 CHECK OUT: 12:00'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://oakhillcourt.com/campground/rv-park/ ('Start From $40.00 / Night CHECK-IN: 1:00 PM', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://oakhillcourt.com/campground/rv-park/ ('30 & 50 amp sites: $40/Night + tax'; 'Start From $40.00 / Night'; page modified 2025-04-09), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://oakhillcourt.com/campground/rv-park/ ('Our pool, game room, playground, WiFi, bath house and laundry facilities are all available for use by our RV Park guests'; 'WiFi ... access in your camper is not guaranteed') + park map ('Dump Station'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -141278,7 +141404,17 @@
       "nightly_low": 40,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "RV sites from $40."
+      "note": "30 and 50 amp sites $40 a night plus tax; monthly rates on select sites."
+    },
+    "facilities": {
+      "dump": true,
+      "laundry": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://oakhillcourt.com/ https://oakhillcourt.com/campground/rv-park/ (page modified 2025-04-09) https://oakhillcourt.com/policies/ https://oakhillcourt.com/wp-content/uploads/2025/04/Site-Map.jpg (park map) https://www.resontheweb.com/NavigationServlet?HotelCode=21598 (booking engine; plain HTTP returned an engine error, not read) Google Maps listing 'Oak Hill Court Cabins & RV Park' (4.7, 187 reviews, (417) 847-0291) RV Life park 6471 (Algolia index) Esri World Imagery around 36.6181,-93.8469",
+      "note": "Operator site + park map: confirmed $40 (2025 page), 30/50A full hookups, 40-ft max, pull-throughs; added count 22 (14 nightly pull-throughs + 8 annual back-ins), dump/laundry/wifi, ResOnTheWeb booking link and cancellation terms; note cleaned. Passes every private gate; not waterfront stands."
     }
   },
   {
@@ -141349,7 +141485,7 @@
     "waterfront_evidence": "satellite at 36.6731,-93.4574: pin on hilltop community in forest; Table Rock Lake several hundred m away down wooded bluff, no shoreline pads",
     "website": "https://tablerockrv.com/",
     "phone": "417-739-5267",
-    "note": "Boutique 23-site full-hookup park a short walk from Aunts Creek on Table Rock Lake (wooded sites, not lakefront) with pool and store; reservable. --Claude",
+    "note": "Boutique park on Hwy OO a short walk from Aunts Creek on Table Rock Lake (wooded sites, not lakefront) with a pool; Branson is 23 mi. Also rents a cabin and two mobile homes long-term. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -141364,36 +141500,53 @@
       "count": 23
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "laundry": true,
+      "wifi": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/3E72774F-86B8-494C-8042-A54C6ED157CB",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservation only, by phone or on ResNexus. Free cancellation 10+ days before arrival, none after; 3-night minimum on Memorial Day, July 4th and Labor Day weekends. Arrive 2-9 pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://tablerockrv.com/about/ ('All the sites are full hook up'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://tablerockrv.com/about/ ('The 23 oversized RV sites'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://tablerockrv.com/amenities/ ('Wi-Fi ... Laundromat, Clean Bathhouse ... Convenience Store'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://tablerockrv.com/ and https://tablerockrv.com/rates/ (reservation, cancellation and holiday-minimum policies), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-09-20",
         "method": "derived"
+      },
+      "season": {
+        "source": "https://tablerockrv.com/contact/ ('Open All Year'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -141403,53 +141556,14 @@
     },
     "discounts": {
       "good_sam": false
-    }
-  },
-  {
-    "id": 2026,
-    "kind": "campground",
-    "name": "Outback RV Park",
-    "location": "38.2388,-93.3775",
-    "elevation_meters": 206.0,
-    "state": "MO",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "AAA/Campendium + RoverPass: operating RV park on Osage River 24 yrs, big-rig friendly to 40 ft, 30/50A full hookups; takes long-term + nightly drive-in RVs",
-    "waterfront_evidence": "satellite at 38.2388,-93.3775: RV row on town block set back from Truman/Warsaw lakeshore behind road, parking and treeline buffer",
-    "website": "https://www.roverpass.com/c/outback-rv-park-warsaw-mo/",
-    "phone": "660-223-2165",
-    "note": "Small 18-site full-hookup RV park near the Osage River and downtown Warsaw (30/50A, to 40 ft); takes nightly and long-term. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 2,
-      "checked": "2026-06",
-      "source": "rvlife"
     },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
+    "season": {
+      "year_round": true
     },
-    "sites": {
-      "count": 18,
-      "max_rig_ft": 40
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "f5e114cc3f1f8af9",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://tablerockrv.com/ ('All reservations are made by phone by using our Resnexus'; 'Campers may cancel 10 days before arrival date with no fees. All cancellations made less than 10 days will be charged the full amount and are NON-REFUNDABLE'; 'Holiday weekends require a 3 day stay minimum i.e Memorial day, 4th of July, & Labor day'; 417-739-5267) https://tablerockrv.com/rates/ (no nightly rate; 'flexible weekly and monthly rates ... quiet off-season for $600 a month, or ... seasonal action for $700 a month'; 'Our campsites are available by reservation only'; arrival 2-9 pm) https://tablerockrv.com/amenities/ (Swimming Pool, Wi-Fi, Full Hookups, Laundromat, Clean Bathhouse, Convenience Store, Boat Ramp 5 minute walk) https://tablerockrv.com/about/ ('a boutique RV park located a 5 minute walk from Aunts Creek Public Use Area on Table Rock Lake ... one furnished cozy cabin for a short-term rental and two newly renovated 2-bedroom mobile homes for long-term rentals ... The 23 oversized RV sites are shady ... All the sites are full hook up') https://tablerockrv.com/contact/ ('Open All Year'; 2799 State Hwy OO, Reeds Spring) https://resnexus.com/resnexus/reservations/book/3E72774F-86B8-494C-8042-A54C6ED157CB (Incapsula wall to plain HTTP; empty page in headless Chrome) - UNREAD, 2026-11-07 Google Maps listing 'Table Rock Lake RV Resort', 2799 State Hwy OO, Reeds Spring (4.3 from 42 reviews, (417) 739-5267, tablerockrv.com) - the earlier 'Kimberling City' query matched a different park (Table Rock Lake RV Resort & Marina, 78 Kimberling Blvd) RV Life park 12428 'Table Rock RV Resort' (4.5 stars from 4 reviews, $$, avg_rate $31); reviews stayed 7/2026 ('$45 USD a night', pull-thru, 36-ft fifth wheel) and 9/2022 ($40, pull-through site 3) Esri World Imagery around 36.6731,-93.4574",
+      "note": "Operator site confirms 23 full-hookup sites, pool/laundry/store/wifi, open all year, ResNexus booking with holiday 3-night minimum; no nightly rate posted and ResNexus walled (unread). Branson gateway 22 km lifts the price gate; Google listing was the wrong park."
     }
   },
   {
@@ -142118,7 +142232,7 @@
     "waterfront_evidence": "satellite at 37.6272,-89.5994: commercial/rural buildings, only small farm ponds, no river adjacent to sites",
     "website": "https://riverhillsrvpark.com/",
     "phone": "573-270-7451",
-    "note": "Tiny 4-site park near the Mississippi River at Altenburg with two full-hookup pull-throughs plus two electric/water sites; reservable by phone. --Claude",
+    "note": "Tiny park near the Mississippi River at Altenburg, opened late 2025: two pull-throughs on the upper level by the bathhouse, two sites on the lower level; hiking trails, a fishing pond and a picnic area. Veterans camp free for three nights. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -142139,25 +142253,47 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://riverhillsrvpark.com/ ('Full Service ... Hook-ups', 'Electric & Water Hook-ups'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://riverhillsrvpark.com/ ('Two Full Service Pull Through Hook-ups' + 'Two Electric & Water Hook-ups'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://riverhillsrvpark.com/ ('Call 573-270-7451 ... Call today to reserve your spot!'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://riverhillsrvpark.com/ ('full bathroom/shower facilities and washer and dryer available'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://riverhillsrvpark.com/ (veterans special: 'three consecutive days totally free', 'No obligation to stay beyond the three days'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "a6e9609e1eb58141",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true
+    },
+    "discounts": {
+      "military": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://riverhillsrvpark.com/ (operator site; answers 406 Mod_Security to curl and headless Chrome with the 'Mozilla/5.0' agent, read through WebFetch 2026-11-07): 'Two Full Service Pull Through Hook-ups' (upper level, 'full bathroom/shower facilities and washer and dryer'), 'Two Electric & Water Hook-ups' (lower level), 'Call 573-270-7451 ... ask for Rick or Joe ... Call today to reserve your spot!', veterans special 'three consecutive days totally free', address 95 Hwy C & A, Altenburg; no rates posted Google Maps listing 'River Hills RV Park', 95 Hwy C, Frohna (RV park, website riverhillsrvpark.com, (573) 270-7451, no rating or reviews shown), read 2026-11-07 RV Life park 268843 (5 stars from 1 review, price_level 1 / $, avg_rate $0); its one review stayed 12/2025: 'Newly Opened in Late 2025 ... we are the first RV campers to stay at this campground ... complimentary laundry and shower area ... There are 2 FHU sites'; price '$0 USD a night, discount Military'; 'You can also access this campground via Harvest Host' Esri World Imagery around 37.6272,-89.5994 (imagery predates the park)",
+      "note": "Operator site confirms 4 sites (2 full-hookup pull-throughs, 2 water/electric), phone booking, showers/laundry and a veterans' three-free-nights offer; no rate posted. Presence passes on the working site + phone; price rests only on a thin RV Life $ tier. Weak spot."
     }
   },
   {
@@ -142309,7 +142445,7 @@
     "waterfront_evidence": "satellite at 36.6105,-93.8423: small RV cluster in forest clearing, no water nearby",
     "website": "https://www.facebook.com/PeddlersRVPark/",
     "phone": "417-847-3543",
-    "note": "Small park 2 mi north of Roaring River State Park on 11 wooded acres with full-hookup sites (30/50A); reservable by phone. --Claude",
+    "note": "Small park 2 mi north of Roaring River State Park on 11 wooded acres. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -142341,6 +142477,11 @@
       "sig": "53f7ecc502049bb8",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.facebook.com/PeddlersRVPark/ (operator's only web page; login wall to plain HTTP, nothing readable), 2026-11-07 Google Maps listing 'Peddlers RV Park', 22449 State Hwy 112, Cassville (RV park, open, 4.4 from 86 reviews, (417) 847-3543, no website) and its recent reviews (5 and 10 months ago), read 2026-11-07 RV Life park 259986 (5 stars from 1 review, price_level 2 / $$, avg_rate $30); its one review stayed 6/2021: '$30 USD a night', motorhome, back-in site 11, water and sewer Esri World Imagery around 36.6105,-93.8423",
+      "note": "No operator page readable (Facebook only); passes the private gates on Google (4.4/86, phone) plus RV Life $$; no dated rate to write. Hookups/booking stay derived; note trimmed of what the fields carry; pin and not waterfront stand."
     }
   },
   {
@@ -143533,31 +143674,6 @@
     }
   },
   {
-    "id": 2066,
-    "kind": "campground",
-    "name": "The Oak Tree RV Park",
-    "location": "38.2882,-93.6123",
-    "elevation_meters": 248.0,
-    "state": "MO",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "RV Life/Good Sam/RoverPass/Hipcamp listings + operator FB: operating RV park under white oaks in Clinton MO with reviews -> real RV campground",
-    "waterfront_evidence": "satellite at 38.2882,-93.6123: RV/MH rows far from two small ponds; pads not at water",
-    "website": "https://www.facebook.com/oaktree.rvpark/",
-    "note": "Small operating RV park set under mature white oaks in Clinton. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 1,
-      "checked": "2026-06",
-      "source": "rvlife"
-    },
-    "note_scan": {
-      "sig": "2adb7167d756e457",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    }
-  },
-  {
     "id": 2067,
     "kind": "campground",
     "name": "Port of Kimberling Resort & Campground",
@@ -143635,15 +143751,15 @@
     "id": 2068,
     "kind": "campground",
     "name": "Unhitched Sterett Creek Marina & RV Park",
-    "location": "38.2959,-93.3596",
-    "elevation_meters": 241.0,
+    "location": "38.2982,-93.3700",
+    "elevation_meters": 227,
     "state": "MO",
     "ownership": "private",
     "waterfront": "lakeview",
     "inclusion_evidence": "Operator online booking (bookingsus.newbook.cloud/sterett_creek) + Roverpass/Campendium: full-hookup RV sites, midweek nightly specials, currently operating -> real transient RV park",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit d746d91 (MO private: add 123 screened commercial RV parks (+3 local, 1 hipcamp)); on-water value recorded at that commit (no separate per-entry evidence string)",
-    "website": "https://bookingsus.newbook.cloud/online/sterett_creek?place_booking\nhttps://www.facebook.com/unhitchedsterettcreek/",
-    "note": "Marina RV park on Truman Lake near Warsaw with ~100 sites (30/50A, many seasonal) that also takes nightly guests; books online through Unhitched RV (NewBook). --Claude",
+    "waterfront_evidence": "p3-315 (2026-11-07): the operator sells 'Lakefront' sites, but the 6 shore back-ins have a gravel loop road and a 15-25 m eroded bank between them and Truman Lake. Lakeview stands; pin moved ~850 m off the access road.",
+    "website": "https://bookingsus.newbook.cloud/online/sterett_creek",
+    "note": "Marina RV park on Truman Lake near Warsaw, many of its sites seasonal, that also takes nightly guests in upper-camp, lakeview and lakefront loops. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -143651,29 +143767,35 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": true,
+      "sewer": true
     },
     "sites": {
-      "count": 100
+      "count": 100,
+      "pull_through": true
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://bookingsus.newbook.cloud/online/sterett_creek",
+      "note": "NewBook engine sells single nights; the lakefront back-ins carried a 2-night minimum on a May 2027 weeknight. In Nov-Dec only the upper-camp full-hookup sites book online; call for the rest."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://bookingsus.newbook.cloud/online/sterett_creek (site types 'FHU 30/50 Upper Camp', 'Lakeview Back In FHU 30/50' - 'full hookups with 30/50-amp service'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://bookingsus.newbook.cloud/online/sterett_creek (site type 'Lakeview Pull Thru FHU 30/50'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://bookingsus.newbook.cloud/online/sterett_creek (NewBook engine), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://bookingsus.newbook.cloud/online/sterett_creek, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -143681,8 +143803,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://bookingsus.newbook.cloud/online/sterett_creek ('RV Sites ... From $31.14 / night'), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://bookingsus.newbook.cloud/online/sterett_creek (one-night quotes for 2026-11-17, 2026-12-08, 2027-05-11), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -143695,11 +143818,18 @@
       "military": true
     },
     "fees": {
-      "nightly_low": 31.14,
+      "nightly_low": 41,
       "currency": "USD",
       "checked": "2026",
-      "note": "RV sites from $31.14 a night on the NewBook engine (October weeknight, 23-ft rig). Read 2026-10-19."
-    }
+      "note": "One-night quotes on the NewBook engine for a 23-ft motorhome, read 2026-11-07: May 2027 weeknight $41 (water/electric upper camp) to $60 (lakefront back-in); in Nov-Dec 2026 only the upper-camp 30/50 full hookups sell online, at $48. Electric-only upper-camp sites the operator calls tent sites quote $35.",
+      "nightly_high": 60
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://bookingsus.newbook.cloud/online/sterett_creek (operator's NewBook engine; one-night quotes, Motorhome 23 ft, 2 adults default 1: 2026-11-17 and 2026-12-08 'FHU 30/50 Upper Camp $48.00 / night', every other RV type 'Please contact our friendly staff'; 2027-05-11: FHU 30/50 Upper Camp $54, FHU 30 Upper Camp $51, EW Only Upper Camp $41, Electric Only Upper Camp ('30-amp electric tent sites') $35, Lakeview Pull Thru FHU 30/50 $56, Lakeview Back In FHU 30/50 $51, Lakefront Back In FHU 30/50 $60 with '2 Night min'; category_sites_available for a 23-ft rig on 2027-05-11 sums to 38 RV sites), read 2026-11-07 Google Maps listing 'Unhitched Sterett Creek Marina' (4.5 from 524 reviews, (660) 438-2280, website = the NewBook page) RV Life park 15082 (5 stars from 8 reviews, $$, avg_rate $35); reviews stayed 9/2026 ($55), 7/2026 ($40, site L4 back-in, 'Lakeside sites ... no shade there'), 5/2025 ($50), 9/2024 ($43, pull-through L34) https://www.sterettcreek.com/ (now a rifle-sales spam blog - a lapsed domain, not the park) Esri World Imagery around 38.2975,-93.3700 and 38.2975,-93.3718; Open-Meteo elevation",
+      "note": "NewBook engine re-read with one-night quotes: base $41 (May 2027) to $60, $48 the only online type in Nov-Dec; 50A/water/sewer and pull-throughs confirmed; old $31.14 was a 7-night 'from' average. Gates and long-stay tests pass; lakeview stands; pin is 850 m off on the access road."
+    },
+    "phone": "660-438-2280"
   },
   {
     "id": 2069,
@@ -143788,43 +143918,6 @@
     },
     "note_scan": {
       "sig": "a78c0a2632b5142c",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    }
-  },
-  {
-    "id": 2072,
-    "kind": "campground",
-    "name": "Ozark Waterfront Resort",
-    "location": "38.0251,-92.7994",
-    "elevation_meters": 215.0,
-    "state": "MO",
-    "ownership": "private",
-    "waterfront": "lakeview",
-    "inclusion_evidence": "RV Life 10/10 traveler reviews + missourigreatoutdoors listing: currently-operating family campground & marina, spacious shaded full-hookup RV sites, nightly by phone 573-273-4444 -> real RV campground (seasonal marketing but not residential-only)",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit d746d91 (MO private: add 123 screened commercial RV parks (+3 local, 1 hipcamp)); on-water value recorded at that commit (no separate per-entry evidence string)",
-    "website": "https://www.facebook.com/p/Ozark-Waterfront-Resort-100057414049974/",
-    "phone": "573-273-4444",
-    "note": "Family campground and marina on Lake of the Ozarks near Camdenton with shaded full-hookup sites and covered boat slips; markets heavily to seasonal RVers, no online booking. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 2,
-      "checked": "2026-06",
-      "source": "rvlife"
-    },
-    "hookups": {
-      "water": true,
-      "sewer": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "efe489ebfa9f6a55",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     }
