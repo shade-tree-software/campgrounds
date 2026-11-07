@@ -489,3 +489,9 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **Pomme de Terre State Park - Hermitage (1847, MO, p3-320, 2026-11-07):** Loop 400 basic sites H409-H412 sit 35-45 m from the lake over open sandy shore, ~4-5 m above normal pool, with no road between. Stored lakeview. Upgrade to lakefront? **AWH 2026-11-07: lakefront, as long as that shore is not a dedicated day-use beach (it isn't; the swim beach is elsewhere) - set.**
 
 - **Mellon Acres Event Center RV Park (1961, Lawson MO, private, p3-320, 2026-11-07):** a wedding/event estate that lists 21 full-hookup RV lots; its RV page blocked the verifier, Google lists it as a wedding venue (4.8, 97 reviews) and no recent review mentions an RV stay; RV Life $$ (~$39). Kept for now. Keep, or drop as not really selling ordinary nights? **AWH 2026-11-07: drop - done.**
+
+- **Show-Me Rest RV Park (1960, Butler MO, private, p3-321, 2026-11-07):** no website (Hipcamp page 'coming soon'), no posted rate (RV Life $$, avg ~$28), Google 4.7 from 108. One review mentions a work crew staying 'for the next few months'; winter imagery shows ~12 rigs in 19 sites. Kept. Keep, or drop as long-stay in character (it would then fail the posted-rate test)?
+
+- **Red Cedar RV Park (1965, Bolivar MO, private, with a motel, p3-321, 2026-11-07):** no operator website; the only listing is an unclaimed RoverPass page (now cleared); camper-reported $28 a night (Campendium), RV Life $$ / 4.5 from 37, Google 4.3 from 137, phone answers. Kept under the camper-reported-rate rule. Keep?
+
+- **Soggy Bottom Campground (14558, Cameron MO, private, p3-321, 2026-11-07):** operator site is live (23 full-hookup sites, phones), but rates are quoted by email and a mandatory gate fee is unpriced; only RV Life's $$ tier indicates price; Google 4.6 from 118. Kept. Keep, or drop for no posted price?
