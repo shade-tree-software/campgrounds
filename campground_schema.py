@@ -170,6 +170,12 @@ SCHEMA = {
         # agencies and double-count whenever a modifier is applied on top.
         "nightly_low": NUM,
         "nightly_high": NUM,
+        # True when the nightly figures are a computed total for two people for
+        # one night with every required permit included (the price gate's
+        # definition, AWH 2026-10-10), rather than a posted site rate. The
+        # permits themselves stay in `prereq_pass` / `entrance`, and the popup
+        # says they are inside the figure, not on top of it.
+        "all_in": BOOL,
         "currency": ENUM("USD", "CAD"),
         "reservation_fee": NUM,
         # Three distinct mechanics; flattening them loses the cases that matter.
@@ -184,8 +190,18 @@ SCHEMA = {
                            amount=NUM, factor=NUM,
                            per=ENUM("stay", "night"),
                            applies_to=ENUM("base", "total")),
+        # A permit the camper must hold, bought apart from the site. `valid:
+        # "stay"` is one bought per visit (Virginia WMAs' $10 camping
+        # authorization, per party, up to 6 people and 14 nights); `per` says
+        # who buys one, `min_age` from what age a person needs it, and
+        # `waived_by` what you can hold instead ("a Colorado hunting or fishing
+        # license"). AWH 2026-11-07: the popup shows every part of a permit
+        # price, "even if it's complicated", so a camper can price their own stay.
         "prereq_pass": OBJ(name=STR, price=NUM,
-                           valid=ENUM("season", "year", "day")),
+                           valid=ENUM("season", "year", "day", "stay"),
+                           per=ENUM("party", "person", "vehicle"),
+                           min_age=INT(), max_people=INT(), max_nights=INT(),
+                           waived_by=STR),
         # A park ENTRANCE fee is not a camping surcharge, and conflating them
         # misreports both. Indiana charges every vehicle to enter ($7 resident,
         # $15 non-resident) and has no non-resident camping rate at all; New
@@ -198,10 +214,15 @@ SCHEMA = {
         # than the annual one depending purely on trip length.
         # `name` is what the charge is called where "park entry" is wrong:
         # Virginia WMAs charge a per-person-per-day "access permit" (2026-10-09).
+        # `min_age`, `annual` (the year-long alternative to a day charge),
+        # `departure_day` (true = the day you leave is a charged day too, so one
+        # night is two days) and `waived_by` complete a per-person permit like
+        # Virginia's $4 WMA access permit (AWH 2026-11-07).
         "entrance": OBJ(resident=NUM, nonresident=NUM,
                         per=ENUM("vehicle_day", "vehicle_stay", "vehicle_year",
                                  "person_day"),
-                        name=STR),
+                        name=STR, min_age=INT(), annual=NUM,
+                        departure_day=BOOL, waived_by=STR),
         # Per-night add-ons on top of the base rate. Both systems verified so
         # far price the amenities separately, and they are exactly what a search
         # filters on: electric costs $7-8/night extra in NY State and in Suffolk
@@ -746,6 +767,14 @@ FIELD_LABELS = {
     "nonresident": "Non-resident charge",
     "applies_to": "Applies to (base rate / whole price)",
     "prereq_pass": "Required pass",
+    "all_in": "Rate is the all-in total for 2 people, 1 night",
+    "valid": "Valid for",
+    "per": "Per",
+    "min_age": "Needed from age",
+    "max_nights": "Covers up to (nights)",
+    "waived_by": "Not needed with",
+    "annual": "Annual alternative",
+    "departure_day": "Departure day is charged too",
     "price_tier": "Price tier ($ count)",
     "good_sam": "Good Sam",
     "passport_america": "Passport America",

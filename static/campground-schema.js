@@ -22,7 +22,7 @@ function sfDisplay(v) {
 // Fields that say nothing useful in a one-line collapsed summary — provenance,
 // prose, and plumbing. They still render inside the open section.
 const SF_SUMMARY_SKIP = new Set(['source', 'checked', 'note', 'url', 'platform',
-                                 'currency', 'nightly_high', 'closes']);
+                                 'currency', 'nightly_high', 'closes', 'all_in']);
 
 // A collapsed section shows its VALUES, not a count of them. It used to read
 // "4 set", which on the Rating section is worse than useless: Prophetstown is a
@@ -233,15 +233,26 @@ function sfChip(groupKey, field, value, cur) {
     // $15 non-resident per vehicle/stay" reads as if the $15 alone were per
     // vehicle. The year case says its basis in the head instead — unless a
     // name replaced that head ("Recreation Passport"), when the tail says it.
-    const tail = ((value && value.per) === 'vehicle_year' && !(value && value.name)) || !per
-      ? '' : ' (' + per.trim() + ')';
+    // A per-person permit carries its terms (AWH 2026-11-07: show every part of
+    // the price, so a camper can work out their own stay): from what age, that
+    // the departure day is a charged day too, the annual alternative, and what
+    // a camper can hold instead.
+    const terms = [];
+    if (per) terms.push(per.trim());
+    if (value && value.min_age != null) terms.push('age ' + value.min_age + '+');
+    if (value && value.departure_day === true) terms.push('arrival and departure days both count');
+    const tail = ((value && value.per) === 'vehicle_year' && !(value && value.name)) || !terms.length
+      ? '' : ' (' + terms.join(', ') + ')';
+    let after = '';
+    if (value && value.annual != null) after += '; ' + sfMoney(value.annual, cur) + '/year option';
+    if (value && value.waived_by) after += '; not needed with ' + value.waived_by;
     if (r != null && n != null) {
       return head + (r === n
         ? sfMoney(r, cur)
         : sfMoney(r, cur) + ' resident, ' + sfMoney(n, cur) + ' non-resident')
-        + tail;
+        + tail + after;
     }
-    return head.trim() + ' fee' + tail;
+    return head.trim() + ' fee' + tail + after;
   }
   // The name is what the reader has to go and get ("WMA camping authorization",
   // "Green Key"); a price alone read as an anonymous surcharge. A free pass
@@ -287,13 +298,24 @@ function sfChip(groupKey, field, value, cur) {
     return chip;
   }
   if (k === 'fees.prereq_pass') {
-    const name = value && value.name;
-    const price = value && value.price != null
-      ? (value.price === 0 ? 'free' : sfMoney(value.price, cur)
-         + (value.valid ? '/' + value.valid : ''))
-      : null;
-    if (name) return 'requires ' + name + (price ? ' (' + price + ')' : '');
-    return price ? 'requires ' + price + ' pass' : 'pass required';
+    const v = value || {};
+    const name = v.name;
+    // Who buys one and what it covers: Virginia's $10 WMA camping authorization
+    // is one per party per visit, for up to 6 people and 14 nights.
+    const terms = [];
+    if (v.price != null) {
+      terms.push(v.price === 0 ? 'free' : sfMoney(v.price, cur)
+                 + (v.valid ? '/' + v.valid : '')
+                 + (v.per ? ' per ' + v.per : ''));
+    } else if (v.per) {
+      terms.push('one per ' + v.per);
+    }
+    if (v.min_age != null) terms.push('age ' + v.min_age + '+');
+    if (v.max_people != null) terms.push('up to ' + v.max_people + ' people');
+    if (v.max_nights != null) terms.push(v.max_nights + (v.max_nights === 1 ? ' night' : ' nights'));
+    const t = terms.length ? ' (' + terms.join(', ') + ')' : '';
+    const waived = v.waived_by ? '; not needed with ' + v.waived_by : '';
+    return 'requires ' + (name || 'a pass') + t + waived;
   }
   if (Array.isArray(value)) {
     return value.length + ' ' + field.label.toLowerCase()
@@ -414,6 +436,13 @@ function sfChips(group, values, keys) {
       if (values.nightly_high != null && values.nightly_high !== values.nightly_low) {
         // Formatted like the low end: a raw 43.2 beside C$29.71 read as a typo.
         chip += '\u2013' + sfAmount(values.nightly_high);
+      }
+      // An all-in figure is a sum the camper's own party may not match (AWH
+      // 2026-11-07), so it says what it was summed for, and the permits after
+      // it read as its parts rather than as charges on top.
+      if (values.all_in === true) {
+        parts.push(chip + ' for 2 people, 1 night, permits included');
+        return;
       }
       chip += '/night';
       // With add-ons beside it, say the rate is the base they are added to.

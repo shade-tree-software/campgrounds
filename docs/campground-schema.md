@@ -479,6 +479,32 @@ all-in price for two people for one night as its nightly rate** (AWH: $10 campin
 removed — left beside a nightly figure, those chips read as charges ON TOP of it. A row that folds its
 modifiers into the nightly rate must drop them, or the reader adds them twice.
 
+**Since 2026-11-07 the permits are back, beside `all_in: true`.** AWH: the all-in figure was only ever
+for deciding whether to keep a campground; the popup should show the best information there is, "even if
+it's complicated, so the user has all the information they need to decide how much their particular stay
+will cost". So the nightly figure stays the two-person one-night total (the price gate and the map's rate
+filter still read it), `fees.all_in: true` says so, and the chip reads **"$26 for 2 people, 1 night,
+permits included"**. That wording is what stops the permit chips after it reading as charges on top. The
+permits carry their own terms:
+
+```jsonc
+"prereq_pass": {"name": "DWR camping authorization", "price": 10, "valid": "stay",   // one per visit
+                "per": "party", "max_people": 6, "max_nights": 14},
+"entrance":    {"resident": 4, "nonresident": 4, "per": "person_day", "name": "Access Permit",
+                "min_age": 17, "departure_day": true,   // a night is two charged days
+                "annual": 28,                           // the year-long alternative
+                "waived_by": "a Virginia hunting, freshwater fishing or trapping license or ..."}
+```
+
+→ `requires DWR camping authorization ($10/stay per party, up to 6 people, 14 nights)` ·
+`Access Permit $4 (per person/day, age 17+, arrival and departure days both count); $28/year option;
+not needed with a Virginia hunting, freshwater fishing or trapping license or ...`.
+Colorado State Wildlife Areas (2267, 2268, 14478) carry the same shape: no camping fee, a $10
+one-day SWA pass per person 16+, $43.87 a year, waived by an annual Colorado license, all-in $40.
+A permit with no known price is still worth naming (`{"name": "NMDGF GAIN permit"}` at Bill Evans
+Lake 7983 reads `free · requires NMDGF GAIN permit`). Note text that said the same thing was removed
+from the entry notes once the fields held it.
+
 The third is the one a flat model cannot express at all: a season pass amortizes fine over a
 week and terribly over one night, so its cost is **a function of trip length**. Which means
 the honest presentation is not a stored tier but **effective cost for this stay**, computed

@@ -30,7 +30,7 @@ GROUPS = {
     "season": ["year_round", "opens", "closes"],
     "booking": ["reservable", "window_opens_days", "reserve_until", "fcfs",
                 "min_stay", "max_stay_nights", "season"],
-    "fees": ["nightly_low", "nightly_high", "currency", "reservation_fee",
+    "fees": ["nightly_low", "nightly_high", "all_in", "currency", "reservation_fee",
              "nonresident", "prereq_pass", "entrance", "surcharges", "extra_person"],
     "discounts": ["good_sam", "military", "interagency_senior_access"],
 }
@@ -335,6 +335,34 @@ class ChipPhrasingTest(unittest.TestCase):
                                              "per": "vehicle_year",
                                              "name": "Recreation Passport"}}),
             ["Recreation Passport $15 resident, $40 non-resident (per vehicle/year)"])
+
+    def test_permit_priced_camping_shows_every_part(self):
+        """Virginia WMAs (AWH 2026-11-07): the all-in figure says what it was
+        summed for, and each permit carries its own terms."""
+        self.assertEqual(
+            self.chips("fees", {
+                "nightly_low": 26, "nightly_high": 26, "all_in": True,
+                "prereq_pass": {"name": "WMA camping authorization", "price": 10,
+                                "valid": "stay", "per": "party",
+                                "max_people": 6, "max_nights": 14},
+                "entrance": {"resident": 4, "nonresident": 4, "per": "person_day",
+                             "name": "access permit", "min_age": 17,
+                             "departure_day": True, "annual": 28,
+                             "waived_by": "a Virginia hunting, fishing or trapping license"}}),
+            ["$26 for 2 people, 1 night, permits included",
+             "requires WMA camping authorization ($10/stay per party, up to 6 people, 14 nights)",
+             "access permit $4 (per person/day, age 17+, arrival and departure days both count); "
+             "$28/year option; not needed with a Virginia hunting, fishing or trapping license"])
+        # A free site that needs a pass held by everyone on the property.
+        self.assertEqual(
+            self.chips("fees", {"nightly_low": 0, "nightly_high": 0,
+                                "prereq_pass": {"name": "State Wildlife Area pass",
+                                                "per": "person", "min_age": 16,
+                                                "waived_by": "a Colorado hunting or fishing license"}}),
+            ["free", "requires State Wildlife Area pass (one per person, age 16+); "
+                     "not needed with a Colorado hunting or fishing license"])
+        self.assertEqual(self.chips("fees", {"prereq_pass": {"price": 50, "valid": "year"}}),
+                         ["requires a pass ($50/year)"])
 
     # ── Money ───────────────────────────────────────────────────────────────
 
