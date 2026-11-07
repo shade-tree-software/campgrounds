@@ -1,0 +1,41 @@
+{
+ "id": 13953,
+ "checked": "2026-11-06",
+ "sources": [
+  "https://web.archive.org/web/20260714160743/https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/tuttle-creek (KDWP park page, Wayback capture 2026-07-14; ksoutdoors.gov answers 403 live): overview 'Cedar Ridge has 50 primitive campsites.' and 'four being located in the Cedar Ridge Area' (cabins); Areas list 'Cedar Ridge / Camping Available: Yes / ADA Camping Available: Yes / Reservable Sites: No / Primitive Camping: 100'; camp host 'Cedar Ridge - in front of cabins, next to swing set'; park office 785-539-7941, 5800 River Pond Rd, Manhattan",
+  "https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 (plain HTTP, read 2026-11-06): loops 'Cedar Ridge, Fancy Creek, Fancy Creek Hidden Hollow, Fancy Creek Lake View, N Randolph, Riley Point, River Pond, Rocky Ford, South Randolph'; 'Open year round.'; '14 days maximum consecutive stay rule: A guest may reserve and occupy a campsite for up to 14 consecutive nights within a single campground.'",
+  "campitks.gov site list, Cedar Ridge loop (loopID 510656), and campsiteDetails.page?parkID=519132&siteID=<id> for each, read 2026-11-06: 7 units only - Nemaha, Pottawatomie, Riley and Shawnee cabins (39.2786-39.2790,-96.5904..-96.5910) and 'Deer Hill #19/#20/#22' shelters, 'Looking For Category: Day Use'. No campsite is listed",
+  "Esri World Imagery 900 m and 320 m frames of the Cedar Ridge peninsula with the campitks unit points and the stored pin, 2026-11-06; Overpass returned errors today (OSM 'Cedar Ridge Campground' camp_site way 1077505359 centres on the stored pin, from an earlier successful query)"
+ ],
+ "groups": {
+  "booking": {
+   "values": {
+    "reservable": false,
+    "fcfs": "always",
+    "note": "The primitive sites are not on campitks.gov; only the area's four cabins and the Deer Hill shelters reserve there."
+   },
+   "source": "https://web.archive.org/web/20260714160743/https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/tuttle-creek ('Cedar Ridge ... Reservable Sites: No'); campitks.gov Cedar Ridge loop lists only cabins and day-use shelters. Read 2026-11-06",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true
+   },
+   "source": "https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 ('Open year round.'), read 2026-11-06",
+   "method": "manual"
+  }
+ },
+ "note": "Kansas State Parks area on a wooded peninsula on the east shore of Tuttle Creek Lake, beside the marina: primitive camping off the area's loop roads, four cabins and the Deer Hill shelters. KDWP's park page gives both 50 and 100 primitive sites. --Claude",
+ "summary": "KDWP (Wayback 2026-07-14): Cedar Ridge 'Reservable Sites: No', primitive 50 (overview) or 100 (area list); campitks' Cedar Ridge loop holds only 4 cabins + 3 day-use shelters. booking set to reservable false / fcfs always (was reservable true from note prose); season year round. Not waterfront stands; pin kept (pads not visible); count left unset (KDWP contradicts itself).",
+ "flags": [
+  "BOOKING CORRECTION: stored reservable true (derived from note prose) is wrong for the campsites - KDWP lists Cedar Ridge 'Reservable Sites: No' and campitks' Cedar Ridge loop has no campsites (cabins and 'Day Use' shelters only). Set reservable false, fcfs always; this also drops the inherited holiday minimum and processing fee.",
+  "SITE COUNT: not set. KDWP's own page says 'Cedar Ridge has 50 primitive campsites' in the overview and 'Primitive Camping: 100' in the Areas list.",
+  "WATERFRONT: stored 'not waterfront' stands (unsure, stays down). The peninsula is ringed by a rocky bank with a tree strip; the loop roads sit on a bench ~25 m above the lake (stored DEM 353 m vs ~328 m DEM on the lake's edge upstream at Fancy Creek) and no per-site data exists for the primitive sites. The campitks 'River/Lake View: Y' is on the cabins and shelters only.",
+  "PIN 39.27608,-96.59239 kept: it is on the peninsula's west loop road, where OSM's 'Cedar Ridge Campground' polygon centres, but imagery shows no pads or campers, so I can't place the camping better. Cabins are ~350 m NE (39.2788,-96.5907).",
+  "ROAD ACCESS: paved park roads loop the peninsula from the area entrance (imagery); no gate or restriction noted on the KDWP page.",
+  "WEBSITE (apply.py doesn't write it): keep https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/tuttle-creek (confirmed by the Wayback capture of 2026-07-14) and replace https://www.reserveamerica.com/explore/tuttle-creek-state-park/KS/519132/overview with https://www.campitks.gov/camping/tuttle-creek-state-park/r/campgroundDetails.page?parkID=519132 (cabins only for this area).",
+  "PHONE (apply.py doesn't write it): stored blank; the park office is 785-539-7941 (KDWP page).",
+  "FEES left alone: already in the KS shape with no utility add-on, which matches a primitive-only area.",
+  "WEAK SPOT: I could not see any primitive pads or campers on imagery; inclusion rests on KDWP's 'Camping Available: Yes / Primitive Camping: 100'."
+ ]
+}
