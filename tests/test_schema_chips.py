@@ -31,7 +31,7 @@ GROUPS = {
     "booking": ["reservable", "window_opens_days", "reserve_until", "fcfs",
                 "min_stay", "max_stay_nights", "season"],
     "fees": ["nightly_low", "nightly_high", "all_in", "currency", "reservation_fee",
-             "nonresident", "prereq_pass", "entrance", "surcharges", "extra_person"],
+             "nonresident", "prereq_pass", "entrance", "surcharges", "extra_person", "extra_vehicle"],
     "discounts": ["good_sam", "military", "interagency_senior_access"],
 }
 
@@ -314,6 +314,19 @@ class ChipPhrasingTest(unittest.TestCase):
                          ["+$2/night each extra child"])
         self.assertEqual(self.chips("fees", {"extra_person": {"included": 4, "child": 1}}),
                          ["rate covers 4 people, +$1/night each extra child"])
+
+    def test_extra_vehicle_charge_says_when_it_starts(self):
+        self.assertEqual(self.chips("fees", {"extra_vehicle": {"included": 2, "amount": 5}}),
+                         ["+$5/night each vehicle over 2"])
+        self.assertEqual(self.chips("fees", {"extra_vehicle": {"amount": 7, "per": "stay"}}),
+                         ["+$7/stay each extra vehicle"])
+        self.assertEqual(self.chips("fees", {"extra_vehicle": {"included": 1, "max_vehicles": 2}}),
+                         ["rate covers 1 vehicle, 2 vehicles max"])
+        # A Forest Service per-vehicle fee: towing a car pays the base twice.
+        self.assertEqual(
+            self.chips("fees", {"nightly_low": 8, "nightly_high": 8,
+                                "extra_vehicle": {"included": 1, "amount": 8}}),
+            ["$8/night", "+$8/night each vehicle over 1"])
 
     def test_extra_person_follows_the_base_rate(self):
         self.assertEqual(

@@ -63,7 +63,7 @@ const SF_FEE_PER = {
 // An add-on reads as money on top of the base, never as a label with a sum
 // beside it: "electric +$7/night" next to "$33-37/night" left AWH unable to
 // tell whether the $7 was inside the range or extra (2026-10-12).
-const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'surcharges', 'extra_person', 'nonresident',
+const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'surcharges', 'extra_person', 'extra_vehicle', 'nonresident',
                        'reservation_fee', 'prereq_pass', 'entrance'];
 
 const SF_SURCHARGE_PHRASES = {
@@ -295,6 +295,23 @@ function sfChip(groupKey, field, value, cur) {
         + (v.child === 0 ? ' free' : ' ' + sfMoney(v.child, cur));
     }
     if (v.max_people != null) chip += ', ' + v.max_people + ' people max';
+    return chip;
+  }
+  // The vehicle twin of the extra-person chip. A fee charged per vehicle is
+  // stored as included 1 with the base as the amount, so it reads
+  // "+$8/night each vehicle over 1": what towing a car costs.
+  if (k === 'fees.extra_vehicle') {
+    const v = value || {};
+    let chip;
+    if (v.amount != null) {
+      chip = '+' + sfMoney(v.amount, cur) + (v.per === 'stay' ? '/stay' : '/night')
+        + (v.included != null ? ' each vehicle over ' + v.included : ' each extra vehicle');
+    } else if (v.included != null) {
+      chip = 'rate covers ' + v.included + (v.included === 1 ? ' vehicle' : ' vehicles');
+    } else {
+      chip = 'extra-vehicle charge';
+    }
+    if (v.max_vehicles != null) chip += ', ' + v.max_vehicles + (v.max_vehicles === 1 ? ' vehicle' : ' vehicles') + ' max';
     return chip;
   }
   if (k === 'fees.prereq_pass') {

@@ -250,6 +250,15 @@ SCHEMA = {
                             per=ENUM("night", "stay"),
                             child=NUM, child_max_age=INT(),
                             max_people=INT()),
+        # Vehicles past the ones the site fee covers (AWH 2026-11-07), the
+        # vehicle twin of `extra_person`. "Extra vehicle $5" is `amount: 5`;
+        # `included` is the count it starts after (1 or 2 on most parks). A fee
+        # charged PER VEHICLE (the Forest Service's "$8 per vehicle") is
+        # `included: 1` with `amount` equal to the base: a motorhome alone pays
+        # the base, one towing a car pays it twice. `max_vehicles` is a posted cap.
+        "extra_vehicle": OBJ(included=INT(), amount=NUM,
+                             per=ENUM("night", "stay"),
+                             max_vehicles=INT()),
         "checked": STR,
         "note": STR,
     },
@@ -790,6 +799,8 @@ FIELD_LABELS = {
     "waived_if": "Waiver",
     "entrance": "Park entrance fee",
     "extra_person": "Extra-person charge",
+    "extra_vehicle": "Extra-vehicle charge",
+    "max_vehicles": "Vehicles max",
     "included": "People the base rate covers (adults, if children are counted apart)",
     "included_children": "Children the base rate also covers",
     "amount": "Amount",
