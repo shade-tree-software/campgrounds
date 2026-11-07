@@ -485,3 +485,7 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **Unionville City RV Park (1952, MO, p3-316, 2026-11-07):** the town's website lapsed to casino spam, so nothing online describes the park any more; the only trace is a Campendium phone (660-947-2438) next to the city office's 660-947-2437. Kept as a town park (public land is exempt from the presence rule). Keep, or drop with no page left?
 
 - **The Last Resort RV Park (2070, Warsaw MO, private, p3-319, 2026-11-07):** mostly an annual park ($220/month plus electric, by application) with about 16 of ~130 sites sold by the night at $45 ($65 holiday weekends) on its own engine; 'No Full Time Living'. Passes all five long-stay tests narrowly; Google 4.9 from 12 reviews; occupancy couldn't be checked. Kept for now. Keep, or drop as mostly seasonal?
+
+- **Pomme de Terre State Park - Hermitage (1847, MO, p3-320, 2026-11-07):** Loop 400 basic sites H409-H412 sit 35-45 m from the lake over open sandy shore, ~4-5 m above normal pool, with no road between. Stored lakeview. Upgrade to lakefront?
+
+- **Mellon Acres Event Center RV Park (1961, Lawson MO, private, p3-320, 2026-11-07):** a wedding/event estate that lists 21 full-hookup RV lots; its RV page blocked the verifier, Google lists it as a wedding venue (4.8, 97 reviews) and no recent review mentions an RV stay; RV Life $$ (~$39). Kept for now. Keep, or drop as not really selling ordinary nights?

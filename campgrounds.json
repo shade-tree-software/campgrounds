@@ -130739,15 +130739,15 @@
     "id": 1841,
     "kind": "campground",
     "name": "Mark Twain State Park",
-    "location": "39.4887,-91.7902",
-    "elevation_meters": 198.0,
+    "location": "39.4650,-91.8037",
+    "elevation_meters": 215,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "lakeview",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "mostateparks.com camping page: Badger/Coyote/Puma campgrounds, basic+electric+family RV sites, fully reservable",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 70c3003 (MO state parks: add 39 campgrounds with reservation deep links); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-320 (2026-11-07): the nearest pads (Puma) are 100-130 m from the Mark Twain Lake shore through forest, ~18 m above pool; no view supported. Down from lakeview.",
     "website": "https://mostateparks.com/park/mark-twain-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/58",
-    "note": "Three campgrounds (Badger, Coyote, Puma) on Mark Twain Lake with basic and electric (incl. 50A) sites; Puma is the lake-adjacent loop with a boat ramp; reservable online. --Claude",
+    "note": "Three adjoining wooded campgrounds (Badger, Coyote and Puma) on a ridge above Mark Twain Lake; the lake is reached by the Post Oak Trail and the boat launch north of Puma, not from the sites. Watercraft and ATV trailers may be parked off the pad in the grass. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -130755,7 +130755,9 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "booking": {
       "reservable": true,
@@ -130769,9 +130771,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 58 (every campsite typed 'Electric 50 amp', 'Electric 30 amp', 'Family Electric 30/50 amp' or 'Basic'; no water or sewer site type) + https://mostateparks.com/park/mark-twain-state-park/camping (Types of Sites 'Electric*', 'Basic, Electric*', 'Electric*, Family*'; '* 50-amp electric sites available'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
         "source": "https://mostateparks.com/park/mark-twain-state-park/camping and https://mostateparks.com/activity/camping",
@@ -130779,13 +130781,28 @@
         "method": "manual"
       },
       "fees": {
-        "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/twain-camping-fees-2027.pdf ('Badger and Coyote Campgrounds ... Basic $14 $15 $14', 'Electric - 50 AMP $27 $29 $25'; Puma 'Electric - 30 AMP $26 $28 $24', 'Electric - 50 AMP $28 $30 $26', 'Family/Electric 30 AMP $39 $43 $37', 'Family/Electric 50 AMP $43 $47 $41') + CampingFees_MarkTwain_26.pdf (same figures), read 2026-11-07. Coyote's 14 basic sites are 49-61 ft on the booking grid, so a 23-ft rig fits the basic base.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
         "source": "https://mostateparks.com/park/mark-twain-state-park/camping (campground table, 'Available Dates' column), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/twain-camping-fees-2027.pdf ('A $2 PER NIGHT CAMPING DISCOUNT is available year-round for senior citizens (65 years and older), persons with disabilities, military and veterans'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 58, facilities 798 Badger, 800 Coyote, 801 Puma (unit types and VehicleLength), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mostateparks.com/park/mark-twain-state-park/camping (amenity symbols: Badger 'Restroom', 'shower', 'laundry', 'dump station', 'Running water'; Coyote 'Vault toilet', 'Running water'; Puma 'Restroom', 'shower', 'Running water'; 'During the off-season (November through April 14), potable water is available at the frost-free spigot near campsite 1') + Twain_Puma_CG.pdf legend (restroom, showerhouse, vault toilet, water), read 2026-11-07",
+        "checked": "2026-11-07",
         "method": "manual"
       }
     },
@@ -130798,14 +130815,39 @@
       "nightly_low": 14,
       "nightly_high": 15,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Missouri State Parks 2026 rates. On-season: Puma loop Sun-Thu: electric 30A $26, electric 50A $28; Puma loop Fri-Sat: electric 30A $28, electric 50A $30; Badger/Coyote loops Sun-Thu: basic $14, electric 50A $27; Badger/Coyote loops Fri-Sat: basic $15, electric 50A $29. Off-season: Puma loop all: electric 30A $24, electric 50A $25; Badger/Coyote loops all: basic $14, electric 50A $25. Charged by the site's utilities, used or not; $6.50 online reservation fee per site.",
-      "reservation_fee": 6.5
+      "checked": "2027",
+      "note": "Park's own 2026 and 2027 rate sheets (identical). On-season (April 15-October), Sun-Thu / Fri-Sat: Badger and Coyote basic $14 / $15, electric 50A $27 / $29; Puma electric 30A $26 / $28, electric 50A $28 / $30, family electric 30A $39 / $43, family electric 50A $43 / $47. Off-season (November-April 14) nightly: basic $14, Badger/Coyote electric 50A $25, Puma 30A $24, 50A $26, family $37 / $41. Rates include sales tax; a family site (two pads) takes one reservation fee.",
+      "surcharges": {
+        "electric": 12
+      }
     },
     "season": {
       "year_round": true,
       "note": "Showers and water Apr 15-Oct 31."
-    }
+    },
+    "discounts": {
+      "military": true,
+      "note": "$2 a night off year-round for seniors 65+, persons with disabilities, military and veterans; ask at payment, with proof."
+    },
+    "sites": {
+      "count": 92,
+      "max_rig_ft": 73,
+      "note": "92 campsites on the booking grid: Badger 25 (electric 50A), Coyote 31 (17 electric 50A, 14 basic), Puma 36 (14 electric 30A, 18 electric 50A, 4 family electric). Pads 46-73 ft; every site fits 23 ft. Six camper cabins besides."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "potable_water": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mostateparks.com/park/mark-twain-state-park/camping https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_MarkTwain_26.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/twain-camping-fees-2027.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/06/Twain_Puma_CG.pdf https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 58, facilities 798 Badger, 800 Coyote, 801 Puma, 2027-05-11) https://msprdr.usedirect.com/MSPRDR/rdr/fd/units/11879 (unit detail: no description or photo) Esri World Imagery with the UseDirect site points; USGS EPQS elevations at Puma sites 073-077, Coyote 043/045 and the shore",
+      "note": "Confirmed $14-15 basic base (2026 = 2027), electric +12, 50A; Puma off-season 50A corrected to $26; added 92 sites (pads 46-73 ft), showers/flush/vault/laundry/dump/water, military $2. Lakeview -> not waterfront (pads 60-130 m from the shore through forest, ~18 m above pool). PIN ~2.9 km off: move to the sites."
+    },
+    "phone": "573-248-9980"
   },
   {
     "id": 1842,
@@ -130819,7 +130861,7 @@
     "inclusion_evidence": "mostateparks.com camping page: basic/electric/electric-water/full-hookup drive-in RV sites, reservable year-round",
     "waterfront_evidence": "waterfront 'riverview' assessed in commit 70c3003 (MO state parks: add 39 campgrounds with reservation deep links); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://mostateparks.com/park/meramec-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/60",
-    "note": "Large campground on the Meramec River with basic, electric, electric/water and full-hookup sites across three sections; reservable online Mar-Nov, FCFS off-season. --Claude",
+    "note": "Three-section campground along the Meramec River. Section 1's electric/water pull-through sites 114-125 sit between the loop road and a wooded river bank; Section 2's riverside sites 2-19 face the river across the loop road. Some sites may be unavailable in the rainy months. Watercraft and ATV trailers may be parked off the pad in the grass. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -130828,31 +130870,53 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "booking": {
       "reservable": true,
-      "fcfs": "after_cutoff"
+      "fcfs": "after_cutoff",
+      "window_opens_days": 365,
+      "max_stay_nights": 15,
+      "season": {
+        "opens": "03-01",
+        "closes": "11-30"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 60 (Section 1: 14 'Electric/Water 50 amp', 42 'Electric 50 amp'; Section 2: 18 'Sewer/Electric/Water 50 amp', 40 'Electric 50 amp', 51 'Basic'; Section 3: 30 'Electric 50 amp', 1 'Family Electric 50 amp', 1 'Sewer/Electric/Water 50 amp') + camping page ('Electric*, Electric/Water*', 'Basic, Electric*, Sewer/Electric/Water*'; '* 50-amp electric sites available'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/meramec-state-park/camping ('reserve your Missouri State Parks campsite up to 12 months in advance'; campground table, Reservations 'Mar 1-Nov 30' for Sections 1, 2 and 3; 'Reservable sites may be available on a walk-up registration basis if the site is not reserved'; 'Camping is limited to any 15 days within a 30-consecutive-day period'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/meramec-camping-fees-2027.pdf ('Basic $15 $14', 'Electric - 50 AMP $29 $25', '*Electric/Water $32 $26', '*Sewer/Electric/Water $35 $29', 'Family/Electric 50 AMP $52 $46', '* water availability dependent on weather') + CampingFees_Meramec_26.pdf (same figures), read 2026-11-07. Section 2's 51 basic sites are 36-71 ft on the booking grid, so a 23-ft rig fits the basic base.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
         "source": "https://mostateparks.com/park/meramec-state-park/camping (campground table, 'Available Dates' column), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/meramec-camping-fees-2027.pdf ('A $2 PER NIGHT CAMPING DISCOUNT is available year-round for senior citizens (65 years and older), persons with disabilities, military and veterans'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 60, facilities 803 Section 1, 804 Section 2, 805 Section 3 (unit types and VehicleLength), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mostateparks.com/park/meramec-state-park/camping ('The park's store carries a variety of camping necessities'; amenity symbols: Sections 1 and 2 'Running water', 'Restroom', 'shower', 'Vault toilet'; Section 3 'Running water', 'frost-free water', 'Restroom', 'shower', 'laundry', 'dump station', 'store'; 'During the off-season (November through March), potable water is available from the frost-free spigot at the dump station'), read 2026-11-07",
+        "checked": "2026-11-07",
         "method": "manual"
       }
     },
@@ -130865,32 +130929,55 @@
       "nightly_low": 14,
       "nightly_high": 15,
       "currency": "USD",
-      "checked": "2026",
+      "checked": "2027",
       "surcharges": {
         "electric": 14,
         "full_hookup": 20
       },
-      "note": "Missouri State Parks 2026 rates. On-season: basic $15, electric 50A $29, electric/water 50A $32, sewer/electric/water 50A $35. Off-season: basic $14, electric 50A $25, electric/water 50A $26, sewer/electric/water 50A $29. Charged by the site's utilities, used or not; $6.50 online reservation fee per site.",
-      "reservation_fee": 6.5
+      "note": "Park's own 2026 and 2027 rate sheets (identical): on-season (April-October) basic $15, electric 50A $29, electric/water $32, sewer/electric/water $35, family electric 50A $52; off-season (November-March) $14 / $25 / $26 / $29 / $46. Water at the electric/water and full-hookup sites depends on the weather. Rates include sales tax."
     },
     "season": {
       "year_round": true,
       "note": "Showers and water Apr 1-Oct 31."
-    }
+    },
+    "discounts": {
+      "military": true,
+      "note": "$2 a night off year-round for seniors 65+, persons with disabilities, military and veterans; ask at payment, with proof."
+    },
+    "sites": {
+      "count": 197,
+      "max_rig_ft": 90,
+      "note": "197 campsites on the booking grid: Section 1 56 (14 electric/water, 42 electric), Section 2 109 (18 sewer/electric/water, 40 electric, 51 basic), Section 3 32 (30 electric, 1 family, 1 sewer/electric/water). All 50A. Pads 35-90 ft; every site fits 23 ft. Three group tent areas besides."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mostateparks.com/park/meramec-state-park/camping https://mostateparks.com/park/meramec-state-park https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_Meramec_26.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/meramec-camping-fees-2027.pdf Section maps: https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Meramec_Section1_CG.pdf, .../2025/01/Meramec_Section2_CG.pdf https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 60, facilities 803 Section 1, 804 Section 2, 805 Section 3, 2027-05-11) Esri World Imagery (leaf-off) with the UseDirect site points; USGS EPQS elevations at riverside pads and the river",
+      "note": "Confirmed $14-15 basic base, electric +14, full hookup +20 (2026 = 2027), 50A/water/sewer, FCFS after cutoff; added 197 sites (pads 35-90 ft), showers/flush/vault/laundry/dump/water/store, military $2, 12-month window, 15-in-30, reservations Mar 1-Nov 30. Riverview confirmed (riverfront lead for Section 1's 114-125). Pin ~220 m from the sites' centre: fine."
+    },
+    "phone": "573-468-6072"
   },
   {
     "id": 1843,
     "kind": "campground",
     "name": "Montauk State Park",
-    "location": "37.4518,-91.6825",
-    "elevation_meters": 297.0,
+    "location": "37.4544,-91.6750",
+    "elevation_meters": 283,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "riverfront",
+    "waterfront": "creekside",
     "inclusion_evidence": "mostateparks.com camping page: Loops 1-4 basic+electric(50A) RV sites, reservable year-round",
-    "waterfront_evidence": "waterfront 'riverfront' assessed in commit 70c3003 (MO state parks: add 39 campgrounds with reservation deep links); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-320 (2026-11-07): F313/F314 sit 12-25 m from the water on an open bank ~2 m above it, but the Current River channel at the sites is 22-28 m wide, under the ~30 m line. Down from riverfront.",
     "website": "https://mostateparks.com/park/montauk-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/4",
-    "note": "Four loops of basic and electric (incl. 50A) sites on paved pads along the spring-fed Current River; some Loop 3 sites sit right on the river (flood-prone); reservable online. --Claude",
+    "note": "Four loops on paved pads along the spring-fed upper Current River, here a trout stream about 20-30 m wide; Loop 3's family site F314 and site 313 sit on its low bank (flood-prone). Electricity and frost-free water spigots stay on year-round. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -130898,30 +130985,53 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "window_opens_days": 365,
+      "fcfs": "after_cutoff",
+      "max_stay_nights": 15,
+      "season": {
+        "year_round": true
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 4 (every campsite typed 'Basic', 'Family Basic', 'Electric 50 amp' or 'Family Electric 50 amp'; no water or sewer site type) + camping page ('Montauk State Park's campground offers basic and electric campsites'; '* 50-amp electric sites available'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/montauk-state-park/camping ('reserve your Missouri State Parks campsite up to 12 months in advance'; campground table, Reservations 'Year-round' for all four loops; 'Reservable sites may be available on a walk-up registration basis if the site is not reserved'; 'Camping is limited to any 15 days within a 30-consecutive-day period'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/montauk-camping-fees-2027.pdf ('(Feb. 25 through Oct. 31)', '(Nov. 1 through Feb. 24)', 'Basic $15 $14', 'Electric - 50 AMP $29 $25', 'Family/Basic $28 $26', 'Family/Electric $52 $46') + CampingFees_Montauk_26.pdf (same figures), read 2026-11-07. Loop 1's 25 basic sites are 45-61 ft on the booking grid, so a 23-ft rig fits the basic base.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
         "source": "https://mostateparks.com/park/montauk-state-park/camping (campground table, 'Available Dates' column), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/montauk-camping-fees-2027.pdf ('A $2 PER NIGHT CAMPING DISCOUNT is available year-round for senior citizens (65 years and older), persons with disabilities, military and veterans'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 4, facilities 806 Loop 1, 807 Loop 2, 808 Loop 3, 809 Loop 4 (unit types and VehicleLength), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mostateparks.com/park/montauk-state-park/camping ('The park's store carries a variety of camping supplies'; 'Electricity and frost-free water spigots are available in the campground year-round'; amenity symbols: Loops 1, 2 and 4 'Restroom', 'shower', 'laundry', Loops 1 and 4 'dump station', every loop 'Running water' and 'frost-free water') + Montauk-CG_3-4.pdf legend, read 2026-11-07",
+        "checked": "2026-11-07",
         "method": "manual"
       }
     },
@@ -130934,31 +131044,53 @@
       "nightly_low": 14,
       "nightly_high": 15,
       "currency": "USD",
-      "checked": "2026",
+      "checked": "2027",
       "surcharges": {
         "electric": 14
       },
-      "note": "Missouri State Parks 2026 rates. On-season: basic $15, electric 50A $29. Off-season: basic $14, electric 50A $25. Charged by the site's utilities, used or not; $6.50 online reservation fee per site.",
-      "reservation_fee": 6.5
+      "note": "Park's own 2026 and 2027 rate sheets (identical): on-season (February 25-October 31) basic $15, electric 50A $29, family basic $28, family electric $52; off-season (November 1-February 24) $14 / $25 / $26 / $46. Rates include sales tax; a family site (two pads) takes one reservation fee."
     },
     "season": {
       "year_round": true,
       "note": "Showers and water Feb 25-Oct 31."
-    }
+    },
+    "discounts": {
+      "military": true,
+      "note": "$2 a night off year-round for seniors 65+, persons with disabilities, military and veterans; ask at payment, with proof."
+    },
+    "sites": {
+      "count": 141,
+      "max_rig_ft": 77,
+      "note": "141 campsites on the booking grid: Loop 1 28 (25 basic, 3 family basic), Loop 2 51 (47 electric, 4 family electric), Loop 3 36 (34 electric, 2 family electric), Loop 4 26 (25 electric, 1 family electric). All electric sites 50A. Pads 38-77 ft; every site fits 23 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mostateparks.com/park/montauk-state-park/camping https://mostateparks.com/park/montauk-state-park https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_Montauk_26.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/montauk-camping-fees-2027.pdf Loop maps: https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Montauk-CG_1-2.pdf, .../2025/01/Montauk-CG_3-4.pdf https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 4, facilities 806-809 Loops 1-4, 2027-05-11) Esri World Imagery (leaf-off) with the UseDirect site points; USGS EPQS elevations at Loop 2/3/4 river-side pads and the bank",
+      "note": "Confirmed $14-15 basic base, electric +14 (2026 = 2027), 50A; added 141 sites (pads 38-77 ft), showers/flush/laundry/dump/water/store, military $2, 12-month window, year-round reservations, walk-up after cutoff, 15-in-30. Riverfront -> creekside (channel ~20-30 m at the sites). PIN ~730 m off."
+    },
+    "phone": "573-548-2201"
   },
   {
     "id": 1844,
     "kind": "campground",
     "name": "Onondaga Cave State Park",
-    "location": "38.0568,-91.2339",
-    "elevation_meters": 204.0,
+    "location": "38.0584,-91.2371",
+    "elevation_meters": 213,
     "state": "MO",
     "ownership": "state",
     "waterfront": "riverview",
     "inclusion_evidence": "mostateparks.com camping page: Basic + Electric/Water(50A) drive-in RV sites, fully reservable",
     "waterfront_evidence": "waterfront 'riverview' assessed in commit 70c3003 (MO state parks: add 39 campgrounds with reservation deep links); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://mostateparks.com/park/onondaga-cave-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/5",
-    "note": "~66-site campground beside the Meramec River (basic and electric/water 30/50A) under mature hardwoods; some access roads are narrow for large rigs; reservable online. --Claude",
+    "note": "One campground of basic and electric/water sites strung up a wooded hollow off the Meramec River, the basic loop nearest the river. Open year-round; showers, water and reservations April 1-October 31, first come in winter, when potable water is at the canoe-launch spigot. Park gates may close after 11 p.m. in the on-season. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -130967,38 +131099,58 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": false
     },
     "sites": {
-      "count": 66
+      "count": 64,
+      "max_rig_ft": 82,
+      "note": "64 campsites on the booking grid: 19 basic, 43 electric/water 50A and 2 family electric/water (two pads each). Pads 38-82 ft; every site fits 23 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "window_opens_days": 365,
+      "fcfs": "after_cutoff",
+      "max_stay_nights": 15,
+      "season": {
+        "opens": "04-01",
+        "closes": "10-31"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 5 (site types 'Basic', 'Electric/Water 50 amp', 'Family Electric/Water 50 amp'; no sewer type) + camping page ('basic and electric/water campsites'; '* 50-amp electric sites available'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid PlaceId 5, facility 810 Campground (64 units with unit types and VehicleLength), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/onondaga-cave-state-park/camping (campground table: Available Dates 'Year-round', Showers/Water 'Apr 1-Oct 31', Reservations 'Apr 1-Oct 31'; 'The campground is fully reservable.'; 'reserve your Missouri State Parks campsite up to 12 months in advance'; 'Reservable sites may be available on a walk-up registration basis if the site is not reserved.'; 'Camping is limited to any 15 days within a 30-consecutive-day period'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/onondaga-camping-fees-2027.pdf ('(April through October)', '(November through March)', 'Basic $15 $14', '*Electric/Water $32 $26 50 AMP', '*Family/Electric/Water $57 $47 50 AMP') + CampingFees_Onondaga_26.pdf (same figures), read 2026-11-07. Basic sites are 38-68 ft on the booking grid, so a 23-ft rig fits the basic base.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
         "source": "https://mostateparks.com/park/onondaga-cave-state-park/camping (campground table, 'Available Dates' column), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/onondaga-camping-fees-2027.pdf ('A $2 PER NIGHT CAMPING DISCOUNT is available year-round for senior citizens (65 years and older), persons with disabilities, military and veterans'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mostateparks.com/park/onondaga-cave-state-park/camping (amenity symbols: 'Restroom', 'shower', 'laundry', 'dump station', 'Running water', 'Vault toilet', 'wood lot', 'playground', 'amphitheater'; 'Camping supplies are available at the park store.'; 'Frost free spigots are available at several locations') + 2027 rate sheet ('Modern restrooms and showerhouses are closed during this time [off-season]. Potable water is available from the frost-free spigot at the canoe launch day-use area.'), read 2026-11-07",
+        "checked": "2026-11-07",
         "method": "manual"
       }
     },
@@ -131011,14 +131163,35 @@
       "nightly_low": 14,
       "nightly_high": 15,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Missouri State Parks 2026 rates. On-season: basic $15, electric/water 50A $32. Off-season: basic $14, electric/water 50A $26. Charged by the site's utilities, used or not; $6.50 online reservation fee per site.",
-      "reservation_fee": 6.5
+      "checked": "2027",
+      "note": "Park's own 2026 and 2027 rate sheets (identical): on-season (April-October) basic $15, electric/water 50A $32, family electric/water 50A $57; off-season (November-March) $14 / $26 / $47. Every electric site also has water, so the electric add-on (+$17 on-season, +$12 off-season) includes it. Rates include sales tax; a family site (two pads) takes one reservation fee.",
+      "surcharges": {
+        "electric": 17
+      }
     },
     "season": {
       "year_round": true,
       "note": "Showers and water Apr 1-Oct 31."
-    }
+    },
+    "discounts": {
+      "military": true,
+      "note": "$2 a night off year-round for seniors 65+, persons with disabilities, military and veterans; ask at payment, with proof."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mostateparks.com/park/onondaga-cave-state-park/camping https://mostateparks.com/park/onondaga-cave-state-park https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_Onondaga_26.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/onondaga-camping-fees-2027.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Onondaga_CG.pdf https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 5, facility 810 Campground, 2027-05-11) Esri World Imagery (leaf-off) with the UseDirect site points; USGS EPQS at the river-side basic sites",
+      "note": "Confirmed $14-15 basic base (2026 = 2027), electric/water 50A +17; site count 66 -> 64 (19 basic, 43 E/W, 2 family; pads 38-82 ft); added sewer false, showers/flush/vault/laundry/dump/water/store, military $2, 12-month window, reservations Apr 1-Oct 31, walk-up after cutoff, 15-in-30. Riverview kept. PIN ~330 m off. Dropped the unsourced narrow-roads line."
+    },
+    "phone": "573-245-6576"
   },
   {
     "id": 1845,
@@ -131124,15 +131297,15 @@
     "id": 1846,
     "kind": "campground",
     "name": "Pomme de Terre State Park - Pittsburg",
-    "location": "37.8754,-93.3188",
-    "elevation_meters": 290.0,
+    "location": "37.8764,-93.3230",
+    "elevation_meters": 276,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "lakefront",
+    "waterfront": "lakeview",
     "inclusion_evidence": "mostateparks.com camping page: Pittsburg Loops 100-400 basic/electric/electric-water RV sites, fully reservable",
-    "waterfront_evidence": "waterfront 'lakefront' assessed in commit 70c3003 (MO state parks: add 39 campgrounds with reservation deep links); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "p3-320 (2026-11-07): the lake-side pads of Loops 200 and 300 are 30-40 m from the Pomme de Terre shore through continuous woods, ~8 m above pool; a view, not on-water. Down from lakefront.",
     "website": "https://mostateparks.com/park/pomme-de-terre-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/71",
-    "note": "Pittsburg-side campground on Pomme de Terre Lake (Loops 100-400, electric incl. 50A and electric/water); the two lake-closest loops are electric-only and some sites have direct lakefront access; reservable online. --Claude",
+    "note": "Pittsburg-side campground on Pomme de Terre Lake, four loops: Loop 100 electric/water, Loops 200 and 300 electric 50A on wooded points above the lake (open March through November), Loop 400 basic and electric 30A. Loops 100 and 400 stay open all winter with a frost-free spigot near the entrance; showers and water April through October. The area has a full-service marina, beach and store. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -131141,30 +131314,53 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "window_opens_days": 365,
+      "fcfs": "after_cutoff",
+      "max_stay_nights": 15,
+      "season": {
+        "opens": "04-01",
+        "closes": "10-31"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 71, 2027-05-11) facilities 813/847/848/849 (Loop 100 'Electric/Water 30 amp' 18 and 'Electric/Water 50 amp' 2; Loops 200 and 300 'Electric 50 amp' and 'Family Electric 50 amp'; Loop 400 'Basic', 'Family Basic', 'Electric 30 amp', 'Family Electric 30 amp'; no sewer type), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/pomme-de-terre-state-park/camping ('reserve your Missouri State Parks campsite up to 12 months in advance'; campground table, Reservations 'Apr 1-Oct 31' for both campgrounds; 'The campgrounds are fully reservable. Reservable sites may be available on a walk-up registration basis if the site is not reserved.'; 'Camping is limited to any 15 days within a 30-consecutive-day period'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/pomme-de-terre-camping-fees-2027.pdf ('(April through October)', '(November through March)', 'Sun.-Thurs. Fri.-Sat. Nightly', 'Basic $12 $15 $12', 'Electric - 30 AMP $21 $27 $19', 'Electric - 50 AMP $23 $29 $21', '*Electric/Water 30 AMP $25 $29 $19', '*Electric/Water 50 AMP $28 $32 $22', 'Family/Basic $20 $22 $20', 'Family/Electric 30 AMP $36 $42 $34', 'Family/Electric 50 AMP $40 $46 $38', 'Hermitage Campground and Pittsburg Loops 200 and 300 are closed Dec. through Feb.') + CampingFees_Pomme_26.pdf (same figures), read 2026-11-07. Loop 400 basic sites are 43-60 ft on the booking grid, so a 23-ft rig fits the basic base.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
         "source": "https://mostateparks.com/park/pomme-de-terre-state-park/camping (campground table, 'Available Dates' column), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/pomme-de-terre-camping-fees-2027.pdf ('A $2 PER NIGHT CAMPING DISCOUNT is available year-round for senior citizens (65 years and older), persons with disabilities, military and veterans'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 71, 2027-05-11): 813 Loop 100 20 units, 847 Loop 200 39, 848 Loop 300 34, 849 Loop 400 20; VehicleLength 25-77, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mostateparks.com/park/pomme-de-terre-state-park/camping (amenity symbols for both campgrounds: 'Running water', 'Restroom', 'shower', 'laundry', 'Vault toilet', 'dump station', 'playground', 'amphitheater', 'trailhead', Hermitage also 'boat ramp' and 'store'; 'Park stores, which sell camping supplies, are located in both areas of the park.'; 'The dump station, showerhouse and water are turned off during the off-season (November through March). A frost-free spigot is available near the entrance of the Pittsburg Area Campground.'), read 2026-11-07",
+        "checked": "2026-11-07",
         "method": "manual"
       }
     },
@@ -131177,17 +131373,41 @@
       "nightly_low": 12,
       "nightly_high": 15,
       "currency": "USD",
-      "checked": "2026",
+      "checked": "2027",
       "surcharges": {
-        "electric": 12
+        "electric": 12,
+        "water": 2
       },
-      "note": "Missouri State Parks 2026 rates. On-season: Sun-Thu: basic $12, electric 30A $21, electric 50A $23, electric/water 30A $25, electric/water 50A $28; Fri-Sat: basic $15, electric 30A $27, electric 50A $29, electric/water 30A $29, electric/water 50A $32. Off-season: basic $12, electric 30A $19, electric 50A $21, electric/water 30A $19, electric/water 50A $22. Charged by the site's utilities, used or not; $6.50 online reservation fee per site.",
-      "reservation_fee": 6.5
+      "note": "Park's own 2026 and 2027 rate sheets (identical): on-season (April-October) Sunday-Thursday / Friday-Saturday basic $12 / $15, electric 30A $21 / $27, electric 50A $23 / $29, electric/water 30A $25 / $29, electric/water 50A $28 / $32, family basic $20 / $22, family electric 30A $36 / $42, family electric 50A $40 / $46; off-season (November-March) basic $12, electric $19-21, electric/water $19-22. Rates include sales tax; a family site (two pads) takes one reservation fee."
     },
     "season": {
       "year_round": true,
       "note": "Loops 200 and 300 are open March through November only. Showers and water Apr 1-Oct 31."
-    }
+    },
+    "discounts": {
+      "military": true,
+      "note": "$2 a night off year-round for seniors 65+, persons with disabilities, military and veterans; ask at payment, with proof."
+    },
+    "sites": {
+      "count": 113,
+      "max_rig_ft": 77,
+      "note": "113 campsites: Loop 100 20 electric/water (2 of them 50A), Loop 200 39 electric 50A (1 family), Loop 300 34 electric 50A (4 family), Loop 400 20 (4 basic, 3 family basic, 10 electric 30A, 3 family electric 30A). Pads 25-77 ft; every site fits 23 ft, the shortest in Loop 300."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mostateparks.com/park/pomme-de-terre-state-park/camping https://mostateparks.com/park/pomme-de-terre-state-park https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_Pomme_26.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/pomme-de-terre-camping-fees-2027.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Pomme_Pittsburg_CG_Loops_100-200.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Pomme_Pittsburg_CG_Loops_300-400.pdf https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 71, 2027-05-11), facilities 813, 847, 848, 849 Pittsburg Campground Loops 100-400 Esri World Imagery (leaf-off) with the UseDirect site points; USGS EPQS at Loop 200/300 lake-side pads and shore",
+      "note": "Confirmed $12-15 basic base (2026 = 2027), electric +12, water +2; added 113 sites (pads 25-77 ft), sewer false, showers/flush/vault/laundry/dump/water/store, military $2, 12-month window, reservations Apr 1-Oct 31, walk-up after cutoff, 15-in-30. WATERFRONT lakefront -> lakeview. PIN ~385 m off."
+    },
+    "phone": "417-852-4291"
   },
   {
     "id": 1847,
@@ -131201,7 +131421,7 @@
     "inclusion_evidence": "mostateparks.com camping page: Hermitage campground basic+electric RV sites, Mar-Nov, fully reservable",
     "waterfront_evidence": "waterfront 'lakeview' assessed in commit 70c3003 (MO state parks: add 39 campgrounds with reservation deep links); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://mostateparks.com/park/pomme-de-terre-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/71",
-    "note": "Hermitage-side campground on Pomme de Terre Lake with basic and electric sites; flat, open, grassy terrain reviewers prefer for larger rigs; open Mar-Nov; reservable online. --Claude",
+    "note": "Hermitage-side campground on a peninsula of Pomme de Terre Lake: four loops of basic and electric sites (no water hookups), open March through November, with showers and water April through October. Loop 400's west-side basic sites sit above an open shore. The area has its own boat ramp, store and playground; the swim beach is separate. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -131212,26 +131432,53 @@
       "year_round": false,
       "opens": "03-01",
       "closes": "11-30",
-      "note": "Approximate: Open March to November."
+      "note": "Showers and water April 1-October 31."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "window_opens_days": 365,
+      "fcfs": "after_cutoff",
+      "max_stay_nights": 15,
+      "season": {
+        "opens": "04-01",
+        "closes": "10-31"
+      }
     },
     "provenance": {
       "season": {
-        "source": "note prose",
+        "source": "https://mostateparks.com/park/pomme-de-terre-state-park/camping (Hermitage Area Campground: Available Dates 'Mar 1-Nov 30', Showers/Water Available 'Apr 1-Oct 31') + https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Pomme_HermitagCG.pdf ('All campground loops closed from December through February') + 2027 rate sheet ('Hermitage Campground ... closed Dec. through Feb.'), read 2026-11-07",
         "checked": "2026-11-07",
-        "method": "derived"
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/pomme-de-terre-state-park/camping ('reserve your Missouri State Parks campsite up to 12 months in advance'; campground table, Reservations 'Apr 1-Oct 31' for both campgrounds; 'The campgrounds are fully reservable. Reservable sites may be available on a walk-up registration basis if the site is not reserved.'; 'Camping is limited to any 15 days within a 30-consecutive-day period'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/pomme-de-terre-camping-fees-2027.pdf ('(April through October)', '(November through March)', 'Sun.-Thurs. Fri.-Sat. Nightly', 'Basic $12 $15 $12', 'Electric - 30 AMP $21 $27 $19', 'Electric - 50 AMP $23 $29 $21', '*Electric/Water 30 AMP $25 $29 $19', '*Electric/Water 50 AMP $28 $32 $22', 'Family/Basic $20 $22 $20', 'Family/Electric 30 AMP $36 $42 $34', 'Family/Electric 50 AMP $40 $46 $38', 'Hermitage Campground and Pittsburg Loops 200 and 300 are closed Dec. through Feb.') + CampingFees_Pomme_26.pdf (same figures), read 2026-11-07. Basic sites are 40-60 ft on the booking grid, so a 23-ft rig fits the basic base.",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/pomme-de-terre-camping-fees-2027.pdf ('A $2 PER NIGHT CAMPING DISCOUNT is available year-round for senior citizens (65 years and older), persons with disabilities, military and veterans'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 71, 2027-05-11) facilities 812 and 844 (site types 'Basic', 'Family Basic', 'Electric 30 amp', 'Electric 50 amp', 'Family Electric 30 amp', 'Family Electric 50 amp'; no water or sewer type) + camping page (Hermitage 'Types of Sites: Basic, Electric*, Family*'; '* 50-amp electric sites available'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 71, 2027-05-11): facility 812 (Loops 100 and 300) 50 units - Electric 30 amp 27, Electric 50 amp 1, Basic 21, Family Basic 1; facility 844 (Loops 200 and 400) 72 units - Electric 30 amp 35, Family Electric 30 amp 3, Electric 50 amp 28, Family Electric 50 amp 1, Basic 5; VehicleLength 40-67, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mostateparks.com/park/pomme-de-terre-state-park/camping (amenity symbols for both campgrounds: 'Running water', 'Restroom', 'shower', 'laundry', 'Vault toilet', 'dump station', 'playground', 'amphitheater', 'trailhead', Hermitage also 'boat ramp' and 'store'; 'Park stores, which sell camping supplies, are located in both areas of the park.'; 'The dump station, showerhouse and water are turned off during the off-season (November through March). A frost-free spigot is available near the entrance of the Pittsburg Area Campground.'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -131243,13 +131490,41 @@
       "nightly_low": 12,
       "nightly_high": 15,
       "currency": "USD",
-      "checked": "2026",
+      "checked": "2027",
       "surcharges": {
         "electric": 12
       },
-      "note": "Missouri State Parks 2026 rates. On-season: Sun-Thu: basic $12, electric 30A $21, electric 50A $23, electric/water 30A $25, electric/water 50A $28; Fri-Sat: basic $15, electric 30A $27, electric 50A $29, electric/water 30A $29, electric/water 50A $32. Off-season: basic $12, electric 30A $19, electric 50A $21, electric/water 30A $19, electric/water 50A $22. Charged by the site's utilities, used or not; $6.50 online reservation fee per site.",
-      "reservation_fee": 6.5
-    }
+      "note": "Park's own 2026 and 2027 rate sheets (identical): on-season (April-October) Sunday-Thursday / Friday-Saturday basic $12 / $15, electric 30A $21 / $27, electric 50A $23 / $29, family basic $20 / $22, family electric 30A $36 / $42, family electric 50A $40 / $46; off-season (November, and March) basic $12, electric $19-21. The Hermitage campground has no water hookups. Rates include sales tax; a family site (two pads) takes one reservation fee."
+    },
+    "discounts": {
+      "military": true,
+      "note": "$2 a night off year-round for seniors 65+, persons with disabilities, military and veterans; ask at payment, with proof."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 122,
+      "max_rig_ft": 67,
+      "note": "122 campsites in Loops 100-400: 26 basic, 62 electric 30A, 29 electric 50A and 5 family (basic or electric). Pads 40-67 ft; every site fits 23 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mostateparks.com/park/pomme-de-terre-state-park/camping https://mostateparks.com/park/pomme-de-terre-state-park https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_Pomme_26.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/pomme-de-terre-camping-fees-2027.pdf https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/Pomme_HermitagCG.pdf https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (PlaceId 71, 2027-05-11), facilities 812 Hermitage Campground (Loops 100 and 300) and 844 (Loops 200 and 400) Esri World Imagery (leaf-off) with the UseDirect site points; USGS EPQS at Loop 400 pads and shore",
+      "note": "Confirmed $12-15 basic base (2026 = 2027), electric +12; added 122 sites (pads 40-67 ft), water/sewer false, showers/flush/vault/laundry/dump/water/store, military $2, 12-month window, reservations Apr 1-Oct 31, walk-up after cutoff, 15-in-30; season Mar 1-Nov 30 now sourced. Lakeview kept with a lakefront lead for Loop 400 sites 409-412. Pin fine. Deer-hunt closure Nov 5-9."
+    },
+    "phone": "417-852-4291"
   },
   {
     "id": 1848,
@@ -138997,9 +139272,9 @@
     "elevation_meters": 328.0,
     "state": "MO",
     "ownership": "private",
-    "waterfront": "lakeview",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "mellonacres.com/rv-lots: 21 full-hookup drive-through RV lots 'rented to wedding guests and the public', firsthand testimonial of multi-week stay -> public transient RV park, not event-only",
-    "waterfront_evidence": "satellite at 39.4402,-94.1762: angled RV pad comb oriented along access road; pond lies ~80m NE across open unobstructed grass, visible but beyond the ~50m on-water bound -> view",
+    "waterfront_evidence": "p3-320 (2026-11-07): the only water is a ~2-acre pond (under the 5-acre line; no pond-view), with cabins and a drive between it and the RV lots. Down from lakeview.",
     "website": "https://mellonacres.com/rv-lots/",
     "phone": "816-721-9808",
     "note": "Wedding/event estate near Lawson with 21 full-hookup drive-through RV lots rented to the public; reservable. --Claude",
@@ -139041,6 +139316,11 @@
       "sig": "e74ce4fb5be6ec33",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mellonacres.com/rv-lots/ (UNREAD: Cloudflare/WP Engine WAF 'Sorry, you have been blocked', 2026-11-07; not retried) Google Maps place panel 'Mellon Acres' (4.8, 97 reviews, 'Wedding venue', phone (816) 721-9808, 32384 Hwy D, Lawson), read 2026-11-07 RV Life park 262768 'Mellon Acres Event Center RV Park' (4.5 stars, 8 ratings, $$, avg_rate 39, cg_site_count 12, last review 2025-06), via the RV Life Algolia index, read 2026-11-07 Good Sam directory cache trip_data/goodsam_parks.json (not listed) Esri World Imagery at 39.4410,-94.1750",
+      "note": "Operator's RV-lots page refused the fetch (WAF block), so nothing on it was confirmed and no group was written. Presence passes on Google (open, 97 reviews, phone) and price on RV Life $$ ($39 avg). Lakeview -> not waterfront: the water is a ~2-acre pond with cabins and a drive between it and the RV pads."
     }
   },
   {
@@ -140299,15 +140579,15 @@
     "id": 1980,
     "kind": "campground",
     "name": "Mozingo Lake Recreation Park",
-    "location": "40.3628,-94.7762",
-    "elevation_meters": 333.0,
+    "location": "40.3590,-94.7770",
+    "elevation_meters": 329,
     "state": "MO",
     "ownership": "local",
     "waterfront": "lakefront",
     "inclusion_evidence": "mozingolake.com/rv-park: 128 drive-in RV sites (W/E + full hookup, pads 20-50 ft), city of Maryville, 53 reservable rest FCFS -> real RV campground",
     "waterfront_evidence": "waterfront 'lakefront' assessed in commit d746d91 (MO private: add 123 screened commercial RV parks (+3 local, 1 hipcamp)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://mozingolake.com/rv-park\nhttps://www.camplife.com/campground/Mozingo+Lake+Recreation+Park",
-    "note": "City of Maryville park on Mozingo Lake: 128 RV sites, with pads of 20-50 ft, in three campgrounds: South (95 sites, full hookups or water and electric), North (20 concrete full-hookup 30/50-amp sites, with 20 more opening for reservations in 2027) and a 13-site equestrian campground.  53 sites are reservable online for up to 14 days; the rest are first come, first served.  There are private showers and bathrooms, a laundry, Wi-Fi at every site, a dump station, camp hosts and a visitors center selling food and essentials; the South campground stays open all winter, while the North and Equestrian close from November 1 to March 1. --Claude",
+    "note": "City of Maryville park on the roughly 1,000-acre Mozingo Lake, with three RV campgrounds: South (95 sites, on a peninsula), North (20 concrete sites) and a riders' equestrian campground on the west shore. 40 South and North sites are reservable online for up to 14 days; the rest are first come, first served and may stay longer at staff discretion. The South campground and its shower house stay open all winter; the North and Equestrian close from November 1 to March 1. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -140320,8 +140600,9 @@
       "electric": 50
     },
     "sites": {
-      "count": 128,
-      "max_rig_ft": 50
+      "count": 115,
+      "max_rig_ft": 50,
+      "note": "115 RV sites open to any camper: South 95 (101-115 and 176-195 full hookups, 116-175 water and electric) and North 20 (201-220, 30/50A), with 20 more North sites due for reservations in 2027; the 13-site equestrian campground (301-313) is dedicated to riders. The 40 reservable non-equestrian sites are 35-50 ft on CampLife; the operator gives 20-50 ft for the whole park, and the first-come pads on imagery run about 15-20 m."
     },
     "booking": {
       "reservable": true,
@@ -140336,8 +140617,9 @@
         "checked": "2026-10-14"
       },
       "sites": {
-        "source": "https://mozingolake.com/rv-park ('there isn't a bad view from the 128 sites available'; 'Our sites range from 20ft to 50ft long.'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://mozingolake.com/rv-park ('The South RV Campground consists of 95 sites', 'The North RV Campground consists of 20 sites', 'For equestrian users, a 13-space RV campground is dedicated for use on the west side of the lake', 'Our sites range from 20ft to 50ft long.') + CampLife per-site records (RV Sites 176-195 and 201-220: maxLength 35-50; 301-313: 50), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
         "source": "https://mozingolake.com/rv-park ('A total of 53 RV spaces are reservable through our online reservation system. All other RV sites are provided on a first-come, first-serve basis to guests.'; 'All reservable sites are not eligible for stays longer than 14 days due to limited availability of sites.'; 'All first-come, first-serve sites allow for stays longer than 14 days'), read 2026-10-14; https://www.camplife.com/1312/reservation/step1 (53 RV sites sold online; camplife_tier_2026-10-14.jsonl), read 2026-10-14",
@@ -140348,12 +140630,14 @@
         "checked": "2026-10-14"
       },
       "facilities": {
-        "source": "https://mozingolake.com/rv-park ('laundry facilities, private showers and bathrooms'; 'All RV sites have Wi-Fi available for use.'; 'The sanitary dump station is located South of Sites 101-105 and North of the shower house.'; 'the new Visitors Center, located at the park entrance, offers additional food, toiletries, and other essentials for purchase throughout your stay'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://mozingolake.com/rv-park ('All RV Campgrounds are equipped with restrooms and a shower house that are cleaned regularly.'; 'Laundry Facilities are located at the South RV Campground in the shower house facility.'; 'All RV sites have Wi-Fi available for use.'; 'The sanitary dump station is located South of Sites 101-105 and North of the shower house.'; 'the new Visitors Center, located at the park entrance, offers additional food, toiletries, and other essentials for purchase'; water hookups at every site), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://mozingolake.com/rv-park ('Peak Season ( April 1 – Oct. 31) Off Season (Nov. 1 – March 31) Electric/Water $32/night $28/night Water/Electric/Sewage $38/night $32/night Equestrian RV Campground $28/night $25/night'; 'For equestrian users, a 13-space RV campground is dedicated for use on the west side of the lake.'; '*All reservable RV Sites will have a $10 booking fee applied'; 'All other RV sites are provided on a first-come, first-serve basis to guests.'), read 2026-10-14; https://www.camplife.com/1312/reservation/step1 (one night from 2026-10-20: subtotal $48.00 on RV Sites 176 and 205, $38.00 on RV Site 313; camplife_tier_2026-10-14.jsonl), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://mozingolake.com/rv-park ('Peak Season ( April 1 – Oct. 31)', 'Off Season (Nov. 1 – March 31)', 'Electric/Water $32/night $28/night', 'Water/Electric/Sewage $38/night $32/night', 'Equestrian RV Campground $28/night $25/night', '*All reservable RV Sites will have a $10 booking fee applied', 'Sites 116-175 offer electricity and water.', 'Sites 101-175 operate on a first-come, first-served basis.'), read 2026-11-07; https://www.camplife.com/1312/reservation/step1 estimates: RV Site 176 and 204 $48, RV Site 313 (equestrian) $38, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -140370,16 +140654,27 @@
       "laundry": true,
       "wifi": true,
       "dump": true,
-      "camp_store": true
+      "camp_store": true,
+      "flush_toilets": true,
+      "potable_water": true
     },
     "fees": {
       "nightly_low": 28,
-      "nightly_high": 38,
+      "nightly_high": 32,
       "currency": "USD",
       "reservation_fee": 10,
       "checked": "2026",
-      "note": "From the park's own RV page (read 2026-10-14): $32 a night for water and electric and $38 for full hookups in peak season (April 1-October 31), $28 and $32 off season (November 1-March 31); the 13-site equestrian campground, for riders, is $28 and $25. Every reservable RV site carries a $10 booking fee, which CampLife's October quote includes ($48 for a $38 site); the other sites are first come, first served."
-    }
+      "note": "Water and electric $32 a night in peak season (April 1-October 31), $28 off season (November 1-March 31); full hookups $38 / $32. The 13-site equestrian campground, dedicated to riders, is $28 / $25. Every reservable RV site carries a $10 booking fee; CampLife's estimate for a full-hookup site is $48 a night ($38 + $10). The water-and-electric sites (116-175) are first come, first served.",
+      "surcharges": {
+        "full_hookup": 6
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://mozingolake.com/rv-park https://mozingolake.com/assets/2994/mozingo_lake_recreation_park_campground_maps_2024.jpg https://www.camplife.com/1312/reservation/step1 (CampLife booking API through the driver browser: session/siteMap, per-site records for all 53 RV sites, availability and one-night estimates) Esri World Imagery of the South and North RV campgrounds; USGS EPQS elevations, South campground peninsula pads vs the shore",
+      "note": "Confirmed City of Maryville rates and $10 booking fee; fees base corrected to water/electric $28-32 with full hookups +6 (stored high $38 was the full-hookup rate); site count 128 -> 115 (13 equestrian sites are riders-only), 35-50 ft reservable pads; added flush toilets and potable water. Lakefront confirmed on the South peninsula sites. PIN ~420 m off."
+    },
+    "phone": "660-562-2323"
   },
   {
     "id": 1981,
@@ -140476,7 +140771,7 @@
     "waterfront_evidence": "satellite at 37.8533,-94.3457: highway-side RV pull-through loop, no water adjacent",
     "website": "https://www.osageprairie.com/\nhttps://www.roverpass.com/c/osage-prairie-rv-park-nevada-mo/",
     "phone": "417-667-2267",
-    "note": "Family-owned park at 1501 N. Osage Blvd, Nevada, near I-49 and Highway 54, open year round: 30- and 50-amp full-hookup sites, some shaded, with picnic tables and fire pits.  There are showers, a laundry open around the clock, a general store and RV supplies, propane, a playground, a seasonal pool, and horse stalls and a corral for guests travelling with horses. --Claude",
+    "note": "Family-owned park at 1501 N. Osage Blvd, Nevada, beside I-49 and Highway 54, open year round: 46 full-hookup 30/50-amp pull-through sites, some shaded, with picnic tables and fire pits. Showers, a 24-hour laundry, a general store with RV supplies, propane, a playground, a seasonal pool, and horse stalls and a corral for guests travelling with horses. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -140489,14 +140784,17 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 46,
+      "note": "46 full-hookup sites (30 and 50 amp) in three rows of angled pull-throughs, some shaded."
     },
     "season": {
       "year_round": true
     },
     "booking": {
       "reservable": true,
-      "platform": "roverpass"
+      "platform": "roverpass",
+      "note": "Online bookings are requests the park confirms, open about two months ahead; or call. Check-in noon, check-out 11 a.m."
     },
     "provenance": {
       "hookups": {
@@ -140504,16 +140802,18 @@
         "checked": "2026-10-14"
       },
       "sites": {
-        "source": "note prose, 2026-09-15; kept from the note: {\"pull_through\": true}; drops the note's {\"count\": 46}, which none of the park's pages (https://www.osageprairie.com/, https://www.osageprairie.com/amenities, https://www.osageprairie.com/rates-contact, https://www.osageprairie.com/park-map) states, read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://www.osageprairie.com/park-map (park map image: sites numbered 1-46, angled pull-through pads; 'Full Hook-up', '50 AMP & 30 AMP') + RoverPass rate accessibility ['back_in', 'pull_through'], read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.osageprairie.com/rates-contact ('Open year round & ask about Military, Police and Fire / Rescue Discounts'), read 2026-10-14",
         "checked": "2026-10-14"
       },
       "booking": {
-        "source": "https://www.roverpass.com/c/osage-prairie-rv-park-nevada-mo/ (RoverPass park record and RV rates), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "RoverPass API park record (isBookable true, isRequest true, advancedMonths 2; 2027-01-26 'Campground doesn't allow reservations this far in advance'; check-in '12pm (noon) - Flexible', check-out '11am'), read 2026-11-07; https://www.osageprairie.com/ ('Plan your visit today with a phone call, e-mail, or just click on the \"Reserve Now\" Button.')",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -140521,12 +140821,14 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "https://www.osageprairie.com/amenities ('Shower Facilities'; 'Take advantage of our General Store and RV Supplies when you decide to stay with us.'), read 2026-10-14; https://www.roverpass.com/c/osage-prairie-rv-park-nevada-mo/ (park rule: 'Laundry is open 24 hours.'; roverpass_tier_2026-10-14.jsonl), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://www.osageprairie.com/amenities ('Shower Facilities', 'On-site Propane Station', 'General Store and RV Supplies', 'Swimming Pool ( Seasonal opening )') + park map ('Showers & Restrooms', 'Laundry', 'Free Wi-Fi', 'Registration & General Store') + RoverPass rules ('Laundry is open 24 hours.'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.roverpass.com/c/osage-prairie-rv-park-nevada-mo/ (RoverPass's pricing for each RV rate, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12; carts for one and two nights from 2026-10-20 for the park's fees; roverpass_tier_2026-10-14.jsonl), read 2026-10-14; https://www.osageprairie.com/rates-contact ('30 Amp - $40.00'; '50 Amp - $45.00'; '(Plus Sales Tax* Rates are subject to change without notice)'; 'Rates cover 1 vehicle, 1 RV, and 2 people. $2.00 for each additional person and $1.00 for each additional vehicle apply.'; '30 Amp - $240.00'; '50 Amp - $270.00'), read 2026-10-14; https://www.roverpass.com/c/osage-prairie-rv-park-nevada-mo/ (RV rates 'RV Sites - FHU 30 Amp Site for Military, Police, Fire, & Rescue Workers' at $35 and 'RV Sites - FHU 50 Amp Site for Military, Police, Fire, & Rescue Workers' at $40: 'Discounted rate for Military, and Public Service (Police, Fire, Rescue Workers)'; roverpass_tier_2026-10-14.jsonl), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://www.osageprairie.com/rates-contact ('Nightly 30 Amp - $40.00 50 Amp - $45.00', 'Weekly 30 Amp - $240.00 50 Amp - $270.00', 'Monthly Please contact us for Pricing.', 'Rates cover 1 vehicle, 1 RV, and 2 people. $2.00 for each additional person and $1.00 for each additional vehicle apply.', '( Plus Sales Tax* ...)'), read 2026-11-07; RoverPass API one night 2026-11-17 and 2026-11-21: 'FHU 30 Amp Site' $40.00, 'FHU 50 Amp Site' $45.00, 'FHU 30 Amp Site for Military, Police, Fire, & Rescue Workers' $35.00, minNightsRequired 1, read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -140541,14 +140843,22 @@
     "facilities": {
       "showers": true,
       "laundry": true,
-      "camp_store": true
+      "camp_store": true,
+      "flush_toilets": true,
+      "wifi": true,
+      "potable_water": true
     },
     "fees": {
       "nightly_low": 40,
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "Read on RoverPass: one night, site rate before tax, every RV rate a 23-ft rig fits (FHU 30 Amp Site and FHU 50 Amp Site). October 2026, January 2027 and June 2027: $40-45, Tuesday and Saturday alike. Bookings are requests the park confirms. RoverPass adds its own platform fee at checkout ($7.50 on one $45 night). Read 2026-10-14. The park's own rates page lists the same $40 and $45 plus sales tax, for 2 people, an RV and a vehicle, $2 for each extra person and $1 for each extra vehicle, and $240-270 a week; RoverPass sells the same sites to military, police, fire and rescue workers for $5 less."
+      "note": "Every site is full hookup: 30A $40, 50A $45 a night plus sales tax, for 2 people, an RV and a vehicle; $2 per extra person, $1 per extra vehicle. Weekly $240 / $270; monthly on request. RoverPass sells the same nights at those rates (2026-11-17 and 2026-11-21) and a military, police, fire and rescue rate $5 lower; bookings are requests the park confirms, and RoverPass adds its own platform fee."
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.osageprairie.com/ https://www.osageprairie.com/rates-contact https://www.osageprairie.com/amenities https://www.osageprairie.com/park-map (park map image newmappool.jpg) https://www.roverpass.com/c/osage-prairie-rv-park-nevada-mo/ (RoverPass booking API: park record, rates on 2026-11-17 and 2026-11-21, carts) Google Maps place panel and newest reviews; Esri World Imagery",
+      "note": "Confirmed private gates: $40 (30A) / $45 (50A) full hookups posted on the operator's page and sold one night on RoverPass for Nov 2026; added 46 sites (operator map), flush toilets/Wi-Fi/propane/pool, RoverPass request-to-book with a 2-month window. Passes all five long-stay tests. Not waterfront kept."
     }
   },
   {
@@ -141149,8 +141459,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Operator/Good Sam/RoverPass: 49 full-hookup RV sites (50A, RVs to 50ft) at I-44 exit 195, year-round, reservable -> real RV park; re-check 2026-10-14 (AWH #8f, RoverPass operator pass): its RoverPass listing is unclaimed, so the link is gone; held: live site and phone, but no published rate and no booking site (AWH question (b)); kept 2026-10-14: own website and phone but no posted rate; AWH 2026-10-14 (#4 answer): an RV Life $ or $$ can add or keep a park in the absence of a published rate (RV Life tier $$)",
     "waterfront_evidence": "satellite at 37.9578,-91.5544: rows of RV pull-through pads in open lot; small fishing pond lies well S of pads",
-    "website": "http://www.meramecspringscountrystore.com/\nhttp://www.meramecspringscountrystore.com/4622.html",
-    "note": "Country store and full-hookup RV park at 20458 Hwy 8, St. James, about 5.6 miles southeast of I-44 Exit 195: 49 full-hookup sites (50-amp, RVs to 50 ft), swimming pool, canoe, raft and kayak floats, near trout fishing; open year-round. Its website gives no rates and takes no bookings; call 573-265-3796. --Claude",
+    "website": "http://www.meramecspringscountrystore.com/4622.html",
+    "note": "Country store and RV park at 20458 Hwy 8, about 5.6 miles southeast of I-44 Exit 195, with a swimming pool for campers (Memorial Day-Labor Day) and canoe, raft and kayak floats; trout fishing nearby. Its website is old and its rates may be out of date; call 573-265-3796. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -141167,37 +141477,52 @@
       "max_rig_ft": 50
     },
     "season": {
-      "year_round": true
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-01",
+      "note": "The park's website says the RV park is closed November 1 to March 1, sites 1-20 opening March 1 for self-contained rigs only, with the store, restrooms and showers open April 15-November 1. That page is old, and a camper reports staying October-December 2025; call ahead outside April-October."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservations by phone with a $10 deposit per site, forfeited without 72 hours' notice. Two-night minimum on Memorial Day, July 4th and Labor Day weekends and on the local Kids Free Fishing (2nd weekend of May) and Old Iron Works (2nd weekend of October) weekends. Check-in from 9 a.m. if the site is free, checkout noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "http://www.meramecspringscountrystore.com/6301.html ('49 Full Hoop-up RV Sites', '50 amp. and 30 amp. Electric Sites') + 6601.html ('RV FULL HOOKUP RATES: ... 30 amp ... 50 amp'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "http://www.meramecspringscountrystore.com/6301.html ('49 Full Hoop-up RV Sites'), read 2026-11-07. The stored max_rig_ft 50 is not on the operator's pages; left as it is.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "http://www.meramecspringscountrystore.com/6301.html ('Sites 1 - 20 are open March 1 of each year for Self Contained Units only!'; 'Country Store, Bathrooms and Showers are open from April 15th. to November 1st. of each year.'; 'R.V. Park is totally closed November 1 to March 1 each year.'), read 2026-11-07; Google review (Lani T, ~7 months ago: 'I stayed here with my mother from October to December of 2025')",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "http://www.meramecspringscountrystore.com/6601.html ('TWO DAY MINIMUM RESERVATION ON THE FOLLOWING WEEKENDS: Memorial Day, Kids Free Fishing (2nd. weekend of May), 4th. of July, Labor Day, Old Iron Works (2nd. weekend of October)'; 'DEPOSITS REQUIRED FOR ALL RESERVATIONS: $10.00 deposit required per RV ...'; 'ALL RESERVATIONS DEPOSITS WILL BE FORFEITED WITHOUIT A 72 HOUR NOTICE!'; 'Check-Out is 12:00 p.m. (Noon)') + 4622.html (phone 573-265-3796), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-09-20",
         "method": "derived"
+      },
+      "facilities": {
+        "source": "http://www.meramecspringscountrystore.com/6301.html ('Free Wi-Fi for Clients', 'Swimming Pool', 'Dump Station For Non-Guest RV's', 'Country Store', 'Hot Clean Showers', 'Clean Restrooms', 'Laundry Facilities'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -141208,7 +141533,20 @@
     "discounts": {
       "good_sam": false
     },
-    "phone": "573-265-3796"
+    "phone": "573-265-3796",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "dump": true,
+      "camp_store": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "http://www.meramecspringscountrystore.com/ (default 'UNDER CONSTRUCTION' host page) http://www.meramecspringscountrystore.com/4622.html http://www.meramecspringscountrystore.com/6301.html http://www.meramecspringscountrystore.com/6601.html http://www.meramecspringscountrystore.com/6901.html http://www.meramecspringscountrystore.com/7101.html Google Maps place panel 'Meramec Springs Country Store & RV Park' (4.7, 75 reviews, Campground, phone (573) 265-3796, no website listed) and newest reviews, read 2026-11-07 RV Life park 12979 (4.5 stars, 20 ratings, $$, avg_rate 33), read 2026-11-07 Good Sam directory cache trip_data/goodsam_parks.json ('Meramec Springs Country Store & RV Park', gs false, military false)",
+      "note": "Confirmed 49 full-hookup sites, 50A/water/sewer, phone booking; added facilities (showers, restrooms, laundry, dump, store, wifi), holiday-weekend 2-night minimum and $10 deposit. Season year-round (derived) -> Mar 1-Nov 1 per the operator's page, with a dated contrary review in the note. Posted rate $24/$26 is on an old (c. 2012) page, so fees not written. Google 4.7/75, RV Life 4.5/20 $$."
+    }
   },
   {
     "id": 1997,
@@ -144550,9 +144888,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Operator majesticoakscampground.com: family-owned Lake of the Ozarks campground open Apr-Nov with RV sites + cabins + glamping, reservable nightly -> real RV campground",
     "waterfront_evidence": "satellite at 38.2529,-92.6710 + orient: campground inland in wooded hills ~1.5km N of Lake of the Ozarks arms; no on-site water; website 'minutes from Bagnell Dam' is marketing",
-    "website": "http://majesticoakscampground.com/",
+    "website": "https://www.majesticoakscampground.com/",
     "phone": "573-365-1890",
-    "note": "Lake of the Ozarks-area campground near Eldon with 80 sites (32 full-hookup, 30/50A), pool and trails; open Apr-Nov, reservable. --Claude",
+    "note": "Wooded campground on 44 acres of oaks a few minutes from Bagnell Dam, with gravel, shaded sites, a swimming pool (mid-May to mid-September), nature trails, a dog park and a bike pump track. Seasonal and monthly sites are sold besides the nightly ones. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -144565,41 +144903,52 @@
       "sewer": true
     },
     "sites": {
-      "count": 80
+      "max_rig_ft": 47,
+      "pull_through": true,
+      "note": "Campspot sells 33 RV sites (25-47 ft) and 15 tent sites; the FAQ counts 28 full-hookup sites for nightly rental. Seasonal and monthly sites are kept besides."
     },
     "season": {
       "year_round": false,
       "opens": "04-01",
-      "closes": "11-30",
-      "note": "Approximate: Open April to November."
+      "closes": "11-01",
+      "note": "A very few full-hookup RV sites are kept for winter stays from November 1 to March 31, by phone."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/majesticoakscampground",
+      "note": "Check-in and checkout at noon. A specific site can be 'locked in' for $10; otherwise the park assigns a site that fits the rig's length and amperage. Cancelling more than two weeks out costs $25, two weeks to 48 hours $50, under 48 hours no refund. Cabins, glamping tents and the rental camper take 2 nights; RV sites showed no minimum."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.majesticoakscampground.com/campsites-1 ('roomy pull-thrus and spacious back-ins that come in 30 or 50 amp'), https://www.majesticoakscampground.com/faq ('Yes! We have 28 full hook-up sites available for nightly rentals.'), Campspot types 'Deluxe Pull-Thru 30/50 Amp -FHU' etc., read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/majesticoakscampground (API availability 2026-11-10: 11 RV types, 33 sites, rvLengthMax 25-47; 3 tent types, 15 sites) + https://www.majesticoakscampground.com/faq and /campsites-1 ('roomy pull-thrus'), read 2026-11-07. The stored count of 80 came from old note prose and no operator page gives it.",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
+        "source": "https://www.majesticoakscampground.com/faq ('Our camping season is April 1st thru November 1st.'; 'We have very limited full hook-up RV sites available from November 1st thru March 31st. Please give is a call at 573-365-1890.'), read 2026-11-07",
         "checked": "2026-11-07",
-        "method": "derived"
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.majesticoakscampground.com/faq ('Check-in starts at noon'; 'you may \"lock in\" your specific campsite number ... Otherwise, when booking you are guaranteed a campsite that will fit the length/ampage of your camper'; cancellation policy) + https://www.campspot.com/book/majesticoakscampground (BOOK NOW links; API: 'Site Lock Fee' 10.0; RESERVATION_MIN_RULE '2 night minimum' only on the lodging types), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.majesticoakscampground.com/campsites-1 ('Prices range from $44 to $64 per night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.majesticoakscampground.com/campsites-1 ('Prices range from $44 to $64 per night' for RV sites; tent sites 'range in size from being overflow RV sites to primitive. Some even come with water and/or electric' ... 'Prices range from $28-37 per night'), read 2026-11-07; https://www.campspot.com/book/majesticoakscampground (Campspot API, 2026-11-10 one night, 2 adults: 'Tent or RV 20/30 W/E' tripTotalBeforeTaxesFeesAndDiscounts 32.0, 'Processing fee' 1.12, 'Reservation Fee' 6.0; 'Standard Back-in 30 AMP -FHU' 44.0; 'Deluxe Pull-Thru 30/50 Amp -FHU' 59.0; two nights on the W/E type 64.0 with the same $6 reservation fee), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.majesticoakscampground.com/about-us ('Free WIFI', 'Hot Showers', 'Coin laundry', 'Swimming pool (mid-May to mid-September)') + home page ('a camp mercantile for the essentials like firewood, ice and snacks'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -144608,10 +144957,23 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 44,
+      "nightly_low": 32,
       "nightly_high": 64,
       "currency": "USD",
-      "note": "RV sites $44-64."
+      "note": "The park's campsites page gives RV sites at $44-64 a night and tent sites at $28-37, the tent sites including overflow RV sites with water and electric. Campspot sells four of those, 'Tent or RV 20/30 W/E' (sites A-D, 25-34 ft, motorhomes allowed on A, C and D), at $32 a night before tax; its full-hookup types run $44 (standard back-in 30A) to $59 (deluxe pull-through). Campspot adds the park's $6 reservation fee per stay and a 3.5% processing fee.",
+      "checked": "2026",
+      "reservation_fee": 6
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "wifi": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://www.majesticoakscampground.com/ https://www.majesticoakscampground.com/campsites-1 https://www.majesticoakscampground.com/faq https://www.majesticoakscampground.com/rules-policies https://www.majesticoakscampground.com/about-us https://www.campspot.com/book/majesticoakscampground (Campspot API: park 322 record, availability 2026-11-10 and 2026-11-14, type pricing) Google Maps place panel 'Majestic Oaks RV Park & Campground' (4.5, 190 reviews), read 2026-11-07 RV Life park 1620 (4.5 stars, 40 ratings, $$), read 2026-11-07",
+      "note": "Base $32 (Campspot's W/E 'Tent or RV' sites a motorhome may use) to $64 (site's RV range), $6 reservation fee; Campspot booking; season Apr 1-Nov 1 with a few winter FHU sites by phone; 30/50A FHU confirmed; max 47 ft, pull-throughs; showers/laundry/wifi/store; stored count 80 cleared (no page gives it). Google 4.5/190, RV Life 4.5/40."
     }
   },
   {
@@ -145242,8 +145604,8 @@
     "id": 2067,
     "kind": "campground",
     "name": "Port of Kimberling Resort & Campground",
-    "location": "36.6350,-93.4128",
-    "elevation_meters": 300.0,
+    "location": "36.6309,-93.4154",
+    "elevation_meters": 291,
     "state": "MO",
     "ownership": "private",
     "waterfront": "lakeview",
@@ -145251,7 +145613,7 @@
     "waterfront_evidence": "waterfront 'lakeview' assessed in commit d746d91 (MO private: add 123 screened commercial RV parks (+3 local, 1 hipcamp)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://staypok.com/\nhttps://www.campspot.com/book/port-of-kimberling",
     "phone": "417-739-2315",
-    "note": "Resort and marina on Table Rock Lake at Kimberling City, where a hotel and cabins stand beside a campground in three areas: The Bluff, Middle Park and East Park.  Several site types look over the lake, and the full-hookup sites are in Middle Park.  Rates cover 4 people (age 4 and up), 6 at most, and there is a pool, a hot tub, a playground, sports courts, a fitness center and a dog park, plus boat slips at the marina. --Claude",
+    "note": "Resort and marina on Table Rock Lake at Kimberling City, where a hotel and cabins stand beside a campground in three areas: The Bluff, Middle Park and East Park. The full-hookup sites are in Middle Park; East Park's electric/water sites and The Bluff's electric and tent sites look over the lake across a road or a wooded bluff edge. Pool, hot tub, playground, sports courts and a dog park, plus boat slips at the marina. Weekly, monthly and year-round stays are also sold. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -145265,31 +145627,54 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "No Saturday arrivals or departures unless booked within a week of arrival; Memorial Day and Labor Day weekends can't end on a Sunday."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://staypok.com/campground ('Basic RV/Tent Sites have 30 amp electric hook-ups'; 'Premium Back In RV Site, in our Middle Park Campground ... both 30 and 50 amp electric, water, and sewer hook-ups'; 'Standard RV Site ... East Park Campground ... 30 and 50 amp electric hook-ups, in addition to water on site'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://staypok.com/rules-and-policies ('Two-night minimum on all campsites.'; 'Three-night minimum during Memorial Day, 4th of July, and Labor Day weekends.'; 'Sorry, we cannot accept reservations that include a Saturday arrival or departure, unless made within 1 week of booking.'), read 2026-11-07; https://www.campspot.com/book/port-of-kimberling (online booking)",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://staypok.com/deals ('Military Discount | Year Round 10% OFF — ... all active duty service men and women and veterans by offering 10% off during weekday (Sunday - Thursday) stays'; no Good Sam offer among the deals), read 2026-11-07; Good Sam directory (isGsPark false)",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "season": {
-        "source": "https://www.campspot.com/book/port-of-kimberling (no closure on the park record; RV sites on sale on 2027-01-26 and 2027-01-30; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://staypok.com/rules-and-policies ('OPEN: Year Round') + https://staypok.com/hours-of-operation ('Peak Season: April 29 - September 6, 2026 | Park Open: Year Round'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/port-of-kimberling (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://staypok.com/faqs ('For one pet, there is a flat fee of $50. For two pets, there is a flat fee of $75. Pets are not allowed on tent sites or at our hotel rooms.'), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.campspot.com/book/port-of-kimberling (availability for 2026-11-17, 2026-11-21, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; quotes: Prime Electric 2027-01-26 'base 27.0 ... Booking Fee 3.0 ... total 32.69'; Basic RV/Tent 2027-06-08 base 41.0; Premium Pull-Thru 2027-06-12 base 82.0, 2027-06-11 2 nights base 164.0, Booking Fee 4.1), read 2026-11-07; https://staypok.com/faqs ('For one pet, there is a flat fee of $50. For two pets, there is a flat fee of $75.'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.campspot.com/book/port-of-kimberling (site lists: Basic RV/Tent 20 sites rvLengthMax 25-85, Prime Electric 33 (30-70), Standard RV 11 (40-80), Premium Back-In 24 (35-70), Premium Pull-Thru 7 (40-70), Rustic Popup/Tent 4 (15), Prime Site tent 14), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.campspot.com/book/port-of-kimberling (park features 'Bathrooms', 'Showers', 'Internet Access', 'Pool', 'Beach', 'Boat Launch') + https://staypok.com/faqs ('Yes, we have free WiFi available to our guests.'), read 2026-11-07",
+        "checked": "2026-11-07",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -145299,17 +145684,33 @@
     },
     "discounts": {
       "good_sam": false,
-      "military": true
+      "military": true,
+      "note": "10% off Sunday-Thursday nights for active duty and veterans (promo code, ID at check-in; not on Memorial Day, Labor Day or Columbus Day weekends)."
     },
     "season": {
       "year_round": true
     },
     "fees": {
-      "nightly_low": 23,
+      "nightly_low": 27,
       "nightly_high": 82,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Basic RV/Tent Site, Prime Electric Site, Standard RV Site, Premium Back-In RV Site and Premium Pull-Thru RV Site). October 2026: $30-44 on a Tuesday; $40-59 on a Saturday. January 2027: $23-35 on a Tuesday; $27-40 on a Saturday. June 2027: $41-61 on a Tuesday; $55-82 on a Saturday. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13. A pet costs a flat $50 a stay, or $75 for two; pets aren't allowed on tent sites."
+      "checked": "2027",
+      "note": "Dynamic rates on Campspot: one night for 2 adults, site rate before tax and booking fee, every RV site type a 23-ft rig fits (Basic RV/Tent 30A, Prime Electric 30A, Standard RV electric/water, Premium Back-In and Pull-Thru full hookups). November 2026: $34-44 on a Tuesday, $45-59 on a Saturday. January 2027: $27-35 on a Tuesday, $31-40 on a Saturday. June 2027: $41-61 on a Tuesday, $55-82 on a Saturday. In November and January only the Prime Electric and Premium sites are on sale. Campspot adds a booking fee (2.5%, at least $3). Rates cover 4 people (age 4+); a pet is a flat $50 a stay, $75 for two.",
+      "reservation_fee": 3
+    },
+    "sites": {
+      "max_rig_ft": 85,
+      "pull_through": true,
+      "note": "About 95 RV sites a 23-ft rig fits (pads 25-85 ft) plus 4 rustic pop-up/tent sites (15 ft) and 14 tent sites."
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-07",
+      "sources": "https://staypok.com/ https://staypok.com/campground https://staypok.com/deals https://staypok.com/rules-and-policies https://staypok.com/hours-of-operation https://staypok.com/extended-stays https://staypok.com/faqs https://staypok.com/facilities https://www.campspot.com/book/port-of-kimberling https://park-maps.campspot.com/f3df1e07-b78c-42a4-841f-f6986ab6ac32 Esri World Imagery; USGS EPQS at The Bluff's shore pads",
+      "note": "Rates re-quoted on Campspot: low $23 -> $27 (the $23 basic site isn't on sale in winter), high $82 confirmed; booking fee $3 (2.5%, min $3). Hookups 50/water/sewer, year-round season, military 10% weekday, good_sam false now sourced; added max rig 85 ft, pull-throughs, showers/wifi, 2-night standing minimum (3 on holidays). Lakeview kept. Pin ~510 m off (on the hotel). Gate passes; long-stay tests pass."
     }
   },
   {
