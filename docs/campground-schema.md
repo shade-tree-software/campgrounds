@@ -550,6 +550,23 @@ Service's "$8 per vehicle", Colossal Cave 14878's $15) is `included: 1` with `am
 the base, so the popup says what towing a car costs (`+$15/night each vehicle over 1`) while
 the base stays what a lone motorhome pays.
 
+The backfill (2026-11-07, `audit/extra_vehicle/`: `RULES.md`, `chunk.py`, `check.py`, one
+`out/` file per chunk) settled the readings that came up more than once:
+- **A site fee that includes one vehicle's park entry, with extra vehicles paying the entrance**
+  (Kalamazoo County, Bader 2769, Standley Lake 2665), is `extra_vehicle {included: 1, amount:
+  <the daily entry>}`, not `entrance`: an `entrance` would charge the lone motorhome too.
+- **An ordinal names `included`**: "a second vehicle $5" is `included: 1`, "a third vehicle" or
+  "two vehicles per site; a daily fee for extras" is `included: 2`. Pike-San Isabel's "two
+  vehicles or one RV included" is read as 2.
+- **A range stays in prose**, as a per-head range does: Pike-San Isabel's "$13-23" left
+  `amount` unset rather than show the low end as the charge.
+- **A charge with no figure** is `{"per": "night"}` or `{"included": N}` alone, which the
+  popup shows as `extra-vehicle charge` / `rate covers N vehicles`.
+- **Agency-wide terms sit on the registry row**: Ontario Parks (`included: 1`, the A/B/C day
+  rates in its note), Nova Scotia (C$8.25) and Arizona State Parks ($15). Nevada State Parks
+  charge the camping fee itself per vehicle at a per-park figure, so each NV entry carries
+  `included: 1, amount: <its resident per-vehicle fee>`, not the hookup total.
+
 ### 4.3 Do not fold fees into `rating.price_tier`
 
 `price_tier` is RV Life's number, computed on a raw nominal average rate. It is already
