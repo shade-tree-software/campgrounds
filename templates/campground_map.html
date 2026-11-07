@@ -923,12 +923,12 @@ const STORE = {
   },
 };
 // Dimmed (hidden) legend categories / ownership filters, restored from the session.
-// Two ownership classes start OFF: `wma` is informal wildlife-area camping (a
-// permit and a parking lot, not a campground) and `hipcamp` is a booking
-// platform rather than a public campground — both are answers to a narrower
-// question than "where can we camp", so they're opt-in. Only the FALLBACK is
-// seeded: a session that has turned either on keeps it on across page loads.
-const DEFAULT_HIDDEN_OWNERSHIPS = ['wma', 'hipcamp'];
+// One ownership class starts OFF: `hipcamp` is a booking platform rather than
+// a public campground, an answer to a narrower question than "where can we
+// camp", so it's opt-in. `wma` (wildlife-area camping) started off too until
+// AWH 2026-11-07 put it back on by default. Only the FALLBACK is seeded: a
+// session that has changed it keeps its choice across page loads.
+const DEFAULT_HIDDEN_OWNERSHIPS = ['hipcamp'];
 // One set holds the hidden water AND climate categories. Their names never
 // collide, so a category filter belongs to its field rather than to the colour
 // mode: a "lakefront only" map can be coloured by climate and stays lakefront.
