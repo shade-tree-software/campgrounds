@@ -1,5 +1,5 @@
 import json,sys,urllib.request,re,html
-UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36'
+UA='Mozilla/5.0'
 def get(u):
     return json.load(urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':UA}),timeout=40))
 cid=sys.argv[1]

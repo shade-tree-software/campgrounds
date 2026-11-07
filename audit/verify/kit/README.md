@@ -30,3 +30,10 @@ stopped. Scratchpad paths are per-session, so the briefs carry `__SCRATCH__` and
 Status 2026-10-22: wf-mt-1 applied (69492f0). wf-mt-2..wf-mt-6 (37 entries) not started.
 Drawdown leads (14121, 14143, 14148, 14172, 6103) fall in wf-mt-5/6: the gate measures to the high-water
 edge, so drawdown alone does not downgrade.
+
+## Missouri phase-7 brief (2026-11-07)
+
+`brief_mo.txt` is the brief as p3-321 ran it, with `__SCRATCH__` / `__BATCH__` / `__PARAGRAPH__` holes.
+`mkbrief_mo.py SCRATCH p3-NNN PARAGRAPH_FILE` fills them (round-trip checked against p3-321). The
+paragraph names each of the batch's twelve entries with what to look hard at, then one sentence on what
+the previous batch found. Missouri leads found mid-pass: `audit/verify/leads/mo_leads.txt`.

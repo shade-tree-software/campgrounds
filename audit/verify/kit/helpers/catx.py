@@ -1,6 +1,6 @@
 # catx.py FACILITY_ID: rec.gov per-site catalog summary via the public search API (no RIDB key needed)
 import json,sys,urllib.request,collections
-UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36'
+UA='Mozilla/5.0'
 cid=sys.argv[1]; sites=[]; start=0
 while True:
     u=f'https://www.recreation.gov/api/search/campsites?fq=asset_id%3A{cid}&size=200&start={start}'
