@@ -135,5 +135,5 @@
 - [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — very poor reviews drop; reviews may decide a borderline price; under 4 stars + borderline seasonal = auto drop (AWH…
 - [Florida Keys price re-screen — DONE](project_keys_rescreen.md) — 2026-10-30: +14 (15574-15587), 12 skips; Keys rules: owner-lot w/ booking site OK, RV Life $$$+ = price
 - [Winter 2026-27 check](project_winter_check_2026.md) — 76 public waterfront campgrounds (eastern VA, NC, WV east, MD, DE, south-central PA): season/status written…
-- [Campgrounds-only role (planned)](project_campgrounds_only_role.md) — map only, no trips/family/home/banner/Availability/Weather; --AWH notes question open
+- [Campgrounds-only role — BUILT](project_campgrounds_only_role.md) — 2026-11-07: map only, default-deny allowlist, climate withheld; new routes must be listed
 - [Notes name no one](feedback_notes_name_no_one.md) — browser-visible notes: no EKKO, no family camping dates, no first person; say "a 23-ft rig"

@@ -404,12 +404,18 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @app.context_processor
 def inject_trip_stats():
+    # A "Campgrounds only" viewer gets no trip figures at all, not just hidden
+    # ones: base.html leaves the counts out for them, and nothing that isn't in
+    # the context can be rendered by mistake.
+    if current_user.is_authenticated and getattr(current_user, "campgrounds_only", False):
+        return {"is_campgrounds_only": True}
     trips = [t for t in parse_trips() if not t.get("home_only")]
     overnight = sum(1 for t in trips if t["stays"])
     # is_day_trip(), matching the stats page — an empty placeholder trip has
     # no campspots AND no events and counts as neither.
     daytrips = sum(1 for t in trips if is_day_trip(t))
     return {
+        "is_campgrounds_only": False,
         # The header shows the combined figure; the two parts stay available
         # for anything that still wants the breakdown.
         "trip_count": overnight + daytrips,
@@ -1239,7 +1245,7 @@ def _check_home_config():
 
 class User(UserMixin):
     def __init__(self, username, password_hash, is_admin=False, can_upload=False,
-                 can_view_campgrounds=True):
+                 can_view_campgrounds=True, campgrounds_only=False):
         self.id = username
         self.username = username
         self.password_hash = password_hash
@@ -1251,13 +1257,24 @@ class User(UserMixin):
         # a "Trips-only" user has this cleared and cannot reach any Campgrounds
         # page or data API. Admins always retain access.
         self.can_view_campgrounds = bool(is_admin) or bool(can_view_campgrounds)
+        # "Campgrounds only" (AWH 2026-11-07): the campground map and nothing
+        # else — no trips, stats, photos, family or home, and no Availability or
+        # Weather page. Enforced by the default-deny allowlist in
+        # `_require_login_globally` and by the map scrubbing in
+        # `campgrounds_map`/`api_campground_popup`. It overrides the other two
+        # capabilities rather than combining with them; an admin never has it.
+        self.campgrounds_only = bool(campgrounds_only) and not is_admin
+        if self.campgrounds_only:
+            self.can_upload = False
+            self.can_view_campgrounds = True
 
 
 def _load_users():
     return {name: User(name, info["password_hash"],
                        info.get("is_admin", False),
                        info.get("can_upload", False),
-                       info.get("can_view_campgrounds", True))
+                       info.get("can_view_campgrounds", True),
+                       info.get("campgrounds_only", False))
             for name, info in _load_json(USERS_FILE).items()}
 
 
@@ -1278,13 +1295,15 @@ def _save_user(username, password, is_admin=False, can_upload=False,
 SHARE_ID_PREFIX = "share:"
 
 
-def _make_share_user(token, trips_only=False):
+def _make_share_user(token, trips_only=False, campgrounds_only=False):
     """Synthetic read-only user backing a share link (no admin, no upload).
     Its username is 'share:<token>', which never matches a photo uploader
     record and is rejected as a real username, so it stays purely a viewer.
-    `trips_only` links additionally have Campgrounds-section access cleared."""
+    `trips_only` links additionally have Campgrounds-section access cleared;
+    `campgrounds_only` links see the campground map and nothing else."""
     return User(SHARE_ID_PREFIX + token, "", is_admin=False, can_upload=False,
-                can_view_campgrounds=not trips_only)
+                can_view_campgrounds=not trips_only,
+                campgrounds_only=campgrounds_only)
 
 
 @login_manager.user_loader
@@ -1296,7 +1315,8 @@ def load_user(username):
         token = username[len(SHARE_ID_PREFIX):]
         rec = _load_json(SHARE_TOKENS_FILE).get(token)
         if rec is not None:
-            return _make_share_user(token, rec.get("trips_only", False))
+            return _make_share_user(token, rec.get("trips_only", False),
+                                    rec.get("campgrounds_only", False))
         return None
     users = _load_users()
     return users.get(username)
@@ -1342,7 +1362,40 @@ def _require_login_globally():
         # appends a bare '?' when there's no query, which would otherwise ride
         # along into the post-login redirect.
         return redirect(url_for('login', next=request.full_path.rstrip('?')))
+    if _is_campgrounds_only() and request.endpoint not in CAMPGROUNDS_ONLY_ENDPOINTS:
+        return _campgrounds_only_refusal()
     return None
+
+
+# Everything a "Campgrounds only" user may reach once logged in, beyond the
+# login-exempt endpoints above (static, tiles, the service worker, logout).
+# DEFAULT-DENY on purpose: the rest of the app is the family's trips, photos
+# and homes, so a route added later is refused to this role until it is listed
+# here — forgetting to gate a new page can't leak it. The map's own data is
+# scrubbed for the role in `campgrounds_map` / `api_campground_popup`.
+# tests/test_campgrounds_only.py crawls every route against this list.
+CAMPGROUNDS_ONLY_ENDPOINTS = frozenset({
+    'campgrounds_map', 'api_campground_popup',
+    # The legacy split-map URLs redirect into the map.
+    'campgrounds_waterfront', 'campgrounds_climate',
+    'web_manifest',
+})
+
+
+def _is_campgrounds_only():
+    return (current_user.is_authenticated
+            and getattr(current_user, "campgrounds_only", False))
+
+
+def _campgrounds_only_refusal():
+    """A page request goes to the map (a bookmark of `/` or a trip link lands
+    somewhere useful, with a notice only when it was a real refusal); anything
+    else gets a bare 403 that names nothing."""
+    if request.method == 'GET' and not request.path.startswith('/api/'):
+        if request.path in ('/', '/trips', '/trips/map'):
+            return redirect(url_for('campgrounds_map'))
+        return redirect(url_for('campgrounds_map', notice='campgrounds_only'))
+    return jsonify({"error": "Not available"}), 403
 
 
 # ── Access log ──────────────────────────────────────────────────────────────
@@ -2013,6 +2066,11 @@ def web_manifest():
     with open(os.path.join(_STATIC_DIR, 'manifest.json')) as f:
         manifest = json.load(f)
     name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
+    if _is_campgrounds_only():
+        # The installed icon names the app; for this role it names nothing of ours.
+        manifest.update(name="Campgrounds", short_name="Campgrounds",
+                        description="A map of campgrounds.",
+                        start_url=url_for('campgrounds_map'))
     if name.startswith(SHARE_ID_PREFIX):
         manifest['start_url'] = url_for('share_login',
                                         token=name[len(SHARE_ID_PREFIX):])
@@ -2147,7 +2205,8 @@ def share_login(token):
                     "is wrong on your end.",
             cta_href=None,
             hint='Have an account? <a href="/login">Sign in</a>'), 403
-    login_user(_make_share_user(token, rec.get("trips_only", False)), remember=True)
+    login_user(_make_share_user(token, rec.get("trips_only", False),
+                                rec.get("campgrounds_only", False)), remember=True)
     _log_access("share_login", extra={"label": rec.get("label") or ""})
     # ?next= wins when present, but messaging apps routinely strip query strings
     # off a pasted link — so fall back to the destination stored on the link at
@@ -5073,27 +5132,41 @@ def campgrounds_map():
     denied = _require_campground_view_page()
     if denied:
         return denied
-    home, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
+    cg_only = _is_campgrounds_only()
+    if cg_only:
+        # Nothing of the family's: no home or family markers, no visit counts or
+        # trip lists, and no Climate colouring — it is graded against home's
+        # latitude and altitude, so 14k labelled dots would draw home's band.
+        home, family = None, []
+        modes = [m for m in COLOR_MODES if m["key"] != "climate"]
+    else:
+        home, family = _map_config()
+        modes = COLOR_MODES
     mode = request.args.get('color')
-    if mode not in {m["key"] for m in COLOR_MODES}:
-        mode = COLOR_MODES[0]["key"]
+    if mode not in {m["key"] for m in modes}:
+        mode = modes[0]["key"]
 
-    # `mode` and `is_admin` both change the rendered output, so both vary the tag.
-    etag = _map_etag(mode, is_admin)
+    # `mode`, `is_admin` and the role all change the rendered output, so all vary the tag.
+    etag = _map_etag(mode, is_admin, cg_only)
     if request.if_none_match.contains(etag.strip('"')):
         return Response(status=304, headers={"ETag": etag})
+
+    markers = _map_marker_rows(_load_campgrounds())
+    if cg_only:
+        markers = [{k: v for k, v in m.items() if k not in _FAMILY_ONLY_MARKER_FIELDS}
+                   for m in markers]
 
     resp = app.make_response(render_template(
         'campground_map.html',
         title='Map',
-        campgrounds=_map_marker_rows(_load_campgrounds()),
+        campgrounds=markers,
         roadside=_load_roadside(),
         # Metadata only — labels and field order for the eight groups, ~5.8 KB
         # for the whole vocabulary rather than per entry. The VALUES still
         # arrive with the popup fetch (doc §8.4).
         cg_schema=campground_schema.to_client(),
-        color_modes=COLOR_MODES,
+        color_modes=modes,
         default_mode=mode,
         ownership_labels=OWNERSHIP_LABELS,
         state_names=STATE_NAMES,
@@ -5101,9 +5174,16 @@ def campgrounds_map():
         family_locations=family,
         active_nav='campmap',
         is_admin=is_admin,
+        campgrounds_only=cg_only,
     ))
     resp.headers["ETag"] = etag
     return resp
+
+
+# Marker and popup fields a "Campgrounds only" viewer never receives: the
+# family's own visits (and the trips behind them), and the home-relative climate.
+_FAMILY_ONLY_MARKER_FIELDS = frozenset({"visit_count", "climate"})
+_FAMILY_ONLY_POPUP_FIELDS = frozenset({"trips"})
 
 
 def _log_campground_view(cg_id):
@@ -5142,7 +5222,9 @@ def api_campground_popup(cg_id):
     row = next((r for r in _load_campgrounds() if r.get("id") == cg_id), None)
     if row is None:
         return jsonify({"error": "Campground not found"}), 404
-    payload = {k: row[k] for k in _MAP_POPUP_FIELDS if k in row}
+    cg_only = _is_campgrounds_only()
+    payload = {k: row[k] for k in _MAP_POPUP_FIELDS
+               if k in row and not (cg_only and k in _FAMILY_ONLY_POPUP_FIELDS)}
     # Resolved here rather than shipped inline with the markers: the structured
     # groups are popup filler by the same argument `note` and `website` are, and
     # putting them on all ~12.9k markers would add an estimated 2-3 MB to the
@@ -5160,7 +5242,7 @@ def api_campground_popup(cg_id):
         if label:
             payload["policy_label"] = label
     resp = jsonify(payload)
-    resp.headers["ETag"] = _map_etag("popup", cg_id)
+    resp.headers["ETag"] = _map_etag("popup", cg_id, cg_only)
     return resp
 
 
@@ -5759,7 +5841,9 @@ def api_user_list():
         {"username": name,
          "is_admin": info.get("is_admin", False),
          "can_upload": info.get("can_upload", False),
-         "can_view_campgrounds": info.get("can_view_campgrounds", True)}
+         "can_view_campgrounds": info.get("can_view_campgrounds", True),
+         "campgrounds_only": (info.get("campgrounds_only", False)
+                              and not info.get("is_admin", False))}
         for name, info in sorted(data.items())
     ])
 
@@ -5776,6 +5860,11 @@ def api_user_create():
     can_upload = bool(body.get('can_upload'))
     # Default new users to campground access unless the caller opts them out.
     can_view_campgrounds = bool(body.get('can_view_campgrounds', True))
+    # "Campgrounds only" replaces the other capabilities (see User), so it is
+    # stored only on a plain viewer, and with the flags it implies.
+    campgrounds_only = bool(body.get('campgrounds_only')) and not is_admin
+    if campgrounds_only:
+        can_upload, can_view_campgrounds = False, True
     if not username:
         return jsonify({"error": "Username required"}), 400
     if username.startswith(SHARE_ID_PREFIX):
@@ -5790,6 +5879,7 @@ def api_user_create():
         "is_admin": is_admin,
         "can_upload": can_upload,
         "can_view_campgrounds": can_view_campgrounds,
+        "campgrounds_only": campgrounds_only,
     }
     _save_json(USERS_FILE, data)
     return jsonify({"ok": True})
@@ -5818,6 +5908,20 @@ def api_user_update(username):
         data[username]['can_upload'] = bool(body.get('can_upload'))
     if 'can_view_campgrounds' in body:
         data[username]['can_view_campgrounds'] = bool(body.get('can_view_campgrounds'))
+    if 'campgrounds_only' in body:
+        if body.get('campgrounds_only') and data[username].get('is_admin'):
+            # Never a silent demotion (and never of yourself): demote first.
+            return jsonify({"error": "Demote this admin before making them Campgrounds only"}), 400
+        data[username]['campgrounds_only'] = bool(body.get('campgrounds_only'))
+    rec = data[username]
+    # Keep the stored flags coherent with what User enforces: the role is
+    # exclusive of admin, contributor and Trips-only, so turning any of those on
+    # turns it off, and turning it on turns them off.
+    if rec.get('campgrounds_only'):
+        if body.get('is_admin') or body.get('can_upload') or body.get('can_view_campgrounds') is False:
+            rec['campgrounds_only'] = False
+        else:
+            rec['is_admin'], rec['can_upload'], rec['can_view_campgrounds'] = False, False, True
     _save_json(USERS_FILE, data)
     return jsonify({"ok": True})
 
@@ -5847,7 +5951,8 @@ def api_share_link_list():
     links = _load_json(SHARE_TOKENS_FILE)
     out = [{"token": t, "label": i.get("label", ""),
             "next": i.get("next", "/"), "created": i.get("created", ""),
-            "trips_only": i.get("trips_only", False)}
+            "trips_only": i.get("trips_only", False),
+            "campgrounds_only": i.get("campgrounds_only", False)}
            for t, i in links.items()]
     out.sort(key=lambda x: x["created"], reverse=True)
     return jsonify(out)
@@ -5861,21 +5966,26 @@ def api_share_link_create():
     body = request.get_json() or {}
     label = (body.get('label') or '').strip()
     nxt = _safe_next(body.get('next'), default="/")
-    trips_only = bool(body.get('trips_only'))
+    campgrounds_only = bool(body.get('campgrounds_only'))
+    trips_only = bool(body.get('trips_only')) and not campgrounds_only
+    if campgrounds_only and nxt == "/":
+        nxt = "/campgrounds/map"
     token = secrets.token_urlsafe(24)
     links = _load_json(SHARE_TOKENS_FILE)
     links[token] = {"label": label, "next": nxt, "trips_only": trips_only,
+                    "campgrounds_only": campgrounds_only,
                     "created": datetime.now().isoformat(timespec='seconds')}
     _save_json(SHARE_TOKENS_FILE, links)
     return jsonify({"ok": True, "token": token, "label": label, "next": nxt,
-                    "trips_only": trips_only})
+                    "trips_only": trips_only, "campgrounds_only": campgrounds_only})
 
 
 @app.route('/api/share-links/<token>', methods=['PUT'])
 def api_share_link_update(token):
-    """Update a share link in place. Currently only the `trips_only` flag is
-    editable; load_user re-reads this file each request, so the change takes
-    effect on the token's next request (no revoke/recreate needed)."""
+    """Update a share link in place. Only the access flags (`trips_only`,
+    `campgrounds_only`, mutually exclusive) are editable; load_user re-reads
+    this file each request, so the change takes effect on the token's next
+    request (no revoke/recreate needed)."""
     denied = _require_admin()
     if denied:
         return denied
@@ -5883,10 +5993,18 @@ def api_share_link_update(token):
     if token not in links:
         return jsonify({"error": "Share link not found"}), 404
     body = request.get_json() or {}
+    rec = links[token]
     if 'trips_only' in body:
-        links[token]['trips_only'] = bool(body.get('trips_only'))
+        rec['trips_only'] = bool(body.get('trips_only'))
+        if rec['trips_only']:
+            rec['campgrounds_only'] = False
+    if 'campgrounds_only' in body:
+        rec['campgrounds_only'] = bool(body.get('campgrounds_only'))
+        if rec['campgrounds_only']:
+            rec['trips_only'] = False
     _save_json(SHARE_TOKENS_FILE, links)
-    return jsonify({"ok": True, "trips_only": links[token].get("trips_only", False)})
+    return jsonify({"ok": True, "trips_only": rec.get("trips_only", False),
+                    "campgrounds_only": rec.get("campgrounds_only", False)})
 
 
 @app.route('/api/share-links/<token>', methods=['DELETE'])

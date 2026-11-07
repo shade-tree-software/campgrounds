@@ -11,14 +11,17 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="EKKO">
+<meta name="apple-mobile-web-app-title" content="{{ 'Campgrounds' if is_campgrounds_only else 'EKKO' }}">
 {# Served by Flask, not from /static, so a share guest's start_url is their own
    magic link — an installed icon pointing at "/" opens on a login form they
    can't pass. See web_manifest(). #}
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/static/icons/icon-192.png">
-<title>{% block title %}EKKOing Around{% endblock %}</title>
+{# A "Campgrounds only" viewer (AWH 2026-11-07) sees nothing of the family: a
+   neutral name everywhere the app names itself — tab title, link preview,
+   header, home-screen icon — and the campground map as the whole nav. #}
+<title>{% if is_campgrounds_only %}Campgrounds{% else %}{% block title %}EKKOing Around{% endblock %}{% endif %}</title>
 {# Link previews. A share link pasted into iMessage/WhatsApp used to render as
    a bare URL — a relative's literal first impression of the app was an
    unexplained string of characters, which reads like something you shouldn't
@@ -29,11 +32,19 @@
    guest — so trip-specific tags would put real trip names (and any og:image
    we pointed at a photo) into whatever preview cache that crawler keeps. The
    icon and a fixed description leak nothing and still fix the impression. #}
+{% if is_campgrounds_only %}
+<meta name="description" content="A map of campgrounds.">
+<meta property="og:site_name" content="Campgrounds">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Campgrounds">
+<meta property="og:description" content="A map of campgrounds.">
+{% else %}
 <meta name="description" content="{% block meta_description %}A private family record of camping trips in the EKKO.{% endblock %}">
 <meta property="og:site_name" content="EKKOing Around">
 <meta property="og:type" content="website">
 <meta property="og:title" content="EKKOing Around">
 <meta property="og:description" content="Hamilton family road trips — photos, maps and campsites from the road.">
+{% endif %}
 <meta property="og:image" content="{{ url_for('static', filename='icons/icon-512.png', _external=True) }}">
 <meta name="twitter:card" content="summary">
 {# og:url intentionally omitted: on /s/<token> it would echo the magic link
@@ -790,7 +801,8 @@
   {% block style %}{% endblock %}
 </style>
 </head>
-<body{% if current_user.is_authenticated %} class="has-tab-bar"{% endif %}>
+{# No tab bar for a "Campgrounds only" viewer: it would hold one tab, the page they are on. #}
+<body{% if current_user.is_authenticated and not is_campgrounds_only %} class="has-tab-bar"{% endif %}>
 
 {# Skip link: the nav is 8–12 links plus a stats block on every page, so a
    keyboard or screen-reader user had to tab through all of it to reach the
@@ -801,8 +813,12 @@
 <header>
   <div class="header-title">
     {% if current_user.is_authenticated %}<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">&#9776;</button>{% endif %}
+    {% if is_campgrounds_only %}
+    <h1><a href="/campgrounds/map">Campgrounds</a></h1>
+    {% else %}
     <h1><a href="/">EKKOing Around</a></h1>
     <span class="site-subtitle">Hamilton family road trips</span>
+    {% endif %}
   </div>
 </header>
 
@@ -815,6 +831,7 @@
      server's _is_contributor(). #}
   {% set is_contributor = current_user.is_authenticated and current_user.can_upload %}
   <div class="nav-collapse" id="nav-collapse">
+  {% if not is_campgrounds_only %}
   <span class="nav-group">
     <span class="nav-label">Trips:</span>
     <a href="/trips/map"{% if active_nav == 'map' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span class="nav-text">Map</span></a>
@@ -822,6 +839,7 @@
     <a href="/trips/list" id="nav-list"{% if active_nav == 'list' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h.01M4 12h.01M4 18h.01M9 6h11M9 12h11M9 18h11"/></svg><span class="nav-text">List</span></a>
     <a href="/trips/stats"{% if active_nav == 'stats' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V13M12 21V5M19 21V9"/></svg><span class="nav-text">Stats</span></a>
   </span>
+  {% endif %}
   {# Campground map is read-only for non-admins (the route was never
      admin-gated; edit affordances are IS_ADMIN-conditioned) — the
      "places we could go" browser for the whole family. Hidden entirely
@@ -833,17 +851,19 @@
        it, so it doesn't sit beside the trips' "Map"; the phone menu keeps
        "Map" under its Campgrounds heading (.nav-text-long / -short). #}
     <a href="/campgrounds/map"{% if active_nav == 'campmap' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20 L12 5 L21 20"/><path d="M12 12 L8.5 20"/><path d="M12 12 L15.5 20"/><path d="M2 20 H22"/></svg><span class="nav-text"><span class="nav-text-long">Map</span><span class="nav-text-short">Camps</span></span></a>
-    <a href="/campgrounds/availability"{% if active_nav == 'campavail' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15.5l2 2 4-4"/></svg><span class="nav-text">Availability</span></a>
+    {% if not is_campgrounds_only %}<a href="/campgrounds/availability"{% if active_nav == 'campavail' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15.5l2 2 4-4"/></svg><span class="nav-text">Availability</span></a>{% endif %}
     {% if is_contributor %}<a href="/campgrounds/weather"{% if active_nav == 'campweather' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v2M5.3 5.3l1.4 1.4M2.5 12h2M18.7 5.3l-1.4 1.4"/><path d="M8.2 12.6a4 4 0 0 1 7.3-3.3"/><path d="M8 21h9.5a3.5 3.5 0 0 0 .3-7 5 5 0 0 0-9.5 1.3A2.9 2.9 0 0 0 8 21z"/></svg><span class="nav-text">Weather</span></a>{% endif %}
     {% if is_admin %}<a href="/campgrounds/manage"{% if active_nav == 'manage' %} class="active"{% endif %}><svg class="nav-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg><span class="nav-text">Manage</span></a>{% endif %}
   </span>
   {% endif %}
   {# The trip/night counts sit at the right end of the desktop bar, before
      the account controls. Hidden on phones (the Stats tab is one tap away). #}
+  {% if not is_campgrounds_only %}
   <a class="stats" href="/trips/stats" title="View stats">
     <div><span>{{ trip_count }}</span> trip{{ '' if trip_count == 1 else 's' }}</div>
     <div><span>{{ night_count }}</span> night{{ '' if night_count == 1 else 's' }}</div>
   </a>
+  {% endif %}
   {# Admin pages and Logout: one "Admin" menu button on the desktop bar (they
      are rarely used and only an admin sees them); on phones both wrappers are
      display:contents, so the section and the Logout tile flow into the
@@ -920,6 +940,7 @@
    Calendar/List tabs by id for its client-side view switch, same as the
    top-nav links. #}
 <nav class="tab-bar" aria-label="Primary">
+  {% if not is_campgrounds_only %}
   <a href="/trips/map" id="tab-map"{% if active_nav == 'map' %} class="active"{% endif %}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
     <span>Map</span>
@@ -936,6 +957,7 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V13M12 21V5M19 21V9"/></svg>
     <span>Stats</span>
   </a>
+  {% endif %}
   {% if current_user.can_view_campgrounds %}
   <a href="/campgrounds/map" id="tab-campgrounds"{% if active_nav == 'campmap' %} class="active"{% endif %}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 L12 5 L21 20"/><path d="M12 12 L8.5 20"/><path d="M12 12 L15.5 20"/><path d="M2 20 H22"/></svg>
@@ -1003,6 +1025,7 @@
     campgrounds_restricted: ["Campground pages aren't part of your access — here are the trips.", 'info'],
     admin_only: ["That page is admin-only — here are the trips.", 'info'],
     contributors_only: ["That page is for trip contributors — here are the trips.", 'info'],
+    campgrounds_only: ["Your access is the campground map — here it is.", 'info'],
   };
   (function showQueryNotice() {
     const params = new URLSearchParams(location.search);
