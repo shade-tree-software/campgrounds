@@ -32,3 +32,5 @@ Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Su
 - **Re-screen of never-added candidates DONE 2026-10-21** ([[project_family_home_rescreen]]): +22. AWH 2026-10-21: it does NOT lift the Sun brand skip.
 
 AWH 2026-10-30 (Shelby / Mansfield KOA 15471, $49 May/Sep weeknights, $66 June): "Shelby keep it" - the gate is the cheapest real RV night in any season; a summer price over the line does not drop a park whose shoulder nights pass.
+
+**Operator's own posted member discount counts (AWH 2026-11-07, Camelot RV 2038, MO):** $56 list, no gateway, not a Good Sam Park, but the operator's rates page posts 20% off ('You Pay $45.00') for Good Sam/FMCA/AARP/Escapees/seniors/military/veterans. AWH: keep it. So a discount the OPERATOR posts that a Good Sam member gets, bringing the night to $50 or under, lifts the gate like a GS Park's 10%. A directory or camper report of a discount is not enough.
