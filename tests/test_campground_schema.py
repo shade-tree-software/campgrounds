@@ -869,6 +869,46 @@ class TestElevationFromForm(unittest.TestCase):
         self.assertEqual(self.clean(""), 0.0)
 
 
+class TestBlankBoxIsNotAnEdit(unittest.TestCase):
+    """A save from the manage form must not write blanks over fields the entry lacks."""
+
+    def setUp(self):
+        import json, shutil, sys, tempfile
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        import ekko_trips_app as A
+        self.A, self.tmp = A, tempfile.mkdtemp()
+        self.saved = (A.CAMPGROUNDS_JSON, A.FAMILY_JSON)
+        A.CAMPGROUNDS_JSON = os.path.join(self.tmp, "campgrounds.json")
+        A.FAMILY_JSON = os.path.join(self.tmp, "family.json")
+        with open(A.CAMPGROUNDS_JSON, "w") as f:
+            json.dump([{"id": 1, "kind": "campground", "name": "X", "location": "1,2",
+                        "state": "VA", "website": "https://x.example/", "note": "old"}], f)
+        self.addCleanup(shutil.rmtree, self.tmp)
+        self.client = A.app.test_client()
+        with self.client.session_transaction() as s:
+            s["_user_id"], s["_fresh"] = "admin", True
+        self._users = A.USERS_FILE
+        A.USERS_FILE = os.path.join(self.tmp, "users.json")
+        with open(A.USERS_FILE, "w") as f:
+            json.dump({"admin": {"password_hash": "x", "is_admin": True}}, f)
+
+    def tearDown(self):
+        self.A.CAMPGROUNDS_JSON, self.A.FAMILY_JSON = self.saved
+        self.A.USERS_FILE = self._users
+
+    def entry(self):
+        import json
+        return json.load(open(self.A.CAMPGROUNDS_JSON))[0]
+
+    def test_blank_over_absent_is_skipped_and_clearing_still_works(self):
+        r = self.client.put("/api/campgrounds/1", json={"note": "new", "phone": "", "website": ""})
+        self.assertEqual(r.status_code, 200, r.data)
+        e = self.entry()
+        self.assertEqual(e["note"], "new")
+        self.assertNotIn("phone", e, "a blank box over a missing phone wrote one")
+        self.assertEqual(e["website"], "", "clearing a stored website must still clear it")
+
+
 class TestSeasonInheritsWhole(unittest.TestCase):
     """An entry's own season span replaces the agency's, never merges with it."""
 

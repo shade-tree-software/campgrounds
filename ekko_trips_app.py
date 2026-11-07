@@ -6191,6 +6191,13 @@ def api_update_campground(cg_id):
                 "kind", "driveway_location"):
         if key in data:
             val = data[key]
+            # The form sends every box, touched or not. A blank box over a
+            # field the entry doesn't have is not an edit: writing it turned a
+            # note-only save into an apparent "phone cleared" diff line
+            # (Watermelon Park, AWH 2026-11-07). Clearing a stored value still
+            # works, since then the stored side isn't empty.
+            if val in ("", None) and target.get(key) in ("", None):
+                continue
             if key == "elevation_meters":
                 val = _clean_elevation(val, target.get("elevation_meters"))
             target[key] = val
