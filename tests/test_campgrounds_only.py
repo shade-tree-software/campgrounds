@@ -139,6 +139,16 @@ class TestDefaultDeny(unittest.TestCase):
         r = _client("camper").get("/trips/42")
         self.assertIn("notice=campgrounds_only", r.headers["Location"])
 
+    def test_a_share_guest_can_reach_sign_in(self):
+        c = _share_client()
+        page = c.get("/campgrounds/map").get_data(as_text=True)
+        self.assertIn('href="/login"', page)
+        self.assertNotIn('href="/logout"', page)
+        self.assertEqual(c.get("/login").status_code, 200)
+        r = c.post("/login", data={"username": "viewer", "password": "x"})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(c.get("/trips/stats").status_code, 200, "the account replaced the guest")
+
     def test_other_roles_are_untouched(self):
         self.assertEqual(_client("viewer").get("/trips/stats").status_code, 200)
         self.assertEqual(_client("boss").get("/trips/stats").status_code, 200)
