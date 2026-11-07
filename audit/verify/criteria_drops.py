@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    2021: ('2026-11-07', 'Standing rule: under 4.0 on a review site with 25+ reviews = drop and report (AWH 2026-11-02)', "Ballards Campground & RV Park (Carthage/Joplin MO, private): RV Life 3.5 stars from 63 ratings (park 3603, re-read 2026-11-07); Google 4.5 from 337 does not lift it under the rule; no --AWH note. Otherwise passed: $47.50-50 on RoverPass, website joplinrvpark.com + phone. p3-322."),
     2876: ('2026-11-07', 'AWH 2026-11-07: drop', "Rosebud Casino RV Park (SD, private): the RV park has no Google listing of its own; the casino's listing is 3.8 over 864 reviews; RV Life 7.75 over only 8. AWH dropped it on the casino's rating. p3-288."),
     15612: ('2026-11-07', 'AWH 2026-11-07: drop', "Miller Creek, Lewis and Clark SRA (NE, state, added as a lead 2026-11-05): NGPC's brochure icon says 'Non Reservable Tent Camping', a 2021 reviewer advised a small rig or tent on a rough dirt road and a 2026 Google reviewer called it tent-only. AWH dropped it."),
     13955: ('2026-11-07', 'AWH 2026-11-07: drop - horse camps are out unless the horse area is separate from the campground', "El Dorado SP Boulder Bluff (KS, state): the Equestrian Loop's 22 water/electric 50 A sites each have a corral at the Boulder Bluff horse trailhead; the rest of the entry is the primitive Pintail Loop. AWH dropped the entry. p3-310."),

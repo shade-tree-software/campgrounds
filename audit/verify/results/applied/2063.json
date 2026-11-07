@@ -1,0 +1,77 @@
+{
+  "id": 2063,
+  "checked": "2026-11-07",
+  "sources": [
+    "https://54shootersandrvpark.com/ (page text read from its own script bundle, /assets/index-LnQN6uor.js)",
+    "https://parkwith.us/camps/54-shooters-and-rv-park",
+    "Park With Us booking engine quotes for a 23-ft rig, 30A, nights of 2026-11-18 and 2027-07-10",
+    "https://cdn.parkwith.us/camps/54-shooters-and-rv-park/map.png",
+    "Google Maps listing (4.7, 55 reviews; +1 417-667-2343)",
+    "RV Life park 265378 (4.0, 4 reviews, $$$)",
+    "Esri World Imagery"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 35,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "note": "$35 a night for every RV site, the same on a November weeknight and a July Saturday; tax and booking fees added at checkout ($4.63 on one night). $5 a person over two."
+      },
+      "source": "Park With Us engine, https://parkwith.us/camps/54-shooters-and-rv-park: 23-ft rig, 30A, Nov 18-19 2026 - 'Site 1 30/50A 70ft Water $35.00 / night' (sites 1-5 listed alike), checkout 'Reservation x $35.00 x 1 ... Taxes & Fees $4.63 Amount due $39.63'; Jul 10-11 2027 - '$35.00 / night' on sites 1-5; page data 'max_free_guests':2, 'extra_guests_price_in_cents':200 on the RV style. Read 2026-11-07.",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "military": true,
+        "note": "Military and first-responder discounts offered on the booking engine."
+      },
+      "source": "https://parkwith.us/camps/54-shooters-and-rv-park page data: camp_discounts entries for 'Military' and 'First Responders' ('amount_off':5, 'is_bookable':true), read 2026-11-07",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://54shootersandrvpark.com/ RV Park page ('Hookups & Services: 30 & 50 Amp Service; Water at Each Location; Dump Station') + Park With Us sites 1-10 ('electric':'30/50', 'water':true), read 2026-11-07",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 10,
+        "max_rig_ft": 70,
+        "pull_through": true,
+        "note": "Ten 30/50A sites with water in two rows of five, listed at 70 ft; site 1 is a pull-through."
+      },
+      "source": "https://parkwith.us/camps/54-shooters-and-rv-park ('Our campground has 10 spots'; sites 'Site 1'-'Site 10', 'max_length':70) + checkout header 'Site 1 - 30A/50A, Pull-Through' + site map map.png (sites 1-10), read 2026-11-07",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true, "dump": true, "camp_store": true, "note": "Two-bathroom shower house and laundry room; on-site store (drinks, ice, wood, fishing and hunting supplies). Community fire pit, BBQ gazebo, play set and dog park."},
+      "source": "https://parkwith.us/camps/54-shooters-and-rv-park ('We have a great 2 bathroom shower house and laundry room! Our store on site offers everything from drinks, ice, wood, hunting and fishing supplies...') + https://54shootersandrvpark.com/ ('Dump Station'; 'Community Fire Pit, Community BBQ Area, Children's Playset, Dog Park'), read 2026-11-07",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "fcfs": null,
+        "platform": "operator",
+        "url": "https://parkwith.us/camps/54-shooters-and-rv-park",
+        "note": "Book online any time or by phone; full payment at booking, refund (less processing fees) with more than 3 days' notice. Check-in at the store during store hours; after-hours RV line 417-661-0935."
+      },
+      "source": "https://54shootersandrvpark.com/ ('Please contact us or book online to check availability and to make a reservation. Full payment (100%) is required to confirm your reservation'; 'Cancellations must be made at least 3 days prior'; RV Park hours 'Online Booking 24/7 Available', 'In-Person Check-in During Store Hours'; 'RV After Hours: 417-661-0935'; 'Book Your Stay Now' -> parkwith.us/camps/54-shooters-and-rv-park), read 2026-11-07",
+      "method": "manual"
+    }
+  },
+  "note": "Ten-site RV park behind a family-owned gun shop, outdoor shooting range and bait shop on US-54 east of Nevada. The range is in use during store hours. --Claude",
+  "summary": "Stored 'first-come, no reservation system' was wrong: books online (Park With Us). Added $35 flat (2026-27), military, 30/50A + water, 10 sites to 70 ft with a pull-through, showers/laundry/dump/store. Gates pass. Website should be the operator's own site (flag).",
+  "flags": [
+    "WEBSITE: stored is a Facebook page; the operator's own site is https://54shootersandrvpark.com/ (RV Park page + 'Book Your Stay Now' to Park With Us). apply.py does not write website.",
+    "BOOKING: stored reservable false / fcfs always (from 'first-come, no reservation system' in the note) is wrong - the park books online 24/7. fcfs removed (walk-up not stated).",
+    "GATES pass: price $35 (<= $50); presence = own website + phone 417-667-2343 (matches Google +1 417-667-2343); reviews Google 4.7 (55), RV Life 4.0 (4, $$$ avg $43). No weekly/monthly/seasonal stays marketed on the site or the engine; all quoted sites free on both test nights - long-stay tests pass.",
+    "CRITERIA (judgement): the RV park shares the property with an outdoor gun range and a 3D archery range (range used only in store hours). Not a reason to drop under the curation doc, but expect gunfire by day.",
+    "WATERFRONT not waterfront confirmed: no water on imagery except a small farm pond, and the site map's '3D Archery Target Pond' is a small pond inside the fenced archery area. Under 2 ha.",
+    "PIN OK: stored 37.8631,-94.2663 is at the US-54 entrance; Google's 37.86237,-94.26611 is ~80 m away; the sites sit within ~150 m. Esri imagery appears to predate the RV loop, so the sites themselves could not be seen.",
+    "Name: Google/site '54 Shooters and RV Park'; stored '54 Shooters Supply and RV Park' (older name). apply.py does not write name."
+  ]
+}
