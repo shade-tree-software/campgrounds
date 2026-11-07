@@ -134,3 +134,4 @@
 - [Book EKKO as a motorhome](feedback_book_as_motorhome.md) — AWH 2026-10-24: where an engine offers van AND motorhome types, price the motorhome type (Fort DeSoto turned a "van" booking away)
 - [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — very poor reviews drop; reviews may decide a borderline price; under 4 stars + borderline seasonal = auto drop (AWH 10-30..11-01)
 - [Florida Keys price re-screen — DONE](project_keys_rescreen.md) — 2026-10-30: +14 (15574-15587), 12 skips; Keys rules: owner-lot w/ booking site OK, RV Life $$$+ = price
+- [Winter 2026-27 check](project_winter_check_2026.md) — 40 public waterfront campgrounds in eastern VA + NC: season/status written 2026-11-07; 2 unknown; reusable brief in audit/winter_2026/
