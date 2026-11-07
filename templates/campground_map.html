@@ -509,7 +509,7 @@
     font-size: .9rem;
   }
   .cgf-select > span { flex: 0 0 6.5rem; }
-  .cgf-select select {
+  .cgf-select select, .cgf-select input {
     flex: 1;
     min-width: 0;
     padding: .3rem .4rem;
@@ -1029,6 +1029,118 @@ let showClosed = STORE.get('showClosed', true);
 function markerFill(cg) {
   return cg.closed ? CLOSED_FILL : (currentMode.colors[colorCat(cg)] || '#888');
 }
+// ── Open on my dates (AWH 2026-11-07, doc §8.5) ─────────────────────────────
+// Arrive / Leave pick the NIGHTS of a stay (arrive .. the night before leaving;
+// no Leave = one night). "any" passes a campground open on at least one of
+// them, "every" only one open on all of them. The marker carries the entry's
+// OWN season — `year_round: true`, or `opens`/`closes` (MM-DD, recurring) — and
+// nothing else answers: seasonal-with-no-dates and one-ended seasons are
+// unknown and fade (doc §2.2), and loop-by-loop winter detail lives in the
+// season note in the popup, which no filter can read. The closing date is
+// counted as an open night (eligibility defaults up, §2.2).
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+let dateArrive = STORE.get('dateArrive', '');
+let dateLeave = STORE.get('dateLeave', '');
+let dateMode = STORE.get('dateMode', 'any');
+if (!ISO_DATE.test(dateArrive)) dateArrive = '';
+if (!ISO_DATE.test(dateLeave)) dateLeave = '';
+if (dateMode !== 'every') dateMode = 'any';
+
+const DAY_MS = 86400000;
+const MONTH_START = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+// Day of a 365-day year, 0-364. Feb 29 folds onto Feb 28, so a leap-year stay
+// is judged by the same recurring MM-DD season as any other year.
+function dayOfYear(month, day) {
+  return MONTH_START[month - 1] + Math.min(day, month === 2 ? 28 : 31) - 1;
+}
+function isoUtc(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return Date.UTC(y, m - 1, d);
+}
+function dateFilterActive() { return dateArrive !== ''; }
+
+// The stay's nights as a prefix count over the 365 days, rebuilt only when the
+// dates change, so each campground is then judged in O(1): the nights its
+// season covers are prefix[c + 1] - prefix[o].
+let rangeCache = null;
+function stayRange() {
+  const key = dateArrive + '|' + dateLeave;
+  if (rangeCache && rangeCache.key === key) return rangeCache;
+  const start = isoUtc(dateArrive);
+  let nights = dateLeave ? Math.round((isoUtc(dateLeave) - start) / DAY_MS) : 1;
+  if (!(nights >= 1)) nights = 1;
+  nights = Math.min(nights, 366);
+  const mask = new Uint8Array(365);
+  for (let i = 0; i < nights; i++) {
+    const d = new Date(start + i * DAY_MS);
+    mask[dayOfYear(d.getUTCMonth() + 1, d.getUTCDate())] = 1;
+  }
+  const prefix = new Int32Array(366);
+  for (let i = 0; i < 365; i++) prefix[i + 1] = prefix[i] + mask[i];
+  rangeCache = { key, start, last: start + (nights - 1) * DAY_MS, prefix, count: prefix[365] };
+  return rangeCache;
+}
+
+// The season as day-of-year bounds, parsed once per marker. A season that runs
+// over New Year (opens 11-01, closes 04-30) is the two ends of the year.
+function seasonBounds(cg) {
+  if (cg._season === undefined) {
+    cg._season = null;
+    if (cg.opens && cg.closes) {
+      const [om, od] = cg.opens.split('-').map(Number);
+      const [cm, cd] = cg.closes.split('-').map(Number);
+      if (om && od && cm && cd) cg._season = [dayOfYear(om, od), dayOfYear(cm, cd)];
+    }
+  }
+  return cg._season;
+}
+function openNights(r, cg) {
+  const [o, c] = seasonBounds(cg);
+  const span = (a, b) => r.prefix[b + 1] - r.prefix[a];
+  return o <= c ? span(o, c) : span(o, 364) + span(0, c);
+}
+
+// A temporary closure is known for the near future only. `reopens` is free
+// text at whatever precision was announced (§4.5), so the one thing read from
+// it is a year: "2027" / "spring 2027" mean closed until at least Jan 1 2027,
+// "after 2026" until Jan 1 2027. With no year it is closed now and for the next
+// 30 days; past that point the closure says nothing, and a season that would
+// pass becomes unknown rather than open.
+function closedUntil(cg) {
+  if (cg._closedUntil === undefined) {
+    const soon = Date.now() + 30 * DAY_MS;
+    const text = cg.reopens || '';
+    let years = (text.match(/\b20\d\d\b/g) || []).map(Number);
+    const after = text.match(/\bafter\s+(20\d\d)\b/i);
+    if (after) years = years.map(y => (y === Number(after[1]) ? y + 1 : y));
+    const y = years.length ? Math.min(...years) : null;
+    cg._closedUntil = Math.max(soon, y ? Date.UTC(y, 0, 1) : 0);
+  }
+  return cg._closedUntil;
+}
+
+// 'pass' | 'fail' | 'unknown' for the stay set in the panel.
+function dateVerdict(cg) {
+  const r = stayRange();
+  let season;
+  if (cg.year_round) season = 'pass';
+  else if (seasonBounds(cg)) {
+    const n = openNights(r, cg);
+    season = (dateMode === 'every' ? n === r.count : n > 0) ? 'pass' : 'fail';
+  } else season = 'unknown';
+  if (!cg.closed) return season;
+  const until = closedUntil(cg);
+  if (r.start < until) {
+    // Some nights fall inside the known closure. "Every night" fails outright;
+    // "any night" fails unless the stay runs past it, where nothing is known.
+    if (dateMode === 'every' || r.last < until) return 'fail';
+    return season === 'fail' ? 'fail' : 'unknown';
+  }
+  return season === 'pass' ? 'unknown' : season;
+}
+function dateUnknown(cg) { return dateFilterActive() && dateVerdict(cg) === 'unknown'; }
+function datePasses(cg) { return !dateFilterActive() || dateVerdict(cg) !== 'fail'; }
+
 if (!HOOKUP_LEVELS[hookupMin]) hookupMin = '';
 
 function ratingFilterActive() { return ratingMin > 0 || priceMax > 0; }
@@ -1064,10 +1176,15 @@ function hookupPasses(cg) { return !hookupNeeds().some(k => cg[k] === false); }
 // entry unknown; failing ANY on a measured value hides it — so an unknown on one
 // filter still never launders a measured failure on another.
 function schemaFilterActive() {
-  return ratingFilterActive() || hookupFilterActive() || rateFilterActive();
+  return ratingFilterActive() || hookupFilterActive() || rateFilterActive()
+    || dateFilterActive();
 }
-function schemaUnknown(cg) { return ratingUnknown(cg) || hookupUnknown(cg) || rateUnknown(cg); }
-function schemaPasses(cg) { return ratingPasses(cg) && hookupPasses(cg) && ratePasses(cg); }
+function schemaUnknown(cg) {
+  return ratingUnknown(cg) || hookupUnknown(cg) || rateUnknown(cg) || dateUnknown(cg);
+}
+function schemaPasses(cg) {
+  return ratingPasses(cg) && hookupPasses(cg) && ratePasses(cg) && datePasses(cg);
+}
 
 function schemaVisible(cg) {
   if (!schemaPasses(cg)) return false;
@@ -1880,6 +1997,9 @@ function persistFilters() {
   STORE.set('priceMax', priceMax);
   STORE.set('hookupMin', hookupMin);
   STORE.set('rateMax', rateMax);
+  STORE.set('dateArrive', dateArrive);
+  STORE.set('dateLeave', dateLeave);
+  STORE.set('dateMode', dateMode);
   STORE.set('includeUnknown', includeUnknown);
   STORE.set('showClosed', showClosed);
 }
@@ -1894,6 +2014,7 @@ function filtersChanged() {
 // HipCamp start hidden on a fresh session, so they start hidden here too.
 function clearFilters() {
   ratingMin = 0; priceMax = 0; hookupMin = ''; rateMax = null;
+  dateArrive = ''; dateLeave = ''; dateMode = 'any';
   includeUnknown = true; showClosed = true;
   hiddenCategories.clear();
   hiddenOwnerships.clear();
@@ -1908,7 +2029,7 @@ function activeFilterCount() {
   const defaultOwners = ownerValues.every(v =>
     hiddenOwnerships.has(v) === DEFAULT_HIDDEN_OWNERSHIPS.includes(v));
   return [
-    rateMax !== null, priceMax > 0, ratingMin > 0, !!hookupMin,
+    dateFilterActive(), rateMax !== null, priceMax > 0, ratingMin > 0, !!hookupMin,
     presentWater.some(c => hiddenCategories.has(c)),
     presentClimate.some(c => hiddenCategories.has(c)),
     !defaultOwners, !showClosed, !includeUnknown && schemaFilterActive(),
@@ -1923,6 +2044,7 @@ function unknownReasons() {
   if (ratingFilterActive()) r.push('unrated');
   if (hookupFilterActive()) r.push('without hookup data');
   if (rateFilterActive()) r.push('unpriced');
+  if (dateFilterActive()) r.push('without a known season');
   return r;
 }
 function unknownReason() {
@@ -1933,6 +2055,7 @@ const UNKNOWN_TOGGLE_TEXT = {
   'unrated': 'Include unrated',
   'without hookup data': 'Include unknown hookups',
   'unpriced': 'Include unpriced',
+  'without a known season': 'Include unknown seasons',
 };
 
 let unratedNoteEl = null;
@@ -2287,6 +2410,44 @@ function categoryChecks(sec, cats, colors) {
     on => { if (on) hiddenCategories.delete(c); else hiddenCategories.add(c); },
     { color: colors[c], count: categoryCounts.get(c) }));
 }
+
+// A labelled date input, same row layout as filterSelect. `min` (optional)
+// returns the earliest date allowed, so Leave can't be set before Arrive.
+function filterDate(sec, label, get, set, min) {
+  const row = document.createElement('label');
+  row.className = 'cgf-select';
+  const span = document.createElement('span');
+  span.textContent = label;
+  const input = document.createElement('input');
+  input.type = 'date';
+  input.addEventListener('change', () => { set(input.value); filtersChanged(); });
+  row.appendChild(span);
+  row.appendChild(input);
+  sec.appendChild(row);
+  filterSyncers.push(() => {
+    input.value = get();
+    if (min) input.min = min();
+  });
+}
+
+// Dates. Arrive alone asks about one night; a Leave on or before Arrive is
+// dropped rather than read as a backwards stay.
+const dateSec = filterSection('Dates');
+filterDate(dateSec, 'Arrive', () => dateArrive, v => {
+  dateArrive = ISO_DATE.test(v) ? v : '';
+  if (dateLeave && (!dateArrive || dateLeave <= dateArrive)) dateLeave = '';
+});
+filterDate(dateSec, 'Leave', () => dateLeave, v => {
+  dateLeave = ISO_DATE.test(v) && dateArrive && v > dateArrive ? v : '';
+}, () => dateArrive);
+filterSelect(dateSec, 'Open',
+  [['any', 'At least one night'], ['every', 'Every night']],
+  () => dateMode, v => { dateMode = v === 'every' ? 'every' : 'any'; });
+const dateHint = document.createElement('p');
+dateHint.className = 'cgf-hint';
+dateHint.textContent = "Judged by each campground's recorded season. Which loops stay "
+  + 'open in winter is in the popup.';
+dateSec.appendChild(dateHint);
 
 // Price. The nightly rate is the entry's own base rate; the $ tier is RV
 // Life's, a different and rougher number (doc §4.3), so both are offered.

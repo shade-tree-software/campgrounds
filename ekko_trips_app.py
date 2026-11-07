@@ -2555,6 +2555,12 @@ _MAP_HOOKUP_FIELDS = ("electric", "water", "sewer")
 # gate's own exchange (C$69 = US$50) instead of reading C$45 as $45. A Canadian
 # entry with no stored currency is priced in C$ too — nobody posts US dollars
 # in a province. Measured: +21 KB gzipped on a 396 KB marker payload.
+# The fifth (2026-11-07): the entry's own `season`, for the map's Dates filter
+# (AWH: which campgrounds are open on these dates). `year_round: true`, or the
+# `opens`/`closes` pair (MM-DD, recurring) when BOTH are recorded; anything
+# else — seasonal with no dates, or only one end known — carries nothing and is
+# unknown to the filter, so it fades (doc §2.2). `year_round` wins over a
+# pair stored beside it: on those entries the dates are the modern restrooms'.
 _CANADIAN_PROVINCES = frozenset(
     ("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"))
 
@@ -2593,6 +2599,12 @@ def _map_marker_rows(rows):
                 "CAD" if r.get("state") in _CANADIAN_PROVINCES else "USD")
             if currency == "CAD":
                 d["cad"] = True
+        season = r.get("season") or {}
+        if season.get("year_round") is True:
+            d["year_round"] = True
+        elif season.get("opens") and season.get("closes"):
+            d["opens"] = season["opens"]
+            d["closes"] = season["closes"]
         status = r.get("status") or {}
         if status.get("operating") == "temporarily_closed":
             d["closed"] = True

@@ -1026,6 +1026,12 @@ C$. The registry is never consulted for it: an entry priced only by its agency's
 carries no `rate` and is unknown to the filter, because §3 forbids an inherited value
 being the sole reason an entry is hidden.)
 
+(2026-11-07: a fifth exception, the entry's own `season` — `year_round: true`, or `opens` /
+`closes` when BOTH are recorded — for the Dates filter. +13.6 KB gzipped on a 395 KB marker
+payload. A seasonal entry with no dates, or only one end, carries nothing and is unknown to
+the filter. `year_round` wins over a pair stored beside it: on the three entries that have
+both, the dates are the modern restrooms'.)
+
 The audit-evidence strip applies unchanged: `waterfront_evidence` and `inclusion_evidence`
 never reach the browser, and the whitelist is what makes that safe.
 
@@ -1042,7 +1048,7 @@ Since 2026-10-26 the campground map's filters live in three places with one job 
   is set, then `$50 or less`, `Electric`, `On the water`, `4★ and up`. Off, a chip offers
   that common setting; on, it shows the setting actually in force (so `Full hookups` when
   the panel set that) and a tap clears it;
-- the **Filters panel** — every filter, grouped (Price, Rating, Hookups, Proximity to
+- the **Filters panel** — every filter, grouped (Dates, Price, Rating, Hookups, Proximity to
   water, Climate, Ownership, Status, Missing data), a side panel on a desktop and a sheet
   from the bottom on a phone, with Clear all (back to the defaults, so `wma`/`hipcamp`
   hidden) and "Show N campgrounds".
@@ -1139,6 +1145,33 @@ it possible and on the same pattern.
 - RV Life's `$` tier stays beside it in the Price section: a different, rougher number
   (§4.3) with more coverage on private parks.
 - The unknown switch reads "Include unpriced" when this is the only filter set.
+
+**Shipped 2026-11-07: the Dates filter** (AWH: which campgrounds are open on these dates).
+
+- **Coverage, measured first:** of 14,181 campgrounds, 2,671 are year-round and 2,264 carry
+  both `opens` and `closes`; 1,781 are seasonal with no dates, 310 have one end only, and
+  7,158 have no season. So **about 65% fades under any range** — the honest state of the
+  data; every campground whose recorded season misses the stay still leaves the map, which
+  is most of the value. A winter night hides ~2,240. **The lever is more season data**: the
+  1,781 seasonal-no-dates entries are the obvious next pass (many notes state the months).
+- **Arrive / Leave pick nights**: arrive through the night before Leave; no Leave = one
+  night; a Leave on or before Arrive is dropped. **Open: At least one night** (default) or
+  **Every night**. The closing date counts as an open night (§2.2: eligibility defaults
+  up). Seasons are recurring MM-DD, so a season running over New Year (opens 11-01, closes
+  04-30) is the two ends of the year, and Feb 29 folds onto Feb 28.
+- **Temporary closures (§4.5) are known for the near future only.** `reopens` is free text,
+  so the one thing read from it is a year: "2028" / "spring 2027" = closed until at least
+  Jan 1 of that year, "after 2026" = until Jan 1 2027; no year = closed for the next 30
+  days. Nights inside that window fail; past it the closure proves nothing, so a season
+  that would pass becomes unknown, not open.
+- **Loop-by-loop winter detail is not filterable** — it lives in `season.note` (the winter
+  checks wrote "only the North East Loop stays open"), which the popup shows.
+- `booking.season` is never consulted: a reservation season is not a campground season
+  (§4.1).
+- Implemented as `dateVerdict` (pass / fail / unknown) feeding the shared `schemaPasses` /
+  `schemaUnknown`; the stay is a prefix count over 365 days, rebuilt only when the dates
+  change, so each marker is O(1). The unknown switch reads "Include unknown seasons".
+  `tests/test_season_filter.py` pins the payload and the calendar cases.
 
 ### 8.6 The popup marks inherited chips in place
 
