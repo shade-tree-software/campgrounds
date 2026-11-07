@@ -503,6 +503,14 @@ Named booleans, same absent-is-unknown rule. `good_sam` is the one asked for; th
 here because they answer the same question ("what does this actually cost me") and cost
 nothing to carry.
 
+**What `good_sam: true` means (AWH 2026-11-07):** a Good Sam member gets a discount here. The
+directory's Good Sam Park designation (its 10%) is the bulk source, but the operator's own
+posted Good Sam rate counts too (Big Red Barn 2042's 'Good Sam Discount' booking package;
+Camelot 2038's 20% for Good Sam and other members), written `manual` with the operator's page
+as source and a note saying it is not a directory Good Sam Park. A directory listing or camper
+report of such a discount is not enough on its own. Such a discount at $50 or under also
+lifts the price gate, as a Good Sam Park's 10% does (curation rule).
+
 Two population notes:
 
 - **`good_sam` is derivable in bulk, not a research chore** (shipped 2026-09-20, §7 phase 5).
