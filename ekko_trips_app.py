@@ -2200,7 +2200,7 @@ def share_login(token):
         _log_access("share_revoked", extra={"token": token[:8]})
         return render_template(
             'error.html', code="🔗", heading="This link is no longer active",
-            message="Share links get replaced from time to time. Ask Andrew "
+            message="Share links get replaced from time to time. Ask the administrator "
                     "for a fresh one and it'll work straight away — nothing "
                     "is wrong on your end.",
             cta_href=None,
