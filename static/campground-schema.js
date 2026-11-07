@@ -294,7 +294,11 @@ function sfChip(groupKey, field, value, cur) {
       chip += ', children' + (v.child_max_age != null ? ' ' + v.child_max_age + ' and under' : '')
         + (v.child === 0 ? ' free' : ' ' + sfMoney(v.child, cur));
     }
-    if (v.max_people != null) chip += ', ' + v.max_people + ' people max';
+    if (v.max_people != null) {
+      // A cap with nothing priced is just the cap (Ashnola: '4 people max').
+      chip = chip === 'extra-person charge' ? v.max_people + ' people max'
+                                            : chip + ', ' + v.max_people + ' people max';
+    }
     return chip;
   }
   // The vehicle twin of the extra-person chip. A fee charged per vehicle is

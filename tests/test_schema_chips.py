@@ -312,6 +312,8 @@ class ChipPhrasingTest(unittest.TestCase):
         # Only children priced.
         self.assertEqual(self.chips("fees", {"extra_person": {"child": 2}}),
                          ["+$2/night each extra child"])
+        self.assertEqual(self.chips("fees", {"extra_person": {"max_people": 4}}),
+                         ["4 people max"])
         self.assertEqual(self.chips("fees", {"extra_person": {"included": 4, "child": 1}}),
                          ["rate covers 4 people, +$1/night each extra child"])
 
