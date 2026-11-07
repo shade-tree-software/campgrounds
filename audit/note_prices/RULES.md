@@ -34,6 +34,8 @@ and date, so you can tell which is newer.
 - A non-price fact inside a price sentence (a rig length that fits, a site count, a season): keep
   it, rebuilt from the sentence's own words (e.g. "Sites under 20 ft base rate, +$6 for longer (23 ft
   fine)" -> "Longer sites (23 ft fine).").
+- Which sites or which season a rate applies to, when the fields can't say it: "Loop 4 primitive is
+  free FCFS in the off-season" stays whole (the field holds one range, not the season split).
 - Everything that is not a price: FCFS wording, hookups, site counts, setting, rules, caveats, dates.
   Do not fix anything else, do not reword, do not tidy other facts.
 - **Exception - the note is newer:** if the note's price is clearly dated LATER than the fee
