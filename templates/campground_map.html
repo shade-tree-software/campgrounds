@@ -578,6 +578,7 @@
      names the agency (docs/campground-schema.md §8.6). */
   .cg-typical { color: #8a7a4a; }
   .cg-typical-note { color: #8a7a4a; font-size: .9em; margin-top: .15rem; }
+  .cg-fact-note { color: #555; font-size: .95em; line-height: 1.35; margin: .05rem 0 .15rem; }
 
   /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
   .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
@@ -1651,8 +1652,17 @@ function cgFactsHtml(d) {
     const own = verified.size ? sfPopupChips(g, block.values, verified) : [];
     const agency = attributable && inherited.size
       ? sfPopupChips(g, block.values, inherited) : [];
-    const row = cgFactRow(g.label, own, agency);
+    let row = cgFactRow(g.label, own, agency);
     if (row.includes('cg-typical')) anyTypical = true;
+    // The season's own note is the one group note a camper plans around: which
+    // loops stay open in winter, and — on a month-level season — the wording the
+    // stored days were widened from ("Approximate: May to October"), so a day
+    // the source never published can't pass for one (AWH 2026-11-07). Only the
+    // entry's own note; an agency's is a default, not a fact about this park.
+    if (g.key === 'season' && verified.has('note') && block.values.note) {
+      if (!row) row = `<div><b>${escapeHtml(g.label)}</b></div>`;
+      row += `<div class="cg-fact-note">${escapeHtml(block.values.note)}</div>`;
+    }
     rows += row;
   });
   if (!rows) return '';

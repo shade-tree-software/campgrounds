@@ -1168,6 +1168,19 @@ it possible and on the same pattern.
   checks wrote "only the North East Loop stays open"), which the popup shows.
 - `booking.season` is never consulted: a reservation season is not a campground season
   (§4.1).
+- **Month-level seasons are dated at their widest and marked** (AWH 2026-11-07). At ship
+  1,781 seasonal entries had no dates, because the note-scan spec leaves "May to October"
+  undated. `audit/season_dates/notes_pass.py` read them from the notes: a bare month is the
+  whole month, mid = the 15th, early opens on the 1st / closes on the 7th, late opens on
+  the 20th / closes on the last day, holidays at their widest date (Memorial Day 05-25,
+  Labor Day 09-07; the full table is in `notes_2026-11-07/brief.txt`). The stored days are
+  the widest reading, so a filter errs toward open, and the season note says what the
+  source actually states ("Approximate: open May to October."); the popup shows the
+  season's own note, so a widened day never passes for a published one. 1,331 dated (99
+  to the day), 241 left unknown (no months, one end only, a booking/water/fee season, a
+  hole), 13 year-round proposals listed for a person rather than written. A season with
+  a person's provenance (`manual`) took dates only from its own season note and kept its
+  provenance.
 - Implemented as `dateVerdict` (pass / fail / unknown) feeding the shared `schemaPasses` /
   `schemaUnknown`; the stay is a prefix count over 365 days, rebuilt only when the dates
   change, so each marker is O(1). The unknown switch reads "Include unknown seasons".

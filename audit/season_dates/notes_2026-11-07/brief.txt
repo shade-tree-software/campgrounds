@@ -1,0 +1,115 @@
+SEASON DATES FROM NOTES — first pass (AWH 2026-11-07)
+
+You read campground notes and write down WHEN EACH CAMPGROUND IS OPEN, as two MM-DD dates.
+Read only the text you are given. No web, no browser, no other files. Do not edit
+campgrounds.json or anything in the repo. Your only output is one JSON file.
+
+INPUT: a JSON list. Each row has id, name, state, ownership, season (what is stored now: it
+says the campground is seasonal, `year_round: false`, but has no dates; it may carry a
+season `note`), season_source (where that stored season came from), and note (the entry's
+prose note).
+
+OUTPUT: a JSON list with exactly one object per input row, in input order, written to the
+path you are given. Each object is one of:
+
+  {"id": N, "opens": "MM-DD", "closes": "MM-DD", "exact": true|false,
+   "approx_text": "..." or null, "quote": "...", "why": "..."}
+  {"id": N, "year_round": true, "quote": "...", "why": "..."}
+  {"id": N, "skip": "short reason"}
+
+- quote: the words in the note or season note that you took the dates from, copied VERBATIM
+  (a substring someone can search for). Required on every non-skip row.
+- why: one short clause on how you turned the wording into dates ("bare months -> whole
+  months", "Memorial Day -> 05-25 per table").
+
+WHAT COUNTS
+Only the campground's OPERATING season: the nights a person can camp there. NOT:
+- the reservation/booking window ("reservable May 15 - Sep 30", "reservations taken
+  April-October"). A reservation season is not a campground season. If the note says
+  reservations run X-Y and first-come camping happens outside that, SKIP.
+- the season of water, showers, restrooms, flush toilets, the dump station, electric
+  service, fees, the store, the beach, boat rentals, a marina, hunting, fishing.
+  "Water May-Oct" says nothing about when you can camp. (But "open May-Oct; water
+  off in winter" -> May-Oct is the camping season, fine.)
+- "peak season", "busiest", "best in fall", "summer rates", "weekly rates in winter".
+- a one-time past event ("closed in 2024 for repairs").
+When the note is unclear whether the dates are the camping season or something else, SKIP.
+
+WHEN LOOPS / CAMPGROUNDS DIFFER: take the WIDEST span (earliest opening, latest closing) over
+the parts that take RVs. If the note says part of it is open year-round (a winter loop, a
+plowed area, "Loop A open all year"), return {"year_round": true} with the quote — that is
+the answer for "can we camp here", and the loop detail stays in the note.
+
+A season with a hole in the middle (open spring and fall, closed in summer), or two
+unrelated ranges, -> SKIP.
+
+Only one end known ("closes after Labor Day", "opens May 1") -> SKIP. Both ends are needed.
+
+Words with no month — "summer", "spring through fall", "warm months", "snow-free months",
+"ice-out", "when the road opens", "weather permitting" alone — -> SKIP. "Weather permitting"
+next to months is fine: use the months.
+
+DATE RULES (the 2026-10-20 season pass's convention; follow it exactly)
+- A stated day: use it. "May 15 to Oct 1" -> 05-15 / 10-01. A tilde still counts ("~Apr 15").
+  A year-specific statement ("2026: April 1 - October 12") is used as the recurring season.
+- A bare month: the whole month. Opening month -> its 1st; closing month -> its last day.
+  "May-October" -> 05-01 / 10-31. "April through mid-October" -> 04-01 / 10-15.
+- "mid-<month>" -> the 15th (either end).
+- "early <month>": opening -> the 1st; closing -> the 7th.
+- "late <month>": opening -> the 20th; closing -> the month's last day.
+- Alternatives ("Apr 15/May 1 - Oct 15/31", "April or May") -> the widest: earliest opening,
+  latest closing.
+- A floating weekday rule ("second Friday in April", "first weekend in May") -> its widest
+  possible date: earliest possible for an opening, latest possible for a closing.
+- Holidays (widest possible date):
+    Memorial Day -> 05-25          Memorial Day weekend (opening) -> 05-22
+    Thursday before Memorial Day -> 05-21
+    Labor Day / Labor Day weekend (closing) -> 09-07   after Labor Day (opening) -> 09-02
+    Independence Day / July 4 -> 07-04      Canada Day -> 07-01
+    Columbus Day, Indigenous Peoples' Day, Canadian Thanksgiving (closing) -> 10-14
+    US Thanksgiving (closing) -> 11-28      Thanksgiving weekend (closing) -> 12-01
+    Victoria Day (opening) -> 05-18         Victoria Day weekend (opening) -> 05-15
+    Easter (opening) -> 03-22               Fete nationale / Saint-Jean-Baptiste -> 06-24
+  Any other holiday or an event ("opening day of trout season", "deer season") -> SKIP.
+- A season running over New Year (a winter-only campground) is fine: opens 11-01, closes
+  03-31. Do not swap them.
+- Months are leap-free: February ends 02-28.
+
+exact: true ONLY when BOTH ends came from a stated day (including ~ and year-specific).
+Anything that used a month, mid/early/late, a holiday, a weekday rule or alternatives ->
+false.
+
+approx_text (exact:false only): a short phrase for the reader saying what the source
+actually states, written as a sentence fragment after "Approximate: ". Examples:
+  "open May to October."   "Memorial Day to Labor Day."   "mid-April to late October."
+  "the Thursday before Memorial Day to Labor Day."
+Use the note's own wording, tidied, never invented precision. Set it to null only when the
+stored season note ALREADY states that same wording (then it is marked already).
+
+CONFLICTS
+- The note says open year-round / all year / winter camping, but no loop detail? Return
+  {"year_round": true}. The stored `year_round: false` may simply be wrong; quote it.
+- The note and the stored season note disagree on the dates -> prefer the SEASON NOTE when
+  season_source is a web page or an agency (it was written from that source later), and
+  say so in why. If you can't tell which is current, SKIP with "conflict: ...".
+
+CLARIFICATIONS FROM EARLIER CHUNKS
+- When the stored season note already states the wording, set approx_text null; don't restate it.
+- A road or gate closure stated beside the campground's own season is not the season: use the
+  campground's.
+- A one-year extension or exception ("in 2026 extended to Nov 22", "this year open through
+  October") is NOT the recurring season: use the base season it extends. (A year-specific
+  statement of the whole season, "2026: April 1 - October 12", still counts.)
+- recreation.gov first-come or fee-season nights may widen a stated season but are never the
+  only source, except at a reservation-only campground whose rec.gov nights ARE its season.
+- "Closed November to April" style: invert to the widest OPEN reading (reopens at the start of
+  the last closed month named: 04-01; closes at the end of the month before: 10-31).
+- A fairgrounds closed only for fair week: date the season and ignore the fair week (it only
+  makes fair week look open). A longer hole (a whole month) is still a SKIP.
+- "Nth weekend": count the weekend from its Saturday.
+
+Be conservative: a skip costs nothing (the campground just stays "unknown" on the map); a
+wrong date hides a campground that is open. When in doubt, skip.
+
+When done, report: counts (dated exact / dated approx / year_round / skip), the skip reasons
+grouped roughly, and up to 10 rows you were least sure of (id + why).
