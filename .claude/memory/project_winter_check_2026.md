@@ -5,7 +5,7 @@ metadata:
   type: project
 ---
 
-AWH 2026-11-07 asked which PUBLIC campgrounds marked waterfront (front tiers, creekside, coastal dunes/woods; not *view or pond) are open this winter in VA south of Richmond and east of Lynchburg (AWH's correction) and NC north of Wilmington. 40 entries, written to `season` (+ dated "Winter 2026-27:" note with open loops/limits) and `status`; results + brief in audit/winter_2026/. Rules AWH set: a campground closed now that reopens on/after 2026-11-16 may be marked open (Holly Point 258); not open at any point this winter = closed for the winter.
+AWH 2026-11-07 asked (run 1: eastern VA + NC, results_A/C/D; run 2: WV east of Snowshoe, VA north of Richmond, MD, DE, PA south of Allentown + east of Somerset, results_E/F/G, 36 entries) which PUBLIC campgrounds marked waterfront (front tiers, creekside, coastal dunes/woods; not *view or pond) are open this winter in VA south of Richmond and east of Lynchburg (AWH's correction) and NC north of Wilmington. 40 entries, written to `season` (+ dated "Winter 2026-27:" note with open loops/limits) and `status`; results + brief in audit/winter_2026/. Rules AWH set: a campground closed now that reopens on/after 2026-11-16 may be marked open (Holly Point 258); not open at any point this winter = closed for the winter.
 
 Left unknown (county sites 403): 240 Chickahominy Riverfront (757-258-5020), 4326 Mayo Lake (336-597-7806).
 
