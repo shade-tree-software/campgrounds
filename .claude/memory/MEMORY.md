@@ -136,3 +136,4 @@
 - [Florida Keys price re-screen — DONE](project_keys_rescreen.md) — 2026-10-30: +14 (15574-15587), 12 skips; Keys rules: owner-lot w/ booking site OK, RV Life $$$+ = price
 - [Winter 2026-27 check](project_winter_check_2026.md) — 76 public waterfront campgrounds (eastern VA, NC, WV east, MD, DE, south-central PA): season/status written…
 - [Campgrounds-only role (planned)](project_campgrounds_only_role.md) — map only, no trips/family/home/banner/Availability/Weather; --AWH notes question open
+- [Notes name no one](feedback_notes_name_no_one.md) — browser-visible notes: no EKKO, no family camping dates, no first person; say "a 23-ft rig"
