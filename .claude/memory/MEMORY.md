@@ -137,4 +137,4 @@
 - [Winter 2026-27 check](project_winter_check_2026.md) — 76 public waterfront campgrounds (eastern VA, NC, WV east, MD, DE, south-central PA): season/status written…
 - [Campgrounds-only role — BUILT](project_campgrounds_only_role.md) — 2026-11-07: map only, default-deny allowlist, climate withheld; new routes must be listed
 - [Notes name no one](feedback_notes_name_no_one.md) — browser-visible notes: no EKKO, no family camping dates, no first person; say "a 23-ft rig"
-- [Note-price cleanup](project_note_price_cleanup.md) — IN PROGRESS 2026-11-07: rates/extra-person out of notes where fees holds them; chunk 1/15 landed; tools in audit/note_prices/
+- [Note-price cleanup](project_note_price_cleanup.md) — DONE 2026-11-07: rates/extra-person out of notes where fees holds them; all 15 chunks landed; tools in audit/note_prices/
