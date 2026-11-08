@@ -27,3 +27,8 @@
   Huckleberry: no stated season. 9556 Hower's, 9898 Devils Canyon: notes carry closures the
   pages no longer show. 9552, 9553, 9556, 9662: first-come sites, `booking.fcfs` absent.
   9934 King's Bottom: website links the group-site facility (10362432) (chunk 07).
+- 9952 Maple Grove: booking says reservable:false / fcfs always, FS page says some single
+  sites reservable; website is a dead recid URL. 9984 Renegade, 9985 Aspen Grove, 10017
+  Shady Dell: fcfs absent (generic rec.gov FCFS notice). 9997 Green River: note has the
+  reservable/first-come loops swapped (NPS: A+B reservable, C first-come). 9944 Big Bend
+  (BLM): no season; facility 251842 is the 3 group sites only (chunk 08).
