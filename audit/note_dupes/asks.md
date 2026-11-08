@@ -26,3 +26,9 @@ calendar-derived season against the agency's stated season — want one?
 - Grok openers (15, 17): move to curation — done.
 - Calendar-derived seasons: yes, run a pass against each agency's stated season.
 - The 45 RIDB "not reservable" conflicts: yes, check against rec.gov's facility flag and availability calendar.
+- (round 2) 179: --AWH "Recommended in _Where_Should_We_Camp_Next?_ by Stephanie Puglisi." reads
+  like sourcing, like the Grok lines; move it to curation? (16's Grok line was moved, per the 15/17 answer.)
+- (round 2) 246: --AWH "Several primitive RV sites right on the French Broad River" vs the Sites
+  note's two (26, 28), which Campspot showed unbookable. Keep the note as is?
+- (round 2) 236: kept the --Claude "DWR bars camping within 300 ft of a lake or boat ramp" line
+  although booking.note says it: the note's "including one on the lake" would read as a camp spot without it.
