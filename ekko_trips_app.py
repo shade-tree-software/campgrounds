@@ -116,6 +116,13 @@ def _cache_static(resp):
 _AUDIT_EVIDENCE_FIELDS = ("waterfront_evidence", "inclusion_evidence",
                           "note_scan", "verify_scan")
 
+# `curation_note` is curator bookkeeping lifted out of the public `note`
+# (AWH 2026-11-07): correction histories, who found what, auto-tag dates — true
+# but not for campers. Kept off the map and popup, but unlike the audit fields
+# above the Manage page SHOWS it (read-only), so it is not in that tuple. Not in
+# the PUT whitelist either, so a UI save never touches it.
+_ADMIN_ONLY_FIELDS = ("curation_note",)
+
 # Compress text responses above this size. Below it the CPU cost and the ~20
 # bytes of gzip framing aren't worth it.
 _COMPRESS_MIN_BYTES = 4096
@@ -2442,7 +2449,8 @@ def _load_campgrounds():
     # 14.4 MB. Dropping them here keeps them out of every browser payload while
     # leaving the file untouched (PUT merges from a field whitelist, so a UI
     # save can't clobber what the client never received).
-    excluded = {"index", "stays", "elevation_meters"} | set(_AUDIT_EVIDENCE_FIELDS)
+    excluded = ({"index", "stays", "elevation_meters"} | set(_AUDIT_EVIDENCE_FIELDS)
+                | set(_ADMIN_ONLY_FIELDS))
     rows = []
     for entry in entries:
         if "location" not in entry:

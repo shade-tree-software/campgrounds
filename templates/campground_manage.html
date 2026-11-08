@@ -113,6 +113,12 @@
   .ef-website { grid-column: span 6; }
   .ef-driveway { grid-column: span 6; }
   .ef-note { grid-column: 1 / -1; }
+  /* Bookkeeping lifted out of the public note (AWH 2026-11-07): shown so the
+     history behind an entry is visible, never saved back (not in the PUT
+     whitelist), so it is plain text rather than an input. */
+  .ef-curation { font-size: .8rem; color: var(--gray); line-height: 1.35; white-space: pre-line;
+                 background: #f6f4ee; border-radius: 4px; padding: .35rem .5rem; overflow-wrap: anywhere; }
+  .ef-hint { font-weight: normal; color: var(--gray); font-size: .75em; }
   .ef-groups { grid-column: 1 / -1; display: flex; flex-direction: column; gap: .35rem; margin-top: .3rem; }
   /* Collapsed by default: the identity and location fields are what most edits
      touch, and nine open sections would bury them — on a phone especially,
@@ -787,6 +793,7 @@ function editRowHtml(c) {
                  onfocus="showLocationMap(this.value, 'ed-location')" onblur="onLocationBlur('ed-location')">
         </div>${typeFields}
         <div class="ef ef-note"><label>Note</label><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea></div>
+        ${c.curation_note ? `<div class="ef ef-note"><label>Curation note <span class="ef-hint">(admin only, never on the map; read-only here)</span></label><div class="ef-curation">${escapeHtml(c.curation_note)}</div></div>` : ''}
         ${isFamily ? '' : structuredSectionsHtml(c)}
       </div>
       <div class="edit-actions">

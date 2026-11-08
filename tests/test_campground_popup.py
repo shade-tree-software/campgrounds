@@ -182,6 +182,16 @@ class TestPopupPayload(unittest.TestCase):
         self.assertNotIn("waterfront_evidence", payload)
         self.assertNotIn("inclusion_evidence", payload)
 
+    def test_the_curation_note_never_reaches_the_map(self):
+        # Curator bookkeeping lifted out of `note` (AWH 2026-11-07): admin-only,
+        # shown on the Manage page, never on the map or in a popup.
+        import ekko_trips_app as app_mod
+        row = self._first(lambda r: r.get("curation_note"))
+        self.assertNotIn("curation_note", self._popup(row["id"]))
+        self.assertFalse(any("curation_note" in r for r in app_mod._load_campgrounds()))
+        page = self.client.get("/campgrounds/map").get_data(as_text=True)
+        self.assertNotIn(row["curation_note"][:60], page)
+
 
 class TestMapPageCarriesTheVocabulary(unittest.TestCase):
     """The chips are rendered client-side, so the labels have to be on the page."""
