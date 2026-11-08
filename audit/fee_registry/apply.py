@@ -66,7 +66,7 @@ def main():
             srcs = "; ".join(
                 f"{s['key']}: {s['url']}" + (" (search summary, not the page)"
                                              if by_key.get(s["key"]) == "reported" else "")
-                for s in r.get("sources") or [] if s.get("key") in staged)
+                for s in r.get("sources") or [] if s.get("url"))
             if srcs:
                 prov["source"] = ((prov.get("source") or "") + " | " if prov.get("source") else "") \
                     + f"add-ons {DATE}: " + srcs
