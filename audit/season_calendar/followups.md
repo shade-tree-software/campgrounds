@@ -68,3 +68,7 @@
   Labor Day (close left out). 12101 Indian Valley: Apr 17-Oct 15 AND Memorial-Labor Day (left).
   11956 Spring Creek: FS 16 reservable vs rec.gov/note 12. 12205 Frenchman: 17 of 38 reservable,
   booking lacks fcfs. 12204 Grasshopper Flat: 33 of 71 reservable.
+- Chunk 16 (last): 13292 Upper Onion Creek (BLM): no_source. rec.gov 251835 is the GROUP SITE
+  facility (Group A and B only), so the 02-10/11-30 chip is the group window; BLM: the 14
+  individual sites are first-come only, so `booking.reservable: true` / fcfs some_sites describe
+  the group sites. Same pattern as 13291 Lower Onion Creek. PASS COMPLETE: 151 of 151 read.

@@ -35,3 +35,18 @@ calendar-derived season against the agency's stated season — want one?
 - (round 2) 1773: note keeps "RV Life ~9/10" with no Rating chip (stars missing from rating).
 - (round 2) 2101: note's site counts (~80 W/E incl. 10 FHU + 13 E-only, ~154 primitive) vs the
   Sites note (79 W/E, 10 FHU, 2 E-only, 147 primitive); which is right?
+
+## Round 2, chunks 008-021 (2026-11-08) — all left as they were
+- 4100: "No hookups per official reservation page" contradicts the later "Correction 2026-10-12" segment, the 30A chip and the Fees note (30-amp on the five RV/Trailer sites). Cut that sentence and move the correction framing to curation?
+- 4859: note says "RV Life 8.3*/35 reviews", but no Rating chip shows.
+- 5016: note says 14 pads with electric/water; Fees note says 12 sites; chip shows 14.
+- 8834: note has 29 powered / 17 unserviced; Fees note has 26 / 14.
+- 8889: note has 80 unserviced / 24 powered, ~May 1-Oct 14; Fees note has 79 / 21 (15/20-amp), May 8-Oct 4.
+- 8998: note "Open May-Oct" (Season note agrees) vs Fees note May 14-Sep 8.
+- 10653 Deschutes River SRA: note says A-Loop first-come Dec-Mar, Season note Nov 1-Mar 31; note calls B-Loop "primitive RV/tent", Fees note says primitive = tents only.
+- 13086: note says "22-38" 20-amp sites; Sites note says 22.
+- 13534 Alma RV Park: note 28 of 38 seasonal + 9 transient; Booking note 9 transient, the other 29 seasonal.
+- 14222: note "sewer sites are limited"; Sites note counts 76 of 137 with sewer.
+- 14367: note and Sites chip say RV sites to 45 ft; Fees note says max 30 ft.
+- 14621 Lum Park: note says no weekly-or-longer rates; Fees note gives weekly $330.
+- 14983 Cedar Cove: note says tent sites $40; Fees note prices 2-way sites at $40.
