@@ -36,3 +36,10 @@ dates and which loops stay open.
 `fn_out/NNN.json`, rows as in RULES.md (`id`, `was`, `note`, optional `curation`,
 `awh_dropped`, `ask`), only for items you change or ask about. An ask-only row keeps
 `note` equal to `was`.
+
+## Settled in chunk 001
+- **A caveat that qualifies a sentence left in the note stays**, even when a field note
+  repeats it: "DWR bars camping within 300 ft of a lake" stays beside "parking areas,
+  including one on the lake", which would otherwise read as a lakeside camp spot (236).
+- "Recommended by Grok ..." --AWH openers go to `curation` (AWH answered for 15/17); other
+  recommendation/sourcing lines in --AWH text are still an `ask`.
