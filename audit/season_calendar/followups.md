@@ -41,3 +41,8 @@
 - Deschutes (chunk 10): 10678, 10679, 10686, 10704, 10733, 10743, 10755 go first-come only
   from Sep 27 to their close (booking.season candidates); 10703, 10745, 10747 Metolius are
   year-round with reservations ending Oct 17.
+- Chunk 11: 10756, 10860, 10862, 10863, 10864, 10969 (Deschutes) first-come Sep 27 to Oct 18,
+  not in `booking`. 10863 Little Crater: FS max spur 40 ft, note says ~30 ft. 11235 Timber
+  Creek NV: rec.gov facility is the 5 group sites, says singles are first-come; FS says
+  reservations generally required — booking unclear. 10763 Diamond Lake: rec.gov "All sites
+  are available by reservation only" vs fcfs some_sites; no stated season.
