@@ -88,8 +88,10 @@ def main():
         print("\nPROBLEMS:\n  " + "\n  ".join(problems))
         sys.exit(1)
     if apply:
-        with open(REG, "w", encoding="utf-8") as fh:
+        tmp = REG + ".tmp"     # atomic: parallel agents dry-run against this file
+        with open(tmp, "w", encoding="utf-8") as fh:
             fh.write(json.dumps(reg, indent=2, ensure_ascii=False) + "\n")
+        os.replace(tmp, REG)
         print("\napplied", len(rows), "rows")
 
 
