@@ -32,3 +32,6 @@ calendar-derived season against the agency's stated season — want one?
   note's two (26, 28), which Campspot showed unbookable. Keep the note as is?
 - (round 2) 236: kept the --Claude "DWR bars camping within 300 ft of a lake or boat ramp" line
   although booking.note says it: the note's "including one on the lake" would read as a camp spot without it.
+- (round 2) 1773: note keeps "RV Life ~9/10" with no Rating chip (stars missing from rating).
+- (round 2) 2101: note's site counts (~80 W/E incl. 10 FHU + 13 E-only, ~154 primitive) vs the
+  Sites note (79 W/E, 10 FHU, 2 E-only, 147 primitive); which is right?
