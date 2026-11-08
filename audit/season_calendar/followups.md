@@ -22,3 +22,8 @@
 - 7993 Elephant Rock, 7994 Columbine, 9518 Pine Flats, 9520 Mountain View: rec.gov lists
   first-come sites; `booking.fcfs` absent. 8037 Water Canyon: reservations 03-15..11-30,
   open year-round (booking.season candidate). 8021 Agua Piedra: no season stated (chunk 06).
+- 9651 O'Hara: FS page contradicts itself (Current Conditions "april 17 ... 10/3026" vs Seasons
+  of Use "May 12 - September 18"); calendar season left. 9619 Upper Payette Lake, 9760
+  Huckleberry: no stated season. 9556 Hower's, 9898 Devils Canyon: notes carry closures the
+  pages no longer show. 9552, 9553, 9556, 9662: first-come sites, `booking.fcfs` absent.
+  9934 King's Bottom: website links the group-site facility (10362432) (chunk 07).
