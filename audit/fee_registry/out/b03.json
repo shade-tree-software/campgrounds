@@ -1,0 +1,361 @@
+[
+  {
+    "ref": "state:TX",
+    "set": {
+      "entrance": {
+        "per": "person_day",
+        "min_age": 13,
+        "annual": 70,
+        "waived_by": "a Texas State Parks Pass, which also covers the holder's guests"
+      }
+    },
+    "remove": [],
+    "note_add": "Each park sets its own daily entrance fee per person 13 and older, $0-8 (children 12 and under free); the amounts are on the entries. The $70 Texas State Parks Pass covers the holder and their guests for a year. Most park campsite pages allow two vehicles a site (an RV counts as one) and charge extra vehicles in an overflow lot at a per-park rate ($3-10 a night), and allow up to 8 people a site. No page read names a reservation fee; a camping change or cancellation costs a $10 penalty (5+ days out) or $10 a night up to $50 (under 5 days), entrance fees excluded.",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://tpwd.texas.gov/state-parks/fort-parker/fees-facilities/campsites/",
+        "quote": "Parks charge a daily entrance fee in addition to any facility fees, unless otherwise stated."
+      },
+      {
+        "key": "note:entrance-ages",
+        "url": "https://tpwd.texas.gov/state-parks/brazos-bend/fees-facilities/entrance-fees/",
+        "quote": "13 Years and Older | $7 | Per Person ... 12 Years and Under | Free"
+      },
+      {
+        "key": "note:pass",
+        "url": "https://tpwd.texas.gov/state-parks/brazos-bend/fees-facilities/entrance-fees/",
+        "quote": "You and your guests can enjoy unlimited visits to more than 80 state parks without paying entrance fees."
+      },
+      {
+        "key": "note:campsite-plus-entrance",
+        "url": "https://tpwd.texas.gov/state-parks/fort-parker/fees-facilities/campsites/",
+        "quote": "Plus daily entrance fee ... People per Site: 8"
+      },
+      {
+        "key": "note:cancellation",
+        "url": "https://tpwd.texas.gov/state-parks/park-reservation-information/changes-cancellations",
+        "quote": "Penalty = $10 per night with a maximum penalty of $50"
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "entrance.amount": "Set park by park, $0-8 per person 13+ a day (already on each entry; tx_build.py read every park's page 2026-10-12). Whether the departure day is charged too is not stated on any page read.",
+      "reservation_fee": "No TPWD page read names one (reservation, FAQ and cancellation pages); a 2010 TPWD newsletter says the online booking fee was eliminated, but no current page says there is none, so no zero.",
+      "tax": "No TPWD statement. A 1986 Comptroller letter ruling (via a third-party site) treated campsite fees as exempt from hotel tax; not a current primary source.",
+      "nonresident": "No non-resident camping rate appears on any park page, but no page says there is none.",
+      "extra_vehicle": "Per park: most pages allow two vehicles and charge extras $3-10 a night in overflow; no statewide rule.",
+      "extra_person": "Most park pages say 'People per Site: 8', but it is posted per site type, not as a statewide rule, and no page says extra people are free."
+    },
+    "summary": "TX: entrance is per person 13+ per day at a per-park amount ($0-8, on the entries); $70 annual pass covers holder and guests. Reservation fee, tax, extra vehicle/person not settled."
+  },
+  {
+    "ref": "state:OK",
+    "set": {
+      "entrance": {
+        "resident": 0,
+        "nonresident": 0
+      },
+      "extra_vehicle": {
+        "included": 1
+      }
+    },
+    "remove": [],
+    "note_add": "A camping reservation includes one vehicle's parking pass, so the camper pays no parking fee; each further vehicle buys its own pass for the length of the stay. Only the parks that charge for parking (about two dozen of them) sell passes: TravelOK's parking-pass guide lists a one-day pass at $10 ($8 discounted rate), with three-day, week and annual options (read from a search summary, the page no longer loads).",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.travelok.com/state-parks/reservation-guidelines",
+        "quote": "One parking pass to this state park is included with a completed reservation for a State Park accommodation."
+      },
+      {
+        "key": "extra_vehicle",
+        "url": "https://www.travelok.com/state-parks/reservation-guidelines",
+        "quote": "Additional vehicles must also register and purchase a parking pass for the duration of the stay."
+      },
+      {
+        "key": "note:parking-pass-price",
+        "url": "https://web1.travelok.com/articles/your-complete-guide-to-the-oklahoma-state-parks-parking-pass",
+        "quote": "The current parking pass rates are listed below. One Day: $10 | Discounted Rate - $8."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {
+      "note:parking-pass-price": "reported"
+    },
+    "unsettled": {
+      "reservation_fee": "OAC 725:30-12-5(a)(5) says 'A non-refundable portal fee and reservation fee shall be assessed for each campsite reserved online'; the 2026 booking site showed none (ok_build.py), but no statement says there is none, so no zero.",
+      "tax": "The entries say 'plus tax' from the booking site; no TravelOK page read states it, and OAC 725:30-6-16 (Sales tax) is revoked. Not set.",
+      "extra_vehicle.amount": "Depends on pass length and park: $10 a day ($8 discounted) where parking is charged, nothing where it is not.",
+      "nonresident": "None seen; no page says there is none.",
+      "extra_person": "No statewide occupancy or per-person rule found (OAC 725:30 has only McGee Creek's 12-person cap)."
+    },
+    "summary": "OK: the reservation includes one vehicle's parking pass (camper entrance 0); extra vehicles buy their own pass at the parks that charge. Reservation fee and tax not settled."
+  },
+  {
+    "ref": "state:KS",
+    "set": {
+      "entrance": {
+        "resident": 7,
+        "nonresident": 7,
+        "per": "vehicle_day",
+        "annual": 39
+      },
+      "reservation_fee": 2.75
+    },
+    "remove": [],
+    "note_add": "Every vehicle in the park needs its own vehicle permit, a towed car included. The camping permit is per camping unit, so a second tent or camper on a site pays a second camping fee.",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.ksoutdoors.gov/licenses-permits-fees/kansas-state-park-entrance-and-camping-fees",
+        "quote": "A valid State Park Vehicle Permit is required at all Kansas State Parks."
+      },
+      {
+        "key": "note:entrance-amounts",
+        "url": "https://www.ksoutdoors.gov/programs-services/law-enforcement/regulations-statutes/september-2026-faqs",
+        "quote": "annual vehicle permit moving from $25.00 to $39.00"
+      },
+      {
+        "key": "reservation_fee",
+        "url": "https://www.ksoutdoors.gov/licenses-permits-fees/kansas-state-park-entrance-and-camping-fees",
+        "quote": "In addition to the fees below, there is a $2.75 per stay transaction fee for all overnight stays."
+      },
+      {
+        "key": "note:camping-in-addition",
+        "url": "https://www.law.cornell.edu/regulations/kansas/K-A-R-115-2-3",
+        "quote": "in addition to any required motor vehicle permit fee specified in 115-2-2"
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {
+      "entrance": "reported",
+      "note:entrance-amounts": "reported",
+      "reservation_fee": "reported"
+    },
+    "unsettled": {
+      "verification": "ksoutdoors.gov returns 403 to every fetch (fee page, FAQ, all mirrors), so the existing $7 daily / $39 annual / $2.75 figures (read by hand 2026-10-15) were re-confirmed only from search summaries of those pages. The Cornell copy of K.A.R. 115-2-3 is the 2019 text ($10 reservation fee, $9 camping) and is superseded by the Nov 1, 2026 schedule.",
+      "nonresident": "The row's note says Kansas has no non-resident rate; the page that says so could not be fetched to quote, so no zero is written.",
+      "tax": "No source found on whether sales tax is added or included.",
+      "extra_person": "No statewide per-person rule found.",
+      "extra_vehicle": "Covered by the per-vehicle entrance permit; no separate camping charge found."
+    },
+    "summary": "KS: existing $7/day vehicle permit (now with $39 annual) and $2.75 per-stay fee re-confirmed by search summary only (site blocks fetch). Tax, non-resident, extra person not settled."
+  },
+  {
+    "ref": "state:NE",
+    "set": {
+      "entrance": {
+        "resident": 7,
+        "nonresident": 14,
+        "per": "vehicle_day",
+        "departure_day": false
+      },
+      "extra_person": {
+        "max_people": 8
+      },
+      "tax": {
+        "included": false,
+        "name": "Nebraska state and local sales tax plus lodging tax"
+      },
+      "reservation_fee": 8.5
+    },
+    "remove": [],
+    "note_add": "A daily park entry permit runs until noon the day after activation, so one covers one night. Every vehicle needs its own permit; a site holds one camping unit with one tent (or two tents) and one tow or towed vehicle, and extra vehicles park in designated lots. Up to 8 people a site unless the superintendent allows more; additional tents or occupants may be charged an additional camping fee. Tax is added on top of the posted rates and on the reservation fee: state and local sales tax on RV sites plus lodging tax (tent-only sites pay lodging tax only), so the rate varies by location. The reservation fee is per unit reserved, non-refundable. Lake McConaughy and Lake Ogallala charge $5 more Thursday-Saturday in season (on those entries).",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://law.cornell.edu/regulations/nebraska/163-Neb-Admin-Code-ch-5-SS-001",
+        "quote": "The fee of a temporary permit valid on or after January 1, 2024, shall be seven dollars ($7.00)."
+      },
+      {
+        "key": "note:entrance-out-of-state",
+        "url": "https://law.cornell.edu/regulations/nebraska/163-Neb-Admin-Code-ch-5-SS-001",
+        "quote": "The fee for permits issued for vehicles not registered and/or licensed in Nebraska (out-of-state) shall be two times"
+      },
+      {
+        "key": "note:entrance-validity",
+        "url": "https://law.cornell.edu/regulations/nebraska/163-Neb-Admin-Code-ch-5-SS-001",
+        "quote": "until noon of the day following the activation date"
+      },
+      {
+        "key": "note:all-vehicles",
+        "url": "https://nebraskastateparks.reserveamerica.com/resource/contracts/ne/ReservationPolicies.pdf",
+        "quote": "All vehicles entering a Nebraska Park Area are required to have a valid park entry permit."
+      },
+      {
+        "key": "extra_person",
+        "url": "https://law.cornell.edu/regulations/nebraska/163-Neb-Admin-Code-ch-5-SS-001",
+        "quote": "Occupancy at a campsite will allow for up to eight (8) individuals, unless limiting factors such as terrain, safety"
+      },
+      {
+        "key": "note:extra-occupants",
+        "url": "https://law.cornell.edu/regulations/nebraska/163-Neb-Admin-Code-ch-5-SS-001",
+        "quote": "Additional tents or occupants may be assessed an additional camping fee in accordance with the current fee schedule"
+      },
+      {
+        "key": "note:vehicles",
+        "url": "https://law.cornell.edu/regulations/nebraska/163-Neb-Admin-Code-ch-5-SS-001",
+        "quote": "Extra vehicles or trailers must be parked in alternate locations provided or designated for purposes of parking"
+      },
+      {
+        "key": "tax",
+        "url": "https://outdoornebraska.gov/parks/park-pricing/",
+        "quote": "reservation fee and taxes are not included in these rates"
+      },
+      {
+        "key": "note:tax-which",
+        "url": "https://revenue.nebraska.gov/sites/default/files/doc/info/6-415.pdf",
+        "quote": "The charges for recreational vehicle park services, including reservation fees, are taxable regardless of the type of vehicle or accommodation actually utilizing the pad or site"
+      },
+      {
+        "key": "note:tax-lodging",
+        "url": "https://revenue.nebraska.gov/sites/default/files/doc/info/6-415.pdf",
+        "quote": "Charges for sites that are restricted to only tent camping are not taxable; however, lodging tax continues to apply to such charges."
+      },
+      {
+        "key": "reservation_fee",
+        "url": "https://outdoornebraska.gov/parks/reservations/",
+        "quote": "nonrefundable $8.50 (plus tax) reservation fee per lodging unit, camp site, picnic shelter or facility"
+      },
+      {
+        "key": "note:reservation-per-unit",
+        "url": "https://nebraskastateparks.reserveamerica.com/resource/contracts/ne/ReservationPolicies.pdf",
+        "quote": "The reservation fee applies to each unit reserved, whether for one (1) day or any number of days, and is non-refundable."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {
+      "tax": "reported",
+      "reservation_fee": "reported"
+    },
+    "unsettled": {
+      "nonresident": "The camping rates grid prices every site the same for everyone, but it does not say there is no non-resident rate.",
+      "extra_vehicle": "No camping charge for a second vehicle; it parks in a designated lot and needs its own entry permit (the entrance key already charges per vehicle).",
+      "extra_person.amount": "8 people a site; 'additional tents or occupants may be assessed an additional camping fee' with no figure, so no amount.",
+      "fetch": "outdoornebraska.gov returns 403; the tax and reservation-fee quotes come from search summaries of its park-pricing and reservations pages. A commission item to raise park entry fees (Aug 2026) was reported; no new amounts found."
+    },
+    "summary": "NE: entry permit $7/$14 confirmed in 163 NAC 5 (good to noon next day); 8 people a site; tax added on top (sales + lodging); $8.50 reservation fee per unit confirmed."
+  },
+  {
+    "ref": "state:SD",
+    "set": {
+      "entrance": {
+        "resident": 10,
+        "nonresident": 15,
+        "per": "vehicle_day",
+        "departure_day": false
+      },
+      "reservation_fee": 0,
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 10,
+        "per": "stay"
+      }
+    },
+    "remove": [],
+    "note_add": "ARSD confirms the figures (rules amended Nov 11, 2024). A site holds one camper unit: a family, or a party of six or fewer; the manager may let two units (12 people at most) share a site at twice the camping fee. Camping fees are per camper unit, with no per-person charge outside Custer's French Creek natural area and group camps. Each vehicle needs its own entrance licence.",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://sdlegislature.gov/api/Rules/41:03:03",
+        "quote": "the daily park entrance license fee is ten dollars per vehicle for residents, and fifteen dollars for nonresidents;"
+      },
+      {
+        "key": "note:entrance-camper-expiry",
+        "url": "https://sdlegislature.gov/api/Rules/41:03:03",
+        "quote": "A license purchased by registered overnight campers and lodge patrons expires at 4:00 p.m."
+      },
+      {
+        "key": "note:entrance-not-included",
+        "url": "https://gfp.sd.gov/campsites/",
+        "quote": "Camping fees do not include entrance fees, which are required year-round and in most areas."
+      },
+      {
+        "key": "reservation_fee",
+        "url": "https://sdlegislature.gov/api/Rules/41:03:04:05.01",
+        "quote": "The cost of a reservation is six dollars for a reservation made through the park reservation center."
+      },
+      {
+        "key": "nonresident",
+        "url": "https://sdlegislature.gov/api/Rules/41:03:04:05.01",
+        "quote": "A person who is not a resident of this state shall pay a reservation fee of ten dollars for a reservation made online"
+      },
+      {
+        "key": "note:reservation-fee-page",
+        "url": "https://gfp.sd.gov/camp/",
+        "quote": "A $6 non-refundable reservation fee is assessed to all phone reservations."
+      },
+      {
+        "key": "note:per-unit",
+        "url": "https://sdlegislature.gov/api/Rules/41:03:04:03",
+        "quote": "The daily fee for the use of a campground site by one camper unit is as follows:"
+      },
+      {
+        "key": "note:occupancy",
+        "url": "https://sdlegislature.gov/api/Rules/41:03:04:10",
+        "quote": "Except as otherwise provided in this rule, no more than one camper unit may occupy a designated campsite."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "tax": "No GFP page or rule read says whether sales/tourism tax is added or included.",
+      "extra_person": "No per-person charge in the per-unit fee rule, but a party that is neither a family nor six or fewer becomes a second camper unit and pays a second fee, so no zero is written.",
+      "extra_vehicle": "Charged through the per-vehicle entrance licence; no separate camping charge found."
+    },
+    "summary": "SD: existing values confirmed in ARSD - entrance $10/$15 per vehicle (a camper's daily licence runs to 4 p.m. next day), no online reservation fee for residents (phone $6), non-residents $10 per reservation."
+  },
+  {
+    "ref": "state:ND",
+    "set": {
+      "entrance": {
+        "resident": 7,
+        "nonresident": 7,
+        "per": "vehicle_day",
+        "annual": 35
+      }
+    },
+    "remove": [],
+    "note_add": "Every vehicle needs a daily or annual vehicle entrance permit, campers included: $7 a day, $35 a year, $61.25 for a family annual permit (two household vehicles), one price for everyone; North Dakota residents 65+ pay $28 a year. Additional vehicles at a campsite pay the daily fee for each day in the park. A site takes one camping unit with up to six people, or the immediate family. Saturday nights cost $5 more on standard, modern and premium sites (on the entries).",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.parkrec.nd.gov/faq",
+        "quote": "All vehicles entering a state park must have a valid daily or annual vehicle entrance permit. This includes overnight stays as well as day visits."
+      },
+      {
+        "key": "note:entrance-amounts",
+        "url": "https://www.parkrec.nd.gov/sites/www/files/documents/Stay/2026%20State%20Parks%20Guide-WEB.pdf",
+        "quote": "Daily Permit: $7 | Annual Permit: $35 | Family Annual Permit: $61.25"
+      },
+      {
+        "key": "note:extra-vehicles",
+        "url": "https://www.ndlegis.gov/information/acdata/pdf/58-02-08.pdf",
+        "quote": "Additional vehicles at a cabin or campsite will be charged the day use fee for each day in the park."
+      },
+      {
+        "key": "note:occupancy",
+        "url": "https://www.ndlegis.gov/information/acdata/pdf/58-02-08.pdf",
+        "quote": "Only one camping unit with a maximum of six persons or the immediate family members shall be permitted on each designated single campsite except with the permission of the park manager."
+      },
+      {
+        "key": "note:reservation-fee",
+        "url": "https://www.parkrec.nd.gov/faq",
+        "quote": "Online and in-person reservations: $5.80 ... Phone reservations: $9.00"
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "reservation_fee": "Left at the existing 6 (the booking engine's per-site fee); the FAQ still says $5.80 online/in person and $9 by phone.",
+      "tax": "No NDPRD page, guide or rule read says whether tax is added or included.",
+      "nonresident": "The permit and camping prices carry no residency split, but no source says there is no non-resident rate.",
+      "extra_vehicle": "Additional vehicles pay the daily vehicle fee, which the per-vehicle entrance key already charges; nothing separate set.",
+      "extra_person": "Six people or an immediate family per site; no per-person charge found, but no statement of none.",
+      "entrance.departure_day": "58-02-08-05(3) says overnight visitors follow the expiry printed on their permit; the expiry itself is not stated."
+    },
+    "summary": "ND: $7/day per vehicle (one price, $35 annual) confirmed and required for campers; extra vehicles pay the same daily fee; 6 people or a family per site. Tax not settled."
+  }
+]
