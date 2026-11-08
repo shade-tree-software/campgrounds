@@ -583,7 +583,9 @@ stay from the fields alone, oddball cases aside):
   `peak $45–50/night May 15 – Sep 15`. Like `surcharges`, an agency's table is moot beside an
   entry's own price.
 - **`surcharges.holiday`** is the holiday twin of `weekend` (`+$5/night on holidays`). A weekend RATE
-  ("$35 Sun–Thu, $40 Fri–Sat") is stored as the weekday base plus `weekend: 5`.
+  ("$35 Sun–Thu, $40 Fri–Sat") is stored as the weekday base plus `weekend: 5`. **The two do not
+  stack**: a night that is both a weekend and a holiday pays the larger, once. Agencies that post one
+  "weekend/holiday" fee (NY State Parks, Suffolk, Pennsylvania) carry the same figure in both keys.
 - **`fees.tax`**: `{"included": true}` = the posted rates include it; `{"percent": 7}` = added on
   top; `{"percent": 0}` = none is charged (only with a source saying so: federal recreation fees are
   untaxed but concessionaire-run federal campgrounds add tax — Pines, Stanislaus NF, "+fees and taxes";
