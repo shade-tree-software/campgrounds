@@ -19,3 +19,6 @@
 - 6414 Ryan Park, 6476 Hog Park: open in winter with no fees or services, as road access
   permits; season left as the serviced span.
 - 6488 Libby Creek Willow, 6495 North Fork: no agency season stated (chunk 05).
+- 7993 Elephant Rock, 7994 Columbine, 9518 Pine Flats, 9520 Mountain View: rec.gov lists
+  first-come sites; `booking.fcfs` absent. 8037 Water Canyon: reservations 03-15..11-30,
+  open year-round (booking.season candidate). 8021 Agua Piedra: no season stated (chunk 06).
