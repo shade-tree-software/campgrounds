@@ -91,4 +91,4 @@ are not in `shown`; add anything. Do not edit any file but your output file.
 - **Ask, don't cut:**
   - An RV Life star figure with no ★ chip in `shown.Rating`: leave it untouched and ask "stars missing from rating".
   - A note saying reservable/bookable when `shown.Booking` says "not reservable": cut neither, and ask "booking chip contradicts note".
-- **Readability:** after a cut, what is left still reads as English. No dangling "+", "but" or "--", no sentence starting mid-word, and no one-word leftover sentence like "Back-ins.". If the leftover says almost nothing, keep the original words that carry it.
+- **Readability:** after a cut, what is left still reads as English. No dangling "+", "but" or "--", no sentence starting mid-word, and no one-word leftover sentence like "Back-ins.". If the leftover says almost nothing, keep the original words that carry it. When cutting the head of a sentence ("Max RV ~25 ft with several sites fitting ..."), keep the head if what is left would start with a participle or otherwise not be a full sentence.
