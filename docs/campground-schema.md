@@ -1303,7 +1303,8 @@ it possible and on the same pattern.
   Labor Day 09-07; the full table is in `notes_2026-11-07/brief.txt`). The stored days are
   the widest reading, so a filter errs toward open, and the season note says what the
   source actually states ("Approximate: open May to October."); the popup shows the
-  season's own note, so a widened day never passes for a published one. 1,331 dated (99
+  season's own note behind "Show notes" and says "about" on the chip (§8.6), so a widened
+  day never passes for a published one. 1,331 dated (99
   to the day), 241 left unknown (no months, one end only, a booking/water/fee season, a
   hole), 13 year-round proposals listed for a person rather than written. A season with
   a person's provenance (`manual`) took dates only from its own season note and kept its
@@ -1351,11 +1352,25 @@ Three parts of this are load-bearing rather than decorative.
   disagree. The field metadata still comes from `to_client()`; only the phrasing lives
   there.
 
-The popup is a summary — six chips a row, **at most four of them inherited**, verified
-first so the cap always trims the defaults, then a `+N more` tail. The manage form is where every value is visible and the only
-place any of them can be edited.
+The popup is a summary: **each row is held to one line on a desktop and two on a phone**
+(≤700px), verified chips first so what folds is the agency's defaults, and the chips that
+don't fit fold into a `+N more` link that opens the whole row (AWH 2026-11-08). The fit is
+measured (`cgFitFactRows`, run after Leaflet lays the popup out, and again when the detail
+fetch lands or an inline edit re-renders it), not counted: six short chips fit a line where
+three fee chips take two. It replaced a fixed cap of six chips, at most four inherited, whose
+`+N more` was plain text. The manage form is where every value is visible and the only place
+any of them can be edited.
 
-**A group's own `note` rides under its row** for `season`, `booking`, `fees` and `sites`, and only the entry's own (an agency's note is a default, not a fact about the park). The season note shows in full; the other three open folded to one line and a tap unfolds them, since a fee table or a set of minimum stays by site type runs to a paragraph. These used to be Manage-only, with just the season note in the popup; AWH 2026-11-08 had the main note stop repeating them (curation doc), which would have hidden them from campers, so they moved into the popup.
+**A group's own `note` rides under its row, hidden behind one "Show notes" link** under the
+facts (AWH 2026-11-08: chips by default, prose on request), for `season`, `booking`, `fees`
+and `sites`, and only the entry's own (an agency's note is a default, not a fact about the
+park). The link appears only when at least one such note exists. These used to be
+Manage-only, with just the season note in the popup; AWH 2026-11-08 had the main note stop
+repeating them (curation doc), so they moved into the popup, first shown (season in full,
+the rest folded to a line) and then, the same day, behind the link. **A month-level season
+says "about" on its chip** ("open about May 1 – Oct 31") whenever its note starts
+"Approximate": the note used to be what kept a widened day from passing for a published one
+(§8.5), and it is no longer on screen by default.
 
 ### 8.7 A chip is read by someone who has never seen the schema
 
@@ -1392,7 +1407,7 @@ came out of it:
   `50A · water · sewer` is one chip (*full hookups (50A)*) and its opposite is *no hookups*;
   a dated season drops the redundant *seasonal*. Against that, `surcharges` rendered as the
   bare label *per-night amenity surcharges* — the existence of a cost, with no cost — and
-  now expands to one chip per add-on (*+$7/night for electric* since 2026-10-12), letting the six-chip cap trim
+  now expands to one chip per add-on (*+$7/night for electric* since 2026-10-12), letting the row fit trim
   the tail instead of the formatter.
 
 Both surfaces change together because both call `sfChips`; the manage form's collapsed

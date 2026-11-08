@@ -578,12 +578,18 @@
      names the agency (docs/campground-schema.md §8.6). */
   .cg-typical { color: #8a7a4a; }
   .cg-typical-note { color: #8a7a4a; font-size: .9em; margin-top: .15rem; }
-  .cg-fact-note { color: #555; font-size: .95em; line-height: 1.35; margin: .05rem 0 .15rem; }
-  /* Booking / fees / sites notes are often a paragraph (a fee table, minimum
-     stays by site type), so they open folded to one line; a tap unfolds it. */
-  .cg-fact-note.folded { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
-    overflow: hidden; cursor: pointer; }
-  .cg-fact-note.folded.open { display: block; }
+  /* One row per group, held to one line (two on a phone) by cgFitFactRows();
+     the chips it had to hide fold into a tappable "+N more" (AWH 2026-11-08). */
+  .cg-fchip + .cg-fchip::before { content: ' \00b7\00a0'; }
+  .cg-fchip[hidden], .cg-fact-more[hidden] { display: none; }
+  .cg-fact-more, .cg-notes-toggle { color: #1565c0; cursor: pointer; white-space: nowrap; }
+  .cg-fact-more { margin-left: .35em; }
+  .cg-fact-more:hover, .cg-notes-toggle:hover { text-decoration: underline; }
+  /* A group's own note is behind the "Show notes" link: chips first, prose on
+     request (AWH 2026-11-08). */
+  .cg-fact-note { display: none; color: #555; font-size: .95em; line-height: 1.35; margin: .05rem 0 .2rem; }
+  .cg-facts.notes-open .cg-fact-note { display: block; }
+  .cg-notes-toggle { display: inline-block; font-size: .95em; margin-top: .1rem; }
 
   /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
   .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
@@ -1621,23 +1627,74 @@ function loadCgDetail(cg, onDone) {
 //
 // The chips themselves come from the shared formatter the manage page uses, so
 // a value cannot be spoken one way there and another way here.
-const CG_FACT_CHIP_MAX = 6;   // a popup is a summary; the manage form has it all
-// Inherited chips are capped tighter, and the reason is proportion rather than
-// space: spelling them out (doc \u00a78.7) took an Indiana Booking row to ~150
-// characters, which on a phone is four lines about what its agency USUALLY
-// does. Verified chips lead each row, so the cap always trims the defaults.
-const CG_FACT_AGENCY_CHIP_MAX = 4;
-
+//
+// Every chip is rendered; the row is then held to ONE line on a desktop and two
+// on a phone by cgFitFactRows() once the popup is laid out, and the chips that
+// didn't fit fold into "+N more", which opens the whole row (AWH 2026-11-08).
+// A fixed chip count could not do that: six short chips fit one line and three
+// long ones take two. Verified chips lead each row, so what folds first is the
+// agency's defaults.
 function cgFactRow(label, ownChips, agencyChips) {
-  const own = ownChips.slice(0, CG_FACT_CHIP_MAX);
-  const room = Math.min(CG_FACT_AGENCY_CHIP_MAX, CG_FACT_CHIP_MAX - own.length);
-  const agency = agencyChips.slice(0, Math.max(0, room));
-  if (!own.length && !agency.length) return '';
-  const hidden = ownChips.length + agencyChips.length - own.length - agency.length;
-  const shown = own.map(escapeHtml).concat(agency.map(c =>
-    `<span class="cg-typical">${escapeHtml(c)}*</span>`)).join(' \u00b7 ');
-  const extra = hidden > 0 ? ` +${hidden} more` : '';
-  return `<div><b>${escapeHtml(label)}</b>${shown}${extra}</div>`;
+  if (!ownChips.length && !agencyChips.length) return '';
+  const chips = ownChips.map(c => `<span class="cg-fchip">${escapeHtml(c)}</span>`)
+    .concat(agencyChips.map(c => `<span class="cg-fchip cg-typical">${escapeHtml(c)}*</span>`));
+  return `<div class="cg-fact-row"><b>${escapeHtml(label)}</b>${chips.join('')}`
+    + `<a class="cg-fact-more" hidden onclick="cgOpenFactRow(this)"></a></div>`;
+}
+
+function cgFactLines() {
+  return window.matchMedia && window.matchMedia('(max-width: 700px)').matches ? 2 : 1;
+}
+
+// Hide trailing chips until each closed row fits its line budget. Runs on the
+// laid-out popup (it measures), so it is called after Leaflet places it; returns
+// whether anything changed so the caller knows to re-lay the popup out.
+function cgFitFactRows(root) {
+  let changed = false;
+  root.querySelectorAll('.cg-fact-row:not(.open)').forEach(row => {
+    const chips = Array.from(row.querySelectorAll('.cg-fchip'));
+    const more = row.querySelector('.cg-fact-more');
+    chips.forEach(c => { c.hidden = false; });
+    more.hidden = true;
+    const lh = parseFloat(getComputedStyle(row).lineHeight) || 18;
+    const budget = cgFactLines() * lh + lh / 2;   // half a line of slack for rounding
+    let shown = chips.length;
+    while (row.offsetHeight > budget && shown > 1) {
+      chips[--shown].hidden = true;
+      more.textContent = `+${chips.length - shown} more`;
+      more.hidden = false;
+      changed = true;
+    }
+  });
+  return changed;
+}
+
+let cgOpenPopupRef = null;   // the campground popup on screen, for re-layout
+function cgRelayoutPopup() {
+  const p = cgOpenPopupRef;
+  // Leaflet sizes a popup (width, the maxHeight scroll) only when it lays it
+  // out, and update() would re-render the content and lose the fit; so its own
+  // layout + position steps are re-run directly.
+  if (p && p.isOpen() && p._updateLayout) { p._updateLayout(); p._updatePosition(); }
+}
+function cgFitPopup(p) {
+  const el = p && p.isOpen() && p.getElement();
+  if (!el) return;
+  cgOpenPopupRef = p;
+  if (cgFitFactRows(el)) cgRelayoutPopup();
+}
+function cgOpenFactRow(a) {
+  const row = a.closest('.cg-fact-row');
+  row.classList.add('open');
+  row.querySelectorAll('.cg-fchip').forEach(c => { c.hidden = false; });
+  a.hidden = true;
+  cgRelayoutPopup();
+}
+function cgToggleFactNotes(a) {
+  const facts = a.closest('.cg-facts');
+  const open = facts.classList.toggle('notes-open');
+  a.textContent = open ? 'Hide notes' : 'Show notes';
+  cgRelayoutPopup();
 }
 
 const CG_FACT_NOTE_GROUPS = new Set(['season', 'booking', 'fees', 'sites']);
@@ -1649,7 +1706,7 @@ function cgFactsHtml(d) {
   // above — an asterisk with no footnote explaining it. So they are shown only
   // when the server could name where they came from.
   const attributable = !!d.policy_label;
-  let rows = '', anyTypical = false;
+  let rows = '', anyTypical = false, anyNote = false;
   CG_SCHEMA.forEach(g => {
     // Status is already the red "Temporarily closed" line at the top of the
     // popup, read off the marker; a second row saying it again is noise.
@@ -1658,25 +1715,29 @@ function cgFactsHtml(d) {
     if (!block) return;
     const inherited = new Set(block.inherited || []);
     const verified = new Set(Object.keys(block.values).filter(k => !inherited.has(k)));
-    const own = verified.size ? sfPopupChips(g, block.values, verified) : [];
+    let own = verified.size ? sfPopupChips(g, block.values, verified) : [];
+    const ownNote = CG_FACT_NOTE_GROUPS.has(g.key) && verified.has('note')
+      ? block.values.note : '';
+    // A month-level season is stored at its widest days and its note says so
+    // ("Approximate: open May to October", doc §4.1). With the note now behind
+    // a link, the chip has to carry that itself, or a day the source never
+    // published passes for one (AWH 2026-11-07).
+    if (g.key === 'season' && /^approximate/i.test(ownNote || '')) {
+      own = own.map(c => c.replace(/^(open|opens|closes) /, '$1 about '));
+    }
     const agency = attributable && inherited.size
       ? sfPopupChips(g, block.values, inherited) : [];
     let row = cgFactRow(g.label, own, agency);
     if (row.includes('cg-typical')) anyTypical = true;
-    // A group's own note says what its chips can't. The season note shows in
-    // full: which loops stay open in winter, and — on a month-level season —
-    // the wording the stored days were widened from ("Approximate: May to
-    // October"), so a day the source never published can't pass for one (AWH
-    // 2026-11-07). Booking, fees and sites notes (minimum stays by site type,
-    // the fee table, pad sizes) show folded to one line, since several run to a
-    // paragraph; the entry's main note no longer repeats them (AWH 2026-11-08).
-    // Only the entry's own note: an agency's is a default, not a fact about
-    // this park.
-    if (CG_FACT_NOTE_GROUPS.has(g.key) && verified.has('note') && block.values.note) {
-      if (!row) row = `<div><b>${escapeHtml(g.label)}</b></div>`;
-      const fold = g.key === 'season' ? '' : ' folded" title="Tap to read all"'
-        + ' onclick="this.classList.toggle(\'open\')';
-      row += `<div class="cg-fact-note${fold}">${escapeHtml(block.values.note)}</div>`;
+    // A group's own note says what its chips can't (which loops stay open in
+    // winter, minimum stays by site type, the fee table). It sits under its row
+    // but stays hidden until "Show notes" (AWH 2026-11-08: chips by default);
+    // the entry's main note no longer repeats it. Only the entry's own note: an
+    // agency's is a default, not a fact about this park.
+    if (ownNote) {
+      if (!row) row = `<div class="cg-fact-row"><b>${escapeHtml(g.label)}</b></div>`;
+      row += `<div class="cg-fact-note">${escapeHtml(ownNote)}</div>`;
+      anyNote = true;
     }
     rows += row;
   });
@@ -1684,7 +1745,9 @@ function cgFactsHtml(d) {
   const note = anyTypical
     ? `<div class="cg-typical-note">* Typical for ${escapeHtml(d.policy_label)}`
       + ` \u2014 not checked for this campground</div>` : '';
-  return `<div class="cg-facts">${rows}${note}</div>`;
+  const toggle = anyNote
+    ? '<a class="cg-notes-toggle" onclick="cgToggleFactNotes(this)">Show notes</a>' : '';
+  return `<div class="cg-facts">${rows}${note}${toggle}</div>`;
 }
 
 // Popup HTML for one campground. Extracted so an inline edit can regenerate it
@@ -1924,10 +1987,13 @@ CAMPGROUNDS.forEach(cg => {
   // maxHeight keeps a long note from growing the popup past a phone screen:
   // Leaflet scrolls the content instead, so the close button stays reachable.
   marker.bindPopup(() => cgPopupHtml(cg), { maxWidth: 420, maxHeight: 320 });
-  marker.on('popupopen', () => loadCgDetail(cg, () => {
-    const p = marker.getPopup();
-    if (p && p.isOpen()) p.update();
-  }));
+  marker.on('popupopen', () => {
+    cgFitPopup(marker.getPopup());   // detail already cached: fit the rows now
+    loadCgDetail(cg, () => {
+      const p = marker.getPopup();
+      if (p && p.isOpen()) { p.update(); cgFitPopup(p); }
+    });
+  });
 
   const rec = { marker, cg };
   markers.push(rec);
@@ -3929,6 +3995,7 @@ function trimmedBounds(coords, frac) {
     if (!isNaN(lat) && !isNaN(lng)) rec.marker.setLatLng([lat, lng]);
     rec.marker.setStyle({ fillColor: markerFill(cg) });
     rec.marker.setPopupContent(() => cgPopupHtml(cg));
+    cgFitPopup(rec.marker.getPopup());   // re-rendered rows start unfitted
     applyVisibility();
   }
 })();
