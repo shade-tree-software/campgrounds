@@ -87,7 +87,7 @@ are not in `shown`; add anything. Do not edit any file but your output file.
 - **Cut:** a minimum-stay segment the Booking chip states at least as specifically; amenities inside a list (showers, dump station, flush/vault toilets, laundry, WiFi, potable water) when a Facilities chip shows the same item; an older --Claude "FCFS" when `shown.Booking` says "no walk-up sites" (a later, dated finding).
 - **Passed closures:** a --Claude closure/construction caveat whose dates have fully passed AND that a later "Rechecked" line says is over: move both to curation as one verbatim piece ending in a single --Claude. Without such a recheck, keep it.
 - **Seasons:** where the note's season disagrees with the Season chip, keep the note's. Keep holiday-anchored seasons ("Memorial Day-Labor Day").
-- **Leave alone:** "(waterfront none)"-style tags (a script handles them).
+- **Leave alone:** "(waterfront none)"-style tags (a script handles them); another name the campground goes by elsewhere ("RV Life lists it as ..."), since campers search by it.
 - **Ask, don't cut:**
   - An RV Life star figure with no ★ chip in `shown.Rating`: leave it untouched and ask "stars missing from rating".
   - A note saying reservable/bookable when `shown.Booking` says "not reservable": cut neither, and ask "booking chip contradicts note".
