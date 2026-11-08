@@ -31,7 +31,8 @@ GROUPS = {
     "booking": ["reservable", "window_opens_days", "reserve_until", "fcfs",
                 "min_stay", "max_stay_nights", "season"],
     "fees": ["nightly_low", "nightly_high", "all_in", "currency", "reservation_fee",
-             "nonresident", "prereq_pass", "entrance", "surcharges", "extra_person", "extra_vehicle"],
+             "nonresident", "prereq_pass", "entrance", "surcharges", "extra_person", "extra_vehicle",
+             "seasonal", "tax"],
     "discounts": ["good_sam", "military", "interagency_senior_access"],
 }
 
@@ -316,6 +317,35 @@ class ChipPhrasingTest(unittest.TestCase):
                          ["4 people max"])
         self.assertEqual(self.chips("fees", {"extra_person": {"included": 4, "child": 1}}),
                          ["rate covers 4 people, +$1/night each extra child"])
+
+    def test_seasonal_rates_say_when_each_price_holds(self):
+        self.assertEqual(
+            self.chips("fees", {"nightly_low": 30, "nightly_high": 50,
+                                "seasonal": [{"name": "peak", "opens": "05-15", "closes": "09-15",
+                                              "nightly_low": 45, "nightly_high": 50},
+                                             {"opens": "09-16", "closes": "05-14", "nightly_low": 30}]}),
+            ["$30\u201350/night", "peak $45\u201350/night May 15 \u2013 Sep 15; $30/night Sep 16 \u2013 May 14"])
+
+    def test_holiday_surcharge_and_tax(self):
+        self.assertEqual(self.chips("fees", {"nightly_low": 30, "surcharges": {"holiday": 5},
+                                             "tax": {"percent": 7.5}}),
+                         ["$30/night base", "+$5/night on holidays", "+7.5% tax"])
+        self.assertEqual(self.chips("fees", {"tax": {"included": True}}), ["tax included"])
+        self.assertEqual(self.chips("fees", {"tax": {"included": False, "name": "county lodging tax"}}),
+                         ["plus tax (county lodging tax)"])
+
+    def test_a_recorded_none_draws_no_chip(self):
+        # Zeros are facts for the trip-cost sum (doc §4.2), not news for the reader.
+        self.assertEqual(self.chips("fees", {"nightly_low": 20,
+                                             "tax": {"percent": 0},
+                                             "entrance": {"resident": 0, "nonresident": 0},
+                                             "extra_person": {"amount": 0},
+                                             "extra_vehicle": {"amount": 0},
+                                             "nonresident": {"type": "surcharge", "amount": 0}}),
+                         ["$20/night"])
+        self.assertEqual(self.chips("fees", {"extra_person": {"amount": 0, "max_people": 8},
+                                             "extra_vehicle": {"amount": 0, "max_vehicles": 2}}),
+                         ["8 people max", "2 vehicles max"])
 
     def test_extra_vehicle_charge_says_when_it_starts(self):
         self.assertEqual(self.chips("fees", {"extra_vehicle": {"included": 2, "amount": 5}}),

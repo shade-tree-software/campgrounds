@@ -335,6 +335,11 @@ manage form become unmanageable otherwise.
   "nonresident": { ... },        // see §4.2
   "prereq_pass": { ... },        // see §4.2
   "entrance": { ... },           // see §4.2 — a gate fee, NOT a camping surcharge
+  "surcharges": { ... },         // per-night add-ons, holiday included — §4.2
+  "extra_person": { ... },       // §4.2
+  "extra_vehicle": { ... },      // §4.2
+  "seasonal": [ ... ],           // rate by date span — §4.2
+  "tax": { ... },                // included / percent on top — §4.2
   "checked": "2026"
 },
 
@@ -566,6 +571,34 @@ The backfill (2026-11-07, `audit/extra_vehicle/`: `RULES.md`, `chunk.py`, `check
   rates in its note), Nova Scotia (C$8.25) and Arizona State Parks ($15). Nevada State Parks
   charge the camping fee itself per vehicle at a per-park figure, so each NV entry carries
   `included: 1, amount: <its resident per-vehicle fee>`, not the hookup total.
+
+**Seasonal rates, holiday surcharges and tax** (2026-11-07, step 1 of the trip-cost plan: price a
+stay from the fields alone, oddball cases aside):
+
+- **`fees.seasonal`** is a list of spans, `[{"name": "peak", "opens": "05-15", "closes": "09-15",
+  "nightly_low": 45, "nightly_high": 50}, ...]`, replaced whole like `min_stay`. **`nightly_low` /
+  `nightly_high` keep their meaning** — the range over the whole year, which the price gate and the
+  map's rate filter read (the cheapest real night in any season) — and each span says what a night
+  costs between two dates. A night outside every span is priced by the base range alone. Chip:
+  `peak $45–50/night May 15 – Sep 15`. Like `surcharges`, an agency's table is moot beside an
+  entry's own price.
+- **`surcharges.holiday`** is the holiday twin of `weekend` (`+$5/night on holidays`). A weekend RATE
+  ("$35 Sun–Thu, $40 Fri–Sat") is stored as the weekday base plus `weekend: 5`.
+- **`fees.tax`**: `{"included": true}` = the posted rates include it; `{"percent": 7}` = added on
+  top; `{"percent": 0}` = none is charged (federal fees are untaxed); `{"included": false}` with no
+  percent = "plus tax" at a rate the source does not state. `name` says which tax where it matters
+  ("county tourist development tax"). A local rate that varies park by park goes on the entry. Tax
+  is never folded into `nightly_low`: the base stays the posted rate, so the gate compares like with
+  like. Chips: `+7% tax` · `tax included` · `plus tax`. Free entries drop an agency's tax.
+
+**A zero is a recorded "none", and it draws no chip** — the $0-surcharge rule, extended to every
+add-on (2026-11-07). `entrance {resident: 0, nonresident: 0}`, `extra_person {amount: 0}`,
+`extra_vehicle {amount: 0}`, `nonresident {type: "surcharge", amount: 0}` and `tax {percent: 0}` say
+somebody checked and there is no such charge, which is exactly what a trip-cost sum needs to know
+and a reader does not (a cap beside a free amount still speaks: `8 people max`).
+`reservation_fee: 0` keeps its `no booking fee` chip. Zeros merge per key like any value, so an
+agency row can settle "no entrance fee" for every park while one park overrides it, and the trip-cost
+sum treats an ABSENT add-on as unknown, never as zero (§2.1).
 
 ### 4.3 Do not fold fees into `rating.price_tier`
 

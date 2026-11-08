@@ -450,6 +450,33 @@ class TestRegistryResolution(unittest.TestCase):
         paid = {"ownership": "state", "state": "NY", "fees": {"nightly_low": 22, "nightly_high": 22}}
         self.assertEqual(cs.resolve(paid, reg)["fees"]["values"]["nonresident"]["amount"], 5)
 
+    def test_seasonal_and_tax_follow_the_add_on_rules(self):
+        # An agency rate table is moot beside a campground's own price, like its
+        # surcharges; its tax rule still applies (it is the agency's billing),
+        # and at $0 neither means anything.
+        reg = {"state:FL": {"fees": {"tax": {"percent": 6},
+                                     "seasonal": [{"opens": "12-01", "closes": "04-30",
+                                                   "nightly_low": 30}]}}}
+        own = {"ownership": "state", "state": "FL", "fees": {"nightly_low": 24}}
+        values = cs.resolve(own, reg)["fees"]["values"]
+        self.assertNotIn("seasonal", values)
+        self.assertEqual(values["tax"], {"percent": 6})
+        free = {"ownership": "state", "state": "FL", "fees": {"nightly_low": 0, "nightly_high": 0}}
+        self.assertNotIn("tax", cs.resolve(free, reg)["fees"]["values"])
+        unpriced = {"ownership": "state", "state": "FL"}
+        self.assertIn("seasonal", cs.resolve(unpriced, reg)["fees"]["values"])
+
+    def test_seasonal_rates_validate_as_a_list_of_spans(self):
+        row = cs.validate_row({"fees": {"seasonal": [{"opens": "05-15", "closes": "09-15",
+                                                      "nightly_low": "45"}, ""],
+                                        "surcharges": {"holiday": 5},
+                                        "tax": {"included": "true"}}})
+        self.assertEqual(row["fees"]["seasonal"], [{"opens": "05-15", "closes": "09-15",
+                                                    "nightly_low": 45}])
+        self.assertEqual(row["fees"]["tax"], {"included": True})
+        with self.assertRaises(cs.SchemaError):
+            cs.validate_row({"fees": {"seasonal": [{"opens": "May 15"}]}})
+
     def test_ownership_alone_is_what_makes_federal_reachable(self):
         # Federal policy is set per agency, not per state. Without this level a
         # single federal rule would need fifty identical `federal:XX` rows.

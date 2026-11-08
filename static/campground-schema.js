@@ -63,13 +63,13 @@ const SF_FEE_PER = {
 // An add-on reads as money on top of the base, never as a label with a sum
 // beside it: "electric +$7/night" next to "$33-37/night" left AWH unable to
 // tell whether the $7 was inside the range or extra (2026-10-12).
-const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'surcharges', 'extra_person', 'extra_vehicle', 'nonresident',
-                       'reservation_fee', 'prereq_pass', 'entrance'];
+const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'seasonal', 'surcharges', 'extra_person', 'extra_vehicle',
+                       'nonresident', 'tax', 'reservation_fee', 'prereq_pass', 'entrance'];
 
 const SF_SURCHARGE_PHRASES = {
   electric: 'for electric', water: 'for water', sewer: 'for sewer',
   full_hookup: 'for full hookups', waterfront: 'for a waterfront site',
-  oceanfront: 'for an oceanfront site', weekend: 'on weekends',
+  oceanfront: 'for an oceanfront site', weekend: 'on weekends', holiday: 'on holidays',
   premium_site: 'for a premium site', pet: 'per pet',
 };
 
@@ -201,6 +201,9 @@ function sfChip(groupKey, field, value, cur) {
   }
   // The two fee shapes that matter most read as bare labels otherwise.
   if (k === 'fees.nonresident') {
+    // A recorded none (a $0 surcharge, a x1 multiplier) says the agency has no
+    // non-resident rate, which the calculator needs and the reader does not.
+    if (value && (value.amount === 0 || value.factor === 1)) return null;
     // What a multiplier multiplies differs by agency (Suffolk County doubles the
     // base only; Delaware and Hither Hills scale the whole price), so the chip
     // says which when the data knows (`applies_to`), and "the resident rate"
@@ -224,6 +227,10 @@ function sfChip(groupKey, field, value, cur) {
   // annual pass and was reading as a gate fee charged on arrival.
   if (k === 'fees.entrance') {
     const r = value && value.resident, n = value && value.nonresident;
+    // $0 both sides is a recorded "no entrance fee": a fact for the trip-cost
+    // sum, and no chip, like a $0 surcharge (doc §4.2).
+    if ((r === 0 || r == null) && (n === 0 || n == null) && (r === 0 || n === 0)
+        && !(value && value.annual)) return null;
     const per = SF_FEE_PER[value && value.per] || '';
     // A named charge says its own name: a Virginia WMA's $4 is an "access
     // permit", and "park entry" there named a park that does not exist.
@@ -263,6 +270,10 @@ function sfChip(groupKey, field, value, cur) {
   // the per-head amount is an ADULT's, and the chip says so.
   if (k === 'fees.extra_person') {
     const v = value || {};
+    // Extra people free: a recorded none, which speaks only as a cap.
+    if (v.amount === 0 && (v.child == null || v.child === 0)) {
+      return v.max_people != null ? v.max_people + ' people max' : null;
+    }
     const who = v.child != null ? 'adult' : 'person';
     let chip;
     // A rate for "2 adults and 4 children" counts the two apart, and so must
@@ -306,6 +317,10 @@ function sfChip(groupKey, field, value, cur) {
   // "+$8/night each vehicle over 1": what towing a car costs.
   if (k === 'fees.extra_vehicle') {
     const v = value || {};
+    if (v.amount === 0) {
+      return v.max_vehicles != null
+        ? v.max_vehicles + (v.max_vehicles === 1 ? ' vehicle' : ' vehicles') + ' max' : null;
+    }
     let chip;
     if (v.amount != null) {
       chip = '+' + sfMoney(v.amount, cur) + (v.per === 'stay' ? '/stay' : '/night')
@@ -317,6 +332,38 @@ function sfChip(groupKey, field, value, cur) {
     }
     if (v.max_vehicles != null) chip += ', ' + v.max_vehicles + (v.max_vehicles === 1 ? ' vehicle' : ' vehicles') + ' max';
     return chip;
+  }
+  // A rate table by date: "$45-50/night May 15 - Sep 15". The base range
+  // before it is the whole year's, so each span reads as when a price holds.
+  if (k === 'fees.seasonal') {
+    if (!Array.isArray(value) || !value.length) return null;
+    const spans = value.map(r => {
+      let price = null;
+      if (r.nightly_low != null) {
+        price = r.nightly_low === 0 && (r.nightly_high == null || r.nightly_high === 0) ? 'free'
+          : sfMoney(r.nightly_low, cur)
+            + (r.nightly_high != null && r.nightly_high !== r.nightly_low
+               ? '\u2013' + sfAmount(r.nightly_high) : '') + '/night';
+      } else if (r.nightly_high != null) {
+        price = 'up to ' + sfMoney(r.nightly_high, cur) + '/night';
+      }
+      const when = r.opens && r.closes ? sfDate(r.opens) + ' \u2013 ' + sfDate(r.closes)
+        : r.opens ? 'from ' + sfDate(r.opens) : r.closes ? 'until ' + sfDate(r.closes) : '';
+      const head = r.name ? r.name + (price || when ? ' ' : '') : '';
+      return head + [price, when].filter(Boolean).join(' ');
+    }).filter(Boolean);
+    return spans.length ? spans.join('; ') : null;
+  }
+  // Tax. "plus tax" alone still matters: the rate is not what the night costs.
+  // A 0% (federal fees are untaxed) is a recorded none and draws no chip.
+  if (k === 'fees.tax') {
+    const v = value || {};
+    const name = v.name ? ' (' + v.name + ')' : '';
+    if (v.percent === 0) return null;
+    if (v.percent != null) return '+' + String(+Number(v.percent).toFixed(3)) + '% tax' + name;
+    if (v.included === true) return 'tax included';
+    if (v.included === false) return 'plus tax' + name;
+    return null;
   }
   if (k === 'fees.prereq_pass') {
     const v = value || {};

@@ -234,7 +234,24 @@ SCHEMA = {
         # invent a bundle Massachusetts does not sell.
         "surcharges": OBJ(electric=NUM, water=NUM, sewer=NUM, full_hookup=NUM,
                           waterfront=NUM, oceanfront=NUM, weekend=NUM,
-                          premium_site=NUM, pet=NUM),
+                          holiday=NUM, premium_site=NUM, pet=NUM),
+        # Rates that hold for part of the year (2026-11-07). `nightly_low` /
+        # `nightly_high` keep their meaning — the range across the WHOLE year,
+        # which is what the price gate and the map's rate filter read (the
+        # Shelby ruling: the cheapest real night in any season) — and each
+        # span here says what a night costs between two dates. A night outside
+        # every listed span is priced by the base range alone. Replaced whole,
+        # like `min_stay`: part-merging two rate tables yields a table nobody
+        # published.
+        "seasonal": LIST(OBJ(name=STR, opens=MMDD, closes=MMDD,
+                             nightly_low=NUM, nightly_high=NUM)),
+        # Tax on the night (2026-11-07). `included: true` = the posted rates
+        # already include it; `percent` is what is added on top (0 = none is
+        # charged: federal fees are not taxed); `included: false` with no
+        # percent = "plus tax" at a rate the source does not give. A local
+        # lodging tax that varies park by park stays on the entry, or in
+        # `fees.note` as a range.
+        "tax": OBJ(included=BOOL, percent=NUM, name=STR),
         # People beyond the ones the base rate covers (AWH 2026-11-07). The base
         # is what two adults pay (doc §4.2), but parks price the night for 2, 4
         # or 6 people and charge for each one past that, so the amount alone
@@ -608,7 +625,7 @@ RESERVATION_ONLY_FEE_KEYS = ("reservation_fee",)
 
 
 # Agency fee keys that mean nothing on a campground that is free at both ends.
-FREE_MOOT_FEE_KEYS = ("nonresident", "surcharges")
+FREE_MOOT_FEE_KEYS = ("nonresident", "surcharges", "seasonal", "tax")
 
 
 def _moot_agency_keys(entry):
@@ -637,8 +654,9 @@ def _moot_agency_keys(entry):
     # popup read "$33-37/night · electric +$7* · oceanfront +$10* ..." where
     # $33-37 is weekday-weekend and the park has no electric or oceanfront
     # sites (AWH 2026-10-12). An add-on that does apply is recorded on the entry.
+    # The same holds for an agency's seasonal rate table.
     if "nightly_low" in fees or "nightly_high" in fees:
-        moot.setdefault("fees", set()).add("surcharges")
+        moot.setdefault("fees", set()).update(("surcharges", "seasonal"))
     return moot
 
 
@@ -808,6 +826,9 @@ FIELD_LABELS = {
     "child_max_age": "Child rate up to age",
     "max_people": "Max people per site",
     "surcharges": "Per-night amenity surcharges",
+    "seasonal": "Seasonal rates",
+    "tax": "Tax",
+    "percent": "Percent added on top (0 = none)",
     "full_hookup": "Full hookup",
     "premium_site": "Premium/flagship site",
     "oceanfront": "Oceanfront",
@@ -829,6 +850,12 @@ FIELD_LABELS = {
 # reservation season. Looked up before FIELD_LABELS.
 PATH_LABELS = {
     "booking.season": "Reservation season",
+    "fees.extra_vehicle.included": "Vehicles the base rate covers",
+    "fees.tax.included": "Posted rates include tax",
+    "fees.tax.name": "Tax name",
+    "fees.seasonal.name": "Season name",
+    "fees.seasonal.nightly_low": "Nightly rate (low)",
+    "fees.seasonal.nightly_high": "Nightly rate (high)",
 }
 
 
@@ -842,10 +869,13 @@ def _spec_to_client(spec, key, path=None):
     if kind == "list":
         item_spec, slots = constraint
         return {"kind": "list", "label": _label(key, path), "slots": slots,
-                "item": _spec_to_client(item_spec, key)}
+                "item": _spec_to_client(item_spec, key, path)}
     if kind == "obj":
+        # Children carry their path so a key that means different things in
+        # different objects (`included`: people, vehicles, tax) is labelled
+        # for the object it sits in.
         return {"kind": "obj", "label": _label(key, path),
-                "fields": [dict(_spec_to_client(s, k), key=k)
+                "fields": [dict(_spec_to_client(s, k, f"{path}.{k}" if path else None), key=k)
                            for k, s in constraint.items()]}
     out = {"kind": kind, "label": _label(key, path)}
     if constraint is not None:
