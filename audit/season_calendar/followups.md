@@ -60,3 +60,11 @@
   "Early-May to mid-October". First-come sites/periods missing from `booking`: 11389 (Apr 1-14
   all first-come), 11395, 11849 (reservations late spring-early fall only). No stated season:
   11397 Winn, 11865 Minersville.
+- Chunk 15: 13291 Lower Onion Creek (BLM): rec.gov facility 255118 is GROUP SITES ONLY, so its
+  02-10/11-30 chip is the group window; the 21 individual sites are first-come only (entry says
+  fcfs some_sites). No stated season — chip left, but it is not the campground's season.
+  12177 Ice House: page gives "May - October", "Memorial Day Weekend and mid-October" and a dated
+  Oct 11, 2026 closure (used Memorial Day / Oct 11). 12104 Loganville: close stated as Oct 15 AND
+  Labor Day (close left out). 12101 Indian Valley: Apr 17-Oct 15 AND Memorial-Labor Day (left).
+  11956 Spring Creek: FS 16 reservable vs rec.gov/note 12. 12205 Frenchman: 17 of 38 reservable,
+  booking lacks fcfs. 12204 Grasshopper Flat: 33 of 71 reservable.
