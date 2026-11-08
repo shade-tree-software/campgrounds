@@ -18,3 +18,6 @@ or open year-round, I set `season.year_round` (9949 Devils Garden, 12020 Furnace
 FCFS found only those plus 5508 Williams Narrows (closes Sep 22, note silent; left). The
 Chequamegon loops above look like the same artifact. A wider pass would re-read every
 calendar-derived season against the agency's stated season — want one?
+
+## Follow-up, not an ask: note vs RIDB hookups (chunk 049)
+- 13686 Putah Canyon: the note says "some RV sites have electric for an extra fee"; `hookups.electric: 0` was derived from the RIDB catalog 2026-10-20 (every RV-bookable site typed NONELECTRIC). Per the trust-rec.gov rule the field stands; the note sentence was left as is. Worth one look at the concessionaire's page to see whether the electric is a paid add-on RIDB doesn't model.
