@@ -422,6 +422,24 @@ function sfAllNone(group, values) {
     && fields.every(f => f.key in values && values[f.key] === sfNoneValue(f));
 }
 
+// An all-in figure summed from its permits (Virginia WMAs: one $10 camping
+// authorization per party + a $4 access permit per person per day, arrival and
+// departure both counted) is shown AS that sum, so the permits read as its
+// parts rather than as charges on top of it (AWH 2026-11-07). Only when the
+// parts add up to the stored figure for 2 people, 1 night; otherwise null.
+function sfAllInBreakdown(v, cur) {
+  const p = v.prereq_pass, e = v.entrance;
+  if (!p || p.price == null || (p.per && p.per !== 'party')) return null;
+  if (!e || e.per !== 'person_day' || e.resident == null || e.resident !== e.nonresident) return null;
+  const days = e.departure_day === true ? 2 : 1;
+  const permits = e.resident * 2 * days;
+  if (Math.abs(p.price + permits - v.nightly_low) > 0.005) return null;
+  return sfMoney(p.price, cur) + ' ' + (p.name || 'pass') + ' + '
+    + sfMoney(permits, cur) + ' ' + (e.name ? e.name + 's' : 'permits')
+    + ' (' + sfMoney(e.resident, cur) + ' \u00d7 2 people \u00d7 ' + days
+    + (days === 1 ? ' day' : ' days' + ': arrival and departure') + ')';
+}
+
 function sfChips(group, values, keys) {
   // "no showers · no flush toilets · no vault toilets · ..." is seven chips to
   // say one thing. Only when the verified half holds the whole group — a
@@ -432,6 +450,9 @@ function sfChips(group, values, keys) {
   }
   const parts = [];
   const has = k => (!keys || keys.has(k)) && k in values;
+  // Set when the all-in chip spelled out its permits: their own chips then say
+  // only what the sum leaves out (who needs one, what one covers).
+  let allInSplit = false;
   const cur = values.currency;
   // Folds: a set of keys one chip already speaks for, so the run doesn't say
   // the same thing twice in different words.
@@ -489,6 +510,21 @@ function sfChips(group, values, keys) {
       });
       return;
     }
+    if (allInSplit && f.key === 'prereq_pass') {
+      const v = values.prereq_pass, t = [];
+      if (v.max_people != null) t.push('up to ' + v.max_people + ' people');
+      if (v.max_nights != null) t.push(v.max_nights + (v.max_nights === 1 ? ' night' : ' nights'));
+      if (t.length) parts.push('one ' + (v.name || 'pass') + ' covers ' + t.join(', '));
+      return;
+    }
+    if (allInSplit && f.key === 'entrance') {
+      const v = values.entrance;
+      let c = (v.name || 'permit') + (v.min_age != null ? ' for everyone ' + v.min_age + '+' : '');
+      if (v.annual != null) c += '; ' + sfMoney(v.annual, cur) + '/year option';
+      if (v.waived_by) c += '; not needed with ' + v.waived_by;
+      parts.push(c);
+      return;
+    }
     let chip = sfChip(group.key, f, values[f.key], cur);
     // A $0 base rate is free camping, and says so. With no high beside it the
     // entry has free sites and paid ones of unknown price (a free primitive
@@ -509,7 +545,13 @@ function sfChips(group, values, keys) {
       // 2026-11-07), so it says what it was summed for, and the permits after
       // it read as its parts rather than as charges on top.
       if (values.all_in === true) {
-        parts.push(chip + ' for 2 people, 1 night, permits included');
+        const bd = has('prereq_pass') && has('entrance') ? sfAllInBreakdown(values, cur) : null;
+        if (bd) {
+          allInSplit = true;
+          parts.push(chip + ' for 2 people, 1 night = ' + bd);
+        } else {
+          parts.push(chip + ' for 2 people, 1 night, permits included');
+        }
         return;
       }
       chip += '/night';

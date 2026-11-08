@@ -394,10 +394,19 @@ class ChipPhrasingTest(unittest.TestCase):
                              "name": "access permit", "min_age": 17,
                              "departure_day": True, "annual": 28,
                              "waived_by": "a Virginia hunting, fishing or trapping license"}}),
-            ["$26 for 2 people, 1 night, permits included",
-             "requires WMA camping authorization ($10/stay per party, up to 6 people, 14 nights)",
-             "access permit $4 (per person/day, age 17+, arrival and departure days both count); "
-             "$28/year option; not needed with a Virginia hunting, fishing or trapping license"])
+            ["$26 for 2 people, 1 night = $10 WMA camping authorization + $16 access permits "
+             "($4 \u00d7 2 people \u00d7 2 days: arrival and departure)",
+             "one WMA camping authorization covers up to 6 people, 14 nights",
+             "access permit for everyone 17+; $28/year option; "
+             "not needed with a Virginia hunting, fishing or trapping license"])
+        # Parts that don't add up to the figure keep the plain all-in wording
+        # and their own full chips.
+        self.assertEqual(
+            self.chips("fees", {
+                "nightly_low": 30, "nightly_high": 30, "all_in": True,
+                "prereq_pass": {"name": "pass", "price": 10, "per": "party"},
+                "entrance": {"resident": 4, "nonresident": 4, "per": "person_day"}})[0],
+            "$30 for 2 people, 1 night, permits included")
         # A free site that needs a pass held by everyone on the property.
         self.assertEqual(
             self.chips("fees", {"nightly_low": 0, "nightly_high": 0,
