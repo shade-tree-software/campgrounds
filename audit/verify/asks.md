@@ -442,7 +442,7 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **4671 Broad River / 14379 Clay Hill (GA):** Firefly "RV Site - Water Access" units behind reCAPTCHA; Broad River's fees also open. **AWH 2026-11-02 rule: both stay not waterfront unless a page turns up.**
 - **4561 Lake Conasauga:** Availability page hides all sites on rec.gov's 21-ft motorhome limit; recommend leaving it, alternative is a "tight" flag within 2 ft. **Done 2026-11-02 (AWH): `TIGHT_MIN_FT` = 21 shows those sites as tight.**
 - **3900 Bond Falls (MI):** two areas ~4 km apart, pin below the dam; split? Held until answered. **AWH 2026-11-02: Google reviews suggest EKKO fits both campgrounds. Split queued (split-10).**
-- **`header-icon-bar`:** merged branch only AWH can delete.
+- **`header-icon-bar`:** merged branch only AWH can delete. **2026-11-08: no such branch locally or on GitHub; closed.**
 
 - **2658 Molas Lake (CO), wf-co-4:** the town's site PDF calls P32 "waterfront... RVs up to 23 ft" under a header saying "under 23 ft", and says over 23 ft belongs in the view sites. If EKKO fits P32 it's lakefront (pad ~17 m over open shore); held at lakeview. **AWH 2026-11-02 rule: unsure goes down without asking. Stays lakeview.**
 - **2469 Cement Creek (CO), wf-co-7:** Campendium: "nothing larger than 20ish feet" (2022), a 25-ft trailer fit one site (2021), Loop 2 cars and vans only; no posted limit. Kept, tight; note now says so. Drop if that's too thin for EKKO. **AWH 2026-11-02: unclear pad size = keep with a caveat. Kept; caveat in the note.**

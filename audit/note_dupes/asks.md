@@ -50,3 +50,18 @@ calendar-derived season against the agency's stated season — want one?
 - 14367: note and Sites chip say RV sites to 45 ft; Fees note says max 30 ft.
 - 14621 Lum Park: note says no weekly-or-longer rates; Fees note gives weekly $330.
 - 14983 Cedar Cove: note says tent sites $40; Fees note prices 2-way sites at $40.
+
+## Answered by AWH 2026-11-08 (round 2) — applied
+- 179: keep the Puglisi book line visible (a published recommendation is significant).
+- 246: drop the --AWH "several primitive RV sites" wording — done.
+- 4481: drop what contradicts the published source — "No on-site water." cut (operator: "Our
+  full hook-up sites provide water, electric, and sewer services"); hookups now sourced to it.
+- Main note vs group note: the group note wins when it is the more recent read. All 13 were
+  (notes in place by Jun 11-Oct 9 per their derived provenance; group reads Oct 10-Nov 5):
+  2101, 4100 (correction story to curation_note), 5016 (sites 12, MDWFP page), 8834/8889/8998
+  (sites + season from the Alberta Parks camping table), 10653, 13086, 13534, 14222, 14367
+  (max rig 30 ft, ResNexus), 14621, 14983 — conflicting text cut.
+- 11369 Spillway (season follow-up): rec.gov over the note — max rig 32 ft; the FS "16 foot"
+  is not credible. Note's 25-42 ft cut.
+- 10073 Anderson Cove: answered with the source (chip = rec.gov calendar = FS peak season;
+  FS also lists FCFS Nov-Dec and a winter non-peak season) — decision pending.
