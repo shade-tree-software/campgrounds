@@ -1,0 +1,402 @@
+[
+  {
+    "ref": "federal",
+    "set": {},
+    "remove": [],
+    "note_add": "Reservation fee: recreation.gov's site-wide policy says a reservation fee 'may be charged' ($8 online, $9 call centre, $3 in person), and whether it is depends on the agency: the Forest Service, BLM and others pass it on, while the Corps (by policy) and the Park Service (park by park) fold the cost into the nightly fee and charge none. So it is set on the agency rows, not here. Changing an individual-campsite reservation to dates entirely outside the original costs $10; extending or shortening it is free. A cancellation keeps back a $10 service fee. Cancelling the day before or the day of arrival costs $10 plus the first night (all of it for a one-night stay). The reservation fee itself is never refunded. Tax: not settled for federal campgrounds as a whole. Federally run fee campgrounds post untaxed FLREA fees, but concessionaire-run ones add state and local tax: the Forest Service's Pines Campground (Stanislaus) posts '$33.00 per night (+fees and taxes)', and Yellowstone's concession campgrounds post '+ taxes'. Non-resident: since 2026-01-01 eleven national parks charge non-US residents a $100 entrance surcharge. That is an entrance charge, not a camping rate, and it doesn't touch any US state's residents.",
+    "sources": [
+      {
+        "key": "reservation_fee",
+        "url": "https://www.recreation.gov/rules-reservation-policies",
+        "quote": "Reservation Fee: A fee may be charged at the time a reservation is made to cover the cost of reservation services. This fee is in addition to the Recreation Fee and is non-refundable. Fees for camping, day use, group sites, cabins and lookouts: $8 if made on-line; $9 if made through the call center; $3 if made in-person."
+      },
+      {
+        "key": "note:change",
+        "url": "https://www.recreation.gov/rules-reservation-policies",
+        "quote": "If a customer wants to switch dates that are entirely outside of the original reservation dates, there is a $10 change fee. There is no change fee if a customer extends or shortens a reservation, as long as the change includes dates from the original reservation."
+      },
+      {
+        "key": "note:cancel",
+        "url": "https://www.recreation.gov/rules-reservation-policies",
+        "quote": "A $10 service fee will be withheld from any refund for a cancellation."
+      },
+      {
+        "key": "note:late-cancel",
+        "url": "https://www.recreation.gov/rules-reservation-policies",
+        "quote": "Individual Campsites: A customer who cancels a reservation the day before or on the day of arrival will pay a $10.00 service fee AND forfeit the first night's use fee (not to exceed the total paid for the original reservation). Cancellations for a one-night reservation will forfeit the entire amount paid and will not be subject to an additional service fee."
+      },
+      {
+        "key": "tax:concessionaire-usfs",
+        "url": "https://www.fs.usda.gov/r05/stanislaus/recreation/pines-campground",
+        "quote": "Fees are currently $33.00 per night (+fees and taxes)."
+      },
+      {
+        "key": "tax:concessionaire-usfs-operator",
+        "url": "https://www.fs.usda.gov/r05/stanislaus/recreation/pines-campground",
+        "quote": "American Land & Leisure operates this campground under a special use permit administered by the Forest Service."
+      },
+      {
+        "key": "tax:concessioner-nps",
+        "url": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm",
+        "quote": "$38 + taxes"
+      },
+      {
+        "key": "note:nps-nonresident-entrance",
+        "url": "https://www.nps.gov/aboutus/entrance-fee-prices.htm",
+        "quote": "The following national parks also charge a $100 nonresident fee to non-U.S. residents ages 16 and over."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "reservation_fee": "No single figure covers every federal entry. recreation.gov's policy says a fee 'may be charged' ($8/$9/$3), and in practice it depends on the agency: USFS charges $8 (federal:usfs), USACE charges none by policy (federal:usace), and NPS parks fold the cost into the nightly rate. Observed in recreation.gov's campground API: fee_model 1 on all 84 FS, 14 BLM, 1 BOR and 1 FWS facilities sampled, and fee_model 0 on all 54 USACE and 21 NPS facilities.",
+      "tax": "Federally run FLREA fees appear untaxed, but no primary source says so in as many words, and concessionaire-run USFS and NPS campgrounds add tax ('+fees and taxes', '+ taxes'). So {percent: 0} would be wrong for a large share of the federal rows. NOTE: the schema comment and docs/campground-schema.md §4.2 say 'federal fees are untaxed' as a flat fact, and these sources don't support that for concession campgrounds.",
+      "nonresident": "No federal camping rate depends on state residency (this row's existing note says so), but I found no explicit primary statement, so I wrote no zero. The 2026 NPS non-US-resident $100 surcharge is an entrance charge at 11 parks.",
+      "entrance": "Differs by agency: barred by statute on USFS/BLM/BOR land (set on those rows), per park for NPS, per refuge for FWS.",
+      "extra_vehicle": "Differs by agency and facility (USACE settled on its row)."
+    },
+    "summary": "Nothing set here on purpose: the reservation fee and tax both split by agency or operator. The change/cancellation fees and the reason for leaving tax unset go in the note."
+  },
+  {
+    "ref": "federal:usfs",
+    "create": true,
+    "set": {
+      "reservation_fee": 8,
+      "entrance": {
+        "resident": 0,
+        "nonresident": 0
+      }
+    },
+    "remove": [],
+    "note_add": "Reservation fee: $8.00 per reservation, charged by recreation.gov (the Forest Service's fee-site notices say it 'is not a Forest Service recreation fee'). recreation.gov lists $9 by call centre and $3 in person. A first-come site paid on arrival has no reservation fee. Entrance: the law bars an entrance fee on Forest Service land. A standard amenity (day-use) fee can still apply on top of camping at a National Volcanic Monument, a National Conservation Area or a High Impact Recreation Area, set site by site; an entry inside one must carry it itself. Extra vehicles and people per site: set per campground (often an extra-vehicle fee and a 6- or 8-person cap). Tax: concessionaire-run campgrounds (most developed USFS campgrounds) usually add state and local tax ('+fees and taxes' at Pines, Stanislaus); Forest Service-run ones post untaxed fees, so tax is left unset.",
+    "sources": [
+      {
+        "key": "reservation_fee",
+        "url": "https://public-inspection.federalregister.gov/2026-18245.pdf",
+        "quote": "Reservations would cost $8.00 per reservation. The $8.00 reservation fee is a transaction fee charged by the recreation.gov reservation platform and is not a Forest Service recreation fee under the Federal Lands Recreation Enhancement Act."
+      },
+      {
+        "key": "reservation_fee",
+        "url": "https://www.recreation.gov/rules-reservation-policies",
+        "quote": "Fees for camping, day use, group sites, cabins and lookouts: $8 if made on-line; $9 if made through the call center; $3 if made in-person."
+      },
+      {
+        "key": "entrance",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "The Secretary shall not charge an entrance fee for Federal recreational lands and waters managed by the Bureau of Land Management, the Bureau of Reclamation, or the Forest Service."
+      },
+      {
+        "key": "entrance:standard-amenity-exception",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "the Secretary may charge an expanded amenity recreation fee, either in addition to a standard amenity fee or by itself, at Federal recreational lands and waters under the jurisdiction of the Forest Service, the Bureau of Land Management, or the Bureau of Reclamation, but only for the following facilities or services: (A) Use of developed campgrounds"
+      },
+      {
+        "key": "tax:concessionaire",
+        "url": "https://www.fs.usda.gov/r05/stanislaus/recreation/pines-campground",
+        "quote": "Fees are currently $33.00 per night (+fees and taxes)."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "tax": "Concessionaire-operated campgrounds add state/local tax ('+fees and taxes', Pines, Stanislaus NF) while Forest Service-operated ones post untaxed fees, and the rate varies by state and locality. Belongs on the entry, or as {included: false} only where a concessionaire is known.",
+      "extra_vehicle": "Per campground (e.g. the schema doc's '$8 per vehicle' case; Pike-San Isabel's '$13-23'). No national rule.",
+      "extra_person": "Per campground (Pines: 'The number of people allowed in a single campsite is 6.'). No national rule found.",
+      "nonresident": "No residency-based camping rate known, but no explicit statement found."
+    },
+    "summary": "Set the $8 recreation.gov reservation fee (FR notice + rec.gov schedule; fee_model 1 on all 84 FS facilities sampled) and a zero entrance fee (barred by 16 USC 6802(e)(2), standard-amenity exception in the note). Tax, extra vehicle and extra person are per campground or operator. Senior Pass 'may' give 50% (discretionary; concessionaires vary)."
+  },
+  {
+    "ref": "federal:usace",
+    "create": true,
+    "set": {
+      "reservation_fee": 0,
+      "entrance": {
+        "resident": 0,
+        "nonresident": 0
+      },
+      "extra_vehicle": {
+        "amount": 0
+      },
+      "extra_person": {
+        "amount": 0
+      }
+    },
+    "remove": [],
+    "note_add": "Corps camping fees are per site and include the site's amenities, utilities and the cost of recreation.gov, so there is no reservation fee (recreation.gov's $10 change/cancellation service fees still apply). The camping permit covers the project's Corps-run day-use areas (boat ramps, beaches) on the days it is valid. Vehicles parked on the site within its posted carrying capacity (people, vehicles and camping units, set per site by the project, often 2 vehicles and 8 people) cost nothing extra. A vehicle in separate improved parking may be charged a parking fee, and a registered camper's day visitors may be charged up to 50% of the site fee. The site may not exceed its posted capacity, so there is no national max. Policy source: the USACE guide implementing EC 1130-2-550 Chapter 9 (2015; the fee structure took effect 2016-01-01). Its parking, day-use and per-site rules repeat ER 1130-2-550 ch. 9.",
+    "sources": [
+      {
+        "key": "reservation_fee",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "At sites participating in the NRRS/Recreation.gov, a separate fee for participating in the reservation service will not be charged."
+      },
+      {
+        "key": "extra_person",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "Camping use fees shall be charged on a per-site basis for use of the site including all site amenities, utilities and costs to participate in the NRRS/Recreaton.gov. Each campsite shall be rented to a single user/unit party."
+      },
+      {
+        "key": "extra_person:capacity",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "the Operations Project Manager shall determine the carrying capacity, in numbers of persons, vehicles, and camping equipment, for each campsite under his/her management. Except in unusual circumstances, this carrying capacity shall not be exceeded."
+      },
+      {
+        "key": "extra_vehicle",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "Parking fees in campgrounds may be charged for users’ vehicles parked in designated, improved parking spaces other than the campsite. Separate parking fees will not be charged for users’ vehicles parked on the campsite in accordance with the established vehicle carrying capacity."
+      },
+      {
+        "key": "extra_vehicle",
+        "url": "https://corpsLakes.erdc.dren.mil/employees/policy/ER/ER-1130-2-550.pdf",
+        "quote": "Camping fees will be charged on a per-site basis. Each campsite shall be rented to a single user/unit party, which does not exceed the established carrying capacity for"
+      },
+      {
+        "key": "entrance",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "The camping permit entitles the holder to use a designated campsite and recreation facilities within the boundaries of the camping area where the designated campsite is located. It shall also entitle the holder to use any or all Corps- operated day use facilities without paying additional use fees at the same project, on any day for which the permit is valid."
+      },
+      {
+        "key": "note:visitors",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "Visitors of registered campers in fee campgrounds may be charged use fees for use of specialized facilities. If charged, the fee shall not exceed 50 percent of the single user unit campsite fee"
+      },
+      {
+        "key": "note:senior",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "The Interagency Access/Senior Pass and Golden Age/Access passport shall entitle the pass holder and accompanying party a 50 percent discount of camping use fees per site"
+      },
+      {
+        "key": "note:senior",
+        "url": "https://corpslakes.erdc.dren.mil/employees/usefees/EC/USACE%20Guide%20for%20Implementation%20of%20EC%201130-2-550,%20Chapter%209%20and%20RUFSOP.pdf",
+        "quote": "The discount does not apply to fees charged by leaseholders or concessionaires."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "tax": "The fee guide never mentions tax. Corps-operated fees are almost certainly untaxed, but I found no explicit statement, so no zero is written.",
+      "nonresident": "No residency-based rate in the fee guide (camping is priced per site by class and comparability), but no explicit 'none'."
+    },
+    "summary": "Settled from the Corps' own fee guidance: no reservation fee (cost built into the per-site fee), no entrance or day-use fee for campers at the same project, no charge for people or for vehicles on the site within its posted capacity (overflow parking and day visitors may be charged; in the note). Senior/Access Pass gives a flat 50% at Corps-operated campgrounds, 'shall entitle', not at leaseholder or concessionaire parks. Tax is unsettled."
+  },
+  {
+    "ref": "federal:blm",
+    "create": true,
+    "set": {
+      "entrance": {
+        "resident": 0,
+        "nonresident": 0
+      }
+    },
+    "remove": [],
+    "note_add": "Entrance: the law bars an entrance fee on BLM land. A standard amenity (day-use) fee can still apply on top of camping at a National Conservation Area or another qualifying high-investment area, set site by site. Reservation fee: most reservable BLM campgrounds add recreation.gov's $8 ($9 by phone; e.g. Ken's Lake: '$20 per site per night plus reservation fee'). Some fold it into the nightly fee (Datil Well, NM, 2025 plan), so it is left per campground. Extra vehicles and people: per campground (Log Gulch, ID: each RV/trailer/tent $25, two per site).",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "The Secretary shall not charge an entrance fee for Federal recreational lands and waters managed by the Bureau of Land Management, the Bureau of Reclamation, or the Forest Service."
+      },
+      {
+        "key": "entrance:standard-amenity-exception",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "the Secretary may charge a standard amenity recreation fee for Federal recreational lands and waters under the jurisdiction of the Bureau of Land Management, the Bureau of Reclamation, or the Forest Service, but only at the following: (1) A National Conservation Area."
+      },
+      {
+        "key": "reservation_fee:folded",
+        "url": "https://blm.gov/announcement/blm-seeks-input-proposed-fee-increase-datil-well-campground",
+        "quote": "would incorporate the recreation.gov reservation fee into the visitor entry fee"
+      },
+      {
+        "key": "reservation_fee:on-top",
+        "url": "https://www.recreation.gov/api/camps/campgrounds/10040993",
+        "quote": "$20 per site per night plus reservation fee."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "reservation_fee": "Usually recreation.gov's $8 on top (fee_model 1 on all 14 BLM facilities sampled; Ken's Lake 'plus reservation fee'), but BLM offices can fold it into the nightly fee (Datil Well 2025 business plan), so it is per campground.",
+      "tax": "No BLM statement found either way. A few BLM campgrounds are concession-run.",
+      "extra_vehicle": "Per campground (Log Gulch: 'Each individual RV/trailer/tent costs $25 with a max of two of any combination per site').",
+      "extra_person": "Per campground."
+    },
+    "summary": "Only the zero entrance fee settles (16 USC 6802(e)(2), standard-amenity exception in the note). The reservation fee is usually $8 on top but is per campground; tax, vehicles and people unsettled. Senior Pass 'may' give 50%."
+  },
+  {
+    "ref": "federal:nps",
+    "create": true,
+    "set": {},
+    "remove": [],
+    "note_add": "Entrance: per park and paid on top of camping ('Camping fees are in addition to the standard Park Entrance Fee', Sleeping Bear Dunes). Most NPS sites charge none; where charged it runs up to $35 per private vehicle for 7 days. Since 2026-01-01, 11 parks add $100 for each non-US resident 16 and over (Acadia, Bryce Canyon, Everglades, Glacier, Grand Canyon, Grand Teton, Rocky Mountain, Sequoia & Kings Canyon, Yellowstone, Yosemite, Zion). Reservation fee: NPS campgrounds generally fold recreation.gov's $6-8 per-reservation cost into the nightly fee rather than charging it separately (Congaree: 'the park assumes these costs'; Gulf Islands: 'camping fees are used to cover this expense'). No agency-wide statement was found, so it is left unset. Tax: NPS-run campgrounds post untaxed fees, while concessioner-run ones add tax (Yellowstone: '$38 + taxes').",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.nps.gov/slbe/planyourvisit/campingfees.htm",
+        "quote": "Camping fees are in addition to the standard Park Entrance Fee, including camping on North and South Manitou Island."
+      },
+      {
+        "key": "entrance:nonresident",
+        "url": "https://www.nps.gov/aboutus/entrance-fee-prices.htm",
+        "quote": "The following national parks also charge a $100 nonresident fee to non-U.S. residents ages 16 and over."
+      },
+      {
+        "key": "entrance:range",
+        "url": "https://www.nps.gov/orgs/1207/04-12-2018-entrance-fees.htm",
+        "quote": "more than two-thirds of national parks will remain free to enter"
+      },
+      {
+        "key": "reservation_fee:absorbed",
+        "url": "https://www.nps.gov/cong/learn/news/fee-increase-to-recover-clin-costs.htm",
+        "quote": "Currently the park assumes these costs, which are deducted from the fees collected for campsite reservations."
+      },
+      {
+        "key": "reservation_fee:absorbed",
+        "url": "https://www.nps.gov/guis/planyourvisit/costofcollection.htm",
+        "quote": "camping fees are used to cover this expense."
+      },
+      {
+        "key": "tax:concessioner",
+        "url": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm",
+        "quote": "$38 + taxes"
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {
+      "entrance:range": "reported"
+    },
+    "unsettled": {
+      "entrance": "Per park, $0 at most units to $35/private vehicle (7 days) at the big parks, plus the 2026 $100 non-US-resident surcharge at 11 parks. Belongs on each entry. (The 'two-thirds free' line comes from a 2018 NPS release found via search; the current fee table loads by script and could not be read.)",
+      "reservation_fee": "Evidence points to no separate fee (two parks say they absorb recreation.gov's $6-8 CLIN cost; fee_model 0 on all 21 NPS facilities sampled), but there is no agency-wide statement, so no zero is written.",
+      "tax": "Concessioner campgrounds add tax ('+ taxes', Yellowstone); NPS-run ones don't post any. Mixed.",
+      "extra_vehicle": "Per park.",
+      "extra_person": "Per park."
+    },
+    "summary": "Nothing is agency-wide. Entrance (on top of camping, $0-35/vehicle, plus the $100 non-US-resident surcharge at 11 parks from 2026), the reservation fee (generally absorbed, not stated agency-wide), tax (concessioner campgrounds add it), vehicles and people are all per park. Senior/Access Pass is 50% where honoured. (Sleeping Bear Dunes: 50% on camping and reservation fees, not electric hookups.)"
+  },
+  {
+    "ref": "federal:bor",
+    "create": true,
+    "set": {
+      "entrance": {
+        "resident": 0,
+        "nonresident": 0
+      }
+    },
+    "remove": [],
+    "note_add": "Entrance: the law bars an entrance fee on Reclamation-managed land. A standard amenity (day-use) fee can still apply at qualifying high-investment sites. This covers only areas Reclamation manages itself (the DB's federal:bor entries are Reclamation-run Montana and Idaho sites). Reclamation reservoirs managed by state, county or concession partners charge those partners' own entry fees and should carry them on the entry. Reservation fee: Reclamation campgrounds on recreation.gov appear to add the $8 (fee_model 1 on the one sampled), but that wasn't confirmed.",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "The Secretary shall not charge an entrance fee for Federal recreational lands and waters managed by the Bureau of Land Management, the Bureau of Reclamation, or the Forest Service."
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "reservation_fee": "Only one Reclamation facility seen on recreation.gov (Jo Bonner, fee_model 1). No Reclamation statement found.",
+      "tax": "No source found.",
+      "extra_vehicle": "Per campground.",
+      "extra_person": "Per campground."
+    },
+    "summary": "Only the zero entrance fee settles (16 USC 6802(e)(2), Reclamation-managed areas only; partner-managed reservoirs are outside it). Everything else is per site or unknown. 10 entries."
+  },
+  {
+    "ref": "federal:fws",
+    "create": true,
+    "set": {},
+    "remove": [],
+    "note_add": "Entrance: national wildlife refuges are allowed to charge an entrance fee, set refuge by refuge (most charge none), and a valid federal Duck Stamp waives it. Camping on refuges is rare (10 entries) and every term is set per refuge.",
+    "sources": [
+      {
+        "key": "entrance",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "The Secretary of the Interior may charge an entrance fee for a unit of the National Park System, including a national monument administered by the National Park Service, or for a unit of the National Wildlife Refuge System."
+      },
+      {
+        "key": "entrance:duck-stamp",
+        "url": "https://www.law.cornell.edu/uscode/text/16/6802",
+        "quote": "Any person who visits a unit or area under the jurisdiction of the United States Fish and Wildlife Service and who has been issued a valid migratory bird hunting and conservation stamp"
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "entrance": "Per refuge (FLREA authorizes refuge entrance fees; most refuges charge none, but not all).",
+      "reservation_fee": "One refuge facility on recreation.gov (Doris, fee_model 1). No FWS statement.",
+      "tax": "No source found.",
+      "extra_vehicle": "Per refuge.",
+      "extra_person": "Per refuge."
+    },
+    "summary": "Nothing settles agency-wide: refuge entrance fees are allowed by law and set per refuge (a Duck Stamp waives them), and every camping term is per refuge."
+  },
+  {
+    "ref": "federal:parks-canada",
+    "create": true,
+    "set": {
+      "currency": "CAD",
+      "reservation_fee": 11.5,
+      "tax": {
+        "included": true
+      }
+    },
+    "remove": [],
+    "note_add": "Reservation fee: C$11.50 online, C$13.50 by phone, per campsite per stay (a stay is consecutive nights at one park). Each change or cancellation is another C$11.50 online or C$13.50 by phone, plus other fees close to arrival. Fees include all applicable taxes. Entry: camping fees do not include park entry, and you need a valid entry pass for every day of the visit, whether or not you go in and out that day. It is charged at most places and varies by park: C$7.25-12.25 per adult or C$15.00-24.50 per family/group (up to seven people in one vehicle) a day in 2026, Kejimkujik and Pukaskwa lowest, Banff, Jasper, Pacific Rim and Gros Morne highest. Youth 17 and under are free, and a Discovery Pass (C$167.50 family/group) covers a year. Extra vehicles: set per campground (Bruce Peninsula, Cyprus Lake: C$14.75 a night). Fire permits are extra where sold (Banff C$12-17 a day). 2026 promotion: free admission and 25% off camping from June 19 to September 7, 2026. It is over, and regular fees apply from September 8, 2026.",
+    "sources": [
+      {
+        "key": "currency",
+        "url": "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees",
+        "quote": "ADMISSION Daily * Adult $ 12.25 * Senior $ 10.75 Youth free * Family/Group $ 24.50"
+      },
+      {
+        "key": "reservation_fee",
+        "url": "https://parks.canada.ca/termes-terms/reservation",
+        "quote": "The fee to make a reservation on-line is $11.50. The fee to make a reservation by phone is $13.50. This fee is charged per campsite, per stay."
+      },
+      {
+        "key": "tax",
+        "url": "https://parks.canada.ca/termes-terms/reservation",
+        "quote": "Fees All fees listed include all applicable taxes. Fees payable when the reservation is made: Both reservation fees and camping fees are due at the time of your reservation."
+      },
+      {
+        "key": "entrance",
+        "url": "https://parks.canada.ca/termes-terms/reservation",
+        "quote": "Entry Fees: The fees charged when you make your reservation do not include the entry fees for national parks, national historic sites or national marine conservation areas. Entry fees are charged at most locations"
+      },
+      {
+        "key": "entrance",
+        "url": "https://parks.canada.ca/termes-terms/reservation",
+        "quote": "You will be required to have a valid entry pass for each day of your visit (whether you physically enter each day or not)."
+      },
+      {
+        "key": "entrance:low",
+        "url": "https://parks.canada.ca/pn-np/ns/kejimkujik/visit/tarifs-fees",
+        "quote": "Family/Group $ 15.00"
+      },
+      {
+        "key": "entrance:family-def",
+        "url": "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees",
+        "quote": "Family/Group - Up to seven people arriving in a single vehicle in a national park"
+      },
+      {
+        "key": "note:change",
+        "url": "https://parks.canada.ca/termes-terms/reservation",
+        "quote": "The fee for each change or cancellation on-line is $11.50. The fee for each change or cancellation by phone is $13.50."
+      },
+      {
+        "key": "extra_vehicle:per-park",
+        "url": "https://parks.canada.ca/pn-np/on/bruce/visit/tarifs-fees",
+        "quote": "Cyprus Lake - Additional Vehicle, per night $ 14.75"
+      }
+    ],
+    "method": "manual",
+    "method_by_key": {},
+    "unsettled": {
+      "entrance": "Per park: C$7.25-12.25 per adult, C$15.00-24.50 per family/group a day (2026; a pass is needed for every day of the stay). Belongs on each entry.",
+      "nonresident": "Park fee pages show no residency-based rate and Parks Canada sets camping fees 'based on the park, the campground, and the service type', but there is no explicit 'no non-resident rate', so no zero is written.",
+      "extra_vehicle": "Per campground (Cyprus Lake C$14.75/night; none listed at Banff).",
+      "extra_person": "Not found as a national rule."
+    },
+    "summary": "Set CAD, the C$11.50 online reservation fee (C$13.50 by phone) and tax included ('All fees listed include all applicable taxes'). Entry is payable on top for every day of the stay but varies by park (C$15-24.50 family/group a day), so it stays off the row. Non-resident, extra vehicle and extra person are unsettled."
+  }
+]

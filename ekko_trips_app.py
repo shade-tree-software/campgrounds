@@ -5074,6 +5074,19 @@ _POLICY_SYSTEM = {
 # them printed "Washington Dnr"; New York's DEC row would have read "Dec".
 _POLICY_INITIALISMS = {"dec", "dnr"}
 
+# Explicit refs whose slug cannot be spelled into a sentence at all: the
+# federal agency rows (fee-registry step 2, 2026-11-07). "Typical for Usfs"
+# would be the slug rule's reading.
+_POLICY_NAMES = {
+    "federal:usfs": "Forest Service campgrounds",
+    "federal:usace": "Army Corps of Engineers campgrounds",
+    "federal:blm": "BLM campgrounds",
+    "federal:nps": "National Park Service campgrounds",
+    "federal:bor": "Bureau of Reclamation campgrounds",
+    "federal:fws": "Fish and Wildlife Service campgrounds",
+    "federal:parks-canada": "Parks Canada campgrounds",
+}
+
 
 def _policy_label(row, registry):
     """Human phrase for the agency `row` inherits policy from, or None.
@@ -5086,6 +5099,8 @@ def _policy_label(row, registry):
     ref = next((r for r in campground_schema.policy_refs(row) if r in registry), None)
     if ref is None:
         return None
+    if ref in _POLICY_NAMES:
+        return _POLICY_NAMES[ref]
     ownership = (row.get("ownership") or "").strip()
     state = (row.get("state") or "").strip()
     system = _POLICY_SYSTEM.get(ownership)

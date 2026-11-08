@@ -585,7 +585,9 @@ stay from the fields alone, oddball cases aside):
 - **`surcharges.holiday`** is the holiday twin of `weekend` (`+$5/night on holidays`). A weekend RATE
   ("$35 Sun–Thu, $40 Fri–Sat") is stored as the weekday base plus `weekend: 5`.
 - **`fees.tax`**: `{"included": true}` = the posted rates include it; `{"percent": 7}` = added on
-  top; `{"percent": 0}` = none is charged (federal fees are untaxed); `{"included": false}` with no
+  top; `{"percent": 0}` = none is charged (only with a source saying so: federal recreation fees are
+  untaxed but concessionaire-run federal campgrounds add tax — Pines, Stanislaus NF, "+fees and taxes";
+  Yellowstone's concession campgrounds "+ taxes" — so no federal row carries a zero); `{"included": false}` with no
   percent = "plus tax" at a rate the source does not state. `name` says which tax where it matters
   ("county tourist development tax"). A local rate that varies park by park goes on the entry. Tax
   is never folded into `nightly_low`: the base stays the posted rate, so the gate compares like with

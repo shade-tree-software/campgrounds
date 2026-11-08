@@ -97,6 +97,13 @@ class TestPolicyLabel(unittest.TestCase):
                                           "policy_ref": "state:new-york-dec-campgrounds"}, registry),
                          "New York DEC Campgrounds")
 
+    def test_a_federal_agency_row_is_named_in_words(self):
+        registry = {"federal": {}, "federal:usfs": {}}
+        entry = {"ownership": "federal", "state": "CO", "policy_ref": "federal:usfs"}
+        self.assertEqual(A._policy_label(entry, registry), "Forest Service campgrounds")
+        # Until the agency row exists, the entry still reads as federal.
+        self.assertEqual(A._policy_label(entry, {"federal": {}}), "federal campgrounds")
+
     def test_no_matching_row_means_no_label(self):
         # Most of the database: private and local entries with no agency to
         # inherit from. Nothing is inherited, so there is nothing to attribute.

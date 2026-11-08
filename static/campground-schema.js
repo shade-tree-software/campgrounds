@@ -355,7 +355,7 @@ function sfChip(groupKey, field, value, cur) {
     return spans.length ? spans.join('; ') : null;
   }
   // Tax. "plus tax" alone still matters: the rate is not what the night costs.
-  // A 0% (federal fees are untaxed) is a recorded none and draws no chip.
+  // A 0% is a recorded none and draws no chip.
   if (k === 'fees.tax') {
     const v = value || {};
     const name = v.name ? ' (' + v.name + ')' : '';

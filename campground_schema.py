@@ -247,7 +247,7 @@ SCHEMA = {
                              nightly_low=NUM, nightly_high=NUM)),
         # Tax on the night (2026-11-07). `included: true` = the posted rates
         # already include it; `percent` is what is added on top (0 = none is
-        # charged: federal fees are not taxed); `included: false` with no
+        # charged); `included: false` with no
         # percent = "plus tax" at a rate the source does not give. A local
         # lodging tax that varies park by park stays on the entry, or in
         # `fees.note` as a range.
