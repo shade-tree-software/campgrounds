@@ -32,3 +32,9 @@
   Shady Dell: fcfs absent (generic rec.gov FCFS notice). 9997 Green River: note has the
   reservable/first-come loops swapped (NPS: A+B reservable, C first-come). 9944 Big Bend
   (BLM): no season; facility 251842 is the 3 group sites only (chunk 08).
+- 10073 Anderson Cove: FS page gives peak 4/24-10/31, first-come 11/1-12/31 and a "Winter
+  Non-Peak Season 01/01-4/23" (rec.gov prices a winter site), yet also says "open
+  seasonally"; chip left at 04-24..10-31 (year-round?). 10673 Cinder Hill (from 09-27),
+  10677 Fall River (from 09-17): first-come only late season, not in `booking`. 10272 Johnny
+  Creek: pages say first-come only, booking says reservable/some_sites. 10337 Bonaparte
+  Lake: FS page 404. 10272, 10286, 10294, 10337: no stated season (chunk 09).
