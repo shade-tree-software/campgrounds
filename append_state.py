@@ -17,12 +17,27 @@ the database -- so a swept-in entry carries the structured rating from its first
 commit. Without this the field was only ever filled by whoever next happened to run
 extract_rating.py across the whole file: the VA and PA re-sweep adds got theirs a
 week later by accident of the schema project, and anything added after that pass
-would have sat with no rating indefinitely. Populate only -- the note's prose tail
-is left exactly as written, because excision is the conservative half and stays
-extract_rating.py's job (see its module docstring)."""
+would have sat with no rating indefinitely.
+
+The tail is the research agent's way of handing the rating over, not note prose:
+once `rating` holds it, the clause is cut with audit/note_dupes/rvlife.py's
+matcher (AWH 2026-11-07: a note never repeats what a field shows). That matcher
+only cuts a clause whose every figure equals the field, so anything else the
+agent wrote about RV Life stays."""
 import json, sys, os, re, argparse, time
 
 from extract_rating import parse_rating
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'audit', 'note_dupes'))
+import rvlife as _rvlife  # noqa: E402
+
+
+def _policies(_c=[]):
+    if not _c:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'campground_policies.json'), encoding='utf-8') as fh:
+            _c.append(json.load(fh))
+    return _c[0]
 
 # repo root = this script's directory; resolves correctly on any machine/clone
 _REPO = os.path.dirname(os.path.abspath(__file__))
@@ -142,6 +157,9 @@ def main():
         rating, _ = parse_rating(e['note'])
         if rating:
             e['rating'] = rating
+            cut = _rvlife.propose(e, _policies())
+            if cut is not None:
+                e['note'] = cut
         # A campground added while temporarily closed (the curation rule is to add
         # it with a caveat, not withhold it) carries its closure from the first
         # commit, so the map greys it at once instead of after a backfill.
