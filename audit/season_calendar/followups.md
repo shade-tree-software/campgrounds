@@ -38,3 +38,6 @@
   10677 Fall River (from 09-17): first-come only late season, not in `booking`. 10272 Johnny
   Creek: pages say first-come only, booking says reservable/some_sites. 10337 Bonaparte
   Lake: FS page 404. 10272, 10286, 10294, 10337: no stated season (chunk 09).
+- Deschutes (chunk 10): 10678, 10679, 10686, 10704, 10733, 10743, 10755 go first-come only
+  from Sep 27 to their close (booking.season candidates); 10703, 10745, 10747 Metolius are
+  year-round with reservations ending Oct 17.
