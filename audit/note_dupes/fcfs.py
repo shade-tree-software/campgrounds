@@ -20,9 +20,12 @@ from rvlife import clean  # noqa: E402
 
 FC = r"(?:first[- ]come,?\s?first[- ]serve[d]?|FCFS)"
 NR = (r"(?:no (?:advance )?reservations(?: accepted| taken)?|not reservable|non-reservable"
-      r"|not bookable in advance|not on recreation\.gov|no online booking)")
+      r"|not bookable in advance|not on recreation\.gov|no (?:advance )?online (?:booking|reservations))")
 PURE = re.compile(rf"\s*(?:{FC}|{NR}|only|[-–—;,:()]|\s)+\s*", re.I)
-CLAUSE = re.compile(r"(?:^|(?<=[.;]\s)|(?<=--Claude\s)|(?<=--AWH\s))[^.;]*?[.;]")
+# A clause starts the note, or follows "." / ";" / an attribution marker, with
+# one or two spaces (the marker convention is double-spaced).
+CLAUSE = re.compile(r"(?:^|(?<=[.;]\s)|(?<=[.;]\s\s)|(?<=--AWH\s)|(?<=--AWH\s\s)"
+                    r"|(?<=--Claude\s)|(?<=--Claude\s\s))(?!\s|--)[^.;]*?[.;]")
 
 def ok(s, b):
     if not PURE.fullmatch(s.rstrip(".;")): return False

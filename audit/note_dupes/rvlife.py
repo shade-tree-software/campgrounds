@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 import lib  # noqa: E402
 
 STARS = r"(?P<stars>\d(?:\.\d)?)\s?(?:\*|★|\s?stars?)(?:\s?\(\d+(?:\.\d)?/10\))?"
-UNR = r"(?P<unr>(?:0\s?\*\s?)?\(?unrated(?:\s?\(0\*\))?\)?|0\s?\*)"
+UNR = r"(?P<unr>(?:0\s?\*\s?)?\(?(?:listed but )?unrated(?:\s?\(0\*\))?\)?|0\s?\*)"
 PRICE = r"(?:price(?: rating)?\s)?(?P<price>\$+|\d \$ signs?)"
 AVG = r"(?P<avg>~\s?\$\d+(?:/night| avg)?)"
 AUTO = r"(?P<auto>\((?:auto )?\d{1,2}/\d{4}(?:,\s?unrated)?\))"
@@ -61,6 +61,7 @@ def clean(note):
     n = re.sub(r"(^|--\w+\s)\s*--Claude\b", r"\1", n.strip())
     n = re.sub(r"\s+([.;,])", r"\1", n).replace(";.", ".").replace("..", ".")
     n = re.sub(r";\s*$", ".", n.strip())
+    n = re.sub(r";(\s+--\w+)", r".\1", n)             # a clause left dangling before a marker
     n = re.sub(r"--Claude\s+--Claude", "--Claude", n)
     return n.strip()
 
