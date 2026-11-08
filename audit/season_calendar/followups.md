@@ -46,3 +46,9 @@
   Creek NV: rec.gov facility is the 5 group sites, says singles are first-come; FS says
   reservations generally required — booking unclear. 10763 Diamond Lake: rec.gov "All sites
   are available by reservation only" vs fcfs some_sites; no stated season.
+- Chunk 13: 11364 Schoolhouse set temporarily_closed (lake levels) + year-round; page states
+  the reservation window two ways. 11369 Spillway: FS page "small motorhomes up to 16 foot
+  are allowed" vs rec.gov "no RV/trailer over 32' recommended" vs note 25-42 ft — fit unclear
+  (AWH: under ~20 ft = out). 11370 Aspen: page 55 first-come sites, note 27. 11350 Luna Lake:
+  FS gives only "May 15" (close dropped). First-come sites/periods missing from `booking`:
+  11350, 11363, 11369, 11373, 11386, 11388. 11388 Grayling: no stated season.
