@@ -43,3 +43,6 @@ dates and which loops stay open.
   including one on the lake", which would otherwise read as a lakeside camp spot (236).
 - "Recommended by Grok ..." --AWH openers go to `curation` (AWH answered for 15/17); other
   recommendation/sourcing lines in --AWH text are still an `ask`.
+- A "CAMPER-REPORTED RATE: ..." sentence is a fee fact like any other: cut it when the Fees
+  note gives the same report (same amount, month and source) at least as fully (chunks 003-005
+  did; 006 kept them, which is also safe).
