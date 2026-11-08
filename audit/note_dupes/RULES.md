@@ -81,3 +81,14 @@ AWH's own words: cut chip duplicates in them as above (that rule includes --AWH 
 ## Do not
 Reword, summarise, correct, reorder, merge or tidy anything else; fix typos; touch facts that
 are not in `shown`; add anything. Do not edit any file but your output file.
+
+## Calls settled in chunks 001-014
+- **To curation:** "kept as an exception ... per AWH", "Kept as a nightly stop ... (AWH date)", "Kept because trip N stayed here", "AWH <date> (driven past)", "Added by cross-referencing ...", "rest on directory listings (checked ...)", "RV Life mis-tags it ...", "RV Life N★/$$, N reviews; confirmed operating", "RV Life N stars (few reviews)", "RV Life rating not recorded", "Currently operating per ...", "PIN APPROXIMATE ... verify", "FLAGGED:", "Aggregator claims ... official wins", "a real campground, not event-only / not equestrian-only / general campground", "Under $50/night" (the sweep's price gate), audit stamps, and a named private person (a manager or host by name).
+- **Cut:** a minimum-stay segment the Booking chip states at least as specifically; amenities inside a list (showers, dump station, flush/vault toilets, laundry, WiFi, potable water) when a Facilities chip shows the same item; an older --Claude "FCFS" when `shown.Booking` says "no walk-up sites" (a later, dated finding).
+- **Passed closures:** a --Claude closure/construction caveat whose dates have fully passed AND that a later "Rechecked" line says is over: move both to curation as one verbatim piece ending in a single --Claude. Without such a recheck, keep it.
+- **Seasons:** where the note's season disagrees with the Season chip, keep the note's. Keep holiday-anchored seasons ("Memorial Day-Labor Day").
+- **Leave alone:** "(waterfront none)"-style tags (a script handles them).
+- **Ask, don't cut:**
+  - An RV Life star figure with no ★ chip in `shown.Rating`: leave it untouched and ask "stars missing from rating".
+  - A note saying reservable/bookable when `shown.Booking` says "not reservable": cut neither, and ask "booking chip contradicts note".
+- **Readability:** after a cut, what is left still reads as English. No dangling "+", "but" or "--", no sentence starting mid-word, and no one-word leftover sentence like "Back-ins.". If the leftover says almost nothing, keep the original words that carry it.
