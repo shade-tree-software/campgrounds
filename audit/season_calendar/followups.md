@@ -13,3 +13,9 @@
   Reserved nights on only 2 of 36 sites and 12070 Curly Jack on 2 standard sites (note says
   individual sites FCFS, groups reservable) - left not reservable. 6478, 6505, 6511, 10331,
   11905, 11908, 13272 showed no booked night Jul-Oct 2026 - left as is.
+- 6405 Nash Fork, 6443 Brooklyn Lake: FS pages post a 22-ft trailer limit (22 ft does not
+  fail, AWH 2026-10-20); 6405's note says RVs to ~25 ft.
+- 6510 Vedauwoo, 6467 Fremont Lake: pages describe first-come sites; `booking.fcfs` absent.
+- 6414 Ryan Park, 6476 Hog Park: open in winter with no fees or services, as road access
+  permits; season left as the serviced span.
+- 6488 Libby Creek Willow, 6495 North Fork: no agency season stated (chunk 05).
