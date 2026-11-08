@@ -579,6 +579,11 @@
   .cg-typical { color: #8a7a4a; }
   .cg-typical-note { color: #8a7a4a; font-size: .9em; margin-top: .15rem; }
   .cg-fact-note { color: #555; font-size: .95em; line-height: 1.35; margin: .05rem 0 .15rem; }
+  /* Booking / fees / sites notes are often a paragraph (a fee table, minimum
+     stays by site type), so they open folded to one line; a tap unfolds it. */
+  .cg-fact-note.folded { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
+    overflow: hidden; cursor: pointer; }
+  .cg-fact-note.folded.open { display: block; }
 
   /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
   .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
@@ -1635,6 +1640,8 @@ function cgFactRow(label, ownChips, agencyChips) {
   return `<div><b>${escapeHtml(label)}</b>${shown}${extra}</div>`;
 }
 
+const CG_FACT_NOTE_GROUPS = new Set(['season', 'booking', 'fees', 'sites']);
+
 function cgFactsHtml(d) {
   if (!d.policy) return '';
   // Without a name for the agency the inherited values cannot be attributed,
@@ -1656,14 +1663,20 @@ function cgFactsHtml(d) {
       ? sfPopupChips(g, block.values, inherited) : [];
     let row = cgFactRow(g.label, own, agency);
     if (row.includes('cg-typical')) anyTypical = true;
-    // The season's own note is the one group note a camper plans around: which
-    // loops stay open in winter, and — on a month-level season — the wording the
-    // stored days were widened from ("Approximate: May to October"), so a day
-    // the source never published can't pass for one (AWH 2026-11-07). Only the
-    // entry's own note; an agency's is a default, not a fact about this park.
-    if (g.key === 'season' && verified.has('note') && block.values.note) {
+    // A group's own note says what its chips can't. The season note shows in
+    // full: which loops stay open in winter, and — on a month-level season —
+    // the wording the stored days were widened from ("Approximate: May to
+    // October"), so a day the source never published can't pass for one (AWH
+    // 2026-11-07). Booking, fees and sites notes (minimum stays by site type,
+    // the fee table, pad sizes) show folded to one line, since several run to a
+    // paragraph; the entry's main note no longer repeats them (AWH 2026-11-08).
+    // Only the entry's own note: an agency's is a default, not a fact about
+    // this park.
+    if (CG_FACT_NOTE_GROUPS.has(g.key) && verified.has('note') && block.values.note) {
       if (!row) row = `<div><b>${escapeHtml(g.label)}</b></div>`;
-      row += `<div class="cg-fact-note">${escapeHtml(block.values.note)}</div>`;
+      const fold = g.key === 'season' ? '' : ' folded" title="Tap to read all"'
+        + ' onclick="this.classList.toggle(\'open\')';
+      row += `<div class="cg-fact-note${fold}">${escapeHtml(block.values.note)}</div>`;
     }
     rows += row;
   });

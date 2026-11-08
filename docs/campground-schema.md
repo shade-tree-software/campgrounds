@@ -1355,6 +1355,8 @@ The popup is a summary — six chips a row, **at most four of them inherited**, 
 first so the cap always trims the defaults, then a `+N more` tail. The manage form is where every value is visible and the only
 place any of them can be edited.
 
+**A group's own `note` rides under its row** for `season`, `booking`, `fees` and `sites`, and only the entry's own (an agency's note is a default, not a fact about the park). The season note shows in full; the other three open folded to one line and a tap unfolds them, since a fee table or a set of minimum stays by site type runs to a paragraph. These used to be Manage-only, with just the season note in the popup; AWH 2026-11-08 had the main note stop repeating them (curation doc), which would have hidden them from campers, so they moved into the popup.
+
 ### 8.7 A chip is read by someone who has never seen the schema
 
 The stored shapes are terse because storage should be; the chips were terse because they
