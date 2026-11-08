@@ -52,3 +52,11 @@
   (AWH: under ~20 ft = out). 11370 Aspen: page 55 first-come sites, note 27. 11350 Luna Lake:
   FS gives only "May 15" (close dropped). First-come sites/periods missing from `booking`:
   11350, 11363, 11369, 11373, 11386, 11388. 11388 Grayling: no stated season.
+- Chunk 14: notes cut — 11373 ", open about May-Oct", 11389 "; open ~Apr-Nov" (FS: Apr 1-Oct 31),
+  11418 "open ~mid-May to mid-Sep, " (the Sep edge was the calendar's; FS states no close).
+  11395 White Horse Lake: FS max length 38 ft vs entry 45; FS 94 single sites vs note 77 + 10
+  doubles. 11895 Rocky Rest: page states Apr 17-Oct 15 AND Memorial-Labor Day (left).
+  11915 Merrill: close given two ways (left out); 45 walk-in sites. 11435 Dairy Springs: FS
+  "Early-May to mid-October". First-come sites/periods missing from `booking`: 11389 (Apr 1-14
+  all first-come), 11395, 11849 (reservations late spring-early fall only). No stated season:
+  11397 Winn, 11865 Minersville.
