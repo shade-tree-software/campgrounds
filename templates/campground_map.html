@@ -3608,6 +3608,28 @@ function trimmedBounds(coords, frac) {
     [q(lats, 1 - frac), q(lngs, 1 - frac)]
   );
 }
+
+// ── Collapse the legend when it collides with the left-side buttons ─────────
+// On a short window the expanded legend (bottom-left) reaches up over the
+// top-left button stack (locate, route, About, and an admin's roadside-stop
+// button). Checked once on load, after the admin script below has added its
+// button (DOMContentLoaded waits for every parser-inserted script); the reader
+// can still expand it by tapping its header (AWH 2026-11-09).
+function collapseLegendIfCrowded() {
+  const legend = legendControl.getContainer();
+  if (legend.classList.contains('collapsed')) return;
+  const lr = legend.getBoundingClientRect();
+  const corner = map.getContainer().querySelector('.leaflet-top.leaflet-left');
+  const GAP = 8;
+  const hits = Array.from(corner ? corner.children : []).some(el => {
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) return false;              // hidden control
+    return r.bottom + GAP > lr.top && r.top < lr.bottom
+        && r.left < lr.right && r.right > lr.left;
+  });
+  if (hits) legend.classList.add('collapsed');
+}
+document.addEventListener('DOMContentLoaded', collapseLegendIfCrowded);
 </script>
 
 {% if is_admin %}
