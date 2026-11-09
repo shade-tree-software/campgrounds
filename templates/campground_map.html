@@ -534,6 +534,24 @@
   .cgf-check input { width: 1.05rem; height: 1.05rem; margin: 0; flex-shrink: 0; cursor: pointer; }
   .cgf-check .cgf-text { flex: 1; }
   .cgf-check.cgf-strong { font-weight: 600; }
+  /* A label carrying an info button: the button sits right after the words,
+     and the gap before the count goes after the button instead. */
+  .cgf-check .cgf-text.cgf-text-info { flex: 0 1 auto; }
+  .cgf-info {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: -.3rem 0 -.3rem -.3rem;
+    padding: .3rem;
+    border: none;
+    background: none;
+    color: var(--gray);
+    cursor: pointer;
+  }
+  .cgf-info svg { display: block; }
+  .cgf-info:hover, .cgf-info[aria-expanded="true"] { color: var(--navy); }
+  .cgf-hint.cgf-info-text { margin: 0 0 .35rem 1.55rem; }
   .cgf-count { color: var(--gray); font-size: .78rem; font-variant-numeric: tabular-nums; }
   .cgf-hint { margin: .35rem 0 0; font-size: .78rem; line-height: 1.35; color: var(--gray); }
   .cgf-hint:empty { display: none; }
@@ -2070,11 +2088,12 @@ function setOnWaterOnly(on) {
 
 const ownerOrder = Object.keys(OWNERSHIP_LABELS);
 const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
-// HipCamp always sits last, below values the label table doesn't list
-// (Canada's "provincial"), AWH 2026-11-09.
-const ownerValues = ownerOrder.filter(k => presentOwners.has(k) && k !== 'hipcamp')
+// State WMA then HipCamp always sit last, below values the label table
+// doesn't list (Canada's "provincial"), AWH 2026-11-09.
+const OWNERS_LAST = ['wma', 'hipcamp'];
+const ownerValues = ownerOrder.filter(k => presentOwners.has(k) && !OWNERS_LAST.includes(k))
   .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort())
-  .concat(presentOwners.has('hipcamp') ? ['hipcamp'] : []);
+  .concat(OWNERS_LAST.filter(k => presentOwners.has(k)));
 const ownerCounts = new Map();
 CAMPGROUNDS.forEach(cg => ownerCounts.set(ownerKey(cg), (ownerCounts.get(ownerKey(cg)) || 0) + 1));
 
@@ -2497,6 +2516,35 @@ function filterCheck(sec, text, get, set, opts = {}) {
   t.className = 'cgf-text';
   t.textContent = text;
   row.appendChild(t);
+  let tip = null;
+  if (opts.info) {
+    // An info button beside the label. A tap shows the text under the row
+    // (a hover title alone never reaches a phone); it must not also toggle
+    // the checkbox the label wraps.
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cgf-info';
+    btn.title = opts.info;
+    btn.setAttribute('aria-label', 'About ' + text);
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">'
+      + '<circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/>'
+      + '<circle cx="8" cy="4.8" r="1" fill="currentColor"/>'
+      + '<path d="M8 7.2v4.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const open = tip.hidden;
+      tip.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    t.after(btn);
+    t.classList.add('cgf-text-info');
+    tip = document.createElement('p');
+    tip.className = 'cgf-hint cgf-info-text';
+    tip.textContent = opts.info;
+    tip.hidden = true;
+  }
   if (opts.count != null) {
     const c = document.createElement('span');
     c.className = 'cgf-count';
@@ -2504,6 +2552,7 @@ function filterCheck(sec, text, get, set, opts = {}) {
     row.appendChild(c);
   }
   sec.appendChild(row);
+  if (tip) sec.appendChild(tip);
   filterSyncers.push(() => { cb.checked = get(); });
   return t;
 }
@@ -2594,10 +2643,14 @@ if (presentClimate.length) {
 const ownerSec = filterSection('Ownership');
 // The caveat is the filter menu's only; popups keep the plain label.
 const OWNER_FILTER_SUFFIX = { hipcamp: ' (experimental)' };
+const OWNER_FILTER_INFO = {
+  wma: 'State-run Wildlife Management Areas (WMAs) sometimes allow camping but typically have no facilities and may not have individually-marked campsites.',
+  hipcamp: 'Only a small number of HipCamp sites are included in the database at this time.',
+};
 ownerValues.forEach(v => filterCheck(ownerSec, ownerLabel(v) + (OWNER_FILTER_SUFFIX[v] || ''),
   () => !hiddenOwnerships.has(v),
   on => { if (on) hiddenOwnerships.delete(v); else hiddenOwnerships.add(v); },
-  { count: ownerCounts.get(v) }));
+  { count: ownerCounts.get(v), info: OWNER_FILTER_INFO[v] }));
 
 // Unlike the structured filters this hides a KNOWN value (`status.operating`),
 // so hiding is allowed outright (doc §2.2 only protects unknowns).
