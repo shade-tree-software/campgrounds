@@ -134351,53 +134351,76 @@
     "id": 1863,
     "kind": "campground",
     "name": "Berry Bend",
-    "location": "38.1997,-93.5100",
-    "elevation_meters": 218.0,
+    "location": "38.1854,-93.5121",
+    "elevation_meters": 236.0,
     "state": "MO",
     "ownership": "federal",
     "waterfront": "lakeview",
     "inclusion_evidence": "recreation.gov 233425: Loop B 7 full-hookup 50A, Loop C 86 electric 30/50A drive-in RV sites -> keep",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string) | p3-330 (2026-11-09): lakeview kept - C Loop's south-end sites ~49-60 on open grass with scattered trees ~50-80 m from the normal-pool shoreline, a footpath between (no apron at the water); west 89-94 70-90 m through woods; B Loop in woods",
     "website": "https://www.recreation.gov/camping/campgrounds/233425",
-    "note": "USACE Truman Lake campground on a wooded peninsula with 91 electric sites in two loops (B Loop 7 full-hookup 50A; C Loop 30/50A); reservable online, seasonal. --Claude",
+    "note": "USACE Truman Lake campground on a wooded peninsula, in two loops. B Loop's seven full-hookup sites are in the woods away from the lake. C Loop fills the peninsula tip; its south-end sites (about 49-60) sit on open grass with scattered trees looking toward the lake. Boat ramp, playground, and hiking and horse trails. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
       "sewer": true
     },
     "sites": {
-      "count": 91
+      "count": 91,
+      "max_rig_ft": 75,
+      "pull_through": false
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-30"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "The minimums are from the campground's posted notice ('This park requires a 3 night minimum stay on holiday weekends and 2 night minimum stay on weekends'); recreation.gov's booking rules carry no minimum (value 0). A camping permit from the park booth is required before setting up."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/233425 ('B loop consists of 7 campsites ... with full hook-ups including 50-amp electricity, water, and sewage') + campsite catalog (B002-B008 50 amp, water Y, sewer Y), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 233425: 91 STANDARD ELECTRIC overnight sites (7 B, 84 C) permitting RV/Trailer/Tent, max vehicle length 50-75 ft, every site 'Driveway Entry' Back-In, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov rate seasons (Non-Peak from 03-01, Peak 04-15..09-30, Non-Peak to 11-30) and availability calendar (Nov 2026 loaded through Nov 30; nothing loaded Dec 2026-Feb 2027; March 2027 open from Mar 1), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/233425 (notice: 'Campers must have permit before camping. Available at park booth ... This park requires a 3 night minimum stay on holiday weekends and 2 night minimum stay on weekends'; rules maxConsecutiveStay 14), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233425/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233425/rates (Peak STANDARD ELECTRIC $30, template 1c32aba2 $35, B-STANDARD ELECTRIC $40; Off Peak STANDARD ELECTRIC $14, B $24) matched to each site's fee templates in the campsite catalog, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/camping/campgrounds/233425 ('Amenities include flush and pit toilets, showers, drinking water, laundry facilities, and a dump station'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -134407,10 +134430,48 @@
     },
     "fees": {
       "nightly_low": 14,
-      "nightly_high": 35,
-      "currency": "USD"
+      "nightly_high": 40,
+      "currency": "USD",
+      "seasonal": [
+        {
+          "name": "off-peak",
+          "opens": "03-01",
+          "closes": "04-14",
+          "nightly_low": 14,
+          "nightly_high": 24
+        },
+        {
+          "name": "peak",
+          "opens": "04-15",
+          "closes": "09-30",
+          "nightly_low": 30,
+          "nightly_high": 40
+        },
+        {
+          "name": "off-peak",
+          "opens": "10-01",
+          "closes": "11-30",
+          "nightly_low": 14,
+          "nightly_high": 24
+        }
+      ],
+      "note": "Peak: C Loop $30, C Loop sites 39-78 (water at the site) $35, B Loop full hookups $40. Off-peak: C Loop $14, B Loop $24."
     },
-    "policy_ref": "federal:usace"
+    "policy_ref": "federal:usace",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "laundry": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.recreation.gov/camping/campgrounds/233425 (description, notices, rules via https://www.recreation.gov/api/camps/campgrounds/233425), read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/233425/rates (Peak 2026-04-15..09-30 and 2027-04-15..09-30; Non-Peak 2026-03-01..04-14, 2026-10-01..11-30, 2027 the same), read 2026-11-09 recreation.gov campsite catalog (https://www.recreation.gov/api/search/campsites?fq=asset_id:233425, 91 overnight sites + 2 group shelters, with fee templates and site points), read 2026-11-09 recreation.gov availability calendar months 2026-11 to 2027-04 and 2027-10/11, read 2026-11-09 Esri World Imagery (leaf-off, lake drawn down) frames over the B and C loop site points, viewed 2026-11-09",
+      "note": "Confirmed with changes: season Mar 1 - Nov 30 (was seasonal, no dates); fees $14-40 with peak/off-peak spans (high was $35, missed B Loop's $40); 91 sites, max 75 ft, all back-in; facilities incl. laundry and dump; weekend/holiday minimums from the posted notice. Lakeview kept (C Loop south end). PIN 1.6 km off - move to the C Loop. Phone to add."
+    },
+    "phone": "660-438-3872"
   },
   {
     "id": 1864,
@@ -135666,41 +135727,62 @@
     "elevation_meters": 284.0,
     "state": "MO",
     "ownership": "federal",
-    "waterfront": "lakeview",
+    "waterfront": "lakefront",
     "inclusion_evidence": "recreation.gov 232526: ~30 Standard Electric + ~31 Standard Nonelectric, RVs allowed -> real USACE RV campground",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string) | p3-330 (2026-11-09), UP lakeview -> lakefront: on legible leaf-off imagery the point's outer sites 22 (55 ft), 23, 24 and 25 have pads ~10-20 m from the riprap shore at the top of the bank with no road, lot or beach between (the loop road and marina lot are inland of them). South row 3-16 is 30-50 m up a wooded slope (filtered view); 26-31 behind the loop road; west loop 47-60 ~150 m inland.",
     "website": "https://www.recreation.gov/camping/campgrounds/232526",
-    "note": "USACE Table Rock Lake campground near Cassville on the White River Arm, 23 of 61 sites with 50A electric+water plus an adjacent marina and swim area; reservable online. --Claude",
+    "note": "Grassy, partly wooded USACE campground on a point of Table Rock Lake's White River arm near Cassville, beside a marina, boat ramp and swim area. Electric sites sit at the tip of the point (23-31; 22-25 are the lake-edge pads) and in the upper west loop (47-60); the non-electric south row looks through trees to the lake. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
       "sewer": true
     },
     "sites": {
-      "count": 61
+      "count": 61,
+      "max_rig_ft": 65,
+      "pull_through": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ]
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 232526: 'Electricity Hookup' 50 on sites 23-29 and 31, 30 on 30 and 47-60 (52 is 15); 'Water Hookup' Y on all 22 electric sites; 'Sewer Hookup' Y on 47-56, 58, 60, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 232526: 61 standard overnight sites (22 electric, 39 non-electric, 59 reservable), max vehicle lengths 15-65 ft, every site 'Driveway Entry' Back-In, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232526 (rules maxStay 14 nights in a rolling 30 days, minHolidayWeekendStay 3, minWeekendStay 0; 59 of 61 sites reservable), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232526/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232526/rates (Peak STANDARD NONELECTRIC $16, STANDARD ELECTRIC $28, template 'ELECTRICu21' $25) with each site's fee template from the campsite catalog (sites 23-31 on the $25 template, 47-60 on $28), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/camping/campgrounds/232526 ('hot showers, drinking water, a dump station'; amenities Flush Toilets, Showers, Dump Station), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "recreation.gov rates (Peak Season May 1 - Sep 14 in 2025, 2027 and 2028; Sep 15 in 2026) and availability calendar (2026 inventory ends after the night of Sep 15, nothing loaded Oct 2026 or Apr 2027, May 2027 opens May 1, 2027 inventory runs to the night of Sep 14), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -135711,9 +135793,27 @@
     "fees": {
       "nightly_low": 16,
       "nightly_high": 28,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Non-electric sites $16; 50-amp water sites (23-31) $25; 30-amp water/sewer sites (47-60) $28."
     },
-    "policy_ref": "federal:usace"
+    "policy_ref": "federal:usace",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "09-14"
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.recreation.gov/camping/campgrounds/232526 (facility description, notices, rules via https://www.recreation.gov/api/camps/campgrounds/232526), read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/232526/rates (Peak Season 2025-05-01..09-14, 2026-05-01..09-15, 2027-05-01..09-14, 2028-05-01..09-14), read 2026-11-09 recreation.gov campsite catalog (https://www.recreation.gov/api/search/campsites?fq=asset_id:232526, 61 sites), read 2026-11-09 recreation.gov availability calendar months 2026-09, 2026-10, 2027-04, 2027-05, 2027-09, read 2026-11-09 Esri World Imagery (leaf-off, lake below normal pool) 760 m frame over the catalog's 61 site points, plus 180-200 m frames on the point (sites 19-31) and the south row (1-16), viewed 2026-11-09",
+      "note": "Confirmed with changes: season May 1 - Sep 14 added; fees $16-28 confirmed with a per-type note; 61 sites, max 65 ft, all back-in; 22 electric (8 at 50 amp), 11 with sewer; holiday 3-night minimum added. Lakefront lead for point sites 22-25. Pin on the point is fine. Phone to add."
+    },
+    "phone": "417-271-3190"
   },
   {
     "id": 1884,
@@ -138382,51 +138482,61 @@
     "inclusion_evidence": "recreation.gov 234044 site list: standard family sites '1 RV and 1 tent', Loop 200 50A electric, dump station -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 36.962,-90.983: RV loops set back ~150m behind woods/road from the Current River sand bar; rec.gov lists no riverfront sites (river 'flows past')",
     "website": "https://www.recreation.gov/camping/campgrounds/234044",
-    "note": "Large NPS Ozark Riverways campground (~123 sites) on the Current River near Van Buren; one 50A electric loop (200) and the rest basic, showers seasonal; reservable online; open year-round. --Claude",
+    "note": "Large NPS campground on the Current River near Van Buren, in woods behind the river's gravel bars, with paved roads and spurs. Electric sites are in loop 200; loops 100 and 200 stay open in winter, when the water is off except at the heated shower house. Loop 300 has the shortest sites (21-30 ft). --Claude",
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "sites": {
-      "count": 123
+      "count": 130,
+      "max_rig_ft": 76,
+      "pull_through": true
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
     },
     "season": {
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/234044 notices ('50-amp electric hookups are now available in the 200 loop only'; 'There is no direct water hook up at the campsites'; 'There are no sewer hookups'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 234044: 130 standard overnight sites (loop 100 24, 200 28 electric, 300 19, 400 21, 500 18, 600 20), max vehicle lengths 21-76 ft, two pull-throughs (one in loop 300, one in 600), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/234044 ('flush toilets and shower facilities'; notices: water fill 'at the station near the front entrance', 'A dump station is available at the campground entrance', heated shower house/flush restrooms stay open when the water is off), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/234044 ('This year-round campground') + availability calendar (loops 100 and 200 Available through Nov 2026 - Mar 2027, loops 300-600 Closed), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234044 (all standard sites reservable; rules maxStay 14 days in a rolling 30 days, no minimum-stay rule), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234044/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234044/rates (Peak STANDARD NONELECTRIC $20 / STANDARD ELECTRIC $30; Off Peak $10 / $20), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -138437,9 +138547,32 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "seasonal": [
+        {
+          "name": "Peak",
+          "opens": "04-15",
+          "closes": "10-15",
+          "nightly_low": 20,
+          "nightly_high": 30
+        },
+        {
+          "name": "Off-peak",
+          "opens": "10-16",
+          "closes": "04-14",
+          "nightly_low": 10,
+          "nightly_high": 20
+        }
+      ],
+      "note": "Non-electric sites $20, electric (loop 200) $30 from Apr 15 to Oct 15; $10 and $20 the rest of the year."
     },
-    "policy_ref": "federal:nps"
+    "policy_ref": "federal:nps",
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.recreation.gov/camping/campgrounds/234044 (facility description, notices, rules via https://www.recreation.gov/api/camps/campgrounds/234044), read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/234044/rates (Peak Season Apr 15 - Oct 15, Non-Peak Oct 16 - Apr 14, 2025-2028), read 2026-11-09 recreation.gov campsite catalog (https://www.recreation.gov/api/search/campsites?fq=asset_id:234044, 130 standard sites in loops 100-600 plus group/picnic sites), read 2026-11-09 recreation.gov availability calendar months 2026-11 through 2027-03, read 2026-11-09 Esri World Imagery (leaf-off) 2.3 km frame over the site points and 400 m frames on the south (100-300) and north (400-600) loops, viewed 2026-11-09",
+      "note": "Confirmed with changes: 130 standard sites (was ~123), max 76 ft, 2 pull-throughs; 50 amp in loop 200 only, no water or sewer hookups; fees $10-30 with peak/off-peak spans; year-round with loops 100-200 open in winter; max 14 nights. Not waterfront confirmed. Pin OK. Phone to add."
+    },
+    "phone": "573-323-4236"
   },
   {
     "id": 1926,
@@ -953289,7 +953422,7 @@
     "inclusion_evidence": "City of Salisbury (salisburymo.net): Bill Leach RV Park & Campground with full hook-up RV sites ($30/day, $500/month), primitive tent sites, shower house; pay at City Hall drop box; closes for winter",
     "website": "https://salisburymo.net/rv-park-campground/",
     "phone": "660-388-6197",
-    "note": "City of Salisbury campground in the city park by the lake. Full-hookup RV sites and a few tent sites, shower house. $500/month; pay at the City Hall drop box. Seasonal - closed in winter. --Claude",
+    "note": "City of Salisbury campground in the city park above a small fishing lake, beside the golf course: a row of back-in full-hookup RV pads along the park road, a few primitive tent sites ($10) and a shower house. Pay at the City Hall drop box (128 W 2nd St) or the City Clerk on arrival. Closed in winter; no dates posted. --Claude",
     "hookups": {
       "water": true,
       "sewer": true
@@ -953302,23 +953435,24 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://salisburymo.net/rv-park-campground/ ('full hook-up camp sites'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://salisburymo.net/rv-park-campground/ ('the amenities of our shower house'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://salisburymo.net/rv-park-campground/ ('Our campground is generally closed during the winter months'; no dates given), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://salisburymo.net/rv-park-campground/, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://salisburymo.net/rv-park-campground/ ('RV Site rates are as follows: $30.00 per day, $500.00 per month'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -953330,7 +953464,12 @@
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD",
-      "note": "RV sites $30/day, $500/month; tents $10."
+      "note": "$500 a month."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://salisburymo.net/rv-park-campground/ (City of Salisbury), read 2026-11-09 Google Maps listing 'Bill Leach R.V. Park and Campground' (4.1, 9 reviews), read 2026-11-09 Esri World Imagery 440 m and 1.2 km frames over the park and lake, viewed 2026-11-09; city panorama photo https://salisburymo.net/wp-content/uploads/2021/06/campground-panoramic-1024x275.jpg",
+      "note": "Confirmed: $30 a night ($500 a month), full hookups, shower house, closed in winter (no dates on the city page). Not waterfront confirmed (lake ~95 m off across the park road). Pin and phone OK."
     }
   },
   {
@@ -967509,7 +967648,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 8 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/ben-branch-lake-conservation-area",
     "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (563 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'); MDC maps 8 camping spots across the area. 14-day limit in any 30. Site length not published. From Linn, take Highway 89 northeast 10 miles, then County Road 314 west to the area. --Claude",
+    "note": "Wooded primitive camping area on a gravel pull-off lane beside Ben Branch Lake Trail, north of the 39-acre lake, with a privy; MDC calls it a 12-vehicle pull-off camping area. The lake is about 200 m south through the woods. Spot length is not published. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -967517,27 +967656,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/ben-branch-lake-conservation-area (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/ben-branch-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mdc.mo.gov/discover-nature/places/ben-branch-lake-conservation-area ('Facilities on the lake include a (12-vehicle) pull-off camping area, a fishing jetty, and privy accessible to persons with disabilities') + area map 7824map.pdf (privy symbol beside the primitive-camping symbol), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -967548,11 +967693,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/ben-branch-lake-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-05/7824map.pdf (MDC map 'Last Updated - 10/17/2018'), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (8 points) and /26 'Parking Lots' (5 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 500 m frame around 38.5731,-91.7887 with the GIS points drawn, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Individual Campsites' = one 12-vehicle pull-off camping area; the 8 GIS camping points all sit within ~200 m on one gravel lane (one cluster, no split). Free, FCFS, no hookups, 14-day limit; privy added. Pin is on the lane. Not waterfront confirmed. Phone matches."
     }
   },
   {
@@ -968749,7 +968903,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 5 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area",
     "phone": "816-271-3100",
-    "note": "Missouri Department of Conservation area (5,110 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'); MDC maps 5 camping spots across the area. 14-day limit in any 30. Site length not published. From Maryville, take Highway 46 west 14 miles to the area.Starting on October 31, Highway 46 is to close east of Bilby Ranch and will remain closed for some time while they replace the bridge of the Nodaway River. Anyone coming from the east will need to find an alternative route at Highway 113. --Claude",
+    "note": "Rolling prairie and cropland around Bilby Ranch Lake west of Maryville, with primitive camping at gravel lots on the county roads around the edge of the area: this one on the west side at 250th Street, others on 240th Street to the north and on 250th Street to the east. The southwest-corner camping near Highway 46 is its own entry. None is at the lake. No facilities; spot length is not published. MDC's area page (read November 2026) says Highway 46 is closed east of the area for a Nodaway River bridge replacement - from the east, detour via Highway 113. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -968757,23 +968911,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -968788,12 +968943,19 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
-    }
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2023-04/8733map.pdf (last updated 12/21/2021), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (5 points) and /26 'Parking Lots' (10 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery frames on each camping point and its lot, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Individual Campsites', free, FCFS, no hookups, 14-day limit. Five GIS camping points at four places around the perimeter, each on a gravel lot off a county road; pin on the west 250th St lot is right. One split candidate (SW corner, 2 spots near Hwy 46). Phone matches."
+    },
+    "curation_note": "p3-330 (2026-11-09): split - the southwest-corner camping (2 spots, 2.7-3.2 km south, own lots) is now 15632."
   },
   {
     "id": 13768,
@@ -969450,7 +969612,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 3 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/birdsong-conservation-area",
     "phone": "417-853-4592",
-    "note": "Missouri Department of Conservation area (430 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 3 camping spots across the area. 14-day limit in any 30. Site length not published. From Collins, take Highway 54 west about 4 miles, then Route J south 2.50 miles. --Claude",
+    "note": "Oak savanna, glades and grassland along Brush Creek west of Collins, with three primitive camping spots, each beside a small gravel lot on the road through the area: this one off Route J at the south lot, the others at the road bend ~750 m north and at the north lot ~1.1 km northwest. No facilities; spot length is not published. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -969458,23 +969620,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/birdsong-conservation-area (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/birdsong-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -969489,11 +969652,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/birdsong-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8043map.pdf (last updated 6/23/2025), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (3 points) and /26 'Parking Lots' (3 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 1.2 km frame over the area and 140 m frame on the pin, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites', free, FCFS, no hookups, 14-day limit. Three single spots ~0.75-1.1 km apart, each by a gravel lot on the same road - no split. Pin is in the grass ~60 m from the south lot (fine; lot coords given). Not waterfront confirmed. Phone matches."
     }
   },
   {
@@ -969854,8 +970023,8 @@
     "id": 13786,
     "kind": "campground",
     "name": "Big Cane Conservation Area",
-    "location": "36.50874,-90.47477",
-    "elevation_meters": 101.0,
+    "location": "36.50894,-90.47529",
+    "elevation_meters": 103.0,
     "state": "MO",
     "ownership": "state",
     "waterfront": "not waterfront",
@@ -969863,7 +970032,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 3 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/big-cane-conservation-area",
     "phone": "573-290-5730",
-    "note": "Missouri Department of Conservation area (2,154 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 3 camping spots across the area. 14-day limit in any 30. Site length not published. Area consists of two tracts. --Claude",
+    "note": "Black River floodplain forest on the Arkansas line, with three primitive camping areas in the larger tract, all off County Road 276: one at the small gravel lot where the area road ends, one along that road to the west, and one beside the gravel boat-ramp lot on Cane Creek Ditch at the east end of CR 276. No facilities. Spot length is not published. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -969871,23 +970040,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/big-cane-conservation-area (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/big-cane-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -969902,11 +970072,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/big-cane-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8014map.pdf (MDC map dated 10/08), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (3 points) and /26 'Parking Lots' (7 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 1.5 km frame over the area and 240-300 m frames on each camping point, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites', three primitive camping areas (page: 'The area includes three primitive camping areas'), free, FCFS, no hookups, 14-day limit. The GIS camping points sit 50-80 m into the woods off small gravel lots; PIN in unbroken forest - move ~50 m to the gravel lot. No split (all three within 1.1 km off CR 276). Phone matches."
     }
   },
   {
@@ -976057,7 +976233,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/big-buffalo-creek-conservation-area",
     "phone": "660-530-5500",
-    "note": "Missouri Department of Conservation area (3,612 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From Versailles, take Highway 52 west 10 miles, then Route FF south 8 miles to the end of the blacktop, turn on Big Buffalo Road west, and watch for area signs. --Claude",
+    "note": "Primitive camping on two open grassy loops with gravel drives and pull-offs, beside the paved lot on Big Buffalo Road, with a privy. The 6-acre Heron Lake is across the road and Big Buffalo Creek beyond it. The area is reached on gravel past the end of the blacktop. Spot length is not published. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -976065,27 +976241,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/big-buffalo-creek-conservation-area (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/big-buffalo-creek-conservation-area (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "Area map https://mdc.mo.gov/sites/default/files/2023-10/6315map_0.pdf (privy symbol beside the primitive-camping symbol at the parking lot by Heron Lake), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -976096,11 +976278,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/big-buffalo-creek-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2023-10/6315map_0.pdf (MDC map 'Last Updated - 10/2/2023'), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (1 point) and /26 'Parking Lots' (3 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 500 m frame around 38.3335,-93.0880, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Individual Campsites' = one primitive camping area (1 GIS point) on open grassy gravel loops beside the paved lot; free, FCFS, no hookups, 14-day limit; privy added. Pin is on it. Not waterfront confirmed (lake across the road). Phone matches."
     }
   },
   {
@@ -978350,65 +978541,6 @@
     },
     "note_scan": {
       "sig": "9d1457e3406f965c",
-      "checked": "2026-09-29",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
-    },
-    "policy_ref": "state:missouri-conservation-areas",
-    "season": {
-      "year_round": true
-    }
-  },
-  {
-    "id": 13931,
-    "kind": "campground",
-    "name": "Bird's Blue Hole",
-    "location": "36.96411,-89.12678",
-    "elevation_meters": 103.0,
-    "state": "MO",
-    "ownership": "state",
-    "waterfront": "pond",
-    "waterfront_evidence": "satellite at 36.9641,-89.1268 (z18): lot at the Bird's Blue Hole ramp, open gravel ~15 m to the water -> pond",
-    "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
-    "website": "https://mdc.mo.gov/discover-nature/places/birds-blue-hole",
-    "phone": "573-290-5730",
-    "note": "Missouri Department of Conservation area (77 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. At the junction of County Road 301 and Levee Junction southeast of Highway 62 near Bird's Point. --Claude",
-    "hookups": {
-      "electric": 0,
-      "water": false,
-      "sewer": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/birds-blue-hole (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "manual"
-      }
-    },
-    "note_scan": {
-      "sig": "1637f568b8b7c9da",
       "checked": "2026-09-29",
       "model": "claude-opus-5/session"
     },
@@ -982194,7 +982326,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do (2026-09-29); MDC's Camping Sites GIS layer has no point here, so pinned at the parking lot nearest the area centre from MDC's parking-lot layer (z18 satellite) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/black-hawk-access",
     "phone": "573-248-2530",
-    "note": "Missouri Department of Conservation area (137 acres). Primitive camping at MDC-designated sites (MDC lists 'Designated Camping Sites'); MDC does not map where the sites are, so this pin is the parking lot nearest the area centre. Camping is permitted on or adjacent to the two parking lots. 14-day limit in any 30. Site length not published. From Emerson (Route M in Marion County), take County Road 159 south 1.50 miles, then County Road 134 east 1.50 miles. --Claude",
+    "note": "Float access on the South Fabius River near Emerson, reached by a gravel lane south from County Road 134. Camping is on or beside two gravel lots: the boat-ramp lot at the river and a second lot up the lane to the north. No facilities; spot length is not published. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -982202,23 +982334,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/black-hawk-access (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/black-hawk-access (area regulations and Things to Do), read 2026-10-20",
@@ -982233,11 +982366,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/black-hawk-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2023-04/8319map.pdf (last updated 12/28/2021), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (still no point within 3 km) and /26 'Parking Lots' (3 gravel lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 660 m frame over the access road and 120 m frame on the ramp lot, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites', free, FCFS, no hookups, 14-day limit; area page: 'Camping is permitted on or adjacent to these lots' (the ramp lot and one 500 ft north). MDC still maps no camping points, so the camping IS the lots; pin on the ramp lot is right. Riverfront kept: the lot's west edge is ~10 m from a ~35 m-wide river across riprap."
     }
   },
   {
@@ -1013801,71 +1013940,6 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Campspot, one night for 2 adults from a Tuesday (2026-11-10) and from a Saturday (2026-11-14), site rate before tax: Limited Hookup Back In Site $25; Standard Full Hookup RV Site $35; Full Hook-Up Pull Thru Site $45. June 2027 isn't open for booking yet. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
-    }
-  },
-  {
-    "id": 14573,
-    "kind": "campground",
-    "name": "Benton Ridge RV Park",
-    "location": "38.3155,-93.2951",
-    "elevation_meters": 263,
-    "state": "MO",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite (Esri, 700 m and 180 m frames) at 38.3155,-93.2951: rows of RVs on gravel loops in oak woods; two small catch-and-release ponds, the nearest units 25-40 m back from the southern one behind trees and rough grass, with no open apron to the water; default down - not waterfront",
-    "inclusion_evidence": "bentonridgervpark Google Sites pricing page (nightly full-hookup sites $50, 2-night minimum on holidays only; monthly from $300, annual from $1,900; read 2026-10-03); site copy courts 'RV travelers in need of overnight or extended-stay sites'; Google 'Benton Ridge RV Park' 4.4 over 34 with phone (read 2026-10-03); RV Life unrated; nightly use judged real despite the long-term rows (AWH 2026-10-03)",
-    "website": "https://sites.google.com/view/bentonridgervpark/home",
-    "phone": "660-776-9463",
-    "note": "RV park in the hills south of Warsaw, between Truman Lake and Lake of the Ozarks: full-hookup sites (two-night minimum on holidays), alongside monthly and annual sites; bath house, laundry, catch-and-release ponds, on-site bar and grill. Open year round, RVs only. Reserve by phone or the emailed form. Formerly Benton Ridge Winery and Campground. RV Life unrated. --Claude",
-    "hookups": {
-      "water": true,
-      "sewer": true
-    },
-    "facilities": {
-      "laundry": true
-    },
-    "season": {
-      "year_round": true
-    },
-    "booking": {
-      "reservable": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://sites.google.com/view/bentonridgervpark/pricingreservations, read 2026-10-10)",
-        "checked": "2026-10-10"
-      }
-    },
-    "note_scan": {
-      "sig": "35535ca2f5a96678",
-      "checked": "2026-10-09",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 50,
-      "nightly_high": 50,
-      "currency": "USD",
-      "note": "Full-hookup nightly sites $50/night; two-night minimum on holidays."
     }
   },
   {
@@ -1077983,6 +1078057,67 @@
       "checked": "2026-11-09",
       "sources": "https://mdc.mo.gov/discover-nature/places/apple-creek-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8612map.pdf (updated 1/16/2026) and brochure https://mdc.mo.gov/sites/default/files/2022-03/8612_0.pdf, read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' and /26 'Parking Lots' (https://gisblue.mdc.mo.gov/arcgis/rest/services/Discover_Nature/Area_Feature_Layers/FeatureServer), queried 2026-11-09 Esri World Imagery (leaf-off) around 37.54401,-89.58164 (500 m and 3 km frames) and 37.56328,-89.54154 (500 m frame), viewed 2026-11-09",
       "note": "Confirmed: MDC-designated camping ('Designated Camping Sites', 'Individual Campsites'; 2026 map shows two camping sites), free, FCFS, no hookups. The two areas are 4.3 km apart with separate roads - split candidate. Pin on the western camping point. Not waterfront confirmed (ponds ~1 acre)."
+    }
+  },
+  {
+    "id": 15632,
+    "kind": "campground",
+    "name": "Bilby Ranch Lake Conservation Area (southwest camping)",
+    "location": "40.33943,-95.17833",
+    "elevation_meters": 349.0,
+    "state": "MO",
+    "ownership": "state",
+    "waterfront": "not waterfront",
+    "waterfront_evidence": "p3-330 (2026-11-09): split from 13767; MDC GIS camping points 135 (40.33925,-95.17808) and 321 (40.33510,-95.17601) beside gravel lots 920 and 3011 on leaf-off imagery - no lake or river near (Bilby Ranch Lake ~3 km east) -> not waterfront",
+    "inclusion_evidence": "p3-330 (2026-11-09): split from 13767 - MDC area page lists 'Individual Campsites'; the 12/21/2021 area map and GIS 'Camping Sites' layer put two Primitive Camping points in the SW corner, 2.7-3.2 km south of the west-side camping, at their own gravel lots off the boundary road near Highway 46 (county gravel, no ford) -> agency-designated drive-in camping",
+    "website": "https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area",
+    "phone": "816-271-3100",
+    "note": "Rolling prairie and cropland around Bilby Ranch Lake west of Maryville; two primitive camping spots at gravel lots off the boundary road in the area's southwest corner near Highway 46. Not at the lake; no facilities; spot length is not published. The area's other camping (west side at 250th Street, north and east edges) is its own entry. MDC's area page (read November 2026) says Highway 46 is closed east of the area for a Nodaway River bridge replacement - from the east, detour via Highway 113. --Claude",
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "booking": {
+      "reservable": false,
+      "fcfs": "always",
+      "max_stay_nights": 14
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area (3CSR 10-11 140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      }
+    },
+    "fees": {
+      "nightly_low": 0,
+      "nightly_high": 0,
+      "currency": "USD"
+    },
+    "policy_ref": "state:missouri-conservation-areas",
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/bilby-ranch-lake-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2023-04/8733map.pdf (last updated 12/21/2021), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (5 points) and /26 'Parking Lots' (10 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery frames on each camping point and its lot, viewed 2026-11-09",
+      "note": "Confirmed: MDC 'Individual Campsites', free, FCFS, no hookups, 14-day limit. Five GIS camping points at four places around the perimeter, each on a gravel lot off a county road; pin on the west 250th St lot is right. One split candidate (SW corner, 2 spots near Hwy 46). Phone matches."
     }
   }
 ]

@@ -1,0 +1,70 @@
+{
+  "id": 1863,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.recreation.gov/camping/campgrounds/233425 (description, notices, rules via https://www.recreation.gov/api/camps/campgrounds/233425), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/233425/rates (Peak 2026-04-15..09-30 and 2027-04-15..09-30; Non-Peak 2026-03-01..04-14, 2026-10-01..11-30, 2027 the same), read 2026-11-09",
+    "recreation.gov campsite catalog (https://www.recreation.gov/api/search/campsites?fq=asset_id:233425, 91 overnight sites + 2 group shelters, with fee templates and site points), read 2026-11-09",
+    "recreation.gov availability calendar months 2026-11 to 2027-04 and 2027-10/11, read 2026-11-09",
+    "Esri World Imagery (leaf-off, lake drawn down) frames over the B and C loop site points, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 40,
+        "currency": "USD",
+        "seasonal": [
+          {"name": "off-peak", "opens": "03-01", "closes": "04-14", "nightly_low": 14, "nightly_high": 24},
+          {"name": "peak", "opens": "04-15", "closes": "09-30", "nightly_low": 30, "nightly_high": 40},
+          {"name": "off-peak", "opens": "10-01", "closes": "11-30", "nightly_low": 14, "nightly_high": 24}
+        ],
+        "note": "Peak: C Loop $30, C Loop sites 39-78 (water at the site) $35, B Loop full hookups $40. Off-peak: C Loop $14, B Loop $24."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233425/rates (Peak STANDARD ELECTRIC $30, template 1c32aba2 $35, B-STANDARD ELECTRIC $40; Off Peak STANDARD ELECTRIC $14, B $24) matched to each site's fee templates in the campsite catalog, read 2026-11-09",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-01", "closes": "11-30"},
+      "source": "recreation.gov rate seasons (Non-Peak from 03-01, Peak 04-15..09-30, Non-Peak to 11-30) and availability calendar (Nov 2026 loaded through Nov 30; nothing loaded Dec 2026-Feb 2027; March 2027 open from Mar 1), read 2026-11-09",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.recreation.gov/camping/campgrounds/233425 ('B loop consists of 7 campsites ... with full hook-ups including 50-amp electricity, water, and sewage') + campsite catalog (B002-B008 50 amp, water Y, sewer Y), read 2026-11-09",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 91, "max_rig_ft": 75, "pull_through": false},
+      "source": "recreation.gov campsite catalog for 233425: 91 STANDARD ELECTRIC overnight sites (7 B, 84 C) permitting RV/Trailer/Tent, max vehicle length 50-75 ft, every site 'Driveway Entry' Back-In, read 2026-11-09",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "laundry": true, "dump": true},
+      "source": "https://www.recreation.gov/camping/campgrounds/233425 ('Amenities include flush and pit toilets, showers, drinking water, laundry facilities, and a dump station'), read 2026-11-09",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "max_stay_nights": 14,
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "note": "The minimums are from the campground's posted notice ('This park requires a 3 night minimum stay on holiday weekends and 2 night minimum stay on weekends'); recreation.gov's booking rules carry no minimum (value 0). A camping permit from the park booth is required before setting up."
+      },
+      "source": "https://www.recreation.gov/camping/campgrounds/233425 (notice: 'Campers must have permit before camping. Available at park booth ... This park requires a 3 night minimum stay on holiday weekends and 2 night minimum stay on weekends'; rules maxConsecutiveStay 14), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Truman Lake campground on a wooded peninsula, in two loops. B Loop's seven full-hookup sites are in the woods away from the lake. C Loop fills the peninsula tip; its south-end sites (about 49-60) sit on open grass with scattered trees looking toward the lake. Boat ramp, playground, and hiking and horse trails. --Claude",
+  "summary": "Confirmed with changes: season Mar 1 - Nov 30 (was seasonal, no dates); fees $14-40 with peak/off-peak spans (high was $35, missed B Loop's $40); 91 sites, max 75 ft, all back-in; facilities incl. laundry and dump; weekend/holiday minimums from the posted notice. Lakeview kept (C Loop south end). PIN 1.6 km off - move to the C Loop. Phone to add.",
+  "flags": [
+    "PIN: stored 38.1997,-93.5100 is the rec.gov facility point, ~1.6 km north of the C Loop and ~800 m north of the B Loop (it sits between the group shelters GR001/GR002 and the entrance road). Suggest 38.1854,-93.5121 (centroid of the 84 C Loop site points, on the loop roads).",
+    "WATERFRONT (stored lakeview): kept, earned only by C Loop's south end. Measured on leaf-off imagery taken with the lake drawn down: sites ~49-60 sit on open grass with scattered trees, ~50-80 m from the normal-pool shoreline (the vegetation line) of the south cove and the peninsula tip, with a footpath between - an open sightline, but not an apron at the water at normal pool, so lakefront not earned (unsure = down to view). West-side sites 89-94 are 70-90 m from the shore through woods; east-end sites 12-14 are ~110-135 m away; B Loop (7 sites) is in the woods with no water nearby except a fenced lagoon. No rec.gov 'Proximity to Water' value (N/A on 34 sites, absent on the rest).",
+    "PHONE: rec.gov lists 660-438-3872 for the campground; the entry has no phone - suggest adding it.",
+    "ELECTRIC: rec.gov's description says C Loop 'Sites 39-78 are 50-amp with water', but the catalog types those sites 30 amp (only B002-B008 are 50). The 50 in hookups rests on B Loop either way.",
+    "MIN STAY: written from the campground's posted notice; recreation.gov's rule fields minWeekendStay/minHolidayWeekendStay are 0, so the booking system may not enforce it - stated in booking.note.",
+    "FIT: every overnight site permits RV/Trailer/Tent with lengths 50-75 ft.",
+    "Note rewritten: site counts, hookups, booking and season removed (fields hold them); where the lake-facing sites are added."
+  ]
+}
