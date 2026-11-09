@@ -16,3 +16,5 @@ AWH 2026-11-09, answering three phase-7 asks:
 **How to apply:** in a brief, ask the verifier to say whether a horse-labelled camp is physically distinct from a general one. Without a clear distinction it is a drop. Don't hold padless designated roadside camping as a question; write the caveat.
 
 **Split check (2026-11-09):** before splitting, search the DB for an existing entry within ~1 km of the split point. Deer Ridge already had 13743 on the north-tract camp, and a duplicate split (15644) had to be removed. Related: [[feedback_split_multi_campground_parks]].
+
+**Lot-adjacent camping (AWH 2026-11-09):** Dark Hollow 13874 and Charlie Heath 13763 were kept because MDC marks designated camping points beside the lots, even though the brochure says camping is "on or adjacent to all graveled parking lots". An allowance to camp inside a ramp or parking lot, with no designated point, is still a drop (Cross Timbers 13897, Bird's Blue Hole 13931).
