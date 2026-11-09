@@ -1,6 +1,6 @@
 ---
 name: feedback-trust-recgov-over-sweep-notes
-description: "Current recreation.gov/RIDB data outranks the auto-generated sweep notes when they disagree — AWH hasn't visited those campgrounds and can't adjudicate"
+description: "Current recreation.gov/RIDB outranks sweep notes AND the home agency's own web page (FS/NPS/BLM) when they disagree (AWH 2026-11-08); within rec.gov the live selling calendar beats its notice text"
 metadata: 
   node_type: memory
   type: feedback
@@ -25,6 +25,17 @@ these campgrounds and cannot adjudicate a conflicts list — don't hand him one.
 - Notes signed `--AWH` are his own first-hand words, not sweep output — that is
   the exception worth flagging rather than overriding silently.
 - The note prose itself stays unedited (schema doc §6) unless he asks.
+
+**Extended 2026-11-08 (AWH):** rec.gov also outranks the campground's HOME AGENCY page
+(Forest Service, NPS, BLM, USACE) when they conflict: "they are the ones who are actively
+selling sites and are therefore more likely to be up to date than an infrequently-maintained
+forest service or national park web page."
+- Within rec.gov, what it actually SELLS (the live availability calendar) beats its own
+  notice/rules text: Water Canyon 8037's calendar sells Mar 15-Nov 30 though a notice says
+  first-come Oct-Mar; Little Coon Creek 5210 sells April nights though its rules say "Not
+  Reservable".
+- Not a conflict: `season` (open) vs the calendar span (reservations). An agency season
+  WIDER than the calendar is the first-come shoulder, not a disagreement (season pass rule).
 
 `recgov_hookups.py` implements this for hookups. Related:
 [[project-campground-schema]], [[feedback-lone-electric-site-may-be-host]].

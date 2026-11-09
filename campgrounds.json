@@ -386568,7 +386568,8 @@
       "nightly_high": 23,
       "currency": "USD"
     },
-    "policy_ref": "federal:usace"
+    "policy_ref": "federal:usace",
+    "curation_note": "2026-11-08: recreation.gov's rules field says 'Not Reservable' and a notice says to register with the Big Coon Creek attendant, but its live calendar sells nights (April 2027 'Available' on every site, November 'Not Reservable', December 'Closed'), so reservable stays true."
   },
   {
     "id": 5211,
@@ -571096,7 +571097,7 @@
     "inclusion_evidence": "recreation.gov facility 10344809 per-site data: 12+ drive-in standard nonelectric sites with driveway lengths incl 42/40/38/37/32/28/27 ft -> multiple sites fit a 23-ft rig; real drive-in RV campground (overrides aggregator 'not over 18 ft' caveat).",
     "website": "https://www.fs.usda.gov/r03/cibola/recreation/water-canyon-campground\nhttps://www.recreation.gov/camping/campgrounds/10344809",
     "phone": "575-854-2281",
-    "note": "Standard nonelectric sites plus a group site in the Magdalena Mountains, Cibola NF (Magdalena RD), ~6,900 ft; picnic table/fire ring/grill at each site. All drive-in; several 27-42 ft sites that fit a mid-size rig, though the final ~500 ft of dirt access road is rough-longer rigs use caution. Reservable (recreation.gov); FCFS Oct-Mar with possible weather closures. --Claude",
+    "note": "Standard nonelectric sites plus a group site in the Magdalena Mountains, Cibola NF (Magdalena RD), ~6,900 ft; picnic table/fire ring/grill at each site. All drive-in; several 27-42 ft sites that fit a mid-size rig, though the final ~500 ft of dirt access road is rough-longer rigs use caution. Reservable (recreation.gov); possible weather closures. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-07",
@@ -571118,7 +571119,11 @@
     "booking": {
       "reservable": true,
       "platform": "recreation.gov",
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "season": {
+        "opens": "03-15",
+        "closes": "11-30"
+      }
     },
     "provenance": {
       "hookups": {
@@ -571137,9 +571142,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "booking.season: the live recreation.gov calendar (https://www.recreation.gov/api/camps/availability/campground/10344809/month, read 2026-11-08: bookable nights 03-15..03-31 2027 and through 11-30 2026, every night Dec-Feb 'Not Reservable'), agreeing with the FS page ('The reservation season for this site is March 15 - November 30.'); rec.gov's notice 'First Come First Serve season of October through March' is stale (AWH 2026-11-08: rec.gov's selling calendar over agency pages); earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r03/cibola/recreation/water-canyon-campground ('Open year round unless closed due to weather concerns. The reservation season for this site is March 15 - November 30.'); the recreation.gov calendar edges {'closes': '11-30'} were the reservable window, not the open season",
@@ -571152,7 +571157,7 @@
       }
     },
     "note_scan": {
-      "sig": "2c340750272dc74b",
+      "sig": "6e8b28af0feca9e9",
       "checked": "2026-09-15",
       "model": "claude-opus-5/session"
     },
@@ -798780,7 +798785,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "facilities": {
@@ -798789,9 +798795,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234208 ('Single-family campsites within the campground are available on a first-come, first-served basis'; the facility lists three standard sites, 1, 4 and 6, beside the five group sites), read 2026-11-08; rec.gov over the FS page's 'Reservation are generally required for all sites' (AWH 2026-11-08); earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -798806,6 +798812,11 @@
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/234208/rates (recreation.gov rate table, current seasons, standard/RV sites)",
         "checked": "2026-10-09"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234208 ('Trailers and RVs are limited to 34 feet in length, due to tight turns'), read 2026-11-08",
+        "checked": "2026-11-08",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -798826,7 +798837,10 @@
       "nightly_high": 10,
       "currency": "USD"
     },
-    "policy_ref": "federal:usfs"
+    "policy_ref": "federal:usfs",
+    "sites": {
+      "max_rig_ft": 34
+    }
   },
   {
     "id": 11236,

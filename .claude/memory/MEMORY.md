@@ -99,7 +99,7 @@
 - [Researching an agency policy row](reference_agency_policy_research.md) — scrape ALL of an agency's park pages and count the boilerplate (19 of 23 IS the evidence)
 - [Testing JS with no node](reference_js_testing_without_node.md) — dev box has no JS runtime
 - [Bulk passes in stoppable chunks](feedback_chunked_bulk_passes.md) — AWH 2026-09-15: small chunks, sequential, stoppable, committable
-- [Trust rec.gov over sweep notes](feedback_trust_recgov_over_sweep_notes.md) — current RIDB/rec.gov outranks auto-generated notes; AWH can't adjudicate conflicts (hasn't been there)
+- [Trust rec.gov over notes and agency pages](feedback_trust_recgov_over_sweep_notes.md) — current RIDB/rec.gov outranks sweep notes AND FS/NPS/BLM pages (AWH 2026-11-08: they sell the sites); its live calendar beats its own notice text
 - [Lone electric site may be the host's](feedback_lone_electric_site_may_be_host.md) — 1-2 electric sites that the public can't book = unknown electric, never a yes; drop sites named Host
 - [Absent is not zero](feedback_absent_is_not_unknown.md) — the same trap has now bitten four subsystems; omit the key, never cache a failure as a result, never let unknown…
 - [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR is no information, ~120 days per run, FCFS not derivable, fetch-window and 6-month-horizon artifacts guarded…

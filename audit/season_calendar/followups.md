@@ -94,3 +94,8 @@
   "reservations generally required" vs rec.gov singles first-come), 8037 Water Canyon (FS
   reservation season Mar 15-Nov 30 vs rec.gov "First Come First Serve season of October through
   March"), 9662 Powell reservation dates (2024 only), 10073 Anderson Cove (AWH).
+- RESOLVED 2026-11-08 under AWH's rule (rec.gov over the agency page; its live calendar over its
+  notice text): 8037 booking.season 03-15..11-30 (calendar = FS; the rec.gov Oct-Mar FCFS notice
+  is stale); 11235 fcfs some_sites + max rig 34 ft (rec.gov: singles first-come); 5210 stays
+  reservable (calendar sells April 2027, despite the 'Not Reservable' rule field). Left: 9662
+  Powell (no conflict, just 2024-only dates).
