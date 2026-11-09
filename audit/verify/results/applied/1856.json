@@ -1,0 +1,52 @@
+{
+  "id": 1856,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://mostateparks.com/park/trail-tears-state-park/camping, read 2026-11-09",
+    "https://mostateparks.com/park/trail-tears-state-park (Park Office 573-290-5284, Visitor Center 573-290-5268), read 2026-11-09",
+    "Trail of Tears 2026 and 2027 camping-rate sheets (https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2025/01/CampingFees_TrailofTears_26.pdf, .../2026/01/trail-tears-camping-fees-2027.pdf), read 2026-11-09",
+    "Campground maps (.../media/pdf/2024/10/trail-tears-mississippi-cg.pdf, .../trail-tears-lake-boutin-cg.pdf), read 2026-11-09",
+    "UseDirect place 91 (https://icampmo1.usedirect.com/MSPWeb/#!park/91): facilities 832 Lake Boutin, 833 Mississippi River; grids for 2027-05-11 via https://msprdr.usedirect.com/MSPRDR/rdr/search/grid, read 2026-11-09",
+    "Esri World Imagery (leaf-off) around 37.4550,-89.4640 (360 m frame) and 37.4525,-89.4830 (900 m frame), viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2027",
+                 "surcharges": {"electric": 12, "full_hookup": 17},
+                 "note": "Same rates on the 2026 and 2027 sheets. On-season (Apr-Oct): basic $15, electric 30A $27, sewer/electric/water 30A $32. Off-season (Nov-Mar): electric $23, sewer/electric/water $26; the sheet's $14 off-season basic rate has no open site, since the basic sites are all at Lake Boutin, 'closed November through April'. Rates include sales tax."},
+      "source": "Trail of Tears 2026 and 2027 rate sheets ('Basic $15 $14', 'Electric - 30 AMP $27 $23', 'Sewer/Electric/Water 30 AMP $32 $26', 'Lake Boutin Campground is closed November through April', 'Camping rates include sales tax'), read 2026-11-09",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": true, "sewer": true},
+      "source": "UseDirect facility 833 unit names ('Electric 30 amp', 'Sewer/Electric/Water 30 amp'; no 50A unit) + 2027 rate sheet, read 2026-11-09",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 52, "max_rig_ft": 102,
+                 "note": "52 bookable sites: Mississippi River 17 (10 electric 30A, 7 sewer/electric/water 30A; vehicle lengths 51-102 ft); Lake Boutin 35 basic (27-79 ft). Every site takes a 23-ft rig."},
+      "source": "UseDirect grids for facilities 832 and 833 (unit names and per-unit VehicleLength, arrival 2027-05-11), read 2026-11-09",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true,
+                 "note": "Showerhouses closed and full-hookup water off November-March; then water is at the frost-free spigot at the dump station."},
+      "source": "https://mostateparks.com/park/trail-tears-state-park/camping ('During the off-season (November through March), water is off for full hookup sites, and showerhouses are closed. Potable water is available from the frost-free spigot at the dump station') + both campground maps (restroom, showerhouse, vault toilet, dump station, water), read 2026-11-09",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "fcfs": "after_cutoff", "max_stay_nights": 15},
+      "source": "https://mostateparks.com/park/trail-tears-state-park/camping ('Reservable sites may be available on a walk-up registration basis if the site is not reserved'; 'any 15 days within a 30-consecutive-day period'; Reservations: Lake Boutin May 1-Oct 31, Mississippi River Year-round) + UseDirect place 91 (all units AllowWebBooking), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "Two campgrounds about 1.7 km apart. The Mississippi River Campground is a grassy loop below the bluffs, set back from the river behind an active railroad and the boat-ramp lot; Lake Boutin Campground's basic sites line wooded ridge roads south of Lake Boutin. --Claude",
+  "summary": "MO 2026/2027 sheets: basic $15 (Lake Boutin only, May-Oct), electric 30A $27/$23, FHU 30A $32/$26; 52 bookable sites (Mississippi River 17, Lake Boutin 35) 27-102 ft, 30A max. Waterfront DOWN riverfront -> riverview (pads 80-110 m back behind the railroad and boat-ramp lot). Pin ~500 m off (showerhouse). Lake Boutin a split candidate (~1.7 km). Season left (manual).",
+  "flags": [
+    "WATERFRONT DOWN: riverfront -> riverview. The Mississippi River Campground's map and leaf-off imagery put its 17 pads on a grassy loop WEST of the railroad ('The railroad near the Mississippi River Campground is still active' - park camping page); the boat-launch parking lot sits between the tracks and the river. The nearest pads are ~80-110 m from the water's edge (imagery measure; Overpass was down). Open lawn, the tracks and the open paved lot lie between, so a sightline to the river from the north end of the loop is plausible (riverview), but the railroad and day-use lot rule out on-water. apply.py does not write waterfront - set by hand, and rewrite waterfront_evidence.",
+    "SPLIT CANDIDATE (not split): Lake Boutin Campground (basic only, May 1-Oct 31; ridge roads around a junction at ~37.4529,-89.4824, south of Lake Boutin) is ~1.7 km west of the Mississippi River Campground (~37.4545,-89.4635), measured on imagery between the two site centres. Entrances: Lake Boutin is reached by the park road past Lake Boutin and the visitor center (its map's 'To Lake Boutin / To Visitor Center'); the Mississippi River Campground has its own road down to the river (its map's 'To Highway 177, restroom, showerhouse'). Both inside one park off Route 177. Lake Boutin's sites are in woods ~100 m+ from the lake (not waterfront).",
+    "Pin: 37.4516,-89.4592 sits on the showerhouse clearing ~500 m SE of the Mississippi River Campground loop; suggest 37.4545,-89.4635 (loop centre).",
+    "Phone: entry has none; the park page gives Park Office 573-290-5284 (Visitor Center 573-290-5268). apply.py does not write phone.",
+    "Note: old note's 'along the Mississippi River' contradicted by the map/imagery (railroad and lot between), and 'reservable online' repeats booking; rewritten."
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: PAUSED by AWH 2026-11-08 after p3-327 (MO, Running River .. Three Springs); don't queue p3-328 until AWH resumes it; ONE verifier at a time; resume with audit/verify/kit/mkbrief_mo.py (see the RESUME block at the end)
+description: IN PROGRESS (IA, NE, KS done; MO private done through p3-327; RESUMED 2026-11-09 with p3-328, MO mixed incl. first MDC areas); ONE verifier at a time; ONE verifier at a time; resume with audit/verify/kit/mkbrief_mo.py (see the RESUME block at the end)
 metadata:
   type: project
 ---
@@ -95,7 +95,7 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 
 **2026-11-07:** p3-317 applied (drops 2024 Cozy Corner, 1998 Cherokee Lakes). p3-318 applied (2058 dropped, price). p3-319 applied. p3-320 applied (4 waterfront downs). AWH rulings: 1847 Pomme de Terre Hermitage -> lakefront (open shore, not a day-use beach), 1961 Mellon Acres dropped, 2070 Last Resort kept. WMA camping back on by default on the map. p3-321 applied (MO; no drops; 3 waterfront downs; pushed + deployed). FIRST in the next session: the 1850 Sam A. Baker split (Campground 2 riverfront as its own entry, 1850 down to not waterfront; figures in criteria_followups.md p3-321). Then p3-322. AWH dropped all three p3-321 asks (1960 Show-Me Rest, 1965 Red Cedar, 14558 Soggy Bottom). 1850 split DONE (15629 Campground 2, riverfront). AWH 2026-11-07 rulings: dropped 2876 Rosebud, 15612 Miller Creek, 13955 El Dorado Boulder Bluff (horse camps are out unless the horse area is separate from the campground); kept 2841 Tuxedo, 2772 Battle Creek + 1952 Unionville (caveats), 2156 Lake Afton (1.5-ton = truck class). p3-322 applied (5af713eb): split 1858 Wakonda -> Boulder Lake + 15630 Wakonda Lake CG; 2021 Ballards dropped (RV Life 3.5/63); 1997 Bass' River Resort DROPPED (5603a75b): AWH 2026-11-07 kept the US$50/C$69 cap as-is and declined restoring the 307 price-only drops even though the map now has a price filter. fees.extra_person added + filled the same day (61d8bf92; the brief asks for it; p3-323's brief predates it, so convert any extra-person wording in its fees.note into the field when applying). p3-323 (MO private, after Candy Cane) launched 2026-11-07. Next new id 15631. Sand reads still mine to make: 6101 Confederate, 10135 Cisco Beach, 2678 Bridgeport.
 
-**2026-11-08 PAUSE (AWH):** p3-327 applied (ce9d4043) - NOTHING in flight; queue nothing until AWH says resume (next: p3-328, MO private after Three Springs). p3-324..326 applied; AWH dropped 2043 Powell's and 2028 Ozark Country from the p3-326 asks.
+**2026-11-08 PAUSE (AWH):** p3-327 applied (ce9d4043) - NOTHING in flight; RESUMED by AWH 2026-11-09 (pushed + deployed 16897e2a): p3-328 launched (MO mixed: Trail of Tears .. Apple Creek, first 3 MDC conservation areas). p3-324..326 applied; AWH dropped 2043 Powell's and 2028 Ozark Country from the p3-326 asks.
 
 **2026-11-08:** p3-323 had been applied (44f9db83, + 2077 Bayview dropped ffa0c1e7). p3-324 (MO: Cape Camping .. Fair Haven Cove) launched; para in the session scratchpad.
 
