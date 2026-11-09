@@ -137569,53 +137569,65 @@
     "id": 1904,
     "kind": "campground",
     "name": "Lane Spring Recreation Area",
-    "location": "37.7931,-91.8361",
-    "elevation_meters": 253.0,
+    "location": "37.79517,-91.83533",
+    "elevation_meters": 254.0,
     "state": "MO",
     "ownership": "federal",
     "waterfront": "creekside",
     "inclusion_evidence": "recreation.gov 232421: Standard Electric + Nonelectric campsites, USFS drive-in campground (note: RVs to ~34ft)",
     "waterfront_evidence": "waterfront 'creekside' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://www.recreation.gov/camping/campgrounds/232421",
-    "note": "USFS Mark Twain NF campground on Little Piney Creek (trout stream) near Rolla; 17 sites (6 electric, 11 basic) with 6 creekside; only the group pavilion is reservable. --Claude",
+    "note": "Forest Service campground at the end of Forest Road 1892, 12 miles south of Rolla, on Little Piney Creek, a wild trout stream. Shaded back-in sites under hardwoods (sites 4 and 13 pull through), each with a table, lantern post and fire ring; six sites have electric hookups. Six nonelectric sites, 8, 9, 11, 13, 15 and 16, are next to the creek. Highway 63 traffic can sometimes be heard. --Claude",
     "sites": {
-      "count": 17,
-      "max_rig_ft": 34
+      "count": 21,
+      "pull_through": true
     },
     "season": {
       "year_round": false,
       "opens": "04-01",
-      "closes": "10-31",
-      "note": "Approximate: Open April to October."
+      "closes": "10-31"
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "Only the group picnic pavilions take reservations. Check in with the campground host on arrival."
     },
     "provenance": {
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('Single Electric: 6 sites - sites 1 through 5, and site 7 / Nonelectric: 11 sites / Sites 4 and 13 are pull-through sites / Double 4 sites: Loop A: Site 15, Loop B: Sites 19 through 21'; no length limit stated) + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232421 (sites 01-21; Max Vehicle Length 0 on every site), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('Seasons of Use / Campground / Open April 1 - October 31, 2026'; 'The recreation area will close for winter at the end of October.'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('Campsites are first come, first served. Reservation needed for the group picnic pavilion'; 'Campers required to check-in with on-site host upon arrival') + https://www.recreation.gov/api/camps/campgrounds/232421 (facility_rules maxStay 14 nights, rolling 30 days; every campsite reservable=false, only Dogwood and Redbud pavilions reservable), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232421/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('Single Site: $15 per night / Single Site with electric hook-up: $25 per night / Double Site: $30 per night / Additional Vehicle Fee: $2 per vehicle per night'; 'Campsite parking allows for two vehicles per site'; 'Fees must be paid using cash or check') + https://www.recreation.gov/api/camps/campgrounds/232421/rates (2026 Peak Season: Single $15, Single Electric $25, Double $30), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('Electrical hookups available at this location at 6 sites. No water or sewer hookups available.' - no amperage stated), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('The vault toilets are accessible'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area ('There is a 50% discount for camping for anyone with an Interagency Access or Senior Pass.'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -137626,11 +137638,31 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 25,
-      "currency": "USD"
+      "currency": "USD",
+      "extra_vehicle": {
+        "included": 2,
+        "amount": 2,
+        "per": "night"
+      },
+      "note": "Double sites (15 and 19-21) are $30 a night. Paid at the fee tube, cash or check only."
     },
     "hookups": {
-      "electric": 15
-    }
+      "water": false,
+      "sewer": false
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.fs.usda.gov/r09/marktwain/recreation/lane-spring-recreation-area, read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/232421, read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/232421/rates, read 2026-11-09 https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232421 (21 campsites + 2 pavilions), read 2026-11-09 Esri World Imagery 70, 160 and 300 m frames (leaf-off) with the catalog's per-site coordinates plotted, viewed 2026-11-09",
+      "note": "FS page: open April 1 - October 31, 2026; $15 single, $25 electric, $30 double, $2 extra vehicle (2 included); campsites FCFS, only the pavilions reservable; 6 electric (1-5, 7), 11 nonelectric, 4 doubles = 21 sites, no water/sewer hookups, no amperage, no rig limit; creek sites 8, 9, 11, 13, 15, 16 (21-43 m from the water) - creekside held. Electric 15 A and max_rig 34 removed (unsupported). Pin moved 240 m from across the creek to the Loop A centre. Phone 417-967-4194 to add."
+    },
+    "phone": "417-967-4194",
+    "curation_note": "p3-341 (2026-11-09): pin moved from the rec.gov facility point (woods across the creek) to the Loop A site centroid. Electric-site count conflict: FS page 6 electric (1-5, 7), rec.gov catalog types 10 (01-07, 10, 12, 14); the catalog's 15 A sits on every unit incl. pavilions (template value), so electric amperage left unknown. Water system shut down for leaks through Oct 2026."
   },
   {
     "id": 1905,
@@ -954263,7 +954295,7 @@
     "inclusion_evidence": "City of La Plata: reservoir 2.5 mi east of town off Hwy 156/Leopard Ave with 30 campsites (20 new + 10 original), all electric and water, onsite dump station; first come first serve, no reservations",
     "website": "https://www.cityoflaplata.net/parksandrecreation",
     "phone": "660-332-7166",
-    "note": "City of La Plata campground on the 81-acre city reservoir 2.5 mi east of town. 30 water/electric sites, dump station, disc golf. Call City Hall for fees. --Claude",
+    "note": "City of La Plata campground on its 81-acre city reservoir 2.5 miles east of town: a gravel loop of pads in open grass on the slope above the east shore, with picnic tables and fire pits, plus a playground, picnic pavilion and an 18-hole disc golf course. The city posts no camping fee; call City Hall. --Claude",
     "hookups": {
       "water": true
     },
@@ -954279,30 +954311,35 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.cityoflaplata.net/parksandrecreation ('There are 20 new campsites and the original 10 campsites with electric/water hookups and onsite dump station.'; amperage not stated), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.cityoflaplata.net/parksandrecreation ('There are 20 new campsites and the original 10 campsites with electric/water hookups and onsite dump station.') + https://mdc.mo.gov/discover-nature/places/la-plata-city-lake ('The City provides 30 camping sites'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.cityoflaplata.net/parksandrecreation ('onsite dump station'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.cityoflaplata.net/parksandrecreation ('Campground is first come first serve with NO reservations.'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "3cbfb4c4cf6db70a",
       "checked": "2026-09-28",
       "model": "claude-opus-5/session"
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.cityoflaplata.net/parksandrecreation (rendered in a browser; plain HTTP returns template placeholders), read 2026-11-09 https://www.cityoflaplata.net/reservations, /ordinances, /formsandpermits (empty resource lists), read 2026-11-09 https://mdc.mo.gov/discover-nature/places/la-plata-city-lake, read 2026-11-09 MDC area map https://mdc.mo.gov/sites/default/files/2024-05/8247map.pdf (Last Updated 11/6/2018), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (no camping point for Area 8247) and /26 (lot 791), queried 2026-11-09 Esri World Imagery 110 and 250 m frames, viewed 2026-11-09",
+      "note": "City page confirms 30 sites (20 new + 10 original) with electric/water, dump station, FCFS 'NO reservations'; no fee, season or amperage posted anywhere on the city site; MDC lake page confirms the 30 sites, but MDC's map (11/6/2018) doesn't show the campground. Lakeview held (~100-130 m over open grass). Phone matches."
     }
   },
   {
@@ -969928,8 +969965,8 @@
     "waterfront_evidence": "satellite at 38.7054,-92.9790 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront",
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 4 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/lamine-river-conservation-area",
-    "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (6,071 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 4 camping spots across the area. 14-day limit in any 30. Site length not published. Lamine River Conservation Area has five tracts. From Otterville, take Route A east 1 mile. Highway 50 at the Lamine River provides access. Please see map for additional access. --Claude",
+    "phone": "573-346-2210",
+    "note": "MDC area spread over five tracts along the Lamine River east of Otterville. Camping is allowed within 50 feet of four designated gravel parking lots, with no amenities; this entry is the one beside Route A near the concrete boat ramp. The others are on the north tract off Wildlife Road and on the south tracts off Potters Ford Road and Wildlife Drive. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -969937,27 +969974,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/lamine-river-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/lamine-river-conservation-area (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "Area brochure https://mdc.mo.gov/sites/default/files/2022-02/8304_2.pdf ('four designated camping sites (no amenities)'); map https://mdc.mo.gov/sites/default/files/2024-02/8304map_0.pdf shows four Primitive Camping symbols, read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -969968,12 +970011,22 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
-    }
+    },
+    "sites": {
+      "count": 4
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/lamine-river-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-02/8304_2.pdf (12/2021), read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-02/8304map_0.pdf (Conservation Commission 12/08/2023), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 58-61) and /26 (20 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 90 m frames (leaf-off) of all four camping points, viewed 2026-11-09",
+      "note": "Confirmed: page 'Designated Camping Sites', Rule 140 standard; brochure 'four designated camping sites (no amenities)', 'Camping is allowed anytime in designated camping areas shown on map. In these areas, camping is allowed within 50 feet of the parking lot.'; map (12/08/2023) shows four camping symbols at lots. Pin = GIS 58, grass beside the Route A gravel lot (lot 2364) north of the boat ramp. Not waterfront kept. sites.count 4 new; free/FCFS/no hookups/14 nights now manual. PHONE MISMATCH: p"
+    },
+    "curation_note": "p3-341 (2026-11-09): phone 573-815-7900 (2021 brochure's Central Regional Office) -> 573-346-2210 (area page and 12/08/2023 map)."
   },
   {
     "id": 13769,
@@ -971561,7 +971614,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 3 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area",
     "phone": "660-626-1796",
-    "note": "Missouri Department of Conservation area (2,350 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'); MDC maps 3 camping spots across the area. 14-day limit in any 30. Site length not published. From Princeton, take Highway 136 west 4 miles, then right on Fathom Street to the area. --Claude",
+    "note": "Lake Paho, a 273-acre MDC lake west of Princeton, has three small primitive campgrounds with privies. This entry is the \"C\" Campground on the peninsula just south of Route 145 where it crosses the lake's north end: gravel pull-offs among scattered trees off a gravel lane, open lake on both sides. The \"B\" Campground on the east-side peninsula is its own entry. Camping is only in the mapped campgrounds, with at most two camping units per site. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -971569,23 +971622,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -971600,12 +971654,19 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
-    }
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/4702.pdf (2/2026), read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/4702map.pdf (Conservation Commission 11/2/2022), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 233, 234, 235) and /26 (16 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery frames (60-300 m, leaf-off) of all three campgrounds, viewed 2026-11-09",
+      "note": "Confirmed: page 'Individual Campsites', Rule 140 standard; brochure (2/2026) 'Primitive camping is permitted only in areas identified on area map'; map (11/2/2022) shows campgrounds B, C and D. Stored pin = GIS 233 = 'C' Campground (gravel pull-offs on the peninsula south of Rt 145). Lakeview held (pads ~42-60 m from the east shore over open grass; lakefront lead flagged). Split proposed for 'B' Campground (1.40 km SE, own road off Rt 145). Free/FCFS/no hookups/14 nights now manual. Phone matche"
+    },
+    "curation_note": "p3-341 (2026-11-09): B Campground split out as 15650; D Campground (GIS 234, small turnaround 410 m SW) stays with this entry."
   },
   {
     "id": 13794,
@@ -972101,7 +972162,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 2 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/kings-prairie-access",
     "phone": "417-853-4592",
-    "note": "Missouri Department of Conservation area (285 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 2 camping spots across the area. 14-day limit in any 30. Site length not published. From Osceola, take Highway 13 south 4 miles, then Route T east 2.50 miles. --Claude",
+    "note": "Bottomland woods and old fields along Weaubleau Creek south-east of Osceola, with two primitive camping spots beside gravel lots, each at the end of its own gravel lane off SE 200: the larger lot at the Creek Access on the west side, and a small lot by the slough on the east side. No amenities. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -972109,23 +972170,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/kings-prairie-access (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/kings-prairie-access (area regulations and Things to Do), read 2026-10-20",
@@ -972140,11 +972202,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/kings-prairie-access, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/8116.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/8116map.pdf, read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 530, 531) and /26 (lots 1633, 1634), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 70 m frames at both camps, viewed 2026-11-09",
+      "note": "Confirmed: page 'Designated Camping Sites', Rule 140 standard; brochure 'Camping is permitted only in designated areas'; map two Primitive Camping symbols, each beside a lot - Creek Access (GIS 531 = stored pin, in open grass 32 m S of a large gravel lot) and the slough lot (GIS 530, 790 m SE). Free/FCFS/no hookups/14 nights now manual. Not waterfront kept. Phone matches."
     }
   },
   {
@@ -973776,16 +973844,16 @@
     "id": 13831,
     "kind": "campground",
     "name": "King Lake Conservation Area",
-    "location": "40.03874,-94.44110",
-    "elevation_meters": 304.0,
+    "location": "40.02378,-94.43391",
+    "elevation_meters": 291.0,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.0387,-94.4411 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront",
+    "waterfront": "lakeview",
+    "waterfront_evidence": "satellite at 40.0387,-94.4411 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront | p3-341 (2026-11-09), pin moved to the main camp (GIS 107, gravel loop on the east shore), UP not waterfront -> lakeview: the old value was read at the Berlin Rd spot ~400 m from the lake; at the loop the west leg is 10-15 m from the water through a thin fringe of bare trees and the camping inside the loop 30-45 m, but the loop road lies between, so not on-water (leaf-off imagery)",
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 2 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/king-lake-conservation-area",
     "phone": "816-271-3100",
-    "note": "Missouri Department of Conservation area (1,273 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'); MDC maps 2 camping spots across the area. 14-day limit in any 30. Site length not published. From King City, take Route Z east 5 miles, then CR 500 south 1 mile to the area. --Claude",
+    "note": "King Lake northeast of King City. The main camping spot is a gravel loop in open woods on the east shore, reached by a short gravel track north from the boat-ramp lot off NW Ridgeline Road. A second designated spot is beside a small gravel lot on NW Berlin Road at the north end. No amenities. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -973793,23 +973861,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/king-lake-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/king-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -973824,12 +973893,19 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
-    }
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/king-lake-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/8428.pdf (dated 12/2025), read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8428map.pdf (Conservation Commission (c) 04/16), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 107, 108) and /26 (lots 2419-2423), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 60-400 m frames at both camps (leaf-off at the north lot and the south loop, leaf-on wider), viewed 2026-11-09",
+      "note": "Confirmed; pin moved 1.8 km to the main camp: page 'Individual Campsites', Rule 140 standard; brochure (12/2025) 'Primitive camping is permitted only in areas identified on area map'; map (04/16) two Primitive Camping Area symbols - NW Berlin Road lot (GIS 108 = stored pin, a small lot) and the boat ramp on the south-east shore (GIS 107, a gravel camping loop on the shore). Free/FCFS/no hookups/14 nights now manual. Waterfront lead for the loop: lakeview. Phone matches."
+    },
+    "curation_note": "p3-341 (2026-11-09): pin moved 1.77 km from the minor Berlin Rd spot (GIS 108, single small lot, not split) to the main camp."
   },
   {
     "id": 13832,
@@ -974738,7 +974814,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/john-f-murphy-memorial-state-forest-wildlife-area",
     "phone": "417-895-6880",
-    "note": "Missouri Department of Conservation area (325 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'). 14-day limit in any 30. Site length not published. From Wheatland, take Highway 54 east about 0.50 mile. --Claude",
+    "note": "Small forest and old-field area on Highway 54 east of Wheatland. The designated primitive camping spot is at the north end of the gravel parking lot by the highway, beside a privy. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -974746,23 +974822,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/john-f-murphy-memorial-state-forest-wildlife-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/john-f-murphy-memorial-state-forest-wildlife-area (area regulations and Things to Do), read 2026-10-20",
@@ -974777,11 +974854,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/john-f-murphy-memorial-state-forest-wildlife-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2024-09/8130_0.pdf (dated 09/2024), read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8130map.pdf (Conservation Commission (c) 08/10), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 389) and /26 (lot 1635), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 80 m frame, viewed 2026-11-09",
+      "note": "Confirmed: page 'Designated Camping Sites' (the bare 'Camping is prohibited.' after the standard Rule 140 text is the known page artifact); brochure (09/2024) 'Primitive camping is permitted in spots designated on the area'; map (08/10) Primitive Camping Area symbol at the Highway 54 lot = GIS 389 = stored pin, on open gravel. Free/FCFS/no hookups/14 nights now manual. Not waterfront kept. Phone matches."
     }
   },
   {
@@ -974856,7 +974939,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' and 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/john-alva-fuson-md-conservation-area",
     "phone": "417-746-0291",
-    "note": "Missouri Department of Conservation area (1,534 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites' and 'Individual Campsites'). 14-day limit in any 30. Site length not published. From Grovespring, take Highway 5 north 3.75 miles, then Smittle Cave Road west 1.75 miles to Parks Creek Road, which runs through the area. --Claude",
+    "note": "Wooded hills along Parks Creek north of Grovespring, with two small primitive camping areas beside gravel lots: one at Little Smittle Cave, reached by a low-water crossing of Parks Creek (impassable when the creek is up), and one at Lowell Cave on the east side of Parks Creek Road. No amenities. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -974864,23 +974947,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/john-alva-fuson-md-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/john-alva-fuson-md-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -974895,11 +974979,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/john-alva-fuson-md-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-06/8831map.pdf (Conservation Commission (c) 04/16), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 34) and /26 (lots 1967, 1968, 1970), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 50-250 m frames at the camp, the Parks Creek crossing and the Lowell Cave lot, viewed 2026-11-09",
+      "note": "Confirmed with a creek-crossing caveat: page 'Designated Camping Sites / Individual Campsites', Rule 140 standard; map (04/16) two Primitive Camping Area symbols, at the Little Smittle Cave lot (= GIS 34 / stored pin, west of Parks Creek) and the Lowell Cave lot; the road to the pin fords Parks Creek on a low-water slab. Free/FCFS/no hookups/14 nights now manual. Not waterfront kept. Phone matches."
     }
   },
   {
@@ -976915,7 +977005,7 @@
     "id": 13882,
     "kind": "campground",
     "name": "Jamerson C. McCormack Conservation Area",
-    "location": "40.05181,-95.24441",
+    "location": "40.05202,-95.24425",
     "elevation_meters": 277.0,
     "state": "MO",
     "ownership": "state",
@@ -976924,7 +977014,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/jamerson-c-mccormack-conservation-area",
     "phone": "816-271-3100",
-    "note": "Missouri Department of Conservation area (225 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'). 14-day limit in any 30. Site length not published. South of Mound City at I-29 Exit 79, take Highway 159 south 3 miles to area. --Claude",
+    "note": "Small wooded loess-hills area on Highway 159 south of Mound City. MDC's primitive camping area is in the trees beside a small gravel lot at the entrance off the highway; no amenities. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -976932,23 +977022,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/jamerson-c-mccormack-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/jamerson-c-mccormack-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -976963,11 +977054,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/jamerson-c-mccormack-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-09/7611.pdf (dated 12/2025), read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-07/7611map.pdf (Conservation Commission (c) 06/13), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 256) and /26 (lot 60), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 60 and 120 m frames, viewed 2026-11-09",
+      "note": "Confirmed: page 'Designated Camping Sites', Rule 140 standard; brochure (12/2025) 'Primitive camping is permitted only in areas identified on area map'; map (06/13) Primitive Camping Area symbol just south of the entrance lot; GIS 256 sits under canopy 25 m from lot 60 - pin moved onto the lot. Free/FCFS/no hookups/14 nights now manual. Not waterfront kept. Phone matches."
     }
   },
   {
@@ -978815,7 +978912,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/labelle-lake-conservation-area",
     "phone": "573-248-2530",
-    "note": "Missouri Department of Conservation area (334 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From LaBelle, take Route D south 2 miles, then gravel road 212 east 0.60 mile. --Claude",
+    "note": "112-acre former city water-supply lake south of LaBelle. The small designated campground on the south shore, west of the boat ramp, has numbered gravel back-in spurs with tables off a gravel loop, looking north through a belt of trees to the lake, with a shelterhouse and privy nearby. Camping is only at the numbered sites, except walk-in camping outside the firearms deer and turkey seasons. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -978823,27 +978920,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/labelle-lake-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/labelle-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "Area map https://mdc.mo.gov/sites/default/files/2022-12/200402map.pdf (Conservation Commission (c) 06/15: 'Primitive Camping-Individual Sites' symbol labelled '6 Sites'); six numbered gravel spurs visible on Esri imagery, read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -978854,11 +978957,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "sites": {
+      "count": 6
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/labelle-lake-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/200402.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/200402map.pdf (Conservation Commission (c) 06/15), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 532) and /26 (lots 2527, 3230, 3231), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 80 m (leaf-off) and 200 m (leaf-on) frames, viewed 2026-11-09",
+      "note": "Confirmed: page 'Individual Campsites' (+ walk/float/backpack open camping), Rule 140 standard; brochure 'Camping is permitted only at numbered sites in the designated campground'; map (06/15) '6 Sites' campground west of the boat ramp = GIS 532 = stored pin; six ~20 m gravel back-in spurs on imagery. Lakeview confirmed (spur ends 27-46 m from the water through a tree belt). Free/FCFS/no hookups/14 nights now manual; sites.count 6 new. Phone matches."
     }
   },
   {
@@ -979780,7 +979892,7 @@
     "id": 13930,
     "kind": "campground",
     "name": "Keever Bridge Access",
-    "location": "40.42991,-94.63505",
+    "location": "40.42929,-94.63509",
     "elevation_meters": 304.0,
     "state": "MO",
     "ownership": "state",
@@ -979789,7 +979901,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/keever-bridge-access",
     "phone": "816-271-3100",
-    "note": "Missouri Department of Conservation area (6 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From Parnell, take Highway 46 south, then 200th Street west to the area at the Platte River. --Claude",
+    "note": "Small wooded Platte River access south of 200th Street west of Parnell: a short gravel lane into the trees ends at a parking lot with a primitive camping spot beside it. No boat ramp; the river bank is steep. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -979797,23 +979909,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/keever-bridge-access (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/keever-bridge-access (area regulations and Things to Do), read 2026-10-20",
@@ -979828,11 +979941,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/keever-bridge-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6707map.pdf (Conservation Commission (c) 11/07), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 140) and /26 (lot 20), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-on) 110 m frame, viewed 2026-11-09",
+      "note": "Confirmed: page 'Individual Campsites', Rule 140 standard; map (11/07) Primitive Camping Area symbol beside the lot at the end of the gravel lane. GIS camping point 140 (= stored pin) is 69 m N of lot 20, both under leaf-on canopy - pin moved to the lot where the map draws both. Free/FCFS/no hookups/14 nights now manual. Not waterfront kept. Phone matches."
     }
   },
   {
@@ -983791,66 +983910,6 @@
       "checked": "2026-11-09",
       "sources": "https://mdc.mo.gov/discover-nature/places/archangel-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/7833map.pdf (last updated 4/1/2019), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' and /26 'Parking Lots' (https://gisblue.mdc.mo.gov/arcgis/rest/services/Discover_Nature/Area_Feature_Layers/FeatureServer), queried within 3 km 2026-11-09 Esri World Imagery (leaf-off) 400 m frame around 40.4855,-92.6852, viewed 2026-11-09",
       "note": "Confirmed free, FCFS, no hookups, 14-day limit. No campsite can be located: the 2019 area map shows only the paved lot and concrete ramp, GIS has no camping point within 3 km, and imagery shows nothing but the paved loop lot. Pin is on that lot - kept. Not waterfront confirmed."
-    }
-  },
-  {
-    "id": 14001,
-    "kind": "campground",
-    "name": "John L. and Georgia Girvin Conservation Area",
-    "location": "36.35582,-89.55505",
-    "elevation_meters": 86.0,
-    "state": "MO",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 36.3558,-89.5550 (z18): lot under forest canopy, no water within ~100 m -> not waterfront",
-    "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do (2026-09-29); MDC's Camping Sites GIS layer has no point here, so pinned at the area parking lot from MDC's parking-lot layer (z18 satellite, lot under canopy) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
-    "website": "https://mdc.mo.gov/discover-nature/places/john-l-georgia-girvin-conservation-area",
-    "phone": "573-748-5134",
-    "note": "Missouri Department of Conservation area (748 acres). Primitive camping at MDC-designated sites (MDC lists 'Designated Camping Sites'); MDC does not map where the sites are, so this pin is the area parking lot. 14-day limit in any 30. Site length not published. From Portageville, take Highway 162 east, then gravel road 439 south 1 mile, cross the levee and park. Proceed by ATV about 2.50 miles southeast on private farm dirt roads. The area is also accessible by boat from the Mississippi River. --Claude",
-    "hookups": {
-      "electric": 0,
-      "water": false,
-      "sewer": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/john-l-georgia-girvin-conservation-area (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "manual"
-      }
-    },
-    "note_scan": {
-      "sig": "6b20a4a891b8a856",
-      "checked": "2026-09-29",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
-    },
-    "policy_ref": "state:missouri-conservation-areas",
-    "season": {
-      "year_round": true,
-      "note": "The whole area closes during high water on the Mississippi (3 CSR 10-11.115(4))."
     }
   },
   {
@@ -1080195,5 +1080254,67 @@
       "note": "Confirmed: page 'Camping: Individual Campsites', Rule 140 standard; brochure 'Primitive camping is permitted only in areas identified on area map'; map (8/2/2021) nine Primitive Camping symbols, each paired with a Parking Lot = GIS 117-125. Free/FCFS/no hookups/14 nights manual. Pin = GIS 118 on lot 83 (river tract), fine. SPLIT PROPOSED: the lake tract (GIS 123-125) is 4.5-6.8 km NE with its own roads. Not waterfront kept. Phone matches."
     },
     "curation_note": "p3-338 (2026-11-09): split from 13745."
+  },
+  {
+    "id": 15650,
+    "kind": "campground",
+    "name": "Lake Paho Conservation Area (B Campground)",
+    "location": "40.4069,-93.6576",
+    "elevation_meters": 298.0,
+    "state": "MO",
+    "ownership": "state",
+    "waterfront": "not waterfront",
+    "waterfront_evidence": "p3-341 (2026-11-09): split from 13793 - B Campground on the east-side peninsula; the water is 65 m+ from the spurs through woods (leaf-off imagery); no view earned",
+    "inclusion_evidence": "p3-341 (2026-11-09): split from 13793 - brochure (2/2026) 'Primitive camping is permitted only in areas identified on area map'; map (11/2/2022) 'B' Campground with camping symbol, lot 3007 and privy; imagery ~10 gravel back-in spurs and a turnaround (GIS 235); its own MDC road leaves Rt 145 ~1 km SE of C's entrance, 1.4 km from C",
+    "website": "https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area",
+    "phone": "660-626-1796",
+    "note": "Lake Paho, a 273-acre MDC lake west of Princeton. This is the \"B\" Campground on the east-side peninsula, on its own gravel road off Route 145: about ten gravel back-in spurs and a turnaround with a privy, in woods back from the water. Camping is only in the mapped campgrounds, with at most two camping units per site. --Claude",
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "booking": {
+      "reservable": false,
+      "fcfs": "always",
+      "max_stay_nights": 14
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area (area regulations and Things to Do), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      }
+    },
+    "fees": {
+      "nightly_low": 0,
+      "nightly_high": 0,
+      "currency": "USD"
+    },
+    "policy_ref": "state:missouri-conservation-areas",
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/lake-paho-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/4702.pdf (2/2026), read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/4702map.pdf (Conservation Commission 11/2/2022), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 233, 234, 235) and /26 (16 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery frames (60-300 m, leaf-off) of all three campgrounds, viewed 2026-11-09",
+      "note": "Confirmed: page 'Individual Campsites', Rule 140 standard; brochure (2/2026) 'Primitive camping is permitted only in areas identified on area map'; map (11/2/2022) shows campgrounds B, C and D. Stored pin = GIS 233 = 'C' Campground (gravel pull-offs on the peninsula south of Rt 145). Lakeview held (pads ~42-60 m from the east shore over open grass; lakefront lead flagged). Split proposed for 'B' Campground (1.40 km SE, own road off Rt 145). Free/FCFS/no hookups/14 nights now manual. Phone matche"
+    },
+    "curation_note": "p3-341 (2026-11-09): split from 13793."
   }
 ]
