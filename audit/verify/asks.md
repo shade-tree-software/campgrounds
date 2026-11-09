@@ -511,3 +511,7 @@ Nothing here is open. The last three items that were mine to do are done: 6101 C
 Beach (units sit on a strip behind the beach on a dirt track, kept) and 2678 Bridgeport (graded
 sand-dirt roads around the lakes, kept). The splits it queued (258, 146, split-9 Charles Mill,
 split-10 Bond Falls) were done 2026-10-22 / 11-02.
+
+## New asks (p3-326, 2026-11-08)
+- **Ozark Country Campground (2028, Branson MO, private, p3-326):** kept. $60 a night passes only on the Branson gateway (7 km); Google 4.3 from 227, RV Life 4.5 from 140. But it leans long-stay: the operator runs "a long term section… open all the time", a reviewer puts ~50 of ~100 sites as residents, and the office email is @workforcehousingllc.com. The website is stale (footer ©2015) and carries a hidden spam link. Keep or drop?
+- **Powell's Creekside Haven (2043, MO, private, p3-326):** still temporarily_closed. The operator banner "TEMPORARILY CLOSED FOR MAJOR RENOVATION" has been up since at least 2025-04 (Wayback), with no reopening date; the site's pages were last edited 2024-09; the cabins are listed on Airbnb. Google shows no closed label. Kept as temporarily closed with a caveat (standing rule); drop it if two years means gone.
