@@ -97,5 +97,5 @@
 - RESOLVED 2026-11-08 under AWH's rule (rec.gov over the agency page; its live calendar over its
   notice text): 8037 booking.season 03-15..11-30 (calendar = FS; the rec.gov Oct-Mar FCFS notice
   is stale); 11235 fcfs some_sites + max rig 34 ft (rec.gov: singles first-come); 5210 stays
-  reservable (calendar sells April 2027, despite the 'Not Reservable' rule field). Left: 9662
-  Powell (no conflict, just 2024-only dates).
+  reservable (calendar sells April 2027, despite the 'Not Reservable' rule field). 9662 Powell booking.season until 09-15 (calendar; AWH 2026-11-08). Nothing left.
+  (Powell had only 2024 dates.)
