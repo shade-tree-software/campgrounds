@@ -312,6 +312,7 @@
     color: var(--gray);
     margin-bottom: .4rem;
   }
+  .map-legend .legend-color-by .legend-mode-label { color: var(--navy); }
   .map-legend .legend-color-by select {
     flex: 1;
     font-size: .8rem;
@@ -2231,16 +2232,25 @@ legendControl.onAdd = function() {
   // change handler below.
   const colorBy = document.createElement('div');
   colorBy.className = 'legend-color-by';
-  const colorSel = document.createElement('select');
-  colorSel.id = 'color-mode';
-  colorSel.setAttribute('aria-label', 'Color by');
-  COLOR_MODES.forEach(m => {
-    const opt = document.createElement('option');
-    opt.value = m.key;
-    opt.textContent = m.label;
-    colorSel.appendChild(opt);
-  });
-  colorBy.appendChild(colorSel);
+  if (COLOR_MODES.length === 1) {
+    // Nothing to choose (the campgrounds-only role gets Proximity to Water
+    // alone, AWH 2026-11-09): name the mode as plain text, no dropdown.
+    const label = document.createElement('span');
+    label.className = 'legend-mode-label';
+    label.textContent = COLOR_MODES[0].label;
+    colorBy.appendChild(label);
+  } else {
+    const colorSel = document.createElement('select');
+    colorSel.id = 'color-mode';
+    colorSel.setAttribute('aria-label', 'Color by');
+    COLOR_MODES.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.key;
+      opt.textContent = m.label;
+      colorSel.appendChild(opt);
+    });
+    colorBy.appendChild(colorSel);
+  }
   div.appendChild(colorBy);
 
   legendRowsEl = document.createElement('div');
@@ -2628,8 +2638,9 @@ if (!campgroundsOn) {
 // Changes only the colours and the legend's rows. The category filters are
 // per field, not per mode, so a water filter keeps working on a climate map.
 // Reflect the restored mode (URL/session may differ from the server default).
-document.getElementById('color-mode').value = currentMode.key;
-document.getElementById('color-mode').addEventListener('change', (e) => {
+const colorModeSel = document.getElementById('color-mode');  // absent with one mode
+if (colorModeSel) colorModeSel.value = currentMode.key;
+if (colorModeSel) colorModeSel.addEventListener('change', (e) => {
   currentMode = MODES_BY_KEY[e.target.value] || currentMode;
   markers.forEach(({ marker, cg }) => {
     marker.setStyle({ fillColor: markerFill(cg) });
