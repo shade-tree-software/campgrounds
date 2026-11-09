@@ -96,6 +96,43 @@
   }
   .cg-route a.active { background: #d7ebff; }
 
+  /* "About this map" — an info button under the route tool (top-left) that
+     opens #cg-about, a plain-text panel on why the database exists and what
+     it leaves out (AWH 2026-11-09). A panel on this page rather than its own
+     route, so the campgrounds-only role reaches it with no allowlist entry. */
+  .cg-about-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 1100;               /* above the sticky header (900) and map controls */
+    align-items: flex-start; justify-content: center;
+    padding: 4vh 1rem;
+    overflow-y: auto;
+  }
+  .cg-about-backdrop.open { display: flex; }
+  .cg-about {
+    position: relative;
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.3);
+    width: 100%; max-width: 640px;
+    padding: 1.25rem 1.5rem 1.4rem;
+    color: #222; font-size: .97rem; line-height: 1.55;
+  }
+  .cg-about h2 { font-size: 1.2rem; margin: 0 2rem .9rem 0; color: var(--navy); }
+  .cg-about h3 { font-size: 1rem; margin: 1.2rem 0 .4rem; color: var(--navy); }
+  .cg-about p { margin: 0 0 .75rem; }
+  .cg-about-close {
+    position: absolute; top: .6rem; right: .6rem;
+    width: 36px; height: 36px; border: none; border-radius: 8px;
+    background: none; color: var(--gray); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cg-about-close:hover { background: #f0f1f4; color: var(--navy); }
+  @media (max-width: 700px) {
+    .cg-about-backdrop { padding: .5rem; }
+    .cg-about { padding: 1rem 1.1rem 1.1rem; font-size: .95rem; }
+  }
+
   /* Route status pill — a centered banner at the bottom of the map that prompts
      for the next click and, once routed, shows the distance + drive time with a
      Clear button. Bottom-center keeps it clear of the top search box and the
@@ -784,6 +821,29 @@
       <button type="button" class="rs-aim-place" onclick="rsPlaceHere()">Place here</button>
     </div>
     {% endif %}
+  </div>
+</div>
+
+<!-- About this map — opened by the info button under the route tool. Every
+     role sees it, the campgrounds-only one included. -->
+<div class="cg-about-backdrop" id="cg-about-backdrop">
+  <div class="cg-about" role="dialog" aria-modal="true" aria-labelledby="cg-about-title">
+    <button type="button" class="cg-about-close" id="cg-about-close" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h2 id="cg-about-title">About the Campground Map</h2>
+
+    <h3>Why we built it</h3>
+    <p>After we bought our Winnebago EKKO in 2022, a small all-wheel-drive Class C, my wife and I quickly learned how hard it is to find out where the campgrounds are and what each one is like. Every campground has its own website in its own format, and some have none at all. Digging out the basics is slow and frustrating, especially at 8 p.m. somewhere in the middle of Kansas when all you want is a decent place to stop for the night.</p>
+    <p>Prices are a puzzle of their own. Every campground has different booking fees, surcharges and hidden costs. A $45 site can easily become $75 once you add park entrance fees, facility fees, concessionaire fees, equipment fees, per-person and vehicle fees, a weekend surcharge and whatever else turns up at checkout. Then there's the surprise of pulling in for one night and finding a two-night minimum.</p>
+    <p>Campground reviews are everywhere online, but nowhere can you search for &ldquo;lakefront campsites within 20 miles of Estes Park,&rdquo; &ldquo;campgrounds open in January&rdquo; or &ldquo;campgrounds that take last-minute arrivals&rdquo; and trust the answer. Elevation matters more than most listings let on, too. On a 95-degree day in Luray, Virginia, Big Meadows Campground in Shenandoah National Park can be 15 degrees cooler, even though you can see the ridge it sits on from town. You'd only know that if you knew Luray is at about 800 feet and Big Meadows at about 3,500.</p>
+
+    <h3>What we include, and what we leave out</h3>
+    <p>With a few exceptions, such as public campgrounds and gateways to popular destinations, a campground makes the list only if it has at least some RV-friendly sites for $50 a night or less.</p>
+    <p>We focus on campgrounds that fit a large camper van or a small Class C. We assume you have all-wheel drive and can handle an unpaved mountain road, though we leave out campgrounds where the managing agency calls for four-wheel drive. If you drive a 45-foot Class A, many of these campgrounds won't take your rig, and because of the $50 cap we may be missing some that would.</p>
+    <p>If you're a backpacker, you won't find backcountry sites reached only by trail or canoe. We also leave out beach campgrounds where you camp on open sand. A beach campground makes the list only when its sites can be reached by road and have designated pads.</p>
+    <p>We also leave out RV parks that mostly rent by the month or the season, house permanent residents, or require a membership. Many of them technically take overnight guests, but they aren't really set up for a traveler who just needs a place for the night.</p>
+    <p>Finally, many of these campgrounds are primitive, with no hookups of any kind. Check before you go if you need electricity or a sewer connection.</p>
   </div>
 </div>
 
@@ -3270,6 +3330,43 @@ routeControl.onAdd = function() {
   return div;
 };
 routeControl.addTo(map);
+
+// ── About this map ──────────────────────────────────────────────────────────
+// An info button under the route tool opening the #cg-about panel.
+const aboutBackdrop = document.getElementById('cg-about-backdrop');
+let aboutLink = null;
+function cgOpenAbout() {
+  aboutBackdrop.classList.add('open');
+  document.getElementById('cg-about-close').focus();
+}
+function cgCloseAbout() {
+  if (!aboutBackdrop.classList.contains('open')) return;
+  aboutBackdrop.classList.remove('open');
+  if (aboutLink) aboutLink.focus();
+}
+document.getElementById('cg-about-close').addEventListener('click', cgCloseAbout);
+aboutBackdrop.addEventListener('click', e => { if (e.target === aboutBackdrop) cgCloseAbout(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') cgCloseAbout(); });
+
+const aboutControl = L.control({ position: 'topleft' });
+aboutControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'leaflet-bar cg-about-btn');
+  aboutLink = L.DomUtil.create('a', '', div);
+  aboutLink.href = '#';
+  aboutLink.title = 'About this map';
+  aboutLink.setAttribute('aria-label', 'About this map');
+  aboutLink.setAttribute('role', 'button');
+  aboutLink.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    + 'stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/>'
+    + '<path d="M12 11v6"/><circle cx="12" cy="7.6" r=".6" fill="currentColor"/></svg>';
+  L.DomEvent.disableClickPropagation(div);
+  L.DomEvent.on(aboutLink, 'click', function(e) {
+    L.DomEvent.preventDefault(e);
+    cgOpenAbout();
+  });
+  return div;
+};
+aboutControl.addTo(map);
 
 // ── Name search ─────────────────────────────────────────────────────────────
 // Filter-as-you-type over campground names (+ state) AND roadside stop names
