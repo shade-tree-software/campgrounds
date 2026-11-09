@@ -13,7 +13,7 @@ Both passes finished 2026-11-08 and are committed to master. Nothing has been pu
 - **Season pass:** all 151 seasons derived from the recreation.gov calendar were re-read against the agency's own page; chunks are in `audit/season_calendar/out/`.
   - Usual finding: the calendar edge is where reservations stop. The open season is wider and first-come outside it.
   - Group-site-only rec.gov facilities give the group sites' dates, not the campground's (13291 and 13292 Onion Creek).
-  - Open items are in `audit/season_calendar/followups.md`: first-come sites missing from `booking`, RV-length conflicts, two self-contradicting pages.
-- **Notes round 2:** cut what the season, booking, fees and sites notes already say; those notes now show in the popup behind a "Show notes" link (chip rows fit one line on a desktop and two on a phone, with a clickable "+N more"; approximate seasons say "about" on the chip; AWH 2026-11-08). It covered 21 chunks; the questions it raised are in `audit/note_dupes/asks.md` and were not yet put to AWH.
+  - Follow-ups worked 2026-11-08 (afa0cb81, 51 entries: fcfs, booking.season, Onion Creek group-season removed); what is left is at the end of `audit/season_calendar/followups.md` (5210, 11235, 8037, 9662, 10073 awaiting AWH).
+- **Notes round 2:** cut what the season, booking, fees and sites notes already say; those notes now show in the popup behind a "Show notes" link (chip rows fit one line on a desktop and two on a phone, with a clickable "+N more"; approximate seasons say "about" on the chip; AWH 2026-11-08). It covered 21 chunks; the questions it raised are in `audit/note_dupes/asks.md`; AWH answered them 2026-11-08 (main note vs group note: the newer read wins).
 
 Related: [[project-note-price-cleanup]], [[feedback-clean-up-notes]].
