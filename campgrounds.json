@@ -135547,44 +135547,77 @@
     "id": 1877,
     "kind": "campground",
     "name": "Lightfoot Landing",
-    "location": "37.8261,-93.3614",
-    "elevation_meters": 274.0,
+    "location": "37.8322,-93.3640",
+    "elevation_meters": 270.0,
     "state": "MO",
     "ownership": "federal",
     "waterfront": "lakeview",
     "inclusion_evidence": "recreation.gov 233538: 35 Standard Electric water/hookup sites, RV-capable, operating -> real RV campground",
     "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://www.recreation.gov/camping/campgrounds/233538",
-    "note": "Small quiet COE peninsula campground on Pomme de Terre Lake, all 35 sites electric+water; reservable online, full season mid-Apr to Sep 30 with an electric-only shoulder season. --Claude",
+    "note": "Corps of Engineers campground at the tip of a wooded peninsula on Pomme de Terre Lake, off RB Highway east of Highway 83 near Flemington. Gravel back-in and pull-through pads in two loops under open oaks, many with the lake in view; boat ramp with courtesy dock at the point. Check in at the attendant booth on arrival. --Claude",
     "hookups": {
       "water": true,
-      "electric": 50
+      "electric": 50,
+      "sewer": false
     },
     "sites": {
-      "count": 35
+      "count": 35,
+      "pull_through": true,
+      "max_rig_ft": 45,
+      "note": "Catalog 'Max Vehicle Length' 30-45 ft (four sites at 30 ft); six pull-throughs (13, 20, 22, 24, 30, 33)."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "season": {
+        "opens": "04-16",
+        "closes": "09-30"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233538 ('Lightfoot Landing has 35 sites with electric and water hookups ... dump station') + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233538 (35 sites) (29 sites list 'Electricity Hookup 50' and 'Water Hookup Y', none lists sewer; sites 01-06 carry no hookup attributes but are typed STANDARD ELECTRIC), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233538 (35 sites) (35 Overnight STANDARD ELECTRIC sites, RV/Trailer/Tent; Max Vehicle Length 30 x4, 35 x10, 40 x19, 45 x2; Driveway Entry Pull-Through on 13, 20, 22, 24, 30, 33), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233538 notices ('There is no first-come-first-serve window. All reservations can be made from the current day up to six months in advance. Campers are still limited to camping 14 consecutive days at a campground.'; 'All reservations must be made through the Recreation.gov website or app'), rules (minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14) + https://www.recreation.gov/api/camps/availability/campground/233538/month (2026-11, 2027-03, 2027-04, 2027-10), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233538/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233538/rates ('Peak Season 2027-04-16 to 2027-09-30: PeakSTANDARD ELECTRIC 26'; 'Non-Peak Season 2027-10-01 to 2027-11-30: Off PeakSTANDARD ELECTRIC 16') + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233538 (35 sites) (all 35 sites type STANDARD ELECTRIC), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233538 (amenities 'Accessible Flush Toilets', 'Dump Station', 'Showers'; 'Additional amenities include a shower house, boat ramp with courtesy dock, dump station, playground'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233538 notice ('During the off-season, there is a limited camping season that only has electricity available. $10 per night, Dates: March 15 - April 15, October 1 - November 30.') + rates (peak 04-16 to 09-30), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -135595,9 +135628,36 @@
     "fees": {
       "nightly_low": 16,
       "nightly_high": 26,
-      "currency": "USD"
+      "currency": "USD",
+      "seasonal": [
+        {
+          "name": "peak",
+          "opens": "04-16",
+          "closes": "09-30",
+          "nightly_low": 26,
+          "nightly_high": 26
+        }
+      ],
+      "note": "Every site is a $26 'STANDARD ELECTRIC' site in the peak season (Apr 16 - Sep 30). The $16 is the rate table's 2027 off-peak electric rate (Oct 1 - Nov 30); a site notice instead says the electric-only shoulder season is '$10 per night'."
     },
-    "policy_ref": "federal:usace"
+    "policy_ref": "federal:usace",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true
+    },
+    "season": {
+      "opens": "03-15",
+      "closes": "11-30",
+      "note": "Full service Apr 16 - Sep 30; an electric-only shoulder season Mar 15 - Apr 15 and Oct 1 - Nov 30 per the site notice, though recreation.gov sold no nights in Nov 2026, Mar 2027 or Apr 1-15 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.recreation.gov/camping/campgrounds/233538, read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/233538 (description, notices, rules), read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/233538/rates, read 2026-11-09 https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233538 (35 sites), read 2026-11-09 https://www.recreation.gov/api/camps/availability/campground/233538/month (2026-11, 2027-03, 2027-04, 2027-10), read 2026-11-09 recreation.gov per-site photos for sites 01, 02, 13, 16, 25, 29, read 2026-11-09 Esri World Imagery 180 m frame with the catalog's per-site coordinates, and a 600 m frame, viewed 2026-11-09",
+      "note": "Confirmed (lakeview kept, no site earns lakefront). Fees 16-26 kept with a peak span; 50A/water/no sewer, 35 sites (max 45 ft, 6 pull-throughs), showers/flush/dump, season Mar 15 - Nov 30 (shoulder electric-only) and rec.gov-only booking with no FCFS now manual. PIN moves ~700 m north to the campground (flag); phone 417-282-6890 added (flag)."
+    },
+    "phone": "417-282-6890",
+    "curation_note": "p3-342 (2026-11-09): pin moved ~700 m from the park road to the peninsula tip where all 35 sites are. Shoulder fee conflict: rec.gov rate table $16 off-peak electric vs its notice $10 (Mar 15-Apr 15, Oct 1-Nov 30); calendar sold no shoulder nights, so whether the shoulder is sold is unclear."
   },
   {
     "id": 1878,
@@ -137744,54 +137804,72 @@
     "id": 1906,
     "kind": "campground",
     "name": "Loggers Lake",
-    "location": "37.3800,-91.2700",
-    "elevation_meters": 302.0,
+    "location": "37.3878,-91.2607",
+    "elevation_meters": 310.0,
     "state": "MO",
     "ownership": "federal",
-    "waterfront": "lakeview",
+    "waterfront": "lakefront",
     "inclusion_evidence": "USFS page + recreation.gov 251547 site details: nonelectric drive-up sites, trailers to ~30-40ft, gravel road (not 4WD)",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string) | p3-342 (2026-11-09), UP lakeview -> lakefront: sites 010/011 sit on an open grass peninsula ~30-40 m from the shoreline (imagery at low pool, so closer at normal), with the loop road behind them and no day use between; rec.gov site photos 010/011 show table, grass, then water; FS 'all sites have a view of the lake, with only light vegetation in between'",
     "website": "https://www.recreation.gov/camping/campgrounds/251547",
-    "note": "USFS Mark Twain NF campground on spring-fed Logger's Lake near Bunker; ~14 non-electric sites all with lake views; reservable online; the final access road is rough (high-clearance recommended); open Apr-Oct. --Claude",
+    "note": "Forest Service campground on the south-east shore of 22-acre, spring-fed Logger's Lake (electric motors only), in Shannon County south-west of Bunker; small swim beach, boat ramps and a fishing pier. Reached by 6 miles of Dent County Road 565 and 1 mile of FR 2193: the Forest Service says 4WD is not required but the last part of the road is rough and a high-clearance vehicle is highly recommended. Sites must be booked at least 5 days ahead; April and October nights are first come, first served. --Claude",
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "sites": {
-      "count": 14
+      "count": 14,
+      "max_rig_ft": 30,
+      "pull_through": false,
+      "note": "Paved back-in sites; the Forest Service recommends 30 ft at most (recreation.gov lists 40 ft on its 10 bookable sites)."
     },
     "season": {
       "year_round": false,
-      "opens": "04-01",
-      "closes": "10-31",
-      "note": "Approximate: Open April to October."
+      "opens": "04-09",
+      "closes": "11-01",
+      "note": "Forest Service dates for 2026; recreation.gov sells 2027 from April 10 to October 30."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/251547",
+      "window_opens_days": 180,
+      "season": {
+        "opens": "05-01",
+        "closes": "09-30"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area ('No individual hookups available at this location. There is a pressurized water system.') + https://www.recreation.gov/api/search/campsites?fq=asset_id:251547 (all 10 sites STANDARD NONELECTRIC), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area ('Single -nonelectric: 14', 'Maximum recommended size is 30 feet', 'Pavement Type of Parking: Asphalt') + https://www.recreation.gov/api/search/campsites?fq=asset_id:251547 (sites 005-014, Back-in, Driveway Surface Paved, Max Vehicle Length 40), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area ('Open April 9 - November 1, 2026') + https://www.recreation.gov/api/camps/campgrounds/251547/rates (2027 seasons 04-10..10-30), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area ('Reservation needed for camping sites', 'Reservations can be made up to 6 months in advance of visit', 'Reservations must be made at least 5 days in advance of visit') + https://www.recreation.gov/api/camps/campgrounds/251547/rates (2027: First-come, First-served Season 04-10..04-30 and 10-01..10-30, Peak Season 05-01..09-30) + https://www.recreation.gov/api/camps/availability/campground/251547/month (2027-04-10: 'Not Reservable' x10; 2027-05-01: NYR x10), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251547/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251547/rates (Peak Season 2026-04-09..2026-10-26 'PeakSTANDARD NONELECTRIC': 15; 2027 Peak 05-01..09-30 and First-come First-served 04-10..04-30 / 10-01..10-30: 15) + https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area ('Single Site: $10 per night', 'Fees will be paid at the fee tube provided', 'There is a 50% discount for camping for anyone with an Interagency Access or Senior Pass'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area ('Drinking water and vault toilets are centrally located.'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -137802,8 +137880,21 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Recreation.gov charges $15 a night for a single site (double/group site $30-35) in every season it lists for 2026-2028; the Forest Service page still says 'Single Site: $10 per night'. Walk-in nights in April and October are paid at the fee tube (cash or check). Interagency Senior/Access pass holders get 50% off."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.fs.usda.gov/r09/marktwain/recreation/loggers-lake-recreation-area, read 2026-11-09 https://www.recreation.gov/camping/campgrounds/251547, read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/251547, read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/251547/rates, read 2026-11-09 https://www.recreation.gov/api/search/campsites?fq=asset_id:251547 (10 sites with coordinates, attributes and photos), read 2026-11-09 https://www.recreation.gov/api/camps/availability/campground/251547/month (2027-04, 2027-05), read 2026-11-09 recreation.gov site photos 010 and 011 (cdn.recreation.gov, 2019), read 2026-11-09 Esri World Imagery 440 m frame with the rec.gov site points, viewed 2026-11-09",
+      "note": "Confirmed; fees $15 (rec.gov) kept with the FS page's stale $10 noted; added no-hookup water/sewer false, 14 paved back-in sites (FS 30-ft max), vault toilets + water, season 04-09..11-01 (2026), rec.gov booking May-Sep, 180 days. Access road: high clearance 'highly recommended', 4WD 'not required' - kept with a caveat. Pin moves 1.2 km; waterfront ask lakeview -> lakefront; phone to add."
+    },
+    "phone": "573-729-6656",
+    "curation_note": "p3-342 (2026-11-09): pin moved 1.2 km out of the woods to the loop centre. FS page '$10 single' vs rec.gov $15 (kept). Sites FS 14 vs rec.gov catalog 10; max length FS 30 ft vs rec.gov 40 (30 written). Access: FS '4WD vehicle is not required ... high clearance vehicle is highly recommended' - kept with the caveat in the note."
   },
   {
     "id": 1907,
@@ -139869,15 +139960,15 @@
     "id": 1933,
     "kind": "campground",
     "name": "Lead Mine Conservation Area",
-    "location": "37.8629,-92.8978",
-    "elevation_meters": 239.0,
+    "location": "37.8504,-92.9291",
+    "elevation_meters": 332.0,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "riverview",
+    "waterfront": "not waterfront",
     "inclusion_evidence": "MDC area page: 50-site main campground plus primitive areas, FCFS drive-in, no reservation -> real drive-in campground",
-    "waterfront_evidence": "waterfront 'riverview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "waterfront 'riverview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string) | p3-342 (2026-11-09), DOWN riverview -> not waterfront with the pin moved to the main campground (GIS 64, 50 sites, the only privy): on an upland ridge ~1.4 km from the Niangua; the old value was read at a minor east-side ramp camp and its evidence was only a commit reference",
     "website": "https://mdc.mo.gov/discover-nature/places/lead-mine-conservation-area",
-    "note": "Camping (MDC) at a gravel main campground (about 26 sites fit trailers) near the Niangua River and Jakes Creek; drive-in. --Claude",
+    "note": "Large Ozark upland area along the Niangua River and Jakes Creek, five miles east of Tunas. The main campground (with the only privy) is a gravel loop with back-in spurs plus sites along a spur road, in upland oak forest off the area road from the southwest entrance (Route YY), well away from the water. Four smaller primitive camping spots elsewhere, two of them at boat ramps on the Niangua; the east side (Bluff Trail entrance) has no road link to the west side. Multi-use trails are open to horses, and an unstaffed shooting range sits on the southeast side (closed Mondays). --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -139887,37 +139978,39 @@
       "count": 50
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "note": "The privy is at the main campground only: 'No other facilities are provided in any other camping areas.'"
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/lead-mine-conservation-area ('Visitors will find five primitive camping areas. The main campground has 50 sites and is the only location of a privy.'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/lead-mine-conservation-area ('The main campground has 50 sites and is the only location of a privy. No other facilities are provided in any other camping areas.') + map https://mdc.mo.gov/sites/default/files/2024-09/8024map_0.pdf (privy symbol beside the main camping area), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/sites/default/files/2024-04/8024.pdf ('Campers are limited to 14 consecutive days in a 30-day period') + https://mdc.mo.gov/discover-nature/places/lead-mine-conservation-area ('Camping is all on a first come-first served basis with no permit or reservation required'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/lead-mine-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -139932,12 +140025,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
-    }
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/lead-mine-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2024-04/8024.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-09/8024map_0.pdf (Last Updated 7/8/2026), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 64, 65, 66, 67, 370) and /26 (28 lots), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 150, 200 and 700 m frames, viewed 2026-11-09",
+      "note": "Confirmed: 50-site main campground with the only privy, FCFS, free, Rule 140 standard; free/FCFS/no hookups/14 nights/50 sites/vault toilet now manual. PIN is on a minor boat-ramp camp: move ~3.1 km to the main campground (GIS 64). Waterfront riverview -> not waterfront (main camp is upland, ~1.4 km+ from the river). Phone (417) 895-6880 added (flag)."
+    },
+    "phone": "417-895-6880",
+    "curation_note": "p3-342 (2026-11-09): pin moved ~3.1 km from the east-side Niangua ramp camp (GIS 65 / lot 3236) to the main campground; the four other points are single small lots or ramp spots, no split."
   },
   {
     "id": 1935,
@@ -967485,17 +967586,26 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 39.7699,-92.5193 (z17): loops on a peninsula of Long Branch Lake under continuous canopy, a treeline between the nearest loop and the shore; no per-site map read -> default down, not waterfront",
     "inclusion_evidence": "Missouri State Parks camping page + MSPRDR portal (PlaceId 56): two campground facilities with basic and 50-amp electric sites and a dump station, reservable; closed for all of 2026 for construction (added with caveat)",
-    "website": "https://mostateparks.com/park/long-branch-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/",
-    "phone": "877-422-6766",
-    "note": "Missouri State Parks, on a wooded peninsula of Long Branch Lake just west of Macon. Basic, electric (50-amp available), family and 8 walk-in sites in two loops (1-40 & 73-83, 41-72); firewood vending. CLOSED FOR ALL OF 2026 for construction (park camping page, checked 2026-09-29). Normally reservable 12 months ahead. --Claude",
+    "website": "https://mostateparks.com/park/long-branch-state-park/camping\nhttps://icampmo1.usedirect.com/MSPWeb/#!park/56",
+    "phone": "660-773-5229",
+    "note": "Missouri State Parks campground on a wooded peninsula of Long Branch Lake just west of Macon. Walk-in sites are tent-only; family sites have two pads. Off-season (November-March) water is at a frost-free spigot near site 12; firewood vending by the dump station. Site 79 is prone to flooding in heavy rain. --Claude",
     "hookups": {
       "electric": 50
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://icampmo1.usedirect.com/MSPWeb/#!park/56",
+      "window_opens_days": 365,
+      "fcfs": "after_cutoff",
+      "max_stay_nights": 15
     },
     "provenance": {
       "hookups": {
@@ -967504,19 +967614,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/long-branch-state-park/camping ('Showers/Water Available Apr 1-Oct 31'; 'During the off-season (November through March), potable water is available at the frost-free spigot near campsite 12'; 'firewood vending machine ... just past the dump station') + https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2024/12/LongBranch_CG.pdf (legend: restroom, showerhouse, vault toilet, dump station), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/long-branch-state-park/camping ('You are now able to reserve your Missouri State Parks campsite up to 12 months in advance'; 'Make a Reservation Now' -> https://icampmo1.usedirect.com/MSPWeb/#!park/56; 'Reservable sites may be available on a walk-up registration basis if the site is not reserved'; 'Camping is limited to any 15 days within a 30-consecutive-day period'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "status": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-30",
-        "method": "derived"
+        "source": "https://mostateparks.com/park/long-branch-state-park/camping ('The main campground at Long Branch State Park is closed for all of 2026 due to construction.') + https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (facilities 797 and 855: every night IsBlocked from 2026-11-17 through 2027-11-08; control facility 766 shows free nights on 2027-06-08), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
         "source": "Missouri State Parks 2026 on- and off-season rate charts, https://mostateparks.com/activity/camping/camping-fees",
@@ -967527,6 +967637,11 @@
         "source": "https://mostateparks.com/park/long-branch-state-park/camping (campground table, 'Available Dates' column), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "sites": {
+        "source": "https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2024/12/LongBranch_CG.pdf (sites 1-83; WI at 54-62; family-site diamonds) + https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (66 web-bookable units: F012/F015/F024/F037 'Family Electric 30 amp', 011 'Sewer/Electric/Water 30 amp', 041-046 and 065-083 'Electric 50 amp', 047-053/063/064 'Basic', 054-062 'Walk-in'; VehicleLength 35-75) + https://mostateparks.com/park/long-branch-state-park/camping ('Eight walk-in campsites ... suitable only for tent camping'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -967536,8 +967651,7 @@
     },
     "status": {
       "operating": "temporarily_closed",
-      "note": "closed for all of 2026 for construction",
-      "reopens": "2027"
+      "note": "Main campground closed for all of 2026 for construction; the reservation system blocks every night in both loops through early November 2027."
     },
     "fees": {
       "nightly_low": 15,
@@ -967554,7 +967668,17 @@
     "season": {
       "year_round": true,
       "note": "Normally year-round (showers and water Apr 1-Oct 31); closed for all of 2026 for construction."
-    }
+    },
+    "sites": {
+      "count": 83,
+      "note": "Sites 1-40 and 73-83 in one loop, 41-72 in the other; 54-62 are walk-in tent sites; one sewer/electric/water site (11); 50-amp at 41-46 and 65-83. Engine lengths 35-75 ft."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mostateparks.com/park/long-branch-state-park/camping, read 2026-11-09 https://mostateparks.com/park/long-branch-state-park, read 2026-11-09 2027 rate sheet https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2026/01/long-branch-camping-fees-2027.pdf, read 2026-11-09 Campground map https://mostateparks.com/sites/g/files/zuston361/files/media/pdf/2024/12/LongBranch_CG.pdf (05/24), read 2026-11-09 https://msprdr.usedirect.com/MSPRDR/rdr/search/grid (US eDirect grid behind icampmo1.usedirect.com/MSPWeb; facilities 797 'Campground (sites 1-40 and 73-83)' and 855 'Campground (sites 41-72)', nights 2026-11-17..12-16, 2027-03-01..03-30, 04-01..04-30, 05-20..06-01, 06-08, 08-01..08-30, 10-01..10-30, 11-01..11-08; control facility 766), read 2026-11-09 https://msprdr.usedirect.com/MSPRDR/rdr/fd/units/<UnitId> (units 11767 site 033, 11793 site 079), read 2026-11-09 Esri World Imagery 600 m frame with the engine's site points, viewed 2026-11-09",
+      "note": "Confirmed closed: the camping page says the main campground is closed all of 2026, and the US eDirect engine blocks every night in both loops through 2027-11-08 (reopens '2027' unsupported). 2027 rates identical to the stored ones. Added booking (icampmo1 engine, 12 months, walk-up after_cutoff, 15-night max), 83 sites, facilities. Not waterfront kept (nearest RV sites 50-70 m through woods)."
+    },
+    "curation_note": "p3-342 (2026-11-09): reopens '2027' removed (the page gives no date; the eDirect grid blocks every night through 2027-11-08, the end of its window). Phone 877-422-6766 (statewide reservation line) -> park office 660-773-5229. mostateparks.com now links icampmo1.usedirect.com."
   },
   {
     "id": 13731,
@@ -970116,7 +970240,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' and 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 4 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/little-lost-creek-conservation-area",
     "phone": "636-456-3368",
-    "note": "Missouri Department of Conservation area (2,899 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites' and 'Individual Campsites'); MDC maps 4 camping spots across the area. 14-day limit in any 30. Site length not published. From Pendleton, take Route B south 4 miles, or from Pendleton take, Route EE south 4 miles. --Claude",
+    "note": "Wooded Ozark-border hills in Warren County south of Pendleton, with a 6.5-mile multi-use trail open to hikers, bikes and horses. Four primitive camping spots, each beside a small gravel parking lot on the edge roads; no facilities. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -970124,23 +970248,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/sites/default/files/2022-01/8030.pdf ('Campers are limited to 14 consecutive days in a 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/little-lost-creek-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -970155,11 +970280,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/little-lost-creek-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-01/8030.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2023-01/8030map.pdf (Last Updated 2/17/2022), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 173-175, 371) and /26 (lots 1013-1016, 2282), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 90 m frames, viewed 2026-11-09",
+      "note": "Confirmed: four map-designated camping spots at perimeter gravel lots; pin on the north lot (GIS 173). Free/FCFS/no hookups/14 nights now manual. Phone matches; not waterfront kept. The page's bare 'Camping is prohibited.' line is the known page artifact."
     }
   },
   {
@@ -970302,7 +970433,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 4 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/little-compton-lake-conservation-area",
     "phone": "660-646-6122",
-    "note": "Missouri Department of Conservation area (515 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'); MDC maps 4 camping spots across the area. 14-day limit in any 30. Site length not published. From Hale, take Highway 139 south 4 miles, then County Road 140 east 3 miles, then County Road 361 south to area entrance. --Claude",
+    "note": "40-acre fishing lake above the Grand River bottoms in northeastern Carroll County, reached by gravel County Road 361. MDC's map marks primitive camping beside three gravel lots: the boat-ramp lot with the privy, on a grassy point into the lake (the main spot), a lot at the lake's north end and one at its south end. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -970310,27 +970441,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/sites/default/files/2024-06/8329.pdf ('Primitive camping is permitted only in areas identified on the area map. Camping is limited to 14 consecutive days in a 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/little-compton-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8329map.pdf (privy symbol at the boat-ramp parking lot), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -970341,11 +970478,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/little-compton-lake-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2024-06/8329.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8329map.pdf (05/18), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 223-226) and /26 (lots 132-134), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 330 m frame, viewed 2026-11-09",
+      "note": "Confirmed: designated camping (map symbols + GIS 224) at the boat-ramp lot, pin on it; lakeview kept; phone matches. Free/FCFS/no hookups/14 nights now manual; privy added."
     }
   },
   {
@@ -972213,65 +972359,6 @@
       "checked": "2026-11-09",
       "sources": "https://mdc.mo.gov/discover-nature/places/kings-prairie-access, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/8116.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/8116map.pdf, read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (points 530, 531) and /26 (lots 1633, 1634), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery (leaf-off) 70 m frames at both camps, viewed 2026-11-09",
       "note": "Confirmed: page 'Designated Camping Sites', Rule 140 standard; brochure 'Camping is permitted only in designated areas'; map two Primitive Camping symbols, each beside a lot - Creek Access (GIS 531 = stored pin, in open grass 32 m S of a large gravel lot) and the slough lot (GIS 530, 790 m SE). Free/FCFS/no hookups/14 nights now manual. Not waterfront kept. Phone matches."
-    }
-  },
-  {
-    "id": 13803,
-    "kind": "campground",
-    "name": "Little Sac Woods Conservation Area",
-    "location": "37.38189,-93.40025",
-    "elevation_meters": 316.0,
-    "state": "MO",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 37.3819,-93.4002 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront",
-    "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 2 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
-    "website": "https://mdc.mo.gov/discover-nature/places/little-sac-woods-conservation-area",
-    "phone": "417-895-6880",
-    "note": "Missouri Department of Conservation area (772 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 2 camping spots across the area. 14-day limit in any 30. Site length not published. From Willard, take Route Z north 6.5 miles, then Route BB east (right) 2 miles, then Farm Road 115 south (right) 0.80 miles to area. --Claude",
-    "hookups": {
-      "electric": 0,
-      "water": false,
-      "sewer": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/little-sac-woods-conservation-area (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "manual"
-      }
-    },
-    "note_scan": {
-      "sig": "ae986aaf893591d8",
-      "checked": "2026-09-29",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
-    },
-    "policy_ref": "state:missouri-conservation-areas",
-    "season": {
-      "year_round": true
     }
   },
   {
@@ -974755,7 +974842,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/lick-creek-conservation-area",
     "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (317 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'). 14-day limit in any 30. Site length not published. From Columbia, take Highway 63 north 9 miles, then Highway 124 west 3 miles, then Oak Grove School Road north 1.80 miles. --Claude",
+    "note": "Small MDC area north of Columbia around 12-acre Lick Creek Lake. MDC's designated camping point is at the west edge of the gravel boat-ramp lot; camping is also allowed along the interior roads. No amenities. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -974799,6 +974886,12 @@
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "curation_note": "p3-342 (2026-11-09): verifier proposed a lot-only drop (brochure 'Camping is allowed along interior roads and/or parking lots'), but MDC's GIS has a designated camping point (605, 'Designated Camping Area') at the lot edge - kept under the AWH 2026-11-09 designated-point rule.",
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/lick-creek-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2023-05/9228.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/9228map.pdf (Last Updated 3/25/2019), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 605) and /26 (lot 2196), queried 2026-11-09 Esri World Imagery 120 m frame, viewed 2026-11-09",
+      "note": "DROP proposed (lot-only camping): the brochure says 'Camping is allowed along interior roads and/or parking lots. No amenities provided.' The area has one lot, the boat-ramp lot on its 12-acre lake, and MDC's single GIS camping point (605) sits on that lot's west edge (lot 2196 is 26 m away). No campground, pad or camping area apart from the ramp lot."
     }
   },
   {
@@ -979962,12 +980055,12 @@
     "elevation_meters": 269.0,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "riverfront",
-    "waterfront_evidence": "satellite at 40.3389,-95.6213 (z18): open gravel/sand lot running out to the Missouri River bank at the ramp -> riverfront",
+    "waterfront": "riverview",
+    "waterfront_evidence": "satellite at 40.3389,-95.6213 (z18): open gravel/sand lot running out to the Missouri River bank at the ramp -> riverfront | p3-342 (2026-11-09), DOWN riverfront -> riverview: the camping point (GIS 369) is ~30-35 m from the Missouri River, but the ground between is the boat-ramp lot and ramp approach (day use, not an apron)",
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/langdon-bend-access",
     "phone": "816-271-3100",
-    "note": "Missouri Department of Conservation area (12 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From I-29 and Highway 111, take Highway 111 west, then Route E west through Langdon, then Route U west, and 270th Street west to the area. --Claude",
+    "note": "Small Missouri River access at the end of 270th Street west of Langdon: a large open gravel lot at the boat ramp, with the primitive camping spot and a privy on its east edge against the trees, looking across the lot to the river. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -979975,23 +980068,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/langdon-bend-access (3 CSR 10-11.140: 'camping is limited to a period of 14 consecutive days in any 30-day period') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/langdon-bend-access (area regulations and Things to Do), read 2026-10-20",
@@ -980006,11 +980100,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/langdon-bend-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6703map.pdf (Conservation Commission (c) 11/07), read 2026-11-09 MDC GIS Discover_Nature/Area_Feature_Layers FeatureServer/27 (point 369) and /26 (lot 24), queried 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09 Esri World Imagery 120 m frame, viewed 2026-11-09",
+      "note": "Confirmed: page 'Individual Campsites', Rule 140 standard; map (11/07) Primitive Camping Area symbol and privy on the east side of the ramp lot = GIS 369 = stored pin. Free/FCFS/no hookups/14 nights now manual. Waterfront: riverfront -> riverview proposed (the open ground between the camping spot and the river is the boat-ramp parking lot). Phone matches."
     }
   },
   {
@@ -984050,65 +984150,6 @@
       "checked": "2026-11-09",
       "sources": "https://mdc.mo.gov/discover-nature/places/arthur-dupree-memorial-conservation-area, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/9402map.pdf (Last Updated 9/8/2026), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' and /26 'Parking Lots' (https://gisblue.mdc.mo.gov/arcgis/rest/services/Discover_Nature/Area_Feature_Layers/FeatureServer), queried 2026-11-09 Esri World Imagery (autumn) 300 m frame around 39.7857,-94.8825 and a z19 tile mosaic, viewed 2026-11-09",
       "note": "Confirmed free, FCFS, no hookups, 14-day limit. The site is now mapped: the 9/8/2026 area map draws a 'Camping Area' beside the lot and MDC GIS has a 'Primitive Camping Area' point 102 m SE of the lot (39.78536,-94.88211), under canopy with no visible track. Pin move to that point suggested; not waterfront confirmed."
-    }
-  },
-  {
-    "id": 14004,
-    "kind": "campground",
-    "name": "Locust Creek Conservation Area",
-    "location": "40.16812,-93.17294",
-    "elevation_meters": 255.0,
-    "state": "MO",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.1681,-93.1729 (z18): gravel lot/pull-off with no water within ~50 m, or screened from it by trees -> not waterfront",
-    "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do (2026-09-29); MDC's Camping Sites GIS layer has no point here, so pinned at the parking lot nearest the area centre from MDC's parking-lot layer (z18 satellite) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
-    "website": "https://mdc.mo.gov/discover-nature/places/locust-creek-conservation-area",
-    "phone": "660-785-2420",
-    "note": "Missouri Department of Conservation area (3,717 acres). Primitive camping at MDC-designated sites (MDC lists 'Designated Camping Sites'); MDC does not map where the sites are, so this pin is the parking lot nearest the area centre. 14-day limit in any 30. Site length not published. Western Portions - From Milan, take Highway 5/6 south 0.10 mile, then take River Road west 2.50 miles. Eastern Portions -From Milan take Highway 5/6 south 1.20 miles, then take Ribbon Road west 1.25 miles. --Claude",
-    "hookups": {
-      "electric": 0,
-      "water": false,
-      "sewer": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/locust-creek-conservation-area (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "manual"
-      }
-    },
-    "note_scan": {
-      "sig": "73e0d765706e185f",
-      "checked": "2026-09-29",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
-    },
-    "policy_ref": "state:missouri-conservation-areas",
-    "season": {
-      "year_round": true
     }
   },
   {
@@ -1014496,8 +1014537,8 @@
     "id": 14565,
     "kind": "campground",
     "name": "Lazy Dayz Resort",
-    "location": "38.1736,-92.9043",
-    "elevation_meters": 204,
+    "location": "38.1726,-92.9040",
+    "elevation_meters": 209.0,
     "state": "MO",
     "ownership": "private",
     "waterfront": "not waterfront",
@@ -1014505,20 +1014546,37 @@
     "inclusion_evidence": "lazydayz.com (23 RV spots) and ResNexus engine (RV Site $15/night standard rate for 2026-10-14; read 2026-10-03); Google 'Lazy Dayz Resort' 4.3 over 193 with phone; RV Life unrated as Runaway II Resort",
     "website": "https://www.lazydayz.com/\nhttps://resnexus.com/resnexus/reservations/lodging/90467566-A0AB-4E20-94BF-693A39ADE0E0",
     "phone": "573-345-4590",
-    "note": "Lake of the Ozarks resort near Climax Springs (267 Runaway Dr), formerly Runaway II Resort: 23 RV spots just off the lake, cabins, restaurant. --Claude",
+    "note": "Lake of the Ozarks resort at the 45 mile marker near Climax Springs (267 Runaway Dr), formerly Runaway II Resort. The RV sites sit in two rows up the slope south of the store and cabins, about 100-200 m from the cove with cabins and trees between. Cabins, motel, restaurant and bar, pool, boat ramp, gas dock and boat slips. --Claude",
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/lodging/90467566-A0AB-4E20-94BF-693A39ADE0E0"
     },
     "provenance": {
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.lazydayz.com/ ('Book Now' -> ResNexus) + https://resnexus.com/resnexus/reservations/lodging/90467566-A0AB-4E20-94BF-693A39ADE0E0, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "our note (entry added 2026-10-03): '($15 a night in October on its ResNexus engine)'; recheck https://www.lazydayz.com/ https://resnexus.com/resnexus/reservations/lodging/90467566-A0AB-4E20-94BF-693A39ADE0E0",
-        "checked": "2026-10-11",
-        "method": "derived"
+        "source": "https://resnexus.com/resnexus/reservations/lodging/90467566-A0AB-4E20-94BF-693A39ADE0E0 (one-night searches 2026-11-09, 2027-06-15, 2027-10-12: e.g. 'RV 1 is a 56' long and 30' wide pull through site. It offers 50 amp electrical service, water, and sewer. ... Standard Rate $30.00 / night $30.00 Total'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.lazydayz.com/rv-sites ('RV 1 is a 56' long and 30' wide pull through site. It offers 50 amp electrical service, water, and sewer.'; RV 4-10 30 amp, RV 14-15 '30 amp electrical service & water'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.lazydayz.com/ ('With 23 RV spots located just off the lake') + https://www.lazydayz.com/rv-sites (RV 1 to RV 23, 'pull through site'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.lazydayz.com/ ('We offer an on-site convenient store') + https://resnexus.com/resnexus/reservations/book/90467566-A0AB-4E20-94BF-693A39ADE0E0/map?tabID=3&mapID=1 (site map legend and icons: Showers, Restroom, Laundry beside the RV loops), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -1014527,11 +1014585,33 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 15,
-      "nightly_high": 15,
+      "nightly_low": 30,
+      "nightly_high": 30,
       "currency": "USD",
-      "note": "RV spots $15/night in October (ResNexus); the summer rate was not seen. From our own note (entry added 2026-10-03); not re-confirmed with the operator as of 2026-10-11."
-    }
+      "note": "ResNexus 'Standard Rate' $30.00/night on every RV site it listed (full-hookup pull-throughs, 30 and 50 amp) for one night on Tue 2027-06-15, Tue 2027-10-12 and Mon 2026-11-09, 2 adults. The engine shows at most 25 results, boat slips included, so not every RV site was priced.",
+      "checked": "2026"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 23,
+      "pull_through": true,
+      "note": "The operator lists RV 1-23; the ones described are pull-throughs 44-68 ft long and 22-35 ft wide, most full hookup."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.lazydayz.com/, read 2026-11-09 https://www.lazydayz.com/rv-sites, read 2026-11-09 https://resnexus.com/resnexus/reservations/lodging/90467566-A0AB-4E20-94BF-693A39ADE0E0 (headless browser; one-night searches for Mon 2026-11-09, Tue 2027-06-15 and Tue 2027-10-12, 1-2 adults), read 2026-11-09 https://resnexus.com/resnexus/reservations/book/90467566-A0AB-4E20-94BF-693A39ADE0E0/map?tabID=3&mapID=1 (site map), read 2026-11-09 Esri World Imagery 200 m frame, viewed 2026-11-09",
+      "note": "Changed fees $15 -> $30 (ResNexus Standard Rate $30/night on the RV sites for June 2027, October 2027 and November 2026 one-night searches; the old $15 was never an RV rate - boat slips are $7.50-$15). Added 50-amp/water/sewer, 23 pull-through sites, showers/laundry/store, ResNexus booking URL. Not waterfront kept (RV rows 100-200 m from the cove). Passes price, presence and long-stay tests."
+    },
+    "curation_note": "p3-342 (2026-11-09): pin moved off the store at the ramp onto the RV rows. Old $15 rate was a boat-slip rate; RV standard $30."
   },
   {
     "id": 14566,
@@ -1014636,25 +1014716,49 @@
     "inclusion_evidence": "littlesinkincreek.com RV sites page (Sun-Thu $50, Fri-Sat $60; read 2026-10-03) and RoverPass booking; Google 4.9 over 36 with phone; RV Life unrated",
     "website": "http://www.littlesinkincreek.com/\nhttps://www.roverpass.com/c/little-sinkin-creek-bunker-mo/",
     "phone": "573-604-9427",
-    "note": "Campground near Bunker (1960 County Road 563): RV sites for 2 adults + 2 children, holiday weekends (2-night minimum); seasonal and full-time sites too. Online booking (RoverPass). --Claude",
+    "note": "Ozark RV park in the Sinkin Creek valley in Mark Twain National Forest country west of Bunker (1960 County Road 5630), reached by 2 miles of well-maintained gravel off Highway A; the operator warns that GPS routes via County Road 565 / Logger's Lake Road are not RV friendly. It markets itself to UTV/SxS riders, who ride out on forest and county roads; also floating, hiking and a fishing pond. Self check-in; sites are chosen on arrival. Seasonal and full-time monthly sites too. --Claude",
     "booking": {
       "reservable": true,
-      "platform": "roverpass"
+      "platform": "roverpass",
+      "url": "https://www.roverpass.com/c/little-sinkin-creek-bunker-mo/",
+      "window_opens_days": 365,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday"
+        }
+      ]
     },
     "provenance": {
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.roverpass.com/api/queries/ (RoverPass booking GraphQL, as audit/private_gap_browser/roverpass_api.py) one-night searches Tue 2026-11-17, Tue 2027-06-08, Sat 2027-06-12, Tue 2027-09-14, Tue 2027-10-12, Sat 2027-10-16, Sat 2027-05-29; two-night searches from Sat 2027-07-03 and Sat 2027-09-04; carts for 1 and 2 nights from 2026-11-17, 2 adults (isBookable true, systemType CRS, advancedMonths 12; minNightsRequired 1 on every non-holiday date, 2 from 2027-07-03 and 2027-09-04) + https://littlesinkincreek.com/rv-sites ('Holiday Weekends: $75/night (2-night minimum ...)'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://littlesinkincreek.com/rv-sites, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.roverpass.com/api/queries/ (RoverPass booking GraphQL, as audit/private_gap_browser/roverpass_api.py) one-night searches Tue 2026-11-17, Tue 2027-06-08, Sat 2027-06-12, Tue 2027-09-14, Tue 2027-10-12, Sat 2027-10-16, Sat 2027-05-29; two-night searches from Sat 2027-07-03 and Sat 2027-09-04; carts for 1 and 2 nights from 2026-11-17, 2 adults (e.g. 2027-06-08: 'RV Sites - Electric Only' nightPrice $35.00, 'RV Sites - Full Hookups (20/30/50 Amps)' $55.00; 2027-06-12: $40.00 / $60.00; 2027-07-03 two nights: $80.00 / $100.00 a night, minNightsRequired 2; cart 2026-11-17 one night: Reservation $35.00, platform fee $3.50, processing $1.37) + https://littlesinkincreek.com/rv-sites ('Sunday - Thursday: $50/night (includes 2 adults + 2 children)'; 'Additional Guests: Adults: $20/night Children (ages 6-12): $10/night Kids 5 & under: FREE'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "hookups": {
+        "source": "https://littlesinkincreek.com/rv-sites ('Full Hook-Up: Sewer, Water, and Electric'; 'RV Outlet Box: 50 Amp, 30 Amp, and 20 Amp GFCI-protected circuits') + https://www.roverpass.com/api/queries/ (RoverPass booking GraphQL, as audit/private_gap_browser/roverpass_api.py) one-night searches Tue 2026-11-17, Tue 2027-06-08, Sat 2027-06-12, Tue 2027-09-14, Tue 2027-10-12, Sat 2027-10-16, Sat 2027-05-29; two-night searches from Sat 2027-07-03 and Sat 2027-09-04; carts for 1 and 2 nights from 2026-11-17, 2 adults, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://littlesinkincreek.com/ ('28 full hook-up sites; 3 electric only sites'; '100+ foot pull-thru sites for large rigs') + https://littlesinkincreek.com/rv-sites ('6 spacious pull-thru RV sites', '20 easy angled back-in sites', '3 electric-only RV spots', 'Most sites are 75-100 feet long'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://littlesinkincreek.com/ ('Bathroom and Shower: Clean, private restrooms and hot shower'; 'Starlink Wi-Fi'; 'Camp Store (Coming Soon)'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -1014663,13 +1014767,46 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 50,
-      "nightly_high": 75,
+      "nightly_low": 35,
+      "nightly_high": 60,
       "currency": "USD",
-      "note": "$50 Sun-Thu, $60 Fri-Sat, $75 holiday weekends (2-night minimum) for 2 adults + 2 children."
+      "note": "RoverPass: Electric Only (3 sites, 20/30/50 amp) $35 Sun-Fri / $40 Sat; Full Hookups $55 / $60 - on every date read from Nov 2026 to Oct 2027, 2 adults. Holiday weekends are dearer with a 2-night minimum: July 4th $80 electric / $100 full a night, Labor Day $60 / $80; Memorial Day weekend was at the normal rate. RoverPass adds its own platform fee ($3.50) and a card processing fee. The operator's page still says $50 Sun-Thu / $60 Fri-Sat / $75 holiday weekends for the full-hookup sites, including 2 adults + 2 children; extra adults $20, children 6-12 $10, 5 and under free.",
+      "checked": "2026",
+      "surcharges": {
+        "weekend": 5
+      },
+      "extra_person": {
+        "included": 2,
+        "amount": 20,
+        "per": "night",
+        "included_children": 2,
+        "child": 10,
+        "child_max_age": 12
+      }
     },
     "discounts": {
       "good_sam": false
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 31,
+      "pull_through": true,
+      "max_rig_ft": 100,
+      "note": "28 full-hookup sites (6 pull-through, 20 angled back-in, per the operator) and 3 electric-only; most 75-100 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://littlesinkincreek.com/, read 2026-11-09 https://littlesinkincreek.com/rv-sites, read 2026-11-09 https://littlesinkincreek.com/seasonal-rv-sites, read 2026-11-09 https://littlesinkincreek.com/full-time-rv-sites-1, read 2026-11-09 https://littlesinkincreek.com/driving-directions, read 2026-11-09 https://www.roverpass.com/c/little-sinkin-creek-bunker-mo/, read 2026-11-09 https://www.roverpass.com/api/queries/ (RoverPass booking GraphQL, as audit/private_gap_browser/roverpass_api.py) one-night searches Tue 2026-11-17, Tue 2027-06-08, Sat 2027-06-12, Tue 2027-09-14, Tue 2027-10-12, Sat 2027-10-16, Sat 2027-05-29; two-night searches from Sat 2027-07-03 and Sat 2027-09-04; carts for 1 and 2 nights from 2026-11-17, 2 adults, read 2026-11-09 Google Maps 'Little Sinkin Creek RV Resort & Campground' via gm.py, read 2026-11-09 python3 audit/price_research/gateways.py 37.4336,-91.2566 (none within 40 km), run 2026-11-09 Esri World Imagery 300 m frame, viewed 2026-11-09",
+      "note": "Changed fees $50-75 -> $35-60 (RoverPass engine: Electric Only $35/$40 Sat, Full Hookups $55/$60 Sat, all 2027 dates; holiday weekends $60-100 with a 2-night minimum). Added 50A full hookups, 31 sites, showers/wifi, RoverPass booking with holiday-only 2-night minimum, extra-person fees. Passes price/presence/long-stay; CRITERIA ask on its off-road branding (proposed keep as a general RV park)."
     }
   },
   {
