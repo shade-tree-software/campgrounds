@@ -403917,7 +403917,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -403936,9 +403937,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/superior/recreation/flour-lake-campground ('Some are reservable, while others are first-come, first-served.'); https://www.recreation.gov/api/camps/campgrounds/232429 ('Ten first-come, first-served campsites are available.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r09/superior/recreation/flour-lake-campground ('May 8 - October 4')",
@@ -405004,7 +405005,15 @@
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "season": {
+        "closes": "09-27"
+      }
     },
     "provenance": {
       "hookups": {
@@ -405023,9 +405032,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231998 ('Reservations must be made at least 4 days in advance. After this window, sites are considered first-come first-serve.'; RIDB reservationCutOff 4); booking.season = the recreation.gov calendar's last reservable night ('First-come, first-serve sites may be available after the reservation season.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r09/chippewa/recreation/onegume-ah-ni-gah-migkcampground ('5/7/26 - 10/31/26'); the recreation.gov calendar edges {'closes': '09-27'} were the reservable window, not the open season",
@@ -433483,6 +433492,11 @@
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/10134015/rates (recreation.gov rate table, current seasons, standard/RV sites)",
         "checked": "2026-10-09"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r01/dpg/recreation/ccc-campground ('Sixteen single campsites are available on a first-come , first-served basis. Six single campsites (#5, 13, 14, 23, 24, 25) are reservable . ... Make all campsite reservations at Recreation.gov.'), read 2026-11-08",
+        "checked": "2026-11-08",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -433498,7 +433512,12 @@
       "nightly_high": 10,
       "currency": "USD"
     },
-    "policy_ref": "federal:usfs"
+    "policy_ref": "federal:usfs",
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
+    }
   },
   {
     "id": 5906,
@@ -433513,7 +433532,7 @@
     "inclusion_evidence": "USFS Dakota Prairie Grasslands Buffalo Gap page + recreation.gov #246796: 35 paved drive-in sites to ~60 ft with dump station -> real RV campground",
     "website": "https://www.fs.usda.gov/r01/dpg/recreation/buffalo-gap-campground\nhttps://www.recreation.gov/camping/campgrounds/246796",
     "phone": "701-227-7800",
-    "note": "USFS Dakota Prairie Grasslands (Little Missouri National Grassland) campground ~7 mi W of Medora at I-94 exit 18 and a Maah Daah Hey trailhead. 35 paved sites, no hookups but some pads take rigs up to ~60 ft; comfort stations with flush toilets and showers (mid-May to mid-Oct), a vault toilet, potable water, group pavilion, and an RV dump station. 12 sites reservable on recreation.gov, rest first-come. --Claude",
+    "note": "USFS Dakota Prairie Grasslands (Little Missouri National Grassland) campground ~7 mi W of Medora at I-94 exit 18 and a Maah Daah Hey trailhead. 35 paved sites, no hookups but some pads take rigs up to ~60 ft; comfort stations with flush toilets and showers (mid-May to mid-Oct), a vault toilet, potable water, group pavilion, and an RV dump station. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -433543,22 +433562,22 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-15",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-15",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-15",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-15",
         "method": "derived"
       },
@@ -433573,7 +433592,7 @@
       }
     },
     "note_scan": {
-      "sig": "6a3c1c891a4bdac3",
+      "sig": "b2e5ba5910df5090",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     },
@@ -433585,7 +433604,8 @@
       "nightly_high": 20,
       "currency": "USD"
     },
-    "policy_ref": "federal:usfs"
+    "policy_ref": "federal:usfs",
+    "curation_note": "2026-11-08: the FS page says five sites are reservable; the RIDB catalog lists 16 of 36 reservable; the note's 12 was cut."
   },
   {
     "id": 5907,
@@ -475731,7 +475751,8 @@
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -475750,9 +475771,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r04/bridger-teton/recreation/fremont-lake-campground ('These campsites may not be reserved in advance but may only be reserved once you are physically on-site, on a first-come, first-served basis.'); RIDB campsite catalog (trip_data/ridb_campsites.json): 18 of 51 public sites not reservable, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "recreation.gov availability calendar, facility 231912 (122 days observed, edges opens)",
@@ -478764,7 +478785,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -478783,9 +478805,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10155998 ('The Vedauwoo Campground will have a mix of reservation sites and first-come, first-served sites for the 2026 season.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r02/mbrtb/recreation/vedauwoo-campground ('Open seasonally, weather dependent 5/20 to 11/1'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -567911,7 +567933,8 @@
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -567930,9 +567953,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251359 ('FIRST COME FIRST SERVE sites must be booked in person.'); RIDB campsite catalog (trip_data/ridb_campsites.json): 6 of 20 public sites not reservable, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r03/carson/recreation/elephant-rock-campground ('Seasonal closure on Sept. 30, 2025.'); the recreation.gov calendar edges {'closes': '09-10'} were the reservable window, not the open season",
@@ -567993,7 +568016,8 @@
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -568012,9 +568036,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251436 ('FIRST COME FIRST SERVE sites must be booked in person.'); RIDB campsite catalog (trip_data/ridb_campsites.json): 10 of 27 public sites not reservable, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r03/carson/recreation/columbine-campground ('Seasonal closure on Sept. 30, 2025.'); the recreation.gov calendar edges {'closes': '09-10'} were the reservable window, not the open season",
@@ -679314,7 +679338,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -679333,9 +679358,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "RIDB campsite catalog (trip_data/ridb_campsites.json): 10 of 26 public sites not reservable (recreation.gov 232312), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/boise/recreation/pine-flats-campground ('End of May - End of September'); the recreation.gov calendar edges {'closes': '09-07'} were the reservable window, not the open season",
@@ -679470,7 +679495,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -679489,9 +679515,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "RIDB campsite catalog (trip_data/ridb_campsites.json): 4 of 15 public sites not reservable (recreation.gov 232169), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/boise/recreation/mountain-view-campground ('Non Peak season September 8- September 30, 2025.'); the recreation.gov calendar edges {'closes': '09-07'} were the reservable window, not the open season",
@@ -681667,7 +681693,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -681686,9 +681713,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "RIDB campsite catalog (trip_data/ridb_campsites.json): 9 of 16 public sites not reservable (recreation.gov 234097), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/boise/recreation/cozy-cove-campground ('Seasons of Use\nMid-June - End of September'); the recreation.gov calendar edges {'closes': '09-07'} were the reservable window, not the open season",
@@ -681750,7 +681777,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -681769,9 +681797,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "RIDB campsite catalog (trip_data/ridb_campsites.json): 5 of 38 public sites not reservable (recreation.gov 232431), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/boise/recreation/bull-trout-lake-campground-group-sites ('Seasons of Use\nMid-June - End of September'); the recreation.gov calendar edges {'closes': '09-07'} were the reservable window, not the open season",
@@ -681968,7 +681996,8 @@
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -681987,9 +682016,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "RIDB campsite catalog (trip_data/ridb_campsites.json): 6 of 10 public sites not reservable (recreation.gov 234098), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/boise/recreation/howers-campground ('Seasons of Use\nMid-June - End of September'); the recreation.gov calendar edges {'closes': '09-07'} were the reservable window, not the open season",
@@ -689173,7 +689202,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -689192,9 +689222,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233893 ('Additional sites are available on a first-come, first-served basis.'); https://www.fs.usda.gov/r01/nezperce-clearwater/recreation/powell-campground ('34 campsites are available; 23 offer electricity and 19 campsites are reservable'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/233893/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -708460,9 +708490,9 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 39.0170,-112.0898: loop/pull-ins hug east edge of dense maple grove; Ivie Creek buried deep in grove canopy well away from pads, fully screened; no creekside pad evidence, default down",
     "inclusion_evidence": "recreation.gov 234302 + Fishlake NF page: developed forest campground with FCFS single sites + reservable group sites, drinking water and vault toilets, paved-highway + 4 mi gravel access -> real drive-in RV campground",
-    "website": "https://www.fs.usda.gov/recarea/fishlake/recreation/camping-cabins/recarea/?recid=13300\nhttps://www.recreation.gov/camping/campgrounds/234302",
+    "website": "https://www.fs.usda.gov/r04/fishlake/recreation/maple-grove-campground\nhttps://www.recreation.gov/camping/campgrounds/234302",
     "phone": "",
-    "note": "Fishlake National Forest (Fillmore RD) campground beneath red cliffs on Ivie Creek, ~4 mi W of US-50 on FR-101 (milepost 146). Several single sites plus 3 reservable group sites. Maple/cottonwood/oak shade; Rock Canyon Trail starts in the campground. --Claude",
+    "note": "Fishlake National Forest (Fillmore RD) campground beneath red cliffs on Ivie Creek, ~4 mi W of US-50 on FR-101 (milepost 146). Maple/cottonwood/oak shade; Rock Canyon Trail starts in the campground. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -708479,8 +708509,9 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": false,
-      "fcfs": "always"
+      "reservable": true,
+      "fcfs": "some_sites",
+      "platform": "recreation.gov"
     },
     "provenance": {
       "hookups": {
@@ -708494,9 +708525,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r04/fishlake/recreation/maple-grove-campground ('18 single sites and two double sites are available as well with some reservable and some only available on a first come, first served basis.'); https://www.recreation.gov/api/camps/campgrounds/234302 ('This campground has first come, first served sites available.'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/fishlake/recreation/maple-grove-campground ('Seasons of Use\nMay through October'); the recreation.gov calendar edges {'closes': '10-04'} were the reservable window, not the open season",
@@ -708509,7 +708540,7 @@
       }
     },
     "note_scan": {
-      "sig": "3382bfe590f6370f",
+      "sig": "bff9bf5e1bc9ee8a",
       "checked": "2026-09-16",
       "model": "claude-opus-5/session"
     },
@@ -710662,7 +710693,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
     },
     "provenance": {
       "sites": {
@@ -710681,9 +710713,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "RIDB campsite catalog (trip_data/ridb_campsites.json): 20 of 53 public sites not reservable (recreation.gov 232390), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r04/uinta-wasatch-cache/recreation/aspen-grove-campground ('Season 5/8 - 9/20'); the recreation.gov calendar edges {'closes': '09-08'} were the reservable window, not the open season",
@@ -711449,7 +711481,7 @@
     "inclusion_evidence": "nps.gov + recreation.gov Green River CG (234777): 80 drive-in sites for RVs up to 75 ft, drinking water + flush toilets, Loop B reservable -> real NPS RV campground",
     "website": "https://www.nps.gov/dino/planyourvisit/greenrivercampground.htm\nhttps://www.recreation.gov/camping/campgrounds/234777",
     "phone": "(435) 781-7700",
-    "note": "NPS Dinosaur National Monument campground on a cottonwood-shaded bench along the Green River below Split Mountain (~4,800 ft), ~5 mi E of the dinosaur quarry. 80 sites for tents/RVs; RVs cannot fill tanks. Apr-Oct; Loop B reservable mid-May to mid-Sep, Loops A and C first-come, first-served. --Claude",
+    "note": "NPS Dinosaur National Monument campground on a cottonwood-shaded bench along the Green River below Split Mountain (~4,800 ft), ~5 mi E of the dinosaur quarry. 80 sites for tents/RVs; RVs cannot fill tanks. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -711476,7 +711508,8 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "note": "Loops A and B reservable about mid-May through September; Loop C first-come."
     },
     "provenance": {
       "sites": {
@@ -711500,9 +711533,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-16",
-        "method": "derived"
+        "source": "https://www.nps.gov/dino/structured_data_dino.json (Green River Campground: 'Sites in Loop C are first-come, first-served when Green River Campground is open. Reservations are available for the A and B Loop sites during peak season dates, approximately mid-May through September.'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/234777/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -711510,7 +711543,7 @@
       }
     },
     "note_scan": {
-      "sig": "12fa318e09c5d4c1",
+      "sig": "27a4ec43b83c74a1",
       "checked": "2026-09-16",
       "model": "claude-opus-5/session"
     },
@@ -730358,7 +730391,7 @@
     "inclusion_evidence": "recreation.gov Johnny Creek CG #10250569 (Okanogan-Wenatchee NF): 65 drive-in sites, upper loop RVs to ~50 ft -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/okanogan-wenatchee/recreation/johnny-creek-campground\nhttps://www.recreation.gov/camping/campgrounds/10250569",
     "phone": "",
-    "note": "Okanogan-Wenatchee NF (Wenatchee River RD), along Icicle Creek ~12 miles SW of Leavenworth; 65 sites in Upper and Lower loops (56 single, 9 double). Lower loop (sites 1-15) sits along Icicle Creek; upper loop has larger spaces (RVs to ~50 ft). Mostly first-come, first-served. --Claude",
+    "note": "Okanogan-Wenatchee NF (Wenatchee River RD), along Icicle Creek ~12 miles SW of Leavenworth; 65 sites in Upper and Lower loops (56 single, 9 double). Lower loop (sites 1-15) sits along Icicle Creek; upper loop has larger spaces (RVs to ~50 ft). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -730379,8 +730412,8 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true,
-      "fcfs": "some_sites"
+      "reservable": false,
+      "fcfs": "always"
     },
     "provenance": {
       "hookups": {
@@ -730399,9 +730432,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/okanogan-wenatchee/recreation/johnny-creek-campground ('This location is available on a first-come, first-served basis only.'); https://www.recreation.gov/api/camps/campgrounds/10250569 ('The campground is first-come, first-served.'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "recreation.gov availability calendar, facility 10250569 (63 days observed, edges closes)",
@@ -730414,7 +730447,7 @@
       }
     },
     "note_scan": {
-      "sig": "7769fd560627019c",
+      "sig": "53767c72aede8fe0",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -758837,7 +758870,7 @@
     "inclusion_evidence": "recreation.gov Cinder Hill (Deschutes NF 233192) + FS page: ~108 drive-in sites, RVs to 30-65 ft, reservable -> real drive-in RV campground.",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/cinder-hill-campground\nhttps://www.recreation.gov/camping/campgrounds/233192",
     "phone": "541-383-4000",
-    "note": "Deschutes NF campground on the NE shore of East Lake in the Newberry Volcano caldera (Newberry National Volcanic Monument). ~108 sites for tents/trailers/RVs (sites accommodate roughly 30-65 ft, not all sites fit all lengths), no hookups, drinking water, flush/vault toilets, boat ramp (10 mph lake). Reservable online in season, FCFS late Sept until mid-Oct close. --Claude",
+    "note": "Deschutes NF campground on the NE shore of East Lake in the Newberry Volcano caldera (Newberry National Volcanic Monument). ~108 sites for tents/trailers/RVs (sites accommodate roughly 30-65 ft, not all sites fit all lengths), no hookups, drinking water, flush/vault toilets, boat ramp (10 mph lake). Reservable online. --Claude",
     "rating": {
       "stars": 1,
       "price_tier": 1,
@@ -758858,28 +758891,31 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/cinder-hill-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/cinder-hill-campground ('Seasons of Use Tentative Opening: June 12, 2026 - October 18, 2026 Operational Hours Visit Recreation.gov for current operating dates. This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -758892,7 +758928,7 @@
       }
     },
     "note_scan": {
-      "sig": "495932e46392d9a1",
+      "sig": "687e7cacfeaac35a",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -759149,7 +759185,7 @@
     "inclusion_evidence": "recreation.gov #267073 + Deschutes NF page: 12 drive-in nonelectric sites next to Fall River, RVs to 40 ft, reservable -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/fall-river-campground\nhttps://www.recreation.gov/camping/campgrounds/267073",
     "phone": "541-383-4000",
-    "note": "Deschutes NF (Bend-Fort Rock RD) campground beside Fall River. 12 nonelectric sites, no hookups; site max lengths vary (some to 24 ft, some to 30-40 ft). Vault toilets, no potable water at some sites. Reservable, becomes FCFS mid-Sept. Rough access road for larger rigs. --Claude",
+    "note": "Deschutes NF (Bend-Fort Rock RD) campground beside Fall River. 12 nonelectric sites, no hookups; site max lengths vary (some to 24 ft, some to 30-40 ft). Vault toilets, no potable water at some sites. Reservable. Rough access road for larger rigs. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -759169,28 +759205,31 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-16"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/fall-river-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 17, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/fall-river-campground ('Seasons of Use Tentative Opening: May 8, 2026 - October 18, 2026 Operational Hours Visit Recreation.gov for current operating dates. This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 17, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -759203,7 +759242,7 @@
       }
     },
     "note_scan": {
-      "sig": "b6193913304bbd23",
+      "sig": "f2fdfd29782d0419",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -759250,7 +759289,10 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
@@ -759269,9 +759311,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-cultus-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-cultus-campground ('Tentative Opening: May 22, 2026 - October 11, 2026; This campground will be closing at noon on October 11, 2026, and the last night to reserve a campsite is October 10, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -759312,7 +759354,7 @@
     "inclusion_evidence": "recreation.gov #233215 + Deschutes NF page: 15 drive-in nonelectric sites, RVs to 40 ft, boat ramp, reservable -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/little-lava-lake-campground\nhttps://www.recreation.gov/camping/campgrounds/233215",
     "phone": "541-383-4000",
-    "note": "Deschutes NF (Bend-Fort Rock RD) campground on Little Lava Lake (headwaters of the Deschutes River). 15 nonelectric sites, no hookups; gravel back-in drives, max spur 40 ft. Vault toilets, boat ramp. Reservable, FCFS after late Sept. Rough dirt access road. --Claude",
+    "note": "Deschutes NF (Bend-Fort Rock RD) campground on Little Lava Lake (headwaters of the Deschutes River). 15 nonelectric sites, no hookups; gravel back-in drives, max spur 40 ft. Vault toilets, boat ramp. Reservable. Rough dirt access road. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-07",
@@ -759331,28 +759373,31 @@
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-lava-lake-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-lava-lake-campground ('Tentative Opening: May 15, 2026 - October 18, 2026; This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'opens': '05-21', 'closes': '09-26'} were the reservable window, not the open season",
@@ -759365,7 +759410,7 @@
       }
     },
     "note_scan": {
-      "sig": "542ce296510a95a0",
+      "sig": "9fc21d754a74a234",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -759820,7 +759865,7 @@
     "inclusion_evidence": "recreation.gov Cultus Lake CG #251580 (Deschutes NF): 55 drive-in sites, RVs to ~30 ft, reservable -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/cultus-lake-campground\nhttps://www.recreation.gov/camping/campgrounds/251580",
     "phone": "541-383-4000",
-    "note": "USFS Deschutes NF campground on the NE shore of Cultus Lake in the Cascade Lakes area (RV Life lists city as Blue River but it is on the Cascade Lakes Hwy near Bend). 55 sites for tents/trailers/RVs; sites and roads are narrow so RVs over 30 ft not recommended (max spur ~40 ft). Reservable via recreation.gov, becomes FCFS late Sept. --Claude",
+    "note": "USFS Deschutes NF campground on the NE shore of Cultus Lake in the Cascade Lakes area (RV Life lists city as Blue River but it is on the Cascade Lakes Hwy near Bend). 55 sites for tents/trailers/RVs; sites and roads are narrow so RVs over 30 ft not recommended (max spur ~40 ft). Reservable via recreation.gov. --Claude",
     "rating": {
       "stars": 1,
       "price_tier": 2,
@@ -759832,18 +759877,21 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/cultus-lake-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -759861,7 +759909,7 @@
       }
     },
     "note_scan": {
-      "sig": "4e35a4b60b8a819d",
+      "sig": "e0853dbac1fcad92",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -761060,7 +761108,10 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "10-17"
+      }
     },
     "provenance": {
       "hookups": {
@@ -761079,9 +761130,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "the recreation.gov availability calendar's last reservable night (10-17), the FS page giving the campground as open year-round, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -761150,7 +761201,10 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
@@ -761169,9 +761223,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/gorge-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/gorge-campground ('Tentative Opening: May 15, 2026 - October 11, 2026; This campground will be closing at noon on October 11, 2026, and the last night to reserve a campsite is October 10, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -763229,7 +763283,7 @@
     "inclusion_evidence": "recreation.gov Contorta Flat CG 251567: 19 sites, 14 fitting RVs/trailers 24-40 ft, reservable -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/contorta-flat-campground\nhttps://www.recreation.gov/camping/campgrounds/251567",
     "phone": "541-433-3200",
-    "note": "Deschutes NF (Crescent RD) campground on the south shore of Crescent Lake near Contorta Point, ~19 sites, pit toilets, no hookups. 14 sites accommodate RVs/trailers 24-40 ft; some tent sites right on the lake. Reservable via recreation.gov (FCFS late season). --Claude",
+    "note": "Deschutes NF (Crescent RD) campground on the south shore of Crescent Lake near Contorta Point, ~19 sites, pit toilets, no hookups. 14 sites accommodate RVs/trailers 24-40 ft; some tent sites right on the lake. Reservable via recreation.gov. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-07",
@@ -763248,28 +763302,31 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/contorta-flat-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting on September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/contorta-flat-campground ('Tentative Opening Date: May 22, 2026 - October 18, 2026; This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -763282,7 +763339,7 @@
       }
     },
     "note_scan": {
-      "sig": "3a5e68c3d918880b",
+      "sig": "3db697954aa5b985",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -763929,7 +763986,7 @@
     "inclusion_evidence": "recreation.gov Trapper Creek CG #233195 + Deschutes NF page: ~29 drive-in sites, RVs 22-40 ft, drinking water, boat launch, reservable -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/trapper-creek-campground\nhttps://www.recreation.gov/camping/campgrounds/233195",
     "phone": "541-433-3200",
-    "note": "Deschutes NF (Crescent Ranger District) at the west end of Odell Lake where Trapper Creek enters; ~29 sites, drinking water, vault toilets, boat launch, no hookups. Sites accommodate RVs 22-40 ft (max spur 40 ft). Reservable online (becomes first-come, first-served after late Sept). --Claude",
+    "note": "Deschutes NF (Crescent Ranger District) at the west end of Odell Lake where Trapper Creek enters; ~29 sites, drinking water, vault toilets, boat launch, no hookups. Sites accommodate RVs 22-40 ft (max spur 40 ft). Reservable online. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -763950,28 +764007,31 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/trapper-creek-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/trapper-creek-campground ('Tentative Opening: June 12, 2026 - October 18, 2026; This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -763984,7 +764044,7 @@
       }
     },
     "note_scan": {
-      "sig": "f72511f6d3558a99",
+      "sig": "562c77af075d59a9",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -764099,7 +764159,10 @@
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "10-17"
+      }
     },
     "provenance": {
       "hookups": {
@@ -764123,9 +764186,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "the recreation.gov availability calendar's last reservable night (10-17), the FS page giving the campground as open year-round, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/251577/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -764253,7 +764316,10 @@
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "10-17"
+      }
     },
     "provenance": {
       "hookups": {
@@ -764277,9 +764343,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "the recreation.gov availability calendar's last reservable night (10-17), the FS page giving the campground as open year-round, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/266139/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -764847,7 +764913,10 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
@@ -764866,9 +764935,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/quinn-river-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/quinn-river-campground ('Opening: May 15, 2026 - October 18, 2026; This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -764925,7 +764994,10 @@
       "max_rig_ft": 40
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
@@ -764939,9 +765011,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/rock-creek-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/rock-creek-campground ('Tentative Opening: May 15, 2026 - October 18, 2026 ... This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -765392,7 +765464,7 @@
     "inclusion_evidence": "recreation.gov Diamond Lake #231980 + oregonsbestcamping (Umpqua NF): 238 drive-in sites, RVs to 35 ft, reservable -> large real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r06/umpqua/recreation/diamond-lake-campground\nhttps://www.recreation.gov/camping/campgrounds/231980",
     "phone": "(541) 498-2531",
-    "note": "Umpqua NF campground on the east shore of Diamond Lake, 238 sites (many loops; loops A-G+M reservable, K/L FCFS), 51 lakeside sites, max RV 35 ft / trailer 30 ft, boat ramps. Reservable online. --Claude",
+    "note": "Umpqua NF campground on the east shore of Diamond Lake, 238 sites, 51 lakeside sites, max RV 35 ft / trailer 30 ft, boat ramps. Reservable online. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -765413,7 +765485,7 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "never"
     },
     "provenance": {
       "hookups": {
@@ -765432,9 +765504,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231980 ('All sites are available by reservation only.'); RIDB campsite catalog: 229 of 230 sites reservable, read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "recreation.gov availability calendar, facility 231980 (130 days observed, edges closes)",
@@ -765447,7 +765519,7 @@
       }
     },
     "note_scan": {
-      "sig": "a4955b336f0c7be8",
+      "sig": "b837f15bd7a4fd21",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -772581,7 +772653,10 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
@@ -772600,9 +772675,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/east-lake-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/east-lake-campground ('Opening: May 22, 2026 - October 18, 2026 ... This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -772746,7 +772821,10 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
@@ -772760,9 +772838,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/lava-lake-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/lava-lake-campground ('Tentative Opening: May 15, 2026 - October 18, 2026 ... This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -772803,7 +772881,7 @@
     "inclusion_evidence": "recreation.gov Little Crater CG #251537 (Deschutes NF): ~49 drive-in sites, spurs 20-40 ft, reservable -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/little-crater-campground\nhttps://www.recreation.gov/camping/campgrounds/251537",
     "phone": "541-383-5300",
-    "note": "USFS Deschutes NF (Bend-Fort Rock RD) campground strung along the east shore of Paulina Lake inside Newberry Caldera. ~49 sites, drive-in, no hookups; per-site spurs 20-40 ft, max spur ~30 ft (check individual sites). Reservable on recreation.gov; Newberry NVM pass required. --Claude",
+    "note": "USFS Deschutes NF (Bend-Fort Rock RD) campground strung along the east shore of Paulina Lake inside Newberry Caldera. ~49 sites, drive-in, no hookups; per-site spurs 20-40 ft. Reservable on recreation.gov; Newberry NVM pass required. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -772817,27 +772895,30 @@
     },
     "sites": {
       "count": 49,
-      "max_rig_ft": 30
+      "max_rig_ft": 40
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-crater-campground ('Maximum site spur length is 40 feet.'), read 2026-11-08",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-crater-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/little-crater-campground ('Tentative Opening: May 22, 2026 - October 18, 2026 ... This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -772850,7 +772931,7 @@
       }
     },
     "note_scan": {
-      "sig": "92fd0560849dbff6",
+      "sig": "59e533cdb2f02e87",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -772878,7 +772959,7 @@
     "inclusion_evidence": "recreation.gov McKay Crossing CG #272230 (Deschutes NF): 10 drive-in sites, max RV 26 ft, reservable -> real RV campground fitting a 23-ft rig",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/mckay-crossing-campground\nhttps://www.recreation.gov/camping/campgrounds/272230",
     "phone": "541-383-5300",
-    "note": "USFS Deschutes NF (Bend-Fort Rock RD) campground along Paulina Creek off the Paulina Lake Rd. 10 sites, drive-in, no hookups, vault toilets; max spur/RV length 26 ft. Reservable on recreation.gov (FCFS after late Sept). --Claude",
+    "note": "USFS Deschutes NF (Bend-Fort Rock RD) campground along Paulina Creek off the Paulina Lake Rd. 10 sites, drive-in, no hookups, vault toilets; max spur/RV length 26 ft. Reservable on recreation.gov. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-07",
@@ -772898,28 +772979,31 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/mckay-crossing-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/mckay-crossing-campground ('Tentative Opening: May 8, 2026 - October 18, 2026 ... This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -772932,7 +773016,7 @@
       }
     },
     "note_scan": {
-      "sig": "266ca8a38c49188f",
+      "sig": "74b81ca59bc8fe76",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -780207,7 +780291,7 @@
     "inclusion_evidence": "fs.usda + recreation.gov South Shore CG (Deschutes NF): 38 sites, spurs to 40 ft, reservable -> real RV campground",
     "website": "https://www.fs.usda.gov/r06/deschutes/recreation/south-shore-campground\nhttps://www.recreation.gov/camping/campgrounds/232791",
     "phone": "541-549-7700",
-    "note": "Deschutes NF campground (Sisters RD) on the south shore of Suttle Lake; 38 sites (12 pull-through), gravel spurs to 40 ft, no hookups, drinking water, vault toilets, boat launch, dump stations; reservable on recreation.gov (FCFS after late Sept). --Claude",
+    "note": "Deschutes NF campground (Sisters RD) on the south shore of Suttle Lake; 38 sites (12 pull-through), gravel spurs to 40 ft, no hookups, drinking water, vault toilets, boat launch, dump stations; reservable on recreation.gov. --Claude",
     "rating": {
       "stars": 3,
       "price_tier": 1,
@@ -780231,28 +780315,31 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "closes": "09-26"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r06/deschutes/recreation/south-shore-campground ('This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r06/deschutes/recreation/south-shore-campground ('Tentative Opening: May 8, 2026 - October 18, 2026 ... This campground will be closing at noon on October 18, 2026, and the last night to reserve a campsite is October 17, 2026. This campground will become First Come, First Serve (FF on Recreation.gov) only starting September 27, until closing date.'); the recreation.gov calendar edges {'closes': '09-26'} were the reservable window, not the open season",
@@ -780265,7 +780352,7 @@
       }
     },
     "note_scan": {
-      "sig": "5de49a3f6e6f6e1b",
+      "sig": "e36fdef46c633a34",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -807107,7 +807194,8 @@
       "closes": "10-31"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -807126,9 +807214,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234563 ('First-come, first-served sites are available.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/234563/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -807560,7 +807648,11 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "season": {
+        "opens": "05-07",
+        "closes": "10-11"
+      }
     },
     "provenance": {
       "hookups": {
@@ -807584,9 +807676,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-08)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "the recreation.gov availability calendar's reservable nights 05-07..10-11; https://www.recreation.gov/api/camps/campgrounds/232203 ('Walk-in season dates (end-Apr. to mid-May) are weather permitting only.'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-08)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/232203/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -807619,7 +807711,7 @@
     "inclusion_evidence": "recreation.gov Aspen CG #232190 (Apache-Sitgreaves NF): ~136 sites, trailers to 32 ft, 121 reservable + 27 FCFS -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r03/apache-sitgreaves/recreation/aspen-campground\nhttps://www.recreation.gov/camping/campgrounds/232190",
     "phone": "928-535-0181",
-    "note": "Apache-Sitgreaves NF (Black Mesa RD), Mogollon Rim near Woods Canyon Lake. Large campground (~136 sites in four loops of meadow/pine). 121 sites reservable on recreation.gov, 27 first-come-first-served. Electric-motor-only lake. --Claude",
+    "note": "Apache-Sitgreaves NF (Black Mesa RD), Mogollon Rim near Woods Canyon Lake. Large campground (~136 sites in four loops of meadow/pine). Electric-motor-only lake. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -807645,7 +807737,10 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "season": {
+        "closes": "10-11"
+      }
     },
     "provenance": {
       "hookups": {
@@ -807669,9 +807764,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "the recreation.gov availability calendar's last reservable night (10-11); https://www.fs.usda.gov/r03/apache-sitgreaves/recreation/aspen-campground ('55 first come first serve sites'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/232190/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -807679,7 +807774,7 @@
       }
     },
     "note_scan": {
-      "sig": "7fa5eaf3ee2bd179",
+      "sig": "48d081e89f394872",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -807897,7 +807992,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -807921,9 +808017,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233956 ('FIRST COME FIRST SERVE sites must be booked in person .'); RIDB campsite catalog (trip_data/ridb_campsites.json): 19 of 55 public sites not reservable, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/233956/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -808749,7 +808845,7 @@
     "inclusion_evidence": "Tonto NF page + recreation.gov CG 249254: 82 developed sites, RVs to 32 ft, reservable/FCFS on Apache Lake shore -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r03/tonto/recreation/burnt-corral-campground-and-day-use-area\nhttps://www.recreation.gov/camping/campgrounds/249254",
     "phone": "602-225-5395",
-    "note": "Tonto NF campground on the south shoreline of Apache Lake, ~6 mi below Roosevelt Dam off the Apache Trail (SR-88). 82 developed non-electric sites (concrete/compacted-gravel pads, low grades); motorhomes to ~32 ft, towed trailers to 22 ft; potable water, vault toilets, boat ramp, dump station ~5 mi away. Reservable via Recreation.gov Nov 1-Mar 15, first-come first-served Mar 16-Oct 31. --Claude",
+    "note": "Tonto NF campground on the south shoreline of Apache Lake, ~6 mi below Roosevelt Dam off the Apache Trail (SR-88). 82 developed non-electric sites (concrete/compacted-gravel pads, low grades); motorhomes to ~32 ft, towed trailers to 22 ft; potable water, vault toilets, boat ramp, dump station ~5 mi away. Reservable via Recreation.gov. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -808770,28 +808866,33 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "season": {
+        "opens": "11-01",
+        "closes": "03-15"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
+        "source": "note prose (cleaned out of the note 2026-11-08)",
         "checked": "2026-09-17",
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r03/tonto/recreation/burnt-corral-campground-and-day-use-area ('Reservations Open: Nov. 1 through March 15 First Come First Served Season: March 16 through Oct. 31'; 'Reservations can be arranged for odd numbered sites'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r03/tonto/recreation/burnt-corral-campground-and-day-use-area ('Open Season:\nYear-round\nReservations Open:\nNov. 1 through March 15\nFirst Come First Served Season:\nMarch 16 through Oct. 31'); the recreation.gov calendar edges {'opens': '11-01', 'closes': '03-15'} were the reservable window, not the open season",
@@ -808804,7 +808905,7 @@
       }
     },
     "note_scan": {
-      "sig": "19b8a915c8a215cd",
+      "sig": "2368973fa7893d2b",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -808943,7 +809044,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -808967,9 +809069,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232196 ('FIRST COME FIRST SERVE sites must be booked in person.'); RIDB campsite catalog (trip_data/ridb_campsites.json): 7 of 21 public sites not reservable, read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/232196/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -809027,7 +809129,11 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "season": {
+        "opens": "04-15",
+        "closes": "10-31"
+      }
     },
     "provenance": {
       "hookups": {
@@ -809051,9 +809157,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r03/tonto/recreation/christopher-creek-campground-and-group-site ('April 1 - April 14, all sites are first come, first serve. April 15 - October 31, reservations are to be made on Recreation.gov .'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/231896/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -809402,7 +809508,7 @@
     "inclusion_evidence": "recreation.gov White Horse Lake CG (Kaibab NF) 233955 + fs.usda.gov: 77 single/10 double sites, RVs to 45 ft, reservable -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r03/kaibab/recreation/white-horse-lake-campground\nhttps://www.recreation.gov/camping/campgrounds/233955",
     "phone": "",
-    "note": "Kaibab NF (Williams RD) on White Horse Lake, ~19 mi SE of Williams at ~6,600 ft. 77 single sites plus 10 doubles, tent-only, accessible and a group site; no hookups, RVs to 45 ft. Reservable online. Potable water is drinking-only (no RV tank filling). Small boat ramp, vault toilets. --Claude",
+    "note": "Kaibab NF (Williams RD) on White Horse Lake, ~19 mi SE of Williams at ~6,600 ft. Reservable online. Potable water is drinking-only (no RV tank filling). Small boat ramp, vault toilets. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -809415,15 +809521,16 @@
       "sewer": false
     },
     "sites": {
-      "count": 87,
-      "max_rig_ft": 45
+      "count": 94,
+      "max_rig_ft": 38
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -809432,9 +809539,9 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r03/kaibab/recreation/white-horse-lake-campground ('94 single unit sites with tables, fire rings, grills, and tent pads.'; 'Tents, trailers and motorhomes up to 38 feet long can be accommodated.'), read 2026-11-08",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose (cleaned out of the note 2026-11-07)",
@@ -809442,9 +809549,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r03/kaibab/recreation/white-horse-lake-campground ('44 of these single unit sites and the group site are available through reservations. All other single unit sites are first-come, first-served.'), read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r03/kaibab/recreation/white-horse-lake-campground ('2026: May 1 - October 31  -  Reservations available through recreation.gov'); the recreation.gov calendar edges {'closes': '09-17'} were the reservable window, not the open season",
@@ -809457,7 +809564,7 @@
       }
     },
     "note_scan": {
-      "sig": "3213064dfe081db5",
+      "sig": "5346e2eb86fdc179",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -838630,7 +838737,8 @@
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -838654,9 +838762,9 @@
         "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r05/sixrivers/recreation/panther-flat-campground ('Some sites are available on a first-come, first-served basis.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.recreation.gov/api/camps/campgrounds/232322/rates (recreation.gov rate table, current seasons, standard/RV sites)",
@@ -846360,7 +846468,7 @@
     "inclusion_evidence": "recreation.gov Spring Creek CG (Plumas NF, Frenchman Lake) facility 232829: 35 developed sites with paved pads, RV/trailer camping, reservable -> real drive-in RV campground.",
     "website": "https://www.recreation.gov/camping/campgrounds/232829\nhttps://www.fs.usda.gov/r05/plumas",
     "phone": "",
-    "note": "35 sites (about 12 reservable, remainder first-come, first-served) at ~5,700 ft near Frenchman Lake in Plumas NF; paved roads and parking pads, bear lockers; site 23 accessible; reservable on recreation.gov. --Claude",
+    "note": "35 sites at ~5,700 ft near Frenchman Lake in Plumas NF; paved roads and parking pads, bear lockers; site 23 accessible; reservable on recreation.gov. --Claude",
     "rating": {
       "stars": 3,
       "price_tier": 4,
@@ -846411,7 +846519,7 @@
       }
     },
     "note_scan": {
-      "sig": "dce78a3a72e531e6",
+      "sig": "def52c17121b52f9",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
     },
@@ -863981,7 +864089,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -864000,9 +864109,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232830 ('Some campsites are available on a first come basis.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r05/plumas/recreation/grasshopper-flat ('Closed for the season October 11, 2026.'); the recreation.gov calendar edges {'closes': '09-19'} were the reservable window, not the open season",
@@ -864064,7 +864173,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites"
     },
     "provenance": {
       "hookups": {
@@ -864083,9 +864193,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232137 ('Twelve of the campgrounds 38 campsites can be reserved during peak camping season. All other campsites may be taken on a 'First Come' basis.'), read 2026-11-08; earlier keys: note prose",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r05/plumas/recreation/frenchman-campground ('Closed for the season October 11, 2026.'); the recreation.gov calendar edges {'closes': '09-12'} were the reservable window, not the open season",
@@ -937580,8 +937690,8 @@
       "potable_water": false
     },
     "booking": {
-      "reservable": true,
-      "fcfs": "some_sites",
+      "reservable": false,
+      "fcfs": "always",
       "max_stay_nights": 14
     },
     "provenance": {
@@ -937601,18 +937711,13 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-24",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/lower-onion-creek-campground ('Individual sites are available on a first-come, first-served basis. Two group sites, Lower Onion Creek Group Sites A and B, are available for reservation through Recreation.gov.'); the 21 individual sites are what a single rig can use, as at King's Bottom, read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.blm.gov/visit/lower-onion-creek-campground ('$20/night (Pay at campground-cash or check only)', read 2026-10-10)",
         "checked": "2026-10-10"
-      },
-      "season": {
-        "source": "recreation.gov availability calendar, facility 255118 (297 days observed, edges opens+closes)",
-        "checked": "2026-10-20",
-        "method": "derived"
       }
     },
     "note_scan": {
@@ -937626,11 +937731,8 @@
       "currency": "USD",
       "note": "$20/night, cash or check (BLM page)."
     },
-    "season": {
-      "opens": "02-10",
-      "closes": "11-30"
-    },
-    "policy_ref": "federal:blm"
+    "policy_ref": "federal:blm",
+    "curation_note": "Season {\"opens\": \"02-10\", \"closes\": \"11-30\"} removed 2026-11-08: it came from the recreation.gov calendar of the group-site facility only, so it was the group sites' reservation window; BLM states no season for the campground."
   },
   {
     "id": 13292,
@@ -937656,8 +937758,8 @@
       "potable_water": false
     },
     "booking": {
-      "reservable": true,
-      "fcfs": "some_sites",
+      "reservable": false,
+      "fcfs": "always",
       "max_stay_nights": 14
     },
     "provenance": {
@@ -937677,18 +937779,13 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-24",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/upper-onion-creek-campground ('Individual sites are available on a first-come, first-serve basis. Two group sites, Upper Onion Creek Group Sites A and B, are available for reservation through Recreation.gov.'); the 14 individual sites are what a single rig can use, as at King's Bottom, read 2026-11-08; earlier keys: note prose (cleaned out of the note 2026-11-07)",
+        "checked": "2026-11-08",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.blm.gov/visit/upper-onion-creek-campground ('Fees: $20/night ... (Pay at campground-cash or check only)', read 2026-10-10)",
         "checked": "2026-10-10"
-      },
-      "season": {
-        "source": "recreation.gov availability calendar, facility 251835 (295 days observed, edges opens+closes)",
-        "checked": "2026-10-20",
-        "method": "derived"
       }
     },
     "note_scan": {
@@ -937702,11 +937799,8 @@
       "currency": "USD",
       "note": "$20/night, cash or check (BLM page)."
     },
-    "season": {
-      "opens": "02-10",
-      "closes": "11-30"
-    },
-    "policy_ref": "federal:blm"
+    "policy_ref": "federal:blm",
+    "curation_note": "Season {\"opens\": \"02-10\", \"closes\": \"11-30\"} removed 2026-11-08: it came from the recreation.gov calendar of the group-site facility only, so it was the group sites' reservation window; BLM states no season for the campground."
   },
   {
     "id": 13293,

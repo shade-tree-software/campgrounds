@@ -72,3 +72,25 @@
   facility (Group A and B only), so the 02-10/11-30 chip is the group window; BLM: the 14
   individual sites are first-come only, so `booking.reservable: true` / fcfs some_sites describe
   the group sites. Same pattern as 13291 Lower Onion Creek. PASS COMPLETE: 151 of 151 read.
+
+## Worked 2026-11-08 (51 entries; script kept in the session scratchpad, sources in each `provenance.booking`)
+- `fcfs: some_sites` from the agency/rec.gov text or the RIDB catalog's unreservable public sites:
+  5473 6510 6467 7993 7994 9518 9520 9552 9553 9556 9662 9985 11363 11373 11388 11395 11849
+  12204 12205, and 5905 (booking was absent) and 9952 (was reservable:false/always; website
+  moved to the r04 page). 11386 also gets booking.season 11-01..03-15; 11389 04-15..10-31.
+- 5488 Onegume: `after_cutoff`, reserve_until 96 h before arrival, booking.season until 09-27.
+- Deschutes first-come-late-season: booking.season `closes` the day before first-come starts
+  (09-26; 10677 Fall River 09-16) on all 15. Metolius 10703/10745/10747: booking.season until
+  10-17 (calendar). 11369/11370: booking.season from the calendar edges.
+- 10272 Johnny Creek: reservable false, fcfs always. 10763 Diamond Lake: fcfs never (rec.gov
+  "All sites are available by reservation only"); the note's loop split cut.
+- 13291/13292 Onion Creek: reservable false, fcfs always (individual sites; groups only on
+  rec.gov); the group-facility season REMOVED (unknown), recorded in curation_note.
+- Sites: 10863 max rig 40 (FS spur), 11395 count 94 / max rig 38 (FS). Notes cut where they
+  contradicted the agency: 5906 (12 reservable), 9997 (loops; booking.note now says A+B
+  reservable, C first-come), 11370 (27 FCFS), 11956 (12 reservable), and the late-season FCFS
+  phrases the booking.season now carries.
+- LEFT: 5210 (USACE bot wall; reservable vs "Not Reservable"), 11235 Timber Creek (FS
+  "reservations generally required" vs rec.gov singles first-come), 8037 Water Canyon (FS
+  reservation season Mar 15-Nov 30 vs rec.gov "First Come First Serve season of October through
+  March"), 9662 Powell reservation dates (2024 only), 10073 Anderson Cove (AWH).
