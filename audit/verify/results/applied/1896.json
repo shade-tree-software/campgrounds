@@ -1,0 +1,76 @@
+{
+  "id": 1896,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232530 (facility record, notices, rules, amenities), read 2026-11-09",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232530 (59-record campsite catalog), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/232530/rates (rate tables 2020-2028), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/availability/campground/232530/month (Nov 2026 - May 2027), read 2026-11-09",
+    "https://www.swl.usace.army.mil/Missions/Recreation/Lakes/Clearwater-Lake/ - HTTP 403 to plain fetch, no Wayback copy; not used",
+    "Esri World Imagery (leaf-off) 660 m and 800 m frames with every catalog site plotted; Open-Meteo DEM at the loops, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 16,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "recreation.gov peak-season rate tables (2026, 2027, 2028): standard nonelectric sites $14, standard electric $16. No off-peak rate is posted."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232530/rates (Peak Season 2026-05-15 to 2026-09-14, and the same in 2027 and 2028: STANDARD NONELECTRIC $14, STANDARD ELECTRIC $16), read 2026-11-09",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232530 (39 bookable sites in loops B and C list 50-amp electric, 10 in loop A list 30-amp; 34 sites list Water Hookup Y; no site lists sewer), read 2026-11-09",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 57,
+        "note": "57 bookable overnight sites in four loops: A (10 electric 30-amp, 2 nonelectric, paved, shaded), B (20 electric 50-amp, paved, nearly all with water), C (19 electric 50-amp, on open grass, paved and gravel), D (6 nonelectric, mostly gravel, shaded). Listed max vehicle length runs 33 ft (A06) to 100+ ft, most 54-90 ft. One wheeled unit and one tent per site, 10 people maximum."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232530 (site type, loop, Electricity Hookup, Water Hookup, Max Vehicle Length, Driveway Surface, Shade; bookable overnight sites only - GA1 is not bookable, S1 is a day-use group shelter) + https://www.recreation.gov/api/camps/campgrounds/232530 (notice: 'Site occupancy is limited to two camping units. One wheeled unit and one tent'), read 2026-11-09",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true,
+        "note": "Hot showers, dump station, playground, boat ramp, swimming area (day use) and the Bluff View Nature Trail. Generators off 10 p.m. - 6 a.m."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232530 (Facilities: 'a dump station, hot showers, boat ramp, playground, interpretive trail, public phones and a swimming area'; notice on generators), read 2026-11-09",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": null,
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "05-15",
+          "closes": "09-14"
+        },
+        "note": "Reservable on recreation.gov in the peak season (May 15 - Sept 14), up to the day of arrival; 'Campsites are first come, first served outside of peak season'. 14 nights in any rolling 30 days."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232530 (notice 'Campsites are first come, first served outside of peak season'; rules reservationCutOff 0, maxStay 14 nights rolling 30 days, maxConsecutiveStay 14) + https://www.recreation.gov/api/camps/campgrounds/232530/rates (Peak Season 05-15 to 09-14 in 2025-2028) + availability calendar (no bookable nights before 2027-05-15), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground on Clearwater Lake at the end of Highway AA northwest of Piedmont, with four loops: loop C sits on an open grassy point above the lake with views across it; loops A, B and D are wooded. Boat ramp, marina nearby and a day-use swimming beach. --Claude",
+  "summary": "Confirmed from rec.gov: 57 bookable sites (A/B/C/D), 50-amp in B and C, 30-amp in A, water at 34 sites, no sewer listed; $14 nonelectric / $16 electric peak; reservable May 15 - Sept 14, FCFS outside peak (fcfs 'after_cutoff' cleared; booking.season written). Lakeview confirmed from loop C (open mown grass ~120-140 m to the shore); other loops wooded. Phone and pin flagged.",
+  "flags": [
+    "PHONE (apply.py doesn't write it; entry has none): recreation.gov facility_phone '573-223-7777 (CLEARWATER PROJECT OFFICE)  573-223-4459 (BLUFF VIEW GATEHOUSE)' - suggest 573-223-4459 (campground gatehouse), or 573-223-7777.",
+    "PIN: stored 37.1819,-90.7894 is the RIDB facility point; it lands ~25 m south of D07 at the bottom of nonelectric loop D, beside the entrance road. Suggest moving to the loop junction between B and C, ~37.1840,-90.7900, or to loop C (~37.1837,-90.7918).",
+    "WATERFRONT (lakeview kept): loop C (19 sites) is on an open mown point; C06-C09 are ~120-140 m from the lake's east shore across open grass and the perimeter road, C16-C19 ~130 m from the north shore; DEM 160 m vs normal pool ~150 m. Open sightline from the loop itself = lakeview. Not lakefront (road + 100 m+ of grass). Loops A, B and D are in woods 250 m+ from water. The swimming beach to the south is day use.",
+    "SEASON: not written. The campground runs FCFS outside the May 15 - Sept 14 reservation season (rec.gov notice), but nothing on rec.gov says whether it closes in winter (the availability calendar has no records Nov-Apr). The USACE Little Rock District page returned 403 with no Wayback copy.",
+    "FEES: the stored $14-16 matched; the 2024 table's peak began 04-01, 2025-2028 begin 05-15. A third electric code ('STANDARD ELECTRIC u20...') is priced $20 with no matching site type in the catalog; ignored. rec.gov rules carry a militaryDiscount flag; not written.",
+    "SITES: count 60 -> 57 (catalog's bookable overnight sites; the 60 came from the description). GA1 (50-amp, not bookable, no coordinates) is likely the gate attendant's pad and is excluded. Largest Max Vehicle Length values (105-210 ft) look like data artifacts; no max_rig_ft written.",
+    "Note rewritten: 'on a bluff above the lake' dropped (loop C is on a low grassy point ~10 m above the lake); site/hookup/booking facts now in fields."
+  ]
+}
