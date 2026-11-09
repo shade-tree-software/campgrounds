@@ -1,0 +1,56 @@
+{
+  "id": 1886,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232581 (facility record, rules, notices, amenities), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/232581/rates (Peak Season 2026-05-01 to 2026-09-15), read 2026-11-09",
+    "recreation.gov campsite catalog for 232581 (50 sites; per-site campsite records 21759, 21744), read 2026-11-09",
+    "recreation.gov availability calendar 232581, months 2026-08 to 2027-05, read 2026-11-09",
+    "Esri World Imagery 192-461 m frames with the catalog's site coordinates plotted, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 16, "nightly_high": 25, "currency": "USD"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232581/rates (Peak Season 2026-05-01..2026-09-15: STANDARD NONELECTRIC $16, STANDARD ELECTRIC $23, STANDARD ELECTRIC with water (site 18) $25), read 2026-11-09",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "recreation.gov campsite catalog 232581: 25 STANDARD ELECTRIC sites, 22 at 30 A and 3 (sites 23, 24, 41) at 50 A, all reservable; only site 18 lists a water hookup and none sewer, so water/sewer stay unknown, read 2026-11-09",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232581 (amenities 'Dump Station', 'Flush Toilets', 'Showers'; description 'hot showers, drinking water, a dump station and electric hookups'), read 2026-11-09",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-15"},
+      "source": "recreation.gov 232581: rate season 'Peak Season' 2026-05-01..2026-09-15 is the only season; the calendar shows nights booked through 2026-09-15, nothing offered from 2026-10 through 2027-04, and sites open again from 2027-05-01, read 2026-11-09",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "min_stay": [{"nights": 3, "applies": "holiday"}]},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232581 (rules maxStay 14 nights per rolling 30 days, minHolidayWeekendStay 3; '51 reservable campsites'), read 2026-11-09",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232581 notice ('All discounted passes (Golden Age, Senior Lifetime, Senior Annual, Access) must be physically present upon arrival'), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on the White River arm of Table Rock Lake south of Eagle Rock, on grassy loops either side of Highway 86, with a swimming beach, marina, boat ramp and playground. Sites 1-11 line a wooded bluff above the shore; sites 12-16 look over the beach and ramp lot. --Claude",
+  "summary": "Confirmed USACE campground: 50 catalog sites (25 electric 30/50 A, 25 non-electric), lengths mostly 30-70 ft. Fees 16-23 -> 16-25 (site 18, electric + water, is $25). Season added May 1 - Sep 15 from the rate season and calendar. Booking/facilities/discounts written manual. WATERFRONT lakefront -> lakeview proposed: no site has an open apron to the water. Pin is on the west loop (fine). Add rec.gov phone 417-271-3215.",
+  "flags": [
+    "WATERFRONT (lakefront -> lakeview): plotted every catalog site on imagery. Sites 01-11 sit on the west loop ~85-100 m above the shoreline through a continuous wooded slope - no open apron. Sites 12-16 are at the south end beside the boat-ramp parking lot: site 14 is ~30 m from the water but across the paved ramp lot, sites 12-13 are ~55-60 m back with the road and the swimming beach between; the lake is in open view from them. The sites east of Highway 86 (30-51) are 250 m+ from the water. No site meets the riverfront/lakefront rule (open apron within ~50 m, no road/ramp lot/beach between), so lakeview (sites 12-16, and leaf-off views from the bluff sites). recreation.gov's catalog carries no Proximity to Water attribute. The stored value rested only on the commit that added 41 USACE lakes, with no per-entry evidence.",
+    "FEES changed: stored derived 16-23 -> 16-25. The 2026 rate table has three prices; site 18 (campsite 21744, 'Water Hookup Y', 30 A) is on the $25 'STANDARD ELECTRICu21...' template. Every other electric site $23, non-electric $16.",
+    "HOOKUPS: electric 50 kept (now manual). 30 A at 22 sites, 50 A at sites 23, 24, 41. Water only at site 18 (1 site, under the 3-yes rule), no sewer anywhere - water/sewer left absent (unknown), not false.",
+    "SEASON added (none stored): 05-01..09-15. Earlier years' peak seasons ended 09-14; 2026 ran to 09-15. The calendar offers no nights Oct-Apr (empty availability for every site), so it is closed off-season rather than FCFS.",
+    "FIT: maxlen across the 48 RV-usable sites: 45 at 23 ft or more (most 30-70 ft); sites 04 (20 ft), 09 and 16 (22 ft) and 03 (0, unlisted) are short. Two sites are tent-only. A 23-ft rig fits the electric loops (every electric site 30 ft+).",
+    "BOOKING: rules also say minWeekendStay 0 and reservationCutOff 0; the facility record says 51 reservable campsites (catalog 50). militaryDiscount rule value 1 'Military Discount' is present in the rules; not written to discounts.military because the rule's meaning (offered vs a flag) is not stated - lead only.",
+    "PIN: stored 36.5272,-93.7300 is the RIDB facility point, but it lands on the west loop beside site 07, inside the campground. Fine; no move needed. If a central point is wanted, 36.5272,-93.7285 sits in the middle of the west loops.",
+    "PHONE (add): recreation.gov facility_phone '417-271-3215'. Entry has no phone.",
+    "Note rewritten: 'paved lakeside electric RV pads' (not supported - most pads are paved, electric sites are not by the water) and 'reservable online' (now booking) removed; where the sites sit relative to the water put in."
+  ]
+}
