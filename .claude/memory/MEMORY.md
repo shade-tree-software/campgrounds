@@ -139,3 +139,4 @@
 - [Notes name no one](feedback_notes_name_no_one.md) — browser-visible notes: no EKKO, no family camping dates, no first person; say "a 23-ft rig"
 - [Note-price cleanup](project_note_price_cleanup.md) — DONE 2026-11-07: rates/extra-person out of notes where fees holds them; all 15 chunks landed; tools in audit/note_prices/
 - [Season pass + notes round 2 — DONE](project_season_and_notes_round2.md) — 2026-11-08: 151 calendar seasons re-read vs agency; field-note repeats cut (21 chunks); open items in followups.md / asks.md
+- [High elevation in notes](feedback_high_elevation_mentions.md) — no figure repeating elevation_meters; "high elevation" only if well above local terrain (p75+, ~150 m over median), East 3000 ft+ (AWH 2026-11-08)
