@@ -65,3 +65,7 @@ calendar-derived season against the agency's stated season — want one?
   is not credible. Note's 25-42 ft cut.
 - 10073 Anderson Cove: answered with the source (chip = rec.gov calendar = FS peak season;
   FS also lists FCFS Nov-Dec and a winter non-peak season). **AWH: year-round, booking.season 04-24..10-31 — done.**
+
+## 2026-11-08
+- 1773 Loud Thunder, 4859 Clay County Fairgrounds: RV Life ratings written to `rating` (4.5/$$ and 4/$$, RV Life index read 2026-11-08); the note figures cut.
+- 236: an FYI, no decision needed. Nothing left open in this file.

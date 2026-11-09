@@ -504,3 +504,10 @@ Your note says wooded loops, not on the shoreline, so the value stays. On the OD
 - **Bevier RV Center (1992, MO, private, p3-323, 2026-11-07):** posts no rate ('Call our office'); its ResNexus booking engine exists but walls bots, so it went unread; RV Life $$ (avg $34), Google 4.3 from 303. Kept under the booking-page-is-both-indicators rule. Keep? **AWH 2026-11-07: keep.**
 
 - **Blue Mountain Campground (1986, Branson MO, p3-323, 2026-11-07):** the stored website and its $69/$79 rates were a different Blue Mountain Campground (Catskills NY) - both cleared. No operator site exists; set the website to the park's Facebook page (Google's link) and phone 417-338-2114. Good Sam Park, Branson gateway 12 km, so no price gate. (FYI, no decision needed.)
+
+## Re-check of every older ask (2026-11-08)
+Nothing here is open. The last three items that were mine to do are done: 6101 Confederate
+(beach side out under the sand rule; kept on the developed loop, lakefront -> lakeview), 10135 Cisco
+Beach (units sit on a strip behind the beach on a dirt track, kept) and 2678 Bridgeport (graded
+sand-dirt roads around the lakes, kept). The splits it queued (258, 146, split-9 Charles Mill,
+split-10 Bond Falls) were done 2026-10-22 / 11-02.

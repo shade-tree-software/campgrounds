@@ -59,3 +59,11 @@
 - 9093 Taber AB: the town camping page was another campground's (Trout Pond / KMMSC); taberrv.com dead. Link removed, phone -> Google's.
 - 5259 Grape Country AR: NOT renamed - the owner ADDED Sunny Ridge RV Park (ex Dan's Riverview, 5694 Sunny Ridge Rd, Ozark) in May 2025. Grape Country priced $40 (current page), phone -> 479-667-7967. Sunny Ridge is a lead to vet.
 - 2026-10-19: Sunny Ridge RV Park (Ozark AR, 5694 Sunny Ridge Rd; formerly Dan's Riverview), the lead from Grape Country's page: NOT added. RV Life 255472 rates it 3.5* (23 reviews, avg 7.1/10, last review 2023-11), under the private gate's 4*; other sources cannot override an RV Life rating.
+
+# Re-checked 2026-11-08
+Nothing to put to AWH. 24 of the entries named above have since been dropped. Superseded by later
+rules: age-restricted parks (8096, 8125, 14419) are a note line, never a drop (2026-10-14 / 11-04);
+time-of-year minimums stay (11505 Quartzsite); 3+ night standing minimums I may drop and report
+(7794 Sharktooth is already gone). The rest are STALE / CHECK items in states phase 7 has not reached
+(TX, AZ, NM, WA, OR, WI, IL, ON, BC): the verifier re-reads rate, presence and the long-stay tests
+for each when its state comes up (14756 Paradise RV Senior Community included).

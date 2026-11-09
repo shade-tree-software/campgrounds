@@ -24,3 +24,8 @@ Held at AWH's request ("keep them for me for later"); not presented yet.
 # Resolved 2026-10-19
 - 2068 Sterett Creek: NewBook quote "from $31.14 / night" (October weeknight, 23-ft); camper line retired.
 - 13063 St. Barbe: page read in the browser - it posts no rate. Stays unpriced.
+
+# Re-checked 2026-11-08
+Nothing to put to AWH. 1261 Enon Beach, 6690 Double D and 11277 Cal-Nev-Ari have since been dropped.
+14695 Silver Sky and 14697 Valley View (NV) are unpriced, not questions: phase 7 prices them when
+Nevada comes up (a missing rate is unresearched).
