@@ -1,0 +1,93 @@
+{
+  "id": 1872,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233505 (description, notices, important_dates, facility_rules, amenities, phone), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/233505/rates, read 2026-11-09",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233505 (45 sites: loops A, B, C; Electric Hookup, permitted_equipment max_length, Driveway Entry, coordinates), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/availability/campground/233505/month (2026-11, 2026-12, 2027-02, 2027-03, 2027-04), read 2026-11-09",
+    "Esri World Imagery (leaf-off, low lake level) frames: 660 m of loops A/B with every site plotted, 180 m of the A shore row, 160 m of the B knob, 500 m of loop C, 2.6 km of the whole point, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Electric sites $28 from April 16 to September 30 and $20 in the shoulder seasons (March 15 to April 15, October 1 to November 30); non-electric $20 and $10. The table also lists a 2027-10-01 to 11-30 'Peak' season at $28/$20, unlike 2026's $20/$10."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233505/rates (Peak Season 2026-04-16 to 2026-09-30: STANDARD ELECTRIC $28, STANDARD NONELECTRIC $20; Non-Peak Season 2026-10-01 to 2026-11-30 and 2027-03-15 to 2027-04-15: $20 / $10) + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233505 (non-electric sites B17, B18, B21-B23 permit an RV of 25-45 ft), read 2026-11-09",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 30
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233505 (Electric Hookup 30 on all 30 STANDARD ELECTRIC sites, A01-A14 and B01-B16), read 2026-11-09",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 45,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "recreation.gov lists 45 sites (the description says 62): loop A 14 electric, loop B 16 electric and 7 non-electric, and loop C, 8 non-electric sites on a separate point about 2 km south. 40 of the 45 take an RV of 23 ft or more; B19 and B20 are tent/trailer only and C12, C17 and C18 are capped at 20 ft. B18 is the one pull-through."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233505 (permitted_equipment RV max_length 40-45 ft on the electric sites, 20-45 ft on the non-electric; B19/B20 Tent and Trailer only; Driveway Entry Pull-Through on B18) + https://www.recreation.gov/api/camps/campgrounds/233505 ('Hawker Point Park offers 62 campsites'), read 2026-11-09",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "dump": true,
+        "potable_water": true,
+        "note": "No water, showers or flush toilets from March 15 to April 15 and October 1 to November 30. Boat ramp; the Stockton Lake equestrian trail starts here, with a few non-electric sites by the trailhead where horses can be kept."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233505 (amenities Dump Station, Flush Toilets, Showers, Vault Toilets, Water, Boat Ramp; notices 'Shoulder Seasons run from (15 March-15 April) & (1 October-30 November) amenities are reduced' / '(No Water) & (No Waterborne Facilities)'; description 'a few non-electric sites are located near the equestrian trailhead, where horses can be kept'), read 2026-11-09",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "opens": "03-15",
+        "closes": "11-30"
+      },
+      "source": "https://www.recreation.gov/api/camps/availability/campground/233505/month (sites Available through 2026-11-30, no availability at all for December or February, Available from 2027-03-15) + https://www.recreation.gov/api/camps/campgrounds/233505 (notices: shoulder seasons '15 March-15 April' and '1 October-30 November'), read 2026-11-09",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "min_stay": [
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "max_stay_nights": 14,
+        "note": "14 nights in any rolling 30. Check-in and check-out 4 p.m. The park does not take reservations by phone. Day use is not allowed in the campground."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233505 (facility_rules minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days'; notices 'Campground check in time is 4:00 PM. Check out time is 4:00 PM', 'Customers may not call the park to make reservations', 'Campground for overnight stays only - day use prohibited'), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground at Hawker Point on Stockton Lake, on a wooded point with two loops on the north and east shores. The shore-side sites of loop A (A03, A07, A09, A11) and of loop B's knob (B02, B04, B05, B06) back onto the open riprap shoreline. --Claude",
+  "summary": "rec.gov read: 45 sites (A 14 + B 16 electric 30A, B 7 + C 8 non-electric; description says 62), $28/$20 peak, $20/$10 shoulder -> low 10 / high 28 confirmed, Mar 15 - Nov 30 (shoulder months no water), 3-night holiday minimum, 14 nights. Waterfront lead UP: eight shore-side sites earn lakefront. Phone 417-276-7266 to add. PIN is the facility point ~690 m S of the loops: move to 37.6119,-93.7849. Loop C is a separate point 2 km S on its own road (possible split).",
+  "flags": [
+    "WATERFRONT LEAD (lakeview -> lakefront): the catalog has no Proximity to Water attribute. Imagery (taken at a low lake level, bare drawdown shore showing): in loop A the sites east of the loop road - A03, A07, A09, A11 (and A13/A14 at the north end) - have their pads ending at the riprapped shoreline, with only bare rock/sand below to the water, ~30-35 m away even at the low level shown; on loop B's knob B02, B04, B05 and B06 end at the riprap the same way, ~25-30 m from the low-water edge. No road, lot, beach or day-use lawn between those pads and the lake, so those eight to ten sites earn lakefront. The loop-B row B14-B20 sits on the loop road with a wooded strip and the road between it and the north shore; the rest are inland across the loop road.",
+    "PHONE (to add): rec.gov facility_phone 417-276-7266 ('Call the park (417-276-7266) or project office (417-276-3113) for more information'). None stored.",
+    "PIN: stored 37.6064,-93.7811 = the RIDB facility point, on the boat-ramp road ~690 m S of the A/B loops' centre. Move onto the loops: 37.6119,-93.7849 (the loop junction by B10-B14).",
+    "CLUSTERS / SPLIT CANDIDATE: loop C (8 non-electric sites C12-C19, 6 reservable; RV 25-30 ft on C13-C16 and C19) is on a separate peninsula at ~37.5922,-93.7790, 2.2 km S of loops A/B, reached by its own branch road leaving the access road ~1.5 km before the A/B loops (imagery shows a row of further short spurs on that road west of the loop, not on recreation.gov). Whether a shared gate controls both is not stated. It meets the 1 km / own-road test; near.py: no other entry within 1 km of loop C. A split would be a small non-electric loop; AWH's call.",
+    "SITE COUNT: the description says 62 campsites; the catalog and the availability grid both hold 45 (43 reservable; B02, C12, C13 not reservable). Count written as 45 with the breakdown in sites.note.",
+    "RIG LENGTH: every site carries a generic 'Max Vehicle Length 20' attribute, but permitted_equipment gives RV max_length 40-45 ft on all 30 electric sites; max_rig_ft written from the per-equipment lengths (45). 40 of 45 sites take a 23-ft RV.",
+    "SEASON / CLOSURE: the calendar shows every site 'Closed' 2026-11-02 through 2026-11-10 and Available again from 11-11 to 11-30 - a short closure not explained in the notices, ending tomorrow; not written as status.",
+    "FCFS: the stored note's 'reservable online' is right; no FCFS statement on rec.gov (fcfs not written).",
+    "WATER: stored hookups.water true (derived from the note's 'water/electric Apr 16 to Sep 30') left alone: the notice reads 'Drinking water and electric hookups are available during the reservation season, Apr. 16 to Sept. 30', but the catalog carries no Water Hookup attribute on any site - unconfirmed either way.",
+    "MILITARY: rec.gov facility_rules carries a militaryDiscount rule value; not written (rule value only).",
+    "Operator: USACE Stockton Lake project (is_commercially_managed false); federal:usace is right.",
+    "Note rewritten: '62 sites, mostly electric', 'reservable online' and 'water/electric Apr 16 to Sep 30' (fields hold them, and the catalog has 45 sites) dropped; the shore-side sites named."
+  ]
+}

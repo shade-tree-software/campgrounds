@@ -1,0 +1,77 @@
+{
+  "id": 1897,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232604, read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/232604/rates, read 2026-11-09",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232604 (81 records), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/availability/campground/232604/month 2026-11..2027-11, read 2026-11-09",
+    "https://www.swl.usace.army.mil/Missions/Recreation/Lakes/Clearwater-Lake/ - 403 to plain HTTP, no Wayback snapshot (unread)",
+    "Esri World Imagery (leaf-off) 900 m, 300 m and 340 m frames, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026-11-09",
+        "note": "Nonelectric $14, electric $16, electric with water (loop K) $20."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232604/rates: Peak Season 2026-05-15..09-15 and 2027-05-15..09-15 'PeakSTANDARD NONELECTRIC': 14, 'PeakSTANDARD ELECTRIC': 16, 'PeakSTANDARD ELECTRICu20...': 20; catalog price_range 14 (B/D nonelectric), 16 (A/B electric), 20 (K)",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232604: loop K sites K01-K20 'Electric Hookup' 50 + 'Water Hookup' Y, all bookable RV/Trailer sites; loops A/B electric 30",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 80,
+        "note": "57 sites take RVs and trailers (loops A, B, D, K); loop C's 23 are pop-up and tent only. Most RV sites run 38-63 ft; A15 (18 ft) and B17 (14 ft) are too short for a 23-ft rig."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232604: 80 overnight campsites; permitted_equipment RV/Trailer on A (15), B (17), D (5), K (20), 'Pop up' 12 ft + Tent on C (23); Driveway Length / per-equipment max_length",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232604: 'Additional amenities include a dump station, hot showers, a picnic shelter and playground.'",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": null,
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "05-15",
+          "closes": "09-15"
+        },
+        "note": "Reservable for the peak season (mid-May to mid-September); outside it sites are first come, first served. Check-in 4 p.m., check-out 3 p.m."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232604: notice 'Outside peak season, campsites are first come, first served'; rules maxStay 14 nights / rolling 30 days, reservationCutOff 0; rate table Peak Season 05-15..09-15 (2026, 2027, 2028); availability calendar 2027-05 'Open' from 05-15, nothing listed Nov-Apr; catalog Checkin Time 4:00 PM, Checkout Time 3:00 PM",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground on both banks of the Black River at the Highway K bridge, a few miles above Clearwater Lake. Loops A-C sit east of the river and the water-and-electric loop K west of it, all in woods set back from a wide gravel-bar channel popular for wading and canoeing. --Claude",
+  "summary": "Changed: fees 14-16 -> 14-20 (loop K $20); booking: fcfs after_cutoff -> cleared, peak reservation season 05-15..09-15 in booking.season, max 14, FCFS outside peak (rec.gov notice sources the old note text); sites 83 -> 80 with RV/pop-up breakdown; showers + dump added; hookups 50/water confirmed manual. Waterfront riverfront -> not waterfront (lead): every loop is 75 m+ from the channel through woods/gravel bar. Pin is the facility point on the floodplain - move to loops A/B. Add phone.",
+  "flags": [
+    "WATERFRONT LEAD riverfront -> not waterfront (downgrade): leaf-off imagery, site by site from the catalog coordinates. East side: loop B's west row (B01-B07, ~-90.7633) is the closest to the river, ~75-80 m from the main channel with a 50 m wooded bank and the gravel bar between; loop A ~130 m+, loop C (pop-up/tent only) ~300 m. West side: loop K is ~150-250 m from the channel behind the park road, a mowed field and forest; loop D (5 nonelectric, north) ~250 m behind woods. No site has a pad within 50 m of the water with an open apron. A filtered winter view from the B west row is possible but not confirmable, so not riverview either. rec.gov's 'Campsites extended over both sides of the river bank' is description prose and not a basis.",
+    "PIN: stored 37.3242,-90.7667 = rec.gov facility point, on the wooded floodplain west of the channel south of the bridge, no site there. Move to loops A/B: 37.3238,-90.7628 (~340 m E). Loop K (37.3229,-90.7691, ~240 m W of the stored pin) is the other choice - it holds the 50-amp water sites.",
+    "CLUSTERS: loops A/B/C (east bank) and K/D (west bank) are ~600 m apart on either side of the bridge with their own entries off Highway K; under 1 km, one entry. near.py: nothing else within 1 km.",
+    "PHONE (apply.py doesn't write it): add 573-558-2202 - rec.gov facility_phone '573-223-7777 (CLEARWATER LAKE PROJECT OFFICE) 573-558-2202 (HIGHWAY K GATEHOUSE)'. No phone stored now.",
+    "SEASON: not written. The campground's own open dates are not on rec.gov (FCFS outside peak isn't on the calendar, which lists nothing Nov-Apr); the old 2021/2022 rate tables had a Non-Peak season 09-15..10-30, suggesting it runs at least to late October, but nothing current. The Little Rock District Clearwater Lake page refused plain HTTP (403) with no Wayback copy.",
+    "FCFS: the stored derived 'after_cutoff' cleared - reservationCutOff is 0 and the FCFS period is the off-season, which the vocabulary has no value for; it is in booking.season + booking.note.",
+    "SITE COUNT: description says 83; catalog has 80 overnight sites + 1 day-use shelter. RIG: A15 has Driveway Length 58 but per-equipment max 18 (kept as too short per the per-equipment rule).",
+    "SEWER: no Sewer Hookup attribute on any site - left absent. MILITARY: rec.gov militaryDiscount rule value is not a discount claim - not written.",
+    "Note rewritten: 'reservable in peak season, FCFS off-peak' moved to booking (sourced by the rec.gov notice); 'electric sites lining both banks' and 'from the sites' dropped as unsupported by the imagery."
+  ]
+}
