@@ -2070,8 +2070,11 @@ function setOnWaterOnly(on) {
 
 const ownerOrder = Object.keys(OWNERSHIP_LABELS);
 const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
-const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
-  .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
+// HipCamp always sits last, below values the label table doesn't list
+// (Canada's "provincial"), AWH 2026-11-09.
+const ownerValues = ownerOrder.filter(k => presentOwners.has(k) && k !== 'hipcamp')
+  .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort())
+  .concat(presentOwners.has('hipcamp') ? ['hipcamp'] : []);
 const ownerCounts = new Map();
 CAMPGROUNDS.forEach(cg => ownerCounts.set(ownerKey(cg), (ownerCounts.get(ownerKey(cg)) || 0) + 1));
 
@@ -2589,7 +2592,9 @@ if (presentClimate.length) {
 }
 
 const ownerSec = filterSection('Ownership');
-ownerValues.forEach(v => filterCheck(ownerSec, ownerLabel(v),
+// The caveat is the filter menu's only; popups keep the plain label.
+const OWNER_FILTER_SUFFIX = { hipcamp: ' (experimental)' };
+ownerValues.forEach(v => filterCheck(ownerSec, ownerLabel(v) + (OWNER_FILTER_SUFFIX[v] || ''),
   () => !hiddenOwnerships.has(v),
   on => { if (on) hiddenOwnerships.delete(v); else hiddenOwnerships.add(v); },
   { count: ownerCounts.get(v) }));
