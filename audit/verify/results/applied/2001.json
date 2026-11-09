@@ -1,0 +1,40 @@
+{
+  "id": 2001,
+  "checked": "2026-11-08",
+  "sources": [
+    "https://starlitemo.com/ (plain HTTP answers 406 Mod_Security; read in the browser), /shop/, /product/site-02-pull-through-full-hookup-50-amp/, /product/site-11-pull-through-full-hookup-50-amp/, read 2026-11-08",
+    "https://starlitemo.com/wp-json/wc/store/v1/products?per_page=100 (every product: 19 site products at $40.00, 'Monthly site rental' $700, dump station $10) + the YITH booking calendar (admin-ajax get_product_non_available_dates for each site, Nov 2026-Jan 2027), read 2026-11-08",
+    "Google Maps 'Starlite RV Park' search (first result 4.9 over 34 reviews, phone (816) 876-0080, starlitemo.com, 1507 Main St, Stewartsville), read 2026-11-08",
+    "RV Life park 267645 (4.5*, 26 ratings, $$, 30 sites) and its 5 newest reviews (9-10/2026), read 2026-11-08"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 40, "nightly_high": 40, "currency": "USD", "checked": "2026", "note": "Every site $40 a night; 10% off a 7-night stay (longer stays by phone); monthly sites $700 for contract workers by phone. Dump station $10."},
+      "source": "https://starlitemo.com/shop/ + product pages ('Site 02 | Pull Through | Full Hookup | 50 AMP $40.00', 'A 10% weekly rate discount will automatically apply when selecting 7 nights! For stays longer than 7 nights please call the office', 'Dump Station $10.00') + https://starlitemo.com/ ('$700/month bookings available to contract workers - must call to reserve'), read 2026-11-08",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://starlitemo.com/ ('15 full hook-up back-in sites and 15 full hook-up pull-through sites all equipped with 50/20-amp pedestals (30 AMP pigtails upon request.)'), read 2026-11-08",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "pull_through": true},
+      "source": "https://starlitemo.com/ ('a total of 15 full hook-up back-in sites and 15 full hook-up pull-through sites ... All of our sites are at least 70' long'), read 2026-11-08",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://starlitemo.com/shop/", "note": "Nightly sites book on the operator's own site (WooCommerce/YITH); monthly contract-worker sites by phone. Check-in 12-8 pm, check-out 11 am."},
+      "source": "https://starlitemo.com/shop/ ('Search Available Sites', per-site check-in/check-out date booking) + product page ('Check-in 12:00PM-8:00 PM Check-out 11:00 AM'), read 2026-11-08",
+      "method": "manual"
+    }
+  },
+  "note": "Park opened in 2025 on US 36 at Stewartsville, between I-29 and I-35 east of St. Joseph. Mostly monthly contract-worker sites: in November 2026 only 5 of the 19 sites on its booking page (11-15) took nightly bookings. Enter by the upper entrance across from the fuel station; the lower one is the exit (2026 camper report). --Claude",
+  "summary": "Operator's own WooCommerce booking read in the browser: every site $40/night (10% off 7 nights), $700/month for contract workers by phone, 30 sites (15 back-in/15 pull-through, 50/20A FHU, 70 ft+). Occupancy: only sites 11-15 open nightly Nov 2026-Jan 2027; the other 14 online sites blocked every night. Passes the long-stay tests narrowly; note says mostly monthly.",
+  "flags": [
+    "Price gate: $40/night on the operator's own booking site (every site, read 2026-11-08). No gateway within 40 km (Kansas City 74 km) - not needed. Presence: own website with phone (816) 876-0080 + booking; Google 4.9 over 34 reviews (the search opened a results list; the first result is this park, starlitemo.com); RV Life 4.5* over 26 (five 9-10/2026 stays at $40, all rated 10).",
+    "LONG-STAY / WORKFORCE character (report, I read it as passing): the home page leads its booking box with '$700/month bookings available to contract workers - must call to reserve'. Occupancy check on the booking calendar for every site, Nov 2026-Jan 2027: sites 01-10 and 16-19 are unavailable on all 92 nights; only sites 11-15 are open (11-14 every night, 15 except Nov 20-23), including the two weeknights 2026-11-17/18. RV Life reviewers (10/2026): 'A lot of long term residents here so definitely reserve online or call ahead'; (9/2026) 'There are a few full timers'. Five tests: (1) $40 passes; (2) nightly rate and online booking on its own site, no application - passes; (3) 1-night stays sell - passes; (4) 5 nightly of 30 sites = 1 in 6 - passes; (5) RV park, no homes - passes. The four reviewers on sites 11, 13, 14, 15 were all overnighters.",
+    "PHONE missing: the operator gives (816)-876-0080 (apply.py does not write phones). Website works only in a browser - plain HTTP gets 406 from Mod_Security.",
+    "sites.max_rig_ft 70 (note-derived) left: the operator says every site is 'at least 70' long', a site length rather than a posted rig limit."
+  ]
+}
