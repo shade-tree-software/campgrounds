@@ -1579,7 +1579,7 @@ const searchControl = L.control({ position: 'topleft' });
 searchControl.onAdd = function() {
   const div = L.DomUtil.create('div', 'cg-search');
   div.innerHTML =
-    '<input id="cg-search-input" type="search" placeholder="Find a campground or stop…" autocomplete="off">' +
+    '<input id="cg-search-input" type="search" placeholder="' + (ROADSIDE.length ? 'Find a campground or stop…' : 'Find a campground…') + '" autocomplete="off">' +
     '<div class="cg-search-results" id="cg-search-results"></div>';
   // Keep clicks/scroll inside the box from panning/zooming the map.
   L.DomEvent.disableClickPropagation(div);

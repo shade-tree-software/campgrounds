@@ -5184,7 +5184,10 @@ def campgrounds_map():
         'campground_map.html',
         title='Map',
         campgrounds=markers,
-        roadside=_load_roadside(),
+        # Campgrounds-only viewers get no roadside stops at all (AWH 2026-11-09):
+        # with none sent, the layer control doesn't offer the overlay, the search
+        # doesn't list stops and the route tool shows no stops button.
+        roadside=[] if cg_only else _load_roadside(),
         # Metadata only — labels and field order for the eight groups, ~5.8 KB
         # for the whole vocabulary rather than per entry. The VALUES still
         # arrive with the popup fetch (doc §8.4).

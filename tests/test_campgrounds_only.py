@@ -197,6 +197,11 @@ class TestNoLeak(unittest.TestCase):
             pat = r"(?<![\w.])" + re.escape(s) + r"(?![\w])"
             self.assertIsNone(re.search(pat, self.page), msg=f"leaks {s!r}")
 
+    def test_no_roadside_stops(self):
+        # AWH 2026-11-09: no roadside overlay for the role; with none sent the
+        # layer control never offers it.
+        self.assertIn("const ROADSIDE = [];", self.page)
+
     def test_no_visit_counts_or_home_relative_climate(self):
         markers = json.loads(re.search(r"const CAMPGROUNDS = (\[.*?\]);\n", self.page).group(1))
         self.assertGreater(len(markers), 1000)
