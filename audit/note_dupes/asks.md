@@ -64,4 +64,4 @@ calendar-derived season against the agency's stated season — want one?
 - 11369 Spillway (season follow-up): rec.gov over the note — max rig 32 ft; the FS "16 foot"
   is not credible. Note's 25-42 ft cut.
 - 10073 Anderson Cove: answered with the source (chip = rec.gov calendar = FS peak season;
-  FS also lists FCFS Nov-Dec and a winter non-peak season) — decision pending.
+  FS also lists FCFS Nov-Dec and a winter non-peak season). **AWH: year-round, booking.season 04-24..10-31 — done.**
