@@ -20,7 +20,7 @@ Chequamegon loops above look like the same artifact. A wider pass would re-read 
 calendar-derived season against the agency's stated season — want one?
 
 ## Follow-up, not an ask: note vs RIDB hookups (chunk 049)
-- 13686 Putah Canyon: the note says "some RV sites have electric for an extra fee"; `hookups.electric: 0` was derived from the RIDB catalog 2026-10-20 (every RV-bookable site typed NONELECTRIC). Per the trust-rec.gov rule the field stands; the note sentence was left as is. Worth one look at the concessionaire's page to see whether the electric is a paid add-on RIDB doesn't model.
+- 13686 Putah Canyon: the note says "some RV sites have electric for an extra fee"; `hookups.electric: 0` was derived from the RIDB catalog 2026-10-20 (every RV-bookable site typed NONELECTRIC). Per the trust-rec.gov rule the field stands; the note sentence was left as is. Worth one look at the concessionaire's page to see whether the electric is a paid add-on RIDB doesn't model. **2026-11-08: it is ('Power Hook-ups (when available) $15'); electric now unknown with a hookups note, note sentence cut.**
 
 ## Answered by AWH 2026-11-08
 - Grok openers (15, 17): move to curation — done.
