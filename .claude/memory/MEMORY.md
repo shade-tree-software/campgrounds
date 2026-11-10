@@ -4,7 +4,7 @@
 - [Phase 7 Montana (cloud session)](project_phase7_mt.md) — mt-N batches on a claude/ branch beside the main run; conflict rules + held drops inside
 - [App is private, family-only](project_app_is_private_family_only.md) — all accounts/share links go to family & friends; family home locations visible to ALL users is desirable, never a…
 - [Auth model decisions](project_auth_model_decisions.md) — AWH declined share-link self-registration and self-service password change (2026-07-26); don't re-propose…
-- [UX review 2026-07 — ALL BATCHES DONE](project_ux_review_2026_07.md) — full non-admin UX audit, all 24 items shipped 2026-07-26; per-item gotchas inside; start a fresh review for new work
+- [UX review 2026-07 — ALL BATCHES DONE](project_ux_review_2026_07.md) — full non-admin UX audit, all 24 items shipped 2026-07-26
 - [Good Sam directory data access](reference_good_sam_ratings.md) — whole directory via Algolia `gs-ml-cb-assets-prod`; `isGsPark` (not index presence) = the 10% member discount…
 - [Local campground method](reference_local_campground_method.md) — detect county/town/city campgrounds via RV Life park_type + gov-name-scan; include all confirmed local-gov (no…
 - [RV Life price ratings](reference_rvlife_price.md) — pull 0-4 dollar-sign price via Algolia app `H0LPZK92QJ` `park` index (`price_level`); used to filter Good Sam parks…
@@ -48,42 +48,42 @@
 - [Run sweep agents sequentially AND tiny](feedback_sequential_sweep_agents.md) — one agent at a time, ONE candidate per batch; parallel only by explicit per-stage user exception
 - [Roadside notes direction-neutral](feedback_roadside_direction_neutral.md) — don't word roadside-stop notes for one travel direction (route may be driven either way)
 - [Write JSON ensure_ascii=False](feedback_json_ensure_ascii.md) — app must write campgrounds.json with ensure_ascii=False so UI edits don't re-escape note em-dashes/stars to \uXXXX…
-- [Inclusion backfill — DONE/CLOSED](project_inclusion_backfill_remaining.md) — 2026-07-23 inclusion + waterfront 100% on the legacy DB; reusable method in file
-- [Inclusion review queue — CLOSED](project_inclusion_review_queue.md) — all held "review" entries resolved. Lesson: a dead website ≠ closed; check the pin before concluding a campground…
+- [Inclusion backfill — DONE/CLOSED](project_inclusion_backfill_remaining.md) — 2026-07-23 inclusion + waterfront 100% on the legacy DB
+- [Inclusion review queue — CLOSED](project_inclusion_review_queue.md) — all held "review" entries resolved. Lesson: a dead website ≠ closed
 - Coverage status: **geographic sweeps COMPLETE** (US lower 48 + every province); AK/HI/YT/NT/NU OUT OF SCOPE (AWH 2026-09-18), never list as remaining; whole DB waterfront + inclusion audited.
 - US sweeps COMPLETE (waterfront+inclusion 100%; detail in project_<st>_sweep_handoff.md): FL AL MS AR CO IA MO WI KY IN NE IL TN NY; MI in [project_mi_local_stage_handoff.md](project_mi_local_stage_handoff.md)
-- [SD sweep COMPLETE](project_sd_sweep_handoff.md) — 171 entries ids 5709-5879; wf+inc 100%; +5 GFP top-up 2026-09-20 (13153-13157)
-- [ND sweep COMPLETE](project_nd_sweep_handoff.md) — 174 entries ids 5880-6053; wf 100% (50 upgrades) + inc 100%; pushed
-- [MT sweep COMPLETE](project_mt_sweep_handoff.md) — 295 entries ids 6054-6348; wf 100% (105 upgrades, 10 coord fixes) + inc 100%; pushed
-- [MN sweep COMPLETE](project_mn_sweep_handoff.md) — 350 entries ids 5359-5708; reusable add_research_instructions.md; ReserveMN US-eDirect deep links
-- [WY sweep COMPLETE](project_wy_sweep_handoff.md) — 222 entries ids 6349-6570; wf 100% (82 upgrades) + inc 100%, folded in
-- [OK sweep COMPLETE](project_ok_sweep_handoff.md) — 291 entries ids 6571-6861; wf 100% (121 upgrades) + inc 100%; USACE rec.gov per-site coord-plotting = key wf evidence
-- [LA sweep COMPLETE](project_la_sweep_handoff.md) — 147 entries ids 6862-7008; wf 100% (43 upgrades, Grand Isle coastal dunes) + inc 100%; state parks via…
-- [TX sweep COMPLETE](project_tx_sweep_handoff.md) — 922 entries ids 7009-7930 (state 91/local 154/federal 105/private 572); 263 on-water/view; pushed
-- [NM sweep COMPLETE](project_nm_sweep_handoff.md) — 233 entries ids 7931-8163; wf 100% (41 upgrades) + inc 100%; NM `dnr`=BLM=federal (no state DNR)
-- [ID sweep COMPLETE](project_id_sweep_handoff.md) — 447 entries ids 9425-9871 (federal 314); wf 100% (170 upgrades) + inc 100%; dnr=BLM(federal); Idaho Power=private
-- [UT sweep COMPLETE](project_ut_sweep_handoff.md) — 321 new ids 9872-10192; wf 100% (100 upgrades) + inc 100%; dnr=BLM(federal, Moab); added tid_windows GPS feature +…
-- [WA sweep COMPLETE](project_wa_sweep_handoff.md) — 402 new ids 10193-10594; wf 100% (~156 upgrades) + inc 100%; dnr=WA DNR(state); PUD/utility parks=local; Pacific…
-- [OR sweep COMPLETE](project_or_sweep_handoff.md) — 594 new ids 10595-11190 (federal 359); wf 100% (~250 upgrades) + inc 100%; dnr=BLM(no state DNR); Oregon Dunes…
-- [NV sweep COMPLETE](project_nv_sweep_handoff.md) — 124 entries ids 11191-11316; wf 100% (27 upgrades) + inc 100%; dnr=BLM(~63% of NV); reservenevada.gov deep links…
-- [AZ sweep COMPLETE](project_az_sweep_handoff.md) — 287 entries ids 11317-11604; wf 100% (52 upgrades) + inc 100%; dnr=BLM; hardest private vetting (~130 skipped)…
-- [CA sweep COMPLETE](project_ca_sweep_handoff.md) — largest sweep; state/local/federal/private ids 11605-12473; wf+inc 100%; 2 state rescues of RV-Life-mistagged…
-- [ON sweep COMPLETE](project_on_sweep_handoff.md) — Ontario (Canada pilot, 1st): 207 entries ids 8164-8371; wf 100% (93 upgrades); Conservation Authorities=local…
-- [BC sweep COMPLETE](project_bc_sweep_handoff.md) — 2nd Canada: 418 entries ids 8372-8789; wf 100% (~176 upgrades); RSTBC/BC-Hydro=provincial…
-- [AB sweep COMPLETE](project_ab_sweep_handoff.md) — 3rd Canada: 360 entries ids 8790-9149; wf 100% + inc 100%; ReserveAmerica .do ABPP; landlocked, no coastal
-- [SK sweep COMPLETE](project_sk_sweep_handoff.md) — 4th Canada: 166 entries ids 9150-9315; wf 100% (43 upgrades); KEY: SK "Regional Park"=LOCAL not provincial; .do SKPP
-- [MB sweep COMPLETE](project_mb_sweep_handoff.md) — 5th Canada: 109 entries ids 9316-9424; wf+inc 100%; Grand Beach coastal dunes (big inland lake); goingtocamp…
-- [QC sweep COMPLETE](project_qc_sweep_handoff.md) — 6th Canada: 160 entries ids 12474-12633; wf+inc 100%; parc national=SEPAQ provincial, parc régional/ZEC=local; base…
-- [Canada CAD private top-up COMPLETE](project_canada_cad_private_topup.md) — re-ran ON/BC/AB/SK/MB private with CAD-corrected gate: 190 adds ids 12634-12823, wf-audited (77 upgrades)…
-- [Atlantic Canada sweep COMPLETE](project_atlantic_sweep_handoff.md) — NB/NS/PE/NL: 261 adds ids 12824-13084; wf+inc 100%; NL concessionaire-run provincial parks stay provincial
-- [USB standalone edition — DONE](project_usb_standalone_edition.md) — offline SD-card build COMPLETE 2026-09-14; kept for the build recipe and gotchas (Java 21, urllib not curl, /data…
-- [DVD transfer of z15 tiles — DONE](project_dvd_transfer_z15.md) — transfer complete 2026-09-14; keep for the standing rule that the work machine is DVD-only and the split/assemble…
-- [Pre-playbook private-stage gap — DONE/CLOSED](project_pre_playbook_private_gap.md) — 39 adds 2026-09-07..15; method: research inline, probe for parked domains, skip reasons say which kind of no
+- [SD sweep COMPLETE](project_sd_sweep_handoff.md) — 171 entries ids 5709-5879
+- [ND sweep COMPLETE](project_nd_sweep_handoff.md) — 174 entries ids 5880-6053
+- [MT sweep COMPLETE](project_mt_sweep_handoff.md) — 295 entries ids 6054-6348
+- [MN sweep COMPLETE](project_mn_sweep_handoff.md) — 350 entries ids 5359-5708
+- [WY sweep COMPLETE](project_wy_sweep_handoff.md) — 222 entries ids 6349-6570
+- [OK sweep COMPLETE](project_ok_sweep_handoff.md) — 291 entries ids 6571-6861
+- [LA sweep COMPLETE](project_la_sweep_handoff.md) — 147 entries ids 6862-7008
+- [TX sweep COMPLETE](project_tx_sweep_handoff.md) — 922 entries ids 7009-7930 (state 91/local 154/federal 105/private 572)
+- [NM sweep COMPLETE](project_nm_sweep_handoff.md) — 233 entries ids 7931-8163
+- [ID sweep COMPLETE](project_id_sweep_handoff.md) — 447 entries ids 9425-9871 (federal 314)
+- [UT sweep COMPLETE](project_ut_sweep_handoff.md) — 321 new ids 9872-10192
+- [WA sweep COMPLETE](project_wa_sweep_handoff.md) — 402 new ids 10193-10594
+- [OR sweep COMPLETE](project_or_sweep_handoff.md) — 594 new ids 10595-11190 (federal 359)
+- [NV sweep COMPLETE](project_nv_sweep_handoff.md) — 124 entries ids 11191-11316
+- [AZ sweep COMPLETE](project_az_sweep_handoff.md) — 287 entries ids 11317-11604
+- [CA sweep COMPLETE](project_ca_sweep_handoff.md) — largest sweep
+- [ON sweep COMPLETE](project_on_sweep_handoff.md) — Ontario (Canada pilot, 1st): 207 entries ids 8164-8371
+- [BC sweep COMPLETE](project_bc_sweep_handoff.md) — 2nd Canada: 418 entries ids 8372-8789
+- [AB sweep COMPLETE](project_ab_sweep_handoff.md) — 3rd Canada: 360 entries ids 8790-9149
+- [SK sweep COMPLETE](project_sk_sweep_handoff.md) — 4th Canada: 166 entries ids 9150-9315
+- [MB sweep COMPLETE](project_mb_sweep_handoff.md) — 5th Canada: 109 entries ids 9316-9424
+- [QC sweep COMPLETE](project_qc_sweep_handoff.md) — 6th Canada: 160 entries ids 12474-12633
+- [Canada CAD private top-up COMPLETE](project_canada_cad_private_topup.md) — re-ran ON/BC/AB/SK/MB private with CAD-corrected gate: 190 adds ids 12
+- [Atlantic Canada sweep COMPLETE](project_atlantic_sweep_handoff.md) — NB/NS/PE/NL: 261 adds ids 12824-13084
+- [USB standalone edition — DONE](project_usb_standalone_edition.md) — offline SD-card build COMPLETE 2026-09-14
+- [DVD transfer of z15 tiles — DONE](project_dvd_transfer_z15.md) — transfer complete 2026-09-14
+- [Pre-playbook private-stage gap — DONE/CLOSED](project_pre_playbook_private_gap.md) — 39 adds 2026-09-07..15
 - [On-the-road photo cards](project_road_photos.md) — shipped 2026-09-10; keyed by DATE (never renumbers), one card per driving leg, position + place from EXIF vs the…
 - [Rollup examples come from the day notes](project_rollup_examples_from_notes.md) — 39 hand-written notes over drafts, diffed 2026-09-13: few-shot selected per day from day_notes
 - [Never open a rollup with "Away"](feedback_dont_open_with_away.md) — the drafter's tic; AWH lets the direction be the verb, or names the drive
 - [Time for short drives, miles for long](feedback_drive_figures_time_vs_miles.md) — duration under ~130 mi, mileage over ~300; a figure is only worth printing when the distance was the day's achievement
-- [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
+- [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11
 - [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1-6 done (registry: every agency, QC added 2026-10-20…
 - [Free-camping fees pass](project_free_fees.md) — 783 entries got $0 fees from notes (kills discount chips on free sites); dispersed follow-up mostly done
 - [Price research #2 handoff](project_price_research.md) — through 2026-10-19: private round 2 (hand-read of round-1 pages, run_chunk.py + gate) done for every state, ~209…
@@ -116,10 +116,10 @@
 - [One headless browser at a time](feedback_limit_headless_browsers.md) — AWH 2026-10-03: parallel gm.py/rates.py Chrome instances ate memory+CPU; run helpers sequentially, batch queries…
 - [Skip Sun brands; KOA skip RETIRED](feedback_skip_sun_koa_brands.md) — Sun Outdoors/Retreats still pre-skipped; KOAs vetted like any private park since AWH 2026-10-19 (koa.py quotes them)
 - [Canada private gap: no holds](feedback_canada_no_holds.md) — AWH 2026-10-07: hold only for a permanent human-only captcha; blank/non-loading site = skip; rate-limit block =…
-- [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites); next id 15339; recipe in audit/pa_sf_dispersed/
+- [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites)
 - [Price-gate rule + exceptions](feedback_price_gate_proximity_exceptions.md) — over US$50/C$69 = drop (report) unless a gateway within 40 km, a GS Park at 10% off, an operator-posted member discount (2026-11-07), or the Keys zone
-- [Family-home price re-screen — DONE](project_family_home_rescreen.md) — 2026-10-21: +22 (15531-15552); gateway never lifts the Sun skip
-- [Eastern reservable designated sites — DONE](project_fl_wmd_reservable_gap.md) — 2026-10-10: +3 (Stoney Pond NY, DuPuis + Town of KICCO SFWMD), ids 15339-15341
+- [Family-home price re-screen — DONE](project_family_home_rescreen.md) — 2026-10-21: +22 (15531-15552)
+- [Eastern reservable designated sites — DONE](project_fl_wmd_reservable_gap.md) — 2026-10-10: +3 (Stoney Pond NY, DuPuis + Town of KICCO SFWMD), ids 153
 - [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11/12: 17 back (15342-15358) + Lac Libby 15359 + Red Gut Bay 15360 (min was the cabins')
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note…
 - [US private re-check](project_us_private_recheck.md) — 2026-10-12: 125 US private-gap parks re-read; AWH dropped Harmony Ridge, Dunham's, Lakeview TX; 13 age lines, Lake…
@@ -133,12 +133,12 @@
 - [EKKO model year](user_ekko_model_year.md) — 2023 (AWH 2026-10-22); a 10-year rig-age rule passes until 2033
 - [Book EKKO as a motorhome](feedback_book_as_motorhome.md) — AWH 2026-10-24: where an engine offers van AND motorhome types, price the motorhome type (Fort DeSoto turned a…
 - [Google reviews: drop + price tiebreaker](feedback_poor_google_reviews.md) — very poor reviews drop; reviews may decide a borderline price; under 4 stars + borderline seasonal = auto drop (AWH…
-- [Florida Keys price re-screen — DONE](project_keys_rescreen.md) — 2026-10-30: +14 (15574-15587), 12 skips; Keys rules: owner-lot w/ booking site OK, RV Life $$$+ = price
+- [Florida Keys price re-screen — DONE](project_keys_rescreen.md) — 2026-10-30: +14 (15574-15587), 12 skips
 - [Winter 2026-27 check](project_winter_check_2026.md) — 76 public waterfront campgrounds (eastern VA, NC, WV east, MD, DE, south-central PA): season/status written…
 - [Campgrounds-only role — BUILT](project_campgrounds_only_role.md) — 2026-11-07: map only, default-deny allowlist, climate withheld; new routes must be listed
 - [Notes name no one](feedback_notes_name_no_one.md) — browser-visible notes: no EKKO, no family camping dates, no first person; say "a 23-ft rig"
 - [Note-price cleanup](project_note_price_cleanup.md) — DONE 2026-11-07: rates/extra-person out of notes where fees holds them; all 15 chunks landed; tools in audit/note_prices/
-- [Season pass + notes round 2 — DONE](project_season_and_notes_round2.md) — 2026-11-08: 151 calendar seasons re-read vs agency; field-note repeats cut (21 chunks); open items in followups.md / asks.md
+- [Season pass + notes round 2 — DONE](project_season_and_notes_round2.md) — 2026-11-08: 151 calendar seasons re-read vs agency
 - [High elevation in notes](feedback_high_elevation_mentions.md) — no figure repeating elevation_meters; "high elevation" only if well above local terrain (p75+, ~150 m over median), East 3000 ft+ (AWH 2026-11-08)
 - [MDC horse camps, padless camping](feedback_mdc_horse_and_padless.md) — AWH 2026-11-09: an indistinct horse camp = drop; roadside with no pad = keep with a caveat; OHV-side campground = caveat; check for an existing entry before splitting; lot-adjacent camping with designated points stays
 - [Severe driveways and steep grass drop](feedback_steep_access.md) — AWH 2026-11-10: agency grade Severe or steep grass access = site out; trailer-listed sites that fit stay without an RV category
