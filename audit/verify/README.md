@@ -91,7 +91,9 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
    (monthly/seasonal/workforce/residents), where test 2 applies and an RV Life tier does not
    stand in. p3-89 dropped Country Woods and Ho-Hum on test 2 alone; both were restored.
 7. **The note — clean it on every entry (AWH 2026-10-21).** Whenever your result changes
-   anything, propose a cleaned note in `note` if the current one carries text that is
+   anything (and where the note keeps --AWH text, start your --Claude text on a new line
+   after the --AWH marker, never in the same paragraph; AWH 2026-11-09; apply.py also
+   enforces it), propose a cleaned note in `note` if the current one carries text that is
    (a) **redundant** — it only restates a structured value the entry will carry after your
    result (booking/FCFS, fees/prices, season, hookups, site counts/lengths, facilities,
    discounts, an "RV Life N*/$ ..." or other rating line already in `rating`), or

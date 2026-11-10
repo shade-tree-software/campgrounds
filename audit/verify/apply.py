@@ -23,13 +23,30 @@ DONE = os.path.join(RES, "applied")
 HUMAN = {"manual", "reported"}
 
 
+# A note carrying both AWH's and Claude's attributed text puts each run on its own
+# line, never run together in one paragraph (AWH 2026-11-09). The popup and the
+# manage table both render the newline. "(--AWH)" and "--AWH; --Claude" are joint
+# attributions inside a sentence and are left alone.
+ATTRIBUTION_BREAK = re.compile(r"(?<!\S)(--(?:AWH|Claude))[ \t]+(?=\S)")
+
+
+def split_attributions(note):
+    if note and "--AWH" in note and "--Claude" in note:
+        return ATTRIBUTION_BREAK.sub(r"\1\n", note)
+    return note
+
+
 def awh_segments(note):
     """Each run of text the note attributes to AWH, marker included. A rewrite must keep
     them verbatim (curation doc: someone else's attributed text stays in their words)."""
     out = []
     for m in re.finditer(r"--AWH", note):
         start = max(note.rfind("--", 0, m.start()), -1)
-        start = 0 if start < 0 else note.find(" ", start) + 1
+        if start >= 0:
+            ws = re.search(r"\s", note[start:])
+            start = start + ws.end() if ws else 0
+        else:
+            start = 0
         out.append(note[start:m.end()].strip())
     return out
 
@@ -93,7 +110,7 @@ if __name__ == "__main__":
             if lost and not r.get("awh_superseded"):
                 print(f"!! {r['id']} {e['name']}: note rewrite drops --AWH text: {lost[0][:80]!r}")
                 continue
-            trial["note"] = r["note"]
+            trial["note"] = split_attributions(r["note"])
             notes += 1
         groups = sorted(g for g in touched if g in cs.SCHEMA)
         print(f"   {r['id']} {e['state']} {e['name']}: {', '.join(groups) or 'nothing new'}"
