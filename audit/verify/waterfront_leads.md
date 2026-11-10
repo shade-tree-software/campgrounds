@@ -10,6 +10,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, Missouri p3-351 (2026-11-09)
+
+- 1875 Ruark Bluff West stored lakeview: at least ten RV sites (10, 13, 15, 17, 19, 21, 57, 59, 61, 63) on open grass 17-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read
+- 13753 Rudolf Bennitt Conservation Area stored not waterfront: the pinned Bennitt Lake camp (sites 25-27) is on an open mown point, spurs 10-25 m from the water at the north lot; lakeview at least
+
 ## Open, Missouri p3-350 (2026-11-09)
 
 - 1874 Ruark Bluff East stored lakeview: at least 13 of 67 RV sites (A02-A10, A12/A14/A16/A17, B06-B13, B37) are on open mown grass 10-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read
