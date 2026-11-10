@@ -1,0 +1,79 @@
+{
+  "id": 1892,
+  "checked": "2026-11-09",
+  "sources": [
+    "recreation.gov /api/camps/campgrounds/232720 (facility record, notices, rules), read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/232720/rates, read 2026-11-09",
+    "recreation.gov per-campsite catalog and campsite records for 232720 (20 records, all STANDARD ELECTRIC: Loop A 7, Loop B 13), read 2026-11-09",
+    "recreation.gov availability calendar, months 2026-11, 2027-03, 2027-04, 2027-05, 2027-09, 2027-10, read 2026-11-09",
+    "Esri World Imagery (leaf-off, lake drawn down) with the catalog's site coordinates plotted: 480 m frame of both loops and a 220 m frame (0.24 m/px) of Loop B, viewed 2026-11-09",
+    "USACE Little Rock District Bull Shoals pages (swl.usace.army.mil): HTTP 403, UNREAD"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 30,
+        "water": true,
+        "sewer": false
+      },
+      "source": "recreation.gov per-campsite catalog and campsite records for 232720 (20 records, all STANDARD ELECTRIC: Loop A 7, Loop B 13), read 2026-11-09: 'Water Hookup' yes on all 20 sites; 'Electricity Hookup: 30' on the 14 records that give an amperage (the other six say only 'Electricity Hookup'); no site has a sewer value",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 20,
+        "max_rig_ft": 46
+      },
+      "source": "recreation.gov per-campsite catalog and campsite records for 232720 (20 records, all STANDARD ELECTRIC: Loop A 7, Loop B 13), read 2026-11-09: 20 site records (17 singles, the double B15/B16 and the triple A01-2-3), all back-in, all permitting RV, trailer and fifth wheel; Max Vehicle Length 30 to 46 ft (30 on seven sites)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true
+      },
+      "source": "recreation.gov /api/camps/campgrounds/232720 (facility record, notices, rules), read 2026-11-09 ('The park also has flush toilets, a designated swimming area and a playground')",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "opens": "05-01",
+        "closes": "09-29"
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232720/rates, read 2026-11-09 (only season on file: 'Peak Season' 05-01 to 09-29 in 2026, 2027 and 2028) + recreation.gov availability calendar, months 2026-11, 2027-03, 2027-04, 2027-05, 2027-09, 2027-10, read 2026-11-09 (no dates for any site in November, March, April or October; the 13 Loop B sites carry dates from 2027-05-01 through 2027-09-29)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "max_stay_nights": 14,
+        "note": "Check-in 4 pm, check-out 3 pm. Loop B books online; the seven Loop A sites are listed as not available online."
+      },
+      "source": "recreation.gov /api/camps/campgrounds/232720 (facility record, notices, rules), read 2026-11-09 (rules maxStay 14 nights in a rolling 30 days; no minimum-stay rule or notice) + recreation.gov per-campsite catalog and campsite records for 232720 (20 records, all STANDARD ELECTRIC: Loop A 7, Loop B 13), read 2026-11-09 (Checkin Time 4:00 PM, Checkout Time 3:00 PM; Loop B status Open/reservable, Loop A status 'Not Available', not reservable)",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 24,
+        "currency": "USD",
+        "note": "$24 a night for a single site; $42 for the double site (B15/B16)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232720/rates, read 2026-11-09 (Peak Season 2026-05-01 to 09-29, same in 2027 and 2028: STANDARD ELECTRIC $24; the double-site key $42; a triple-site key $54) + recreation.gov per-campsite catalog and campsite records for 232720 (20 records, all STANDARD ELECTRIC: Loop A 7, Loop B 13), read 2026-11-09 (B03-B14 use the $24 key, B15/B16 the $42 key; Loop A singles a $24 key)",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers park on Bull Shoals Lake at the US 160 bridge in Theodosia: two small, open loops on a low point either side of a boat-ramp lot, beside a private marina and resort. Little shade; the lake is in plain view from most pads across the loop road and a bare, sloping bank that widens as the pool drops. Swim area and playground. --Claude",
+  "summary": "rec.gov read (USACE's own pages refused, unread): season May 1-Sept 29, $24 a single site (the stored $16 low is a non-electric rate key no site uses; $26 not found), 20 site records 30-46 ft all with 30 A and water, flush toilets. No minimum stay. Only Loop B's 13 sites are bookable; Loop A's 7 show 'Not Available' - open question. Pin is on Loop B, no move. Lakeview stands.",
+  "flags": [
+    "LOOP A STATUS - OPEN QUESTION: all seven Loop A records (A01-2-3, A10-A15) carry campsite status 'Not Available', are not reservable and have no calendar dates in any month read; only Loop B's 13 units book. rec.gov does not say whether Loop A is closed, walk-up only or held back, and the Corps page is unread (403). sites.count was written as the 20 catalog records; if Loop A is shut the working count is 13 (12 singles and one double). Stored 26 matched neither.",
+    "FEES: stored $16-26 -> $24-24. The rate table's $16 is a STANDARD NONELECTRIC key, but every site in the catalog is electric with water, so no site is sold at $16; no site uses the $26 key either. Singles are $24, the double B15/B16 $42. Senior/Access pass half price is the agency policy row, not re-read.",
+    "SEASON: stored {year_round: false} (derived) -> opens 05-01, closes 09-29, from the rate season and the calendar agreeing (no dates outside May 1-Sept 29 for any site).",
+    "WATERFRONT (stored lakeview; no change): counted on the 0.24 m/px frame with site coordinates plotted, imagery at a drawn-down pool. Loop B is open ground with a handful of trees. B09 and B08 are nearest the water: about 55 m from the waterline in the image, with the loop road and then a bare bank between, and the paved boat-ramp lot directly beside B08 (day use between pad and water). B15/B16 is about 60 m back behind a gravel work yard and the marina lot. Loop A's A10, A13 and A14 look down a bare slope to the water about 100 m off in this image. Bull Shoals is a flood-control pool that swings many feet, so the gap changes, but at every pad the loop road lies between pad and bank. On an open apron within 50 m with nothing between: none. Clear open views from most pads: lakeview is right.",
+    "PIN: stored 36.5733,-92.6536 falls inside Loop B (25 m from B08). No move. Loop A is 250 m north-east across the ramp lot - one campground.",
+    "PHONE (none stored; apply.py does not write it): recreation.gov lists 417-273-4626 for the park; its contact text gives the Mountain Home project office, (870) 425-2700, for facility questions.",
+    "NEIGHBOURS: the private RV sites, cabins and marina immediately west and north belong to a separate resort, not the Corps park. Theo's RV Park (14561) is 1 km north-west.",
+    "STATUS: closed for the season now (last night Sept 29); 2027 dates from May 1 are on the calendar. No closure notice. Notices: no off-road vehicles, no livestock.",
+    "NOTE: the stored note's site count, 'electric', 'reservable online May-Sep' repeated fields and were cut."
+  ]
+}
