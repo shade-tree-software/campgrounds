@@ -4,6 +4,12 @@ A verifier's source (operator page or booking engine) claims water access that d
 the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, both ways; a
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
+## Open, Missouri p3-346 (2026-11-09)
+
+- 13788 Osage-Tavern Access stored not waterfront: five or six north spurs end ~15-25 m from the Tavern Creek mouth (~40 m wide) across mown grass under scattered trees, no road between; west spurs ~45 m from the Osage behind timber; bank height unknown
+- 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
+- 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
+
 ## Open, Maine p3-238 (2026-11-02)
 
 - 4207 River Run Canoe & Campground stored not waterfront: reviews say 'one of the river front sites', 'right on the river'; Saco ~40 m wide; none names an RV, and which sites take one is unknown
