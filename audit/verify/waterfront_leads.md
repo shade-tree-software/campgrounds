@@ -1062,3 +1062,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 15276 CR004: Camp Run 19 m; canopy. 15275 CR001: Cooks Run 35 m; canopy. 15278 CR010: Trout Run 36 m; canopy.
 - 15271 Medix Run 006/007: Medix Run 22-26 m, woods. 15270 Medix 002: 25 m, woods. 15264 Masten: Pleasant Stream 38 m, woods.
 - p3-367: 15297 site 026 Plantation Hole (page says streamside; creek 38 m, trees between); 15303 Horton Run 8 m from the agency's pad point, dense conifers. Both left at not waterfront.
+- 15318 Tiadaghton ER 001 (East Run Road): unnamed perennial stream 7 m from the agency point, culvert at the pin; narrow headwater stream under trees, open view not established. p3-369.

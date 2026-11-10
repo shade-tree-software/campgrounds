@@ -580,3 +580,4 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 
 - **Closed (AWH 2026-11-10):** 15290 SS016 (snowmobile parking lot) and 15291 SS017 (beside a compressor station) dropped; 15284 HY040 kept with a fit caveat in the note; 15282 CR020 kept. Still open: 15300 WS011-013 (ATV-system sites not in a parking lot).
 - **Closed (AWH 2026-11-10):** 15300 WS011-013 dropped (ATV tracks run through the sites).
+- **p3-369 (2026-11-10):** 15321 Tiadaghton MF 001 (Manor Fork Road): the agency says it is 'adjacent to the Northcentral Regional ATV Trail System. Expect road noise and trail noise during ATV season.' Not called part of the system, a trailhead or parking; a former gas pump-station pad. Kept with the wording. Drop?
