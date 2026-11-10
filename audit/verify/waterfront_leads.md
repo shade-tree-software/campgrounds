@@ -1066,3 +1066,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 8849 Beaver Flats (AB): operator says 'beautiful riverside sites'; drive-in sites 42-46 are 20-40 m from the Elbow River behind a belt of trees. p3-371.
 - 9096 Bear Creek Campground (AB): operator 'watch the creek flow beneath you'; small creek 40-100 m west of the pin in forest, pads not visible. p3-371.
 - 8888 Two O'Clock Creek (AB): agency says a few sites are next to the creek; winter imagery showed none within 190 m. Re-read on snow-free imagery. p3-372.
+- 8928 Medicine Lake (AB): open clearing at Loop C SW corner ~52.7466,-114.7426 (sites C-31..C-35?) ~20-35 m from water; read the site map. p3-373.
+- 8987 North Buck Lake (AB): east spur sites 12-14 ~15-25 m, partly under trees. p3-373.
+- 9142 Memory Lane (AB): trout pond 35-50 m from the bottom row; check for a road between. p3-373.
