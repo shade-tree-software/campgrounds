@@ -10,6 +10,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, Missouri p3-350 (2026-11-09)
+
+- 1874 Ruark Bluff East stored lakeview: at least 13 of 67 RV sites (A02-A10, A12/A14/A16/A17, B06-B13, B37) are on open mown grass 10-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read
+
 ## Open, Missouri p3-349 (2026-11-09)
 
 - 13755 Ranacker Conservation Area stored not waterfront: the pinned Peno Creek loop (39.45919,-91.28985) has its edge 10-15 m from the 12-15 m wide creek; creekside arguable

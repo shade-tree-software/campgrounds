@@ -1,0 +1,92 @@
+{
+  "id": 1926,
+  "checked": "2026-11-09",
+  "sources": [
+    "recreation.gov /api/camps/campgrounds/234045 (facility record + notices), /rates, and the per-campsite catalog (63 records), read 2026-11-09",
+    "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09",
+    "recreation.gov availability, months 2026-12 and 2027-01 (62-63 of 63 sites bookable through the winter), read 2026-11-09",
+    "Esri World Imagery (leaf-off) with the catalog's per-site coordinates plotted: 620 m frame (0.69 m/px) and 260 m frame of the east end (0.29 m/px), viewed 2026-11-09"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": false
+      },
+      "source": "recreation.gov /api/camps/campgrounds/234045 (facility record + notices), /rates, and the per-campsite catalog (63 records), read 2026-11-09: sites E1-E6 typed STANDARD ELECTRIC, 50 amp, water hookup Y; notices 'Water and 50-amp electric hookups are now available' and 'No sewer hookups available; a dump station is located at the campground entrance'. The other 40 RV sites are non-electric",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 54,
+        "max_rig_ft": 60
+      },
+      "source": "recreation.gov /api/camps/campgrounds/234045 (facility record + notices), /rates, and the per-campsite catalog (63 records), read 2026-11-09: 54 family sites (40 standard non-electric + 6 standard electric that take an RV; 8 tent-only, six of them walk-in) plus 8 group sites not counted; longest posted RV length 60 ft (site 17)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "dump": true,
+        "potable_water": true
+      },
+      "source": "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 (amenities: flush + vault toilets, hot showers, dump station year round, potable water seasonal); rec.gov notice: water systems off Oct 15-Apr 14 except the heated shower house",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true
+      },
+      "source": "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 ('Round Spring Campground is open daily year-round'); rec.gov 'Open year-round'; winter nights bookable on the rec.gov calendar",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "max_stay_nights": 14
+      },
+      "source": "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 ('Starting on January 1, 2025, all sites will be available by reservation only. Same-day reservations are available.'; 0 first-come sites); rec.gov rules maxStay 14 days",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 30,
+        "currency": "USD",
+        "seasonal": [
+          {
+            "name": "Apr 15 - Oct 15",
+            "opens": "04-15",
+            "closes": "10-15",
+            "nightly_low": 20,
+            "nightly_high": 30
+          },
+          {
+            "name": "Oct 16 - Apr 14",
+            "opens": "10-16",
+            "closes": "04-14",
+            "nightly_low": 10,
+            "nightly_high": 20
+          }
+        ]
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234045/rates (2026 Peak Apr 15-Oct 15: non-electric $20, electric $30; Non-Peak Oct 16-Apr 14: $10 / $20) and the NPS API fee list (same figures), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "National Park Service campground in the Ozark National Scenic Riverways, in woods above the Current River off Highway 19. 46 sites take an RV; only the six E sites have hookups (50-amp electric and water), the rest are basic. Posted lengths run from 20 ft (sites 12-14) to 60 ft. Eight more sites are tent-only, six of them walk-in along the spring branch. Reservation only, same-day included. In winter (Oct 16 to Apr 14) the water is off except the heated shower house. No cell signal. --Claude",
+  "summary": "Confirmed against rec.gov and the NPS API: year-round, reservation-only since 2025-01-01, 46 RV sites of which six (E1-E6) have 50A + water, no sewer, dump at the entrance; $20/$30 in season, $10/$20 Oct 16-Apr 14. Site count corrected 62 -> 54 family sites (the 62 included 8 group sites). Not waterfront stands. Pin is ~380 m north of the campground - move flagged. No stored phone - two published numbers flagged.",
+  "flags": [
+    "PIN MOVE: stored 37.2831,-91.4083 is rec.gov's facility point, which falls north of the campground near the Highway 19 bridge / spring area; the 54 family sites (catalog coordinates, matching the paved loops on imagery) centre on 37.2798,-91.4072, about 380 m south-south-east. The NPS API gives 37.27952,-91.40687. Proposed new pin 37.2798,-91.4072.",
+    "WATERFRONT (stored not waterfront, stands; evidence should be refreshed): rec.gov now tags EVERY site 'Riverfront' (a blanket tag, even the group sites and the picnic pavilion), so the stored line 'rec.gov flags no riverfront sites' is out of date and the tag carries no information. Per-site on the leaf-off frames: nearest RV sites to the Current River are 26 (~65-70 m) and 25 (~90 m), both through continuous timber on a slope; 28 is ~100 m from the gravel-bar landing; the electric row E1-E6 is ~330 m back. Walk-in tent sites 30-35 line the spring branch, ~75 m+ from the river. No RV site on an open apron within 50 m; no photo evidence of a view in leaf. Not waterfront kept.",
+    "PHONE (none stored; apply.py does not write it): rec.gov facility phone 573-323-4236 (notice: 'call (573) 323-4236 between 8:00 a.m. and 4:30 p.m. weekdays', park HQ); its Contact Info block says (573) 561-0580; the NPS API record gives (573) 858-3297. Suggest 573-323-4236.",
+    "SITES: stored 62 = 54 family + 8 group sites (G1-G3 tent-only groups, G4-G8 groups, max 2 RVs). Written 54. Six sites (44-49) carry RV length 0 in the equipment table but driveway lengths 38-50 ft and are typed for RV/trailer - a catalog gap, not a ban. Three sites (12, 13, 14) are capped at 20 ft; all others that take an RV post 25 ft or more.",
+    "CURRENT NOTICES (not written): NPS alert of 2026-09-25 - Round Spring pavilion/spring parking lot closed for the rest of 2026 while the low-water bridge over Spring Valley Creek is rebuilt (the campground is not affected); paving work in the park's campgrounds during summer 2026.",
+    "NOT READ: the nps.gov campground page renders from script and gave no text over plain HTTP; the same record was read through the NPS API instead."
+  ]
+}

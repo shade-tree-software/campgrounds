@@ -135427,52 +135427,73 @@
     "id": 1874,
     "kind": "campground",
     "name": "Ruark Bluff East",
-    "location": "37.5222,-93.8053",
-    "elevation_meters": 295.0,
+    "location": "37.5230,-93.7965",
+    "elevation_meters": 269.0,
     "state": "MO",
     "ownership": "federal",
     "waterfront": "lakeview",
     "inclusion_evidence": "recreation.gov 233609: Standard Electric/Nonelectric sites, one RV per site, open year-round -> real RV campground",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 0b13fed (MO federal USACE: add 41 lake campgrounds with recreation.gov links); on-water value recorded at that commit (no separate per-entry evidence string)\np3-350 (2026-11-09): lakeview held, upgrade lead logged. On leaf-off imagery with the lake drawn down, A02-A10 pad ends are 10-20 m from the water across open mown grass, A12/A14/A16/A17 20-30 m, B06-B13 25-35 m, B37 ~20 m; no site photos read and the pool level was low. Pin moved ~750 m from the rec.gov point in woods to the B loop.",
     "website": "https://www.recreation.gov/camping/campgrounds/233609",
-    "note": "USACE Stockton Lake campground on the Big Sac arm (~91 sites, ~28 electric) with a boat ramp and beach; year-round, reservable online (water/electric Apr 16 to Sep 30). --Claude",
+    "note": "Corps of Engineers campground on two wooded points of Stockton Lake. 29 of the 67 RV sites have electric, all in the B loop: 50 amp at B25-B34, 30 amp at the rest. The A sites are basic, and many of them sit on the open shore of the north point. Water is a shared fill-up, not at the site, and is off outside Apr 16 to Sep 30. Reservations run Mar 15 to Nov 30. Boat ramp and beach just outside the entrance. --Claude",
     "hookups": {
-      "water": true,
-      "electric": 50
+      "water": false,
+      "electric": 50,
+      "sewer": false
     },
     "sites": {
-      "count": 91
+      "count": 80,
+      "max_rig_ft": 80
     },
     "season": {
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "03-15",
+        "closes": "11-30"
+      },
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Not on the reservation calendar Dec 1 to Mar 14; the campground stays open then, with no water."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09: 29 STANDARD ELECTRIC sites (B25-B34 50 amp, B01-B13 and B35-B40 30 amp); water hookup 'No' on every site that states it; notice 'Drinking water (community fill-up) and electric hookups are available during the reservation season'. No sewer attribute; dump station listed",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09: 67 sites that take an RV (29 electric, 38 non-electric) + 13 walk-to tent sites; a group camp and a day shelter not counted. Longest posted length 80 ft (B05, B26); shortest RV site 30 ft",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 (notice: 'The campground is open year-round')",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 (rules: maxStay 14 nights, minHolidayWeekendStay 3; rate seasons Mar 15-Apr 15, Apr 16-Sep 30, Oct 1-Nov 30) + recreation.gov availability, months 2026-11, 2026-12, 2027-01, 2027-03, 2027-05, read 2026-11-09 (Nov and Mar 15 on bookable; December and January return no bookable dates)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233609/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233609/rates joined to each site's fee template (2026 peak Apr 16-Sep 30: non-electric $20, electric B01-B13 $28, electric B25-B40 $32; shoulder: non-electric $10, electric $20), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 (amenities: Accessible Flush Toilets, Accessible Vault Toilets, Dump Station, Showers, Water; 'two shower houses, a dump station')",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -135483,9 +135504,45 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 32,
-      "currency": "USD"
+      "currency": "USD",
+      "seasonal": [
+        {
+          "name": "Apr 16 - Sep 30",
+          "opens": "04-16",
+          "closes": "09-30",
+          "nightly_low": 20,
+          "nightly_high": 32
+        },
+        {
+          "name": "Oct 1 - Nov 30",
+          "opens": "10-01",
+          "closes": "11-30",
+          "nightly_low": 10,
+          "nightly_high": 20
+        },
+        {
+          "name": "Mar 15 - Apr 15",
+          "opens": "03-15",
+          "closes": "04-15",
+          "nightly_low": 10,
+          "nightly_high": 20
+        }
+      ]
     },
-    "policy_ref": "federal:usace"
+    "policy_ref": "federal:usace",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "dump": true,
+      "potable_water": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 recreation.gov availability, months 2026-11, 2026-12, 2027-01, 2027-03, 2027-05, read 2026-11-09 Esri World Imagery (leaf-off, lake drawn down) with the catalog's per-site coordinates plotted: 1150 m frame (1.28 m/px), 520 m frame (0.58 m/px), 230 m frame of the A point (0.26 m/px), 260 m frame of the B north row (0.29 m/px), viewed 2026-11-09",
+      "note": "Confirmed against rec.gov: open year-round, 67 RV sites (29 electric: ten 50A, nineteen 30A; 38 non-electric) + 13 walk-to tent sites; $20-32 Apr 16-Sep 30, $10-20 in the shoulders. Stored hookups.water TRUE corrected to false (community fill-up only). Count 91 -> 80 (catalog). Waterfront lead UP lakeview -> lakefront (counted). Pin is ~750 m west of the sites - move flagged. Phone flagged."
+    },
+    "phone": "417-637-5303"
   },
   {
     "id": 1875,
@@ -140033,52 +140090,63 @@
     "id": 1926,
     "kind": "campground",
     "name": "Round Spring Campground",
-    "location": "37.2831,-91.4083",
-    "elevation_meters": 229.0,
+    "location": "37.2798,-91.4072",
+    "elevation_meters": 224.0,
     "state": "MO",
     "ownership": "federal",
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov 234045 site list: standard family RV sites + 50A electric E1-E6, year-round -> real drive-in RV campground",
-    "waterfront_evidence": "satellite at 37.283,-91.408: loops in open grass but a continuous riparian treeline screens them from the Current River; rec.gov flags no riverfront sites",
+    "waterfront_evidence": "satellite at 37.283,-91.408: loops in open grass but a continuous riparian treeline screens them from the Current River; rec.gov flags no riverfront sites\np3-350 (2026-11-09): not waterfront held. The nearest RV sites (26 at ~65-70 m, 25 at ~90 m) are behind continuous timber from the Current River; rec.gov now tags every site 'Riverfront', which counts for nothing. Pin moved ~380 m from the rec.gov facility point to the loops.",
     "website": "https://www.recreation.gov/camping/campgrounds/234045",
-    "note": "NPS Ozark Riverways campground (~62 sites) on the Current River near Eminence; six 50A electric sites (E1-E6) plus basic and a few tent-only sites; reservable online; open year-round. --Claude",
+    "note": "National Park Service campground in the Ozark National Scenic Riverways, in woods above the Current River off Highway 19. 46 sites take an RV; only the six E sites have hookups (50-amp electric and water), the rest are basic. Posted lengths run from 20 ft (sites 12-14) to 60 ft. Eight more sites are tent-only, six of them walk-in along the spring branch. Reservation only, same-day included. In winter (Oct 16 to Apr 14) the water is off except the heated shower house. No cell signal. --Claude",
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": false
     },
     "sites": {
-      "count": 62
+      "count": 54,
+      "max_rig_ft": 60
     },
     "season": {
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov /api/camps/campgrounds/234045 (facility record + notices), /rates, and the per-campsite catalog (63 records), read 2026-11-09: sites E1-E6 typed STANDARD ELECTRIC, 50 amp, water hookup Y; notices 'Water and 50-amp electric hookups are now available' and 'No sewer hookups available; a dump station is located at the campground entrance'. The other 40 RV sites are non-electric",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov /api/camps/campgrounds/234045 (facility record + notices), /rates, and the per-campsite catalog (63 records), read 2026-11-09: 54 family sites (40 standard non-electric + 6 standard electric that take an RV; 8 tent-only, six of them walk-in) plus 8 group sites not counted; longest posted RV length 60 ft (site 17)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 ('Round Spring Campground is open daily year-round'); rec.gov 'Open year-round'; winter nights bookable on the rec.gov calendar",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 ('Starting on January 1, 2025, all sites will be available by reservation only. Same-day reservations are available.'; 0 first-come sites); rec.gov rules maxStay 14 days",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234045/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234045/rates (2026 Peak Apr 15-Oct 15: non-electric $20, electric $30; Non-Peak Oct 16-Apr 14: $10 / $20) and the NPS API fee list (same figures), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 (amenities: flush + vault toilets, hot showers, dump station year round, potable water seasonal); rec.gov notice: water systems off Oct 15-Apr 14 except the heated shower house",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -140089,9 +140157,38 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "seasonal": [
+        {
+          "name": "Apr 15 - Oct 15",
+          "opens": "04-15",
+          "closes": "10-15",
+          "nightly_low": 20,
+          "nightly_high": 30
+        },
+        {
+          "name": "Oct 16 - Apr 14",
+          "opens": "10-16",
+          "closes": "04-14",
+          "nightly_low": 10,
+          "nightly_high": 20
+        }
+      ]
     },
-    "policy_ref": "federal:nps"
+    "policy_ref": "federal:nps",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "dump": true,
+      "potable_water": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "recreation.gov /api/camps/campgrounds/234045 (facility record + notices), /rates, and the per-campsite catalog (63 records), read 2026-11-09 NPS API developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Round Spring Campground record) and /alerts?parkCode=ozar, read 2026-11-09 recreation.gov availability, months 2026-12 and 2027-01 (62-63 of 63 sites bookable through the winter), read 2026-11-09 Esri World Imagery (leaf-off) with the catalog's per-site coordinates plotted: 620 m frame (0.69 m/px) and 260 m frame of the east end (0.29 m/px), viewed 2026-11-09",
+      "note": "Confirmed against rec.gov and the NPS API: year-round, reservation-only since 2025-01-01, 46 RV sites of which six (E1-E6) have 50A + water, no sewer, dump at the entrance; $20/$30 in season, $10/$20 Oct 16-Apr 14. Site count corrected 62 -> 54 family sites (the 62 included 8 group sites). Not waterfront stands. Pin is ~380 m north of the campground - move flagged. No stored phone - two published numbers flagged."
+    },
+    "phone": "573-323-4236"
   },
   {
     "id": 1927,
@@ -970568,12 +970665,12 @@
     "elevation_meters": 175.0,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "riverfront",
-    "waterfront_evidence": "satellite at 38.3937,-91.8211 (z18): lot runs out to the Osage/Missouri bank, open sand/gravel apron to the water -> riverfront",
+    "waterfront": "riverview",
+    "waterfront_evidence": "satellite at 38.3937,-91.8211 (z18): lot runs out to the Osage/Missouri bank, open sand/gravel apron to the water -> riverfront\np3-350 (2026-11-09): riverfront -> riverview. The river is the Gasconade; the earlier line described the ramp lot. Of five GIS camping points, three are 150-165 m from the water with timber and the whole ramp lot between, the pinned one ~80 m with the lot between, and one ~41 m behind ~35 m of timber; no site is on an open apron within 50 m.",
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' and 'Campsites at Rollins Ferry Access, Osage County, Missouri' under Things to Do; MDC Camping Sites GIS layer places 5 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/rollins-ferry-access",
     "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (16 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites' and 'Campsites at Rollins Ferry Access, Osage County, Missouri'); MDC maps 5 camping spots across the area. 14-day limit in any 30. Site length not published. From Linn, take Highway 89 south 7 miles to the access. --Claude",
+    "note": "Primitive campsites in bottomland timber at a Gasconade River boat ramp, in two groups: seven along the gravel entrance road before the ramp lot (short angled gravel spurs on the south side of the road), and four just south of the lot beside the privy, about 40 m from the river bank through the trees. The ramp lot itself is parking. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -970581,27 +970678,38 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/rollins-ferry-access (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/rollins-ferry-access (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6713map.pdf (Privy symbol beside the Primitive Camping symbol), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://mdc.mo.gov/discover-nature/places/rollins-ferry-access ('This area has 11 primitive campsites and a boat ramp.'); the area map labels them '7 Sites' and '4 Sites', read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -970612,11 +970720,23 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "sites": {
+      "count": 11
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/rollins-ferry-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6713map.pdf (dated 04/10), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (5 points) and /26 'Parking Lots' (1 lot), queried 2026-11-09 Esri World Imagery (leaf-off) 300 m frame (0.33 m/px) and 130 m frame of the south spots (0.14 m/px), viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: 11 primitive campsites (area page), drawn on the map as '7 Sites' on the entrance road and '4 Sites' south of the ramp lot, with a privy; 5 GIS points. Free, FCFS, no hookups, 14-day limit; site count and privy written; phone matches; pin is on a camping point. Stored RIVERFRONT is not supported: no site is on an open apron - flagged as a lead down to riverview."
     }
   },
   {
@@ -971534,7 +971654,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 3 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/robert-m-white-ii-conservation-area",
     "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (1,163 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 3 camping spots across the area. 14-day limit in any 30. Site length not published. From Mexico, take Highway 15 north 8 miles, then Route Z east 2 miles, and Route ZZ east 2 miles. --Claude",
+    "note": "Three primitive camping spots, each beside a small gravel parking lot on the edge of the area: the north-west lot where County Road 390 ends (the roomiest, with a mown patch beside it), one on County Road 353 at the south-west, and one on Route ZZ at the east side. No pads, tables, privy or water. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -971542,23 +971662,29 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/robert-m-white-ii-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://mdc.mo.gov/sites/default/files/2022-03/8710.pdf (brochure: camping 'permitted only in designated areas', no dates on it) + https://mdc.mo.gov/discover-nature/places/robert-m-white-ii-conservation-area (3 CSR 10-11.115: camping 'allowed 24 hours a day on areas where these activities are permitted'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -971568,9 +971694,18 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
-    "policy_ref": "state:missouri-conservation-areas"
+    "policy_ref": "state:missouri-conservation-areas",
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/robert-m-white-ii-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/8710.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/8710map.pdf (last updated 8/15/2022), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (3 points) and /26 'Parking Lots' (3 lots), queried 2026-11-09 Esri World Imagery (leaf-off) 220 m frames over the three camping points, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites' - three Primitive Camping symbols on the map, each beside a Parking Lot symbol, and three GIS points. Free, FCFS, no hookups, 14-day limit; phone matches. Season written year-round: the brochure puts no dates on camping (its May 10 - August 31 dates are the lake access road). No waterfowl zone. Pin is on the north-west spot."
+    }
   },
   {
     "id": 13779,
@@ -975579,11 +975714,11 @@
     "state": "MO",
     "ownership": "state",
     "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 38.9221,-92.9810 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront",
+    "waterfront_evidence": "satellite at 38.9221,-92.9810 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront\np3-350 (2026-11-09): not waterfront held: the camping patch is ~30 m from the Lamine River behind a 15-20 m tree belt; leaf-on imagery shows no view.",
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/roberts-bluff-access",
     "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (7 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'). 14-day limit in any 30. Site length not published. From Pilot Grove, take Route HH northwest 4.50 miles, then Buffalo Prairie Drive (gravel) north 2 miles. --Claude",
+    "note": "Camping is on a small mown patch at the west end of the gravel boat-ramp lot on the Lamine River, with a privy at the lot; the concrete ramp is alongside and the river is about 30 m away behind the bank trees. No pads or tables. Reached by gravel Buffalo Prairie Drive: 2 miles from Route HH, or 1 mile from Bryant Bottom Road off I-70 exit 89. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -975591,27 +975726,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/roberts-bluff-access (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/roberts-bluff-access (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mdc.mo.gov/sites/default/files/2023-10/7203map.pdf (Privy symbol beside the Primitive Camping symbol), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -975622,11 +975763,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/roberts-bluff-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2023-10/7203map.pdf (last updated 7/21/2021), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (1 point) and /26 'Parking Lots' (1 lot), queried 2026-11-09 Esri World Imagery (leaf-on) 260 m frame (0.29 m/px), viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed and stays under the lot rule: MDC marks a Primitive Camping point (map symbol and GIS point) on the grass at the west edge of the ramp lot. Free, FCFS, no hookups, 14-day limit; privy written; phone matches. Pin is on the camping point. Not waterfront stands; a riverview lead is reported but not shown."
     }
   },
   {
@@ -979899,7 +980049,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/robert-e-talbot-conservation-area",
     "phone": "417-895-6880",
-    "note": "Missouri Department of Conservation area (4,361 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From Stotts City, take Highway 97 north, then Highway 96 east 1 mile. --Claude",
+    "note": "One small primitive campground: a gravel loop about 55 m long in open oak timber on the east side of Highway 97, about 1.3 miles south of Highway 96, with metal fire rings and nothing else. MDC calls it best suited to tents or small travel trailers and RVs: the loop lane is narrow and there are no built pads. The rest of the area's lots are parking only. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -979907,23 +980057,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/robert-e-talbot-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/robert-e-talbot-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -979938,11 +980089,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/robert-e-talbot-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2024-04/8037.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/8037map.pdf (dated 09/14), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (1 point) and /26 'Parking Lots' (22 lots), queried 2026-11-09 Esri World Imagery (leaf-off) 260 m frame of the campground (0.29 m/px), viewed 2026-11-09 https://thedyrt.com/camping/missouri/talbot-conservation-area (two camper reviews, May 2025; secondary), read 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: one designated campground (map symbol at lot 10 on Highway 97, one GIS point, a gravel loop on imagery). Free, FCFS, no hookups, 14-day limit; phone matches. Pin is on the loop. MDC's 'best suited for tents or small travel trailers/RVs' wording flagged with a caveat in the note. The stored note's directions lead to the headquarters on Highway 96, not the campground - replaced."
     }
   },
   {
@@ -980359,12 +980516,12 @@
     "elevation_meters": 269.0,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "riverview",
-    "waterfront_evidence": "satellite at 39.9084,-94.6916 (z18): camping loop in the grove beside the river behind a tree band -> riverview",
+    "waterfront": "not waterfront",
+    "waterfront_evidence": "satellite at 39.9084,-94.6916 (z18): camping loop in the grove beside the river behind a tree band -> riverview\np3-350 (2026-11-09): riverview -> not waterfront. The camping loop (gravel oval ~75 x 45 m, 200 m south of the river lot) has its edge ~46 m from the sandbar and ~59 m from the water behind ~45 m of bottomland timber; no view could be confirmed (unsure goes down).",
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/rochester-falls-access",
     "phone": "816-271-3100",
-    "note": "Missouri Department of Conservation area (14 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From St. Joseph, take Highway 169 north 10 miles to area entrance. --Claude",
+    "note": "A primitive camping loop of its own beside the Highway 169 bridge over the Platte River: an oval gravel lane about 75 m long under big scattered hardwoods, sites around and inside it, a privy at its entrance. The river is 45-60 m east of the loop behind a band of bottomland timber and a sandbar. The fishing-access lot is 200 m further on, where the gravel drive ends at the bank. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -980372,27 +980529,33 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/rochester-falls-access (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/rochester-falls-access (area regulations and Things to Do), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6307map.pdf (Privy symbol beside the Primitive Camping symbol), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -980403,11 +980566,20 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "facilities": {
+      "vault_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/rochester-falls-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6307map.pdf (dated 10/08), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (1 point) and /26 'Parking Lots' (2 lots), queried 2026-11-09 Esri World Imagery (leaf-off) 420 m and 190 m frames (0.47 and 0.21 m/px), viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed, and not a lot: MDC 'Individual Campsites' ('This area offers camping and access to the Platte River') at a separate gravel camping loop with a privy; the river-access lot is 200 m north. Free, FCFS, no hookups, 14-day limit; privy written; phone matches; pin is inside the loop. Stored riverview is not supported by anything I can show: the loop is 45-60 m from the river behind about 45 m of timber - flagged as a lead down."
     }
   },
   {
@@ -984516,65 +984688,6 @@
     }
   },
   {
-    "id": 13993,
-    "kind": "campground",
-    "name": "Rocky Ford Access",
-    "location": "40.06534,-93.16679",
-    "elevation_meters": 226.0,
-    "state": "MO",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.0653,-93.1668 (z18): gravel lot/pull-off with no water within ~50 m, or screened from it by trees -> not waterfront",
-    "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do (2026-09-29); MDC's Camping Sites GIS layer has no point here, so pinned at the area parking lot from MDC's parking-lot layer (z18 satellite) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
-    "website": "https://mdc.mo.gov/discover-nature/places/rocky-ford-access",
-    "phone": "660-785-2420",
-    "note": "Missouri Department of Conservation area (4 acres). Primitive camping at MDC-designated sites (MDC lists 'Designated Camping Sites'); MDC does not map where the sites are, so this pin is the area parking lot. 14-day limit in any 30. Site length not published. From Browning, take Highway 5 north 3 miles, then Vernon Road west 0.50 mile. --Claude",
-    "hookups": {
-      "electric": 0,
-      "water": false,
-      "sewer": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/rocky-ford-access (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "manual"
-      }
-    },
-    "note_scan": {
-      "sig": "946b31cf0075c4a3",
-      "checked": "2026-09-29",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
-    },
-    "policy_ref": "state:missouri-conservation-areas",
-    "season": {
-      "year_round": true
-    }
-  },
-  {
     "id": 13994,
     "kind": "campground",
     "name": "Sunnyside School Access",
@@ -984621,65 +984734,6 @@
     },
     "note_scan": {
       "sig": "d2afab1db4131a3b",
-      "checked": "2026-09-29",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
-    },
-    "policy_ref": "state:missouri-conservation-areas",
-    "season": {
-      "year_round": true
-    }
-  },
-  {
-    "id": 13998,
-    "kind": "campground",
-    "name": "Rose Pond Conservation Area",
-    "location": "40.33591,-91.51759",
-    "elevation_meters": 149.0,
-    "state": "MO",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 40.3359,-91.5176 (z18): gravel lot/pull-off with no water within ~50 m, or screened from it by trees -> not waterfront",
-    "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do (2026-09-29); MDC's Camping Sites GIS layer has no point here, so pinned at the area parking lot from MDC's parking-lot layer (z18 satellite) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
-    "website": "https://mdc.mo.gov/discover-nature/places/rose-pond-conservation-area",
-    "phone": "573-248-2530",
-    "note": "Missouri Department of Conservation area (382 acres). Primitive camping at MDC-designated sites (MDC lists 'Designated Camping Sites'); MDC does not map where the sites are, so this pin is the area parking lot. 14-day limit in any 30. Site length not published. From Wayland, take Highway 27/61 south 7 miles, then Route F east 2.50 miles, then Route P north 2 miles, then on gravel road 317west 0.25 miles, then on gravel road 304north 0.50 miles. --Claude",
-    "hookups": {
-      "electric": 0,
-      "water": false,
-      "sewer": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/rose-pond-conservation-area (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "manual"
-      }
-    },
-    "note_scan": {
-      "sig": "2c7d954ad722b3a2",
       "checked": "2026-09-29",
       "model": "claude-opus-5/session"
     },
@@ -1015688,8 +1015742,8 @@
     "id": 14570,
     "kind": "campground",
     "name": "Rockin' Bell River Resort",
-    "location": "37.0647,-91.6625",
-    "elevation_meters": 343,
+    "location": "37.0656,-91.6628",
+    "elevation_meters": 341.0,
     "state": "MO",
     "ownership": "private",
     "waterfront": "not waterfront",
@@ -1015697,7 +1015751,7 @@
     "inclusion_evidence": "rockinbellriverresort.com (RV sites: 10 full 30/50 amp, $40/night; read 2026-10-03) and Firefly booking; Google 4.9 over 46 with phone; RV Life unrated",
     "website": "https://rockinbellriverresort.com/\nhttps://app.fireflyreservations.com/Kiosk/Property/RockinBellRiverResort",
     "phone": "417-362-0815",
-    "note": "Resort near Mountain View (891 MO-17): 10 full-hookup 30/50-amp RV sites, cabins, glamping tents. Online booking (Firefly). --Claude",
+    "note": "Newer gated campground (keypad entrance) in timber on Hwy 17, a quarter mile north of the Buck Hollow access on the Jacks Fork; the river is not on the property. RV sites are a row of angled pull-ins along a gravel drive; also cabins, glamping tents and primitive tent camping, with a concrete shower house, a covered pavilion, a riding arena and horse stalls. Long-term stays are also sold on the RV sites. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
@@ -1015707,27 +1015761,35 @@
       "count": 10
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/Kiosk/Property/RockinBellRiverResort"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://rockinbellriverresort.com/ and https://rockinbellriverresort.com/book-your-stay/, read 2026-11-09: 'RV Sites: 10 Full 30/50 amp, $40 per night'; long-term text 'Each unit includes 30 amp or 50amp service and sewer'",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://rockinbellriverresort.com/ and https://rockinbellriverresort.com/book-your-stay/, read 2026-11-09: 'RV Sites: 10 Full 30/50 amp'",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://rockinbellriverresort.com/ and https://rockinbellriverresort.com/book-your-stay/, read 2026-11-09: 'We use a third party \"Fire Fly Reservations\" to handle our bookings'",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://rockinbellriverresort.com/, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://rockinbellriverresort.com/ and https://rockinbellriverresort.com/book-your-stay/, read 2026-11-09: 'RV Sites: 10 Full 30/50 amp, $40 per night', 'tent/primitive camping Starting At $25 per night', 'long term camping options on RV sites ... Priced at only $400 per month'",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://rockinbellriverresort.com/ and https://rockinbellriverresort.com/book-your-stay/, read 2026-11-09: 'Shower house with two separate shower/restrooms and one restroom', 'Dump Station', 'Our Campground now has Starlink Wifi!'",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -1015739,7 +1015801,18 @@
       "nightly_low": 40,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Full-hookup 30/50-amp RV sites $40/night."
+      "note": "Full-hookup RV sites $40 a night as posted by the operator; the booking engine's fees and tax were not read. Tent and primitive camping from $25. Long-term RV sites $400 a month."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://rockinbellriverresort.com/ and https://rockinbellriverresort.com/book-your-stay/, read 2026-11-09 https://app.fireflyreservations.com/Kiosk/Property/RockinBellRiverResort (kiosk landing page only: name, HWY 17 Mountain View, phone (417) 362-0815; the priced search was not run), read 2026-11-09 Google Maps place panel 'Rockin Bell River Resort' (4.9 over 48, 891 MO-17, phone 417-362-0815), read 2026-11-09 Esri World Imagery (leaf-off) 700 m frame (0.78 m/px) and 2600 m frame (2.9 m/px), viewed 2026-11-09 audit/price_research/gateways.py 37.0647,-91.6625: none within 40 km",
+      "note": "Confirmed from the operator's pages: 10 full-hookup 30/50A RV sites at $40/night, shower house, dump station, Starlink wifi, Firefly booking; now also sells long-term stays at $400/month. Under the $50 gate at the posted rate. Not waterfront confirmed: the river is the Jacks Fork, about 800 m south. Google 4.9 over 48. Phone and website match."
     }
   },
   {
@@ -1015838,14 +1015911,15 @@
     "inclusion_evidence": "Campspot listing (Limited Hookup Back In Site $28/night for 2026-10-14; read 2026-10-03); Google 4.8 over 25 with phone; RV Life unrated",
     "website": "https://rockislandrvpark.com/\nhttps://www.campspot.com/book/rock-island",
     "phone": "573-569-9140",
-    "note": "Small RV park in Versailles (506 N Walnut Ave): full-hookup back-ins and pull-throughs, and a limited-hookup back-in (30/50-amp and water).  RVs must be 2015 or newer; call about older rigs. --Claude",
+    "note": "Small gravel RV park on the north edge of Versailles (506 N Walnut Ave) beside the highway: full-hookup back-ins and two pull-throughs, plus one 25-ft back-in with electric and water only. Takes both overnight and long-term guests. RVs more than 10 years old need the park's approval first. No open fires except in a fire pit; one shared pit. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 50
     },
     "booking": {
       "reservable": true,
@@ -1015856,26 +1015930,34 @@
           "applies": "always"
         }
       ],
-      "note": "Campspot asks 2 nights for both full-hookup site types on weeknights from October to December 2026; the one limited-hookup back-in (25 ft) sells single nights."
+      "note": "Campspot asks 2 nights on both full-hookup site types (read for a Tuesday in November 2026); the one limited-hookup back-in (25 ft, no sewer) sells single nights.",
+      "url": "https://www.campspot.com/book/rock-island"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/rock-island (Campspot API through a browser: park record 3327 with terms, and availability for 2026-11-17 one night, 2026-11-20 two nights; 2 adults), read 2026-11-09: both full-hookup types list 30-Amp, 50-Amp, Water Hook-Up, Sewer Hook-Up; https://rockislandrvpark.com/, read 2026-11-09 ('Max Amp Service: 50', 'Full RV Hookups')",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/rock-island (Campspot API through a browser: park record 3327 with terms, and availability for 2026-11-17 one night, 2026-11-20 two nights; 2 adults), read 2026-11-09: 9 sites sold online - Standard Full Hookup back-ins 01, 02, 08, 14, 15, 18 and pull-throughs 19, 20 (rvLengthMax 50), Limited Hookup back-in 21 (rvLengthMax 25)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://www.campspot.com/book/rock-island (RESERVATION_MIN_RULE 'There is a 2 night minimum' on both full-hookup types for one night from 2026-10-21, 2026-11-10 and 2026-12-08; none on the limited-hookup back-in), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.campspot.com/book/rock-island (Campspot API through a browser: park record 3327 with terms, and availability for 2026-11-17 one night, 2026-11-20 two nights; 2 adults), read 2026-11-09 (RESERVATION_MIN_RULE 'There is a 2 night minimum over the requested period of time' on both full-hookup types for one night from Tue 2026-11-17; none on the limited-hookup back-in; all three bookable for two nights from Fri 2026-11-20)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/rock-island (each RV site type's price breakdown for one night from 2026-11-10, 2026-11-14, 2 adults; campspot_recheck_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.campspot.com/book/rock-island (Campspot API through a browser: park record 3327 with terms, and availability for 2026-11-17 one night, 2026-11-20 two nights; 2 adults), read 2026-11-09: one night Tue 2026-11-17 listed $28 / $38 / $48 and two nights Fri-Sun 2026-11-20 listed $53 / $73 / $93 in total, i.e. $25 / $35 / $45 a night plus a flat $3 Campspot fee per booking; 'Each paid guest registration covers 1 RV per site and 1 vehicle per site'",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://rockislandrvpark.com/, read 2026-11-09 ('Wi-Fi Available'); Campspot amenities 'Wi-Fi'",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -1015887,8 +1015969,19 @@
       "nightly_low": 25,
       "nightly_high": 45,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Campspot, one night for 2 adults from a Tuesday (2026-11-10) and from a Saturday (2026-11-14), site rate before tax: Limited Hookup Back In Site $25; Standard Full Hookup RV Site $35; Full Hook-Up Pull Thru Site $45. June 2027 isn't open for booking yet. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
+      "checked": "2026-11",
+      "note": "Campspot, 2 adults, site rate before tax: Limited Hookup Back In Site $25; Standard Full Hookup RV Site $35; Full Hook-Up Pull Thru Site $45, the same on a weeknight and a weekend in November 2026. Campspot adds its own booking fee ($3 on these stays). Dates from April 2027 on are not open for booking yet. Read 2026-11-09.",
+      "extra_vehicle": {
+        "included": 1
+      }
+    },
+    "facilities": {
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://rockislandrvpark.com/, read 2026-11-09 https://www.campspot.com/book/rock-island (Campspot API through a browser: park record 3327 with terms, and availability for 2026-11-17 one night, 2026-11-20 two nights; 2 adults), read 2026-11-09 Google Maps place panel 'Rock Island RV Park' (4.8 over 25, 506 N Walnut Ave, phone 573-569-9140), read 2026-11-09 Esri World Imagery (leaf-off) 260 m frame (0.29 m/px) at 38.4379,-92.8466, viewed 2026-11-09 audit/price_research/gateways.py 38.4380,-92.8466: none within 40 km",
+      "note": "Confirmed on the operator's site and Campspot: full hookups 30/50A, 9 sites sold nightly online (6 back-in, 2 pull-through, 1 limited-hookup), $25/$35/$45 before Campspot's $3 fee, weekday and weekend alike in November 2026; 2-night minimum still on the full-hookup types. Under the $50 gate. Rig-age rule re-read. Google 4.8 over 25. Phone and website match; pin on the lot; not waterfront stands."
     }
   },
   {
@@ -1016910,7 +1017003,7 @@
     "inclusion_evidence": "roaringriverhillscampgroundandcabins.com read 2026-10-03: RV camping nightly $45 (60-90 ft sites), tent $27. Not on RV Life; Good Sam directory row -> published rate <= $50 passes; Google 4.7 over 50 with phone. Distinct from Oak Hill Court & RV Park (2023), ~400 m north",
     "website": "https://roaringriverhillscampgroundandcabins.com/",
     "phone": "417-671-4295",
-    "note": "RV park on Hwy 112 between Cassville and Roaring River State Park (21511 State Hwy 112): sites 60-90 ft long, tent sites $27, cabins, boat and RV storage. --Claude",
+    "note": "RV park on Hwy 112 three miles north of Roaring River State Park: back-in gravel sites 60-90 ft long on an open loop behind the store, with a shower house; also tent sites, cabins, glamping tents and a rental trailer. Small catch-and-release fishing ponds. --Claude",
     "note_scan": {
       "sig": "e3dcb90a1b15e14d",
       "checked": "2026-10-09",
@@ -1016920,22 +1017013,94 @@
       "nightly_low": 45,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "RV camping $45/night (2 adults + 2 children); tent $27."
+      "note": "Tent sites $27. Early arrival or late departure $10 each.",
+      "extra_person": {
+        "included": 2,
+        "included_children": 2,
+        "amount": 5,
+        "child": 3,
+        "child_max_age": 17,
+        "per": "night",
+        "max_people": 6
+      },
+      "extra_vehicle": {
+        "included": 1,
+        "max_vehicles": 1
+      }
     },
     "provenance": {
       "fees": {
-        "source": "https://roaringriverhillscampgroundandcabins.com/, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09: 'RV Camping Nightly: $45', 'Tent Camping Nightly: $27', 'Occupancy for all campsites is 2 adults and 2 children', 'Additional guests: $5', 'extra visitors $5.00 per adult and $3.00 per child under the age of 18 ... per day (max of 6 total guests allowed)', 'One vehicle is allowed per campsite'; https://letscamp.ca/api/camps/roaring-river-hills (the park's 'Reserve Now' engine: status live, minimumPrice 45 USD, minNights 1, maxRVLength 60 ft, open dates 2026-01-01 to 2027-12-31), read 2026-11-09 (from $45)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "hookups": {
+        "source": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09: 'We offer Full hook-up and easy access RV sites with 20-, 30- and 50-amp service'; 'Hookups: 20/30/50A'",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09: '25 campsites', 'All sites are back-in with gravel pads', 'Length varies from 60' to 90''; https://letscamp.ca/api/camps/roaring-river-hills (the park's 'Reserve Now' engine: status live, minimumPrice 45 USD, minNights 1, maxRVLength 60 ft, open dates 2026-01-01 to 2027-12-31), read 2026-11-09 (engine caps RV length at 60 ft)",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09 (Amenities: Shower House, WiFi)",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09 ('Dates & Hours: Open Year Round'); https://letscamp.ca/api/camps/roaring-river-hills (the park's 'Reserve Now' engine: status live, minimumPrice 45 USD, minNights 1, maxRVLength 60 ft, open dates 2026-01-01 to 2027-12-31), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09 ('Reserve Now!' links letscamp.ca/camps/roaring-river-hills; Site Policies: '3 night minimum for holidays or events'); https://letscamp.ca/api/camps/roaring-river-hills (the park's 'Reserve Now' engine: status live, minimumPrice 45 USD, minNights 1, maxRVLength 60 ft, open dates 2026-01-01 to 2027-12-31), read 2026-11-09 (minNights 1)",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "discounts": {
       "good_sam": false,
       "military": true
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 25,
+      "max_rig_ft": 60,
+      "pull_through": false
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://letscamp.ca/camps/roaring-river-hills",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ]
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://roaringriverhillscampgroundandcabins.com/ (home page with Rates & Sites, Campground Policies, Site Policies, Visitor Policies), read 2026-11-09 https://letscamp.ca/api/camps/roaring-river-hills (the park's 'Reserve Now' engine: status live, minimumPrice 45 USD, minNights 1, maxRVLength 60 ft, open dates 2026-01-01 to 2027-12-31), read 2026-11-09 Google Maps place panel 'Roaring River Hills Campground and Cabins' (4.7 over 56, 21511 State Hwy 112, phone 417-671-4295), read 2026-11-09 Esri World Imagery (leaf-off) 420 m frame (0.47 m/px) at 36.6200,-93.8510, viewed 2026-11-09 audit/price_research/gateways.py 36.6195,-93.8512: none within 40 km (Branson 57 km)",
+      "note": "Confirmed on the operator's site and its Let's Camp engine: 25 back-in full-hookup sites (20/30/50A), open year-round, RV $45/night flat for 2 adults + 2 children, extra adult $5 / child $3, one vehicle per site, 3-night minimum on holidays/events only. Under the $50 gate at the posted rate. Google 4.7 over 56. Hookups, sites, season, booking and extra-person fee written; phone and website match; not waterfront stands; pin is in the loop."
     }
   },
   {

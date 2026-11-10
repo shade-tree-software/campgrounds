@@ -1,0 +1,109 @@
+{
+  "id": 1874,
+  "checked": "2026-11-09",
+  "sources": [
+    "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09",
+    "recreation.gov availability, months 2026-11, 2026-12, 2027-01, 2027-03, 2027-05, read 2026-11-09",
+    "Esri World Imagery (leaf-off, lake drawn down) with the catalog's per-site coordinates plotted: 1150 m frame (1.28 m/px), 520 m frame (0.58 m/px), 230 m frame of the A point (0.26 m/px), 260 m frame of the B north row (0.29 m/px), viewed 2026-11-09"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09: 29 STANDARD ELECTRIC sites (B25-B34 50 amp, B01-B13 and B35-B40 30 amp); water hookup 'No' on every site that states it; notice 'Drinking water (community fill-up) and electric hookups are available during the reservation season'. No sewer attribute; dump station listed",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 80,
+        "max_rig_ft": 80
+      },
+      "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09: 67 sites that take an RV (29 electric, 38 non-electric) + 13 walk-to tent sites; a group camp and a day shelter not counted. Longest posted length 80 ft (B05, B26); shortest RV site 30 ft",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "dump": true,
+        "potable_water": true
+      },
+      "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 (amenities: Accessible Flush Toilets, Accessible Vault Toilets, Dump Station, Showers, Water; 'two shower houses, a dump station')",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true
+      },
+      "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 (notice: 'The campground is open year-round')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "03-15",
+          "closes": "11-30"
+        },
+        "min_stay": [
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "note": "Not on the reservation calendar Dec 1 to Mar 14; the campground stays open then, with no water."
+      },
+      "source": "recreation.gov /api/camps/campgrounds/233609 (facility record + notices), /rates, and the per-campsite catalog (83 records), read 2026-11-09 (rules: maxStay 14 nights, minHolidayWeekendStay 3; rate seasons Mar 15-Apr 15, Apr 16-Sep 30, Oct 1-Nov 30) + recreation.gov availability, months 2026-11, 2026-12, 2027-01, 2027-03, 2027-05, read 2026-11-09 (Nov and Mar 15 on bookable; December and January return no bookable dates)",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 32,
+        "currency": "USD",
+        "seasonal": [
+          {
+            "name": "Apr 16 - Sep 30",
+            "opens": "04-16",
+            "closes": "09-30",
+            "nightly_low": 20,
+            "nightly_high": 32
+          },
+          {
+            "name": "Oct 1 - Nov 30",
+            "opens": "10-01",
+            "closes": "11-30",
+            "nightly_low": 10,
+            "nightly_high": 20
+          },
+          {
+            "name": "Mar 15 - Apr 15",
+            "opens": "03-15",
+            "closes": "04-15",
+            "nightly_low": 10,
+            "nightly_high": 20
+          }
+        ]
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233609/rates joined to each site's fee template (2026 peak Apr 16-Sep 30: non-electric $20, electric B01-B13 $28, electric B25-B40 $32; shoulder: non-electric $10, electric $20), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on two wooded points of Stockton Lake. 29 of the 67 RV sites have electric, all in the B loop: 50 amp at B25-B34, 30 amp at the rest. The A sites are basic, and many of them sit on the open shore of the north point. Water is a shared fill-up, not at the site, and is off outside Apr 16 to Sep 30. Reservations run Mar 15 to Nov 30. Boat ramp and beach just outside the entrance. --Claude",
+  "summary": "Confirmed against rec.gov: open year-round, 67 RV sites (29 electric: ten 50A, nineteen 30A; 38 non-electric) + 13 walk-to tent sites; $20-32 Apr 16-Sep 30, $10-20 in the shoulders. Stored hookups.water TRUE corrected to false (community fill-up only). Count 91 -> 80 (catalog). Waterfront lead UP lakeview -> lakefront (counted). Pin is ~750 m west of the sites - move flagged. Phone flagged.",
+  "flags": [
+    "WATERFRONT LEAD UP (stored lakeview, stored evidence is only a commit reference): on the leaf-off frames (lake drawn down, so distances to today's water are an upper bound) the A-point non-electric RV sites A02-A10 have pad ends 10-20 m from the water across mown grass with a few scattered trees, nothing between; A12, A14, A16, A17 on the east side of the same point are 20-30 m from the riprap shore, open; the electric row B06-B13 faces the north cove 25-35 m away across open mown grass with five or six scattered trees; B37 about 20 m. At least 13 RV sites on an open apron within 50 m (9 basic A sites + B06-B08, B10 and more), plus walk-to tent sites T01-T06 and T14-T20 on the shore. Supports LAKEFRONT. rec.gov tags only the walk-to sites 'Lakefront' (the RV sites carry no proximity attribute). No site photos were read.",
+    "PIN MOVE: stored 37.5222,-93.8053 is rec.gov's facility point, in woods about 750 m west of the nearest campsite. The sites are on two points: A loop around 37.5254,-93.7958 and the electric B loop around 37.5230,-93.7965 (catalog coordinates agree with the pads on imagery, except A29-A35 which the catalog plots in the lake). Proposed new pin 37.5230,-93.7965 (B loop).",
+    "HOOKUPS: stored water=true (derived) is wrong - every site that states it says water hookup 'No' and the notice calls it a community fill-up. Written false. Electric 50 stands but only ten sites (B25-B34) are 50 amp; the other nineteen electric sites are 30 amp; 38 RV sites have none.",
+    "SITES: rec.gov prose says 91 campsites; the catalog lists 80 individual sites (67 RV + 13 walk-to tent) plus one group camp (B22), the Mutton Creek Group Camp (a separate place 2.3 km east, 37.52524,-93.77030, filed under this facility) and a day shelter. Three A sites (A01, A09, A34) show 'Not Available'. Written 80.",
+    "WINTER: notice says open year-round; shoulder seasons Mar 15-Apr 15 and Oct 1-Nov 30 have 'No Water & No Waterborne Facilities' (vault toilets only). Dec 1-Mar 14 is outside every rate season and the calendar returns no bookable dates; what is charged then and whether the electric is on was not found on rec.gov - a question for the park (417-637-5303). The USACE lake page was not read.",
+    "PHONE (none stored; apply.py does not write it): rec.gov facility phone 417-637-5303 (park), project office 417-276-3113.",
+    "MIN STAY: rec.gov rule minHolidayWeekendStay 3 nights (holiday weekends only, written); no standing minimum."
+  ]
+}
