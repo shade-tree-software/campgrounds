@@ -1,6 +1,6 @@
 ---
 name: feedback-missouri-waterfront-declined
-description: AWH 2026-11-10 - a few CLEARLY waterfront sites make the campground waterfront, with a caveat naming them; the 12 Missouri leads (10-45 m back) were kept as stored
+description: AWH 2026-11-10 - a few CLEARLY waterfront sites make the campground waterfront, with a caveat naming them; 10-35 m across open grass is clear
 metadata:
   type: feedback
 ---
@@ -9,4 +9,6 @@ AWH 2026-11-10, shown twelve held Missouri upgrade leads with distances (Pulltit
 
 **Why:** the number of sites is not the test; whether they are clearly on the water is.
 
-**How to apply:** a few sites clearly on the water (through the evidence gate) = upgrade, with the note saying how many and which. My reading, not AWH's words: the Missouri twelve were not clear cases, so sites tens of metres back stay at the view-level value and are logged in `audit/verify/waterfront_leads.md` rather than asked. Related: [[feedback_waterfront_unsure_downgrade]], [[feedback_reaudit_contrary_waterfront_claims]].
+Then: "10-35 m across open grass counts as clearly waterfront. You can upgrade those ones." (Ruark Bluff East/West, Pulltite, Ranacker, Shawnee Trail raised.)
+
+**How to apply:** a few sites 10-35 m from the water across open ground, nothing between, seen on imagery = upgrade without asking, with the note saying how many and which sites. Farther back, screened, or unclear stays at the stored value and is logged in `audit/verify/waterfront_leads.md`. Related: [[feedback_waterfront_unsure_downgrade]], [[feedback_reaudit_contrary_waterfront_claims]].

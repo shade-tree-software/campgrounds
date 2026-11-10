@@ -40,26 +40,26 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Open, Missouri p3-352 (2026-11-09)
 
-- 13828 Shawnee Trail Conservation Area stored not waterfront: the pinned lake-point camp (37.43738,-94.56882) is a mown knoll within 10-25 m of ~10-acre Pin Oak Lake with no screen; lakefront likely **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 13828 Shawnee Trail Conservation Area stored not waterfront: the pinned lake-point camp (37.43738,-94.56882) is a mown knoll within 10-25 m of ~10-acre Pin Oak Lake with no screen; lakefront likely **DONE - AWH 2026-11-10 (later): raised to lakefront with a caveat naming the sites.**
 - 14589 Sinking Creek Ranch stored not waterfront: operator says 'creekside pads'; re-look when imagery shows the pads
 
 ## Open, Missouri p3-351 (2026-11-09)
 
-- 1875 Ruark Bluff West stored lakeview: at least ten RV sites (10, 13, 15, 17, 19, 21, 57, 59, 61, 63) on open grass 17-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 1875 Ruark Bluff West stored lakeview: at least ten RV sites (10, 13, 15, 17, 19, 21, 57, 59, 61, 63) on open grass 17-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read **DONE - AWH 2026-11-10 (later): raised to lakefront with a caveat naming the sites.**
 - 13753 Rudolf Bennitt Conservation Area stored not waterfront: the pinned Bennitt Lake camp (sites 25-27) is on an open mown point, spurs 10-25 m from the water at the north lot; lakeview at least **CLOSED - AWH 2026-11-10: keep the stored value.**
 
 ## Open, Missouri p3-350 (2026-11-09)
 
-- 1874 Ruark Bluff East stored lakeview: at least 13 of 67 RV sites (A02-A10, A12/A14/A16/A17, B06-B13, B37) are on open mown grass 10-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 1874 Ruark Bluff East stored lakeview: at least 13 of 67 RV sites (A02-A10, A12/A14/A16/A17, B06-B13, B37) are on open mown grass 10-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read **DONE - AWH 2026-11-10 (later): raised to lakefront with a caveat naming the sites.**
 
 ## Open, Missouri p3-349 (2026-11-09)
 
-- 13755 Ranacker Conservation Area stored not waterfront: the pinned Peno Creek loop (39.45919,-91.28985) has its edge 10-15 m from the 12-15 m wide creek; creekside arguable **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 13755 Ranacker Conservation Area stored not waterfront: the pinned Peno Creek loop (39.45919,-91.28985) has its edge 10-15 m from the 12-15 m wide creek; creekside arguable **DONE - AWH 2026-11-10 (later): raised to creekside with a caveat naming the sites.**
 - 13797 Rinquelin Trail Lake Conservation Area stored not waterfront (pin on the entrance spot): the lake spot (38.08565,-92.15030) is a small tent plot beside the boat-ramp lot, where a rig would stand 5-10 m from the 29-acre lake; lakeview at best if the pin moves
 
 ## Open, Missouri p3-348 (2026-11-09)
 
-- 1927 Pulltite Campground stored riverview (raised from not waterfront in p3-348): ~11 fitting even-numbered sites within 30 m of the Current River with no road between, under thin open hardwoods; riverfront is arguable, bank height unknown **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 1927 Pulltite Campground stored riverview (raised from not waterfront in p3-348): ~11 fitting even-numbered sites within 30 m of the Current River with no road between, under thin open hardwoods; riverfront is arguable, bank height unknown **DONE - AWH 2026-11-10 (later): raised to riverfront with a caveat naming the sites.**
 - 1929 Powder Mill Campground stored riverview: sites 1-4 end ~25-40 m from the Current River across mown grass with one line of bank trees, no road between **CLOSED - AWH 2026-11-10: keep the stored value.**
 - 13518 Pleasant Hill City Lake Campground stored not waterfront: 4-5 gravel spurs on the lake side of the north shore drive (~38.8264,-94.2952) sit 10-20 m from the water; not established that these are the RV sites
 
