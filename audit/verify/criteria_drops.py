@@ -454,6 +454,7 @@ DROPS = {
     15312: ('2026-11-10', 'agency says the road in requires high clearance', "Susquehannock site 048 Thompson Hollow: the booking page says the half mile of Ridge Road to the site 'is a secondary state forest road and may receive less maintenance than Thompson Hollow Road, requiring high-clearance'. Treated like an agency 4WD recommendation."),
     15290: ('2026-11-10', 'AWH: campsite in a snowmobile parking lot', "Sproul SS016: the agency puts the campsite 'in the snowmobile parking area' on PA 144. Dropped by AWH 2026-11-10, like the ATV lots."),
     15291: ('2026-11-10', 'AWH', "Sproul SS017 on Beech Creek Road, beside a gas compressor station per the agency's description. Dropped by AWH 2026-11-10."),
+    15300: ('2026-11-10', 'AWH: ATV-system campsites', "Sproul WS011, WS012, WS013 on Robbins Road: the booking pages call them part of the Northcentral Regional ATV Trail System, and imagery shows ATV tracks running through the sites. Dropped by AWH 2026-11-10."),
 }
 
 if __name__ == "__main__":

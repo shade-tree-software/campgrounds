@@ -579,3 +579,4 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 - **15300 WS011, WS012, WS013 (Robbins Road), p3-367:** the pages say each is 'part of the Northcentral Regional ATV Trail System' but none calls the ground a parking area, and the named ATV lots are all over 2 km away. Kept. (15299, the three sites inside the Whiskey Springs ATV trailhead lot, was dropped under the ATV-lot rule.) Say if ATV-system campsites like these should go too.
 
 - **Closed (AWH 2026-11-10):** 15290 SS016 (snowmobile parking lot) and 15291 SS017 (beside a compressor station) dropped; 15284 HY040 kept with a fit caveat in the note; 15282 CR020 kept. Still open: 15300 WS011-013 (ATV-system sites not in a parking lot).
+- **Closed (AWH 2026-11-10):** 15300 WS011-013 dropped (ATV tracks run through the sites).
