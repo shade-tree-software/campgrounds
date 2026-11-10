@@ -1052,6 +1052,9 @@ current rules no longer derive — restoring a note's value where one was replac
 (14,993 campgrounds, ~2 minutes) and every later run matches and derives from it for free.
 What the build settled:
 
+  **Only where recreation.gov sells the sites** (AWH 2026-11-10, Watercress 1916): it "might not
+  maintain accurate listings about campgrounds that are FCFS only", so for a first-come-only
+  campground the Forest Service page is trusted over a recreation.gov notice.
 - **The index will not page past 1,000 records**, so a state over that is read as several
   disjoint queries split on `campground.type`, then the asset `type`, then city. TX alone is
   2,936 rows. The splitter also asks for the remainder a facet does not cover, because a

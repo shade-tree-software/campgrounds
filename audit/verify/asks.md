@@ -562,3 +562,5 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 - **13517 Sumner:** no city phone is published anywhere searched (directories say "not published"; City Hall is 111 West Centre). Still open.
 - **AWH does not know:** 1892 Theodosia Loop A, 13823 Schell-Osage refuge, 13880, 13737, 13756, 13797, 1942, 15630, 13753 - left as written; none is behind a bot check.
 - **Still open, re-asked with detail:** the Missouri waterfront upgrades; the MDC bare-lots rule; the Jonas / Kerkeslin names; 15225 Akersville.
+
+- **Closed (AWH 2026-11-10, later):** 15225 Akersville kept with a note to call the district office (717-485-3148, already on the entry); 13517 Sumner kept with the caveat; 8814 and 8798 renamed Jonas Campground and Kerkeslin Campground; agency-designated bare lots stay with a bare-lot caveat (nine MDC entries noted); all twelve Missouri waterfront leads keep their stored values. Rules written into docs/campground-curation.md.
