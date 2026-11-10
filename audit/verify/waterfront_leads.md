@@ -10,6 +10,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, viewed entries p3-358 (2026-11-10)
+
+- 8796 Snaring Campground (Jasper): not waterfront -> riverview? Parks Canada: "a few spots along the river with dramatic views"; map puts B 1-8 and loop C nearest the Snaring River, imagery 50-90 m with trees between. Needs a ground photo.
+- 8810 Mosquito Creek Campground (Banff): not waterfront -> creekside/riverview? Open gravel area within ~20 m of the creek on imagery; no campground map found to say it holds campsites.
+
 ## Open, Missouri p3-355 (2026-11-10)
 
 - 1880 Wheatland Park stored lakeview: about nine of 41 pads on an open apron with nothing between - east loop 77, 78, 79 (~25-35 m), 80, 81 (~30-40 m); west tip 22, 27, 30 (~10-25 m), 23 (~25 m); lakefront looks earned
