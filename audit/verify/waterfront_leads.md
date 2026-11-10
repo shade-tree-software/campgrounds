@@ -10,6 +10,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, Missouri p3-349 (2026-11-09)
+
+- 13755 Ranacker Conservation Area stored not waterfront: the pinned Peno Creek loop (39.45919,-91.28985) has its edge 10-15 m from the 12-15 m wide creek; creekside arguable
+- 13797 Rinquelin Trail Lake Conservation Area stored not waterfront (pin on the entrance spot): the lake spot (38.08565,-92.15030) is a small tent plot beside the boat-ramp lot, where a rig would stand 5-10 m from the 29-acre lake; lakeview at best if the pin moves
+
 ## Open, Missouri p3-348 (2026-11-09)
 
 - 1927 Pulltite Campground stored riverview (raised from not waterfront in p3-348): ~11 fitting even-numbered sites within 30 m of the Current River with no road between, under thin open hardwoods; riverfront is arguable, bank height unknown
