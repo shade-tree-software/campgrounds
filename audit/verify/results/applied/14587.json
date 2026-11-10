@@ -1,0 +1,94 @@
+{
+  "id": 14587,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.pontiaccove.com/new-page (Campground page: season, rates, rules, campground map 'edited 2024'), read 2026-11-09",
+    "https://www.pontiaccove.com/ (home), read 2026-11-09",
+    "https://pontiaccove.stellarims.com/category/2 and /details/12, /details/15 for 2027-04-13 to 04-15 (the park's Stellar booking engine: unit types, per-site lengths, prices), read in a browser 2026-11-09",
+    "Google Maps place 'Pontiac Cove Marina' (4.8, 239 reviews), read 2026-11-09",
+    "Esri World Imagery (leaf-off) 500 m frame, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 40,
+        "nightly_high": 50,
+        "currency": "USD",
+        "note": "Single 50-amp/water $40, premium $45, the one 50-amp/water/sewer site $50; double sites $70-80. Tax is added. The seventh night of a week is free."
+      },
+      "source": "https://www.pontiaccove.com/new-page ('Single 50 amp/water ...: $40/night, $240/week'; 'Premium Single ...: $45/night'; 'Single 50 amp/water/sewer (Site 40): $50/night'; 'STAY 6 NIGHTS, THE 7TH NIGHT IS FREE!') + https://pontiaccove.stellarims.com/category/2 ('$40/night + tax'; 2 nights 2027-04-13/15 = $80.00 before tax), read 2026-11-09",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://www.pontiaccove.com/new-page (rate list: '50 amp/water' sites; 'Single 50 amp/water/sewer (Site 40)') + https://pontiaccove.stellarims.com/category/2 ('50/30 AMP, Water, No Sewer' on all but the one 'Sewer Included' type), read 2026-11-09",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 38,
+        "max_rig_ft": 40
+      },
+      "source": "https://www.pontiaccove.com/new-page (rate list names sites 1-37 and 40: 35 RV pads and 3 tent sites) + https://pontiaccove.stellarims.com/details/12 (unit list: 'Site 5 (40-ft back-in)', 'Site 6 (40-ft back-in)', 'Site 21 (40-ft back-in)', others 20-35 ft), read 2026-11-09",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true
+      },
+      "source": "https://www.pontiaccove.com/new-page ('All sites and the showerhouse are open mid-March through late October'; campground map legend: 'With Showers', 'Dump Station'), read 2026-11-09",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "All sites and the showerhouse are open mid-March through late October; sites 25-37 stay open year-round without the showerhouse."
+      },
+      "source": "https://www.pontiaccove.com/new-page ('All sites and the showerhouse are open mid-March through late October. Sites 25-37 are open year-round but will not have access to the showerhouse in the off-season.'), read 2026-11-09",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://pontiaccove.stellarims.com",
+        "fcfs": "some_sites",
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "always"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "note": "2-night minimum to reserve a site, 3 on holiday weekends; walk-ins are welcome when the park is not full, which is the way to a single night. Kept with the minimum marked, per AWH 2026-10-10."
+      },
+      "source": "https://www.pontiaccove.com/new-page ('There is a 2-night minimum to reserve a site; 3-night minimum on holiday weekends. Walk-ins are welcome when park is not full.'; 'Online booking for 2027 is open!') + https://pontiaccove.stellarims.com/category/2 ('2-Night Minimum *3 nights on holiday weekends*'), read 2026-11-09",
+      "method": "manual"
+    }
+  },
+  "note": "Privately managed campground on a bluff-top point of Bull Shoals Lake at Pontiac, above the marina cove, with a restaurant and brewery beside the marina. Back-in sites under open oaks; the engine lists each site's length (20 to 40 ft), and the two-rig double sites cost more. Check in at the marina. No refund inside 30 days of arrival. --Claude",
+  "summary": "Operator page and its booking engine read: rates unchanged ($40 / $45 premium / $50 the one sewer site, plus tax), 50A + water, 38 numbered sites to 40 ft, showerhouse and dump station, all sites mid-March to late October with sites 25-37 year-round. The 2-night minimum is for reservations only - walk-ins are taken when not full. The lake is Bull Shoals, not Norfork as the stored note said. Lakeview stands; pin fine; Google 4.8 (239).",
+  "flags": [
+    "NOTE CORRECTION (wrong lake): the stored note says 'Norfork Lake'. The operator's home page says 'the secluded lake village of Pontiac, Missouri, on beautiful Bull Shoals Lake', and its campground map labels BULL SHOALS LAKE. Rewritten. The stored waterfront_evidence also says 'Norfork Lake' and wants the same one-word fix (not something apply.py writes).",
+    "MINIMUM STAY / ONE NIGHT: 'There is a 2-night minimum to reserve a site; 3-night minimum on holiday weekends. Walk-ins are welcome when park is not full.' The engine repeats '2-Night Minimum *3 nights on holiday weekends*' on every unit type. So a single night cannot be reserved but can be had as a walk-in when there is room. Standing minimum is 2 (kept, marked, per the 2026-10-10 decision); not a 3+ standing minimum.",
+    "PRICE GATE (passes): the cheapest RV site with hookups is $40/night + tax (12 standard sites); the engine also lists a 'Sites w 30 amp/no water' type at $28/night + tax that the operator's rate page does not mention (no unit was offered for my April dates, so I could not see which sites). The one full-hookup site (40) is $50 + tax. No resort or grounds fee is named. Tax rate not shown before checkout; I did not start a booking. gateways.py not needed.",
+    "SEWER: only site 40 has a sewer hookup; every other site is 50A + water with a dump station on the grounds. I left sewer true (it exists) - owner's call whether one site of 35 should read as 'sewer'.",
+    "RIG LENGTH: the engine names each standard site's length: sites 5, 6, 21 '40-ft back-in'; 20, 28 35 ft; 7 30 ft; 8, 9, 10, 36 25 ft; 31, 37 20 ft. Premium and double types not opened. Plenty of sites for a 23-ft rig; two standard sites (31, 37) are too short.",
+    "SEASON: stored none. Written year_round true with the note that only sites 25-37 run through winter (no showerhouse); the engine showed no unit free for 2026-11-10, consistent with a reduced off-season.",
+    "WATERFRONT (stored lakeview - stands): the map and imagery agree - the sites are on top of a point marked 'Bluffs' on its lake side, the nearest pads (11-14, 24, 32-33) 40-70 m from the water above a rock bluff, and the south-side loop (28-35) looks down on the marina cove across the park road and launch drive. No pad at the water. Lakeview.",
+    "OWNERSHIP (stays private, for information): the page says 'The Pontiac Campground is privately managed' - wording that fits a leased public (Corps of Engineers lake) campground run by the marina. No recreation.gov listing was looked for; the operator sets rates and takes the bookings.",
+    "PIN: stored 36.5090,-92.6096 is in the middle of the campground by the pavilion - fine. (Google's point is on the marina docks.)",
+    "PHONE / WEBSITE: 417-679-3676 matches the site and Google. The stored website is http://; https://www.pontiaccove.com/ is the live address and https://www.pontiaccove.com/new-page is the campground page.",
+    "RATINGS: Google 4.8 from 239 reviews (marina and campground share the listing). RV Life not checked.",
+    "DISCOUNTS: good_sam false / military true are directory-derived and were not touched; the operator's pages mention neither.",
+    "LONG-STAY: nightly and weekly rates only; no monthly or seasonal rate on the page. Not long-stay in character."
+  ]
+}

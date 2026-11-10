@@ -1,0 +1,83 @@
+{
+  "id": 1927,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09",
+    "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09",
+    "NPS API alerts for parkCode=ozar (4 alerts), read 2026-11-09",
+    "Esri World Imagery (leaf-off): 800 m overview and three 300 m frames with recreation.gov's per-site coordinates plotted, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 20,
+        "currency": "USD",
+        "note": "$20 April 15-October 15, $10 October 16-April 14."
+      },
+      "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 (fees: 'Summer non-electric camping fee from April 15 to October 15' 20.00; 'Winter non-electric fee from October 16 to April 14' 10.00); recreation.gov rates: Peak STANDARD NONELECTRIC 20, Off Peak 10",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 (notice 'No hook-ups available at this campground'; all 53 standard sites typed STANDARD NONELECTRIC)",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 53,
+        "max_rig_ft": 60
+      },
+      "source": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 (catalog: standard sites 003-055 = 53, plus 3 group tent areas not counted; RV/Trailer max length 60 ft on 29 sites, 50 on 1, 45 on 7, 40 on 4, 30 on 5; sites 006, 008, 010 at 18 ft and 012 at 20 ft). The NPS record says totalSites 55 with 3 group and 3 tent-only.",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true,
+        "potable_water": true,
+        "dump": false,
+        "camp_store": true
+      },
+      "source": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 ('flush toilets and showers facilities available April 15 through October 15'; notice 'Modern restrooms are open from April 15-Oct. 1; outside this time, visitors will be provided with an alternative'; 'Water systems shut off Oct. 15-April 14'; amenities 'Showers', 'Water (Seasonal)', 'Water Spigot'); NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 (toilets 'Flush Toilets'; potableWater 'Yes - seasonal'; campStore 'Yes - seasonal'; dumpStation 'No')",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Water, showers and flush toilets run April 15 to about October 15; an alternative toilet is provided in winter."
+      },
+      "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 ('Pulltite Campground is open daily year-round'); https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 ('This year-round campground'; water notice as quoted under facilities)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/234357",
+        "fcfs": "never",
+        "max_stay_nights": 14
+      },
+      "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 ('Starting on January 1, 2025, all sites will be available by reservation only. Same-day reservations are available.'; numberOfSitesFirstComeFirstServe 0); recreation.gov rules: maxConsecutiveStay 14",
+      "method": "manual"
+    }
+  },
+  "note": "National Park Service campground strung along the Current River at the end of Highway EE south of Salem: paved road and spurs, with roughly half the sites on the river side of the road under open hardwoods. One RV and one tent per site, six people. Seasonal camp store with ice and firewood; no dump station; no cell service. Canoe and tube outfitter at the landing. --Claude",
+  "summary": "Open and bookable: all 56 catalog sites status Open, calendar selling November 2026 and April 2027. 53 standard non-electric sites (RV lengths to 60 ft; four sites are 18-20 ft), $20 summer / $10 winter, reservation only, 14-night limit. The stored note's 'facilities reduced to a vault toilet after Oct 2025 flood damage' is no longer what either source says - flush toilets and showers are listed again - so the note is rewritten and facilities updated. Waterfront lead up and a pin move flagged.",
+  "flags": [
+    "FLOOD-DAMAGE LINE REMOVED: the stored note said facilities were reduced to a vault toilet after October 2025 flood damage. Neither recreation.gov nor the NPS record says that now: recreation.gov has 'flush toilets and showers facilities available April 15 through October 15' and the NPS record lists flush toilets, showers, seasonal potable water and a seasonal camp store. No park alert mentions Pulltite damage. I could not find a page stating the repair was completed - this rests on the current listings. Stored facilities.vault_toilets true came from that note line; I wrote flush_toilets/showers/potable_water true and did not write vault_toilets either way (the winter 'alternative' toilet is not described). Suggest removing vault_toilets true.",
+    "WINTER FACILITIES - the two federal sources disagree with themselves: recreation.gov's Facilities text says 'The main shower house/restroom at the front of the campground will be open year round' and the NPS record says showers 'Hot - Year Round', toilets 'Flush Toilets - year round'; but recreation.gov's notices say 'Modern restrooms are open from April 15-Oct. 1' and 'Water systems shut off Oct. 15-April 14 ... The exception are the heated shower houses/flush restrooms at Round Spring, Big Spring and Alley Spring campgrounds' - Pulltite is not among the exceptions. I wrote the cautious reading (seasonal) in season.note.",
+    "WATERFRONT LEAD UP (stored 'not waterfront' - owner's call, I did not change it): the stored evidence says the loops are 'set back behind a wooded band' and 'rec.gov lists no riverfront sites'. Plotting recreation.gov's per-site coordinates on leaf-off imagery shows otherwise: the campground road runs parallel to the Current River and the river-side sites sit between road and bank with no road, trail corridor or day-use area between them and the water. Sites 22, 24, 26, 28, 32, 34, 36, 38, 40 are about 15-30 m from the water's edge under thin, open hardwoods; sites 4, 6, 8, 10, 12, 14 about 20-35 m (6, 8, 10 and 12 are 18-20 ft sites, too short to count); sites 42-54 even about 25-50 m behind a somewhat denser tree band. That is roughly 11 fitting sites within 30 m and another 7 within 50 m, of 53. The odd-numbered sites are across the road, 40-70 m back. recreation.gov now tags all 56 sites 'Riverfront' including the far-side ones, so that tag is type-level and does not count. All of this is leaf-off; in leaf the bank trees will screen some of it, and I cannot judge bank height from imagery. Riverview looks earned at the least; riverfront is arguable for the 22-40 stretch.",
+    "PIN MOVE: stored 37.3344,-91.4831 (recreation.gov's facility coordinate) is in woods about 60 m south of the west loop, off any road. The NPS coordinate 37.33436,-91.47825 is at the entrance/store. Middle of the campground road, between sites 31 and 32: 37.33600,-91.48036 (about 300 m from the stored pin).",
+    "SITE COUNT: stored 55 (NPS totalSites 55). recreation.gov sells 53 standard sites (003-055) plus 3 group tent areas; written 53.",
+    "SHORT SITES: sites 006, 008, 010 list RV/Trailer length 18 ft and 012 lists 20 ft; three further standard sites list no RV length at all. The other 46 take 30 ft or more.",
+    "2026 PAVING: park alert (July 2026) says paving work at Pulltite among others during the 2026 summer season, 'roads and campground loops may close and reopen'. Nothing is closed on the calendar now; not written to status.",
+    "CALENDAR: 2027-07 shows 53 sites 'NYR' (not yet released - the 6-month window), no information about summer.",
+    "PHONE: none stored. NPS gives (573) 323-4236 for park information; recreation.gov's contact block (573) 561-0580.",
+    "POLICY ROW: federal:nps already set; fine."
+  ]
+}

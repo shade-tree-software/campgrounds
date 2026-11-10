@@ -10,6 +10,12 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, Missouri p3-348 (2026-11-09)
+
+- 1927 Pulltite Campground stored riverview (raised from not waterfront in p3-348): ~11 fitting even-numbered sites within 30 m of the Current River with no road between, under thin open hardwoods; riverfront is arguable, bank height unknown
+- 1929 Powder Mill Campground stored riverview: sites 1-4 end ~25-40 m from the Current River across mown grass with one line of bank trees, no road between
+- 13518 Pleasant Hill City Lake Campground stored not waterfront: 4-5 gravel spurs on the lake side of the north shore drive (~38.8264,-94.2952) sit 10-20 m from the water; not established that these are the RV sites
+
 ## Open, Missouri p3-347 (2026-11-09)
 
 - 13757 Paydown Access stored not waterfront: two of six camping points (GIS 544, 545) sit 15-25 m from the Gasconade (~120 m wide) behind a single line of bank trees; the other four are 50-75 m back

@@ -1,0 +1,68 @@
+{
+  "id": 1920,
+  "checked": "2026-11-09",
+  "sources": [
+    "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09",
+    "https://www.recreation.gov/api/camps/campgrounds/232420 (+ /rates, /api/search/campsites?fq=asset_id:232420 and the 16 per-campsite records), queried 2026-11-09",
+    "Esri World Imagery 420 m and 200 m frames over the loop with recreation.gov's per-site coordinates plotted, viewed 2026-11-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 15,
+        "nightly_high": 25,
+        "currency": "USD"
+      },
+      "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Single Site: $15 per night'; 'Single Site with electric hook-up: $25 per night'); recreation.gov rate table 2026-2028 carries the same two campsite rates, 15 and 25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 15
+      },
+      "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Single: 13', 'Double: 2'); recreation.gov catalog lists campsites 01-15",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "potable_water": false,
+        "vault_toilets": true
+      },
+      "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Potable water is not available at this site.'; 'Vault toilet(s)')",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "10-01",
+        "note": "Campground open April 1 - October 1, 2026; the day-use area is open year-round."
+      },
+      "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Seasons of Use: Campground Open April 1 - October 1, 2026; Day Use Area Open year-round')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always"
+      },
+      "source": "recreation.gov per-campsite records: all 15 campsites 'Not Reservable' with a scan-and-pay rule; https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Reservation Needed for Group Picnic Area Pavilion' is the only reservation named)",
+      "method": "manual"
+    }
+  },
+  "note": "Mark Twain National Forest campground in pine timber on a point of 31-acre Pinewoods Lake, just off US 60 west of Ellsinore; a paved 1.3-mile trail circles the lake between the sites and the shore. Four sites are charged the electric rate, though the same Forest Service page also says no hookups are available and the amperage is not published. No rig length is published for any site. First come, first served; only the picnic pavilion is reservable. Pack out trash. Eight people per single site. --Claude",
+  "summary": "Forest Service page and recreation.gov read: 15 sites (13 single, 2 double), $15 or $25 with electric, no potable water, vault toilets, campground season April 1-October 1 (2026), sites not reservable (scan and pay / first come). Stored 'reservable true' and 'electric 0' are both contradicted. Pin is 930 m west of the campground - move. Lakeview stands.",
+  "flags": [
+    "POLICY ROW: the entry has no policy_ref; federal:usfs is the row that applies (Mark Twain NF, Poplar Bluff Ranger District). Its $8 reservation fee does not bite here because the campsites are not reservable.",
+    "BOOKING CHANGE: stored reservable true (derived from note prose 'reservable online') is wrong for the campsites. recreation.gov's 15 campsite records are all status 'Not Reservable' with a scanAndPay rule; the only bookable item is the 'Pinewoods Pavilion' group picnic area (day use, 4-day cutoff). The FS page's Reservations block likewise names only the pavilion. Written reservable false / fcfs always. The recreation.gov website link is still the right facility page but sells no campsite - the FS page https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area would be the better website (flag only).",
+    "ELECTRIC (stored 0 - contradicted, amperage unknown): the FS fee block lists 'Single Site with electric hook-up: $25 per night', and recreation.gov puts four campsites (02, 07, 10, 15) on the $25 rate and the other eleven on $15. Against that, the same FS page says 'Each site has a table, lantern post, and fire ring. No hookups are available', and every catalog record is typed STANDARD NONELECTRIC with no electric attribute. So electric exists on about four sites by the fee schedule but no source gives amps. I did not write hookups (no amperage to write, and 0 is not supported). Suggest clearing hookups.electric to unknown, or owner's call on a value; water and sewer: none (no potable water on site).",
+    "RIG LENGTH (stored max_rig_ft 30, derived from note prose - no source found): the FS page publishes no length, and all 15 recreation.gov records carry max vehicle length 0 (i.e. blank), driveway surface 'N/A', no permitted-equipment list. The stored 30 ft has nothing behind it that I could read; I wrote only the count. Spurs are under pine canopy on imagery and could not be measured. FS page: 'Campsite parking allows for two vehicles per site'. Kept (unclear pad size is a caveat, not a drop); suggest removing max_rig_ft 30.",
+    "PIN MOVE (about 930 m): stored 36.9192,-90.7839 is recreation.gov's facility coordinate (36.9191667,-90.7838889), which falls in forest west of the lake, nowhere near a road into the site. The camp loop is on the point at the lake's north-west shore: recreation.gov's 15 per-site coordinates centre on 36.92053,-90.77346 and the FS page gives 36.920688,-90.773416. Suggest 36.92053,-90.77346.",
+    "WATERFRONT (stored lakeview - stands; the stored evidence is only a commit reference): per-site coordinates plotted on imagery put the loop in closed pine timber on a point. The southern sites are near the water - site 08 about 15-20 m from the shore, 09 about 45 m, 10 and 11 about 55-70 m, 06 and 07 about 40-50 m - with the paved lake trail running along the shore between sites and water on the south-east side. The canopy is evergreen and continuous, so no open apron can be confirmed and nothing shows a pad at the bank; recreation.gov's 'Proximity to Water' is N/A on every campsite. Lakeview (water within about 20-70 m of roughly six sites through open-trunked pine) is as far as it goes; not lakefront.",
+    "SEASON: stored approximate Apr 1-Oct 31 (derived) replaced by the FS page's 'Open April 1 - October 1, 2026'. recreation.gov's rate season (May 1-Oct 31) is a fee period for the pavilion and not an operating season.",
+    "STATUS: the FS page banner reads 'Site Closed' on 2026-11-09, which fits the October 1 seasonal close; no alert for this site in the page's alert list (the listed ones are Paddy Creek bridge, Chadwick trail 119, Beaver Lake, Red Bridge Road). I did not find a statement separating seasonal from other closure.",
+    "PHONE: none stored. The FS page gives the Poplar Bluff Ranger District, 573-785-1475.",
+    "DISCOUNT: FS page: 50% off camping with an Interagency Access or Senior Pass (already what the federal rows carry; not written per entry).",
+    "DIRECTIONS SLIP: the FS page says 16 miles west on US 60 from US 67; recreation.gov says east. West is right (Ellsinore side)."
+  ]
+}

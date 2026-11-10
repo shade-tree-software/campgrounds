@@ -139334,52 +139334,53 @@
     "id": 1920,
     "kind": "campground",
     "name": "Pinewoods Lake Recreation Area",
-    "location": "36.9192,-90.7839",
-    "elevation_meters": 263.0,
+    "location": "36.92053,-90.77346",
+    "elevation_meters": 258.0,
     "state": "MO",
     "ownership": "federal",
     "waterfront": "lakeview",
     "inclusion_evidence": "recreation.gov 232420: 13-15 standard nonelectric drive-in sites, paved, reservable USFS campground -> real RV campground",
-    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)",
-    "website": "https://www.recreation.gov/camping/campgrounds/232420",
-    "note": "USFS Mark Twain NF campground at 31-acre Pinewoods Lake near Ellsinore; 15 paved sites (mostly non-electric with a limited electric option), RVs to ~30 ft; reservable online; open Apr-Oct. --Claude",
+    "waterfront_evidence": "waterfront 'lakeview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)\np3-348 (2026-11-09): lakeview held. Site 08 is ~15-20 m from the water, 09 ~45 m, 06/07 40-50 m, 10/11 55-70 m, through pine with the lake trail between. Pin moved ~930 m off the rec.gov facility point to the Forest Service coordinate.",
+    "website": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area,\nhttps://www.recreation.gov/camping/campgrounds/232420",
+    "note": "Mark Twain National Forest campground in pine timber on a point of 31-acre Pinewoods Lake, just off US 60 west of Ellsinore; a paved 1.3-mile trail circles the lake between the sites and the shore. Four sites are charged the electric rate, though the same Forest Service page also says no hookups are available and the amperage is not published. No rig length is published for any site. First come, first served; only the picnic pavilion is reservable. Pack out trash. Eight people per single site. --Claude",
     "sites": {
-      "count": 15,
-      "max_rig_ft": 30
+      "count": 15
     },
     "season": {
       "year_round": false,
       "opens": "04-01",
-      "closes": "10-31",
-      "note": "Approximate: Open April to October."
+      "closes": "10-01",
+      "note": "Campground open April 1 - October 1, 2026; the day-use area is open year-round."
     },
     "booking": {
-      "reservable": true
+      "reservable": false,
+      "fcfs": "always"
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Single: 13', 'Double: 2'); recreation.gov catalog lists campsites 01-15",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Seasons of Use: Campground Open April 1 - October 1, 2026; Day Use Area Open year-round')",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov per-campsite records: all 15 campsites 'Not Reservable' with a scan-and-pay rule; https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Reservation Needed for Group Picnic Area Pavilion' is the only reservation named)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232420/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Single Site: $15 per night'; 'Single Site with electric hook-up: $25 per night'); recreation.gov rate table 2026-2028 carries the same two campsite rates, 15 and 25",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 ('Potable water is not available at this site.'; 'Vault toilet(s)')",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -139387,14 +139388,22 @@
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     },
-    "hookups": {
-      "electric": 0
-    },
     "fees": {
       "nightly_low": 15,
-      "nightly_high": 15,
+      "nightly_high": 25,
       "currency": "USD"
-    }
+    },
+    "facilities": {
+      "potable_water": false,
+      "vault_toilets": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.fs.usda.gov/r09/marktwain/recreation/pinewoods-lake-recreation-area, read 2026-11-09 https://www.recreation.gov/api/camps/campgrounds/232420 (+ /rates, /api/search/campsites?fq=asset_id:232420 and the 16 per-campsite records), queried 2026-11-09 Esri World Imagery 420 m and 200 m frames over the loop with recreation.gov's per-site coordinates plotted, viewed 2026-11-09",
+      "note": "Forest Service page and recreation.gov read: 15 sites (13 single, 2 double), $15 or $25 with electric, no potable water, vault toilets, campground season April 1-October 1 (2026), sites not reservable (scan and pay / first come). Stored 'reservable true' and 'electric 0' are both contradicted. Pin is 930 m west of the campground - move. Lakeview stands."
+    },
+    "phone": "573-785-1475",
+    "policy_ref": "federal:usfs"
   },
   {
     "id": 1921,
@@ -139928,59 +139937,73 @@
     "id": 1927,
     "kind": "campground",
     "name": "Pulltite Campground",
-    "location": "37.3344,-91.4831",
-    "elevation_meters": 229.0,
+    "location": "37.33600,-91.48036",
+    "elevation_meters": 223.0,
     "state": "MO",
     "ownership": "federal",
-    "waterfront": "not waterfront",
+    "waterfront": "riverview",
     "inclusion_evidence": "recreation.gov 234357: standard nonelectric sites, paved roads/parking spurs, '1 RV and 1 tent' allowed, open year-round (reduced facilities after flood) -> drive-in RV-capable",
-    "waterfront_evidence": "satellite at 37.334,-91.483: campground loops set back behind a wooded band south of the Current River; rec.gov lists no riverfront sites",
+    "waterfront_evidence": "satellite at 37.334,-91.483: campground loops set back behind a wooded band south of the Current River; rec.gov lists no riverfront sites\np3-348 (2026-11-09): not waterfront -> riverview; the earlier read was wrong. The campground road parallels the Current River and the even-numbered sites sit between road and bank with nothing between them and the water: on leaf-off imagery sites 22-40 even are ~15-30 m from the water under thin open hardwoods, 4-14 even ~20-35 m, 42-54 even ~25-50 m behind a denser tree band (about 11 sites a 23-ft rig fits within 30 m, 7 more within 50 m, of 53). Bank height unknown, so riverfront is not claimed. rec.gov's 'Riverfront' tag is on all 56 sites and counts for nothing. Pin moved ~300 m onto the campground road.",
     "website": "https://www.recreation.gov/camping/campgrounds/234357",
-    "note": "All-basic NPS Ozark Riverways campground (55 sites) on the Current River near Salem; no electric; reservable online; facilities reduced to a vault toilet after Oct 2025 flood damage; open year-round. --Claude",
+    "note": "National Park Service campground strung along the Current River at the end of Highway EE south of Salem: paved road and spurs, with roughly half the sites on the river side of the road under open hardwoods. One RV and one tent per site, six people. Seasonal camp store with ice and firewood; no dump station; no cell service. Canoe and tube outfitter at the landing. --Claude",
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "sites": {
-      "count": 55
+      "count": 53,
+      "max_rig_ft": 60
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "flush_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "dump": false,
+      "camp_store": true
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "Water, showers and flush toilets run April 15 to about October 15; an alternative toilet is provided in winter."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/234357",
+      "fcfs": "never",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 (notice 'No hook-ups available at this campground'; all 53 standard sites typed STANDARD NONELECTRIC)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 (catalog: standard sites 003-055 = 53, plus 3 group tent areas not counted; RV/Trailer max length 60 ft on 29 sites, 50 on 1, 45 on 7, 40 on 4, 30 on 5; sites 006, 008, 010 at 18 ft and 012 at 20 ft). The NPS record says totalSites 55 with 3 group and 3 tent-only.",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 ('flush toilets and showers facilities available April 15 through October 15'; notice 'Modern restrooms are open from April 15-Oct. 1; outside this time, visitors will be provided with an alternative'; 'Water systems shut off Oct. 15-April 14'; amenities 'Showers', 'Water (Seasonal)', 'Water Spigot'); NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 (toilets 'Flush Toilets'; potableWater 'Yes - seasonal'; campStore 'Yes - seasonal'; dumpStation 'No')",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 ('Pulltite Campground is open daily year-round'); https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 ('This year-round campground'; water notice as quoted under facilities)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 ('Starting on January 1, 2025, all sites will be available by reservation only. Same-day reservations are available.'; numberOfSitesFirstComeFirstServe 0); recreation.gov rules: maxConsecutiveStay 14",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234357/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 (fees: 'Summer non-electric camping fee from April 15 to October 15' 20.00; 'Winter non-electric fee from October 16 to April 14' 10.00); recreation.gov rates: Peak STANDARD NONELECTRIC 20, Off Peak 10",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -139991,9 +140014,16 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 April 15-October 15, $10 October 16-April 14."
     },
-    "policy_ref": "federal:nps"
+    "policy_ref": "federal:nps",
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.recreation.gov/camping/campgrounds/234357 (facility record, notices, rates, 56-campsite catalog, availability for Nov 2026 / Apr 2027 / Jul 2027), queried 2026-11-09 NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Pulltite Campground record), read 2026-11-09 NPS API alerts for parkCode=ozar (4 alerts), read 2026-11-09 Esri World Imagery (leaf-off): 800 m overview and three 300 m frames with recreation.gov's per-site coordinates plotted, viewed 2026-11-09",
+      "note": "Open and bookable: all 56 catalog sites status Open, calendar selling November 2026 and April 2027. 53 standard non-electric sites (RV lengths to 60 ft; four sites are 18-20 ft), $20 summer / $10 winter, reservation only, 14-night limit. The stored note's 'facilities reduced to a vault toilet after Oct 2025 flood damage' is no longer what either source says - flush toilets and showers are listed again - so the note is rewritten and facilities updated. Waterfront lead up and a pin move flagged."
+    },
+    "phone": "573-323-4236"
   },
   {
     "id": 1928,
@@ -140070,55 +140100,64 @@
     "ownership": "federal",
     "waterfront": "riverview",
     "inclusion_evidence": "recreation.gov POI 10340979 / NPS: 10 FCFS drive-in sites, RVs/trailers to 35 ft (Site 1 to 50 ft), open Apr-Oct -> real RV campground",
-    "waterfront_evidence": "waterfront 'riverview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)",
+    "waterfront_evidence": "waterfront 'riverview' assessed in commit 547f430 (MO federal USFS/NPS + MDC areas: add 31 campgrounds); on-water value recorded at that commit (no separate per-entry evidence string)\np3-348 (2026-11-09): riverview held. Sites 1-4 back toward the Current River, spurs ending ~25-40 m from the water across mown grass with one line of bank trees; sites 5-8 are across the drive, 45-80 m back.",
     "website": "https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm",
-    "note": "Primitive NPS Ozark Riverways campground (~8-10 sites) on the Current River ~12 mi east of Eminence; boat ramp. --Claude  Since 2025 Ozark Riverways lists Powder Mill as a backcountry campground: reservations required on Recreation.gov (NPS backcountry campgrounds page, 2026-10-10). --Claude",
+    "note": "National Park Service campground in an open grass field beside the Current River at the Highway 106 bridge east of Eminence: eight gravel back-in spurs off one gravel drive, four backing toward the river bank. The park calls it a backcountry campground, meaning few amenities; the approach is paved. No drinking water, no trash service. On recreation.gov it is booked under Jacks Fork / Middle Current Backcountry Campsites. Six people per site. Trails lead to Blue Spring and Owls Bend. --Claude",
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "sites": {
-      "max_rig_ft": 35
+      "max_rig_ft": 50,
+      "count": 8
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "potable_water": false,
+      "showers": false,
+      "dump": false
     },
     "season": {
-      "year_round": false
+      "year_round": true,
+      "note": "Typically open throughout the year; may close temporarily during or after flooding."
     },
     "booking": {
       "reservable": true,
       "fcfs": "never",
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/10344874"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 (electricalHookups 0; potableWater 'No water'; dumpStation 'No'); recreation.gov: all 8 STANDARD NONELECTRIC, Water Hookup 'No'",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "recreation.gov per-campsite records, Powder Mill Campground Sites 1-8: each 'Back-in', Driveway Length 50, permitted equipment RV 50 / Trailer 50 / Fifth Wheel 50; NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 (totalSites 8, tentOnly 0)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 (toilets 'Vault Toilets - year round'; potableWater 'No water'; showers 'None'; dumpStation 'No')",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 (operatingHours: 'Powder Mill Campground is typically open throughout the year. The campground may be temporarily closed during/after flooding or storms.'); https://www.nps.gov/ozar/planyourvisit/backcountry-campgrounds.htm, read 2026-11-09 ('Fees apply year-round')",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://www.nps.gov/ozar/planyourvisit/backcountry-campgrounds.htm, read 2026-11-09 ('Reservations are required for all backcountry campsites and must be made through Recreation.gov.'); NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 (numberOfSitesReservable 8, numberOfSitesFirstComeFirstServe 0)",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.nps.gov/ozar/planyourvisit/backcountry-campgrounds.htm ('Powder Mill is listed as a backcountry campground: 'Reservations are required for all backcountry campsites and must be made through Recreation.gov. Fees apply year-round.' Standard (6 people) $10 per night, starting April 15, 2025', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 (fees: 'Standard Site 10.00 - Fee for standard sites starting April 15, 2025'); recreation.gov 2026 rate 'PeakBackcountryStandard: 10'",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -140132,7 +140171,13 @@
       "currency": "USD",
       "note": "Standard site $10/night; reservations required on Recreation.gov since 2025 (NPS backcountry campgrounds page)."
     },
-    "policy_ref": "federal:nps"
+    "policy_ref": "federal:nps",
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "NPS API https://developer.nps.gov/api/v1/campgrounds?parkCode=ozar (Powder Mill Campground record; the data behind https://www.nps.gov/ozar/planyourvisit/powder-mill-campground.htm, whose HTML is filled by script), read 2026-11-09 https://www.recreation.gov/camping/campgrounds/10344874 ('Jacks Fork / Middle Current Backcountry Campsites': facility record, rates, catalog of 52 campsites, the 8 Powder Mill per-campsite records, November 2026 availability), queried 2026-11-09 https://www.nps.gov/ozar/planyourvisit/backcountry-campgrounds.htm, read 2026-11-09 NPS API alerts for parkCode=ozar (4 alerts), read 2026-11-09 Esri World Imagery (leaf-off) 320 m frame with recreation.gov's per-site coordinates plotted, viewed 2026-11-09",
+      "note": "Still a drive-in campground: 8 standard non-electric back-in sites, each listed at 50 ft with RV, trailer and fifth wheel permitted, paved approach, $10 year-round, reservation only on recreation.gov (facility 10344874), vault toilet, no water. Open - all 8 sites bookable in November 2026 and no alert. Stored 'year_round false' and 'max 35 ft' replaced. Riverview stands, with an upgrade lead."
+    },
+    "phone": "573-323-4236"
   },
   {
     "id": 1930,
@@ -954915,9 +954960,9 @@
     "inclusion_evidence": "City of Pleasant Hill: City Lake park (16104 S Lake Rd) offers electric RV and primitive campsites; only electric sites may be reserved in advance via the city's Campsite Reservations page; portable toilets, no showers",
     "website": "https://www.pleasanthill.com/facilityview.aspx?fid=28",
     "phone": "816-540-3135",
-    "note": "City of Pleasant Hill campground at City Lake. Electric RV sites (reservable through the city) and primitive sites; portable toilets only, no showers. Disc golf, trails, shelters; city boat permit for the lake. --Claude",
+    "note": "City of Pleasant Hill campground at City Lake, south-east of town: electric RV sites and primitive sites, with a restroom and shower building. Disc golf, mountain-bike trail, shelters, playground, kayak launch and boat ramp; a city boat permit is needed for the lake. --Claude",
     "facilities": {
-      "showers": false
+      "showers": true
     },
     "booking": {
       "reservable": true,
@@ -954926,9 +954971,9 @@
     },
     "provenance": {
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.pleasanthill.com/facilityview.aspx?fid=28 (Amenities: 'Restroom and shower facilities'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -954950,6 +954995,11 @@
       "nightly_high": 25,
       "currency": "USD",
       "note": "Electric camping $20 or $25 (two posted rates); primitive $10 or $15."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.pleasanthill.com/facilityview.aspx?fid=28 (City Lake facility page, read in a browser 2026-11-09) https://www.pleasanthill.com/pview.aspx?id=20522&catid=525 (Fee Schedule) and https://www.pleasanthill.com/pview.aspx?id=20521&catid=525 (Rules & Regulations): both UNREAD 2026-11-09 - the city site answered HTTP 403 / a Cloudflare bot check on every try Esri World Imagery (leaf-off) 600 m and 220 m frames, viewed 2026-11-09",
+      "note": "Only the city's City Lake facility page could be read: it confirms 'Electric R/V & primitive camp sites', lists 'Restroom and shower facilities' (the stored 'portable toilets only, no showers' is contradicted - showers now true), and gives phone 816-540-3135 and 16104 S. Lake. The Fee Schedule and Rules pages are behind a bot check and UNREAD, so the 2026 rates, what separates $20 from $25, amperage, site count, season, stay limit and reservation method are all still unanswered. Possible waterfr"
     }
   },
   {
@@ -970001,8 +970051,8 @@
     "waterfront_evidence": "satellite at 38.7825,-92.5952 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront",
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 5 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/prairie-home-conservation-area",
-    "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (1,461 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 5 camping spots across the area. 14-day limit in any 30. Site length not published. From Prairie Home, take Route J west 0.50 miles, then Route W south 2 miles to the area. --Claude",
+    "phone": "573-346-2210",
+    "note": "Five designated primitive camping spots scattered along the area's gravel roads (Prairie Road, Cedron Road and the south lot), each one a small gravel parking lot in upland woods with the camping spot at its edge: no pads, tables or privy, so a rig camps on the lot. The lots run roughly 12-15 m wide and 20-35 m long. The only privy is at Johnson Lake, which has no camping. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -970010,27 +970060,28 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/prairie-home-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/prairie-home-conservation-area (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
+        "source": "https://mdc.mo.gov/sites/default/files/2022-03/6404.pdf ('Camping is allowed anytime in designated camping areas'), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -970041,11 +970092,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/prairie-home-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/6404.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2022-12/6404map.pdf ('Last Updated - 8/23/2022'), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (5 points) and /26 'Parking Lots' (9 lots), queried 2026-11-09 Esri World Imagery (leaf-off) 150 m frames over all five camping points, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites' - five Primitive Camping symbols on the map, each beside a Parking Lot symbol, five GIS points each at a lot's edge; the brochure counts 'five designated camping sites (no amenities)' and says camping is allowed anytime. Free, FCFS, no hookups, 14-day limit. Every one is a lone small gravel lot; no main camp. Pin fine. Stored phone differs from the area page."
     }
   },
   {
@@ -970385,7 +970442,7 @@
     "id": 13765,
     "kind": "campground",
     "name": "Ralph and Martha Perry Memorial Conservation Area",
-    "location": "38.89995,-93.50689",
+    "location": "38.89975,-93.50690",
     "elevation_meters": 230.0,
     "state": "MO",
     "ownership": "state",
@@ -970394,7 +970451,7 @@
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 5 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/ralph-martha-perry-memorial-conservation-area",
     "phone": "660-530-5500",
-    "note": "Missouri Department of Conservation area (4,134 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'); MDC maps 5 camping spots across the area. 14-day limit in any 30. Site length not published. West tract: from Concordia, take Highway 23 south 5 miles. --Claude",
+    "note": "Camping is allowed within 50 yards of five roadside parking lots, each a small gravel lot on a county road with no pads, tables or privy: two on road 925 south of Guier Lake (the west one at the gate of the shooting-range road), one on road 1000 on the east side, one on road 1075 on the north side, and one on Aria Lane in the separate tract north of the Blackwater River. A rig camps on the lot. The road 1075 lot sits at the edge of the waterfowl refuge, which is closed to all use October 15 to March 1; the other four are outside it. The 925 lots are the roomiest; the road 1000 one is little more than a gravel apron at a junction. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -970402,23 +970459,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/ralph-martha-perry-memorial-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/ralph-martha-perry-memorial-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -970433,12 +970491,18 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true,
       "note": "Portions of the area are closed to protect waterfowl, October 15 through March 1."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/ralph-martha-perry-memorial-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-04/7214.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/7214map.pdf ('Last Updated - 10/8/2019'; also a 400-dpi crop of the west tract), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (5 points) and /26 'Parking Lots' (13 lots), queried 2026-11-09 Esri World Imagery (leaf-off) 180 m frames over all five camping points, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: MDC 'Individual Campsites' - the brochure allows camping 'within 50 yards of parking lots A, B, C, D and E only', the map draws five Primitive Camping symbols each beside a Parking Lot, and GIS has five points 30-55 m from five small roadside gravel lots. Free, FCFS, no hookups, 14-day limit. One of the five (road 1075) is at the waterfowl refuge edge; the pinned one is not. Pin is in timber 28 m from its lot. Phone matches."
     }
   },
   {
@@ -971689,7 +971753,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 3 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/poosey-conservation-area",
     "phone": "660-646-6122",
-    "note": "Missouri Department of Conservation area (5,863 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 3 camping spots across the area. 14-day limit in any 30. Site length not published. From Chillicothe, take Highway 190 west 5 miles, then Route A north 5 miles. At the Route W junction, continue on Route A west 1 mile to the area entrance. --Claude",
+    "note": "Three small primitive camping loops spread over the area, each a gravel loop or spur road in oak-hickory timber with pull-ins and, on the area map, a privy. The central one is just north of Route A beside a gravel lot and a pond, on the side of the area where the trails are open to horses. The south one is in the woods above 192-acre Indian Creek Community Lake, about 150 m from the water with no view through the timber; the north one circles a wooded knob at the head of 18-acre Pike's Lake, by the dam. The loops are about two miles apart by air and reached from different county roads. The brochure speaks of camping in self-contained units and says drinking water is not provided. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -971697,23 +971761,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/poosey-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/poosey-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -971728,11 +971793,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/poosey-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2024-07/7935.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-08/7935map.pdf ('Last Updated: 9/21/2026'), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (3 points) and /26 'Parking Lots' (21 lots), queried 2026-11-09 Esri World Imagery (leaf-on) 260 m frames over all three camping points and 600 m frames over the north and south ones, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites' - three Camping Area symbols on the 2026 map, three GIS points, each a real gravel camping loop in timber on imagery. Free, FCFS, no hookups, 14-day limit. No horse camp is labelled. The three loops are 3.0-3.6 km from the pinned one on separate roads: split lead. Pin (central loop) and phone fine."
     }
   },
   {
@@ -972590,16 +972661,16 @@
     "id": 13798,
     "kind": "campground",
     "name": "Plowboy Bend Conservation Area",
-    "location": "38.80619,-92.41028",
-    "elevation_meters": 180.0,
+    "location": "38.80529,-92.41045",
+    "elevation_meters": 183.0,
     "state": "MO",
     "ownership": "state",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 38.8062,-92.4103 (z18): camping at a gravel lot/clearing with no water within ~50 m, or screened from it by trees -> not waterfront",
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 2 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/plowboy-bend-conservation-area",
-    "phone": "573-796-0286",
-    "note": "Missouri Department of Conservation area (2,617 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 2 camping spots across the area. 14-day limit in any 30. Site length not published. From Jamestown, take Route Y north 5 miles to end of pavement, continue on Riverbottom Road east 0.50 mile crossing railroad tracks to area. --Claude",
+    "phone": "573-815-7900",
+    "note": "Two primitive camping areas in the Missouri River bottoms, each a small gravel parking lot in young bottomland timber with no pads, tables or privy: one beside Riverbottom Road about 0.4 mile inside the area, the other at the end of a short gravel spur east of the road. The way in is gravel from the end of Route Y's pavement, over a railroad crossing; the whole area is floodplain behind the levee. The river is half a mile or more from either lot, beyond the levee. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -972607,27 +972678,28 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/plowboy-bend-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
-        "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/plowboy-bend-conservation-area (area regulations and Things to Do), read 2026-10-20",
-        "checked": "2026-10-20",
+        "source": "https://mdc.mo.gov/sites/default/files/2022-03/9830.pdf ('Camping is allowed anytime in designated camping areas shown on map'), read 2026-11-09",
+        "checked": "2026-11-09",
         "method": "manual"
       }
     },
@@ -972638,11 +972710,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/plowboy-bend-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-03/9830.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-06/9530map.pdf (dated 03/10), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (2 points) and /26 'Parking Lots' (3 lots), queried 2026-11-09 Esri World Imagery, 450 m leaf-on and 160 m leaf-off frames over both camping points and their lots, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites' - two Primitive Camping Area symbols on the map, each beside a parking-lot symbol, and two GIS camping points. Free, FCFS, no hookups, 14-day limit; the brochure says camping is allowed anytime, with no amenities. No waterfowl zone or refuge on the map. Pin is in timber 103 m from its lot: move to the lot. Stored phone differs from the area page."
     }
   },
   {
@@ -973371,7 +973449,7 @@
     "inclusion_evidence": "MDC area page lists 'Designated Camping Sites' under Things to Do; MDC Camping Sites GIS layer places 2 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/pony-express-lake-conservation-area",
     "phone": "816-381-8458",
-    "note": "Missouri Department of Conservation area (3,290 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Designated Camping Sites'); MDC maps 2 camping spots across the area. 14-day limit in any 30. Site length not published. From Cameron, take Highway 36 west 6 miles, then Highway 33 north 2 miles, then Route RA 1.50 miles to area entrance. --Claude",
+    "note": "Main camping area on a peninsula on the east shore of 240-acre Pony Express Lake, off Route RA and Lakesite Road by the paved boat ramp: a large gravel lot with a privy and, beside it, a mown lawn with scattered shade trees that slopes down to a cove 50-70 m off. No pads; rigs use the lot and its edge. A second designated camping area is the field-trial grounds on Maple Road, about a mile west on the other side of the lake: a gravel drive, a building and a mown field dotted with trees, with no lake in sight. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -973379,23 +973457,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/pony-express-lake-conservation-area (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/pony-express-lake-conservation-area (area regulations and Things to Do), read 2026-10-20",
@@ -973410,11 +973489,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/pony-express-lake-conservation-area, read 2026-11-09 Area brochure https://mdc.mo.gov/sites/default/files/2022-08/6101.pdf, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/mo_nature/downloads/conservation-areas/6101map.pdf (dated 11/12), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (2 points) and /26 'Parking Lots' (26 lots), queried 2026-11-09 Esri World Imagery 380 m frame over the east-shore camping area and 300 m frame over the Maple Road one, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed: MDC 'Designated Camping Sites' - two camping areas on the map and in GIS, the main one on the east-shore peninsula by the ramp (where the pin is) and one at the Maple Road field-trial grounds 1.5 km west. Free, FCFS, no hookups, 14-day limit. Stored lakeview fits the main area. Pin and phone fine."
     }
   },
   {
@@ -978545,16 +978630,16 @@
     "id": 13894,
     "kind": "campground",
     "name": "Pointers Creek Access",
-    "location": "38.42511,-91.74283",
-    "elevation_meters": 174.0,
+    "location": "38.42486,-91.74260",
+    "elevation_meters": 173.0,
     "state": "MO",
     "ownership": "state",
-    "waterfront": "riverfront",
-    "waterfront_evidence": "satellite at 38.4251,-91.7428 (z18): gravel lot on the point at the creek mouth, open gravel apron to the water -> riverfront",
+    "waterfront": "riverview",
+    "waterfront_evidence": "satellite at 38.4251,-91.7428 (z18): gravel lot on the point at the creek mouth, open gravel apron to the water -> riverfront\np3-348 (2026-11-09): riverfront -> riverview. The one designated camping point is at the edge of the ramp lot; the ramp and its apron sit between the lot and the Gasconade, so the river is in view past the ramp but no camping spot fronts it.",
     "inclusion_evidence": "MDC area page lists 'Individual Campsites' under Things to Do; MDC Camping Sites GIS layer places 1 camping point(s) here, pinned at a drive-in lot/road (z18 satellite, 2026-09-29) -> agency-designated drive-in camping (AWH 2026-09-29: the MDC tag is the bar; site length unpublished)",
     "website": "https://mdc.mo.gov/discover-nature/places/pointers-creek-access",
     "phone": "573-815-7900",
-    "note": "Missouri Department of Conservation area (9 acres). Primitive camping at MDC-designated drive-in sites (MDC lists 'Individual Campsites'). 14-day limit in any 30. Site length not published. From Linn, take Route CC southeast 8 miles, then Route RA east to the access. (Route RA is impassable when Pointers Creek is at flood stage). --Claude",
+    "note": "Boat-ramp access on the point where Pointers Creek meets the Gasconade River, at the end of Route RA: one gravel lot with a privy and the ramp, and a designated primitive camping spot at the lot's edge. There are no pads; a rig camps on the ramp lot, which looks straight onto the river past the ramp. Route RA is impassable when Pointers Creek is at flood stage. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -978562,23 +978647,24 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('no RV hookups are provided at any department area'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/places/pointers-creek-access (3 CSR 10-11.140, standard text: 'On department areas where camping is allowed, camping is limited to a period of 14 consecutive days in any 30-day period.') + https://mdc.mo.gov/discover-nature/activities/camping ('most camping is first come, first served'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://mdc.mo.gov/discover-nature/activities/camping ('All camping on conservation areas is free'); the area page lists no fee, read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "season": {
         "source": "3 CSR 10-11.115(1) (camping permitted at any time where authorized); https://mdc.mo.gov/discover-nature/places/pointers-creek-access (area regulations and Things to Do), read 2026-10-20",
@@ -978593,11 +978679,17 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD"
     },
     "policy_ref": "state:missouri-conservation-areas",
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://mdc.mo.gov/discover-nature/places/pointers-creek-access, read 2026-11-09 Area map https://mdc.mo.gov/sites/default/files/2024-07/6613map.pdf (dated 06/08), read 2026-11-09 MDC GIS Area_Feature_Layers/FeatureServer/27 'Camping Sites' (1 point) and /26 'Parking Lots' (1 lot), queried 2026-11-09 Esri World Imagery (leaf-off) 200 m frame (0.22 m/px) over the access, viewed 2026-11-09 https://mdc.mo.gov/discover-nature/activities/camping, read 2026-11-09",
+      "note": "Confirmed as far as MDC goes: 'Individual Campsites', one Primitive Camping Area symbol on the map beside the parking lot and one GIS point at the lot's edge. Free, FCFS, no hookups, 14-day limit. It is a 9-acre ramp access whose only hardstand is the ramp lot: lot-rule call for the owner. Stored riverfront does not meet the open-apron test (ramp and lot between): lead down to riverview. Phone matches."
     }
   },
   {
@@ -1015181,19 +1015273,41 @@
     "inclusion_evidence": "pinetrailscampground.com (weekly $240 = 7 nights for the price of 6, i.e. $40/night; read 2026-10-03) and Firefly booking engine; Google 4.8 over 43 with phone; RV Life unrated",
     "website": "https://pinetrailscampground.com/\nhttps://app.fireflyreservations.com/reserve/property/PineTrailsCampground",
     "phone": "573-760-2724",
-    "note": "Campground in the woods near Belleview (19664 State Hwy 32): nightly RV sites (a week is $240, 7 nights for the price of 6). Online booking (Firefly). --Claude",
+    "note": "Small campground in the woods on Highway 32 near Belleview: fifteen gravel full-hookup sites, back-in and a few pull-through, round one loop with a store and shower house. A week is $240 (7 nights for the price of 6); longer stays are priced on request. Pets limited to two per site. No outside firewood. --Claude",
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/PineTrailsCampground"
     },
     "provenance": {
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://pinetrailscampground.com/ ('Reserve Now' links to the park's Firefly Reservations page) , read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
         "source": "https://pinetrailscampground.com/ (read 2026-10-10)",
         "checked": "2026-10-10"
+      },
+      "hookups": {
+        "source": "https://pinetrailscampground.com/campsites/ ('Back In, 50/30 Amps, Full Hookups'; 'Pull-Thru, 50/30 Amps, Full Hookups'; 'Water & Sewer'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://pinetrailscampground.com/campsites/ campground map (sites numbered 1-15) and 'Pull-Thru ... Limited quantity', read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://pinetrailscampground.com/ ('Camp Store', 'Bath House', 'Laundry Room'; map: 'Camp Store & Shower House'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://pinetrailscampground.com/ ('Camping starts on March 1st.') + https://app.fireflyreservations.com/reserve/property/PineTrailsCampground availability calendar (0 units from 2026-11-23 through 2027-03-04; 10+ from 2027-03-05), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -1015206,6 +1015320,31 @@
       "nightly_high": 40,
       "currency": "USD",
       "note": "Weekly rate $240 is '7 nights for the price of 6', i.e. $40/night."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 15,
+      "pull_through": true
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-22",
+      "note": "The operator says camping starts March 1; the booking calendar's last open night in 2026 is November 22 and its first in 2027 is March 5."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://pinetrailscampground.com/ (home), /campsites/ (with the campground map image), /rules/ and /contact/, read 2026-11-09 https://app.fireflyreservations.com/reserve/property/PineTrailsCampground (search form read; property availability calendar for Nov 2026-Mar 2027, Jun and Jul 2027 read in a browser 2026-11-09; the priced search was blocked by a reCAPTCHA and is UNREAD) Google Maps place 'Pine Trails Camp Ground' (4.8, 45 reviews; phone, website), read 2026-11-09 Esri World Imagery (leaf-off) 450 m frame, viewed 2026-11-09",
+      "note": "Operator site and Firefly calendar read: 15 full-hookup 30/50A sites (back-in and pull-through), store, bath house, laundry; season March to about November 22; Google 4.8 (45). The $40 rate still rests on the posted weekly special ($240 = 7 for the price of 6); the engine's priced search is behind a reCAPTCHA and was not read, so fees, minimum stay and extra-person charge are unchanged/unknown. Not long-stay in character. Pin fine."
     }
   },
   {
@@ -1016510,11 +1016649,11 @@
     "state": "MO",
     "ownership": "private",
     "waterfront": "lakeview",
-    "waterfront_evidence": "satellite (Esri, 600 m frame, leaf-off) at 36.5090,-92.6096: sites scattered under open oaks on a bluff-top point of Norfork Lake above the marina cove, the lake on three sides 30-80 m away and below a rocky bluff; no pads at the water's edge; lakeview",
+    "waterfront_evidence": "satellite (Esri, 600 m frame, leaf-off) at 36.5090,-92.6096: sites scattered under open oaks on a bluff-top point of Norfork Lake above the marina cove, the lake on three sides 30-80 m away and below a rocky bluff; no pads at the water's edge; lakeview\np3-348 (2026-11-09): the lake is Bull Shoals, not Norfork (operator page); lakeview stands, bluff-top pads well above the water.",
     "inclusion_evidence": "pontiaccove.com campground rates read 2026-10-03: single 50 amp/water $40/night ($240/week), premium $45, 50 amp/water/sewer $50; 3 tent-only sites listed separately. Not on RV Life; Good Sam directory row -> published rate <= $50 passes; Google 'Pontiac Cove Marina' 4.8 over 239 with phone",
-    "website": "http://www.pontiaccove.com/",
+    "website": "https://www.pontiaccove.com/",
     "phone": "417-679-3676",
-    "note": "Marina resort on a wooded point of Norfork Lake at Pontiac (563 Pontiac Cove Rd): 50-amp/water sites (premium, one full-hookup site), tent sites, boat slips. --Claude  MINIMUM STAY: 2 nights (2-night minimum to reserve a site; 3-night minimum on holiday weekends.; www.pontiaccove.com, 2026-10-10). --Claude",
+    "note": "Privately managed campground on a bluff-top point of Bull Shoals Lake at Pontiac, above the marina cove, with a restaurant and brewery beside the marina. Back-in sites under open oaks; the engine lists each site's length (20 to 40 ft), and the two-rig double sites cost more. Check in at the marina. No refund inside 30 days of arrival. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
@@ -1016522,22 +1016661,39 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.pontiaccove.com/new-page (rate list: '50 amp/water' sites; 'Single 50 amp/water/sewer (Site 40)') + https://pontiaccove.stellarims.com/category/2 ('50/30 AMP, Water, No Sewer' on all but the one 'Sewer Included' type), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.pontiaccove.com/new-page (Campground Rates, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.pontiaccove.com/new-page ('Single 50 amp/water ...: $40/night, $240/week'; 'Premium Single ...: $45/night'; 'Single 50 amp/water/sewer (Site 40): $50/night'; 'STAY 6 NIGHTS, THE 7TH NIGHT IS FREE!') + https://pontiaccove.stellarims.com/category/2 ('$40/night + tax'; 2 nights 2027-04-13/15 = $80.00 before tax), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://www.pontiaccove.com/new-page",
-        "checked": "2026-10-10"
+        "source": "https://www.pontiaccove.com/new-page ('There is a 2-night minimum to reserve a site; 3-night minimum on holiday weekends. Walk-ins are welcome when park is not full.'; 'Online booking for 2027 is open!') + https://pontiaccove.stellarims.com/category/2 ('2-Night Minimum *3 nights on holiday weekends*'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "sites": {
+        "source": "https://www.pontiaccove.com/new-page (rate list names sites 1-37 and 40: 35 RV pads and 3 tent sites) + https://pontiaccove.stellarims.com/details/12 (unit list: 'Site 5 (40-ft back-in)', 'Site 6 (40-ft back-in)', 'Site 21 (40-ft back-in)', others 20-35 ft), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.pontiaccove.com/new-page ('All sites and the showerhouse are open mid-March through late October'; campground map legend: 'With Showers', 'Dump Station'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.pontiaccove.com/new-page ('All sites and the showerhouse are open mid-March through late October. Sites 25-37 are open year-round but will not have access to the showerhouse in the off-season.'), read 2026-11-09",
+        "checked": "2026-11-09",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -1016549,7 +1016705,7 @@
       "nightly_low": 40,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "Single 50-amp/water $40, premium $45, 50-amp/water/sewer $50 per night; 2-night minimum to reserve (3 on holiday weekends)."
+      "note": "Single 50-amp/water $40, premium $45, the one 50-amp/water/sewer site $50; double sites $70-80. Tax is added. The seventh night of a week is free."
     },
     "booking": {
       "min_stay": [
@@ -1016562,11 +1016718,32 @@
           "applies": "holiday"
         }
       ],
-      "note": "2-night minimum to reserve a site; 3-night minimum on holiday weekends. Kept with the minimum marked, per AWH 2026-10-10."
+      "note": "2-night minimum to reserve a site, 3 on holiday weekends; walk-ins are welcome when the park is not full, which is the way to a single night. Kept with the minimum marked, per AWH 2026-10-10.",
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://pontiaccove.stellarims.com",
+      "fcfs": "some_sites"
     },
     "discounts": {
       "good_sam": false,
       "military": true
+    },
+    "sites": {
+      "count": 38,
+      "max_rig_ft": 40
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": true,
+      "note": "All sites and the showerhouse are open mid-March through late October; sites 25-37 stay open year-round without the showerhouse."
+    },
+    "verify_scan": {
+      "checked": "2026-11-09",
+      "sources": "https://www.pontiaccove.com/new-page (Campground page: season, rates, rules, campground map 'edited 2024'), read 2026-11-09 https://www.pontiaccove.com/ (home), read 2026-11-09 https://pontiaccove.stellarims.com/category/2 and /details/12, /details/15 for 2027-04-13 to 04-15 (the park's Stellar booking engine: unit types, per-site lengths, prices), read in a browser 2026-11-09 Google Maps place 'Pontiac Cove Marina' (4.8, 239 reviews), read 2026-11-09 Esri World Imagery (leaf-off) 500 m frame, viewed 2026-11-09",
+      "note": "Operator page and its booking engine read: rates unchanged ($40 / $45 premium / $50 the one sewer site, plus tax), 50A + water, 38 numbered sites to 40 ft, showerhouse and dump station, all sites mid-March to late October with sites 25-37 year-round. The 2-night minimum is for reservations only - walk-ins are taken when not full. The lake is Bull Shoals, not Norfork as the stored note said. Lakeview stands; pin fine; Google 4.8 (239)."
     }
   },
   {
