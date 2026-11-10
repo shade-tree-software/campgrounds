@@ -10,6 +10,7 @@ heavily visited first):
   2. the other campgrounds stayed at
   3. campgrounds anyone in the family opened on the map in the last 60 days
      (trip_data/campground_views.jsonl), most-opened first
+  3.5 the PA state-forest roadside sites (LATE below; AWH 2026-11-10)
   4. everything else, by state in order of stays there, then RV Life stars, then name;
      states never stayed in follow, whole state by whole state, nearest to home first
      (AWH 2026-10-26: they used to tie and interleave by stars across the continent)
@@ -54,8 +55,10 @@ def views():
 
 
 # PA state-forest roadside sites (audit/pa_sf_dispersed/, 2026-10-10) were built straight
-# from each site's ReserveAmerica page, and batch p3-6 (12 of them) found nothing to change,
-# so they wait until everything else is done rather than spending a verifier each.
+# from each site's ReserveAmerica page. They used to wait until everything else was done
+# (batch p3-6 found nothing to change in 12), but p3-357 found walk-up-only sites, ATV
+# trailheads and a 13% driveway, so they now run right after the viewed entries and before
+# the next whole state (AWH 2026-11-10).
 LATE = range(15183, 15339)
 
 
@@ -123,7 +126,7 @@ def ranked(rows, reg, trips):
         elif seen[e["id"]]:
             tier = 3
         else:
-            tier = 5 if e["id"] in LATE else 4
+            tier = 3.5 if e["id"] in LATE else 4
         stars = (e.get("rating") or {}).get("stars") or 0
         out.append(((tier, -stays[e["id"]], -seen[e["id"]], state_rank.get(e["state"], 99),
                      -stars, e["name"]), e))
