@@ -142,4 +142,4 @@
 - [High elevation in notes](feedback_high_elevation_mentions.md) — no figure repeating elevation_meters; "high elevation" only if well above local terrain (p75+, ~150 m over median), East 3000 ft+ (AWH 2026-11-08)
 - [MDC horse camps, padless camping](feedback_mdc_horse_and_padless.md) — AWH 2026-11-09: an indistinct horse camp = drop; roadside with no pad = keep with a caveat; OHV-side campground = caveat; check for an existing entry before splitting; lot-adjacent camping with designated points stays
 - [Severe driveways and steep grass drop](feedback_steep_access.md) — AWH 2026-11-10: agency grade Severe or steep grass access = site out; trailer-listed sites that fit stay without an RV category
-- [Missouri waterfront upgrades declined](feedback_missouri_waterfront_declined.md) — AWH 2026-11-10: 12 leads, all kept as stored; a minority of shore sites does not raise a value
+- [A few clear waterfront sites count](feedback_missouri_waterfront_declined.md) — AWH 2026-11-10: a few clearly waterfront sites = waterfront with a caveat naming them; the 12 Missouri leads (10-45 m back) kept as stored
