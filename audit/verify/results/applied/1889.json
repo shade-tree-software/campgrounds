@@ -1,0 +1,83 @@
+{
+  "id": 1889,
+  "checked": "2026-11-10",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232732 (facility record: description, notices, rules, amenities, address), read 2026-11-10",
+    "https://www.recreation.gov/api/camps/campgrounds/232732/rates, read 2026-11-10",
+    "recreation.gov per-campsite records for facility 232732 (search catalog + /api/camps/campsites/<id>, 51 sites), read 2026-11-10",
+    "recreation.gov availability calendar for 232732, months 2026-11, 2027-03, 2027-04, 2027-05, 2027-09, 2027-10, read 2026-11-10",
+    "Esri World Imagery (leaf-off) three 260 m frames (0.29 m/px) with the 51 site coordinates plotted, viewed 2026-11-10"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 46,
+        "max_rig_ft": 84
+      },
+      "source": "recreation.gov per-campsite records for facility 232732 (search catalog + /api/camps/campsites/<id>, 51 sites), read 2026-11-10: 51 records (numbered 01-09 and 17-58), of which sites 54-58 are status 'Not Available' and carry no calendar; 46 bookable or walk-up. Max Vehicle Length 16-84 ft; 37 sites take 25 ft or more",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "recreation.gov per-campsite records for facility 232732 (search catalog + /api/camps/campsites/<id>, 51 sites), read 2026-11-10: 37 STANDARD ELECTRIC (27 at 50 A, 1 at 50/30, 9 at 30 A), 14 non-electric; Water Hookup 'Y' on 32 of the 37 electric sites (not on 33-37); no sewer",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232732 (amenities: 'Drinking Water', 'Dump Station', 'Flush Toilets', 'Showers'; description: 'hot showers, drinking water, a dump station and electric hookups'), read 2026-11-10",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "min_stay": [
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "season": {
+          "opens": "05-01",
+          "closes": "09-14"
+        }
+      },
+      "source": "recreation.gov availability calendar for 232732, months 2026-11, 2027-03, 2027-04, 2027-05, 2027-09, 2027-10, read 2026-11-10: 46 sites carry nights 2027-05-01 to 2027-09-14 (Available/Open/NYR), nothing in March, April, October or November; facility rules minHolidayWeekendStay 3, minWeekendStay 0, maxStay 14 nights / rolling 30 days; sites 04, 05, 20 and 21 are marked 'This site is for Walk-up only'",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 16,
+        "nightly_high": 25,
+        "currency": "USD"
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232732/rates (Peak Season 2026-05-01 to 2026-09-15 and 2027-05-01 to 2027-09-14) matched to each site's fee template: non-electric $16, electric without water (sites 33-37) $23, electric with water $25; read 2026-11-10",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on a wooded point on the Kings River Arm of Table Rock Lake, south of Shell Knob, with the Kings River Marina, a boat ramp and a swim beach in the same recreation area. A row of electric sites on the west side sits on an open slope above a cove; the non-electric sites along the south shore are in timber. Site driveways are paved; a few are steep. --Claude",
+  "summary": "Confirmed live on recreation.gov. Sites cut from 56 to 46 (51 records, 5 not available); 50 A and water confirmed; showers, flush toilets, water and dump written; fee high 23 -> 25; reservation season May 1 - Sep 14, 3-night holiday minimum, four walk-up sites. Lakefront stands (west row). 'Rough access roads' is not supported by anything read and is out of the note. Pin fine. Phone 417-858-3904.",
+  "flags": [
+    "SITE COUNT: stored 56 (note prose; the facility text also says 'Viola Campground offers 56 reservable campsites'). The per-site records are 51 (numbers 10-16 do not exist), and five of those - 54, 55, 56, 57, 58, the non-electric sites in the trees east of the boat-ramp lot - are status 'Not Available' with no calendar. Written 46. Note's '~42 electric' is 37 in the records.",
+    "AMPERAGE: 27 sites at 50 A, one at 50/30, nine at 30 A (17, 18, 20, 21, 33-37). Stored 50 stands as the common case; the facility text gives no amperage, so no disagreement here.",
+    "FEES: stored high was $23. The $23 template belongs only to sites 33-37 (30 A, no water); the other 32 electric sites carry a $25 template. Sites 04 and 05 (non-electric, walk-up only) carry a template priced $28 in the rate table, which reads as a data-entry oddity (more than a 50 A site) and was left out of the range.",
+    "SEASON: reservations run May 1 - Sep 14 (2027 calendar; rate table 'Peak Season' same dates) - the note's 'Apr-Sep' was wrong. April, October and the winter carry no calendar status and no off-season rate, so whether the park is open first-come outside the season is unread; the stored season (year_round false, no dates) is left as it is.",
+    "MINIMUM STAY: facility rule minHolidayWeekendStay 3 (written); minWeekendStay 0, so no ordinary-weekend minimum.",
+    "WALK-UP SITES: 04, 05, 20, 21 - 'This site is for Walk-up only; we should not be making any advanced reservations. First-come First-Served' (fcfs some_sites).",
+    "ROUGH ACCESS ROADS: nothing read supports it. Directions are 'From Shell Knob, Missouri, take Highway 39 south for 7 miles and turn west to campground entrance' (address 27501 Big Rock Road); no notice posts a length or grade limit; every site record has Driveway Surface 'Paved', with grade Slight on most, Moderate on 01-05, 08, 09, 17-19 and Severe on site 20 only. The caveat is dropped from the note in favour of 'a few are steep'.",
+    "WATERFRONT - LAKEFRONT STANDS: the west row (43, 45, 46, 49, 51, 52, and 39/40 further south) has pads running out onto an open, thinly treed slope 20-30 m from the cove's water line with nothing between; site 51's own record says \"60' TO SHORELINE\". The south-shore non-electric sites 01-05, 08 and 09 are 15-25 m from the rip-rapped bank but under timber. The interior loop (25-37) is in woods; records for 26-32 say 'SHORELINE SITE: NO, DISTANCE TO SHORELINE: 300-400'. Count on open ground within ~50 m: at least 6.",
+    "PIN: stored 36.5617,-93.5947 is the recreation.gov facility point; it falls inside the campground, about 35 m east of site 34 on the interior loop. No move (site centroid 36.56193,-93.59577, 65 m west).",
+    "PHONE (lead, not written by apply): recreation.gov lists 417-858-3904 for the facility.",
+    "Notices worth knowing: staffed booth 8-10 am and 2-6 pm; checkout 3 pm; 'One tent and one RV, or two tents are allowed per campsite'; 'All daily guests must pay a day-use fee'."
+  ]
+}

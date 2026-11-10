@@ -10,6 +10,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, Missouri p3-354 (2026-11-10)
+
+- 13898 Tri-City Community Lake stored lakeview: two camp-loop spur ends are ~19 m and ~30 m from the shore of the 27-acre lake over open mown ground, nothing between; lakefront supportable
+
 ## Open, Missouri p3-353 (2026-11-09)
 
 - 13905 Thomas Hill Reservoir Conservation Area stored lakeview: three of ~18 pads (west loop) are ~38-45 m from the riprap shore across open mown grass, nothing between; lakefront supportable
