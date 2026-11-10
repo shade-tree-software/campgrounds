@@ -1069,3 +1069,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 8928 Medicine Lake (AB): open clearing at Loop C SW corner ~52.7466,-114.7426 (sites C-31..C-35?) ~20-35 m from water; read the site map. p3-373.
 - 8987 North Buck Lake (AB): east spur sites 12-14 ~15-25 m, partly under trees. p3-373.
 - 9142 Memory Lane (AB): trout pond 35-50 m from the bottom row; check for a road between. p3-373.
+- 8929 Zeiner (AB): Loop C lake row (19 Near Water sites) 30-40 m behind a tree row and narrow beach; site-map read. p3-374.
