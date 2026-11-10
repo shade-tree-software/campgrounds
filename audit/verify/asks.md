@@ -545,3 +545,20 @@ split-10 Bond Falls) were done 2026-10-22 / 11-02.
 - **p3-361 (2026-11-10):** (a) DROPPED 15211 Buchanan CV004 Shaffer Road on its 10-ft posted clearance under trees - say if a 10-ft posting should not drop. (b) 15212 CV013 Refuge Trail ATV and 15222 SH035 Cove Road ATV - campsites at the back of DCNR ATV trailhead lots, open to any camper: keep (kept) or drop as OHV staging? Same question as Piney Mountain 15268 and Big Flat 73. (c) 15223 - BV008 closed for maintenance until 2027-01-01: left in the count. (d) 15215 SH004 (800-ft grass track ~8%, not recommended when wet) and 15224 CV023 (~20% bank): keep as caveated (kept)?
 
 - **p3-362 (2026-11-10):** (a) 15228 SH032 Waterflat - campsite inside the Waterflat ATV trailhead lot: keep (kept) or drop? Same question as Refuge Trail, Cove Road, Piney Mountain and Big Flat. (b) 15228 SH033 Cove Road Landing B - posted 10-ft clearance, but the landing is open sky and only the 800-ft access track is under trees: kept in the count; out instead? (c) 15239 S004 Shanty Draft - no RV category on the booking page: count it (counted) or cut to one site? (d) 15227 SH027 Summit Road A - "1 vehicle with tents", 30 ft, no visible pad: count 3 (kept) or 2? (e) 15232 Cornplanter - season Mar 28 - Jan 19 written from one booking year's dates: OK?
+
+## Answered (AWH 2026-11-10, evening)
+
+Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway graded Severe, or steep grass access, drops; (3) any posted clearance under 10.5 ft drops, open lot or not; (4) a site that fits and is listed for trailers stays even with no RV category; (5) where the booking page sells a trailer site that DCNR's older map layer calls tent-only, keep with the caveat in the note; (6) sites blocked from booking with no reason are marked temporarily closed; (7) recreation.gov may not maintain first-come-only campgrounds, so there the Forest Service page is trusted.
+
+- **Dropped (13):** 15268 Piney Mountain, 73 Big Flat, 15212 CV013 Refuge Trail ATV, 15222 SH035 Cove Road ATV, 15228 (Waterflat ATV lot + Cove Road Landing B 10 ft), 15198 Paddy Mountain (Severe + 10 ft), 15208 BV014 (Severe), 15332 Tuscarora 071 (Severe), 15215 SH004 (steep grass), 15203 Bums Inn (10 ft), 1729 Circle O, 13907 Nannie B. Floyd, 14561 Theo's RV Park.
+- **Trimmed:** 15200 is now site 045 alone (048 Severe); 15224 is now CV001 alone (CV003 ~11% grass, CV023 ~20% bank), pin moved to CV001.
+- **Temporarily closed:** 15199 Old Mingle Road, 15202 Hunter Road. 15199 also carries the map-layer caveat for 024/025.
+- **15267 Swift Run:** ReserveAmerica sells January-March nights, so year-round with a caveat.
+- **Kept as written:** 15210 BV020, 15206 BV009 Tower, 12875 Nature's Nest, 8811 Two Jack Main, 8810 Mosquito Creek, 13912 Talbot, 13884 Rush Bottoms, 14589 Sinking Creek, 1868 Talley Bend (stays dropped), 1916 Watercress, trailer-listed sites (15338 site 084, 15239 S004, 15227 SH027).
+- **8803 Icefields Centre RV:** kept as a special case (next to the Athabasca Glacier). **8793 Wapiti:** one campground whose winter loop is part of it, stays year-round with the note. **8869 Payne Lake:** one entry, two loops 450 m apart, said in the note.
+- **Parks Canada:** fixed in code and registry - a Canadian federal entry no longer inherits the US `federal` row; `federal:parks-canada` now carries its own booking terms.
+- **1928 Two Rivers:** site 003 (28 ft) is reservable on recreation.gov (site-specific, nights Available May 2027) - kept.
+- **13518 Pleasant Hill City Lake:** rates written from the page AWH saved: electric $20 resident / $25 non-resident, primitive $10 / $15.
+- **13517 Sumner:** no city phone is published anywhere searched (directories say "not published"; City Hall is 111 West Centre). Still open.
+- **AWH does not know:** 1892 Theodosia Loop A, 13823 Schell-Osage refuge, 13880, 13737, 13756, 13797, 1942, 15630, 13753 - left as written; none is behind a bot check.
+- **Still open, re-asked with detail:** the Missouri waterfront upgrades; the MDC bare-lots rule; the Jonas / Kerkeslin names; 15225 Akersville.

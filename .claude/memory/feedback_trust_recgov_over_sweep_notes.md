@@ -39,3 +39,5 @@ forest service or national park web page."
 
 `recgov_hookups.py` implements this for hookups. Related:
 [[project-campground-schema]], [[feedback-lone-electric-site-may-be-host]].
+
+**Exception, AWH 2026-11-10 (Watercress 1916):** "rec.gov might not maintain accurate listings about campgrounds that are FCFS only. In that case, default to trusting the forest service page." So rec.gov outranks the agency page only where rec.gov actually sells the sites.

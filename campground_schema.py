@@ -557,6 +557,10 @@ def _stage_provenance(incoming):
 
 # ── Registry resolution ─────────────────────────────────────────────────────
 
+CANADIAN_PROVINCES = frozenset(
+    ("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"))
+
+
 def policy_refs(entry):
     """Registry rows this entry inherits from, MOST SPECIFIC FIRST.
 
@@ -598,7 +602,12 @@ def policy_refs(entry):
     state = (entry.get("state") or "").strip()
     if ownership and state and not explicit:
         refs.append(f"{ownership}:{state}")
-    if ownership:
+    # The bare `federal` row is the US baseline (recreation.gov, its 180-day
+    # window, the interagency Senior/Access discount). A Canadian federal
+    # campground is Parks Canada's, which shares none of it, so level 3 stops
+    # at the border: all 76 Parks Canada entries printed those three US facts
+    # under their own agency's name (AWH 2026-11-10).
+    if ownership and not (ownership == "federal" and state in CANADIAN_PROVINCES):
         refs.append(ownership)
     return refs
 

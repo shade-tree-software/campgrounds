@@ -141,3 +141,4 @@
 - [Season pass + notes round 2 — DONE](project_season_and_notes_round2.md) — 2026-11-08: 151 calendar seasons re-read vs agency; field-note repeats cut (21 chunks); open items in followups.md / asks.md
 - [High elevation in notes](feedback_high_elevation_mentions.md) — no figure repeating elevation_meters; "high elevation" only if well above local terrain (p75+, ~150 m over median), East 3000 ft+ (AWH 2026-11-08)
 - [MDC horse camps, padless camping](feedback_mdc_horse_and_padless.md) — AWH 2026-11-09: an indistinct horse camp = drop; roadside with no pad = keep with a caveat; OHV-side campground = caveat; check for an existing entry before splitting; lot-adjacent camping with designated points stays
+- [Severe driveways and steep grass drop](feedback_steep_access.md) — AWH 2026-11-10: agency grade Severe or steep grass access = site out; trailer-listed sites that fit stay without an RV category

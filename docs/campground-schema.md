@@ -156,6 +156,13 @@ key the second agency's row left unset showed the park system's value under the 
 agency's name: Washington State Parks' 10-night maximum on all 34 Washington DNR entries,
 Michigan's 180-day window on a state forest. Level 3 still composes under an explicit ref.
 
+**Level 3 `federal` is the US baseline and stops at the border** (AWH 2026-11-10). A federal
+campground in a Canadian province is Parks Canada's, and the bare `federal` row's
+recreation.gov platform, 180-day window and interagency Senior/Access discount are all wrong
+for it; every one of the 76 `federal:parks-canada` entries printed them. `policy_refs()`
+omits level 3 when ownership is federal and the state is in `CANADIAN_PROVINCES`, and the
+`federal:parks-canada` row carries its own booking terms.
+
 **`policy_ref: "none"` declines all three, and exists because levels 2 and 3 are DERIVED
 and therefore cannot otherwise be refused.** An entry cannot be `ownership: state` in
 Georgia without inheriting `state:GA`. Jekyll Island Campground (id 590) is the case that

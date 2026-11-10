@@ -312,6 +312,20 @@ class TestRegistryResolution(unittest.TestCase):
                  "policy_ref": "federal:usfs"}
         self.assertEqual(cs.policy_refs(named), ["federal:usfs", "federal"])
 
+    def test_canadian_federal_skips_the_us_federal_baseline(self):
+        # The bare `federal` row is recreation.gov, its 180-day window and the
+        # interagency pass discount. Parks Canada shares none of it.
+        entry = {"ownership": "federal", "state": "AB",
+                 "policy_ref": "federal:parks-canada"}
+        self.assertEqual(cs.policy_refs(entry), ["federal:parks-canada"])
+        registry = {"federal": {"booking": {"platform": "recreation.gov",
+                                            "window_opens_days": 180},
+                                "discounts": {"interagency_senior_access": True}},
+                    "federal:parks-canada": {"booking": {"platform": "operator"}}}
+        got = cs.resolve(entry, registry)
+        self.assertEqual(got["booking"]["values"], {"platform": "operator"})
+        self.assertNotIn("discounts", got)
+
     def test_policy_ref_none_declines_every_level(self):
         # The derived {ownership}:{state} level cannot be declined any other
         # way, and Jekyll Island is state-owned but outside the state system.
