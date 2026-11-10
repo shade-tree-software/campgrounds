@@ -10,6 +10,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, Missouri p3-347 (2026-11-09)
+
+- 13757 Paydown Access stored not waterfront: two of six camping points (GIS 544, 545) sit 15-25 m from the Gasconade (~120 m wide) behind a single line of bank trees; the other four are 50-75 m back
+
 ## Open, Maine p3-238 (2026-11-02)
 
 - 4207 River Run Canoe & Campground stored not waterfront: reviews say 'one of the river front sites', 'right on the river'; Saco ~40 m wide; none names an RV, and which sites take one is unknown
