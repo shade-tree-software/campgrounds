@@ -452,6 +452,8 @@ DROPS = {
     14561: ('2026-11-10', 'live web presence: the operator website cannot be reached (AWH 2026-11-10)', "Theo's RV Park (MO, private): mostly annual sites, kept in p3-353 on a posted $40 nightly rate; AWH could not get to the website. AWH: drop."),
     15299: ('2026-11-10', 'ATV parking lot (AWH 2026-11-10 ruling)', "All three sites (WS007, WS008, WS009) are inside the Whiskey Springs ATV trailhead lot: each booking page says 'Campsite is at the Whiskey Springs Trailhead Parking Area (Boyer Parking Area)', and the DCNR ATV brochure maps that lot at the same point."),
     15312: ('2026-11-10', 'agency says the road in requires high clearance', "Susquehannock site 048 Thompson Hollow: the booking page says the half mile of Ridge Road to the site 'is a secondary state forest road and may receive less maintenance than Thompson Hollow Road, requiring high-clearance'. Treated like an agency 4WD recommendation."),
+    15290: ('2026-11-10', 'AWH: campsite in a snowmobile parking lot', "Sproul SS016: the agency puts the campsite 'in the snowmobile parking area' on PA 144. Dropped by AWH 2026-11-10, like the ATV lots."),
+    15291: ('2026-11-10', 'AWH', "Sproul SS017 on Beech Creek Road, beside a gas compressor station per the agency's description. Dropped by AWH 2026-11-10."),
 }
 
 if __name__ == "__main__":
