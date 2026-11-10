@@ -450,6 +450,7 @@ DROPS = {
     1729: ('2026-11-10', 'price and presence: no posted price anywhere readable (AWH 2026-11-10)', 'Circle O (IL, private): an active Facebook page but no rate on any page that could be read, and its inclusion evidence cited the pinecliff content farm. AWH: drop. p3-358.'),
     13907: ('2026-11-10', 'walk-in spot: the designated camping spot cannot be reached by a vehicle (AWH 2026-11-10)', 'Nannie B. Floyd Memorial Conservation Area (MO, MDC, 20 acres): one camping point about 20 m inside woods behind a water-filled roadside ditch; no lot, pad or drive, so a motorhome could only stand on the edge of gravel Slater Avenue. AWH: drop. p3-345.'),
     14561: ('2026-11-10', 'live web presence: the operator website cannot be reached (AWH 2026-11-10)', "Theo's RV Park (MO, private): mostly annual sites, kept in p3-353 on a posted $40 nightly rate; AWH could not get to the website. AWH: drop."),
+    15299: ('2026-11-10', 'ATV parking lot (AWH 2026-11-10 ruling)', "All three sites (WS007, WS008, WS009) are inside the Whiskey Springs ATV trailhead lot: each booking page says 'Campsite is at the Whiskey Springs Trailhead Parking Area (Boyer Parking Area)', and the DCNR ATV brochure maps that lot at the same point."),
 }
 
 if __name__ == "__main__":
