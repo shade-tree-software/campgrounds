@@ -1,0 +1,75 @@
+{
+  "id": 1898,
+  "checked": "2026-11-10",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/254084 (facility record 'Webb Creek Park': description, notices, rules, amenities, address), read 2026-11-10",
+    "https://www.recreation.gov/api/camps/campgrounds/254084/rates, read 2026-11-10",
+    "recreation.gov per-campsite records for facility 254084 (search catalog + /api/camps/campsites/<id>, 30 sites), read 2026-11-10",
+    "recreation.gov availability calendar for 254084, months 2026-11, 2027-04, 2027-05, 2027-09, 2027-10, read 2026-11-10",
+    "Esri World Imagery (leaf-off) 480 m frame at 0.53 m/px with the 30 site coordinates and the stored pin plotted, viewed 2026-11-10"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 30,
+        "max_rig_ft": 40
+      },
+      "source": "recreation.gov per-campsite records for facility 254084 (search catalog + /api/camps/campsites/<id>, 30 sites), read 2026-11-10: 30 records numbered 001, 002, 009 and 012-038, all status Open, all permitting RV, Trailer and Tent; Max Vehicle Length 40 ft on 21 sites and 30 ft on 9, so every site takes a 23-ft motorhome",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 30
+      },
+      "source": "recreation.gov per-campsite records for facility 254084 (search catalog + /api/camps/campsites/<id>, 30 sites), read 2026-11-10: Electricity Hookup '30' on 25 sites (015-038 typed STANDARD ELECTRIC, plus 009, typed non-electric but carrying the electric fee template); 001, 002, 012, 013, 014 have none. No site record carries a Water Hookup or Sewer Hookup attribute",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/254084 (description: 'Additional amenities include a dump station, showers, boat ramp, playground and a swimming area'; amenities 'Dump Station', 'Showers', 'Restroom'), read 2026-11-10",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "after_cutoff",
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "05-15",
+          "closes": "09-14"
+        }
+      },
+      "source": "recreation.gov availability calendar for 254084, months 2026-11, 2027-04, 2027-05, 2027-09, 2027-10, read 2026-11-10: all 30 sites carry nights from 2027-05-15 (Open, then NYR past the 6-month window) and none in November 2026, April 2027 or October 2027; rate table 'Peak Season' 2026-05-15 to 2026-09-15 and 2027-05-15 to 2027-09-15; notice 'Campsites are first-come, first-served outside of peak season.'; rules maxStay 14 nights / rolling 30 days, minConsecutiveStay 1",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 16,
+        "currency": "USD"
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/254084/rates (Peak Season 2026 and 2027): STANDARD NONELECTRIC $14, STANDARD ELECTRIC $16, matched to each site's fee template; read 2026-11-10",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on the Webb Creek arm of Clearwater Lake, at the end of Route H south of Ellington, sharing the park with a marina, boat ramp, playground and swim beach. Five sites sit on the open flat by the ramp and beach; the rest climb a wooded hillside on paved spurs, many of them steep, and the Corps warns that access is steep and means backing a camping unit uphill. --Claude",
+  "summary": "Confirmed live on recreation.gov as 'Webb Creek Park'. Sites 31 -> 30 (per-site records); 30 A on 25 sites confirmed; showers and dump written; $14/$16 confirmed for 2026 and 2027; reservation season May 15 - Sep 14 with first-come outside it; 14-night limit. Lakeview stands. Pin fine. Phone 573-223-7777. Off-season rate and whether the park is open all winter are not posted.",
+  "flags": [
+    "LIVE: facility 254084 is active (not deactivated), 30 campsite records all 'Open', a 2027 calendar loaded from May 15.",
+    "NAME: recreation.gov's facility name is 'Webb Creek Park' (its text also says 'Webb Creek Campground'); stored 'Webb Creek'.",
+    "SITE COUNT: stored 31 (the facility text says 'offers 31 sites'); the per-site records are 30 (001, 002, 009, 012-038), all with a calendar. Written 30.",
+    "AMPERAGE / WATER: per-site records give 30 A on 25 sites and nothing on 5; stored 30 stands and the facility text gives no amperage, so no disagreement. One oddity: site 009 is typed STANDARD NONELECTRIC but has Electricity Hookup 30 and the electric ($16) fee template. No site record has a water or sewer attribute, and the facility text mentions no water hookups or drinking water at all, so water is left unset (absent, not 'no').",
+    "RATES: Peak $14 non-electric, $16 electric, same for 2026 and 2027. The rate table also holds a $20 'STANDARD ELECTRIC-447031' template that no site record uses - left out. No off-peak rate row exists although the site fee templates name an 'Off Peak' season: the first-come off-season price is unread.",
+    "SEASON: reservations May 15 - Sep 14 (calendar and rate table agree). The notice says 'Campsites are first-come, first-served outside of peak season', so the campground is open beyond the reservation season, but nothing read says for how long or whether water/showers stay on; no season was stored and none is written. The Corps' Little Rock District pages were not tried (they have refused plain HTTP all week) - unread.",
+    "MINIMUM STAY: minConsecutiveStay 1 (soft) - no rule. No weekend or holiday minimum in the facility rules.",
+    "ACCESS CAVEAT (kept in the note): notice 'Attention: Site access is difficult due to steep road access and requires backing camping unit upgrade.' Per-site Driveway Grade: Severe on 13 sites (016-020, 022-024, 026, 027, 031-033), Moderate on 11, Slight on 6 (001, 002, 009, 012, 014, 021); all driveways Paved, 37-150 ft long. Route H is paved to the park. Not a fit problem for a 23-ft motorhome on the flat sites; the hillside spurs want care. Another notice: 'Site occupancy is limited to two camping units. One wheeled unit and one tent OR the site may have two tents.'",
+    "WATERFRONT - LAKEVIEW STANDS: imagery is leaf-off at a LOW pool (the Webb Creek arm south of the park is down to a narrow channel between bare flats, and a wide band of sand is exposed along the east shore), so distances to water are longer than at summer pool. Sites 009, 012 and 013 are on the open mown flat 85-100 m from the east shoreline, with the park road and the boat-ramp parking lot between; sites 001 and 002 are at the south end about 20-30 m from the top of the swim beach's sand and 60-80 m from the water in the frame, with the beach (day use) between. Sites 014-038 are in timber on the hillside 120-330 m from the shore. So five pads have an open view across day-use ground and none is on an open apron within ~50 m with nothing between: lakeview, not lakefront.",
+    "PIN: stored 37.1494,-90.8082 (the recreation.gov facility point) falls on the open flat between sites 009 and 013, inside the campground; the site centroid is 37.15029,-90.80926, about 135 m north-west up the hill. No move.",
+    "PHONE (lead, not written by apply): none stored. recreation.gov lists '573-223-7777 (CLEARWATER LAKE PROJECT OFFICE) 573-461-2282' - the project office, and a second number that reads as the park's gatehouse line.",
+    "MILITARY: the rules carry militaryDiscount = 1, which is a rule flag, not a discount claim - nothing written."
+  ]
+}
