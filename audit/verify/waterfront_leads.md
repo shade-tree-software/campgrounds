@@ -1070,3 +1070,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 8987 North Buck Lake (AB): east spur sites 12-14 ~15-25 m, partly under trees. p3-373.
 - 9142 Memory Lane (AB): trout pond 35-50 m from the bottom row; check for a road between. p3-373.
 - 8929 Zeiner (AB): Loop C lake row (19 Near Water sites) 30-40 m behind a tree row and narrow beach; site-map read. p3-374.
+- 8874 Writing-on-Stone (AB): south-tip sites 20-30 m from the Milk River with cottonwood/brush between; check for open ground. p3-375.
