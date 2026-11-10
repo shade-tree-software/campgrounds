@@ -6,9 +6,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Open, Missouri p3-346 (2026-11-09)
 
-- 13788 Osage-Tavern Access stored not waterfront: five or six north spurs end ~15-25 m from the Tavern Creek mouth (~40 m wide) across mown grass under scattered trees, no road between; west spurs ~45 m from the Osage behind timber; bank height unknown
+- 13788 Osage-Tavern Access stored not waterfront: five or six north spurs end ~15-25 m from the Tavern Creek mouth (~40 m wide) across mown grass under scattered trees, no road between; west spurs ~45 m from the Osage behind timber; bank height unknown **DONE - AWH 2026-11-10: raised to riverfront under the map's About wording (within about 50 m, open ground).**
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
-- 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
+- 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown **DONE - AWH 2026-11-10: raised to riverfront under the map's About wording (within about 50 m, open ground).**
 
 ## Open, PA state forest p3-360 (2026-11-10)
 
@@ -28,15 +28,15 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Open, Missouri p3-355 (2026-11-10)
 
-- 1880 Wheatland Park stored lakeview: about nine of 41 pads on an open apron with nothing between - east loop 77, 78, 79 (~25-35 m), 80, 81 (~30-40 m); west tip 22, 27, 30 (~10-25 m), 23 (~25 m); lakefront looks earned **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 1880 Wheatland Park stored lakeview: about nine of 41 pads on an open apron with nothing between - east loop 77, 78, 79 (~25-35 m), 80, 81 (~30-40 m); west tip 22, 27, 30 (~10-25 m), 23 (~25 m); lakefront looks earned **DONE - AWH 2026-11-10: raised to lakefront under the map's About wording (within about 50 m, open ground).**
 
 ## Open, Missouri p3-354 (2026-11-10)
 
-- 13898 Tri-City Community Lake stored lakeview: two camp-loop spur ends are ~19 m and ~30 m from the shore of the 27-acre lake over open mown ground, nothing between; lakefront supportable **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 13898 Tri-City Community Lake stored lakeview: two camp-loop spur ends are ~19 m and ~30 m from the shore of the 27-acre lake over open mown ground, nothing between; lakefront supportable **DONE - AWH 2026-11-10: raised to lakefront under the map's About wording (within about 50 m, open ground).**
 
 ## Open, Missouri p3-353 (2026-11-09)
 
-- 13905 Thomas Hill Reservoir Conservation Area stored lakeview: three of ~18 pads (west loop) are ~38-45 m from the riprap shore across open mown grass, nothing between; lakefront supportable **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 13905 Thomas Hill Reservoir Conservation Area stored lakeview: three of ~18 pads (west loop) are ~38-45 m from the riprap shore across open mown grass, nothing between; lakefront supportable **DONE - AWH 2026-11-10: raised to lakefront under the map's About wording (within about 50 m, open ground).**
 
 ## Open, Missouri p3-352 (2026-11-09)
 
@@ -46,7 +46,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## Open, Missouri p3-351 (2026-11-09)
 
 - 1875 Ruark Bluff West stored lakeview: at least ten RV sites (10, 13, 15, 17, 19, 21, 57, 59, 61, 63) on open grass 17-35 m from Stockton Lake on leaf-off, drawn-down imagery; lakefront likely, no site photos read **DONE - AWH 2026-11-10 (later): raised to lakefront with a caveat naming the sites.**
-- 13753 Rudolf Bennitt Conservation Area stored not waterfront: the pinned Bennitt Lake camp (sites 25-27) is on an open mown point, spurs 10-25 m from the water at the north lot; lakeview at least **CLOSED - AWH 2026-11-10: keep the stored value.**
+- 13753 Rudolf Bennitt Conservation Area stored not waterfront: the pinned Bennitt Lake camp (sites 25-27) is on an open mown point, spurs 10-25 m from the water at the north lot; lakeview at least **DONE - AWH 2026-11-10: raised to lakeview under the map's About wording (within about 50 m, open ground).**
 
 ## Open, Missouri p3-350 (2026-11-09)
 
