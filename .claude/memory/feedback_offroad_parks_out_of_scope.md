@@ -20,3 +20,5 @@ Off-road parks are not in scope (AWH 2026-10-02, settling the AL private-gap hol
 **AWH 2026-11-10:** a state forest campsite the agency places in a snowmobile parking area drops too (Sproul SS016), and so did SS017 beside a gas compressor station. Same day: a page giving a 25-ft vehicle limit beside shorter driveway/spur figures stays with a fit caveat (HY040, CR020).
 
 **AWH 2026-11-10 (later):** campsites that are part of an ATV trail system drop even when not in a parking lot (Sproul WS011-013: "ATV tracks run right through... doesn't sound very appealing. Drop them."). A roadside site on a road ATVs share stays with the wording in the note (my reading; SS003 kept).
+
+**AWH 2026-11-10 (third):** "Drop 15321" - Tiadaghton MF 001, which the agency calls adjacent to the ATV trail system with trail noise in season. So adjacent-with-an-agency-noise-warning drops too, not only part-of.

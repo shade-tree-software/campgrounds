@@ -455,6 +455,7 @@ DROPS = {
     15290: ('2026-11-10', 'AWH: campsite in a snowmobile parking lot', "Sproul SS016: the agency puts the campsite 'in the snowmobile parking area' on PA 144. Dropped by AWH 2026-11-10, like the ATV lots."),
     15291: ('2026-11-10', 'AWH', "Sproul SS017 on Beech Creek Road, beside a gas compressor station per the agency's description. Dropped by AWH 2026-11-10."),
     15300: ('2026-11-10', 'AWH: ATV-system campsites', "Sproul WS011, WS012, WS013 on Robbins Road: the booking pages call them part of the Northcentral Regional ATV Trail System, and imagery shows ATV tracks running through the sites. Dropped by AWH 2026-11-10."),
+    15321: ('2026-11-10', 'AWH: beside the ATV trail system', "Tiadaghton MF 001 on Manor Fork Road: the booking page says it is 'adjacent to the Northcentral Regional ATV Trail System. Expect road noise and trail noise during ATV season.' Dropped by AWH 2026-11-10."),
 }
 
 if __name__ == "__main__":
