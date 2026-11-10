@@ -144,3 +144,4 @@
 - [Don't measure grades; act on what the agency says](feedback_steep_access.md) — AWH 2026-11-10: keep unless the agency/operator mentions a road problem; then Severe driveway / steep grass / 4WD rules decide warn vs drop
 - [A few clear waterfront sites count](feedback_missouri_waterfront_declined.md) — AWH 2026-11-10: a few clearly waterfront sites = waterfront with a caveat naming them; the map's About panel is the definitive wording (about 50 m, open ground)
 - [EKKO road-grade limit](user_ekko_grade_limit.md) — Spade Road to SH001 (10% over 1.2 km, last 450 m ~14%) is about the limit, dry weather only (AWH 2026-11-10)
+- [Look it up before asking](feedback_look_up_before_asking.md) — AWH 2026-11-10: a keep/drop question one easy lookup settles (RV Life tier, Google reviews) gets looked up; ask only when completely stuck
