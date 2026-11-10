@@ -571,3 +571,8 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 - **15244 Elk site 061 Bubbling Springs (Montour):** same two approaches, level driveway, 40-ft site. Kept as "about the limit" by the Elk Lick Run approach; say if that road is too much.
 
 - **Closed (AWH 2026-11-10):** 15240, 15243 and 15244 all kept. Rule: no grade measuring and no close look at road surfaces; keep anything unless the owner, operator or agency mentions an issue with the road, then the rules decide between a warning and a drop.
+
+## p3-366 (2026-11-10), Sproul state forest sites
+- **15284 HY040 (Carrier Road):** the booking page says Max Vehicle Length 25 and sells it for RVs and trailers, but also gives Equipment Length 10, Driveway Length 15 and a 10-ft spur on a 30 x 40 ft site (added December 2024; the map layer says no trailer access). Kept at 25 ft with the figures in the note. Keep or drop?
+- **15282 CR020 (Crowley Run Road):** Max Vehicle Length 30 against Equipment Length 20, on a 50 x 50 ft site with a 50-ft driveway. Kept.
+- **15290 SS016:** the agency puts the campsite in the snowmobile parking area on PA 144 (a gravel lot, pull-through, 50 ft). Not an ATV lot, so kept with that in the note; say if a snowmobile lot should go the way of the ATV lots.
