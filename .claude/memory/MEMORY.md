@@ -141,6 +141,6 @@
 - [Season pass + notes round 2 — DONE](project_season_and_notes_round2.md) — 2026-11-08: 151 calendar seasons re-read vs agency
 - [High elevation in notes](feedback_high_elevation_mentions.md) — no figure repeating elevation_meters; "high elevation" only if well above local terrain (p75+, ~150 m over median), East 3000 ft+ (AWH 2026-11-08)
 - [MDC horse camps, padless camping](feedback_mdc_horse_and_padless.md) — AWH 2026-11-09: an indistinct horse camp = drop; roadside with no pad = keep with a caveat; OHV-side campground = caveat; check for an existing entry before splitting; lot-adjacent camping with designated points stays
-- [Severe driveways and steep grass drop](feedback_steep_access.md) — AWH 2026-11-10: agency grade Severe or steep grass access = site out; trailer-listed sites that fit stay without an RV category
+- [Don't measure grades; act on what the agency says](feedback_steep_access.md) — AWH 2026-11-10: keep unless the agency/operator mentions a road problem; then Severe driveway / steep grass / 4WD rules decide warn vs drop
 - [A few clear waterfront sites count](feedback_missouri_waterfront_declined.md) — AWH 2026-11-10: a few clearly waterfront sites = waterfront with a caveat naming them; the map's About panel is the definitive wording (about 50 m, open ground)
 - [EKKO road-grade limit](user_ekko_grade_limit.md) — Spade Road to SH001 (10% over 1.2 km, last 450 m ~14%) is about the limit, dry weather only (AWH 2026-11-10)

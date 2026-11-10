@@ -10,3 +10,5 @@ AWH drove EKKO up Spade Road (T 402) from the south to Buchanan SF site SH001 To
 Measured 2026-11-10 (USGS 3DEP every 25 m along the Census road line): 122 m in 1.2 km, ~10% average; final 450 m ~14% with 17-21% pitches.
 
 **How to apply:** this is the calibration for ROAD grades (not site driveways, see [[feedback-steep-access]]). An access road at or under roughly this (about 14% for under half a km) stays with a dry-weather caveat in the note; clearly steeper or much longer at that grade is a drop to report. Related: [[user_ekko_no_4wd]].
+
+**AWH 2026-11-10 (later):** this is a yardstick for a road an agency or operator flags, not a licence to profile every access road - see [[feedback-steep-access]].
