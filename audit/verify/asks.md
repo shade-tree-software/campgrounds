@@ -564,3 +564,8 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 - **Still open, re-asked with detail:** the Missouri waterfront upgrades; the MDC bare-lots rule; the Jonas / Kerkeslin names; 15225 Akersville.
 
 - **Closed (AWH 2026-11-10, later):** 15225 Akersville kept with a note to call the district office (717-485-3148, already on the entry); 13517 Sumner kept with the caveat; 8814 and 8798 renamed Jonas Campground and Kerkeslin Campground; agency-designated bare lots stay with a bare-lot caveat (nine MDC entries noted); all twelve Missouri waterfront leads keep their stored values. Rules written into docs/campground-curation.md.
+
+## p3-363 (2026-11-10), Elk and Loyalsock state forest sites
+- **15240 Elk site 017 Middle (West Hicks):** the only site. DIRT driveway, 300 ft, graded Moderate; elevation data puts it near 10% on average and imagery shows no pad. The rule drops Severe driveways and steep grass (about 8%+); dirt at 10% sits between. Kept with the grade in the note. Keep or drop?
+- **15243 Elk site 060 Bronson (Montour):** the booking page's own route, Montour Road from PA 120, holds about 10% for 2.6 miles (Spade Road's grade at 3.5 times the length). The other way in (PA 872, Elk Lick Run Road, Trout Run Road) has one pitch of 10.5% for 0.8 mile, about the Spade Road yardstick, then 10 miles of ridge road; the driveway is dirt at 7-8%. Kept with both routes in the note. Keep or drop?
+- **15244 Elk site 061 Bubbling Springs (Montour):** same two approaches, level driveway, 40-ft site. Kept as "about the limit" by the Elk Lick Run approach; say if that road is too much.
