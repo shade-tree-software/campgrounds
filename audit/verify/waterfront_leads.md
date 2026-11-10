@@ -10,6 +10,13 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 1866 Osage Bluff stored lakeview: about nine rim pads (around sites 39-49 and 20-22) 25-45 m from Truman Lake over open mown grass, no road between; but the pads sit ~10-13 m above pool (coarse DEM) and the imagery's pool level is unknown
 - 1879 Outlet Park stored riverview: all 19 pads on the river side of the one road, 15-25 m from the bank of the ~35-38 m outlet river, mown ground with scattered bank trees; bank height unknown
 
+## Open, viewed entries p3-359 (2026-11-10)
+
+- 8808 Two Jack Lakeside (Banff): lakeview -> lakefront? Parks Canada: "offers some lakefront sites"; the shore sites on the 2026 map are walk-in tent sites 14-35, drive-in 38-54 are 25-50 m back in thin trees. No drive-in pad seen at the water.
+- 8793 Wapiti (Jasper): not waterfront -> riverview? "On the shore of the Athabasca River"; FF loop 40-80 m from the bank through thin burned forest.
+- 8800 Lake Louise Hard-Sided (Banff): not waterfront -> riverview? Western rows 40-80 m from the Bow through a tree belt.
+- 8814 Jonas Creek (Jasper): not waterfront -> creekside? Map draws the creek beside sites 12-13; narrow channel under canopy.
+
 ## Open, viewed entries p3-358 (2026-11-10)
 
 - 8796 Snaring Campground (Jasper): not waterfront -> riverview? Parks Canada: "a few spots along the river with dramatic views"; map puts B 1-8 and loop C nearest the Snaring River, imagery 50-90 m with trees between. Needs a ground photo.

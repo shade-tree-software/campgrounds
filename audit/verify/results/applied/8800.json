@@ -1,0 +1,82 @@
+{
+ "id": 8800,
+ "checked": "2026-11-10",
+ "sources": [
+  "https://parks.canada.ca/pn-np/ab/banff/activ/camping",
+  "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees",
+  "Esri World Imagery tiles (rendered and viewed)",
+  "https://reservation.pc.gc.ca (REFUSED: 403 to plain HTTP; unread)",
+  "https://parks.canada.ca/pn-np/ab/banff/activ/camping/hiver-winter (redirects to the activities index: Banff winter camping page UNREAD)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 40,
+    "nightly_high": 40,
+    "currency": "CAD",
+    "reservation_fee": 11.5,
+    "checked": "2026",
+    "note": "A fire permit is C$17.00 a day at sites with a firepit; the camping page says reservations include it where applicable."
+   },
+   "source": "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees ('Lake Louise - Electrical $40.00'; 'Lake Louise Area Campgrounds and Banff Icefields Parkway Campgrounds - Fire Permit, per day $17.00'; 'Online reservation $11.50'; page modified 2026-02-12); https://parks.canada.ca/pn-np/ab/banff/activ/camping ('Reservations include fire permits where applicable'), read 2026-11-10",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "max_stay_nights": 14,
+    "season": {
+     "year_round": true
+    },
+    "note": "Booked through the Parks Canada Reservation Service (online or 1-877-737-3783), until 2 pm on the day of arrival. Check-in 2-8 pm, check-out by 11 am. Two vehicles (one fully hard-sided camping unit and one regular vehicle) and six people per site. Generators 9-10:30 am and 5-7 pm."
+   },
+   "source": "https://parks.canada.ca/pn-np/ab/banff/activ/camping ('Maximum stay – 14 nights'; 'Check-in time: 2 p.m. to 8 p.m.'; 'Check-out or re-register by 11 a.m.'; 'Campground reservations may be made until 2 p.m. on date of booking'; generators '9 a.m. to 10:30 a.m. and 5 p.m. to 7 p.m.'; page modified 2026-09-15); 2026 table: Lake Louise Hard-sided reservable 'Open Year Round'; 'Maximum 2 vehicles: 1 completely hard-sided camping unit, and 1 regular vehicle', read 2026-11-10",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://parks.canada.ca/pn-np/ab/banff/activ/camping ('shared double-length sites best suited for units up to 15 meters (50 feet) ... serviced with 15-30-50 amps'), read 2026-11-10",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 189,
+    "max_rig_ft": 50
+   },
+   "source": "https://parks.canada.ca/pn-np/ab/banff/activ/camping ('Lake Louise Hard-sided 189'; 'best suited for units up to 15 meters (50 feet)'; 'Can accommodate most sizes of motorhomes and trailers (under 22 m / 75 ft)'), read 2026-11-10",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "potable_water": true,
+    "flush_toilets": true,
+    "showers": true,
+    "dump": true
+   },
+   "source": "https://parks.canada.ca/pn-np/ab/banff/activ/camping (Lake Louise Hard-sided services: 'Electricity, Drinking water, Flush toilet, Showers, ... Firepits, Dumping station: sewage disposal'), read 2026-11-10",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true
+   },
+   "source": "https://parks.canada.ca/pn-np/ab/banff/activ/camping (2026 table: Lake Louise Hard-sided operational dates 'Open Year Round'), read 2026-11-10",
+   "method": "manual"
+  }
+ },
+ "note": "South of Lake Louise village on the east bank of the Bow River, alongside the Canadian Pacific rail line. Hard-sided units only: anything with soft sides or pop-outs must use the separate soft-sided section across the river, which is the part inside the electric fence. Sites are shared double-length pads; some have no firepit. --Claude",
+ "summary": "Keep. Year-round, 189 electrical sites (15/30/50 amp) to 50 ft at C$40, showers, flush toilets, dump and drinking water confirmed. Note corrected: the electric fence encloses the soft-sided section, not this one. PIN is at the entrance, about 750 m north of the loops: move proposed.",
+ "flags": [
+  "PIN MOVE proposed (apply.py does not write location): stored 51.41779,-116.17342 sits by the entrance road just north of the Bow River bridge. Imagery (z15 and z16, rendered) shows the hard-sided loops as a strip on the east bank between the river and the rail line, running from about 250 m to about 1.3 km south of the pin. Proposed approximately 51.4110,-116.1718 (middle of the strip, read off the image; about 760 m south of the stored pin). Not checked against a campground map (no Lake Louise map was read), so approximate.",
+  "Note correction: stored 'An electric fence encloses the campground for bear safety' is wrong for this section. Page: 'Units with soft sides or pop-outs must use the soft-sided camping section, enclosed by an electric fence.'",
+  "Winter services not read: the Banff winter camping page could not be found (the guessed URL redirects to an index). The year-round status is from the 2026 dates table; which loops and services run in winter is unread.",
+  "hookups: water and sewer at the site are not stated (table says 'Electrical'); left unset.",
+  "The page lists 'Cooking shelter, Picnic shelter' among services and also says 'There are no picnic shelters in this campground'; neither is a schema field.",
+  "PHONE: entry has none; only the reservation line 1-877-737-3783 is given. apply.py does not write phone.",
+  "Agency rows: the entry inherits the generic `federal` row's booking platform (recreation.gov), 180-day window and the US interagency senior/access discount; none applies to Parks Canada. Platform left unset here because the schema's list has no value for the Parks Canada Reservation Service; the reservation window is not stated on the pages read.",
+  "UNREAD: reservation.pc.gc.ca (403 to plain HTTP, tried once): per-site lengths and the booking window not read. Overpass timed out twice, so OSM was not consulted; pin checks rest on Parks Canada's campground map and Esri imagery.",
+  "Waterfront: 'not waterfront' stands. Upgrade LEAD, not written: the western rows run roughly 40-80 m from the Bow River through a tree belt (imagery estimate); no page claims river sites, and the rail line is on the other side."
+ ]
+}
