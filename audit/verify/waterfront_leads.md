@@ -1055,3 +1055,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## Resolved 2026-11-02, wf-co-19 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
+
+## Open, Pennsylvania state forest p3-365 (2026-11-10) - imagery could not confirm, values left at not waterfront
+- 15273 Oxbow: page says streamside, Left Branch Young Womans Creek 6 m by NHD; canopy.
+- 15274 Bull Run: page says streamside; creek 25-30 m, tree line on the bank.
+- 15276 CR004: Camp Run 19 m; canopy. 15275 CR001: Cooks Run 35 m; canopy. 15278 CR010: Trout Run 36 m; canopy.
+- 15271 Medix Run 006/007: Medix Run 22-26 m, woods. 15270 Medix 002: 25 m, woods. 15264 Masten: Pleasant Stream 38 m, woods.
