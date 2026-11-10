@@ -582,3 +582,4 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 - **Closed (AWH 2026-11-10):** 15300 WS011-013 dropped (ATV tracks run through the sites).
 - **p3-369 (2026-11-10):** 15321 Tiadaghton MF 001 (Manor Fork Road): the agency says it is 'adjacent to the Northcentral Regional ATV Trail System. Expect road noise and trail noise during ATV season.' Not called part of the system, a trailhead or parking; a former gas pump-station pad. Kept with the wording. Drop?
 - **Closed (AWH 2026-11-10):** 15321 MF 001 dropped (adjacent to the ATV trail system, agency warns of trail noise).
+- **p3-372 (2026-11-10):** 9025 Fort Macleod Lions Club Campground: no operator or municipal page exists (only a tourism listing and a Facebook group); the rate, season, phone and land owner are all unverified, Google shows 4.4 stars from 34 reviews. Keep as it is, or drop on the live-web-presence rule?

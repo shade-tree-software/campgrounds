@@ -1065,3 +1065,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 15318 Tiadaghton ER 001 (East Run Road): unnamed perennial stream 7 m from the agency point, culvert at the pin; narrow headwater stream under trees, open view not established. p3-369.
 - 8849 Beaver Flats (AB): operator says 'beautiful riverside sites'; drive-in sites 42-46 are 20-40 m from the Elbow River behind a belt of trees. p3-371.
 - 9096 Bear Creek Campground (AB): operator 'watch the creek flow beneath you'; small creek 40-100 m west of the pin in forest, pads not visible. p3-371.
+- 8888 Two O'Clock Creek (AB): agency says a few sites are next to the creek; winter imagery showed none within 190 m. Re-read on snow-free imagery. p3-372.

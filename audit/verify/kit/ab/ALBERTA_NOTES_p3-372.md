@@ -1,0 +1,11 @@
+# Alberta notes from p3-372 (2026-11-10)
+- Alberta Parks: the "First-Come, First-Served" amenity beats the rate table's "Reservable Dates" column (the column only repeats the season). Dickson Point and Hornbeck Creek are FCFS and are not on shop.albertaparks.ca.
+- shop.albertaparks.ca "Closed through <date>" = the day before next season's first night (2027); albertaparks.ca pages still show 2026 dates in November.
+- ParkIds: 330324 Dunvegan, 330165 Fish Lake, 330168 Goldeye Lake, 330174 Kootenay Plains (Two O'Clock Creek).
+- Westward Bound Campgrounds runs the Nordegg-area PRAs (Fish Lake, Goldeye, Two O'Clock Creek): 1-855-721-3975 / 403-721-3975.
+- Seniors-discount line appears on some campground pages (Dunvegan, Goldeye, Hornbeck Creek) and not others (Dickson Point, Fish Lake, Two O'Clock Creek); the provincial:AB row has none.
+- Let's Camp API needs header `X-Tenant-Type: camp` (Viking Eastview Park).
+- viking.ca and stpaul.ca answer 403 to curl; both load in the headless browser (bw.py under the lock).
+- hintoncampground.ca (Yellowhead Property Services) is one huge single-page app with base64 images inline: grep the h2t text, never the html.
+- Esri export returns HTTP 500 at some small extents: retry, or nudge the centre / use a 200-260 m half-width.
+- Campspot returned an empty list for 2027 dates at ironhorse-ab in November 2026 (rates not loaded yet).
