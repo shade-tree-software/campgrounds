@@ -1,0 +1,77 @@
+{
+  "id": 13362,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://eggharborcitylake.com/",
+    "https://eggharborcitylake.com/rates-reservations/",
+    "https://eggharborcitylake.com/faq/",
+    "https://eggharborcitylake.com/ campground map image campground-map-5.1.26.jpg",
+    "OpenStreetMap API map call (caravan_site way 40542067) + Esri World Imagery z18 at 39.5575,-74.6105"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 30,
+        "water": true
+      },
+      "source": "https://eggharborcitylake.com/faq/ ('We have 30-AMP, or 20-AMP, and water hookups.') and https://eggharborcitylake.com/rates-reservations/ (RV sites '30 Amp'/'30amp'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "dump": true,
+        "showers": true
+      },
+      "source": "https://eggharborcitylake.com/faq/ ('our campground offers a dump station!'; 'Free Showers and Toilets'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-22",
+        "closes": "09-30",
+        "note": "2026 dates as posted: 'The season begins on Friday, May 22, 2026' and 'ends on Wednesday, September 30, 2026'."
+      },
+      "source": "https://eggharborcitylake.com/faq/, read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://app.fireflyreservations.com/reserve/property/EggHarborCityLake",
+        "note": "Book online or in person at the campground office; same-day reservations accepted when available. The person reserving must be at least 21. No check-ins after 9 PM."
+      },
+      "source": "https://eggharborcitylake.com/faq/ ('Guests must be at least 21 years old to reserve a campsite'; 'Yes, we accept same-day reservations based on availability') and the site's 'book online' link to Firefly Reservations, read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "currency": "USD",
+        "checked": "2026",
+        "extra_person": {
+          "amount": 10,
+          "per": "night",
+          "child": 5,
+          "max_people": 6
+        },
+        "tax": {
+          "included": true
+        }
+      },
+      "source": "https://eggharborcitylake.com/rates-reservations/ ('2026 Camping Rates': additional adults $10 overnight, additional children $5 overnight; 'Rates apply to a maximum of 6 occupants per site') and https://eggharborcitylake.com/faq/ ('Yes, all rates include applicable taxes.'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Egg Harbor City's lake park and campground in the Pinelands, about 20 miles from Atlantic City; the city contracts operation to Renault Winery & Resort from 2026. Lake swimming beach. Sells seasonal, monthly and weekly stays as well as nights. --Claude",
+  "summary": "Operator site read (eggharborcitylake.com, 200; the nav is Renault Winery's resort). Confirmed water, dump, online booking (Firefly); added electric 30, showers, season 05-22 to 09-30 (2026 dates), booking url/21+ rule, extra person $10/$5, 6-person cap, tax included. Rate tables on the page conflict ($70/$75 vs $75/$85), left as stored and flagged; the 5.1.26 site map marks sites 1-20 50-amp. Note cleaned (hookups, dump, season, booking text moved to fields).",
+  "flags": [
+    "FEES CONFLICT (stored nightly_low 70 / high 75 from an operator read 2026-10-10, left alone): the '2026 Camping Rates' page carries two tables. Table A: 'RV/Tent Sites 1-16 & 20-40, 30 Amp' $75/day, 'Sites 17-20 Water Only' $70/day, tents 41-43 $65. Table B: 'RV Sites 1-20 30amp Beach View' $85/day, 'RV Sites 21-40 30amp FHU' $75/day, tents 41-43 $65. If Table B is current, nightly_high should be 85 and the base is $75 (no water-only RV site).",
+    "HOOKUPS CONFLICT: the campground map dated 5.1.26 (campground-map-5.1.26.jpg) colours sites 1-20 '50-AMP & WATER' and 21-40 '30-AMP & WATER'; the FAQ says '30-AMP, or 20-AMP, and water' and both rate tables say 30 amp. Wrote electric 30 (two of three pages); 50 if the map is the current truth. Sewer left unset: Table B says 'FHU' and a heading reads 'Water / Electric + Sewer', but the page also sells sewer pump-outs ($100 monthly / one a week, $30 scheduled, $50 emergency), which suggests no sewer connection.",
+    "PRICE/OWNERSHIP: ownership stays local (city-owned park) but the city contracts operation to a private resort, and every RV rate is $70-85 a night, over the US$50 private gate with no evident gateway beyond Atlantic City ~20 miles away. The gate applies to private entries only; reviewer to decide whether a resort-operated city park counts as private.",
+    "LONG-STAY CHARACTER: the page leads with 'Seasonal RV and Tent camping for residents and non-residents, as well as monthly, weekly and daily camping' (seasonal $5,500-6,000, monthly $1,800-2,350). Nightly camping is posted and bookable online, so it reads as a mixed park; unknown what share of sites are seasonal.",
+    "WATERFRONT: keep not waterfront. The 5.1.26 map puts sites 1-10 along the lake-side loop road with the 'BEACH AREA' (the day-use swimming beach, wristbands sold) between them and the lake; Table B calls sites 1-20 'Beach View'. Imagery z18 (older, pre-map) shows the site rows in pines with a pine band between the nearest row and the open beach; the beach, a day-use area, is a used strip and disqualifies on-water. A lakeview for sites 1-10 would need current imagery showing the pine band gone; not upgraded.",
+    "Pin 39.55750,-74.61050 is in the site rows (OSM caravan_site centroid 39.55811,-74.60855 is 180 m E and includes the beach area); no move.",
+    "Website https://eggharborcitylake.com/ answered 200 and is this campground; phone 609-878-8400 matches the stored value."
+  ]
+}

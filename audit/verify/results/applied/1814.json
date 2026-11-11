@@ -1,0 +1,73 @@
+{
+  "id": 1814,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.njportal.com/DEP/NJOutdoors/Park/Details?locationId=15",
+    "https://www.njportal.com/DEP/NJOutdoors/Park/ListSiteAvailabilityJson (locationId=15, per-site catalog and nightly status 2026-11-12 to 2027-12)",
+    "https://www.njportal.com/DEP/NJOutdoors/Park/SiteFilter (locationId=15, by feature and by trailer length)",
+    "https://www.njportal.com/DEP/NJOutdoors/Content/map/ParkMap_15.gif",
+    "NJ Outdoors ParkMap_15.gif read against its siteIcons coordinates (grass area vs woods)",
+    "OpenStreetMap API map call (camp_site way 40206096, toilets way 1254881920) + Esri World Imagery z16-z18"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$20 a night for a New Jersey resident, $25 for a non-resident, on every family tent/trailer site (CS01-CS65), as listed on NJ Outdoors, read 2026-11-11."
+      },
+      "source": "https://www.njportal.com/DEP/NJOutdoors/Park/Details?locationId=15 (each site's 'Cost', ResidentCost 20.00 / NonResidentCost 25.00 on all 65 CS sites), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 65,
+        "max_rig_ft": 40,
+        "note": "65 family campsites (CS01-CS65) on NJ Outdoors: 53 take trailers, 38 of them listing a maximum trailer length of 23 ft or more (up to 40 ft; others 15-20 ft), and 12 are tent-only. Also 3 group sites and 6 shelters."
+      },
+      "source": "https://www.njportal.com/DEP/NJOutdoors/Park/ListSiteAvailabilityJson (locationId=15: SiteTypes and TrailerLength per site) + SiteFilter by trailer length (40 sites pass at 23 ft, 4 at 40 ft, none at 50), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.njportal.com/DEP/NJOutdoors/Park/SiteFilter (locationId=15: no site returned for Electricity Access, Electric 30/50 Amp Hookup or Water Hookup), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true,
+        "dump": true,
+        "potable_water": true,
+        "laundry": null
+      },
+      "source": "https://www.njportal.com/DEP/NJOutdoors/Park/Details?locationId=15 (amenities 'Bathhouse' and 'RV/Trailer Sanitary Station' within facility, 'Laundry' within 10 miles; every family site 'Toilets: Flush' and Shower Access; park map icons Drinking Water, Restroom, Sanitary Dump Station), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "12-15",
+        "note": "On the NJ Outdoors calendar sites CS01-CS21 are open from April 1 and stay open to December 14 (2026); the other sites open April 2 and close after October 30. The 2027 calendar so far closes every site after October 30."
+      },
+      "source": "https://www.njportal.com/DEP/NJOutdoors/Park/ListSiteAvailabilityJson (locationId=15, nightly site status sampled 2026-11-12 to 2027-12-17), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Sites CS01-CS21 and CS30-CS33 sit on the open grass loop, the rest under trees; on NJ Outdoors several wooded sites (CS46, CS61, CS64, CS65) take 35-ft trailers. Boat launch on Swartswood Lake. --Claude",
+  "summary": "NJ Outdoors read (dep.nj.gov park page UNREAD: Incapsula block, Wayback 429). Confirmed $20/$25, 65 sites, no hookups, showers/flush/dump. Added max_rig_ft 40 with site-length breakdown (38 trailer sites take 23 ft+), season widened 10-31 -> 12-15 (CS01-CS21 open to Dec 14 in 2026), laundry cleared (NJ Outdoors lists it within 10 miles, not on site). Note: 'wooded sites are tent-only' corrected (NJ Outdoors types wooded CS46/CS61/CS64/CS65 Tent,Trailer at 35 ft; grass vs woods placed from NJ Outdoors' ParkMap_15), NJ Outdoors line dropped.",
+  "flags": [
+    "Phone: none stored; NJ Outdoors gives the park's 'Direct Line: (973) 383-5230' (https://www.njportal.com/DEP/NJOutdoors/Park/Details?locationId=15).",
+    "Pin 41.07360,-74.81885: no per-site coordinates exist (no OSM pitches; NJ Outdoors' site map is unreferenced pixels). OSM's camp_site polygon (way 40206096, mislabelled 'Swartswood Day Use Area', 41.0719-41.0806 N) and a campground toilet building at 41.07746,-74.81843 put the loops in the woods north of the day-use area between the lake and CR 619. On imagery the pin is at the south edge of that area beside the open meadow that ParkMap_15 draws as the grass loop (CS01-CS21); the wooded loops run north under canopy. Estimated site centroid about 41.0754,-74.8197, roughly 200 m from the pin, so no move proposed.",
+    "Waterfront: NJ Outdoors flags no site as waterfront (WaterfrontSite false on all); the park map puts the far loop (CS43-CS65) near the lake with a trail between. Stored 'not waterfront' kept.",
+    "Group sites A and C show 'ClosedNonSeasonal' on every 2027 night on NJ Outdoors (family sites unaffected).",
+    "UNREAD: dep.nj.gov park page (Incapsula 'Request unsuccessful' to plain HTTP and to the headless browser with UA Mozilla/5.0; Wayback answered 429)."
+  ]
+}
