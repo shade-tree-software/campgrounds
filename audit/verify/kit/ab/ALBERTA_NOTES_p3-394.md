@@ -1,0 +1,23 @@
+# p3-394 Alberta notes (2026-11-11)
+
+- reservation.albertaparks.ca no longer resolves (DNS failure, curl exit 6). Any entry that stores it as a website needs the shop link instead.
+- Cypress Hills (Elkwater) shop parkId 330135:
+  - shop link https://shop.albertaparks.ca/camping/cypress-hills-provincial-park/r/campgroundDetails.do?contractCode=ABPP&parkId=330135
+  - The shop shows only the park-level "Status: Open year round"; it gives no per-campground "Closed through" date.
+  - The SENIORS line IS present on the Ferguson Hill, Lodgepole, Reesor Lake and Battle Creek pages (the p3-383 notes said it was absent).
+  - Phone on every page: 403-893-3833 ext 5. None has a Facility Operator line.
+  - Sep 2, 2026 advisory: seasonal water shut-off from Sep 14, 2026 to Jun 1, 2027.
+  - Reesor Lake has a blue-green algae advisory from Aug 19, 2026.
+  - The 20-ft sites at Ferguson Hill and Lodgepole are listed in the 8881 and 8882 flags.
+- Crescent Falls (shop parkId 330159) and Dry Haven are run by Westward Bound Campgrounds, 1-855-721-3975. Both pages carry the seniors line.
+- Tolman East and West (Dry Island Buffalo Jump):
+  - Leaseholder Starland County, 403-772-3793.
+  - First come, first served; exact cash or cheque only; season May 15 - Oct 14.
+  - No seniors line; a community gun range is nearby.
+  - The tear sheet is https://www.albertaparks.ca/media/6494241/dry-island-buffalo-jump-tear-sheet.pdf (Nov 2021).
+- Coal Lake South (County of Wetaskiwin) books on Let's Camp.
+- Delia: the village takes phone bookings. The Campspot listing (Delia & District Agricultural Society) is closed, with an undated C$32 rate.
+- Dr. Middlemass (Wainwright):
+  - The town's 2025 brochure has C$38.85 incl. GST and "No trucks over 1-tonne".
+  - campreservations.ca now redirects to the campspot.com home page (CloudFront 403 to curl).
+- Countryside (Vulcan area, private): C$40 + GST, Google 4.4 from 34 reviews, long-stay leaning.
