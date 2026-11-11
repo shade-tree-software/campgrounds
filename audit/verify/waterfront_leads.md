@@ -1072,3 +1072,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 8929 Zeiner (AB): Loop C lake row (19 Near Water sites) 30-40 m behind a tree row and narrow beach; site-map read. p3-374.
 - 8874 Writing-on-Stone (AB): south-tip sites 20-30 m from the Milk River with cottonwood/brush between; check for open ground. p3-375.
 - p3-378 (2026-11-10): 9136 Heritage Lake and 9089 Gold Springs lakefront confirmed; no downgrades.
+- p3-377 (2026-11-10): 9067 Cold Lake M.D. Park lakefront -> lakeview (spruce band; the open SE end faces the park's day-use beach). 8842 Chinook lakeview kept. 8872 Dinosaur PP creek behind brush, not waterfront kept.
