@@ -1,0 +1,11 @@
+- 5464 WRITTEN: $16/$32 dbl, 48 sites (28 recgov), lakeview kept (002N/004N tagged Lakefront, wooded), season 05-07..11-24, bk season 05-07..09-07
+- 5633 WRITTEN: $30 conf (wayback; live CF 403), 30/50A, phone 218-843-2737, riverfront->creekside (~24 m channel), G 4.4/16, lead Horseshoe Park
+- 5383 WRITTEN: $24/$34 conf, 35 sites 18E 30A(+1 50A), 40ft, Apr30-Oct24, pin move 570 m -> 48.63301,-95.53584, phone 218-425-7504
+- 5478 WRITTEN: $24->$26, 7 sites 20-40ft, lakefront kept sites 3,4 (photos), season 05-08..10-04, phone 218-387-1750
+- 5392 WRITTEN: $24/$34, 152 sites 67E, Lakeside closed for dam to ~Jul 2027, Two Rivers open (narrow roads), split candidate Lakeside ~48.724,-96.623 / Two Rivers 48.72598,-96.60350, season 05-14..10-24, phone 218-754-2200
+- 5654 WRITTEN: $25 tax incl, 15 RV sites, season mid-May..late Sep manual, ResNexus (unread), phone conflict 439-6411 vs 359-6639, not waterfront kept
+- 5411 WRITTEN: $24/$34, 40 sites 18E 50A, 35-55ft, no dump, season 04-16..10-24, pin move 610 m -> 44.08858,-93.05911, DNR link + phone 507-414-6191, platform -> usedirect
+- 285 WRITTEN: $24/$34, 61 sites 18E 30A no water, 55ft, 4 pull-thru, season 05-14..10-24, note 'lakefront on Savanna Lake' wrong (40-60m through forest), phone 218-419-1500
+- 5707 WRITTEN: $30 ($40 holiday) before tax, 8 RV (40 drive-thru x3, 35 back-in x5) + 7 tent, rezStream, Google 4.6/71, drop exploreminnesota link, possible lakeview lead
+- 5634 WRITTEN: $30/$175wk/$500mo, 7 hookups, reservations by phone (fcfs cleared), Google no rating
+- 5381 WRITTEN: $24, 31 back-in no electric, 60ft (two 25ft), no dump, season 04-16..10-24, pin move 1.4 km -> 43.93839,-91.38534, DNR link fix, phone 507-312-2650

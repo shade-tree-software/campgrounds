@@ -1196,3 +1196,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-431 (MN, 2026-11-11)
 - 5384 Interstate not waterfront -> riverview (ReserveMN "Water Front" 5/6/10/13/14/18/21 under canopy). 5703 Welles riverview -> not waterfront. Leads: 5379 Glacial Lakes lakeview (Lower 7/1E/2E/4E), 5677 Pomme de Terre lakefront (09-18, brush fringe), 5428 Birch Lake lakeview (canopy, no site numbers).
+
+## p3-432 (MN, 2026-11-11)
+- 5478 Iron Lake lakefront kept on 003/004. 5464 Deer Lake lakeview kept. Leads: 5654 Lake Hanska lakeview (tree belt), 5707 Wolf Lake lakeview (45-50 m), 5392 Lakeside shore sites after the lake refills.

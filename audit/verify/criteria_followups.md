@@ -1732,3 +1732,9 @@ me drop and report); each needs the research named before a verdict.
 - SPLIT CANDIDATE 5425 Zippel Bay: Anglers Campground (16 sites, 48.85454,-94.86007) ~1.7 km west of the other three loops, one park entrance - not split yet.
 - 5428 Birch Lake: phone 320-616-2525 not on DNR record/map (Sauk Rapids office named) - left.
 - 5664 Magnolia: no official web page (local city campground; directories + Google only) - kept.
+
+## p3-432 (MN, 2026-11-11)
+- 5633 Gilbert Olson NOT APPLIED: hallockmn.org refused (Cloudflare 403) and the verifier read a Wayback copy instead - an archive copy of a refusing site is another route, so the result is treated as unread. Re-queue; proposal was riverfront -> creekside (pads 10-15 m, river 22-26 m wide).
+- LEAD (re-find from a non-refusing source): Horseshoe Park Campground, Hallock (~48.7769,-96.9456) - came from the same archived page.
+- SPLIT CANDIDATES now two: 5392 Lake Bronson (Two Rivers 48.72598,-96.60350 vs Lakeside, ~1.46 km, separate roads; Lakeside closed to ~July 2027) and 5425 Zippel Bay (Anglers ~1.7 km west).
+- 5654 Lake Hanska phone: 507-439-6411 kept vs park page 507-359-6639.
