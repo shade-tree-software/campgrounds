@@ -1720,3 +1720,9 @@ me drop and report); each needs the research named before a verdict.
 - DROPPED 5583 Trails Inn Quadna (ride-in/ride-out ATV base), 5592 Wildwedge (40 of 49 sites seasonal, nightly gets leftovers, peak $55-69), 5591 WestRich (109 seasonal vs 19 overnight, no rate, website DNS dead).
 - 5585 Treasure Island kept at Google 3.8/115 (full RV park, not seasonal). River's Edge 30-38 waterfront lead needs Campspot photos.
 - 5421 Tettegouche closed for a firearm hunt Nov 7-22, 2026 (no status written).
+
+## p3-430 (MN, 2026-11-11)
+- DROPPED 5648 Games Lake, and with it 5646 Diamond Lake + 13329 Big Kandiyohi East on the same county-wide Kandiyohi 7-night summer minimum (Green Lake 5647 / Big Kandiyohi West 5612 precedent). Kandiyohi followup closed.
+- 5608 Benton Beach: all 39 RV sites also sold as season blocks; seasonal share unmeasured.
+- 5625 Dakota County Fairgrounds: operator is the Agricultural Society - ownership local vs private open.
+- 5593 Willow Acres exactly $50 on an undated page.

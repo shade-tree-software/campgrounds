@@ -1,0 +1,53 @@
+{
+  "id": 5458,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232150 (description, notices, facility rules) and /rates (read 2026-11-11)",
+    "recreation.gov campsite search fq=asset_id:232150 (45 sites 079-123 with coordinates, attributes, reservable flags; read 2026-11-11)",
+    "https://www.fs.usda.gov/r09/chippewa/recreation/chippewa-campground-loop (Forest Service page, last updated September 21, 2026; read 2026-11-11)",
+    "Esri World_Imagery around 47.3838,-94.5110 (440 m frame) with the catalog's site points"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "FS page ('All sites in the Chippewa loop have electric hookups.') + rec.gov catalog (all 45 sites STANDARD ELECTRIC, 'Electricity Hookup' 30), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 46, "max_rig_ft": 64, "pull_through": false, "note": "All back-in gravel spurs; recreation.gov lists 45 sites (079-123), reservable sites taking 46-64 ft; the 15 first-come sites carry no length."},
+      "source": "FS page ('No. of Sites 46'; 'Size Restrictions No') + rec.gov catalog (45 sites, all 'Driveway Entry' Back-in, 'Driveway Surface' Gravel, 'Max Vehicle Length' 46-64 on 079-109, 0 on 110-123), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": false},
+      "source": "FS page ('Flush toilets and showers are available in the Campground.'; 'There is NO dump station in the Norway Beach Recreation Area.') + rec.gov description ('Flush toilets, showers and drinking water are provided.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-22", "closes": "09-22", "note": "2026 season of use May 22 - September 22; after Labor Day every site is first-come."},
+      "source": "FS page ('Seasons of Use 5/22/26 - 9/22/26'; 'Closed for the Season') + rec.gov rate seasons (2026 Peak May 22 - Sep 4, 'First-come, First-served Season' after Labor Day to Sep 22 in 2027/2028), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232150", "fcfs": "some_sites", "min_stay": [{"nights": 2, "applies": "always"}, {"nights": 3, "applies": "holiday"}], "note": "Sites 079-108 are reservable through Labor Day (bookings close 4 days ahead); sites 109-123 are first-come, and after Labor Day every site is first-come. The 2-night minimum is for reservations."},
+      "source": "rec.gov catalog (30 sites reservable, 109-123 'Not Reservable') + rec.gov facility rules (minConsecutiveStay 2, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4) + rate seasons ('First-come, First-served Season' after Labor Day), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026", "note": "Every site $26 a night; one camping unit per site, an extra unit is charged extra."},
+      "source": "FS page ('Overnight Use: $26 per night') + rec.gov rates (2026 and 2027 Peak and First-come seasons $26) + notice ('Fee includes one camping unit (camper, RV, pop-up, family tent) per site; additional units will be charged an additional fee'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Chippewa National Forest campground in the Norway Beach Recreation Area on the south shore of Cass Lake, among mature red and white pines; the sites sit back in the woods, the nearest about 90 m from the shore. Beach, paved bike trail and the Norway Beach Visitor Center close by. --Claude",
+  "summary": "rec.gov + FS page read: $26 all sites; all 45-46 sites electric 30A, back-in, 46-64 ft; 30 reservable (079-108), 15 FCFS (109-123), all FCFS after Labor Day; 2-night min (3 holiday); season May 22 - Sep 22; flush, showers, no dump. Not waterfront confirmed. Pin moves ~940 m to the loops.",
+  "flags": [
+    "PIN MOVE ~940 m: stored 47.37613,-94.51679 is south-west of the campground; the catalog's 44 site points centre on 47.38370,-94.51119 (FS gives 47.382284,-94.508411, rec.gov 47.38243,-94.508506 - near the loop entrance). Move to 47.38370,-94.51119.",
+    "Not waterfront confirmed: the nearest sites (094 at 47.38486,-94.51081; 113 at 47.38360,-94.51243; 095 at 47.38453,-94.51110) are ~90-100 m from Cass Lake under continuous pine canopy; no site tagged for water. FS 'Located right on the waters of Cass Lake' and rec.gov 'Some sites overlook the scenic lake' are marketing for the recreation area.",
+    "Electric: rec.gov description says 'Thirty of the sites are equipped with electric hookups', but the FS page ('All sites in the Chippewa loop have electric hookups') and the catalog (all 45 STANDARD ELECTRIC, 30 A) say every site; the old note's '~30 with electric' was the description's count. Amperage 30 confirmed.",
+    "Drinking water conflict: rec.gov description 'Flush toilets, showers and drinking water are provided.' vs FS page 'Potable water is not available at this site.' (the same FS template line appears on other Chippewa pages); potable_water left as stored.",
+    "Phone: none stored -> 218-835-4291 (Blackduck Ranger District, on the FS page); rec.gov lists 218-335-8600.",
+    "Website: keep both stored links.",
+    "Note cleaned: dropped site count, electric count, flush/showers/water and the reservable/FCFS mix (fields hold them); the electric count was wrong."
+  ]
+}

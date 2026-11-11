@@ -400075,8 +400075,8 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 44.1177,-92.1748: campground is a grassy meadow opening with a single loop; North Branch Whitewater River not at the loop (canopy valley to W/S)",
     "inclusion_evidence": "MN DNR Carley + ReserveMN: 20 drive-in rustic sites, max RV ~30 ft -> real (small) drive-in RV campground.",
-    "website": "https://www.dnr.state.mn.us/state_parks/carley.html\nhttps://reservemn.usedirect.com/MinnesotaWeb/#!park/113",
-    "note": "Carley State Park, small rustic campground in the wooded valley along the North Branch Whitewater River near Plainview; 20 drive-in sites, no hookups, vault toilets (no showers), RVs to ~30 ft (sloped/compact, favors smaller rigs). Reservable online. --Claude",
+    "website": "https://www.dnr.state.mn.us/state-parks/park.html?id=spk00130\nhttps://reservemn.usedirect.com/MinnesotaWeb/#!park/113",
+    "note": "Small, secluded campground in the wooded valley of the North Branch Whitewater River near Plainview; rough terrain makes it hard going for large RVs, and the DNR names sites 1 and 16 as the best for them. No office on site (run from Whitewater State Park). --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 1,
@@ -400089,14 +400089,21 @@
       "sewer": false
     },
     "sites": {
-      "count": 20
+      "count": 20,
+      "max_rig_ft": 30,
+      "pull_through": true,
+      "note": "DNR limit 30 ft, measured from the front of the tow vehicle; the DNR calls sites 1 and 16 (16 is the one pull-through) the best for RVs because of rough terrain. ReserveMN spurs run 30-75 ft."
     },
     "facilities": {
       "vault_toilets": true,
-      "showers": false
+      "showers": false,
+      "flush_toilets": false,
+      "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://reservemn.usedirect.com/MinnesotaWeb/#!park/113"
     },
     "provenance": {
       "hookups": {
@@ -400105,23 +400112,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "DNR overnight facilities ('Drive-in Sites' '20 secluded and wooded sites'; 'RV Length Limit' '30 feet' 'Length is from front of tow vehicle to rear of vehicle being towed.') + seasonal update ('Campsites 1 & 16 are best suitable for RV campers. Rough terrrain in the campground makes it diffucult for large RV campers.') + ReserveMN facility 874 (20 units, 19 Back-in and site 16 Pull-thru, lengths 30-75), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "DNR seasonal update ('No flush toilets are available at this park. Vault toilets available year-round.'; 'No showers available at this park.'; drinking water: 'Water is off for the season.') + park map legend (Drinking Water at the campground), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "DNR seasonal update ('Reservations can be made 120 days in advance for camping online or by calling the Reservation # 1-866-857-2757.') + ReserveMN PlaceId 113 (all 20 units web-bookable), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "ReserveMN PlaceId 113 (Carley State Park; Carley Campground): each campsite type's nightly rate from rdr/search/details for sampled sites, 2027-06-15 and 2027-06-19, read 2026-10-12 (mn_booking_rates_june_2026-10-12.jsonl); https://www.dnr.state.mn.us/state_parks/fees.html",
-        "checked": "2026-10-12"
+        "source": "ReserveMN facility 874 unit rates for 2027-06-15 (all 20 units $20.00), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "season": {
+        "source": "DNR seasonal update ('Carley State Park Campground is open each year between Memorial Day Weekend and Labor Day Weekend, and closed for the remainder of the year.') + alert ('The Carley State Park campground is CLOSED for the 2026 season, and will reopen again for the 2027 season on Friday May 28th, 2027. Updated October 29, 2026'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -400137,8 +400150,21 @@
         "weekend": 0
       },
       "checked": "2026",
-      "note": "$20 a night for a drive-in site without electric. The same on a Saturday. Plus tax and the $8 online reservation fee (none for a same-day reservation), and a state park vehicle permit. ReserveMN's prices for June 2027 nights, read 2026-10-12."
-    }
+      "note": "ReserveMN: every drive-in site $20 a night (no electric sites)."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-28",
+      "closes": "09-06",
+      "note": "Open Memorial Day weekend through Labor Day weekend each year; the 2027 season opens Friday May 28."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.dnr.state.mn.us/state-parks/park.html?id=spk00130 (MN DNR Carley State Park; record read via maps.dnr.state.mn.us feature_detail id=spk00130, alert 'Updated October 29, 2026'; read 2026-11-11) ReserveMN (UseDirect) PlaceId 113, facility 874 'Carley Campground': unit catalog and per-unit rates for 2027-06-15 via mnrdr.usedirect.com rdr/search (read 2026-11-11) https://files.dnr.state.mn.us/maps/state_parks/spk00130.pdf (DNR park map; read 2026-11-11) Esri World_Imagery around 44.1176,-92.1745 (500 m frame)",
+      "note": "DNR record spk00130 + ReserveMN facility 874 read: $20 confirmed; 20 sites, DNR limit 30 ft (spurs 30-75), one pull-through (16); open Memorial Day-Labor Day weekends (2027 opens May 28); vault toilets, seasonal water, no showers/flush. Not waterfront kept. Phone 507-312-2300; dead DNR link replaced."
+    },
+    "phone": "507-312-2300",
+    "curation_note": "p3-430 (2026-11-11): phone added; DNR link replaced (old one 404); DNR \"Rough terrrain in the campground makes it diffucult for large RV campers\" - kept with a caveat (30-ft limit, spurs 30-75 ft). --Claude"
   },
   {
     "id": 5370,
@@ -405468,11 +405494,11 @@
     "elevation_meters": 347.0,
     "state": "MN",
     "ownership": "state",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "DNR Ash River Campground map cmp00029 + satellite at 48.4063,-92.8146: loop N of Cty Rd 129 set back in forest from the Ash River; trailer/boat access separate -> not waterfront",
+    "waterfront": "riverview",
+    "waterfront_evidence": "DNR Ash River Campground map cmp00029 + satellite at 48.4063,-92.8146: loop N of Cty Rd 129 set back in forest from the Ash River; trailer/boat access separate -> not waterfront p3-430 (2026-11-11): DNR map sites 1-2 on open grass ~30-40 m from the Ash River (~48.40640,-92.81430) with paved County Road 129 between -> riverview, not riverfront.",
     "inclusion_evidence": "MN DNR Kabetogama SF page + Explore MN: 8 primitive drive-in forest sites at the Ash River public landing, vault toilets/water, FCFS $14 -> real drive-in RV campground",
-    "website": "https://www.dnr.state.mn.us/state_forests/forest.html?id=sft00027",
-    "note": "Rustic DNR state-forest campground at the Ash River public landing near Voyageurs NP; 8 primitive drive-in sites (cleared pad, fire ring, table), vault toilets, drinking water, boat ramp and beach. No hookups. Managed by Bear Head Lake State Park. --Claude",
+    "website": "https://www.dnr.state.mn.us/state-forests/forest.html?id=sft00027",
+    "note": "Rustic DNR state forest campground on one small loop beside the Ash River public landing (boat ramp), near Voyageurs National Park's Ash River Visitor Center; managed from Bear Head Lake State Park. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 1,
@@ -405493,7 +405519,9 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "none",
+      "note": "First come, first served; the fee is paid online on the arrival date (no paying ahead for a future date)."
     },
     "provenance": {
       "hookups": {
@@ -405502,23 +405530,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "DNR facility cmp00029 (camping: campsites 8, accessible 1; 'Each of the eight campsites') + facility map (sites 1-9 shown on one loop), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "DNR facility cmp00029 (water_and_sanitation: toilets 2, wells 1; 'seasonal drinking water') + facility map legend ('Vault Toilet' at two points on the loop), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "DNR facility cmp00029 ('Each of the eight campsites has a fire ring, picnic table, access to toilets, and seasonal drinking water. First-come first, served.'; 'All campsites require a fee that must be paid before occupying a campsite. Same-day advance payments available.') + fees-reservations page, read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.dnr.state.mn.us/state_parks/fees.html ('In state forests (taxes are included): Drive-in campsites $17/night ... Equestrian campsites $22/night'), read 2026-10-12",
-        "checked": "2026-10-12"
+        "source": "https://www.dnr.state.mn.us/state-parks/fees.html ('In state forests (taxes are included): Drive-in campsites $17/night') + https://www.dnr.state.mn.us/state-forests/fees-reservations.html ('Beginning in 2026, state forest camping fees are paid before you occupy a campsite. Same day advance payment is available on your arrival date'; 'DNR does not accept self-payment envelopes on site or mail-in payments.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "season": {
+        "source": "DNR facility cmp00029 ('Campground closed November 22 - May 7, 2027, depending upon weather conditions. Water is off for the season. No trash service November 1 - mid-May.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -405535,8 +405569,21 @@
         "weekend": 0
       },
       "checked": "2026",
-      "note": "Minnesota state forest campground: drive-in campsites $17 a night, taxes included; first come, first served, paid at the campground. DNR fee page, read 2026-10-12."
-    }
+      "note": "State forest drive-in campsite $17 a night, taxes included. Paid online (or at a state park ranger station) on the day of arrival, before occupying a site; no envelopes on site."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-08",
+      "closes": "11-21",
+      "note": "Closed November 22 to May 7, depending on weather; water off and no trash service from November 1 to mid-May."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.dnr.state.mn.us/state-forests/forest.html?id=sft00027 (MN DNR Kabetogama State Forest; record read via maps.dnr.state.mn.us feature_detail id=sft00027, facility cmp00029 'Ash River Campground', last updated 2026-06-09; read 2026-11-11) https://files.dnr.state.mn.us/maps/state_forests/cmp00029.pdf (DNR Ash River Campground facility map, 2023; read 2026-11-11) https://www.dnr.state.mn.us/state-forests/fees-reservations.html (state forest camping fees and how to pay; read 2026-11-11) https://www.dnr.state.mn.us/state-parks/fees.html ('In state forests (taxes are included): Drive-in campsites $17/night'; read 2026-11-11) Esri World_Imagery around 48.40628,-92.81458 (400 m frame) and 48.40660,-92.81500 (220 m frame)",
+      "note": "DNR record cmp00029 + 2023 map read: 8 FCFS sites, $17 tax-included, now paid online on the arrival day (old note's 'paid at the campground' corrected); closed Nov 22 - May 7; vault toilets, seasonal well water. Riverview lead (sites 1-2 across County Road 129). Phone 218-235-2520 (Bear Head Lake SP), DNR link to hyphen form."
+    },
+    "phone": "218-235-2520",
+    "curation_note": "p3-430 (2026-11-11): not waterfront -> riverview; phone added; season May 8 - Nov 21; DNR link form updated. --Claude"
   },
   {
     "id": 5427,
@@ -407968,15 +408015,15 @@
     "id": 5458,
     "kind": "campground",
     "name": "Chippewa Loop Campground",
-    "location": "47.37613,-94.51679",
-    "elevation_meters": 422,
+    "location": "47.3837,-94.51119",
+    "elevation_meters": 416.0,
     "state": "MN",
     "ownership": "federal",
     "waterfront": "not waterfront",
     "waterfront_evidence": "rec.gov per-site coords (fac 232150) on satellite: inland electric loop set back from Cass Lake behind forest, no shoreline RV sites",
     "inclusion_evidence": "Recreation.gov 232150 + USFS Norway Beach page: 46-site drive-in loop, ~30 electric RV sites -> real RV campground",
     "website": "https://www.fs.usda.gov/r09/chippewa/recreation/chippewa-campground-loop\nhttps://www.recreation.gov/camping/campgrounds/232150",
-    "note": "Chippewa NF, Norway Beach Rec Area near Cass Lake; the Chippewa loop has 46 sites, ~30 with electric hookups (the only electric loop in Norway Beach), flush toilets, showers, drinking water. Mix of Recreation.gov-reservable and FCFS sites. --Claude",
+    "note": "Chippewa National Forest campground in the Norway Beach Recreation Area on the south shore of Cass Lake, among mature red and white pines; the sites sit back in the woods, the nearest about 90 m from the shore. Beach, paved bike trail and the Norway Beach Visitor Center close by. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 1,
@@ -407987,7 +408034,10 @@
       "electric": 30
     },
     "sites": {
-      "count": 46
+      "count": 46,
+      "max_rig_ft": 64,
+      "pull_through": false,
+      "note": "All back-in gravel spurs; recreation.gov lists 45 sites (079-123), reservable sites taking 46-64 ft; the 15 first-come sites carry no length."
     },
     "facilities": {
       "flush_toilets": true,
@@ -407998,32 +408048,50 @@
     "booking": {
       "reservable": true,
       "platform": "recreation.gov",
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "url": "https://www.recreation.gov/camping/campgrounds/232150",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Sites 079-108 are reservable through Labor Day (bookings close 4 days ahead); sites 109-123 are first-come, and after Labor Day every site is first-come. The 2-night minimum is for reservations."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "FS page ('All sites in the Chippewa loop have electric hookups.') + rec.gov catalog (all 45 sites STANDARD ELECTRIC, 'Electricity Hookup' 30), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "FS page ('No. of Sites 46'; 'Size Restrictions No') + rec.gov catalog (45 sites, all 'Driveway Entry' Back-in, 'Driveway Surface' Gravel, 'Max Vehicle Length' 46-64 on 079-109, 0 on 110-123), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "FS page ('Flush toilets and showers are available in the Campground.'; 'There is NO dump station in the Norway Beach Recreation Area.') + rec.gov description ('Flush toilets, showers and drinking water are provided.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "rec.gov catalog (30 sites reservable, 109-123 'Not Reservable') + rec.gov facility rules (minConsecutiveStay 2, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4) + rate seasons ('First-come, First-served Season' after Labor Day), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232150/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "FS page ('Overnight Use: $26 per night') + rec.gov rates (2026 and 2027 Peak and First-come seasons $26) + notice ('Fee includes one camping unit (camper, RV, pop-up, family tent) per site; additional units will be charged an additional fee'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "season": {
+        "source": "FS page ('Seasons of Use 5/22/26 - 9/22/26'; 'Closed for the Season') + rec.gov rate seasons (2026 Peak May 22 - Sep 4, 'First-come, First-served Season' after Labor Day to Sep 22 in 2027/2028), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -408034,9 +408102,24 @@
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Every site $26 a night; one camping unit per site, an extra unit is charged extra."
     },
-    "policy_ref": "federal:usfs"
+    "policy_ref": "federal:usfs",
+    "season": {
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "09-22",
+      "note": "2026 season of use May 22 - September 22; after Labor Day every site is first-come."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232150 (description, notices, facility rules) and /rates (read 2026-11-11) recreation.gov campsite search fq=asset_id:232150 (45 sites 079-123 with coordinates, attributes, reservable flags; read 2026-11-11) https://www.fs.usda.gov/r09/chippewa/recreation/chippewa-campground-loop (Forest Service page, last updated September 21, 2026; read 2026-11-11) Esri World_Imagery around 47.3838,-94.5110 (440 m frame) with the catalog's site points",
+      "note": "rec.gov + FS page read: $26 all sites; all 45-46 sites electric 30A, back-in, 46-64 ft; 30 reservable (079-108), 15 FCFS (109-123), all FCFS after Labor Day; 2-night min (3 holiday); season May 22 - Sep 22; flush, showers, no dump. Not waterfront confirmed. Pin moves ~940 m to the loops."
+    },
+    "phone": "218-835-4291",
+    "curation_note": "p3-430 (2026-11-11): phone added; rec.gov text says 30 electric, FS page and catalog say all 45 (30 A); potable water FS vs rec.gov conflict, stored left. pin moved from 47.37613,-94.51679 to 47.3837,-94.51119 (site centroid, ~940 m; elev 416.0 m) --Claude"
   },
   {
     "id": 5459,
@@ -411997,12 +412080,12 @@
     "elevation_meters": 423,
     "state": "MN",
     "ownership": "federal",
-    "waterfront": "lakefront",
-    "waterfront_evidence": "rec.gov 233144: 3 STANDARD NONELECTRIC sites flagged proximity_water=Lakefront; satellite shows open sandy-beach frontage on Lake Winnibigoshish",
+    "waterfront": "lakeview",
+    "waterfront_evidence": "rec.gov 233144: 3 STANDARD NONELECTRIC sites flagged proximity_water=Lakefront; satellite shows open sandy-beach frontage on Lake Winnibigoshish p3-430 (2026-11-11): nearest sites 012 (47.42383,-94.31898), 013, 015, 024, 026, 027 sit ~60-65 m from Cass Lake under continuous pine canopy; rec.gov tags 012/013/015 \"Lakefront\" but also \"Shade: Full\" and describes \"Some sites have lake views\" -> lakeview.",
     "inclusion_evidence": "fs.usda.gov Chippewa NF Winnie page + recreation.gov 233144: ~34 reservable drive-in sites, no length restriction, boat access -> real RV campground",
     "website": "https://www.fs.usda.gov/r09/chippewa/recreation/winnie-campground\nhttps://www.recreation.gov/camping/campgrounds/233144",
-    "phone": "218-335-8600",
-    "note": "Chippewa NF campground on the remote west side of Lake Winnibigoshish. ~34 sites with picnic tables/fire rings, vault toilets, hand-pump water (page notes no potable water), boat access; no size restriction listed; reservable online. --Claude",
+    "phone": "218-835-4291",
+    "note": "Remote Chippewa National Forest campground on the west shore of Lake Winnibigoshish, in mature red and white pine; boat ramp and harbor next to it. Sites sit in the woods back from the shore. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -412010,29 +412093,34 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 34
+      "count": 33,
+      "max_rig_ft": 70,
+      "note": "All back-in gravel spurs, 50-70 ft (most 50-60); site 018's driveway is graded severe. The FS page says 35 sites."
     },
     "facilities": {
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/233144",
+      "note": "Reservable on recreation.gov in the peak season (May 8 - Sep 4 in 2026); first-come, first-served after the reservation season (Sep 5 - Oct 13 in 2026)."
     },
     "provenance": {
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov catalog (33 STANDARD NONELECTRIC sites, Max Vehicle Length 50 x11, 55 x12, 60 x9, 70 x1; 'Driveway Entry' Back-in; 018 'Driveway Grade' Severe; equipment RV, Trailer, Fifth Wheel, Caravan/Camper Van and others on every site) + description ('The campground offers 33 reservable sites'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov description ('Vault toilets, hand-pumped drinking water and recycling services are provided') + amenities ('Vault Toilets'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov notices ('First-come, first-served sites may be available after the reservation season') + /rates (Peak Season 2026-05-08..09-04; 'First-come, First-served Season' 2026-09-05..10-13; all 33 sites reservable in the catalog), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -412040,8 +412128,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233144/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "recreation.gov /rates (Peak Season 2026-05-08 to 2026-09-04 'STANDARD NONELECTRIC' 16; First-come, First-served Season 2026-09-05 to 2026-10-13 16; 2027 and 2028 peak 16) + FS page ('Use Fee $16/Night'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -412055,9 +412144,16 @@
     "fees": {
       "nightly_low": 16,
       "nightly_high": 16,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026"
     },
-    "policy_ref": "federal:usfs"
+    "policy_ref": "federal:usfs",
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233144 (description, notices, rules) and /rates (read 2026-11-11) https://www.recreation.gov/api/search/campsites?fq=asset_id:233144 (per-site catalog: 33 sites, coordinates, lengths, attributes; read 2026-11-11) https://www.fs.usda.gov/r09/chippewa/recreation/winnie-campground (Chippewa NF page; read 2026-11-11) Esri World_Imagery around 47.4252,-94.3180 (500 m frame) and 47.4242,-94.3186 (220 m frame) with the rec.gov site points plotted",
+      "note": "rec.gov + FS page read: $16 confirmed (2026-2028); 33 back-in sites 50-70 ft on rec.gov (FS says 35); reservable in peak season, FCFS Sep 5-Oct 13 2026; vault toilets. Waterfront: stored lakefront not supported - nearest sites ~60 m from the shore under continuous pine canopy -> lakeview lead. Phone 218-835-4291 on both official pages."
+    },
+    "curation_note": "p3-430 (2026-11-11): lakefront -> lakeview (canopy, 60-65 m); phone 218-335-8600 -> 218-835-4291 (Blackduck/Walker-Cass Lake office per FS); potable water FS vs rec.gov conflict, stored left. --Claude"
   },
   {
     "id": 5511,
@@ -417525,7 +417621,7 @@
     "waterfront_evidence": "satellite at 46.8661,-95.0374: wooded pull-thru RV sites set well back; small pond/Crooked River to NW, sites not on water",
     "inclusion_evidence": "parkrapidsrvpark.com (operator): large ~1-acre all-pull-thru full-hookup RV sites, nightly -> real drive-in RV resort",
     "website": "https://parkrapidsrvpark.com/",
-    "note": "Quiet wooded RV resort ~5 mi S of Park Rapids (near Itasca SP); large ~1-acre all-pull-thru sites, all full-hookup (water/sewer/20-30-50-amp), some winterized for year-round use, nightly reservable, per operator. --Claude",
+    "note": "Small, quiet RV park in woods and tree rows about 5 mi south of Park Rapids, near Itasca State Park and the Heartland Trail; sites of about an acre each. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -417538,10 +417634,14 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 12
     },
     "season": {
-      "year_round": true
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "11-30",
+      "note": "Campground season April through November; some winterized sites keep running water and full hookups most of the year."
     },
     "booking": {
       "reservable": true,
@@ -417550,31 +417650,35 @@
           "nights": 2,
           "applies": "always"
         }
-      ]
+      ],
+      "platform": "phone",
+      "note": "By phone or email (or the site's contact form). Check-in 1 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkrapidsrvpark.com/ ('FULL HOOK UPS (water, sewer at each site)'; '50/30/20 AMP SERVICE at each site'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkrapidsrvpark.com/ ('This 25 ACRE campground with only 12 SITES'; 'All sites are PULL THROUGH'; 'Perfect location for Big Rigs'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkrapidsrvpark.com/ ('campground season April through November. Some sites are winterized so there is running water and full hook ups available most of the year! Perfect for Deer Hunting Season'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://parkrapidsrvpark.com/ ('Nitely (2 nite minimum) $50', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://parkrapidsrvpark.com/ ('Please call ahead or email to make a reservation.'; 'Nitely (2 nite minimum)'; 'Check-In: 1:00 pm Check-Out: 11:00 am'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://parkrapidsrvpark.com/ ('Nitely (2 nite minimum) $50', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://parkrapidsrvpark.com/ ('Our Rates': 'Nitely (2 nite minimum) $50'; 'Weekly (7 nites) $300'; 'Monthly $800 plus electric use'; 'Seasonal Email or Call for rates'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -417587,8 +417691,15 @@
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "$50 nightly, 2-night minimum."
-    }
+      "note": "$50 a night (2-night minimum); weekly $300, monthly $800 plus electric; seasonal rates on request. The page gives no year."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://parkrapidsrvpark.com/ (Willow Acres an RV Resort, operator site; rates, season, sites, reservations; footer '© 2018'; read 2026-11-11) Google Maps place panel 'Willow Acres a Park Rapids RV Resort', 14170 Crooked River Dr (4.6 stars, 30 reviews; phone (218) 252-2337; read 2026-11-11) Esri World_Imagery around 46.86614,-95.03743 (800 m frame) audit/price_research/gateways.py 46.86614,-95.03743 (none within 40 km)",
+      "note": "Operator page read: $50 nightly (2-night min), weekly $300, monthly $800, seasonal by request; 12 full-hookup 50/30/20-amp pull-throughs on 25 acres; season April-November (stored year_round corrected), some winterized sites; reservations by phone/email. Google 4.6/30. Gate: $50 is at, not over, the line; no gateway within 40 km. Not waterfront confirmed; pin fine (~140 m from site centroid)."
+    },
+    "phone": "218-252-2337",
+    "curation_note": "p3-430 (2026-11-11): phone added; season year_round -> Apr 1-Nov 30; at the $50 line on an undated page with a 2-night minimum (passes); Google 4.6/30; long-stay share unmeasured. --Claude"
   },
   {
     "id": 5596,
@@ -418127,9 +418238,9 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "Satellite at 45.2047,-96.0198: campground loop in the river-oxbow park screened from the Pomme de Terre River by a continuous treed bank (~30-50m wide)",
     "inclusion_evidence": "City of Appleton campground reservation page: 12 drive-in 50-amp electric RV sites with dump station on the Pomme de Terre River, reservable -> real municipal RV campground",
-    "website": "https://appletonmn.gov/campgroundreservation",
-    "phone": "612-251-6667",
-    "note": "City of Appleton municipal campground on the Pomme de Terre River off Hwy 7/59; 12 RV sites (25 total) with 50-amp electric, water, pull-throughs, dump station, showers, fishing pier. All sites reservable. --Claude",
+    "website": "https://appletonmn.gov/camping\nhttps://appletonmn.gov/campgroundreservation",
+    "phone": "320-289-1363",
+    "note": "City of Appleton campground in Lions Park, in town just off Hwy 7/59 beside the Pomme de Terre River, with a fishing pier and a riverside walking path; the river sits behind a band of trees from the sites. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -418141,40 +418252,46 @@
       "water": true
     },
     "sites": {
-      "count": 25,
-      "pull_through": true
+      "count": 19,
+      "pull_through": true,
+      "note": "19 hookup sites (1 and 3-20) plus four tent sites."
     },
     "facilities": {
       "showers": true,
       "dump": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/421BBF15-F3F7-447D-B98D-14CB2CCDD4E3",
+      "fcfs": "never",
+      "note": "Every site needs a reservation, online (ResNexus) or through the City Office; stays over 7 days by phone to check availability. Paid in full at booking. Check-in 1 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://appletonmn.gov/camping ('**The water to the sites, dump station and cleaning house are now off for the for the 2026 season**'; 'Tent Site #4 (water/electricity available)'), read 2026-11-11; amperage not stated, stored 50 left as it is",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://appletonmn.gov/camping ('Hookup Sites Number 1, 3-20'; 'Tent Sites #1-3'; 'Tent Site #4') + 2024 campground map (sites 1, 3-20 and T1-T4), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://appletonmn.gov/camping ('Amenities at the Campground': 'Restroom Building with showers'; 'Sewer Dump Station'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://appletonmn.gov/campgroundreservation ('anyone wishing to guarantee a camping site must make a reservation through our NEW online booking system. If you do not have online access, you can call the City Office'; 'If your stay will be longer than 7 days, please call the City Office at (320) 289-1363 to check availability.'; 'Reservations must be paid for in full at the time of booking.'; 'Check In 1pm. Check out 11am') + https://appletonmn.gov/camping ('All sites must have a reservation.'; 'All sites available by reservation ONLY!'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://appletonmn.gov/camping (audit/price_research/local_mn_2026-10-15/mn_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://appletonmn.gov/camping ('Hookup Sites Number 1, 3-20, $35/night (2026 rate)'; 'Weekly Hookup Site & Tent Site #4: $200 first week, $175 each consecutive week (2026 rate)'; 'Tent Sites #1-3(no water/electricity) $25/night (2026 rate)'; 'Weekly Tent Rate: $125.00 (2026 rate)'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -418187,8 +418304,14 @@
       "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of Appleton 2026: hookup sites $35 a night; tents $25. Read 2026-10-15."
-    }
+      "note": "2026: hookup sites $35 a night; weekly $200 the first week, $175 each week after. Tent sites without hookups $25 (weekly $125)."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://appletonmn.gov/camping (City of Appleton 'Campground information': 2026 rates, amenities; read 2026-11-11) https://appletonmn.gov/campgroundreservation (City of Appleton 'Campground Reservation Information': policy, BOOK NOW link; read 2026-11-11) https://appletonmn.gov/vertical/sites/%7B4405B7C1-A469-4999-9BC5-EC3962355392%7D/uploads/Campground_Map_2024.pdf (city campground map 2024; read 2026-11-11) https://resnexus.com/resnexus/reservations/book/421BBF15-F3F7-447D-B98D-14CB2CCDD4E3 (city's ResNexus booking page: answered an Incapsula challenge to plain HTTP, not retried, unread) Esri World_Imagery around 45.20388,-96.02097 (400 m frame) and 45.2041,-96.0193 (240 m frame)",
+      "note": "City pages + 2024 map read: 2026 hookup sites $35 confirmed (weekly $200/$175); 19 hookup sites (1, 3-20) + 4 tent sites (stored 25 -> 19); reservation-only via ResNexus (unread: Incapsula) or City Office; showers, dump. Not waterfront kept. Phone 612-251-6667 not on any city page -> City Office 320-289-1363."
+    },
+    "curation_note": "p3-430 (2026-11-11): phone 612-251-6667 -> 320-289-1363; city camping page added; riverview unconfirmed (sites 3/4/6/8 ~30 m behind a continuous tree band); OHV context only (separate Appleton OHV Park). --Claude"
   },
   {
     "id": 5603,
@@ -418642,7 +418765,7 @@
     "waterfront_evidence": "Satellite at 45.7487,-94.1648: wooded campground loops sit north of the highway, ~300m back from Little Rock Lake; lakeshore is day-use beach + private residential docks, not campsites",
     "inclusion_evidence": "Benton County facility page: 44 drive-in water/electric RV/tent sites with dump station on Little Rock Lake, FCFS -> real county RV campground",
     "website": "https://www.bentoncountymn.gov/facilities/facility/details/Benton-Beach-3",
-    "note": "Benton County park on the north shore of Little Rock Lake, 2.5 mi E of Rice; 44 RV/tent sites with water and electric available, showers, dump station, lake access. Open Fishing Opener through after Labor Day. --Claude",
+    "note": "Benton County park on the north shore of Little Rock Lake, 2.5 mi east of Rice; the campground sits in woods north of the park's fields, back from the lake. The county no longer keeps a swim beach (the shore is a restored native buffer). Generators are not allowed. County Road 2 in front of the park is under major construction all summer 2027, with some closures (county notice, October 2026). --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -418653,18 +418776,24 @@
       "water": true
     },
     "sites": {
-      "count": 44
+      "count": 43,
+      "note": "39 RV sites (2-40) plus four tent sites (41-44); the county says 44 sites."
     },
     "facilities": {
       "showers": true,
       "dump": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-08",
+      "closes": "09-14",
+      "note": "2026: seasonal block from May 8; the campground closed Monday September 14, the week after Labor Day."
     },
     "booking": {
-      "reservable": false,
-      "fcfs": "always"
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://secure.rec1.com/MN/benton-county-mn/catalog",
+      "note": "All camping is booked and paid online (Rec1, a user account is needed). Seasonal sites open for booking January 1, daily, weekly and monthly stays March 1; the same sites 2-40 are offered both ways."
     },
     "provenance": {
       "hookups": {
@@ -418673,31 +418802,59 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Rec1 daily list (Campsites 2-40 and 41-44 '(Tent Site)'; tab count 43) + county page ('Campground With 44 Sites for RVs and Tent Camping'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "County page ('showers and dump station available') + Rec1 ('Sanitary Dump Station Permit'; terms 'Showers are to be used by registered campers only.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Rec1 catalog (seasonal list: 'Select \"May 8\" on the calendar for annual availability.'; daily list: 'Campground will be closing for the season Monday September 14th all campers must be out by noon!'; fee schedule 'SEASON (ALL DAYS - MEMORIAL WEEKEND - LABOR DAY WEEKEND)'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "County page ('From this point forward, all reservations and Payments for Camping and Shelters Must be made online.'; 'Seasonal Camp Sites ... will be available for booking for the season Online Only starting Jan. 1 st'; 'Camping by the Day, Weekly, and Monthly will be available for booking for the season Online Only starting March 1 st'; 'To book online, you will first need to make a user account') + Rec1 catalog (Campsites 2-40 in both the daily and the seasonal lists), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "Rec1 '2026 Price Rates' (Benton County Fee Schedule, Effective January 1, 2026: 'Camping – Non-Electric Site (2 ADULTS, Children FREE WITH PARENTS): $25 per night'; 'Camping – Electric Site (2 Adults, Children Free with Parents: $40 per night (2024)'; 'ADDITIONAL ADULT (OVERNIGHT VISITOR, 18 YEARS & OLDER): $4'; 'Electric Site; 7 to 27 consecutive days: $31.50 per night'; '28 consecutive days or more: $25 per night'; 'CAMPING FEES - SEASON ... $1,800 (2026); $2,000 (2027)'; '*All Bookings are subject to 7.375 % sales tax, 3% credit card fee') + daily list (Campsites 2-40 'Multiple Rates'; Campsites 41-44 '(Tent Site)' '$25/Multi-Day'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "be5d071dc753b9b0",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "fees": {
+      "nightly_low": 40,
+      "nightly_high": 40,
+      "currency": "USD",
+      "checked": "2026",
+      "extra_person": {
+        "included": 2,
+        "amount": 4,
+        "child": 0
+      },
+      "tax": {
+        "included": false,
+        "percent": 7.375
+      },
+      "note": "Electric RV sites $40 a night for two adults (children free with parents); 7-27 nights $31.50 a night, 28+ nights $25; whole season $1,800 (2026), $2,000 (2027). Tent sites $25. A 3% card fee is added."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.bentoncountymn.gov/facilities/facility/details/Benton-Beach-3 (Benton County facility page; read 2026-11-11) https://secure.rec1.com/MN/benton-county-mn/catalog (Benton County's Rec1 booking catalog, rendered in the headless browser: '2026 Price Rates' tab (Benton County Fee Schedule effective January 1, 2026), daily and seasonal campsite lists, closing notice, terms; read 2026-11-11) Esri World_Imagery around 45.74820,-94.16470 and 45.7502,-94.1647 (400 m frames)",
+      "note": "County page + Rec1 catalog read: electric sites $40 for 2 adults (+$4 extra adult), 7-27 nights $31.50, season $1,800; online-only booking on Rec1 (stored 'FCFS always, not reservable' corrected); 39 RV sites (2-40) + 4 tent sites; 2026 season May 8 - Sep 14; showers, dump. Every RV site is also sold as a $1,800 season block, booked two months before nightly stays open: seasonal share unmeasured. Not waterfront kept."
+    },
+    "phone": "320-968-5292",
+    "curation_note": "p3-430 (2026-11-11): phone added; booking FCFS -> online-only Rec1; all 39 RV sites also sold as $1,800 season blocks (seasonal booking opens Jan 1, nightly Mar 1) - seasonal share unmeasured; CR 2 construction 2027. --Claude"
   },
   {
     "id": 5609,
@@ -419589,9 +419746,9 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite at 46.2570,-96.0372: herringbone pads set back ~120-200m from Pebble Lake behind open grass and a vegetated shore treeline/brush that screens the lake -> not waterfront",
     "inclusion_evidence": "fergusfallsmn.gov DeLagoon page: rebuilt 2025 to 42 drive-in RV sites with hookups + dump on Pebble Lake -> real municipal RV campground; re-check 2026-10-14 (AWH #8f, RoverPass operator pass): its RoverPass listing is unclaimed, so the link is gone; priced from https://www.fergusfallsmn.gov/campground, $25-60 a night",
-    "website": "https://www.fergusfallsmn.gov/delagoonpark\nhttps://www.campspot.com/book/DeLagoon-Campground",
+    "website": "https://www.fergusfallsmn.gov/campground\nhttps://www.campspot.com/book/DeLagoon-Campground",
     "phone": "218-332-5806",
-    "note": "City of Fergus Falls park campground on Pebble Lake, rebuilt in 2025 to 42 RV sites (10 full-hookup, 32 water+electric) plus 8 tent sites, new bathhouse and dump, boat landing. Reservations online only (Campspot). --Claude",
+    "note": "City of Fergus Falls campground in DeLagoon Park on Pebble Lake, rebuilt in 2025 on open ground beside the park's ball fields, disc golf and boat landing. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -419603,12 +419760,16 @@
       "sewer": true
     },
     "sites": {
-      "count": 50
+      "count": 51,
+      "note": "42 RV sites (10 full hook-up, 32 water and electric) and 9 tent sites."
     },
     "booking": {
       "reservable": true,
       "platform": "campspot",
-      "max_stay_nights": 7
+      "max_stay_nights": 7,
+      "url": "https://www.campspot.com/book/DeLagoon-Campground",
+      "fcfs": "never",
+      "note": "Online only; 2027 bookings open January 1, 2027."
     },
     "provenance": {
       "hookups": {
@@ -419617,23 +419778,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "City page ('9 tent sites', '32 RV sites with partial hook-ups (water & electric)', '10 RV sites with full hook-ups (water, sewer & electric)'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "City page ('Campsites reservations are available by on-line registration only . We have a 7-night maximum.'; 'On-line reservations for 2027 will be available starting January 1, 2027.'; 'Online Reservation System: www.campspot.com/book/DeLagoon-Campground'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "City project page ('There will be 8 tent sites, a shower/bath house and RV dump station.'; April 14, 2025: 'the shower building is now set in place') + campground rules ('Bathroom/shower rules: ... No flushing of feminine products'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fergusfallsmn.gov/campground ('RV site – partial hook-up'; '$50.00/day'; 'RV site – full hook-up'; '$60.00/day'; 'Off-Season Rates (October and April)'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "City page 'Rates': 'In-Season Rates (May through September)' Tent site $25.00/day, 'RV site – partial hook-up Water & electric $50.00/day', 'RV site – full hook-up Water, sewer & electric $60.00/day'; 'Off-Season Rates (October and April) ... Off-season runs Oct 1- Nov 1, 2026. Starting in 2027, we plan to also offer April camping.' 'RV or tent site Water & electric $25.00/day', read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "season": {
+        "source": "City page ('DeLagoon Campground is currently CLOSED and will re-open in the spring of 2027!'; 'In-Season Rates (May through September)'; 'Off-season camping is October 1-November 1.'; 'Starting in 2027, we plan to also offer April camping.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -419642,29 +419809,43 @@
       "model": "claude-opus-5/session"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true
     },
     "fees": {
-      "nightly_low": 25,
+      "nightly_low": 50,
       "nightly_high": 60,
       "currency": "USD",
       "checked": "2026",
-      "note": "Water and electric RV sites $50 a night, full hook-up $60, tent sites with water and electric $25; in October and April every site is $25. Reservations online only, 7-night maximum. The page gives no year. Read 2026-10-14."
-    }
+      "note": "May through September: RV sites with water and electric $50 a day, full hook-up $60; tent sites (water and electric) $25. Off-season (October 1 - November 1 in 2026, April planned from 2027) every site $25."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "11-01",
+      "note": "May through September, then off-season camping October 1 - November 1; April camping planned from 2027. Closed now, re-opening spring 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.fergusfallsmn.gov/campground (City of Fergus Falls DeLagoon Campground page: sites, rates, rules, contact; read 2026-11-11) https://www.fergusfallsmn.gov/delagoonpark (city project page: 2024-2025 campground rebuild; read 2026-11-11) https://www.campspot.com/book/DeLagoon-Campground (Campspot, rendered in the headless browser for 2027-06-15: no sites loaded yet; footer 'City of Fergus Falls, a Minnesota Governmental Entity, d/b/a DeLagoon Campground', phone (218) 332-5806; read 2026-11-11) Esri World_Imagery around 46.2570,-96.0372 (500 m and 240 m frames)",
+      "note": "City page read: RV $50 (W/E) / $60 (FH), tent $25, off-season $25 (stored low $25 was the tent/off-season rate -> base $50); 51 sites (42 RV + 9 tent); online-only Campspot, 7-night max; May-Sep plus Oct 1-Nov 1 off-season; showers, dump. Waterfront lead: lakeview. Campspot inventory for 2027 not loaded; site map not readable."
+    },
+    "curation_note": "p3-430 (2026-11-11): base $25 -> $50 (RV W/E $50, FHU $60; $25 was tent/off-season); link -> /campground. Lakeview lead: rebuilt southern spurs end on open lawn ~30-35 m from Pebble Lake (~46.2568,-96.0373), no site numbers (map script did not load) - not written. --Claude"
   },
   {
     "id": 5621,
     "kind": "campground",
     "name": "Cleary Lake Regional Park",
-    "location": "44.68396,-93.39557",
-    "elevation_meters": 294,
+    "location": "44.68845,-93.39412",
+    "elevation_meters": 294.0,
     "state": "MN",
     "ownership": "local",
     "waterfront": "not waterfront",
     "waterfront_evidence": "TRPD page: 2 RV + 6 drive-in sites (Basswood/White Pine) set back in woods ~600m+ S of Cleary Lake; only a group tent site has a dock; canopy-blind satellite -> not waterfront",
     "inclusion_evidence": "threeriversparks.org Cleary Lake Campground page: 2 full-hookup drive-in RV sites + White Pine drive-in RV sites -> qualifies as drive-in RV-capable (limited)",
     "website": "https://www.threeriversparks.org/location/cleary-lake-campground",
-    "note": "Three Rivers Park District / Scott County regional park on Cleary Lake; limited RV capacity -- 2 drive-in RV sites with full hookups (Basswood) plus White Pine drive-in sites that allow RVs (no electric); remaining sites are walk-in tent. Reservable. --Claude",
+    "note": "Three Rivers Park District campground in Cleary Lake Regional Park (run jointly with Scott County), set back in woods and prairie from the lake. Only the two Basswood RV sites and the six White Pine drive-in sites take a camper; the rest are walk-in tent sites. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 3,
@@ -419673,25 +419854,45 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://go.threeriversparks.org/ThreeRiversWeb/#!park/9/26",
+      "window_opens_days": 120
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Booking engine RV01/RV02 ('Electric - 50 AMP', 'Electricity Type' '50/30 amp', 'Water Hookup' Yes, 'Sewer Hookup' Yes) + park page ('RV sites have full hookups with water, sewer and electric'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Park page ('When open, reserve a campsite online or call 763-559-6700 .'; 'Campsite reservations are available from 120 days prior to the check-in date.') + booking engine (all units web-bookable), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.threeriversparks.org/location/cleary-lake-campground (audit/price_research/local_mn_2026-10-15/mn_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "Booking engine facility 26 for 2027-06-15 (WP01-WP06 and BW01-BW14 $22.00, RV01-RV02 $55.00) + park page ('Daily Rates $20 per campsite', '$50 per RV site', 'Sales tax not included on all prices listed above.', 'An $8.25 (tax included) non-refundable reservation fee applies.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "Park page ('Basswood has 14 camp sites and two RV sites.' 'Walk-in campsites have no electricity'; 'White Pine has six campsites. Drive-in sites. RVs allowed. No electricity at any sites.') + booking engine (RV01-02 and WP01-06 'Pad Length' 50, VehicleLength 50; BW01-14 'Non-Electric Hike-In'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "Park page ('There is a centrally located bathroom and shower facility.'; 'Dump station available for registered guests') + campground map legend (Shower, Flush Toilet, Drinking Water, Dump Station), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "season": {
+        "source": "Booking engine facility 26 SeasonDates (in season 2027-04-30 through 2027-10-16, out of season before and after) + park page ('Closed for the 2026 season.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -419700,13 +419901,40 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 50,
-      "nightly_high": 50,
+      "nightly_low": 22,
+      "nightly_high": 55,
       "currency": "USD",
       "reservation_fee": 8.25,
-      "checked": "2026",
-      "note": "Three Rivers Parks: RV sites $50 a day, campsites $20, plus sales tax; $8.25 reservation fee. Read 2026-10-15."
-    }
+      "checked": "2027",
+      "note": "2027 booking engine: drive-in and walk-in campsites $22 a night, the two full-hookup RV sites $55. The park page still shows the 2026 rates, $20 and $50. The $8.25 reservation fee includes its tax.",
+      "tax": {
+        "included": false
+      }
+    },
+    "sites": {
+      "count": 22,
+      "max_rig_ft": 50,
+      "note": "Two full-hookup RV sites and six White Pine drive-in sites (no electricity, RVs allowed), all with 50-ft pads; Basswood's other 14 sites are walk-in tent sites."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-30",
+      "closes": "10-16",
+      "note": "2027 booking calendar: April 30 - October 16. Closed for the rest of 2026."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.threeriversparks.org/location/cleary-lake-campground (Three Rivers Park District campground page: rates, reservations, camping areas; read 2026-11-11) https://trpd.maps.arcgis.com/sharing/rest/content/items/b70154da024f4cc89f18e4822e261e40/data (Cleary Lake Regional Park Campgrounds summer map PDF, updated 4/29/2026; read 2026-11-11) https://go.threeriversparks.org/ThreeRiversWeb/#!park/9/26 (Three Rivers booking engine, a UseDirect/Tyler system: facility 26 unit list, per-unit amenities and rates for 2027-06-15, booking calendar 2027, via its rdr API; read 2026-11-11) Esri World_Imagery around 44.6880,-93.3945 (600 m frame)",
+      "note": "Park page + booking engine + map read: 2 full-hookup 50A RV sites ($55 in 2027, $50 posted for 2026) and 6 White Pine drive-in 50-ft pads ($22/$20, no power) - base corrected 50 -> 22; reserve online 120 days ahead; 2027 season Apr 30 - Oct 16; showers, flush, dump. Not waterfront kept. Pin moves ~520 m."
+    },
+    "phone": "763-559-6700",
+    "curation_note": "p3-430 (2026-11-11): phone added; base $50 -> $22 (six White Pine drive-in sites, 50-ft pads); only 8 sites take a camper. pin moved from 44.68396,-93.39557 to 44.68845,-93.39412 (shower building between White Pine and Basswood, ~520 m; elev 294.0 m) --Claude"
   },
   {
     "id": 5622,
@@ -420025,9 +420253,9 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "No water body at or near the campground (inland/in-town park, golf/fairground, or highway RV park) per the research lead; default down, satellite look skipped per gate.",
     "inclusion_evidence": "dakotacountyfair.org camping page: ~100 electric/water pull-through RV sites bookable outside fair week -> real RV campground (not event-only camping)",
-    "website": "https://www.dakotacountyfair.org/p/getinvolved/camping-rates-and-rules",
+    "website": "https://www.dakotacountyfair.org/p/getconnected/camping-rates-and-rules",
     "phone": "651-463-8818",
-    "note": "Dakota County Agricultural Society fairgrounds RV camping at Farmington; ~100 grass sites with 50A electric and water, pull-throughs, restrooms/showers, dump. Reservable (email); operates as a campground outside fair week (no daily camping during the fair). --Claude",
+    "note": "Dakota County Agricultural Society campground on the fairgrounds at Farmington, open to ordinary nightly stays through the summer; some dates go to events on the grounds. Generators are not allowed and there is no storm shelter. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -420047,7 +420275,17 @@
       "dump": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://forms.monday.com/forms/b86af361b10cab97dbbe515e3f405fa8?r=use1",
+      "fcfs": "never",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always"
+        }
+      ],
+      "note": "Reservation by request form, confirmed by email; no walk-ups. Check-in 8 a.m.-4:30 p.m. Some dates are taken by private events on the grounds."
     },
     "provenance": {
       "hookups": {
@@ -420061,18 +420299,24 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Camping page ('Dump Station the Dakota County Fairgrounds ... Registered Camping Guests: Included in rental rates'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Camping page ('Camping at Dakota County Fairgrounds is by reservation only - no exceptions!'; 'To make a reservation, please submit this reservation request . This is not a guarantee. You will receive a confirmation email if we are able to accommodate your stay'; 'Minimum stay: Two nights'; 'There are dates that we are full already throughout the camping season when the fairgrounds are booked by private events.'; 'Check-in: 8 a.m. - 4:30 p.m. only'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.dakotacountyfair.org/p/getconnected/camping-rates-and-rules (audit/price_research/local_mn_2026-10-15/mn_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "Camping page '2026 Camping Rates': 'Rates assume max of four people per campground and max of two vehicles. All rates include sales tax.' 'Daily (two-night minimum) With water/electric : $50 Without water/electric : $40'; 'Weekly (6 nights, 7 days) ... $250 ... $175'; 'Monthly (29 nights, 30 days) ... $650 ... $500'; 'Over four people: Add $4/person/night'; 'Rates and Rules may be updated for 2027.', read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
+      },
+      "season": {
+        "source": "Camping page ('CAMPGROUND AND DUMP STATION ARE CLOSED UNTIL MAY 1, 2027.'; 'Dakota County Fair Campground 2026 Season: May 1, 2026 - September 25, 2026.'), read 2026-11-11",
+        "checked": "2026-11-11",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -420081,12 +420325,32 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 50,
+      "nightly_low": 40,
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "Dakota County Fair: water and electric $50 a day, $40 without, tax included; two-night minimum. Read 2026-10-15."
-    }
+      "note": "2026, tax included: $50 a night with water and electric, $40 without; weekly (6 nights) $250 / $175; monthly (29 nights) $650 / $500. Rates may change for 2027. Paid in full on arrival; no refunds.",
+      "tax": {
+        "included": true
+      },
+      "extra_person": {
+        "included": 4,
+        "amount": 4,
+        "per": "night"
+      }
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "09-25",
+      "note": "2026 season May 1 - September 25; closed until May 1, 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-11-11",
+      "sources": "https://www.dakotacountyfair.org/p/getinvolved/camping-rates-and-rules (redirects to /p/getconnected/camping-rates-and-rules; Dakota County Agricultural Society camping page: 2026 season, rates, rules, contact; read 2026-11-11) https://www.dakotacountyfair.org/p/about/fair-map (2026 Fair Week Map PDF: camping blocks; read 2026-11-11) Google Maps place panel 'Dakota County Fairgrounds' (headless browser; read 2026-11-11) Esri World_Imagery around 44.6290,-93.1470 (700 m frame)",
+      "note": "Camping page read: 2026 season May 1 - Sep 25; reservation-only by request form, 2-night minimum; $50 W/E / $40 dry, tax included, +$4 per person over 4, weekly/monthly offered; dump. Base corrected 50 -> 40 (dry site). Ordinary nights outside events confirmed. Not waterfront. Google 4.5/869 (whole fairgrounds)."
+    },
+    "curation_note": "p3-430 (2026-11-11): fairgrounds test passes (ordinary nights all season by request form); base $50 -> $40 dry; operator is the Dakota County Agricultural Society (ownership left local); link updated after redirect. --Claude"
   },
   {
     "id": 5626,
@@ -421669,131 +421933,6 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Aitkin County: $20 a night per site, no electricity. Read 2026-10-15."
-    }
-  },
-  {
-    "id": 5646,
-    "kind": "campground",
-    "name": "Diamond Lake County Park (Kandiyohi County Park 3)",
-    "location": "45.19140,-94.86280",
-    "elevation_meters": 372,
-    "state": "MN",
-    "ownership": "local",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 45.1914,-94.8628: wooded camp loops set back >100m behind a day-use beach/parking/lawn strip; pads screened in trees, none on open shore",
-    "inclusion_evidence": "Kandiyohi County Parks page + Willmar Lakes Area listing: Diamond Lake County Park (Park 3) = 60 drive-in campsites w/ electric on Diamond Lake -> real county RV campground",
-    "website": "https://www.kcmn.us/departments/county_parks/index.php",
-    "phone": "320-974-8520",
-    "note": "Kandiyohi County park on the west shore of Diamond Lake; ~60 campsites with electric, swimming beach and shelter. County takes reservations only for stays of 7+ nights; shorter stays first-come, first-served. --Claude",
-    "rating": {
-      "price_tier": 1,
-      "checked": "2026-06",
-      "source": "rvlife"
-    },
-    "sites": {
-      "count": 60
-    },
-    "season": {
-      "year_round": false,
-      "opens": "05-01",
-      "closes": "09-30",
-      "note": "Approximate: Open May to September."
-    },
-    "booking": {
-      "reservable": true,
-      "fcfs": "some_sites"
-    },
-    "provenance": {
-      "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-11-07",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "aa4db4fbb122e0e4",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "facilities": {
-      "dump": true
-    }
-  },
-  {
-    "id": 5648,
-    "kind": "campground",
-    "name": "Games Lake County Park (Kandiyohi County Park 7)",
-    "location": "45.32430,-95.09080",
-    "elevation_meters": 367,
-    "state": "MN",
-    "ownership": "local",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 45.3233,-95.0925: dense-wooded camp loops set back behind a day-use beach + parking complex; pads screened by forest",
-    "inclusion_evidence": "Willmar Lakes Area + Kandiyohi County Parks: Games Lake County Park (Park 7) = 56 wooded full-hookup sites + 5 cabins -> county RV campground",
-    "website": "https://www.kcmn.us/departments/county_parks/index.php",
-    "phone": "320-354-3692",
-    "note": "Kandiyohi County park on the east shore of Games Lake; 56 wooded campsites (full hookups available) plus 5 camper cabins, swimming beach. County takes 7+ night reservations; shorter stays FCFS. --Claude",
-    "rating": {
-      "stars": 3.5,
-      "price_tier": 2,
-      "checked": "2026-06",
-      "source": "rvlife"
-    },
-    "hookups": {
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 56
-    },
-    "facilities": {
-      "showers": true
-    },
-    "booking": {
-      "reservable": true,
-      "fcfs": "some_sites"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "9f2404da9a592435",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
     }
   },
   {
@@ -951208,65 +951347,6 @@
       "currency": "USD",
       "note": "Explore Minnesota listing: a free-will offering for the first week, then $5 a day; 5 sites with electric and water, open May-September."
     }
-  },
-  {
-    "id": 13329,
-    "kind": "campground",
-    "name": "Big Kandiyohi Lake County Park East",
-    "location": "45.010037,-94.914811",
-    "elevation_meters": 341.0,
-    "state": "MN",
-    "ownership": "local",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "Esri z17 satellite: the campground sits in a wooded block north of the lakeshore road; Big Kandiyohi Lake is ~150 m south across the road and a row of houses --Claude",
-    "inclusion_evidence": "Kandiyohi County: about 80 campsites with electric, flush toilets, hot showers, camp store, beach, boat ramp; May-September, daily and seasonal rates",
-    "website": "https://www.kcmn.us/departments/county_parks/\nhttps://resnexus.com/resnexus/reservations/book/42A22252-1E54-4593-A869-A59616120C81",
-    "note": "Kandiyohi County park on the east shore of Big Kandiyohi Lake, 18 miles south of Willmar on County Road 8 (the west unit is a separate park). About 80 electric sites, sandy beach, boat ramp, two camper cabins. Daily and seasonal rates. --Claude",
-    "sites": {
-      "count": 80
-    },
-    "facilities": {
-      "flush_toilets": true,
-      "showers": true,
-      "camp_store": true
-    },
-    "provenance": {
-      "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-11-07",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-12",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "1301f1ccd63f9e80",
-      "checked": "2026-10-12",
-      "model": "claude-opus-5/session"
-    },
-    "season": {
-      "year_round": false,
-      "opens": "05-01",
-      "closes": "09-30",
-      "note": "Approximate: May to September."
-    },
-    "booking": {
-      "reservable": true
-    },
-    "curation_note": "AWH 2026-10-11: the county's ResNexus page showed no availability on any night tried, so no rate could be read; the county opens registration each season, so re-check once 2027 registration opens. --Claude"
   },
   {
     "id": 13330,

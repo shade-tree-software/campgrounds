@@ -1190,3 +1190,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-429 (MN, 2026-11-11)
 - 5420 Temperance River Upper not waterfront -> coastal walk (75-115 m to Superior over open scrub). 5697 Tiell Park not waterfront -> lakeview. 5585 Treasure Island River's Edge 30-38 "Waterfront view" open (imagery predates them).
+
+## p3-430 (MN, 2026-11-11)
+- 5510 Winnie lakefront -> lakeview (canopy, 60-65 m). 5426 Ash River not waterfront -> riverview (road between). 5620 DeLagoon lakeview lead (rebuilt spurs ~30-35 m from Pebble Lake, no site numbers yet). 5602 Appleton riverview unconfirmed (tree band).

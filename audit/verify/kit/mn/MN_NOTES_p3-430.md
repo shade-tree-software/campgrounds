@@ -1,0 +1,12 @@
+- 5593 WRITTEN: $50 2-nt min (at line), G 4.6/30, season Apr-Nov, phone 218-252-2337
+- 5510 WRITTEN: lakefront->lakeview lead (012/013/015 ~60 m canopy), phone 218-835-4291, 33 sites
+- 5602 WRITTEN: $35 conf, 19 hookup sites, ResNexus Incapsula unread, phone 320-289-1363
+- 5426 WRITTEN: season 5/8-11/21, riverview lead sites 1-2, phone 218-235-2520, hyphen link
+- 5608 WRITTEN: Rec1 online-only (corrected FCFS), $40/2 adults, season 5/8-9/14, 39 RV sites all also seasonal blocks (unmeasured), phone 320-968-5292
+- 5369 WRITTEN: spk00130, $20, 30-ft limit + rough terrain caveat, season MemDay-LabDay, phone 507-312-2300
+- 5458 WRITTEN: pin move ~940 m to 47.38370,-94.51119, all 45 sites 30A, 15 FCFS, season 5/22-9/22, not wf (~90 m canopy), phone 218-835-4291
+- 5620 WRITTEN: base 25->50, 51 sites, season May-Nov1, lakeview lead (S spurs ~30-35 m, shrub line), site map unreadable
+- 5621 WRITTEN: base 50->22 (White Pine drive-in 50 ft), RV 50A $55 2027, season 4/30-10/16, pin move ~520 m to 44.68845,-93.39412, phone 763-559-6700
+- 5625 WRITTEN: season 5/1-9/25, request form, 2-nt min, base 50->40, ag society ownership q, G 4.5/869
+- 5648 WRITTEN: DROP CAND 7+ continuous days summer, online-only, $35+tax, phone 320-354-4453
+- apply.py dry run: 11 ready, 11 note rewrites, no !!

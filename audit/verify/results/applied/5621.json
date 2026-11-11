@@ -1,0 +1,53 @@
+{
+  "id": 5621,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.threeriversparks.org/location/cleary-lake-campground (Three Rivers Park District campground page: rates, reservations, camping areas; read 2026-11-11)",
+    "https://trpd.maps.arcgis.com/sharing/rest/content/items/b70154da024f4cc89f18e4822e261e40/data (Cleary Lake Regional Park Campgrounds summer map PDF, updated 4/29/2026; read 2026-11-11)",
+    "https://go.threeriversparks.org/ThreeRiversWeb/#!park/9/26 (Three Rivers booking engine, a UseDirect/Tyler system: facility 26 unit list, per-unit amenities and rates for 2027-06-15, booking calendar 2027, via its rdr API; read 2026-11-11)",
+    "Esri World_Imagery around 44.6880,-93.3945 (600 m frame)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 22, "nightly_high": 55, "currency": "USD", "reservation_fee": 8.25, "tax": {"included": false}, "checked": "2027", "note": "2027 booking engine: drive-in and walk-in campsites $22 a night, the two full-hookup RV sites $55. The park page still shows the 2026 rates, $20 and $50. The $8.25 reservation fee includes its tax."},
+      "source": "Booking engine facility 26 for 2027-06-15 (WP01-WP06 and BW01-BW14 $22.00, RV01-RV02 $55.00) + park page ('Daily Rates $20 per campsite', '$50 per RV site', 'Sales tax not included on all prices listed above.', 'An $8.25 (tax included) non-refundable reservation fee applies.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "Booking engine RV01/RV02 ('Electric - 50 AMP', 'Electricity Type' '50/30 amp', 'Water Hookup' Yes, 'Sewer Hookup' Yes) + park page ('RV sites have full hookups with water, sewer and electric'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "max_rig_ft": 50, "note": "Two full-hookup RV sites and six White Pine drive-in sites (no electricity, RVs allowed), all with 50-ft pads; Basswood's other 14 sites are walk-in tent sites."},
+      "source": "Park page ('Basswood has 14 camp sites and two RV sites.' 'Walk-in campsites have no electricity'; 'White Pine has six campsites. Drive-in sites. RVs allowed. No electricity at any sites.') + booking engine (RV01-02 and WP01-06 'Pad Length' 50, VehicleLength 50; BW01-14 'Non-Electric Hike-In'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "Park page ('There is a centrally located bathroom and shower facility.'; 'Dump station available for registered guests') + campground map legend (Shower, Flush Toilet, Drinking Water, Dump Station), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://go.threeriversparks.org/ThreeRiversWeb/#!park/9/26", "window_opens_days": 120},
+      "source": "Park page ('When open, reserve a campsite online or call 763-559-6700 .'; 'Campsite reservations are available from 120 days prior to the check-in date.') + booking engine (all units web-bookable), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-30", "closes": "10-16", "note": "2027 booking calendar: April 30 - October 16. Closed for the rest of 2026."},
+      "source": "Booking engine facility 26 SeasonDates (in season 2027-04-30 through 2027-10-16, out of season before and after) + park page ('Closed for the 2026 season.'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Three Rivers Park District campground in Cleary Lake Regional Park (run jointly with Scott County), set back in woods and prairie from the lake. Only the two Basswood RV sites and the six White Pine drive-in sites take a camper; the rest are walk-in tent sites. --Claude",
+  "summary": "Park page + booking engine + map read: 2 full-hookup 50A RV sites ($55 in 2027, $50 posted for 2026) and 6 White Pine drive-in 50-ft pads ($22/$20, no power) - base corrected 50 -> 22; reserve online 120 days ahead; 2027 season Apr 30 - Oct 16; showers, flush, dump. Not waterfront kept. Pin moves ~520 m.",
+  "flags": [
+    "PIN MOVE ~520 m: stored 44.68396,-93.39557 is in woods south of the campground; the shower building between the White Pine drive-in sites and Basswood is at about 44.68845,-93.39412 (booking engine facility point 44.68882,-93.39313). Move to 44.68845,-93.39412.",
+    "Base fee corrected 50 -> 22: White Pine's six drive-in sites ('Drive-in sites. RVs allowed.') have 50-ft pads, so the cheapest site a 23-ft motorhome fits is the $22 (2027) / $20 (2026) non-electric site.",
+    "Small RV capacity (not a criteria problem): 8 sites take a camper (2 full hookup + 6 drive-in); kept in the note.",
+    "Not waterfront kept: on the park's map the RV sites (RV 1-2, by the turf overflow lot) and White Pine 1-6 are well back from Cleary Lake; only walk-in Basswood 12-14 approach the shore.",
+    "Phone: none stored -> 763-559-6700 (Three Rivers reservations, on the park page).",
+    "Website: keep https://www.threeriversparks.org/location/cleary-lake-campground; booking URL https://go.threeriversparks.org/ThreeRiversWeb/#!park/9/26 in booking.url.",
+    "Note cleaned: dropped 'full hookups', 'no electric', 'Reservable' and the Basswood count (fields hold them)."
+  ]
+}
