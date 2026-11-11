@@ -1688,3 +1688,10 @@ me drop and report); each needs the research named before a verdict.
 - NEW 15664 Camden State Park, Upper Campground split from 5368 (now "..., Lower Campground"); 2,341 m apart.
 - LEAD: Chisholm's "Fairgrounds and Redhead Campground" (16 W/E sites, daily rates) - not in DB.
 - 5372 Crow Wing: Rock Lake FRA campground unchecked. 5470 Eighteen Lake: Superior NF post-wildfire closure alert unread. 5463 Cross Lake: USACE page 403.
+
+## p3-425 (MN, 2026-11-11)
+- DROPPED 5657 Lake Ripley (standing 3-night minimum, booking tiered toward 30-night stays) and 5544 Lake Pepin Campground & Trailer Court (half trailer court, no website/rate/booking).
+- NEW 15665 Fairgrounds and Redhead Campground (Chisholm): city-run, 16 W/E sites, $35 nightly on CampLife.
+- 5539 Jackpot Junction kept: $50.00 base exactly at the line; casino RV park with its own booking engine.
+- 5484 Mabel Lake: potable_water removed (FS "not available" vs rec.gov "hand pump").
+- 15613: booking.platform resnexus -> operator.

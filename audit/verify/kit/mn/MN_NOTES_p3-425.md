@@ -1,0 +1,12 @@
+- 5539 Jackpot: WRITTEN. 30 sites, 0/60/80 +10% tax, 7-night max, Google casino hotel 3.9/4579 only.
+- 5387 Magney: WRITTEN. 27 back-in, 45ft, $20, May9-Oct18 2026, ph 218-387-6300.
+- 5388 Kilen: WRITTEN. 33 DI, 11E 50A, $20/30, May8-Oct18, ph 507-832-6030, no dump.
+- 5391 Bemidji: WRITTEN. 95 (43E 30A), $24/34, yr-round, ph 218-308-2300.
+- 5393 Carlos: WRITTEN. lakefront kept on 109-124E (~30m), 121 sites, $25/35, ph 320-993-3750, season unset.
+- 5544 Lake Pepin CG & Trailer Ct: WRITTEN. drop candidate (long-stay test 2, no rate, half MH court), G 4.3/85, ph ok, website -> FB, strip RoverPass, vlc 403 unread.
+- 5657 Lake Ripley: WRITTEN. DROP cand 3-night standing min; lakefront->lakeview (lane between sites & lake); $30/35.
+- 5660 Lofgren: WRITTEN. 14 sites $30.90+tax, dump onsite, ATV side flag, caretaker phone 401-385-5560.
+- 5546 Luverne: WRITTEN. lakeview kept ~140m, 9 FHU 50A, phone booking, G 4.6/58.
+- 5484 Mabel Lake: WRITTEN. $14, 22 sites, season 05-28..09-20, not wf, phone ->218-547-1044, water conflict.
+- 5398 Beatrice: WRITTEN. booking FCFS->reservable (DNR), pin move 370m to 47.7103,-93.0702, not wf kept (5 tagged sites 20-30m wooded), rig caveat, ph 218-274-7200.
+- Chisholm Redhead lead: QUALIFIES -> new_chisholm_redhead.json. CampLife 6651542, 16 back-in W/E 30/50, $35, 1.25 km S of 5524 off Discovery Dr; not wf.

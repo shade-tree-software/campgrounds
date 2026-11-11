@@ -1175,3 +1175,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-424 (MN, 2026-11-11)
 - 5463 Cross Lake lakefront -> lakeview (pine band + rail fence, sites 21/23/25/27). 5470 Eighteen Lake lakefront -> lakeview (no photo; fallback not waterfront).
 - 5473 Flour Lake lakeview -> not waterfront (rec.gov "Lakefront" 020/026/036/037 under canopy 40-70 m). 5638 Hobo Park lakefront -> lakeview (nightly lots 51E-54E behind tree band; open lawn lots seasonal).
+
+## p3-425 (MN, 2026-11-11)
+- 5398 McCarthy Beach Beatrice not waterfront -> lakeview (ReserveMN "Water Front" B3/B8/B21/B22/B24 under canopy). 5393 Lake Carlos lakefront kept (Lower 109-124E, open grass/sand).

@@ -1,0 +1,57 @@
+{
+  "id": 5484,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10191080 (overview, rules, amenities, notices)",
+    "https://www.recreation.gov/api/camps/campgrounds/10191080/rates",
+    "RIDB per-campsite catalog for facility 10191080 (trip_data/ridb_campsites.json, fetched 2026-10-20) + https://www.recreation.gov/api/camps/campsites/<id> for each of the 21 sites' coordinates",
+    "https://www.fs.usda.gov/r09/chippewa/recreation/mabel-lake-campground (Chippewa NF page, last updated 2026-10-27)",
+    "Esri World_Imagery around 47.0498,-94.0720 (half-width 220 m) with the 21 rec.gov site points plotted"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 14, "nightly_high": 14},
+      "source": "Chippewa NF page ('Single Site: $14 per night') + recreation.gov rates (Peak Season 2026-05-22 to 09-07 and 2027-05-28 to 09-06 PeakScanPay1 14; First-come, First-served Season WalkInScanPay1 14), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "RIDB catalog: all 21 sites type 'RV NONELECTRIC', 'Water Hookup: No', read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "note": "rec.gov sells 21 sites (10 reservable, 11 first-come), all typed RV/trailer/tent, with driveways listed at 37-74 ft (site 9 the shortest). The Forest Service lists no size restriction."},
+      "source": "Chippewa NF page ('There are 22 campsites available.'; 'Size Restrictions No') + RIDB catalog (21 sites, Driveway Length 37-74, 10 reservable), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "Chippewa NF page ('Restrooms Vault Toilet') + recreation.gov amenities ('Vault Toilets'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-28", "closes": "09-20", "note": "2027 Forest Service season of use: May 28 to September 20. Closed for the season now."},
+      "source": "Chippewa NF page ('Seasons of Use 05/28/27 - 09/20/27'; 'Current Conditions Closed for the Season'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10191080", "fcfs": "some_sites", "window_opens_days": 180, "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "note": "10 sites reservable up to 6 months ahead but not same day or within 4 days of arrival; the other 11 are first-come, claimed in person."},
+      "source": "recreation.gov overview ('This location is available via reservation and first-come, first-serve basis, depending on the campsite. Visitors are required to physically arrive at the campground to purchase and claim a first-come, first-serve site. Reservable sites may be booked up to 6 months in advance. Reservations cannot be made same day or within 4 days of the intended arrival date.'; rule reservationCutOff 4) + RIDB catalog (10 of 21 reservable), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Secluded Chippewa National Forest campground on Mabel Lake with a sandy beach, about 26 miles east of Walker off Highway 200; the North Country Trail and the Boy River are nearby. Sites sit in the woods back from the shore. Bears are active: food must be stored in hard-sided campers or vehicles. --Claude",
+  "summary": "rec.gov API + RIDB catalog + Chippewa NF page read: $14 flat, 22 sites (rec.gov 21: 10 reservable / 11 FCFS, 4-day cutoff, 6-month window), non-electric, vault toilets, season 05-28 to 09-20 (2027). Not waterfront confirmed (wooded, ~55-70 m). Phone none -> 218-547-1044. Drinking-water conflict flagged (FS 'not available' vs rec.gov 'hand pump'); stored potable_water false left.",
+  "flags": [
+    "Drinking water conflict: Chippewa NF page 'Potable water is not available at this site.' vs recreation.gov amenities 'Drinking Water (hand pump)'. Stored potable_water false (derived) left untouched; reviewer decides (rec.gov usually wins, but this amenity list can be a stale template).",
+    "Phone: none stored -> 218-547-1044 (Walker Ranger District, on the FS page). rec.gov lists facility_phone N/A.",
+    "Website: both stored links work (rec.gov 10191080 and the FS page).",
+    "Waterfront: not waterfront confirmed. Plotting the rec.gov site points on imagery, the shore-side sites (13 at 47.05069,-94.07220; 14 at 47.05037,-94.07244; 16 at 47.04993,-94.07259; 18 at 47.04957,-94.07283; 19 at 47.04931,-94.07303) are ~55-70 m from the beach through continuous woods; no site is on open ground to the water and no view could be confirmed under the canopy.",
+    "Status: FS page shows 'Site Temporarily Closed' / 'Closed for the Season' (seasonal closure, not a long-term one).",
+    "Season: 2027 per the FS. The rec.gov rate seasons for 2026 ran May 22 to Sept 21 (rate seasons are not a campground season; not written).",
+    "Sites: FS 22 vs rec.gov 21 (the stored note's '1 host' accounts for the difference). Site 9 driveway 37 ft, the shortest; all fit a 23-ft rig.",
+    "Discount: rec.gov rule 'tribalDiscount' for the Leech Lake Band of Ojibwe (not written).",
+    "Pin 47.04930,-94.07140 is ~70 m south-east of the site centroid (~47.0499,-94.0718), inside the loop. OK.",
+    "Note: stored text repeated sites/booking/facility fields; rewritten (directions corrected to the FS 'about 26 miles east of Walker'; the stored '~6 mi W of Remer' is consistent and was simply replaced)."
+  ]
+}
