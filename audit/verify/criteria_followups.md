@@ -1667,3 +1667,7 @@ me drop and report); each needs the research named before a verdict.
 - 5690 Sportsman Park: sites 17-24 rates unread; rec1 account to book.
 - 5588 Wagner Park: monthly stays sold; nightly share unmeasured.
 - 5511 Winnie Dam fees 24 -> 30.
+
+## p3-422 (MN, 2026-11-11) - cut short by a usage limit
+- Only 5600 Ambush Park applied. 5514 Balsam Bay's partial result withdrawn (site down: Cloudflare 1016; Google 4.4/72) so it re-queues; the other ten re-run in p3-423.
+- 5600: only rate sheet "Revised 5/1/2023" - fees not written.

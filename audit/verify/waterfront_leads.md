@@ -1164,3 +1164,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5575 Sinclair Lewis lakeview -> lakefront on sites 1-10 (open grass 15-25 m; imagery re-viewed).
 - 5588 Wagner Park creekside -> not waterfront (45-55 m, road + brush).
 - 5599 Alexander Ramsey: weak riverfront lead, north-loop rig ~44.55233,-95.12171 ~10-15 m from the Redwood River; needs the campground map.
+
+## p3-422 (MN, 2026-11-11)
+- 5600 Ambush Park riverfront -> not waterfront (2026 city map: pads 1-14 on the west loop road ~100-145 m from the Chippewa River behind a bank tree band; imagery re-viewed).
