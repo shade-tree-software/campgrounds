@@ -1737,4 +1737,5 @@ me drop and report); each needs the research named before a verdict.
 - 5633 Gilbert Olson NOT APPLIED: hallockmn.org refused (Cloudflare 403) and the verifier read a Wayback copy instead - an archive copy of a refusing site is another route, so the result is treated as unread. Re-queue; proposal was riverfront -> creekside (pads 10-15 m, river 22-26 m wide).
 - LEAD (re-find from a non-refusing source): Horseshoe Park Campground, Hallock (~48.7769,-96.9456) - came from the same archived page.
 - SPLIT CANDIDATES now two: 5392 Lake Bronson (Two Rivers 48.72598,-96.60350 vs Lakeside, ~1.46 km, separate roads; Lakeside closed to ~July 2027) and 5425 Zippel Bay (Anglers ~1.7 km west).
+  -> DONE 2026-11-11: Two Rivers 15667, Anglers 15668; Lakeside 5392 lakefront on 37E-41E/42/45/46 (closed to ~July 2027).
 - 5654 Lake Hanska phone: 507-439-6411 kept vs park page 507-359-6639.
