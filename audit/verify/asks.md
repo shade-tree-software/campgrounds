@@ -587,3 +587,6 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 
 ## 12801 Drayton Valley RV Park (AB, town-run) - p3-377, 2026-11-10 - CLOSED: AWH 2026-11-10 "drop Drayton" (dropped, removals.json)
 Keep or drop? Campspot sells nightly only 4 of its 42 RV sites (the "Full Service 30 Amp" type), beside a posted C$975/month rate and seasonal rentals - just under the 1-in-10 nightly test. Google 3.8 from 58 reviews. Both the long-stay tests and the under-4-stars rule were written for private parks; this one is the town's. C$65.10 a night tax included. Season also unclear (town: year-round; Campspot: May 1 - Oct 12).
+
+## 616 Spruce Run Recreation Area (NJ, --AWH lakefront) - p3-404, 2026-11-11 - OPEN
+Keep lakefront? Your note says the lakefront sites are marked blue on the reservation map; NJ Outdoors tags trailer sites 009, 011, 013, 015-017, 023, 033, 034, 037 and 041 as waterfront. On imagery those outer-loop sites sit behind a tree band 18-55 m deep, then a sand drawdown apron to the water - by the gate that reads lakeview. Kept lakefront pending your call (the pin was also moved 1.2 km from the office to the campground loop).
