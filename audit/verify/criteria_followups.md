@@ -1619,3 +1619,12 @@ me drop and report); each needs the research named before a verdict.
 - 5414 / 5422 booking.platform 'operator' (derived) vs state:MN 'usedirect' row; left.
 - 5422 Whitewater: DNR 'Dump Station is OFF for the 2026 season' read as the winter shutdown; Hwy 74 culvert detour through Nov 2026.
 - LEAD: Riverview Campground, Lanesboro MN (16 RV sites to 38 ft, 30/50 A, $40, campspot.com/book/riverviewcampground) - queued for p3-418.
+
+## p3-417 (MN, 2026-11-11)
+- No drops. 5626 Daly Park (Blue Earth County): rates only behind a county sign-up/log-in, guide/brochure PDFs Cloudflare-blocked; kept as local (private price test n/a). Stored 86 sites and showers unconfirmed.
+- 5628 Everett Park: ownership local -> private (Fox Lake Conservation League, not on Martin County's park list); $25 posted + phone passes the private test; stored 30 A/showers/water/dump not on the league page.
+- 5527 Dakotah Meadows: operator "48 paved" vs stored 122 sites - left.
+- 5622 Collinwood: base = resident rate + $8 non-resident surcharge (Bertram precedent). 5520 Camp Itasca 30 vs 50 A conflict (kept 50).
+- 5375 Forestville: season manual, no opens date (2026 electric opened 04-10); South Branch Root River crossing closed after flooding.
+- 5630 Floodwood: Hipcamp "sewer at select sites" unconfirmed, not written; camp host line 325-253-7538.
+- Unread: ResNexus (5523, 5626), WebTrac (5519, 5622 - site lengths).

@@ -1134,3 +1134,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5506 Whiteface Reservoir lakefront -> lakeview (site 004 'Lakefront' tag ~85 m under canopy).
 - 5419 Temperance Lower lakeview kept (#41/#42/#44 ~50-60 m from the river-mouth beach); coastal walk would also fit.
 - 5587 Voyageur's View: riverbank lane ~20-30 m from the Red Lake River behind a tree line (2017 map: sites 125-153?) - unconfirmed, no upgrade.
+
+## p3-417 (MN, 2026-11-11)
+- 5628 Everett Park not waterfront -> lakeview (sites 25-60 m behind the shore road and a thin gappy tree line; no site map).
+- 5626 Daly Park: camp roads 25-35 m from Lura Lake, pads inland - possible lakeview if a site map is read.
+- 5630 Floodwood: Hipcamp "river side" sites 3-9, imagery shows continuous trees 30-40 m (maybe pre-renovation).
+- 5373 Father Hennepin lakeview kept (Lakeview sites 1-7, 33-47 m through a wooded bank). 5619 Crookston riverview kept.
