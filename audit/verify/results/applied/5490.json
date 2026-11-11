@@ -1,0 +1,85 @@
+{
+  "id": 5490,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233588 (facility description, notices, rules, amenities, phone)",
+    "https://www.recreation.gov/api/camps/campgrounds/233588/rates (2026 and 2027 Peak Season rate tables)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233588 (per-site catalog: 22 assets, coordinates, lengths, amps)",
+    "https://www.recreation.gov/api/camps/availability/campground/233588/month (April 2027 empty, May 2027 open from 05-01)",
+    "https://www.mvp.usace.army.mil/Missions/Recreation/Pokegama-Recreation-Area/ (UNREAD: Access Denied to plain HTTP and in the headless browser)",
+    "Esri World_Imagery around 47.2496,-93.5845 with the catalog's site points, and z19 tiles at site 07"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 30,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Electric sites $30; the two tent-only sites $16."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233588/rates (Peak Season 2026-05-01 to 2026-10-14 and 2027-05-01 to 2027-10-14: STANDARD ELECTRIC per_night 30, TENT ONLY NONELECTRIC 16, per_person 0) + site catalog price_range 30-30 on every STANDARD ELECTRIC site, read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "recreation.gov campsite catalog for 233588 (19 STANDARD ELECTRIC sites; Electricity Hookup 50 on sites 03-19, sites 01-02 carry an unparsed placeholder value; Water Hookup 'No' on all 19; no sewer attribute) + facility description ('19 electric back in sites'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 19,
+        "pull_through": false,
+        "max_rig_ft": 79,
+        "note": "19 back-in electric sites, every one listed for an RV or trailer of 46 ft or more; two hike-in tent-only sites (20-21) by the dam."
+      },
+      "source": "recreation.gov campsite catalog for 233588 (19 STANDARD ELECTRIC, Driveway Entry 'Back-In' on all; RV/Trailer max length 46-79 ft; sites 20-21 TENT ONLY NONELECTRIC, Site Access 'Hike-In') + facility description ('19 electric back in sites, two primitive tent-only sites (non-electric)'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true,
+        "dump": true,
+        "potable_water": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233588 ('Amenities include flush toilets, showers, drinking water, a dump station, boat ramp, playground and a fish cleaning station.'; amenities list 'Flush Toilets (Seasonal)', 'Dump Station', 'Drinking Water'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-01",
+        "closes": "10-14"
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233588/rates (Peak Season 2026-05-01 to 2026-10-14 and 2027-05-01 to 2027-10-14; no 2026/2027 walk-up or shoulder seasons, unlike 2019-2022) + availability calendar (April 2027 has no sites; May 2027 'Available' from 05-01), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233588",
+        "max_stay_nights": 14,
+        "note": "Every site is reservable by site number; bookable up to the day of arrival."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233588 (rules: maxStay 14 nights, rolling 30 days; maxConsecutiveStay 14; reservationCutOff 0 days prior to arrival) + api/search (campsite_reserve_type 'Site-Specific', reservable true), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground beside Pokegama Dam on the Mississippi River, 2 miles west of Grand Rapids; red pine and hardwood woods, a boat ramp, fishing dock and fish-cleaning station. US 2 and a rail line run along the north edge. --Claude",
+  "summary": "rec.gov read: 19 back-in 50-amp sites (no water/sewer), 2 hike-in tent sites; $30 (was 26) for 2026 and 2027; season May 1-Oct 14; 14-night max; showers, flush toilets, dump. Riverview kept (sites 06-13 are 20-40 m from the river behind a wooded bank). USACE page unread (Access Denied). Pin moved ~250 m from the tent sites by the dam to the RV loop.",
+  "flags": [
+    "Fees base 26 -> 30: the 2026 and 2027 Peak Season tables both price STANDARD ELECTRIC at $30 (every site's price_range is 30-30). The $26 from the 2026-10-09 rate read is not on today's table.",
+    "Waterfront: keep riverview. Catalog points for sites 06-13 (47.24952,-93.58398 to 47.24892,-93.58246) run along the south bank of the Mississippi below the dam; z19 imagery at site 07 shows the pads under a closed canopy with a 20-40 m wooded bank to the water, and the only open clearing (site 06's dock area, ~47.2496,-93.5848) is a day-use dock, not a pad. No site within ~50 m over open ground.",
+    "Pin 47.25050,-93.58700 sits by the dam beside the hike-in tent sites 20-21 (47.2508,-93.5868), about 250 m west of the RV sites. Move to 47.24960,-93.58400 (centre of RV sites 01-19).",
+    "Season: closes is the rate table's last Peak night (10-14). Older years ran walk-up shoulder seasons (Apr 15-30, Oct 16-31); none are posted for 2026 or 2027.",
+    "Phone: none stored -> 218-326-6128 (rec.gov facility phone). Website lines unchanged (rec.gov page + USACE page; the USACE page returned Access Denied to plain HTTP and in the browser, so it was not read).",
+    "Hookups: sites 01-02 carry the placeholder 'Electricity Hookup' as their amp value; the other 17 say 50.",
+    "Note: the old note's highway/rail noise is kept as a fact (US 2 and a rail line run ~100 m north of the sites in imagery); site count, pads, facilities and reservable moved to fields."
+  ]
+}

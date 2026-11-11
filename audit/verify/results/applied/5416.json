@@ -1,0 +1,63 @@
+{
+  "id": 5416,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://maps.dnr.state.mn.us/cgi-bin/compass/feature_detail.cgi?id=spk00265 (DNR record behind https://www.dnr.state.mn.us/state_parks/park.html?id=spk00265: overnight facilities, seasonal update, alert, contact)",
+    "https://files.dnr.state.mn.us/maps/state_parks/spk00265_summer.pdf (DNR summer map, text only)",
+    "https://mnrdr.usedirect.com/MinnesotaRDR/rdr/ search/place PlaceId 72; search/grid + search/details for facilities 917 Lakeview Campground (41 units) and 805 Oakridge Campground (56 units) on 2027-06-15 and 917 on 2027-06-19; SeasonDates 2026-11-12 to 2027-12-31",
+    "Esri World_Imagery around 45.3160,-95.0360 (export with ReserveMN facility points) and z18/z19 tiles on the Lakeview loops"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "surcharges": {"electric": 10, "weekend": 0},
+        "checked": "2026",
+        "note": "$25 a night for a drive-in site without electric; electric $35. The same on a Saturday."
+      },
+      "source": "ReserveMN facility 917 search/details: 40 electric units $35.00 and site 32 $25.00 on 2027-06-15 and 2027-06-19 (Saturday); facility 805: 33 electric units $35.00, 23 non-electric $25.00 on 2027-06-15, read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "DNR seasonal update ('All Lakeview campsites are electric except 32.'; 'Note that Sibley State Park campsites are either electric or non-electric only, as this park does not have full hookups.') + ReserveMN unit details (Amp 50 on Lakeview, '20, 30, 50' on Oakridge electric units), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 99, "max_rig_ft": 60, "pull_through": true, "note": "Lakeview Campground (41 sites, all but one electric) and Oak Ridge Campground (wooded and open sites, about half electric). Some sites are too small for larger RVs."},
+      "source": "DNR overnight facilities ('The park has 99 sites across two campgrounds.'; 'The park has 40 electric sites in the Lakeview Campground and 34 electric sites in the Oak Ridge campground.'; 'The max RV length is 60 feet.') + seasonal update ('Larger RVs will not fit in some sites. Please verify that your RV will fit in a campsite prior to making reservations.') + ReserveMN (Lakeview 41 units 44-78 ft, Pull-thru on 1E, 2E, 4E, 6E, 15E, 19E, 33E, 40E; Oakridge 56 units 35-110 ft), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true, "note": "Showers, campground flush toilets, the dump station and campground water run mid-May to mid-October (May 7 to October 18 in 2027); vault toilets all year, and RV tanks can be filled year-round at the ranger station spigot."},
+      "source": "DNR sanitation ('Shower buildings are located in the Lakeview and Oak Ridge campgrounds.'; flush toilets 'available from mid-May to mid-October'; 'Vault toilets are available year-round.'; 'The dump station operates in the park from mid-May through mid-October.') + seasonal update ('water is available seasonally when OPEN (May 7 to Oct. 18, 2027). You can fill water tanks year-round at the outdoor spigot on the ranger station.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-02", "closes": "11-07", "note": "The reservable season. Water, showers and the dump station run May 7 to October 18 in 2027."},
+      "source": "ReserveMN facilities 917 and 805 SeasonDates (out of season 2026-11-18 to 2027-04-01, in season 2027-04-02 to 2027-11-07, out of season from 2027-11-08) + DNR seasonal update (water 'May 7 to Oct. 18, 2027'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://reservemn.usedirect.com/MinnesotaWeb/#!park/72"},
+      "source": "ReserveMN PlaceId 72 facilities 917 and 805 (every listed unit AllowWebBooking true) + DNR ('Reservations needed before occupying a campsite.'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "State park on Lake Andrew near New London. Lakeview Campground sits on the wooded slope above the swimming beach and boat launch; Oak Ridge Campground is in the woods to the north-east. Mt. Tom Trail climbs to a lookout tower, and there are horse trails, an interpretive center and kayak and canoe rental at the beach store in summer. --Claude",
+  "summary": "DNR record + ReserveMN read: 99 sites in two campgrounds (Lakeview 41, Oak Ridge 56 online), 74 electric (50 amp), no water/sewer at sites; $25 / $35 electric confirmed; 60-ft limit, some sites too small for larger RVs; reservable season Apr 2-Nov 7 (2027), water and showers May 7-Oct 18. Sites count 130 -> 99. Not waterfront kept; pin OK. Phone none -> 320-347-7810.",
+  "flags": [
+    "Sites: count 130 (derived) -> 99 (DNR 'The park has 99 sites across two campgrounds'). ReserveMN lists 41 + 56 = 97 web units; the DNR's electric total (40 + 34 = 74) against ReserveMN's 40 + 33 suggests one Oak Ridge electric site is not bookable online.",
+    "Hookups: water and sewer false from the DNR's 'this park does not have full hookups'; electric 50.",
+    "Booking: platform operator (derived) -> usedirect, the state:MN row's value.",
+    "Season: ReserveMN's in-season window is 2027-04-02 to 2027-11-07; the DNR's November update still lists 'Camping is OPEN in Lakeview and Oak Ridge Campgrounds' with water off, and ReserveMN shows the campgrounds in season to 2026-11-17. Whether winter camping continues outside the reservable season is not stated; opens/closes are the reservable season.",
+    "Waterfront: keep not waterfront. ReserveMN gives '.1 mile' (sites 30-41) or '.2 mile' to the water for every Lakeview site. Imagery: the south row of the Lakeview loops (an RV pad at ~45.31390,-95.03810) is 40-45 m above Lake Andrew behind a continuous wooded slope 25-35 m deep; the open shore by the boat launch and beach (~45.3147,-95.0405) is a day-use parking area, not campsites. Oak Ridge is ~800 m inland.",
+    "Pin 45.31460,-95.03720 is on the Lakeview loops, ~190 m from ReserveMN's Lakeview facility point (45.31508,-95.03949, which sits by the beach parking): OK. Oak Ridge (ReserveMN 45.31879,-95.02854) is ~820 m away and shares this entry.",
+    "Phone: none stored -> 320-347-7810 (DNR contact, 800 Sibley Park Road Northeast, New London).",
+    "Website: only the ReserveMN link is stored; add the DNR page https://www.dnr.state.mn.us/state_parks/park.html?id=spk00265 as the first line.",
+    "DNR alert: 'On Dec. 5 and 6, 2026, Sibley State Park is closed to the public due to a special Muzzleloader Deer hunt.' Outside the reservable season; no status.",
+    "A horse campground (nine sites) and a group camp are separate facilities; this entry covers the two drive-in campgrounds."
+  ]
+}

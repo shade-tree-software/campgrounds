@@ -1154,3 +1154,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5537 Spring Grove KOA not waterfront -> creekside (sites 52-61, ~25-30 m open grass to Riceford Creek; imagery re-viewed).
 - 5641 HooDoo Point lakefront -> lakeview (pads 15-25 m behind a tree band).
 - NEW 15663 Riverview Lanesboro creekside (Root River ~25-27 m wide below the dam).
+
+## p3-420 (MN, 2026-11-11)
+- 5492 Sandy Lake riverfront -> lakefront (old evidence named the wrong water; sites 05-14 on Big Sandy Lake above the dam).
+- 5687 Schroeder not waterfront -> lakeview (south row 30-40 m from Cedar Lake).
+- 5553 Olson lakefront kept on sites 7-12 (paved public lake trail between; open ground).

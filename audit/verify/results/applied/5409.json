@@ -1,0 +1,62 @@
+{
+  "id": 5409,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://maps.dnr.state.mn.us/cgi-bin/compass/feature_detail.cgi?id=sra00302 (DNR park record behind https://www.dnr.state.mn.us/state_parks/park.html?id=sra00302: overnight facilities, seasonal update, contact, alert)",
+    "https://files.dnr.state.mn.us/maps/state_parks/sra00302_camp.pdf (DNR campground map)",
+    "https://mnrdr.usedirect.com/MinnesotaRDR/rdr/ search/place PlaceId 81, search/grid + search/details for facility 1000 Portsmouth Campground (units, lengths, amps, rates for 2026-10-01, 2027-06-15 and 2027-06-19; SeasonDates 2026-11-11 to 2028-01-04)",
+    "Esri World_Imagery around 46.4908,-93.9725"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 24,
+        "currency": "USD",
+        "surcharges": {"electric": 10, "weekend": 0},
+        "checked": "2026",
+        "note": "$24 a night for a drive-in site without electric; electric $34. The same on a Saturday and in October."
+      },
+      "source": "ReserveMN facility 1000 search/details: every Drive-In unit $24.00 and every Drive-In Electric unit $34.00 on 2026-10-01, 2027-06-15 and 2027-06-19 (Saturday), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "DNR seasonal update ('Portsmouth Campground does not have a dump station, water fill station, water hook-ups or sewer hook-ups for RVs.'; 'Portsmouth Campground has 18 electric sites.') + ReserveMN unit details (Amp 50 on 1E, 3E, 4E; 30 on 8E-14E, 18E-25E), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 33, "max_rig_ft": 70, "pull_through": false, "note": "Drive-in sites 1e-25e (18 electric) and 5-29 (non-electric), all back-ins listed at 30 ft or more; sites 30-33 by the parking lot are walk-in tent sites. Site 2e is not bookable online."},
+      "source": "DNR overnight facilities ('29 sites - 18 electric, 15 non-electric'; 'Walk-in Sites: Four sites') + DNR campground map (sites 1e-25e, 5-29, walk-ins 30-33 at the parking lot) + ReserveMN facility 1000 (32 web units: 17 Drive-In Electric 40-70 ft, 11 Drive-In 30-40 ft, 4 Walk-In; Driveway 'Back-in' on all; 2E absent from the web list), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": false, "note": "The shower building was closed for the 2026 season, leaving one vault toilet beside it; no water fill for RVs. The nearest dump station is at Lum Park in Brainerd."},
+      "source": "DNR sanitation (Showers / Flush Toilets 'Seasonally available, in campground'; Vault Toilets 'Available year-round'; 'No dump or fill station at this park') + seasonal update ('Portsmouth Campground Shower Building is closed for the 2026 camping season. 1 vault toilet is available year-round and it is located next to the shower building.'; 'Water fill-up for RVs is not available.'; 'The nearest dump station availability is in Lum Park in Brainerd') + campground map (Drinking water symbol at the restroom), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-30", "closes": "10-24", "note": "The 2026 season ran to October 31."},
+      "source": "ReserveMN facility 1000 SeasonDates (out of season 2026-11-11 to 2027-04-29, in season 2027-04-30 to 2027-10-24, out of season from 2027-10-25) + DNR seasonal update ('Portsmouth Campground will close for the season on October 31st, 2026.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://reservemn.usedirect.com/MinnesotaWeb/#!park/81"},
+      "source": "ReserveMN PlaceId 81 facility 1000 (every unit AllowWebBooking true) + DNR ('All Portsmouth campsites and yurts at this park are by reservation only.'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Campground at Cuyuna Country SRA near Crosby and Ironton, above Portsmouth Mine Lake (a flooded iron-ore pit) with a swimming beach below the loops; shaded and open grassy sites. The recreation area's 50+ miles of mountain-bike singletrack start nearby. --Claude",
+  "summary": "DNR record + campground map + ReserveMN read: 18 electric (17 online, 50/30-amp) + 11 non-electric drive-in back-ins (30-70 ft) + 4 walk-ins; $24 / $34 electric confirmed; no water/sewer/dump/fill; shower building closed in 2026; season 2027 Apr 30-Oct 24 (2026 to Oct 31). Not waterfront kept; pin OK.",
+  "flags": [
+    "Mountain-bike trail area, not OHV (per the brief): no flag.",
+    "Facilities: 'Portsmouth Campground Shower Building is closed for the 2026 camping season' (DNR seasonal update) - recorded in facilities.note; showers/flush_toilets kept true as the park's normal facilities. Reviewer may prefer to drop the 2026 wording once 2027 opens.",
+    "Booking: platform operator (derived) -> usedirect, the state:MN row's value; url = the ReserveMN park link already in website.",
+    "Sites: stored 33 (note prose: 18 + 15) kept; that 15 non-electric includes the 4 walk-in tent sites, so drive-in sites are 18 electric + 11 non-electric = 29 (DNR: '29 sites'). The 4 walk-ins are 30-33 near the parking lot. Every drive-in site takes a 23-ft rig (30 ft and up). Note DNR's own text is inconsistent ('29 sites - 18 electric, 15 non-electric').",
+    "Waterfront: keep not waterfront. The loops sit ~150-300 m NW of Portsmouth Mine Lake in woods; the campground map puts the swimming beach at the end of a road south of sites 5-6, which are the nearest and still well back from the shore.",
+    "Pin 46.49150,-93.97290 is ~25 m from ReserveMN's facility point (46.49171,-93.97277) on the campground loops: OK. (DNR's text GPS for 'Portsmouth Campground' repeats the Miner's Mountain Rally Center coordinates and is not the campground.)",
+    "Phone: none stored -> 218-772-3690 (DNR contact for Cuyuna Country SRA, office at 307 3rd Street, Ironton).",
+    "Website lines both confirmed (DNR park page, ReserveMN park 81).",
+    "DNR alert (updated 2026-09-11): 'All mountain bike trails will be closed Nov. 6th-22nd for the annual deer hunting closure. The Yurts will also be closed November 6th-29th.' Campground already out of season then; no status change."
+  ]
+}

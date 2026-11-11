@@ -1,0 +1,60 @@
+{
+  "id": 5410,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://maps.dnr.state.mn.us/cgi-bin/compass/feature_detail.cgi?id=sra00309 (DNR record behind https://www.dnr.state.mn.us/state_parks/park.html?id=sra00309: overnight facilities, seasonal update, alert, contact)",
+    "https://mnrdr.usedirect.com/MinnesotaRDR/rdr/ search/place PlaceId 71, search/grid + search/details for facility 911 Sherlock Park Campground (113 units, lengths, amps, rates for 2027-06-15 and 2027-06-19; SeasonDates 2026-11-11 to 2027-12-31)",
+    "Esri World_Imagery around 47.9314,-97.0308"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 24,
+        "currency": "USD",
+        "surcharges": {"electric": 10, "full_hookup": 18, "weekend": 0},
+        "checked": "2026",
+        "note": "$24 a night for a drive-in site without electric; electric $34; full hookups $42. The same on a Saturday."
+      },
+      "source": "ReserveMN facility 911 search/details: 8 Drive-In units $24.00 (50-60 ft), 3 Drive-In Electric $34.00, 98 Drive-In Electric/Water/Sewer $42.00, on 2027-06-15 and 2027-06-19 (Saturday), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "DNR overnight facilities ('The campground has 98 full-service sites with electric, water and sewer hookups. The campground also has three electric-only sites. All electric sites have 20-, 30-and 50-amp hookups.') + ReserveMN unit details (Amp 50 on all 101 electric units), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 109, "max_rig_ft": 60, "pull_through": true, "note": "Most sites are full-hookup pull-throughs (79). Sites 1-20 and 42-59 are on one-way roads and not recommended for large RVs. Four walk-in tent sites besides."},
+      "source": "DNR overnight facilities ('The campground has 109 drive-in sites. The majority of sites are pull-through ... Sites 1-20 and 42-59 are on one-way roads. These sites are note recommended for large RVs.'; 'All 79 pull-through sites are full-service sites'; 'The max RV length is 60 feet. Length is measured from front of tow vehicle to rear of vehicle being towed.'; 'The four walk-in sites') + ReserveMN facility 911 (109 drive-in units 36-110 ft, 78 web-bookable Pull-thru), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": false, "note": "No dump station: sewer is at the full-hookup sites. Showers and flush toilets are summer-only."},
+      "source": "DNR sanitation ('The accessible shower building in the campground is open in summer only.'; 'Flush toilets are only available in summer.'; 'Vault toilets are available year-round in the campground.') + seasonal update ('No dump station available at this park. Sewer dump is at full-service sites.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-30", "closes": "10-24", "note": "The DNR says the campground usually opens the first full weekend of May, weather permitting; in 2026 it closed October 26."},
+      "source": "ReserveMN facility 911 SeasonDates (in season 2027-04-30 to 2027-10-24) + DNR ('The campground usually opens during the first full weekend of May, depending on weather conditions.'; alert 'Sherlock Campground closed for 2026 season October 26th.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://reservemn.usedirect.com/MinnesotaWeb/#!park/71"},
+      "source": "ReserveMN PlaceId 71 facility 911 (112 of 113 units AllowWebBooking true; CH94, the camp host's pull-through, false), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Sherlock Park Campground in the East Grand Forks Greenway, the land between the Red and Red Lake rivers cleared after the 1997 flood; open, grassy loops with scattered trees, the Greenway trails and the riverwalk shops beside it. --Claude",
+  "summary": "DNR + ReserveMN read: 109 drive-in (98 full hookup incl. 79 pull-throughs, 3 electric, 8 non-electric) + 4 walk-in; 20/30/50-amp; $24 / $34 / $42 confirmed; 60-ft limit; no dump station (sewer at sites) -> dump true -> false; summer showers; season 2027 Apr 30-Oct 24 (2026 closed Oct 26). Not waterfront kept; pin OK.",
+  "flags": [
+    "Facilities: dump true (derived from the old note) -> false. DNR: 'No dump station available at this park. Sewer dump is at full-service sites.'",
+    "Sites 1-20 and 42-59 'not recommended for large RVs' (one-way roads; the 2026 alert says 1-20 & 42-69). Advice for big rigs, not a limit a 23-ft motorhome hits; no drop flag.",
+    "Booking: platform operator (derived) -> usedirect, the state:MN row's value.",
+    "Waterfront: keep not waterfront. Imagery: the loops fill the Greenway north-east of the Red Lake River, with a trail and a 50-100 m riparian woodland between the nearest pads and the water; ReserveMN gives '.2 mile' to the water on 37 units and '15'' only on the walk-in tent sites W2-W4.",
+    "Pin 47.93200,-97.03050 is inside the loops, ~60 m from ReserveMN's facility point (47.93144,-97.03085): OK.",
+    "Phone: none stored -> 218-773-4950 (DNR contact, 515 2nd Street NW, East Grand Forks).",
+    "Website: only the ReserveMN link is stored; add the DNR page https://www.dnr.state.mn.us/state_parks/park.html?id=sra00309 as the first line.",
+    "Status: closed for the season (alert: 'Sherlock Campground closed for 2026 season October 26th. water is off at sites and bathrooms & shower buildings closed.'). Seasonal, not a closure; no status written."
+  ]
+}

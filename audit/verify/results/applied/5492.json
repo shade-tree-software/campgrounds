@@ -1,0 +1,63 @@
+{
+  "id": 5492,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233620 (facility description, directions, notices, rules, amenities, phone)",
+    "https://www.recreation.gov/api/camps/campgrounds/233620/rates (2026, 2027 and 2028 Peak Season tables)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233620 (per-site catalog: 61 assets, coordinates, lengths, amps, water)",
+    "https://www.recreation.gov/api/camps/availability/campground/233620/month (April 2027 empty; May 2027 from 05-01; October 2027 to 10-14)",
+    "Esri World_Imagery around 46.7880,-93.3200 with the catalog's site points, z19 tiles on the south peninsula, and Esri World_Topo_Map of the dam and lake",
+    "Open-Meteo elevation on the water either side of the peninsula",
+    "https://www.mvp.usace.army.mil/Missions/Recreation/Sandy-Lake/ (not fetched: the same USACE site refused both fetch routes for 5490 this batch)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 26,
+        "nightly_high": 26,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Electric sites $26; double sites $52; walk-to tent sites $16-18; group sites $60."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233620/rates (Peak Season 2026-05-01 to 2026-10-14 and 2027-05-01 to 2027-10-14: STANDARD ELECTRIC 26, double STANDARD ELECTRIC 52, WALK TO 18 / 16, GROUP STANDARD ELECTRIC 60, CABIN ELECTRIC 60), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov campsite catalog for 233620 (Electricity Hookup 50 on all 49 STANDARD ELECTRIC sites and both group sites; Water Hookup 'Yes' on sites 22, 24, 28 and 30, 'No' elsewhere; no sewer attribute), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 49, "max_rig_ft": 80, "pull_through": true, "note": "Sites 1-21 on the south side of the dam and 22-49 on the north side, each with its own entrance; eight pull-throughs, all on the north side. Site lengths run 22-80 ft. Two group sites, a camper cabin and eight walk-to tent sites besides."},
+      "source": "recreation.gov campsite catalog for 233620 (49 STANDARD ELECTRIC; RV/Trailer max length 22-80 ft; Pull-Through on 23, 25, 26, 27, 31, 35, 42, 47) + facility description ('43 single family sites, five double family sites and two group sites'; 'Campsites 1-21 ... \"South Entrance\". Campsites 22-49 ... \"North Entrance\"'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "showers": true, "dump": true, "potable_water": true, "laundry": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233620 ('Amenities include flush and vault restrooms, showers, drinking water, laundry facilities and a dump station.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-14"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233620/rates (Peak Season 05-01 to 10-14 in 2026, 2027 and 2028) + availability calendar (April 2027 no sites; first available 2027-05-01; last available 2027-10-14), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233620", "max_stay_nights": 14},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233620 (rules: maxStay 14 nights, rolling 30 days; reservationCutOff 0 days) + catalog (every site 'Site-Specific', reservable), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground at the outlet of Big Sandy Lake, 13 miles north of McGregor, the only public campground and beach on the lake. The 1895 dam splits it into north and south halves with separate road entrances, joined only by a footpath across the dam; red and white pine and hardwoods, two lake boat ramps and a river ramp, docks, a fishing pier, a beach and a small lock-house museum. No firewood sold; bring certified firewood. --Claude",
+  "summary": "rec.gov read: 49 electric sites (50-amp; water at 4), 22-80 ft, 8 pull-throughs; $26 confirmed (doubles $52); season May 1-Oct 14; showers, laundry, dump. Waterfront: stored riverfront is on the wrong water - the south-peninsula sites sit ABOVE the dam on Big Sandy Lake, so riverfront -> lakefront (sites 09-14 on open grass ~20 m from the lake with a dock each). Pin ~460 m off in a residential area -> move.",
+  "flags": [
+    "WATERFRONT riverfront -> lakefront. The stored evidence ('Sandy River channel below the dam') misreads the water: on Esri topo and imagery the dam sits at ~46.7881,-93.3200 at the west end of the lake's outlet channel, and the south-peninsula sites lie east (upstream) of it, between that outlet arm and Big Sandy Lake itself. Sites 09-14 (46.78702,-93.31881 to 46.78705,-93.31963) face south onto the lake across ~15-25 m of open grass, each with a dock at the shore (z19, leaf-off: scattered deciduous trees, no continuous band). Sites 05-08 (46.78718,-93.31926 to 46.78715,-93.31892) face the outlet arm to the north across ~15-20 m with a few bare trees. Six-plus named sites within ~50 m over open ground on a lake -> lakefront. North-side sites 22-49 sit in woods by the marsh, not on open water. Suggested evidence: 'catalog sites 09-14 ~20 m from Big Sandy Lake over open grass, dock per site; above the dam (dam 46.7881,-93.3200, west of the peninsula)'.",
+    "Pin 46.78420,-93.32330 is in the residential area south-west of the campground, ~400 m from the nearest site (21) and ~460 m from the south loop. Move to 46.78710,-93.31930 (south-peninsula sites 01-14, by the South Entrance office/shower building).",
+    "Sites: max_rig_ft 100 (derived) -> 80 (site 34; the 92-ft figure is the North Group site). Some short south-side sites (09 at 22 ft, 08 at 24 ft, 10 at 25 ft); plenty of 30 ft+ sites fit a 23-ft rig.",
+    "Facilities: laundry added (rec.gov description 'laundry facilities').",
+    "Fees $26 confirmed for 2026-2028; federal:usace row holds the rest.",
+    "Season 05-01 to 10-14 from the rate tables and the 2027 calendar.",
+    "Phone 651-290-5850 confirmed (rec.gov facility phone). USACE web page not fetched (the mvp.usace.army.mil site gave Access Denied on 5490 earlier in this batch).",
+    "A rec.gov militaryDiscount rule is present; per the brief that is not a discount claim."
+  ]
+}

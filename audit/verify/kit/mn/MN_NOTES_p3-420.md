@@ -1,0 +1,13 @@
+# p3-420 MN notes (2026-11-11)
+- 5553 Olson: written. city page via browser; map PDF 63 elec + 5 tent; low 23->30 (tent); lakefront kept sites 7-12 (path precedent); website 2nd line -> campspot.com/book/olsonpark
+- 5559 Plum Creek Park: county; 47/64 RV seasonal, 16 overnight + 1 ADA; $25 30/50A no w/s; May-Sep; own engine; mostly-seasonal note; pin ~180 m SE in field (under 250).
+- 5490 Pokegama Dam: rec.gov $30 (was 26), 19 back-in 50A, May1-Oct14, riverview kept (wooded bank 20-40 m), pin ~250 m -> 47.2496,-93.5840; phone 218-326-6128 new; USACE page Access Denied.
+- 5409 Cuyuna Portsmouth: $24/$34 confirmed; 17 E online + 11 non-E drive-in + 4 walk-in; showers closed 2026; season 04-30..10-24 (2027); not wf; pin OK; phone 218-772-3690.
+- 5410 Red River SRA: $24/34/42 confirmed; 109 drive-in, 98 FHU (79 PT); dump false (none); 60 ft; season 04-30..10-24; not wf; pin OK; phone 218-773-4950; add DNR page to website.
+- 5566 Refuge RV Park: DROP CANDIDATE presence (no operator site, unclaimed RoverPass, no rate); Google 4.5/44; spring imagery ~full; gateway MSP.
+- 5568 River Road Luverne: $35 operator / $40-48 Hipcamp all-in; Google 4.6/58; 11/18 sites held all summer -> mostly long-stay, nightly 7/18 passes; hipcamp booking; season closed winter (dates unset).
+- 5683 Rock River Park Edgerton: city page confirms 16 sites, $25/$30, FCFS, showers/dump; not waterfront kept (river ~10 m wide, tree band); season unposted.
+- 5492 Sandy Lake: $26 confirmed, 49 sites 22-80 ft, season 05-01..10-14, laundry; WATERFRONT riverfront->lakefront (south peninsula is ABOVE dam on Big Sandy Lake, sites 09-14 ~20 m open grass w/ docks); pin ~460 m off -> 46.78710,-93.31930.
+- 5493 Sawbill: $20 + $10 2nd vehicle (2 max); no hookups; 45-ft back-ins; showers/laundry/store at outfitter; season manual kept (rec.gov FCFS to 10-20 vs stored 10-19 flagged); not waterfront kept; phone none->218-663-7150.
+- 5687 Schroeder: county page+PDF: $40 nonres/$32 res +$6, 50 electric (50/30), 7-night max, season 05-01..10-18; suggested lakeview (south row 30-40 m, broken trees) - reviewer's call; phone none->320-274-8870.
+- 5416 Sibley: DNR spk00265 + ReserveMN 917/805: 99 sites (130 derived), 74 electric 50A, no water/sewer; $25/$35; 60 ft; season 04-02..11-07 (reservable), water May 7-Oct 18; not waterfront kept; phone none->320-347-7810; add DNR page to website.

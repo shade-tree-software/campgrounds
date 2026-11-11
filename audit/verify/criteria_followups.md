@@ -1654,3 +1654,9 @@ me drop and report); each needs the research named before a verdict.
 - 5641 HooDoo Point: operator site on maintenance; re-check groups when it's back.
 - 5644: county close Oct 30 vs stored 10-29.
 - NEW 15663 Riverview Campground (Lanesboro): ~460 m from Sylvan Park 5582 but its own entrance + Campspot listing (separate-booking exception).
+
+## p3-420 (MN, 2026-11-11)
+- DROPPED 5566 Refuge RV Park (Hastings): mostly seasonal, no nightly rate/booking the operator controls; unclaimed RoverPass only.
+- 5553 Olson Park: fees low 23 -> 30 (tent-only $23); revert if Campspot sells the primitive type to RVs once 2027 loads.
+- 5559 Plum Creek and 5568 River Road: mostly seasonal/long-stay, nightly ~39%, kept with note lines.
+- 5490/5492 USACE pages unread (Akamai). 5493 rec.gov FCFS to 10-20 vs manual season 10-19. 5416 winter camping past the reservable season unstated.
