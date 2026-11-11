@@ -1709,3 +1709,9 @@ me drop and report); each needs the research named before a verdict.
 - Erskine leads rejected: "Lake Cameron RV Park" = 2Annes Lakeside RV Park (site 503, RV Life $$$, 12 reviews); Farmer's Union / Union Lake Sarah Campground (one place) self-described seasonal, no RV rate, on neither RV Life nor Good Sam.
 - 5569 River View Owatonna kept: $50 at the gate, mostly seasonal but passes. 5570 Royal Oaks kept via Good Sam 10%.
 - Unread: ResNexus 5675/5558 (Incapsula), Campspot 5684/5570 (CloudFront).
+
+## p3-428 (MN, 2026-11-11)
+- DROPPED 5580 Sugar Bay (60+ senior park, 2009 "Contact us" rates, Google 3.3/20) and 5581 Sugar Point Resort ($62 full hookup, no exception).
+- 5576 Spafford: no result (cloquetmn.gov Akamai 403); snippets suggest seasonal/monthly only and a 2024 review of a refused one-night stay - re-queued, check hard.
+- 5579 Stony Point: FS says closed for construction vs manual "reopened July 2, 2026"; 2027 sold FCFS-only on rec.gov.
+- LEAD: Red Pine Campground near Saginaw (Good Sam directory), not in DB.

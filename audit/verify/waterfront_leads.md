@@ -1184,3 +1184,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-427 (MN, 2026-11-11)
 - 5676 Polk County Park lakeview -> not waterfront (lake row 29-34 seasonal). Leads: 5675 Pihl's "Lakefront $40" sites unread; 5562 Prairie Lake sites 1-4 possible lakeview; 5569 River View D/C rows under canopy.
+
+## p3-428 (MN, 2026-11-11)
+- 5686 Sauk River riverview -> creekside (09-14). 5497 South Pike Bay not waterfront -> lakeview (odd 3-23 under canopy; photos show open trunks - lakefront possible). 5579 Stony Point lakefront kept on 16/19 (pre-rebuild photos). 5577 Sportsman Park possible riverfront, no site numbers.

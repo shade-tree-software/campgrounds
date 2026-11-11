@@ -1,0 +1,49 @@
+{
+  "id": 5579,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.fs.usda.gov/r09/chippewa/recreation/stony-point-campground (Forest Service page, 'Last updated September 21, 2026'), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/campgrounds/231999 (description, notices, rules, amenities) and its rates, read 2026-11-11",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231999 (per-site catalog: 43 sites with coordinates, lengths, photos), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/availability/campground/231999/month for 2027-05 and 2027-06 (every night 'Not Reservable'), read 2026-11-11",
+    "Esri World_Imagery around 47.1371,-94.4560 (half-width 200 m) with the catalog site points; recreation.gov photos of sites 11, 12, 14, 16, 19, 20, 21, 23"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026"},
+      "source": "recreation.gov rates for 231999: 2026 Peak Season 07-07..09-08 and First-come seasons, 'STANDARD ELECTRIC' $26 (also $26 for 2027); FS page 'Single Site: $26 per night', read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "recreation.gov 231999: 'The campground offers sites with 30 amp electric hookups'; catalog: 42 STANDARD ELECTRIC sites, all 30 A, read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "flush_toilets": true},
+      "source": "recreation.gov 231999: 'Flush and vault toilets, showers, drinking water and a dump station are provided'; FS page: 'Electricity, showers, an RV dump station and fish-cleaning shed are available', 'Flush toilet(s)', read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 44, "max_rig_ft": 45, "note": "recreation.gov's catalog holds 42 electric sites (32 take 45 ft, 10 take 35 ft) plus one walk-to tent site."},
+      "source": "FS page 'There are 44 campsites at Stony Point', 'Size Restrictions No'; recreation.gov catalog Max Vehicle Length 45 (32 sites) / 35 (10 sites), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231999", "max_stay_nights": 14, "note": "recreation.gov lists the whole 2027 season (May 14 - Sep 20) as a 'First-come, First-served Season' and shows every 2027 night 'Not Reservable'; in 2026 sites were sold from July 7 to September 8 after the construction reopening."},
+      "source": "recreation.gov 231999 rules maxConsecutiveStay 14; rates: 'First-come, First-served Season 2027-05-14..2027-09-20'; availability 2027-05 and 2027-06 all 'Not Reservable' (a neighbouring Chippewa campground, 232134, shows 'NYR' for June 2027), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Chippewa National Forest campground on Leech Lake, 14 mi E of Walker: open grassy sites under old-growth oak, elm, maple and ash; boat ramp and dock, two boat harbors, swimming beach, fish-cleaning shed. Lakefront at a handful of sites on the east side (16 and 19 open to the water; 12, 14 and 20 nearby), per pre-rebuild recreation.gov photos. --Claude",
+  "summary": "FS page (updated 2026-09-21) + rec.gov campground, rates, catalog, 2027 availability read: $26 (2026/2027), 30 A, showers, flush toilets, dump, 44 sites (catalog 42 electric, 35-45 ft), 14-night max. FS: construction continues into fall 2026, 'Closed for the season for construction of upgrades'. rec.gov makes all of 2027 first-come (Not Reservable): reservable left as stored, flagged. Stored lakefront holds only on a few east-side sites (16, 19 clear): caveat added to the note. Potable water conflict between pages.",
+  "flags": [
+    "BOOKING 2027: recreation.gov's rate table names the whole 2027 season 'First-come, First-served Season 2027-05-14 to 2027-09-20' and its calendar shows every May and June 2027 night as 'Not Reservable' (not 'NYR'), so next season looks first-come only. Stored booking.reservable true (derived from the RIDB catalog) was not changed; a reviewer may set reservable false / fcfs always for 2027, or wait to see whether recreation.gov opens 2027 sales.",
+    "STATUS (manual, not overwritten): stored status open, 'reopened July 2, 2026'. The FS page now says 'Current construction projects at Stony Point Campground will continue into the fall of 2026' and 'Seasons of Use: Closed for the season for construction of upgrades' (updated 2026-09-21, after the 2026 season ended). Consistent with the stored reopening plus a seasonal close; no 2027 opening date is published.",
+    "WATERFRONT (stored lakefront, checked hard): the catalog points put the east side sites (11, 12, 14, 16, 19, 20) about 27-45 m from Leech Lake's shore on imagery (site 14 47.137303,-94.454851 ~27 m; site 12 47.137104,-94.455059 ~30 m; site 16 47.137528,-94.454753 ~35 m; site 19 47.137847,-94.454403 ~36 m; site 20 47.138087,-94.454159 ~44 m), all under canopy so imagery cannot confirm. recreation.gov's own photos (2019/2022, before the rebuild) show site 16 and site 19 on open lawn with the lake straight beyond, and 12, 20, 21 and 23 with the water glimpsed through open woods. Every other site (2-10, 22-43) is 60 m+ back. By AWH's 2026-11-10 rule the value can stand as `lakefront` with a caveat naming the east-side sites (now in the note); a strict reading would downgrade to `lakeview`. These sites are reservable/nightly on recreation.gov (2026). The photos predate the 2025-26 construction; layout changes are unknown.",
+    "Drinking water conflict (both agency pages): FS page 'Potable water is not available at this site.' vs recreation.gov 'showers, drinking water and a dump station are provided'. potable_water is not stored; nothing written.",
+    "Site count: FS 44, recreation.gov catalog 43 (42 electric + 1 walk-to tent site). Count kept at 44 from the FS page.",
+    "Phone 218-547-1044 and both website lines confirmed. Pin 47.13550,-94.45650 sits at the south end near sites 40-42 and the boat launch (FS gives 47.13735,-94.456079, ~205 m north in the middle of the loops); under 250 m, no move needed.",
+    "Note: stored text repeated site count and electricity; rewritten with the waterfront caveat. The hidden curation_note was left as is."
+  ]
+}
