@@ -1,0 +1,14 @@
+# p3-424 MN notes (2026-11-11)
+- RULE (coordinator, mid-batch): park wording discouraging nightly guests ('Seasonal leases preferred', 'nightly by approval', 'call to see if we have room') = drop candidate even if 5 tests pass; quote it.
+- 5524 Chisholm: WRITTEN. May1-Oct31 (no winter since 2025), $30/35, CampLife 1050, seasonal 41-54, ph 218-421-7158 suggested, lead Redhead CG.
+- 5463 Cross Lake: WRITTEN. lakefront->lakeview (21/23/25/27 40-55m through pines + fence, photos). $24/32/40, closes 10-15 notice, fcfs never, USACE page 403.
+- 5526 Crow Wing Inn: WRITTEN. $35 Apr-Oct, no winter, 7 spots, phone booking, G 4.7/45, pin 170m E -> motel 46.96285,-94.83924.
+- 5372 Crow Wing SP: WRITTEN. 59/12E 30A 45ft, $24/34, ph 218-825-3075, web 404->spk00139.
+- 5470 Eighteen Lake: WRITTEN. lakefront->lakeview, free, 3 pull-in >21ft, May8-Oct1, ph 218-663-8060.
+- 5529 Eveleth: WRITTEN. pin move 47.4389,-92.5040; 50 sites 15 seasonal.
+- 5374 Flandrau: WRITTEN. pin->44.29430,-94.46951; yr-round; ph 507-233-1260; web->spk00145.
+- 5473 Flour Lake: WRITTEN. lakeview->not wf; $26; ph 218-388-2203.
+- 5636 Heritage Embarrass: WRITTEN. ph host 218-410-4645; Google 4.9/8.
+- 5638 Hobo Park: WRITTEN. DROP CAND mostly seasonal (16 daily of 102 per 2021 map); lakefront->lakeview; Google 4.5/87.
+- 5642 Isanti: WRITTEN. DROP CAND 'call to see what we have available'.
+- Camden Upper proposal written (new_camden_upper.json); centroids 2,341 m apart. Dry run: 11 ready, no !!. DONE.

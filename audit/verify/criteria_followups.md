@@ -1681,3 +1681,10 @@ me drop and report); each needs the research named before a verdict.
 - 5371 Lindbergh: manual season vs DNR Sep 21 close. 5617 Cedar Hanson: derived 61 sites vs county 37 + primitive.
 
 - 5522 Cavens Landing DROPPED by AWH 2026-11-11 (operator discourages nightly guests).
+
+## p3-424 (MN, 2026-11-11)
+- DROPPED 5642 Isanti County Fairgrounds: "Seasonal Camping ... give us a call to see what we have available"; no nightly rate/booking (fairgrounds rule + nightly-discouraging wording).
+- 5638 Hobo Park KEPT though mostly seasonal: 16 of 102 lots are "Daily Rental Lots" (~16%), $38/$53, city-run, Google 4.5/87, no discouraging wording.
+- NEW 15664 Camden State Park, Upper Campground split from 5368 (now "..., Lower Campground"); 2,341 m apart.
+- LEAD: Chisholm's "Fairgrounds and Redhead Campground" (16 W/E sites, daily rates) - not in DB.
+- 5372 Crow Wing: Rock Lake FRA campground unchecked. 5470 Eighteen Lake: Superior NF post-wildfire closure alert unread. 5463 Cross Lake: USACE page 403.

@@ -1171,3 +1171,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-423 (MN, 2026-11-11)
 - 5368 Camden not waterfront -> riverview (ReserveMN "Water Front: Yes" 1E/5E/8E/10E/12E/32/35, under canopy 30-40 m).
 - 5613 Toqua lakefront -> lakeview (shore tree band). 5363 Big Bog riverfront kept (sites 1-4, 5E-14E). 5522 Cavens lakefront kept (four lakeside dock sites, nightly).
+
+## p3-424 (MN, 2026-11-11)
+- 5463 Cross Lake lakefront -> lakeview (pine band + rail fence, sites 21/23/25/27). 5470 Eighteen Lake lakefront -> lakeview (no photo; fallback not waterfront).
+- 5473 Flour Lake lakeview -> not waterfront (rec.gov "Lakefront" 020/026/036/037 under canopy 40-70 m). 5638 Hobo Park lakefront -> lakeview (nightly lots 51E-54E behind tree band; open lawn lots seasonal).
