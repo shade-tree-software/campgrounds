@@ -1124,3 +1124,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5442 Owen Lake lakefront -> lakeview (canopy/brush, no site placed).
 - 5616 Brown Park lakefront -> lakeview (both loops behind trees / 483rd Ave).
 - 5556 (dropped) lakeview lots 07, 09, 11 were 10-20 m from shore but not sold nightly. 5554 beaver pond (0.4 ha) too small.
+
+## p3-412 (MN, 2026-11-11)
+- 5380 Gooseberry Falls not waterfront -> coastal walk (first use of the new value; wooded point, 50-150 m, park trails only).
+- 5435 Hungryman Lake lakeview -> not waterfront (pine canopy, ~110 m; Google photos unread).
+- 5637 Hill City lakeview kept; one or two pads by the boat landing could be a lakefront-with-caveat if the site map is read.

@@ -1,0 +1,54 @@
+{
+  "id": 5475,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233648 (facility record: description, notices, rules, amenities)",
+    "https://www.recreation.gov/api/camps/campgrounds/233648/rates (rate seasons 2019-2028)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233648 (all 43 campsite records with attributes and coordinates)",
+    "https://www.recreation.gov/api/camps/availability/campground/233648/month for 2026-11, 2027-04, 2027-05",
+    "Esri World Imagery around 46.4110,-94.3505 and 46.4115,-94.3520",
+    "UNREAD: https://www.mvp.usace.army.mil/Missions/Recreation/Gull-Lake/ (403 to a plain request)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 39, "pull_through": true},
+      "source": "recreation.gov campsites for 233648: 42 STANDARD ELECTRIC sites of which 36HOST, 38HOST, 40HOST are camp-host sites, leaving 39 public sites (01-35, 12A, 16A, 37, 39); driveway lengths 53-122 ft; one pull-through (22), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "recreation.gov 233648 notice ('There are no sewer or water sites at this campground but potable water and a dump station are located at the campground entrance.') + description ('each with 50 or 30 amp electric hookup service') + every public site's 'Electric Hookup: 50', read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true, "note": "Shower building and drinking water May 14 - October 15 (2026)."},
+      "source": "recreation.gov 233648 amenities ('Showers (Seasonal)', 'Flush Toilets (Seasonal)', 'Vault Toilets', 'Dump Station', 'Water (Seasonal)') + notice ('The shower building and drinking water are available May 14 - October 15.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-14", "note": "2027 nights on sale from May 1; the 2026 season ran May 14 - October 14."},
+      "source": "recreation.gov 233648 rates (Peak Season 2027-05-01..2027-10-14, 2026-05-14..2026-10-14) + availability (May 2027 nights 'Available' from 2027-05-01; nothing offered November 2026 or April 2027), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "note": "Reservations only through recreation.gov, before the visit or on arrival; the park office cannot take them."},
+      "source": "recreation.gov 233648 notice ('Reservations MUST be made online utilizing recreation.gov either prior to your visit or immediately upon arrival. The park office can not make reservations.') + rules (reservationCutOff 0 days), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 32, "nightly_high": 32, "currency": "USD", "checked": "2026", "note": "$32 a night (standard electric), the same for 2026 and 2027. Read 2026-11-11."},
+      "source": "recreation.gov 233648 rates: Peak Season 2026 and 2027 'STANDARD ELECTRIC' per_night 32, weekend 0, read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground beside Gull Dam, at the outlet of Gull Lake on the Gull River near Brainerd: well-spaced wooded sites with long driveways. The swimming beach and boat ramp are across the dam. Water fill and dump at the campground entrance. Enter from the south (the north entrance is closed). --Claude",
+  "summary": "recreation.gov facility/rates/campsites read: 39 public electric sites (3 host sites excluded), 50-amp, no water/sewer at sites (stored values set false), driveways 53-122 ft, one pull-through; showers/flush/vault/dump/water; season 05-01..10-14 (was 05-01..10-31 from prose); $32 unchanged. Not waterfront kept. USACE page unread (403).",
+  "flags": [
+    "Waterfront: keep not waterfront. Every site is under continuous canopy (rec.gov 'Shade: Yes'); the west-most sites (39 at 46.41108,-94.35171; 30 at 46.41131,-94.35147) are about 50-60 m from the dam pool's east bank with the campground road and woods between (imagery). The river below the dam is ~100 m from site 02. No site within 50 m over open ground.",
+    "Site count 40 -> 39 public (rec.gov lists 42 electric sites; 36HOST, 38HOST and 40HOST are camp-host sites, and site 40 is also the firewood shed per the notice).",
+    "Phone: stored 218-829-3334 not confirmed (USACE page 403, unread); recreation.gov lists the facility phone as (651) 290-5772. Leave unless the reviewer can confirm; apply.py does not write phones.",
+    "Access notice (not a grade issue): 'There is no longer an entrance at the north side of the park. All users will need to access the park via the south entrance.' Put in the note.",
+    "Policy row federal:usace not contradicted (14-night maximum in a rolling 30 days, reservations on recreation.gov, same-day booking allowed).",
+    "Pin 46.41083,-94.35139 is recreation.gov's facility point inside the campground; fine. Websites OK (rec.gov 233648 live; USACE page could not be read)."
+  ]
+}

@@ -1602,3 +1602,11 @@ me drop and report); each needs the research named before a verdict.
 - 5567 Remer Motel: ATV/SXS rides hosted; general motel campground, kept. Campground block ~890 m from the motel pin (47.06325,-93.91007) shows no pads on imagery; pin left at check-in.
 - 5563 Prairie View (casino RV park): $45 base passes; season unconfirmed. 5413: fees.note repeats state boilerplate (rates not re-read).
 - 5552 Oak Leaf / 5442 Owen Lake: optional pin moves (~130 m, ~115 m) not made.
+
+## p3-412 (MN, 2026-11-11)
+- 5647 Green Lake (Kandiyohi Co.) DROPPED: 7-night summer minimum (Memorial Day-Labor Day, ~3.5 months). The same county policy covers 5612, 5646, 5648, 13329 (not yet verified): verifiers told via mn_head.
+- 5377 Franz Jevne: DNR "Steep grades located after the picnic area limit RV and large 5th Wheel travel" - within the 30-ft limit, kept with the caveat.
+- 5637 Hill City: site count 14 (city) vs 19 (Campspot) unwritten; east-end pads 40-50 m from the boat-landing shore across the landing lot - lakeview kept; site map unread (Cloudflare).
+- 5635 Harmony: hookups and season unposted. 5550-style: none.
+- 5475 Gull Lake USACE page 403; phone replaced by rec.gov's.
+- 5632 Freeborn fairgrounds: campers ~330 m west (43.6615,-93.3628) may be event/storage units; pin left.
