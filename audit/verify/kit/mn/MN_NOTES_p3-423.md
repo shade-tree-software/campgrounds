@@ -1,0 +1,12 @@
+# p3-423 MN notes (2026-11-11)
+- 5514 Balsam Bay: WRITTEN. drop cand: member-managed LLC, owned lots/shares (lakeplace MLS 7110764 active; rvpark lot #11 2023-24). site 530. Google 4.4/72 ph ok. not wf. pin ok.
+- 5360 Banning: WRITTEN. closed constr (campground to May 2028). 33/11E 30A, $24/34, 50ft, pads 25-90. pin ok. ph 320-216-3910. website 404.
+- 5605 Barsness: WRITTEN. $50/55 conf, May1-Sep30, online res 2027 opens Apr1 (engine unknown). upper=seasonal. ph 320-634-5433.
+- 5363 Big Bog: WRITTEN. riverfront kept (rec.gov WF yes 1-14, north sites 25-35 m over grass). 31/26E 30/50, $24/34, yr-round, no dump (cleared). pin in river ~115 m. ph 218-888-7310.
+- 5613 Toqua: WRITTEN. lakefront->lakeview (no site map; campers 15-25 m behind tree band). $25, RoverPass county-linked, Apr22-Nov30, 7-night. ph 320-839-6373.
+- 5518 Bray: WRITTEN (no groups). county site Cloudflare block = UNREAD; RoverPass unclaimed. NW kept.
+- 5368 Camden: WRITTEN. Lower cg; recgov WF yes 1E 5E 8E 10E 12E 32 35 -> riverfront for review (canopy). Upper split candidate 44.34520,-95.92186 45 sites. max 60->50. ph 507-872-7031.
+- 5370 Cascade River: WRITTEN. coastal walk NO (Hwy 61 between). 40/21E 20-50A, no w/s, 35ft, yr-round 7 plowed. fcfs cleared. ph 218-387-6000.
+- 5522 Cavens Landing: WRITTEN. $40/$50 lakefront (2024 page), fcfs, 17 sites 50A+sewer+water; mostly seasonal but passes 5 tests; lakefront kept (4 lakeside sites); season yr-round left (conflict flagged); Google 4.3/29.
+- 5617 Cedar Hanson: WRITTEN. pin in lake -> Google 43.79220,-94.73418 (~280 m). fcfs, max 7, yr_round false, ph 507-236-4693, Google 4.2/23.
+- 5371 Lindbergh: WRITTEN. 38/15E 30A, 50ft, $20/$30, season manual left (close 9-21 flagged), ph 320-616-2525.

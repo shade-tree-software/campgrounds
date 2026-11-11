@@ -1671,3 +1671,11 @@ me drop and report); each needs the research named before a verdict.
 ## p3-422 (MN, 2026-11-11) - cut short by a usage limit
 - Only 5600 Ambush Park applied. 5514 Balsam Bay's partial result withdrawn (site down: Cloudflare 1016; Google 4.4/72) so it re-queues; the other ten re-run in p3-423.
 - 5600: only rate sheet "Revised 5/1/2023" - fees not written.
+
+## p3-423 (MN, 2026-11-11)
+- DROPPED 5514 Balsam Bay Resort: member-managed owner-lot LLC (MLS + "You own the lot ... HOA fees"), dead site, no nightly rate.
+- 5518 Bray Park: county site Cloudflare 403 - result withdrawn, re-queued.
+- 5522 Cavens Landing: "Seasonal leases preferred! Short term stays are limited." but passes all five tests ($40/$50 posted, phone, Google 4.3/29). Kept; AWH may call it on the fence.
+- 5368 Camden: SPLIT CANDIDATE - Upper Campground ReserveMN facility 816 (45 sites) ~2.4 km south of the Lower (this entry).
+- 5360 Banning: temporarily closed through 2027, reopening May 2028.
+- 5371 Lindbergh: manual season vs DNR Sep 21 close. 5617 Cedar Hanson: derived 61 sites vs county 37 + primitive.

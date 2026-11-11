@@ -1167,3 +1167,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-422 (MN, 2026-11-11)
 - 5600 Ambush Park riverfront -> not waterfront (2026 city map: pads 1-14 on the west loop road ~100-145 m from the Chippewa River behind a bank tree band; imagery re-viewed).
+
+## p3-423 (MN, 2026-11-11)
+- 5368 Camden not waterfront -> riverview (ReserveMN "Water Front: Yes" 1E/5E/8E/10E/12E/32/35, under canopy 30-40 m).
+- 5613 Toqua lakefront -> lakeview (shore tree band). 5363 Big Bog riverfront kept (sites 1-4, 5E-14E). 5522 Cavens lakefront kept (four lakeside dock sites, nightly).
