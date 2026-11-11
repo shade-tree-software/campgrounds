@@ -1074,3 +1074,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - p3-378 (2026-11-10): 9136 Heritage Lake and 9089 Gold Springs lakefront confirmed; no downgrades.
 - p3-377 (2026-11-10): 9067 Cold Lake M.D. Park lakefront -> lakeview (spruce band; the open SE end faces the park's day-use beach). 8842 Chinook lakeview kept. 8872 Dinosaur PP creek behind brush, not waterfront kept.
 - p3-379 (2026-11-10): 9073 Lee Creek - north loop west-row back-ins (~49.1912,-113.3112) 10-20 m from the riprap bank over open ground, no road: possible few-clear-sites riverfront; site numbers unread, riverview kept. 9043 Keiver's Lake lakeview confirmed (sand road between).
+- p3-376 (2026-11-10): 8970 Carson-Pegasus 'Near Water' G144-147 / H170-175 are 25-35 m from the west arm behind a tree strip - not waterfront kept, lakeview possible. 8829 Chain Lakes lakeview, 12793 Bow RiversEdge riverview, 9061 Bear Lake lakeview confirmed.
