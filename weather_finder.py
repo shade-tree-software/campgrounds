@@ -71,16 +71,16 @@ SORTS = ("distance", "temp", "rain", "waterfront")
 # vocabulary's own hierarchy rather than sorting the strings alphabetically,
 # which would put "bayview" above "lakefront".
 #
-# `coastal woods` sits between the at-the-water types and the view-only ones on
-# purpose. It's an earned on-water designation (you walk through the
-# campground's own undeveloped shore forest to the beach) but it has no
+# `coastal walk` (formerly `coastal woods`) sits between the at-the-water types
+# and the view-only ones on purpose. It's an earned on-water designation (an
+# easy walk to an ocean or Great Lake shore) but it has no
 # sightline, which is exactly why the campground map's "On the water" quick
 # filter excludes it. Ranking it below the water's-edge types honours that
 # exclusion; ranking it above view-only reflects that access beats a view.
 _WATERFRONT_RANKS = {
     "bayfront": 0, "lakefront": 0, "riverfront": 0,
     "creekside": 0, "pond": 0, "coastal dunes": 0,
-    "coastal woods": 1,
+    "coastal walk": 1,
     "lakeview": 2, "riverview": 2, "bayview": 2,
     "not waterfront": 3,
 }

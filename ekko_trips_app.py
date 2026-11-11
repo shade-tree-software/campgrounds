@@ -582,7 +582,7 @@ HOME_FILE = os.path.join(os.path.dirname(__file__), "home.json")
 
 WATERFRONT_COLORS = {
     "coastal dunes": "#e6a817",
-    "coastal woods": "#6b8e23",
+    "coastal walk":  "#6b8e23",
     "bayfront":      "#0d47a1",
     "bayview":       "#5c6bc0",
     "lakefront":     "#1976d2",

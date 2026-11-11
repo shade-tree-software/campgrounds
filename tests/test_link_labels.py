@@ -137,6 +137,10 @@ class LinkLabels(unittest.TestCase):
             ra = [u for u in urls if "reserveamerica.com/explore" in u]
             if len(ra) < 2:
                 continue
+            # Only entries built from that site list; a later add (Peggy's Hill
+            # 15266, sites 29425/29426) names a parking area, not site codes.
+            if any(re.search(r"/(\d+)/campsite-booking", u).group(1) not in sites for u in ra):
+                continue
             # RA spells a site "081" or "Medix Run 006"; the label drops the
             # place words and a numeric code's leading zeros.
             want = []
@@ -146,7 +150,7 @@ class LinkLabels(unittest.TestCase):
                 want.append("reserveamerica.com \u00b7 site " + re.sub(r"^0+(?=\d)", "", code))
             self.assertEqual(self.labels(urls, e["name"]), want, e["id"])
             checked += 1
-        self.assertGreater(checked, 30)
+        self.assertGreater(checked, 20)  # 26 on 2026-11-11, after phase-7 site removals
 
 if __name__ == "__main__":
     unittest.main()
