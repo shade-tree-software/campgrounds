@@ -1,0 +1,57 @@
+{
+  "id": 5489,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232134 (description, notices, rules, rate table)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232134 (16-site catalog: equipment, lengths, preview photos)",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 16 sites (per-site coordinates)",
+    "https://www.fs.usda.gov/r09/superior/recreation/pfeiffer-lake-campground-backcountry-sites (last updated October 5, 2026)",
+    "Esri World_Imagery around 47.7516,-92.4740 (half-width 200 m) with the 16 rec.gov site points",
+    "rec.gov preview photos for sites 012, 014 and 016"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 18, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 9, "per": "night"}, "extra_person": {"max_people": 9}},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/pfeiffer-lake-campground-backcountry-sites ('Single Site: $18 per night'; 'Maximum of 9 people per site.'; 'Additional vehicles at the site require additional half fee') + recreation.gov 232134 notice ('Additional fee for second vehicle (non-towed) is $9.00/per day.') and rate table ($18 Peak 2026-05-08 to 09-08 and 2027-05-14 to 09-07; $18 first-come 2026-09-09 to 10-19), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": "some_sites"},
+      "source": "recreation.gov 232134 ('The campground has 16 total campsites 8 reservable and 8 first-come, first-served campsites'; catalog: 8 Site-Specific reservable, 8 not) + FS page ('Some sites are reservable through Reservation.gov'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov catalog 232134: all 16 sites STANDARD NONELECTRIC, no water or sewer hookup attribute, read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 16, "max_rig_ft": 45, "pull_through": false, "note": "Site 10 is tent-only. Recreation.gov posts an RV length of 32 ft on most sites, 24-25 ft on sites 3 and 4, 30 ft on 13, 40 ft on 12 and 45 ft on 14."},
+      "source": "recreation.gov catalog 232134 (16 sites; RV max length 24-45 ft on 15 sites, site 010 Tent only; Driveway Entry Back-in x16, Parallel x1 incl. the S&P record) + FS page ('No. of Sites 16 campsites'; 'Sites are pull-in and not specifically designed for RVs. Most can accommodate a moderately sized vehicle.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "vault_toilets": true},
+      "source": "FS page ('Potable water is available at this site. Solar Powered Well'; 'The campground provides fire rings, tables, drinking water, vault toilets') + recreation.gov amenities ('Drinking Water (peak season)', 'Vault Toilets'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-08", "closes": "09-26", "note": "Recreation.gov keeps first-come sites on sale at the same rate from September 9 to about October 19, and says the gates are typically locked November 1 through May 1."},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/pfeiffer-lake-campground-backcountry-sites ('Seasons of Use May 8 - September 26') + recreation.gov 232134 notice ('Campground will be closed and gates typically will be locked November 1 through May 1.') and its 'First-come, First-served Season' rate rows 2026-09-09 to 2026-10-19 / 2027-09-08 to 2027-10-18, read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "On the north shore of 57-acre Pfeiffer Lake in mixed pine and hardwood forest; the lake shows through the trees from sites 12, 14 and 16 on the lower loop. Grassy swim beach, fishing pier, boat ramp, playground and a 3-mile hiking trail; two boat-in or hike-in backcountry sites on the lake are open year-round. The Forest Service says the sites are not designed for RVs, though most take a moderately sized vehicle. --Claude",
+  "summary": "rec.gov + FS read: $18 confirmed, extra vehicle $9, 9 people max; 16 sites (8 reservable, 8 FCFS; site 10 tent-only), RV lengths 24-45 ft (max_rig 32 -> 45), all back-in (pull_through false); no hookups confirmed; potable water + vault toilets confirmed; season 05-08 to 09-26 (FS) with rec.gov FCFS into mid-October. Lakeview kept (filtered view in rec.gov photos of sites 12/14/16, ~60-80 m through trees). Pin OK. Phone none -> 218-453-8650.",
+  "flags": [
+    "Waterfront: lakeview KEPT. rec.gov site points put the lower-loop sites 012 (47.75121,-92.47383, reservable, RV 40 ft), 014 (47.75111,-92.47354, FCFS, RV 45 ft) and 016 (47.75108,-92.47327, reservable, RV 32 ft) about 60, 70 and 80 m from the south-west shore across wooded ground (leaf-off imagery: open understory, scattered pine and birch, no road between). rec.gov's own preview photo for site 12 shows the lake through the trees; the photos for 14 and 16 show water faintly behind the trees. Not on-water (tree band, >50 m). Proposed waterfront_evidence (none stored): 'rec.gov site photos: lake visible through trees from sites 12, 14, 16 (~60-80 m, wooded); imagery 47.7512,-92.4735'.",
+    "Season: the FS page gives 'Seasons of Use May 8 - September 26'; recreation.gov sells first-come nights at $18 from Sept 9 to Oct 19 (2026) and says the gates are locked November 1 through May 1. Written the FS dates with the rec.gov run in season.note; a reviewer may extend closes to 10-19.",
+    "FS page currently shows 'Site Partially Closed / Closed-no fees or services (Gated)' - the ordinary off-season state (page updated Oct 5, 2026), not a status.",
+    "Phone: none stored -> 218-453-8650 (Laurentian Ranger District, 318 Forestry Road, Aurora, on the FS page; recreation.gov lists no facility phone).",
+    "Name/district: the stored note placed it in the 'LaCroix district near Cook'; recreation.gov and the FS page give the Laurentian Ranger District (Aurora). Note rewritten.",
+    "Pin: stored 47.75200,-92.47330 is ~80 m from the 16-site centroid (47.7517,-92.4740); FS gives 47.75192,-92.47257 (entrance). No move.",
+    "Site 010 is typed Tent only (20-ft driveway). rec.gov RV max lengths: 32 ft on 10 sites, 24 (004), 25 (003), 30 (013), 40 (012), 45 (014); trailers 20 ft on most sites (31 at 002, 40-45 at 012/014). All 15 RV sites take a 23-ft motorhome.",
+    "recreation.gov rule: reservationWindow 6 months, reservationCutOff 5 days prior to arrival, site must be occupied in the first 24 hours (left to the federal:usfs row; not written).",
+    "Note: stored text repeated the site counts, booking split and rig length and gave the wrong district; rewritten."
+  ]
+}

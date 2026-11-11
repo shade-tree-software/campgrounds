@@ -1,0 +1,13 @@
+# p3-427 notes
+- 5489 Pfeiffer: WRITTEN. $18, 16 sites (8R/8FCFS, 10 tent), lakeview kept (12/14/16 photos), phone -> 218-453-8650, season FS 05-08..09-26
+- 5676 Polk: WRITTEN. lakeview->not wf lead, 17 nightly E of 63, $32.21, Google 4.7/37
+- 5675 Pihl's: WRITTEN. $30/$40 lakefront, site dead->faribaultcountymn.gov/1261, wf lead (county sells Lakefront), Google 4.4/43
+- 5558 Pipestone: WRITTEN. price unread (JS/Incapsula), year_round, max_rig 70
+- 5562 Prairie Lake: WRITTEN. $39.95-49.95 dated 2026-04-06, call to book, not wf kept, Google 4.6/86
+- 5565 Red Fox: WRITTEN. OHV drop candidate, stale 2022 site, seasonal leaning, no rate
+- 5569 River View: WRITTEN. $50 at gate, mostly seasonal (~30% nightly), wf lead D-loop under canopy, closed 2026 season
+- 5412 St Croix Riverview: WRITTEN. DNR id spk00276 wrong -> spk00253; year_round; all back-in
+- 5684 Roseau: WRITTEN. $34, phone -> 218-469-3096, Campspot 403 unread
+- 5570 Royal Oaks: WRITTEN. 2026 $50/$55, GS 10%, 90 sites, no tents, storm notice still up. ALL TEN DONE.
+- Task A: new_kathio_ogechie.json written (centroids 1.82 km apart, own branch road)
+- Task B: Lake Cameron = 2Annes Lakeside RV Park (site 503 unavailable, Google 4.3/12, RV Life $$$ avg $45) -> fails presence+price. Union Lake Sarah (=Farmers Union) Google 4.6/87, no RV rate, not in RV Life/GS, phone booking only -> fails price. Neither same as 5676 (11.8/10.6 km).

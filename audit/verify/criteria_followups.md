@@ -1702,3 +1702,10 @@ me drop and report); each needs the research named before a verdict.
 - 5400 Mille Lacs Kathio: pin moved to Petaga; SPLIT CANDIDATE Ogechie Campground.
 - LEADS near Erskine (McIntosh city page): Lake Cameron RV Park; Farmer's Union Campground on Lake Sarah; Union Lake Sarah Campground. Check against 5676 Polk County Park.
 - 31 MN DNR links normalized state_parks/park.html?id= -> state-parks/park.html?id= (old form 301s).
+
+## p3-427 (MN, 2026-11-11)
+- DROPPED 5565 Red Fox Campground & RV: ATV trails from the campground (OHV base), stale 2022 site, no rate.
+- NEW 15666 Mille Lacs Kathio State Park, Ogechie Campground split from 5400 (now "..., Petaga Campground"), 1.82 km apart.
+- Erskine leads rejected: "Lake Cameron RV Park" = 2Annes Lakeside RV Park (site 503, RV Life $$$, 12 reviews); Farmer's Union / Union Lake Sarah Campground (one place) self-described seasonal, no RV rate, on neither RV Life nor Good Sam.
+- 5569 River View Owatonna kept: $50 at the gate, mostly seasonal but passes. 5570 Royal Oaks kept via Good Sam 10%.
+- Unread: ResNexus 5675/5558 (Incapsula), Campspot 5684/5570 (CloudFront).

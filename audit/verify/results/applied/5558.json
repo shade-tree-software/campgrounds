@@ -1,0 +1,55 @@
+{
+  "id": 5558,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.pipestonefamilycampground.com/ (home page)",
+    "https://www.pipestonefamilycampground.com/ accommodations page (site list; prices filled by script, blank in the HTML)",
+    "https://www.pipestonefamilycampground.com/ contact page",
+    "ResNexus booking engine C6F3BEC0-07CA-411B-BF09-6E30BF6B1F38 (answered with an Incapsula bot challenge; not read)",
+    "Good Sam directory (trip_data/goodsam_parks.json): gs false, military true",
+    "Google Maps 'Pipestone Family Campground', 919 N Hiawatha Ave (4.3 from 200 reviews; newest few read)",
+    "audit/price_research/gateways.py 44.00984,-96.31649 (none within 40 km)",
+    "Esri World_Imagery around 44.0098,-96.3165"
+  ],
+  "groups": {
+    "season": {
+      "values": {"year_round": true, "note": "Open all year; the operator says amenities depend on weather and temperature. The heated pool and outdoor activities run May 1 to October 1."},
+      "source": "https://www.pipestonefamilycampground.com/ ('Open year round-Amenities dependent on weather and temperature. Heated and Air-Conditioned Shower Houses.'; outdoor activities and heated pool 'May 1st to October 1st'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true, "note": "Sites 13-16 and 25-27 are 30-amp only; 50-amp rigs must book a 50-amp site."},
+      "source": "https://www.pipestonefamilycampground.com/ accommodations ('Full Hook-Up W/E/S 30/50 AMP Pull-Through', '50AMP Site') + home page ('50-amp campers are required to book in 50 amp sites, 30 amp sites 13-16 and 25-27 are for only 30 amp or less campers'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 78, "max_rig_ft": 70, "pull_through": true, "note": "Gravel pads; pull-throughs 60-70 ft long. Tent sites, some with electric and water, are extra."},
+      "source": "https://www.pipestonefamilycampground.com/ ('78 RV sites + tent sites'; 'Big Rigs are Welcome') + accommodations ('60' Long', '70' Long', 'On Gravel Pad', 'Pull-Through'; '43) Tent Site W/ Electric & Water'; tent sites A-G), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true, "camp_store": true, "wifi": true},
+      "source": "https://www.pipestonefamilycampground.com/ ('Air-conditioned bathrooms and hot showers'; 'Free Wi-Fi * Air-Conditioned Laundry'; 'Fully Stocked Camp Store'; 'Heated Outdoor Pool'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.pipestonefamilycampground.com/", "note": "Booked online through the park's own ResNexus engine; full payment when booking, refunded if cancelled 72 hours ahead."},
+      "source": "https://www.pipestonefamilycampground.com/ ('Check Availability' to the ResNexus engine; 'All Reservations require full payment at the time of reserving' ... refunds 'if cancelled 3 days (72-hours) prior'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Private campground on the north edge of Pipestone, a short drive from Pipestone National Monument, with a heated pool, mini-golf, playground and a few tepees to rent. Weekly and monthly rates are offered. Reviewers mention train horns at night. --Claude",
+  "summary": "Operator site read: open year round (stored May-Oct derived -> year_round), 78 RV sites + tents, 30/50 A full hookups (30 A only on 13-16/25-27), pull-throughs 60-70 ft on gravel (max_rig 80 -> 70), showers/laundry/store/wifi confirmed; books on its ResNexus engine (Incapsula, unread). Nightly price NOT read (blank on the page; engine refused). Not waterfront confirmed. Pin OK. Phone confirmed. Google 4.3/200.",
+  "flags": [
+    "PRICE NOT READ: the accommodations page prints 'STARTING AT $ per night' with the amounts filled in by script (blank in the HTML), and the ResNexus engine answered an Incapsula bot challenge (not retried). No dated rate exists in price_research. Gate status: no gateway within 40 km (gateways.py: Minneapolis 265 km), not a Good Sam Park (gs false), no posted member discount; the stored RV Life $$ tier (price_level 2, checked 2026-06) is the only price signal and points under $40. Presence passes (own website with booking engine and phone; Google 4.3 from 200). A reviewer may want a dated nightly rate.",
+    "Season: stored season (05-01 to 10-31, 'Approximate', derived from the sweep note) contradicts the operator's 'Open year round-Amenities dependent on weather and temperature.' Written year_round true with the May 1 - October 1 pool/activities run in season.note.",
+    "Long-stay: 'Weekly and Monthly, Rates Available.' and a review from a worker staying for a job; nightly booking is the default product (online engine, 2-night weekend reviews), no wording discouraging nightly guests, no minimum stated. Not seasonal-heavy on imagery. Google 4.3 from 200 reviews.",
+    "Google reviews (newest): train horns overnight (a month ago); a Tripadvisor review two months ago complains of site 80 backing onto a highway with septic smell.",
+    "Sites: max_rig_ft 80 (derived) -> 70: the longest pull-through posted is 70 ft. Discounts.military true stays as the Good Sam directory's derived value; the operator's own pages say nothing about discounts.",
+    "Phone 507-825-2455 confirmed (site header and contact page; Google). The contact page also lists a text line, (507) 215-6797.",
+    "Website https://www.pipestonefamilycampground.com/ confirmed.",
+    "Waterfront: not waterfront confirmed (open prairie lots on the edge of town; no water body by the sites).",
+    "Pin: stored 44.00984,-96.31649 is in the site rows; Google 44.00985,-96.31625, Good Sam 44.00942,-96.31737. No move.",
+    "Note: stored text repeated the site count, hookups, pull-throughs, rig length, store, dump, season ('open May-Oct', wrong) and booking; rewritten. 'Dump' is not mentioned on the operator pages read and was left as stored."
+  ]
+}

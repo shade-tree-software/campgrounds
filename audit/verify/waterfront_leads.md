@@ -1181,3 +1181,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-426 (MN, 2026-11-11)
 - 5403 Monson Lake lakeview lead (ReserveMN "Lake is less than 100 Feet behind campsite" 4/6/8/10/12, under canopy). 5669 Moose Lake City lakefront unconfirmed. 5666 McKinley lakeview kept (50-55).
+
+## p3-427 (MN, 2026-11-11)
+- 5676 Polk County Park lakeview -> not waterfront (lake row 29-34 seasonal). Leads: 5675 Pihl's "Lakefront $40" sites unread; 5562 Prairie Lake sites 1-4 possible lakeview; 5569 River View D/C rows under canopy.
