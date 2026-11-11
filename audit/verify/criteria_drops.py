@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    5556: ('2026-11-11', 'Price gate: over US$50 with no exception (AWH 2026-10-19 standing rule); lakeview lots monthly/seasonal only', "Park Lake Resort & Campground (Mahtowa MN): operator engine 2027 'Daily Rentals: Lakeview - Unavailable; Standard - $55.00 (Lots 13-26)'; no gateway within 40 km, no Good Sam claim; only lots 13-26 sold by the night. Precedent 14369. p3-414."),
     5595: ('2026-11-11', 'OHV trail-access campgrounds are out (AWH 2026-10-02 / 2026-11-10)', "Daisy Lake RV Campground (Nevis MN): operator 'Take full advantage of our ATV trail system, which begins right at the entrance of the campground'. Precedent 8981, 5515. p3-411."),
     5528: ('2026-11-11', 'Require a live web presence (AWH 2026-10-14): private parks need a price and a presence', "Dora Lake Lodge Resort (Dora Lake MN): doralakelodge.com is a parked for-sale domain, the Facebook page is unavailable, no rate anywhere; Google 4.5 from 8 reviews; phones 218-659-4214 (stored) and 218-659-2890 (Google) unconfirmed. p3-411."),
     5516: ('2026-11-11', 'Exclude seasonal/residential parks (AWH 2026-10-14 five tests): no nightly sale', "Birch Lake RV Park & Campground (Babbitt MN): operator 'The park is a seasonal RV park only'; season May 1 - Oct 1 at a yearly seasonal rate with a waiting list; no nightly rate or booking engine anywhere; the stored RoverPass/Hipcamp nightly booking is not on the operator's site. p3-410."),

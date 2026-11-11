@@ -1594,3 +1594,11 @@ me drop and report); each needs the research named before a verdict.
 - 5541 Kruger: phone left at 651-345-3401 (Frontenac SP, the manager); verifier floated 651-299-3000 (DNR Info Center).
 - 5658 Land of Memories: Mankato page 403 to every client; site count, booking, season unconfirmed.
 - 5667 Memorial Forest: books on ResNexus (no schema value; platform operator).
+
+## p3-414 (MN, 2026-11-11)
+- 5616 resolved: re-pointed to Brown Park (north) and renamed; South (~400 m, same address) stays inside the entry. Water/sewer unconfirmed (ResNexus hCaptcha); South's electric unknown.
+- 15661 Veterans' Park Campground (Dawson) ADDED from the p3-411 lead: rate, season, amperage, pad lengths unpublished.
+- 5554 Owen's Place: long-stay borderline (yearly $1,500 / monthly $500 sites beside a $35 nightly rate), Google 4.7 (12); kept.
+- 5567 Remer Motel: ATV/SXS rides hosted; general motel campground, kept. Campground block ~890 m from the motel pin (47.06325,-93.91007) shows no pads on imagery; pin left at check-in.
+- 5563 Prairie View (casino RV park): $45 base passes; season unconfirmed. 5413: fees.note repeats state boilerplate (rates not re-read).
+- 5552 Oak Leaf / 5442 Owen Lake: optional pin moves (~130 m, ~115 m) not made.

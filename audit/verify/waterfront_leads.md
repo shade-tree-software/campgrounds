@@ -1119,3 +1119,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5658 Land of Memories riverview -> not waterfront (behind the levee, ~100 m).
 - 5653 Lake Byllesby lakefront kept on sites 1-17 (open grass + paved trail, 25-35 m).
 - 5543 Lake Hendricks lakefront kept on the nine full-hookup lakeside sites (10-20 m, open grass).
+
+## p3-414 (MN, 2026-11-11)
+- 5442 Owen Lake lakefront -> lakeview (canopy/brush, no site placed).
+- 5616 Brown Park lakefront -> lakeview (both loops behind trees / 483rd Ave).
+- 5556 (dropped) lakeview lots 07, 09, 11 were 10-20 m from shore but not sold nightly. 5554 beaver pond (0.4 ha) too small.
