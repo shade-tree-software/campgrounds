@@ -1579,3 +1579,10 @@ me drop and report); each needs the research named before a verdict.
 - 5629 Fisherman's Point: lakefront kept on 49 "lake access" sites; site numbers not placed.
 - 5465 Devil Track / 5471 Fall Lake: lakeview kept; some spurs 20-40 m from shore under canopy, no site numbers.
 - 5623 Crosby: no 2027 rates posted. 5627 Dawson: rates/season/amperage unread. 5471: season dates unsettled. 5595/5528 dropped.
+
+## p3-408 (RI, 2026-11-11) - Rhode Island complete
+- 206 Burlingame: 38 pull-throughs may price at riparks Tier 2 ($24/$45); per-site prices unreadable. max_rig_ft unset (RA lengths to 119 ft look like a typo). 2026 construction dated in the note (complete April 2027).
+- 205 George Washington: 11 sites at 20 ft (03, 12, 18, 19, 36-40, 42, 44) - caveat, not a drop; RA description outdated (45 sites, outhouses), followed riparks.
+- 13357 Newport RV Park (town-owned, leased): season unset (rate seasons Apr 15-Nov 1 vs homepage May-Oct); max_rig_ft unset (operator gives 40/45/50/60).
+- 4170 Breachway: manual booking note repeats state:RI boilerplate; DEM 2026 repair release unread.
+- state:RI policy: riparks/camping (read 2026-11-11) says 2027 reservations are on hold; no provider named yet.

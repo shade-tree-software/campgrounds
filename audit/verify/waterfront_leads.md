@@ -1110,3 +1110,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5627 Dawson riverview -> not waterfront (Gnome Park ~1 km from the river); Veterans' Park (river frontage) is a lead.
 - 5376 Fort Ridgely: evidence corrected (creek valley, not upland); east spurs face Fort Ridgely Creek under canopy; a creekside upgrade needs open ground at named sites.
 - 5616 Brown Park South held (lakefront vs lakeview conflict, see followups).
+
+## p3-408 (RI, 2026-11-11)
+- 4171 Fishermen's Memorial not waterfront -> bayview (RA Waterview 070-074, 086-092; shrub + salt marsh 50-80 m to open water).
+- 4170 Breachway bayfront kept (sites 58-75 on the channel bank); 206 Burlingame and 205 George Washington lakeview kept.

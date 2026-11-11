@@ -1,0 +1,69 @@
+{
+  "id": 206,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://riparks.ri.gov/campgrounds/camping-area-descriptions-specific-requirements#burlingame",
+    "https://riparks.ri.gov/campgrounds/camping-policies",
+    "https://riparks.ri.gov/parks/burlingame-state-park",
+    "https://dem.ri.gov/press-releases/wait-over-burlingame-state-campground-opens-season",
+    "https://dem.ri.gov/press-releases/tents-fun-three-state-campgrounds-open-april-10",
+    "https://rhodeislandstateparks.reserveamerica.com/camping/burlingame-state-campground/r/campgroundDetails.do?contractCode=RI&parkId=252711",
+    "https://services1.arcgis.com/HAt3zp2GOzn12Lxk/arcgis/rest/services/Burlingame_Campground_v2/FeatureServer/4 (RIDEM campsite points, from the riparks interactive map)",
+    "RIGIS 2023 3-inch orthophoto (maps.edc.uri.edu RI_202303_RGB_3in_web)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 18,
+        "nightly_high": 18,
+        "currency": "USD",
+        "nonresident": {"type": "surcharge", "amount": 18, "per": "night"},
+        "note": "$18 a night for a Rhode Island resident, $36 for a non-resident (Tier 3, no hookups)."
+      },
+      "source": "https://riparks.ri.gov/campgrounds/camping-policies (2026 rate tiers; Tier 3 No Hookups $18 / $36), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "riparks camping-area descriptions: 'Utilities ARE NOT available at this campground', read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "potable_water": true, "camp_store": true},
+      "source": "riparks camping-area descriptions (restrooms with shower facilities, camp store, septic dump and water filling stations) + DEM press release 2026-06-08 (new shower and restroom buildings), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 688,
+        "pull_through": true,
+        "note": "598 sites take an RV or tent (512 of them listed for 23 ft or more, 38 pull-through in the 500 Area, Fish Camp and Mills Camp); Main Camp's 90 sites are tent only. 20 cabins besides."
+      },
+      "source": "ReserveAmerica site list for parkId 252711 (598 Standard, 90 Tent Only, 20 Cabin, 1 Shelter; Equip length per site), read 2026-11-11; riparks: about 700 campsites and 20 cabins",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://rhodeislandstateparks.reserveamerica.com/camping/burlingame-state-campground/r/campgroundDetails.do?contractCode=RI&parkId=252711"
+      },
+      "source": "riparks camping-area descriptions ('Reservations: Book Online') + the ReserveAmerica campground page, read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Recommended in _Where_Should_We_Camp_Next?_ by Stephanie Puglisi\nFish Camp sites 109-111 look out on Watchaug Pond across the loop road; the sites nearer the shore are listed for 20 ft or less. Main Camp is tent only. Restroom construction delayed the 2026 opening to June 12, fewer sites were offered and the campground beach was closed; DEM expects the work finished in April 2027. --Claude",
+  "summary": "Confirmed $18/$36 (Tier 3), no utilities, showers/dump/water fill/camp store, RA booking; 688 campsites (598 RV/tent, 512 listed 23 ft+, 38 pull-through; 90 tent-only Main Camp) + 20 cabins. Lakeview confirmed on RA Waterview sites 109-111; 'directly along the shore' removed (shore sites are 10-20 ft). 2026 opened June 12 amid construction; no normal season dates or closing date posted.",
+  "flags": [
+    "WATERFRONT (stored lakeview: confirmed): ReserveAmerica marks Fish Camp 109 (Max Vehicle Length 40), 110 (30) and 111 (30) 'Waterfront Site: Waterview'. On the RIGIS 2023 orthophoto their RA GIS points sit 15-30 m from Watchaug Pond with the Fish Camp loop road and a wooded strip between, so view, not on-water. The sites nearest the shore (112-116) are listed at 10-20 ft. Main Camp, the loop by the campground beach, is tent only. No other site is tagged near water. Evidence string: 'RA Waterview on Fish Camp 109-111 (30-40 ft); RIGIS 2023: 15-30 m to Watchaug Pond across the loop road and a wooded strip'. The old note claim 'Sites directly along the shore of Watchaug Pond' is removed.",
+    "WEBSITE: the stored https://riparks.ri.gov/parks/burlingame-state-park is the day-use picnic area page ('Just a short drive away is the popular Burlingame State Campground'). Replace with https://riparks.ri.gov/campgrounds/camping-area-descriptions-specific-requirements#burlingame (curl gets 403 on riparks; both load in a browser). The RA link is right.",
+    "PHONE: (401) 322-8910 confirmed on the ReserveAmerica campground page, which also lists a reservations line (401) 409-1138 and BurlingameCampground@gmail.com.",
+    "PRICE LEAD: riparks Tier 2 ($24 / $45) covers 'electric, water and/or drive through trailer access'. Burlingame has 38 pull-through sites (500 Area 538, 547, 550, 552, 553; Fish Camp 122, 123, 125, 127; 29 in Mills Camp) that may price at Tier 2, which would make nightly_high 24. Per-site prices could not be read now (RA closed through Nov 11; 2027 reservations on hold).",
+    "STATUS (dated caveat, in the note): DEM 2026-06-08: reservations opened June 10 for nights from June 12; fewer sites offered during phase two; campground beach closed for the season; construction expected fully complete in April 2027.",
+    "SEASON: no normal opening or closing date posted (riparks '2026 Season Start: TBD' before the June release). Season left unset.",
+    "Site lengths run up to 119 ft in RA's list (Mills Camp 781), with several 95-105 ft; max_rig_ft left unset rather than written from those figures.",
+    "PIN: stored 41.3745,-71.6960 is about 60 m from the centroid of RIDEM's 743 campsite points (41.3740,-71.6963): fine.",
+    "POLICY ROW: riparks/camping (read 2026-11-11) still says 2027 reservations are on hold; no provider named."
+  ],
+  "awh_superseded": []
+}
