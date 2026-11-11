@@ -1187,3 +1187,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-428 (MN, 2026-11-11)
 - 5686 Sauk River riverview -> creekside (09-14). 5497 South Pike Bay not waterfront -> lakeview (odd 3-23 under canopy; photos show open trunks - lakefront possible). 5579 Stony Point lakefront kept on 16/19 (pre-rebuild photos). 5577 Sportsman Park possible riverfront, no site numbers.
+
+## p3-429 (MN, 2026-11-11)
+- 5420 Temperance River Upper not waterfront -> coastal walk (75-115 m to Superior over open scrub). 5697 Tiell Park not waterfront -> lakeview. 5585 Treasure Island River's Edge 30-38 "Waterfront view" open (imagery predates them).

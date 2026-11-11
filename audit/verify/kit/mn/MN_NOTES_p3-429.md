@@ -1,0 +1,13 @@
+# p3-429 notes (MN, 11 entries)
+- 5499 WRITTEN: FCFS (no rec.gov), season 5/8-10/19, riverview kept (nearest clearing 10-20 m behind trees)
+- 5420 WRITTEN: 36 sites, lakeview lead (22E,14,15,12,23E 75-115 m open), phone 218-663-3100, pin 230 m
+- 5421 WRITTEN: dump->false, phone 218-353-8800, hunt closure Nov 7-22
+- 5697 WRITTEN: lakeview lead (7, 17-21), 15 of 21 may be seasonal
+- 5699 WRITTEN: phone booking 10 res/14 FCFS, FH 1-wk min, not waterfront
+- 5583 WRITTEN: OHV drop candidate, ResNexus Incapsula refused, G 4.6/202
+- 5585 WRITTEN: Google 3.8/115 drop cand, casino-lot q, River's Edge wf lead
+- 5589 WRITTEN: base 15->25, Firefly, 2026 May15-Oct11, 20/74 seasonal
+- 5591 NO RESULT FILE: westrichrvpark.com DNS SERVFAIL (gate.com NS REFUSED; domain reg to 2030; Wayback shows 200 captures to 2026-07-13, Wayback API then blocked us as bot -> not retried). Google 'WestRich RV Park & Campground' 4.7/68, ph +1 320-796-0161 (matches), no website on panel, 720 Agnes St Spicer. Imagery 45.2352,-94.954: dense rows, look seasonal; top row ~25-35 m from Green Lake behind continuous tree belt. 109 seasonal/19 overnight (inclusion_evidence) = mostly seasonal + iffy (no rate, site dead) -> drop candidate for reviewer.
+- 5423 WRITTEN: spk00254, pin move 2 km to 45.54462,-92.74063, year-round, phone 651-583-2125
+- 5592 WRITTEN: 40/49 seasonal (mostly seasonal, not iffy), base 45 passes, pin move ~360 m
+- apply.py dry run: 10 ready, no !!; 5591 no result

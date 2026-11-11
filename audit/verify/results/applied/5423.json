@@ -1,0 +1,60 @@
+{
+  "id": 5423,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.dnr.state.mn.us/state-parks/park.html?id=spk00254 (MN DNR Wild River State Park; record read via maps.dnr.state.mn.us feature_detail id=spk00254, alerts 'Last updated November 3, 2026'; read 2026-11-11)",
+    "ReserveMN (UseDirect) PlaceId 106, facility 895 'Wild River Campground': unit catalog and per-unit rates for 2027-03-05 via mnrdr.usedirect.com rdr/search/details (read 2026-11-11)",
+    "Esri World_Imagery around 45.54462,-92.74063 (700 m frame)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "surcharges": {"electric": 10, "weekend": 0},
+        "checked": "2026",
+        "note": "ReserveMN: drive-in site $25 a night, electric $35; the two double sites $50."
+      },
+      "source": "ReserveMN facility 895 unit rates for 2027-03-05 (56 'Drive-In' back-ins and 2 pull-throughs at $25.00, 33 'Drive-In Electric' at $35.00, 2 'Drive-In Double Site' at $50.00), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ReserveMN facility 895 catalog (Drive-In Electric units list 'Electric 30, 50') + DNR ('The park has 34 electric sites ... There are no full hookups.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 93, "max_rig_ft": 60, "pull_through": true, "note": "Mostly gravel back-ins; two non-electric pull-throughs (82 and 93). ReserveMN lists 93 sites (33 electric, 2 doubles); the DNR says 94 drive-in and 34 electric. Spurs on ReserveMN run 27-75 ft, most 40-60 ft."},
+      "source": "DNR ('There are 94 drive-in sites.'; 'There are two pull-through sites. Neither are electric.'; 'The maximum RV length is 60 feet.'; 'The park has typical gravel back-in sites that vary in spur length.') + ReserveMN facility 895 catalog (93 units, VehicleLength 27-75), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "DNR overnight facilities ('Showers are available seasonally in the campground.'; 'Flush toilets are available seasonally in the campground.'; Vault Toilets 'Throughout the park'; Dump Station 'Seasonal'; 'Water and a hose are available at the ranger station year-round.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Camping year-round in the main campground; in winter only lane D (four electric sites) and lane E (non-electric) stay open, with campground water, showers and the dump station off; water at the ranger station."},
+      "source": "DNR seasonal update ('Camping is available year-round in the main campground.'; 'The park has 34 electric sites, four of these remain open through the winter.'; 'In winter, electric sites are available in the campground's D lane. Non-electric winter campsites are available in the E lane.'; 'Water is off for the season in the campground ... The dump station is closed.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"platform": "usedirect", "url": "https://reservemn.usedirect.com/MinnesotaWeb/#!park/106"},
+      "source": "DNR seasonal update ('All sites are 100% reservable. Reservations are taken up to 120 days in advance.') + ReserveMN PlaceId 106 (all 93 units AllowWebBooking true), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Wild River State Park's drive-in campground, in woods on the upland above the St. Croix River, with screening between sites. The park also has camper cabins, a horse camp and backpack and canoe-in sites. --Claude",
+  "summary": "DNR record (spk00254) + ReserveMN facility 895 read: $25 / electric $35 confirmed (50 amp); 93 sites on ReserveMN (DNR 94), max 60 ft (spurs 27-75), 2 non-electric pull-throughs; showers/flush/dump seasonal; camping year-round (lanes D/E in winter). Pin ~2 km off: move to the unit centroid. Phone and DNR link added. Not waterfront kept.",
+  "flags": [
+    "PIN MOVE (~2.0 km): stored 45.52720,-92.74680 is well south of the campground; ReserveMN's 93 unit coordinates centre at 45.54462,-92.74063 (range 45.54258-45.54721, -92.74443 to -92.73669), which Esri imagery shows as the wooded campground loops. Move to 45.54462,-92.74063.",
+    "Phone: none stored -> 651-583-2125 (DNR park contact).",
+    "Website: add https://www.dnr.state.mn.us/state-parks/park.html?id=spk00254 as the first line, keeping https://reservemn.usedirect.com/MinnesotaWeb/#!park/106 below it.",
+    "Season changed from absent to year_round (DNR: 'Camping is available year-round in the main campground.').",
+    "Not waterfront kept: the loops sit ~300 m or more from the St. Croix River through continuous forest.",
+    "Status: the DNR alert closed the whole park 11/7-11/9/2026 for a special deer hunt; normal camping resumed 11/10/2026, so no status is written.",
+    "Lead check: the park also runs Snake River Campground in Chengwatana State Forest (closes November 30 or first plowable snow); it is already in the DB as 5445.",
+    "Note cleaned: dropped the site count, electric/pull-through, toilets/showers/dump and 'Reservable via ReserveMN' (fields hold them)."
+  ]
+}

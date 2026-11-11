@@ -1715,3 +1715,8 @@ me drop and report); each needs the research named before a verdict.
 - 5576 Spafford: no result (cloquetmn.gov Akamai 403); snippets suggest seasonal/monthly only and a 2024 review of a refused one-night stay - re-queued, check hard.
 - 5579 Stony Point: FS says closed for construction vs manual "reopened July 2, 2026"; 2027 sold FCFS-only on rec.gov.
 - LEAD: Red Pine Campground near Saginaw (Good Sam directory), not in DB.
+
+## p3-429 (MN, 2026-11-11)
+- DROPPED 5583 Trails Inn Quadna (ride-in/ride-out ATV base), 5592 Wildwedge (40 of 49 sites seasonal, nightly gets leftovers, peak $55-69), 5591 WestRich (109 seasonal vs 19 overnight, no rate, website DNS dead).
+- 5585 Treasure Island kept at Google 3.8/115 (full RV park, not seasonal). River's Edge 30-38 waterfront lead needs Campspot photos.
+- 5421 Tettegouche closed for a firearm hunt Nov 7-22, 2026 (no status written).
