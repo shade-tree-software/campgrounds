@@ -1628,3 +1628,13 @@ me drop and report); each needs the research named before a verdict.
 - 5375 Forestville: season manual, no opens date (2026 electric opened 04-10); South Branch Root River crossing closed after flooding.
 - 5630 Floodwood: Hipcamp "sewer at select sites" unconfirmed, not written; camp host line 325-253-7538.
 - Unread: ResNexus (5523, 5626), WebTrac (5519, 5622 - site lengths).
+
+## p3-416 (MN, 2026-11-11)
+- DROP 5612 Big Kandiyohi Lake County Park West (Kandiyohi 7-night summer minimum, as Green Lake 5647). Remaining Kandiyohi parks to meet it: 5646 Diamond Lake, 5648 Games Lake, 13329 Big Kandiyohi East.
+- 5607 Baylor: pin at the Eagle Lake Observatory; campground maybe ~500 m west (~44.8110,-93.9460), unconfirmed - needs placing. Live county site 403 (values from Wayback).
+- 15449 Bemidji KOA: $47.83 cheapest / $49.36 next (2027-06-15) - at the gate, re-check.
+- 5614 Black Beach: ATV trail access from sites (general municipal campground, OHV side; kept). Old $10 reservation fee no longer listed.
+- 14619 Brookside: mostly seasonal (~19 of ~125 RV sites nightly, ~15%), passes all five long-stay tests.
+- 5517 Boondocks: Facebook-only; Google 4.8/144 + phone; camper-reported fees.
+- 5512: shooting ranges beside the RV rows (noise). 5365: DNR no advance reservation needed late fall-early spring (vs state:MN); hunt closure Dec 4-7 2026.
+- 5708 Zumbrota: 10 more sites approved for 2024, count unpublished.

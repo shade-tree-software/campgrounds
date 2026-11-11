@@ -1140,3 +1140,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5626 Daly Park: camp roads 25-35 m from Lura Lake, pads inland - possible lakeview if a site map is read.
 - 5630 Floodwood: Hipcamp "river side" sites 3-9, imagery shows continuous trees 30-40 m (maybe pre-renovation).
 - 5373 Father Hennepin lakeview kept (Lakeview sites 1-7, 33-47 m through a wooded bank). 5619 Crookston riverview kept.
+
+## p3-416 (MN, 2026-11-11)
+- 5614 Black Beach lakeview -> coastal walk (Lake Superior beach ~150 m from the east loop, city park land only).
+- 5365 Blue Mounds: evidence corrected (sites 11-13 ~20-30 m behind a tree band); not waterfront stands.
+- 5612 (dropped) had one lakefront row on the peninsula's east shore.
