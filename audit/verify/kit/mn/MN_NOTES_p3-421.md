@@ -1,0 +1,13 @@
+# p3-421 MN notes (2026-11-11)
+- 5575 Sinclair Lewis: written. city page + 2023 brochure + 2025 map + ResNexus (browser): $45 / $50 Sat 2027; 80 sites, 35 seasonal; 40 ft; May1-Sep30; WF lead lakeview->lakefront sites 1-10 (~15-25 m open grass); website domain -> saukcentremn.gov; pin on seasonal row (~220 m, OK).
+- 15450 Onamia KOA: written. koa.py $44.99-64.99 (2027 May/Jul), Google 4.6/226, passes gate; not wf; pin OK; season unread (403/429).
+- 5496 South Kawishiwi: written. rec.gov 31 back-in, 23 elec (5,7,8 50A $32), $22/30/32; 40-88 ft; 10 FCFS; season May7-Sep26; not wf; pin OK; phone concessionaire 218-365-2963.
+- 5417 Split Rock Creek: written. spk00267 + RMN 918: 33 sites (32 web), 21E 30A, $24/34, 52 ft, year-round; pin 610 m -> 43.90146,-96.36607; phone 507-348-7908; note 'Rock County' wrong.
+- 5690 Sportsman Park Sleepy Eye: written. city + rec1: 24 back-in E(20/30/50)+W, $32 sites 1-16, 17-24 multiple rates unread, 7-night limit; phone 507-794-4040 -> 507-766-0508; season unread.
+- 5694 Sunnybrook Wadena: city page Client Challenge, OTL 403 -> unread; no groups; website -> wadena.org parks; leads in flags.
+- 5588 Wagner Park: $40 incl tax all hookup, 42 FHU 50A, monthly $650; WATERFRONT LEAD creekside -> not waterfront (45-55 m across loop road+brush); phone OK.
+- 5590 Welcome Creek: no operator site; Visit Fairmont reported facilities/phone booking; Google 4.4/192; RV Life avg 28; passes; not long-stay.
+- 5424 William O'Brien: spk00283; 114 drive-in, 71E, $25/35, Savanna YR / Riverway Apr-Oct; pin 330 m -> Riverway 45.22032,-92.75639; phone 651-539-4980.
+- 5511 Winnie Dam: rec.gov $30 all 22 sites (stored $24 wrong); 17x50A 5x30A; site 02 FCFS; season not written; pin OK.
+- 5451 Woodenfrog: DNR cmp00032; 61 non-electric, $17 incl tax same-day online, FCFS; season 05-07..11-21; pin on private resort 380 m -> 48.481835,-93.063963.
+- 5599 Ramsey Park: operator Cloudflare 403; used 10-15 capture: 50A electric only, water/sewer cleared, 5-night limit; weak waterfront lead north loop.

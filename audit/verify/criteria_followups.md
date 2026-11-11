@@ -1660,3 +1660,10 @@ me drop and report); each needs the research named before a verdict.
 - 5553 Olson Park: fees low 23 -> 30 (tent-only $23); revert if Campspot sells the primitive type to RVs once 2027 loads.
 - 5559 Plum Creek and 5568 River Road: mostly seasonal/long-stay, nightly ~39%, kept with note lines.
 - 5490/5492 USACE pages unread (Akamai). 5493 rec.gov FCFS to 10-20 vs manual season 10-19. 5416 winter camping past the reservable season unstated.
+
+## p3-421 (MN, 2026-11-11)
+- No drops. 5694 Sunnybrook (Wadena): nothing read (bot challenge / 403); leads $38, May 15-Oct 1, phone 218-539-3104 vs stored 218-632-2753. Re-check.
+- 5599 Alexander Ramsey: groups from the 2026-10-15 repo capture of the operator page (live page Cloudflare-blocked).
+- 5690 Sportsman Park: sites 17-24 rates unread; rec1 account to book.
+- 5588 Wagner Park: monthly stays sold; nightly share unmeasured.
+- 5511 Winnie Dam fees 24 -> 30.

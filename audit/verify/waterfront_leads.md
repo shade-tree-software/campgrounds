@@ -1159,3 +1159,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5492 Sandy Lake riverfront -> lakefront (old evidence named the wrong water; sites 05-14 on Big Sandy Lake above the dam).
 - 5687 Schroeder not waterfront -> lakeview (south row 30-40 m from Cedar Lake).
 - 5553 Olson lakefront kept on sites 7-12 (paved public lake trail between; open ground).
+
+## p3-421 (MN, 2026-11-11)
+- 5575 Sinclair Lewis lakeview -> lakefront on sites 1-10 (open grass 15-25 m; imagery re-viewed).
+- 5588 Wagner Park creekside -> not waterfront (45-55 m, road + brush).
+- 5599 Alexander Ramsey: weak riverfront lead, north-loop rig ~44.55233,-95.12171 ~10-15 m from the Redwood River; needs the campground map.

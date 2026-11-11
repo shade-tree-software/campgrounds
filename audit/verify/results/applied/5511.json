@@ -1,0 +1,46 @@
+{
+  "id": 5511,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233533 (description, notices, rules) and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233533 (22-site catalog with price_range, hookups, entry, coordinates)",
+    "https://www.recreation.gov/api/camps/availability/campground/233533/month (2026-10)",
+    "Esri World_Imagery around 47.4300,-94.0470 with catalog site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026"},
+      "source": "recreation.gov catalog: every one of the 22 sites price_range $30/night; /rates 'Peak Season' 2026-05-01..2026-10-14, 2027-05-01..2027-10-14 and 2028 'PeakSTANDARD ELECTRIC': 30, read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov overview ('All sites offer 30/50 AMP electric with water'); catalog Electricity Hookup 50 on 17 sites, 30 on 5, read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "pull_through": true, "note": "One pull-through (site 21); the rest back-in. Posted vehicle lengths run 40 ft and up."},
+      "source": "recreation.gov ('offers 22 sites with electric hookups'); catalog Driveway Entry (21 'Pull-through', others 'Back-in'), Max Vehicle Length 40-104 ft, read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true},
+      "source": "recreation.gov ('Amenities include showers, flush toilets, pit toilets, drinking water, a dump station'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233533", "max_stay_nights": 14, "fcfs": "some_sites"},
+      "source": "recreation.gov catalog (21 of 22 sites reservable; site 02 not) + rules maxStay 14 nights, read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground at the Lake Winnibigoshish dam, where the lake drains into the Mississippi, near Deer River. Sites are in red pine and hardwood forest; boat ramp to the river by the picnic shelter, and the nearest Lake Winnie access is about a mile north-east on Plug Hat Road. Not the Forest Service's Winnie Campground. --Claude",
+  "summary": "rec.gov read: 22 electric sites (17 at 50 A, 5 at 30 A) with water, $30 every site (stored $24 was wrong), 21 reservable + site 02 walk-up, 14-night max, showers/flush/vault/dump. Rate season May 1 - Oct 14 (not used as season); 2026 calendar shows bookings through Oct 14. Not waterfront kept; pin OK.",
+  "flags": [
+    "Fees: nightly $24 -> $30 (rec.gov catalog and the 2026-2028 rate tables all show $30; the stored $24 has no source behind it on the current pages).",
+    "Season: not written. rec.gov states no campground dates; the rate tables' 'Peak Season' May 1 - Oct 14 is a rate season, and the 2026 calendar shows reserved nights through Oct 14 only (earlier months no longer queryable). recgov_calendar.py would be the tool to set it.",
+    "Waterfront: keep not waterfront. Imagery: every site is in continuous forest; the Mississippi tailwater below the dam is ~150-200 m south-west of the nearest sites (01, 03, 05) past the day-use parking lot; Lake Winnie is above the dam and out of sight.",
+    "Phone 218-326-6128 confirmed (rec.gov facility_phone).",
+    "Pin 47.43000,-94.04840 sits between sites 01 and 03: OK."
+  ]
+}
