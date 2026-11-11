@@ -1586,3 +1586,11 @@ me drop and report); each needs the research named before a verdict.
 - 13357 Newport RV Park (town-owned, leased): season unset (rate seasons Apr 15-Nov 1 vs homepage May-Oct); max_rig_ft unset (operator gives 40/45/50/60).
 - 4170 Breachway: manual booking note repeats state:RI boilerplate; DEM 2026 repair release unread.
 - state:RI policy: riparks/camping (read 2026-11-11) says 2027 reservations are on hold; no provider named yet.
+
+## p3-413 (MN, 2026-11-11)
+- 5547 Maple Springs (private): 45 of ~68 RV sites seasonal (2022 map) but ~1/3 nightly, $47 posted, Google 4.6 (106) -> passes the five tests, kept.
+- 5543 Lake Hendricks: "Long-term rates are available", sites look heavily occupied; no engine to check. Kept, flagged.
+- 5550 North Star: potable water conflict (FS "not available" vs rec.gov "Drinking Water (hand pump)"); left unset.
+- 5541 Kruger: phone left at 651-345-3401 (Frontenac SP, the manager); verifier floated 651-299-3000 (DNR Info Center).
+- 5658 Land of Memories: Mankato page 403 to every client; site count, booking, season unconfirmed.
+- 5667 Memorial Forest: books on ResNexus (no schema value; platform operator).

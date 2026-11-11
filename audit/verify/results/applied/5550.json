@@ -1,0 +1,58 @@
+{
+  "id": 5550,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10191085 (overview, notices, rules, amenities) and /rates",
+    "recreation.gov public campsite search for facility 10191085 (38 sites: type, equipment, lengths)",
+    "https://www.fs.usda.gov/r09/chippewa/recreation/north-star-campground (last updated October 30, 2026)",
+    "Esri World_Imagery around the campground"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 14,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$14 a night per single site, first-come and reserved seasons alike. The fee covers one camping unit; on large sites a second unit is allowed but pays the full nightly fee by envelope at the entrance kiosk."
+      },
+      "source": "https://www.fs.usda.gov/r09/chippewa/recreation/north-star-campground ('Overnight Use: Single Site: $14 per night') + https://www.recreation.gov/api/camps/campgrounds/10191085/rates (2026 First-come, First-served Season and Peak Season, $14) + rec.gov notice ('Fee includes one camping unit per site... on large sites double occupancy is permitted. The second occupant must pay the full nightly amount'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "note": "New for 2026: sites 22-38 reservable on recreation.gov from July 3 to September 6; sites 1-21 stay first-come, first-served, and any site without a reservation is first-come. Reservations are posted 4 days ahead (no booking within 4 days)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10191085 (notice '!! NEW FOR 2026 !! Sites 22-38 will be reservable through recreation.gov from 7/3/2026 to the evening of 9/6/26. Sites 1-21 will remain first-come first-served. When there is no reservation for a site, the site is considered first-come first-served. Reservations will be posted 4 days in advance'; rules maxConsecutiveStay 14, reservationCutOff 4) + USFS page (same split), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-23", "closes": "11-24", "note": "2026: May 23 to November 24 (USFS); recreation.gov's first-come season starts May 22."},
+      "source": "https://www.fs.usda.gov/r09/chippewa/recreation/north-star-campground ('Seasons of Use 5/23/26 - 11/24/26') + https://www.recreation.gov/api/camps/campgrounds/10191085/rates (First-come, First-served Season 2026-05-22 to 2026-07-02, Peak 2026-07-03 to 2026-09-06, First-come 2026-09-07 to 2026-11-24), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 38, "note": "All 38 sites are standard nonelectric and accept RVs, trailers and fifth wheels; USFS lists no size restriction. Posted lengths, where given (26 sites), run 48-100 ft."},
+      "source": "recreation.gov campsite search, facility 10191085 (38 STANDARD NONELECTRIC sites, every one listing RV/Trailer/Fifth Wheel; max lengths 48-100 ft on 26 sites, none on 12) + USFS page ('No. of Sites 38', 'Size Restrictions No'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "https://www.fs.usda.gov/r09/chippewa/recreation/north-star-campground ('Vault toilets are available at the Campground') + rec.gov amenities ('Vault Toilets'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Chippewa National Forest campground in pine woods on North Star Lake, within easy walking distance of a sandy swimming beach; sheltered bays for fishing and quiet paddling. Black bears are active in the campground: food and coolers must be kept in hard-sided campers or vehicles. --Claude",
+  "summary": "rec.gov record/rates/catalog and the USFS page read: $14 (2026), 38 nonelectric sites all RV-capable (lengths 48-100 ft where posted, no FS size limit), sites 22-38 reservable July 3-Sept 6 with a 4-day cutoff and the rest FCFS, 14-night limit, season May 23-Nov 24 2026, vault toilets. Drinking water conflicts between the two pages (flag).",
+  "flags": [
+    "DRINKING WATER conflict: USFS page says 'Potable water is not available at this site'; recreation.gov amenities list 'Drinking Water' and 'Drinking Water (hand pump)'. potable_water left unset; reviewer's call (rec.gov is usually trusted, but an amenity checklist is weaker than the FS statement).",
+    "Not waterfront kept: the loops lie under continuous pine canopy between Highway 38 and North Star Lake; a few spurs on the west loop look to be within ~40-50 m of the shore (about 47.5575,-93.6550) but through trees, and imagery can only veto here. No rec.gov site attribute gives proximity to water.",
+    "Pin 47.55650,-93.65380 in the middle of the loops (rec.gov/FS point 47.556934,-93.652341 is ~120 m E): OK.",
+    "Phone 218-246-2123 matches (Deer River Ranger District, rec.gov contact). Websites fine.",
+    "Note cleaned: dropped site count/nonelectric, 'no length restriction listed' and the FCFS/reservable split (fields hold them)."
+  ]
+}

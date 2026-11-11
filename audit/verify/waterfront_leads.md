@@ -1114,3 +1114,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-408 (RI, 2026-11-11)
 - 4171 Fishermen's Memorial not waterfront -> bayview (RA Waterview 070-074, 086-092; shrub + salt marsh 50-80 m to open water).
 - 4170 Breachway bayfront kept (sites 58-75 on the channel bank); 206 Burlingame and 205 George Washington lakeview kept.
+
+## p3-413 (MN, 2026-11-11)
+- 5658 Land of Memories riverview -> not waterfront (behind the levee, ~100 m).
+- 5653 Lake Byllesby lakefront kept on sites 1-17 (open grass + paved trail, 25-35 m).
+- 5543 Lake Hendricks lakefront kept on the nine full-hookup lakeside sites (10-20 m, open grass).
