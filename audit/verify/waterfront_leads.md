@@ -1100,3 +1100,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - p3-406 (2026-11-11): 4055 Hopeville lakefront -> lakeview; 4062 Hawes riverfront -> riverview (sites 5, 20, 22 30-45 m under pines - riverfront lead if the ground is shown open); 4059 Housatonic riverview kept, riverfront lead sites 12-16 (25-30 m, pine band); 4058 Macedonia creekside lead sites 28-29. 212 Hammonasset --AWH coastal woods asked.
 - p3-407 (2026-11-11): CT all six not waterfront kept. Lead: 13975 Kettletown RA 'Lakefront' 009-017, only 009 fits, 40-55 m deciduous woods. 4052 Devil's Hopyard Eightmile River 35-50 m from sites 15-21 through wooded marsh.
 - p3-409 (2026-11-11): 4091 Bald Mountain riverfront -> riverview; 298 Lake St. Catherine lakefront -> lakeview; 4089 Campbell's Bay bayview -> not waterfront. Leads: 4081 Brighton prime sites 15-27/49-57 10-30 m under trees (lakeview kept); 14369 dropped.
+
+## p3-410 (MN, 2026-11-11)
+- 5611 Big Falls riverview -> not waterfront (sites 17-19 30-45 m behind loop road + tree band; open riverbank is day-use).
+- 5454 Birch Lake CG lakefront kept: sites 6, 12, 18, 19 water past the table on rec.gov photos.
+- 5601 Anderson: county sells a "designated lakeside" site type; sites unplaced, kept not waterfront.
