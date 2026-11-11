@@ -1149,3 +1149,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-419 (MN, 2026-11-11)
 - 5573 McCullough lakefront -> lakeview (open strip sites 18/20 are seasonal; nightly 19/21 ~45-50 m behind shore brush).
 - 5397 Maplewood not waterfront -> lakeview (Lakeside 7E/8E/15E/16E ~18-23 m behind a shore-tree fringe).
+
+## p3-418 (MN, 2026-11-11)
+- 5537 Spring Grove KOA not waterfront -> creekside (sites 52-61, ~25-30 m open grass to Riceford Creek; imagery re-viewed).
+- 5641 HooDoo Point lakefront -> lakeview (pads 15-25 m behind a tree band).
+- NEW 15663 Riverview Lanesboro creekside (Root River ~25-27 m wide below the dam).

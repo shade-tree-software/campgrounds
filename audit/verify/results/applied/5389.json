@@ -1,0 +1,46 @@
+{
+  "id": 5389,
+  "checked": "2026-11-11",
+  "sources": [
+    "MN DNR park data for La Salle Lake SRA (sra00311): https://www.dnr.state.mn.us/state-parks/park.html?id=sra00311 (overnight facilities, seasonal update, alert 'Updated November 6, 2026', contact), read 2026-11-11",
+    "ReserveMN PlaceId 137, facility 1005 La Salle Lake Campground: grid units (38 'Drive-In Electric/Water/Sewer', VehicleLength 65, MapInfo coordinates, SeasonDates 2026-11-12 to 2027-06-30) and search/details for every unit on 2027-06-15, read 2026-11-11",
+    "Esri World Imagery around 47.3457,-95.1634, viewed 2026-11-11"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 39, "max_rig_ft": 65, "pull_through": false},
+      "source": "MN DNR La Salle overnight facilities ('Drive-in Sites: 39 sites') + ReserveMN facility 1005 (38 web-bookable units, every one VehicleLength 65 and 'Back-in'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "MN DNR La Salle ('Electric Sites: All sites. All sites have full sewer, water and electric hookup.') + ReserveMN search/details (all 38 units 'Amp: 50'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true},
+      "source": "MN DNR La Salle sanitation (Showers and Flush Toilets, Campground: 'Available fishing opener weekend through first Sunday in October.') + seasonal update ('There is one rustic toilet located across from campsite #39 and two rustic toilets located in the day use area.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-14", "closes": "11-22", "note": "The shower building runs fishing-opener weekend to the first Sunday in October; water is shut off and the bathrooms closed after that."},
+      "source": "ReserveMN facility 1005 SeasonDates (in season 2026-11-12 to 2026-11-22, out of season 2026-11-23 to 2027-05-13, in season from 2027-05-14) + MN DNR seasonal update ('Water has been shut off for the remainder of the 2026 camping season.'; 'Campground bathrooms are closed for the remainder of the 2026 camping season.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "ReserveMN facility 1005 (all 38 units AllowWebBooking true) + DNR seasonal update ('If you have a reservation, you may go directly to your campsite.'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded campground loop about a quarter mile east of La Salle Lake; some sites may need extra blocks to level. Managed from Itasca State Park. --Claude",
+  "summary": "DNR + ReserveMN: 39 back-in sites, all full hookups 50 A, pads 65 ft, $42 confirmed, season May 14 to Nov 22 (ReserveMN), showers fishing opener to early October. PIN MOVE ~660 m onto the campground loop. Website 404 replaced. Not waterfront kept (~0.25 mile).",
+  "flags": [
+    "PIN MOVE (~660 m): stored 47.34800,-95.16610 is north-west of the campground, near Highway 9 and the day-use/boat-launch side. ReserveMN drive-in unit centroid 47.34328,-95.16076 sits on the campground loop on Esri imagery. Move there.",
+    "WEBSITE: the first stored URL https://www.dnr.state.mn.us/state_recreation_areas/la_salle_lake/index.html returns 404 (2026-11-11). Replace with https://www.dnr.state.mn.us/state-parks/park.html?id=sra00311 (200); keep the ReserveMN park link second.",
+    "Phone: none stored. DNR contact lists Itasca State Park '218-699-7251' (the recreation area has no office; the alert gives 218-699-7256 for questions). Add 218-699-7251.",
+    "Waterfront: not waterfront kept. ReserveMN search/details for every unit: '.25 mile to LaSalle Lake'; imagery shows the loop well inside the woods east of the lake.",
+    "Count: DNR says 39 drive-in sites, ReserveMN lists 38 bookable units (the 39th may be a host site); count written from DNR.",
+    "Note cleaned: dropped 'Newer state recreation area', 'electric RV sites, plus cabins; showers. Reservable online' (fields hold them, and every site is full hookup, not only 'electric RV sites')."
+  ]
+}

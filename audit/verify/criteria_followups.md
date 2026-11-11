@@ -1646,3 +1646,11 @@ me drop and report); each needs the research named before a verdict.
 - 5542 Lake Elmo: sewer only on four $50 sites that may be host pads.
 - 5396 Lake Vermilion-Soudan: the park's Pyrite Campground is an OHV campground - out of scope, do not add.
 - 5482 Leech Lake USACE page 403. 5437: ResNexus 25 sites vs county 28.
+
+## p3-418 (MN, 2026-11-11)
+- No drops. 5536 Hay Creek Valley: mostly permanent/monthly, ~24 nightly + 8 tent of ~150 passes 1 in 10; $50 at the line; Google 4.5/409 (review: non-seasonals treated as outsiders). Kept.
+- 5540 Kozy Oaks: ~6 short-term + 14 tent of ~100 sell nightly (~20%, tents count per AWH 2026-10-30); $39/$42; 4.5/209. Kept, note says mostly seasonal.
+- 5662 Garvin: county pages Akamai-blocked; snippet says all sites reservation-only in 2026 vs fcfs some_sites.
+- 5641 HooDoo Point: operator site on maintenance; re-check groups when it's back.
+- 5644: county close Oct 30 vs stored 10-29.
+- NEW 15663 Riverview Campground (Lanesboro): ~460 m from Sylvan Park 5582 but its own entrance + Campspot listing (separate-booking exception).
