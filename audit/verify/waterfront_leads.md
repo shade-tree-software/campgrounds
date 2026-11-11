@@ -1178,3 +1178,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-425 (MN, 2026-11-11)
 - 5398 McCarthy Beach Beatrice not waterfront -> lakeview (ReserveMN "Water Front" B3/B8/B21/B22/B24 under canopy). 5393 Lake Carlos lakefront kept (Lower 109-124E, open grass/sand).
+
+## p3-426 (MN, 2026-11-11)
+- 5403 Monson Lake lakeview lead (ReserveMN "Lake is less than 100 Feet behind campsite" 4/6/8/10/12, under canopy). 5669 Moose Lake City lakefront unconfirmed. 5666 McKinley lakeview kept (50-55).

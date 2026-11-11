@@ -1695,3 +1695,10 @@ me drop and report); each needs the research named before a verdict.
 - 5539 Jackpot Junction kept: $50.00 base exactly at the line; casino RV park with its own booking engine.
 - 5484 Mabel Lake: potable_water removed (FS "not available" vs rec.gov "hand pump").
 - 15613: booking.platform resnexus -> operator.
+
+## p3-426 (MN, 2026-11-11)
+- DROPPED 5549 New Leech Lake Campground: mostly seasonal look, only a 2019 rate page, 4 Google reviews (on-the-fence rule).
+- 5669 Moose Lake City Campground: Campspot CloudFront 403, no result - re-queued; stored lakefront unconfirmed (pads ~11-15 m from Moosehead Lake over lawn, site numbers unknown).
+- 5400 Mille Lacs Kathio: pin moved to Petaga; SPLIT CANDIDATE Ogechie Campground.
+- LEADS near Erskine (McIntosh city page): Lake Cameron RV Park; Farmer's Union Campground on Lake Sarah; Union Lake Sarah Campground. Check against 5676 Polk County Park.
+- 31 MN DNR links normalized state_parks/park.html?id= -> state-parks/park.html?id= (old form 301s).

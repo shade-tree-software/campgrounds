@@ -1,0 +1,12 @@
+# p3-426 notes
+- 5665 McIntosh: WRITTEN. FCFS 0/20 confirmed, potable null, pin move 440m -> 47.6341,-95.8840, leads Erskine x3
+- 5666 McKinley: WRITTEN. 2026 $55/35, 61 sites (26 seasonal, 8 tent), phone ->218-753-5921, lakeview kept (50-55), hookups cleared, website line 2 moved
+- 5400 Kathio: WRITTEN. 65 DI, $23/25/35, 30A, pin 3.3km -> 46.1272,-93.7693, ph 320-532-3523
+- 5401 Minneopa: WRITTEN. 56 units, $24/34, 30A, ph 507-386-3910, pin OK
+- 5403 Monson: WRITTEN. 20 sites $20/30 50A, season 04-30..10-24, no dump, lakeview lead 4-12, ph 320-347-7810
+- 5669 Moose Lake City CG: NO RESULT FILE. Campspot (park + book pages) CloudFront 403 'Request blocked' to plain HTTP; not retried. City site only links Campspot (no own page). Google 4.5/172, ph 218-485-4761 (Google = stored). Prior read 2026-10-13 (campspot_tier jsonl): closed 2026-10-01..2027-04-30 & 2027-10-01..2028-04-30, no site types listed. Imagery: lakeside row of back-in pads south of lower lane (~46.4541,-92.7532), pads end ~11-15 m from shore over open lawn; RVs also at west end ~20 m. Site numbers/nightly unknown -> recommend lakeview unless map confirms. Pin ~105 m OK.
+- 5404 Moose Lake SP: WRITTEN. 33 DI $24/34, dump false, season 04-16..10-24, pin 500m -> 46.4312,-92.7319, ph 218-460-7001
+- 5670 Nashwauk: WRITTEN. 18 FHU lots, $30 or $600/mo, 16/18 open June 2027 night; Google 3.8/6
+- 5549 New Leech Lake: WRITTEN. 2019 rates only, phone booking, cleared showers/laundry/dump/pull-through, long-stay unclear (imagery mostly seasonal look)
+- 5407 Old Mill SP: WRITTEN. 25 back-in $20/30, dump false, count 26->25, pin 300m -> 48.3651,-96.5689, ph 218-754-2200
+- 5557 Peaceful Valley: WRITTEN. $38/43, 36 sites, 50A, laundry/pull-through cleared, booking form url; Google 4.3/100
