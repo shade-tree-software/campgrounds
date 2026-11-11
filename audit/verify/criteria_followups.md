@@ -1679,3 +1679,5 @@ me drop and report); each needs the research named before a verdict.
 - 5368 Camden: SPLIT CANDIDATE - Upper Campground ReserveMN facility 816 (45 sites) ~2.4 km south of the Lower (this entry).
 - 5360 Banning: temporarily closed through 2027, reopening May 2028.
 - 5371 Lindbergh: manual season vs DNR Sep 21 close. 5617 Cedar Hanson: derived 61 sites vs county 37 + primitive.
+
+- 5522 Cavens Landing DROPPED by AWH 2026-11-11 (operator discourages nightly guests).
