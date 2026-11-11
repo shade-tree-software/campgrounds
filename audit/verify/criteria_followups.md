@@ -1739,3 +1739,9 @@ me drop and report); each needs the research named before a verdict.
 - SPLIT CANDIDATES now two: 5392 Lake Bronson (Two Rivers 48.72598,-96.60350 vs Lakeside, ~1.46 km, separate roads; Lakeside closed to ~July 2027) and 5425 Zippel Bay (Anglers ~1.7 km west).
   -> DONE 2026-11-11: Two Rivers 15667, Anglers 15668; Lakeside 5392 lakefront on 37E-41E/42/45/46 (closed to ~July 2027).
 - 5654 Lake Hanska phone: 507-439-6411 kept vs park page 507-359-6639.
+
+## p3-433 (MN, 2026-11-11)
+- UNREAD (Cloudflare-refused city sites; sit in batch files, so queue.py will not reissue them): 5649 Karlstad, 5689 Sherin Memorial (Pelican Rapids), 5702 Warroad (lakeview plausible on imagery), 5705 Wildcat Park (Firefly portal https://app.fireflyreservations.com/reserve/property/WildcatPark readable; county site down). Earlier unread in the same state: 5518, 5669, 5576, 5633 - one MN unread sweep at the end.
+- 5618 Cedar Lake Memorial Park ownership local -> private (American Legion Post 350).
+- 5678 Rice County Fairgrounds: "$65 / $40" with no unit; fair association (ownership left local).
+- LEAD: Snake River Campground (Aitkin County, south of McGrath; $20, 12 primitive sites) - not in DB (5445 is the Chengwatana one).

@@ -1199,3 +1199,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-432 (MN, 2026-11-11)
 - 5478 Iron Lake lakefront kept on 003/004. 5464 Deer Lake lakeview kept. Leads: 5654 Lake Hanska lakeview (tree belt), 5707 Wolf Lake lakeview (45-50 m), 5392 Lakeside shore sites after the lake refills.
+
+## p3-433 (MN, 2026-11-11)
+- 5604 Bagley lakefront -> lakeview (only the 10 seasonal pads locatable, behind reeds). 13323 Aitkin riverview kept. 5702 Warroad (unread) lakeview plausible.

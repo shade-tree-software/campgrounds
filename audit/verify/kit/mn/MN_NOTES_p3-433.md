@@ -1,0 +1,13 @@
+# p3-433 MN notes
+- 5649: cityofkarlstad.com Cloudflare challenge 403 (also 2026-10-15 read). Only aggregators found. NO RESULT FILE.
+- 5678 WRITTEN: fair site campground page: ~22 spots, $65 E+W / $40 none (no unit), no bathrooms/showers, dump public, ordinary nights rented. website add.
+- 5689: pelicanrapids.com Cloudflare challenge 403 now; only tourism/aggregators. NO RESULT FILE.
+- 5702: visitwarroad.com (warroad.org redirects there) Cloudflare block 403. NO RESULT FILE. Imagery: RV loop ~48.9068,-95.3018 SE of pin (~110 m), east edge ~70 m from Lake of the Woods shore across shore road + beach; north lot ~48.9090,-95.3017 open grass near river mouth marsh. Lakeview plausible, not upgradable.
+- 5704 WRITTEN: confirms; pin move -> 47.4822,-92.6597 (~370 m); not wf kept (canopy); 6 people/site; note cleaned
+- 5705: brownsvillemn.gov CF block 403; co.houston.mn.us down (CF 1001 DNS error / TLS fail) -> wayback 429 so far. Search snippet: reservations by Wildcat Creek Management LLC (507) 482-6250.
+- 5604 WRITTEN: $35/$20, May1-Sep30, phone booking 218-694-2871, >40 RV (10 seasonal SW of beach), lakefront->lakeview (sites not locatable; seasonal strip behind reeds)
+- 5366 WRITTEN: $17 tax incl, FCFS same-day pay, 14d, 11 sites, no wf confirmed, phone 218-328-8982, link fix
+- 5415 WRITTEN: $20, 28 back-in 25-40ft, no elec, season 05-14..09-06, usedirect, pin move 306 m -> 47.2231,-93.8024, DNR link spk00263, phone 218-328-8984
+- 5618 WRITTEN: $40/$60 hol (3n hol min), phone booking, May-Sep, 65 sites (25 RV/25 seasonal/15 tent per 2012 map), American Legion Post 350 owned -> ownership flag (private), G 4.9/47, not wf kept
+- 13323 WRITTEN: $30, 9 sites 2 pull-thru 50A, OneGov booking 7-day cutoff then FCFS, riverview kept (30-45 m tree band), domain -> aitkincountymn.gov
+- 5705 NO RESULT: brownsvillemn.gov Cloudflare block; co.houston.mn.us down (DNS/TLS), Wayback 429 x5; Firefly portal app.fireflyreservations.com/reserve/property/WildcatPark readable (RV Site/Tent/Shelter, max search date 10-11-2026, no 2027 dates) - not enough for a result
