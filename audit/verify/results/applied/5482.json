@@ -1,0 +1,66 @@
+{
+  "id": 5482,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233535 (facility description, notices, rules, amenities, rate table 2019-2028)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233535 (per-site catalog: 78 units with type, length, hookups, coordinates, fee templates)",
+    "https://www.recreation.gov/api/camps/availability/campground/233535/month (2027-05, 2027-09, 2027-10)",
+    "Esri World_Imagery around 47.2450,-94.2235 with the catalog's site points plotted"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "recreation.gov facility description ('73 wooded sites with electric hookups, including eight sites with full hookups') + catalog (all 73 STANDARD ELECTRIC sites 'Electricity Hookup 50'; water and sewer at sites 05, 08, 09, 10, 11, 12, 13, 14), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 73, "pull_through": true, "note": "73 wooded electric sites, 28 to 138 ft (all but one 40 ft or more), with four pull-throughs (06, 62, 68, 71); plus four walk-to tent sites."},
+      "source": "recreation.gov facility description ('73 wooded sites with electric hookups ... Additionally, there are four primitive walk-to tent sites') + catalog (73 STANDARD ELECTRIC, Max Vehicle Length 28-138; Pull-Through 06, 62, 68, 71; 4 WALK TO), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": true},
+      "source": "recreation.gov facility description ('Amenities include flush toilets, showers, drinking water, laundry facilities, a dump station, boat ramps and overnight boat mooring') + amenities list ('Showers (Seasonal)', 'Laundry Facilities', 'Dump Station', 'Drinking Water'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-14", "note": "Rate season May 1 to October 14 in 2026 and 2028; the 2027 calendar opens May 3, last night October 14."},
+      "source": "recreation.gov rate table (Peak Season 2026-05-01 to 2026-10-14; 2027-05-03 to 2027-10-14; 2028-05-01 to 2028-10-14) + availability calendar 2027 (sites 'Not Available' May 1-2, open from May 3; 'Not Available' from Oct 15), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233535",
+        "max_stay_nights": 14,
+        "note": "14 nights in any rolling 30 days. Check-in 1 p.m., check-out noon; campers with a reservation go straight to their site."
+      },
+      "source": "recreation.gov rules (maxStay 14 nights 'Rolling 30 Days'; maxConsecutiveStay 14) + notices ('Check in at 1pm or after on first date of reservation. Check out time is noon.'; 'Visitors with reservations are to go directly to their campsite.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 26,
+        "nightly_high": 50,
+        "currency": "USD",
+        "surcharges": {"full_hookup": 14, "weekend": 0},
+        "checked": "2026",
+        "note": "Electric sites $26 a night; full-hookup sites $40; two extra-long sites (06, a 138-ft pull-through, and 58) $50. Walk-to tent sites $14."
+      },
+      "source": "recreation.gov rate table (2026 and 2027 Peak Season: 'STANDARD ELECTRIC' 26, 'STANDARD ELECTRICu40' 40, 'STANDARD ELECTRICu50' 50, 'WALK TO' 14) + catalog fee templates (u40 on sites 05, 08, 09, 11, 12 and peak-season 10, 13, 14; u50 on sites 06 and 58), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground at the Leech Lake dam in Federal Dam, on Portage Bay in the Chippewa National Forest. Wooded loops above the boat ramps and mooring canal; the shore is beyond the ramp parking lot. --Claude",
+  "summary": "rec.gov record, rate table, per-site catalog and 2027 calendar read: 73 electric sites (50 amp, 28-138 ft, four pull-throughs) + 4 walk-to tent sites, 8 full hookups; flush toilets, seasonal showers, laundry, dump; $26 electric / $40 full hookup / $50 two long sites (fees high 26 -> 50); season May 1-Oct 14 (was approximate May 1-Oct 31); 14-night max. Count 77 -> 73. Pin OK; not waterfront kept.",
+  "flags": [
+    "Season: closes 10-31 -> 10-14. The stored 'early May to late October' came from note prose; rec.gov's rate season ends October 14 every year 2019-2028 and the 2027 calendar turns 'Not Available' from October 15.",
+    "Sites: count 77 -> 73 (the 73 drive-in electric sites; the four walk-to tent sites, 76-79, are in the note). Every drive-in site fits a 23-ft rig (shortest: 46 at 28 ft).",
+    "Fees: nightly_high 26 -> 50. Full hookups $40 (sites 05, 08, 09, 11, 12 all season; 10, 13, 14 at $40 in peak season); sites 06 and 58 price at $50 though the catalog shows no water/sewer there (06 is a 138-ft pull-through, 58 is 94 ft). Only the Peak rate is published; Off Peak/Transition templates exist on the sites but carry no posted rate.",
+    "Waterfront: keep not waterfront. Plotted on imagery, the nearest sites (12, 11, 09, 08, 05) are ~80-110 m from Portage Bay, with the boat-ramp parking lot and the park road between them and the shore; the loops are under forest.",
+    "Pin 47.24500,-94.22380 is inside the loops (catalog centroid ~47.2449,-94.2240): OK.",
+    "Phone 218-654-3145 confirmed (recreation.gov). Website: recreation.gov link confirmed; the stored USACE page https://www.mvp.usace.army.mil/Missions/Recreation/Leech-Lake/ returned 403 to a plain fetch - UNREAD, not checked.",
+    "Two catalog numbers are missing (07, 59) - likely host/staff sites, not counted. Rules: one wheeled camping unit plus one tent per site; ATVs/UTVs not allowed in the campground; certified firewood only."
+  ]
+}

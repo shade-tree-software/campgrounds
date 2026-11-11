@@ -1638,3 +1638,11 @@ me drop and report); each needs the research named before a verdict.
 - 5517 Boondocks: Facebook-only; Google 4.8/144 + phone; camper-reported fees.
 - 5512: shooting ranges beside the RV rows (noise). 5365: DNR no advance reservation needed late fall-early spring (vs state:MN); hunt closure Dec 4-7 2026.
 - 5708 Zumbrota: 10 more sites approved for 2024, count unpublished.
+
+## p3-419 (MN, 2026-11-11)
+- No drops. 5545 Lax Lake Resort: $48 base / $54 with electric, no gateway, not GS; kept on the cheapest real night + Google 4.7/86 (tiebreaker). Contact page still "Now taking reservations for 2024!"; only 2 motorhome sites (to 32 ft); no pets; phone/mail booking.
+- 5661 Long Lake (Clearwater Co.): rate unread (Cloudflare), amperage unknown.
+- 5551 Northwest Acres: Aug-Oct beet-harvest bookings (review); 30/50 A review-only.
+- 5542 Lake Elmo: sewer only on four $50 sites that may be host pads.
+- 5396 Lake Vermilion-Soudan: the park's Pyrite Campground is an OHV campground - out of scope, do not add.
+- 5482 Leech Lake USACE page 403. 5437: ResNexus 25 sites vs county 28.

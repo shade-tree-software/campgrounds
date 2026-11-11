@@ -1145,3 +1145,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5614 Black Beach lakeview -> coastal walk (Lake Superior beach ~150 m from the east loop, city park land only).
 - 5365 Blue Mounds: evidence corrected (sites 11-13 ~20-30 m behind a tree band); not waterfront stands.
 - 5612 (dropped) had one lakefront row on the peninsula's east shore.
+
+## p3-419 (MN, 2026-11-11)
+- 5573 McCullough lakefront -> lakeview (open strip sites 18/20 are seasonal; nightly 19/21 ~45-50 m behind shore brush).
+- 5397 Maplewood not waterfront -> lakeview (Lakeside 7E/8E/15E/16E ~18-23 m behind a shore-tree fringe).
