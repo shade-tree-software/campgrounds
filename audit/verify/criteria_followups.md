@@ -1610,3 +1610,12 @@ me drop and report); each needs the research named before a verdict.
 - 5635 Harmony: hookups and season unposted. 5550-style: none.
 - 5475 Gull Lake USACE page 403; phone replaced by rec.gov's.
 - 5632 Freeborn fairgrounds: campers ~330 m west (43.6615,-93.3628) may be event/storage units; pin left.
+
+## p3-415 (MN, 2026-11-11)
+- DROPS 5594 Young's Bay Resort (no campsites or RV camping, operator rates page) and 5586 Trout Lake Campground ($54.50 Campspot, no exception; primarily seasonal).
+- 5587 Voyageur's View: no nightly rate posted, Campspot closed for 2027; kept on RV Life tier 2 (AWH 2026-10-11 keep test). Re-read once 2027 dates open. Tubing/kayak runs suspended (campground not said closed).
+- 5418 Shipwreck Creek: season group is manual (closes 10-26), but ReserveMN sells Drive-In Electric 201/203/205/207/209 in Nov/Dec/Feb and the DNR says the 46 electric sites are open -> likely year_round with five winter sites; manual group untouched, needs a decision.
+- 5419 Temperance Lower: DNR 'OPEN for the season' in winter vs ReserveMN out of season; season unwritten. Sites #53/#55 steep grade (tent/very small trailers only) - caveat in note. DNR 'Reservations are strongly recommended' (softer than the state:MN row).
+- 5414 / 5422 booking.platform 'operator' (derived) vs state:MN 'usedirect' row; left.
+- 5422 Whitewater: DNR 'Dump Station is OFF for the 2026 season' read as the winter shutdown; Hwy 74 culvert detour through Nov 2026.
+- LEAD: Riverview Campground, Lanesboro MN (16 RV sites to 38 ft, 30/50 A, $40, campspot.com/book/riverviewcampground) - queued for p3-418.

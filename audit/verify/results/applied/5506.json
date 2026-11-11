@@ -1,0 +1,72 @@
+{
+  "id": 5506,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232188 (facility record, notices, rules; read 2026-11-11)",
+    "https://www.recreation.gov/api/camps/campgrounds/232188/rates (2027 rate seasons; read 2026-11-11)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232188 (34 campsites with type, coordinates, lengths, prices; read 2026-11-11)",
+    "trip_data/ridb_campsites.json facility 232188 (fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r09/superior/recreation/whiteface-reservoir-campground (read 2026-11-11)",
+    "Esri World_Imagery around 47.3320,-92.1430"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 30,
+        "currency": "USD",
+        "surcharges": {"electric": 7},
+        "seasonal": [{"name": "September first-come season", "opens": "09-06", "closes": "09-30", "nightly_low": 26, "nightly_high": 30}],
+        "checked": "2026",
+        "note": "Standard site $28 a night, premium (RV) site $30, electric sites $35; $26 for a standard site in the September first-come season. Extra vehicle $8 a night. Long-term sites are sold by the month or season."
+      },
+      "source": "recreation.gov campsite search (STANDARD NONELECTRIC price 28, RV NONELECTRIC 30, STANDARD ELECTRIC 35) + rates API 2027 seasons (Peak 2027-05-01 to 09-05: STANDARD NONELECTRIC 28; Walk In 2027-09-06 to 09-30: STANDARD NONELECTRIC 26) + FS page ('Standard: $28/night', 'Premium: $30/night', 'Electric: Available at some premium sites, additional $7 fee'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-30", "note": "Reservable May 1 to Sept 5, first come Sept 6-30 (recreation.gov 2027 rate seasons); the Forest Service page says May 1 - October 2."},
+      "source": "recreation.gov rates API (2027 'Peak Season' 2027-05-01 to 2027-09-05, 'Walk In First-come, First-served Season' 2027-09-06 to 2027-09-30) + FS page ('Seasons of Use May 1 - October 2'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "fcfs": "some_sites",
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232188",
+        "max_stay_nights": 14,
+        "note": "Long-term sites are reserved for the whole season through the project office. Check-in 2 p.m., check-out noon (FS)."
+      },
+      "source": "recreation.gov facility rules ('maxConsecutiveStay' 14) and notices ('Some campsites are available for long-term occupancy; must be reserved for the entire reservation season') + FS page ('Some sites are reservable through Recreation.gov'; 'Check in: 2:00 p.m.; Check-out: 12:00 p.m.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "recreation.gov campsite search (every electric site 'Electricity Hookup' 30) + RIDB catalog, read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 52},
+      "source": "FS page ('52 campsites (some with electricity), includes 12 long-term campsites (over 14 days)'; 'Sites are pull-in and not specifically designed for RVs. Most can accommodate a moderately sized vehicle.') + recreation.gov (34 listed sites, max vehicle lengths 30-50 ft), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Restrooms: Vault toilet(s)'; 'Potable water is available at this site.' 'Solar Powered Wells'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Superior National Forest campground on Whiteface Reservoir (4,980 acres) near Aurora, in mixed aspen, birch and maple; a few sites overlook the water. Boat launch, fish-cleaning house, swim beach and playground; a group site and some long-term seasonal sites. --Claude",
+  "summary": "rec.gov facility, rates and every listed site + FS page read: fees 26-28 -> $28 standard / $30 premium (+$7 electric = $35), $26 September first-come; season May 1-Sep 30 (FS says Oct 2); 52 sites, 30-amp, vault toilets and water; FS shows the campground closed for the winter now. Waterfront lakefront -> lakeview (downgrade); pin ~370 m off.",
+  "flags": [
+    "WATERFRONT DOWNGRADE lakefront -> lakeview: FS/rec.gov: 'A few sites overlook the reservoir, and all sites offer shade and privacy.' Only site 004 carries rec.gov's 'Proximity to Water: Lakefront' attribute, but its catalog point (47.33233,-92.14153) is about 85 m from the shore under continuous forest canopy on imagery; the nearest other points, 009 (47.33237,-92.14068) and 010 (47.33254,-92.14073), are about 50-70 m back, also under canopy. No site is clearly within 50 m over open ground.",
+    "PIN MOVE: stored 47.33489,-92.14561 (the FS page's lat/long) is ~370 m from the centroid of the 31 listed family-site points and ~320 m from the nearest one. Move to 47.33196,-92.14336.",
+    "Status: FS page 'Current Conditions: Closed–No fees or services' (seasonal closure; 'Seasons of Use May 1 - October 2'). Not a permanent closure.",
+    "Fit: rec.gov max vehicle lengths 30-50 ft on every listed site; FS: 'Sites are pull-in and not specifically designed for RVs. Most can accommodate a moderately sized vehicle.' Stored max_rig_ft 50 left.",
+    "Phone: stored 218-453-8650 matches the FS district office and rec.gov's facility contact line; rec.gov's facility_phone field shows (218) 229-8800 (an older district number). No change suggested.",
+    "People per site: rec.gov site attribute 'Max Num of People' 8, FS page 'Maximum of 9 people per site'; extra_person not written.",
+    "Long-stay: 12 long-term sites (rec.gov 'Seasonal Sites'/'Long Term' loops, not bookable nightly) beside about 40 nightly sites; not a seasonal-lease park.",
+    "Policy row federal:usfs not contradicted.",
+    "Note cleaned: dropped 'Laurentian RD', '50+ sites incl. ~31 that take RVs/trailers 30-50 ft', '20 sites have electric' and 'Most sites reservable online' (fields hold them or wrong: 17 standard-electric + 3 RV-electric family sites listed)."
+  ]
+}

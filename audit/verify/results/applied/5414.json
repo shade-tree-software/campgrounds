@@ -1,0 +1,57 @@
+{
+  "id": 5414,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00262 (via maps.dnr.state.mn.us feature_detail spk00262: overnight facilities, seasonal update, alerts updated May 22nd, 2026, contact)",
+    "ReserveMN (mnrdr.usedirect.com) PlaceId 93: search/place, search/grid and search/details for every unit of facilities 856 (Chase Point Campground) and 916 (Lodge Campground), 2027-06-15",
+    "Esri World_Imagery around 47.713-47.722,-93.569"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "MN DNR Scenic seasonal update ('Electrical sites in Chase Point have 15, 30, and 50 amp service') + ReserveMN details (Chase Point electric units 'Amp: 50'; Lodge L77E and L80E 'Amp: 30'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 88, "pull_through": true},
+      "source": "MN DNR Scenic overnight facilities ('The park has 88 drive-in sites across two campgrounds.'; 'The park has 20 electric pull-through sites in the Chase Point campground.'; 'The max RV length varies from 39 to 90 feet.') + ReserveMN grid (61 Chase Point + 25 Lodge web-bookable drive-in units, posted lengths 20-110 ft, 84 of 86 at 23 ft or more), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Showers and flush toilets: Chase Point from fishing opener to early October, the Lodge campground Memorial Day weekend to Labor Day weekend. Dump station across from the ranger station, fishing opener to early October. A hand well by Chase Point site 25 runs year-round."
+      },
+      "source": "MN DNR Scenic overnight facilities (Showers, Flush Toilets, Vault Toilets 'Some park vault toilets are available year-round', Dump Station 'across from the ranger station and available from fishing opener through early October') + seasonal update ('A hand well is available year-round by site 25 in the Chase Point Campground'), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 24,
+        "currency": "USD",
+        "surcharges": {"electric": 10, "weekend": 0},
+        "checked": "2026",
+        "note": "$24 a night for a drive-in site without electric, $34 with electric, in both campgrounds. ReserveMN's prices for June 2027 nights."
+      },
+      "source": "ReserveMN search/details for every unit of facilities 856 and 916, 2027-06-15 (non-electric 'Rate 24.00', electric 'Rate 34.00'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Two drive-in campgrounds among old-growth pines on Coon-Sandwick Lake: Chase Point on a wooded point (61 sites, 36 electric; the pull-throughs are 50-68) and the Lodge campground 0.8 km north by the beach and boat access (25 sites, two electric). The RV fill station's hose has no threaded connection; the nearest threaded fill is Bigfork's municipal station. --Claude",
+  "summary": "DNR page + every ReserveMN unit read: electric 20 -> 50 amp (15/30/50 at Chase Point, 30 at the Lodge's two), 88 drive-in sites (ReserveMN 86, 84 of them 23 ft+), pull-throughs, showers/flush/vault/hand well/dump with their seasons; fees $24/$34 re-confirmed for June 2027. Not waterfront kept. Season left (manual).",
+  "flags": [
+    "Phone: none stored; the park's own number is 218-571-2600 (DNR contact block). apply.py does not write phones.",
+    "Fit: ReserveMN posts per-site lengths of 20-110 ft; 84 of the 86 web-bookable drive-in units take 23 ft or more (only Chase Point non-electric sites 7 and 11 are 20 ft). DNR: 'The max RV length varies from 39 to 90 feet.' No campground-wide cap; max_rig_ft not written.",
+    "Sites: DNR says 88 drive-in sites and 38 electric at Chase Point; ReserveMN lists 86 web-bookable drive-in units (36 electric at Chase Point, 2 at the Lodge). count written from the DNR page.",
+    "Waterfront: keep not waterfront. ReserveMN gives '.1 mile' or '.2 mile' to the lake for every unit. The nearest units (Chase Point 1E, 2E, 27E-32E, 47E-49E at about 47.7130,-93.5689) are about 35-40 m from the shore on imagery, but under continuous pine canopy with a loop lane between them and the water: a *view at most, unconfirmed under canopy. The Lodge units (centroid 47.72156,-93.56870) are likewise wooded.",
+    "Pin 47.71382,-93.56995 is ~45 m from the Chase Point unit centroid (47.71419,-93.56973): OK. Lodge campground centroid is 820 m north; both off the same park road, so not a split candidate (under ~1 km, no own entrance found).",
+    "Season group is manual (2026: Chase Point closes November 1, Lodge September 7) and was not touched. DNR seasonal update now: 'Campgrounds and lodging are now closed for the winter, and will reopen in the spring of 2027.' The ReserveMN grid would not return 2027 season dates.",
+    "Booking: stored platform 'operator' (derived) while the state:MN row says 'usedirect' for the same ReserveMN site; left as is. Policy row not contradicted: every drive-in unit is AllowWebBooking true; DNR 'All campsites require reservations.'",
+    "Note cleaned: the stored '34 with 20-amp electric' was wrong (15/30/50-amp, 36-38 electric); dropped the facilities and 'Reservable via ReserveMN' (fields hold them)."
+  ]
+}

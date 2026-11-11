@@ -1,0 +1,63 @@
+{
+  "id": 5422,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00280 (via maps.dnr.state.mn.us feature_detail spk00280: overnight facilities, seasonal update, alerts updated November 5, 2026, contact)",
+    "ReserveMN (mnrdr.usedirect.com) PlaceId 105: search/place, search/grid (2026-12-15 to 2027-01-04) and search/details for every unit of facilities 761 (Cedar Hill Campground) and 1038 (Minneiska Campground), 2027-06-15",
+    "Esri World_Imagery around 44.061,-92.0445"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "MN DNR Whitewater seasonal update ('All electric sites have 20, 30, and 50 amp hookups. There are no water or sewer hookups at Whitewater State Park.') + ReserveMN details (electric units 'Amp: 50'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 110, "pull_through": true, "max_rig_ft": 50},
+      "source": "MN DNR Whitewater overnight facilities ('The park has 110 drive-in sites'; 'Sites 46, 64, 200e, 203e, 205e, 206e, 208e, 212e, 216e, 220e, 227e, 236e, and 238e are pull-through.'; 'The maximum RV length is 50 feet.') + ReserveMN grid (Cedar Hill 69 drive-in units 35-100 ft, Minneiska 41 drive-in electric units 65 ft), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Showers, flush toilets and the dump station (south end of the visitor-center lot) run mid-April to mid-October; vault toilets year-round; winter drinking water at the visitor-center spigot."
+      },
+      "source": "MN DNR Whitewater overnight facilities ('Showers are available mid-April through mid-October.'; 'Flush toilets are available mid-April through mid-October.'; 'Vault toilets throughout the park are available year-round.'; 'The dump station is available mid-April through mid-October.') + seasonal update ('Drinking water is available year-round outside the Visitor Center near the flag pole'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Six electric sites in the Minneiska campground stay open through the winter (200E, 203E, 205E, 206E, 208E, 212E); Cedar Hill closes for the winter. Showers, flush toilets and water run mid-April to mid-October."},
+      "source": "MN DNR Whitewater seasonal update ('Camping is available year-round ... Winter camping sites are in the Minneiska Campground and are electric.') + ReserveMN grid 2026-12-15 to 2027-01-04 (Minneiska in season, units 200E/203E/205E/206E/208E/212E free; Cedar Hill all units out of season), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "surcharges": {"electric": 10, "weekend": 0},
+        "checked": "2026",
+        "note": "$25 a night for a drive-in site without electric, $35 with electric. ReserveMN's prices for June 2027 nights."
+      },
+      "source": "ReserveMN search/details for every unit of facilities 761 and 1038, 2027-06-15 (non-electric 'Rate 25.00', electric 'Rate 35.00'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Two drive-in campgrounds in the Whitewater River valley, from open and grassy to wooded: Cedar Hill west of Hwy 74 (mostly electric, plus non-electric and cart-in sites) and Minneiska east of it (all electric). --Claude",
+  "summary": "DNR page + every ReserveMN unit read: 110 drive-in sites (85 electric, 20/30/50-amp, no water/sewer hookups), 13 pull-throughs, 50-ft park limit, showers/flush/dump mid-April to mid-October, vault year-round; $25/$35 re-confirmed; year-round with six Minneiska winter sites (season added). Not waterfront kept.",
+  "flags": [
+    "Season added as year_round (none stored): DNR 'Camping is available year-round'; ReserveMN shows Minneiska 200E, 203E, 205E, 206E, 208E and 212E bookable in December/January.",
+    "Dump: DNR seasonal update (Nov 2026) 'The Dump Station is OFF for the 2026 season.' Read as the usual winter shutdown (the facilities list says 'available mid-April through mid-October'); dump left true.",
+    "Fit: every drive-in unit posts 35 ft or more (Cedar Hill 35-100 ft, Minneiska 65 ft); DNR park-wide limit 50 ft written as max_rig_ft.",
+    "Waterfront: keep not waterfront. ReserveMN gives '.1 mile' to the river for Cedar Hill 45-69 and '.2 mile' for the electric loop; on imagery the loops are wooded and about 150 m from the Whitewater River.",
+    "Pin 44.06293,-92.04321 (DNR park point, at the parking lot by Hwy 74) is ~190 m from the Minneiska unit centroid (44.06147,-92.04204) and ~390 m from Cedar Hill's (44.06054,-92.04673), between the two campgrounds that this one entry covers: OK. The two are ~390 m apart off the same park road, not a split.",
+    "Phone: none stored; the park's number is 507-312-2300 (DNR contact). apply.py does not write phones. Website: suggest adding https://www.dnr.state.mn.us/state_parks/park.html?id=spk00280 beside the ReserveMN link.",
+    "Alert (not a criteria flag): Hwy 74 culvert replacement with detours August-November 2026; the DNR asks visitors to avoid the gravel township roads Google Maps suggests. Park closed to the public Nov 21-22 for a lottery deer hunt.",
+    "Booking: stored platform 'operator' (derived) while the state:MN row says 'usedirect'; left. Policy row not contradicted ('Reservations are required for all campsites').",
+    "Note cleaned: dropped the facilities list and 'Reservable via ReserveMN' (fields hold them); 'Gooseberry Glen' is now the cart-in campground only, so the loops are named Cedar Hill and Minneiska as ReserveMN does."
+  ]
+}

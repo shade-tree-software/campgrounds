@@ -1129,3 +1129,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5380 Gooseberry Falls not waterfront -> coastal walk (first use of the new value; wooded point, 50-150 m, park trails only).
 - 5435 Hungryman Lake lakeview -> not waterfront (pine canopy, ~110 m; Google photos unread).
 - 5637 Hill City lakeview kept; one or two pads by the boat landing could be a lakefront-with-caveat if the site map is read.
+
+## p3-415 (MN, 2026-11-11)
+- 5506 Whiteface Reservoir lakefront -> lakeview (site 004 'Lakefront' tag ~85 m under canopy).
+- 5419 Temperance Lower lakeview kept (#41/#42/#44 ~50-60 m from the river-mouth beach); coastal walk would also fit.
+- 5587 Voyageur's View: riverbank lane ~20-30 m from the Red Lake River behind a tree line (2017 map: sites 125-153?) - unconfirmed, no upgrade.
