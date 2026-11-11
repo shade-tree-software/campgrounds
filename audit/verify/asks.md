@@ -585,5 +585,5 @@ Rules: (1) a site in a lot the agency names as ATV parking drops; (2) a driveway
 - **p3-372 (2026-11-10):** 9025 Fort Macleod Lions Club Campground: no operator or municipal page exists (only a tourism listing and a Facebook group); the rate, season, phone and land owner are all unverified, Google shows 4.4 stars from 34 reviews. Keep as it is, or drop on the live-web-presence rule?
 - **Answered by lookup (2026-11-10):** 9025 Fort Macleod Lions: RV Life lists it (300 m from the pin, open) at price level 1 ($), average rate 15, 5 stars, park type 'city'. With Google's 34 reviews and a phone it passes presence and price even if private. Kept; ownership still unsettled (RV Life's 'city' tag leans local).
 
-## 12801 Drayton Valley RV Park (AB, town-run) - p3-377, 2026-11-10
+## 12801 Drayton Valley RV Park (AB, town-run) - p3-377, 2026-11-10 - CLOSED: AWH 2026-11-10 "drop Drayton" (dropped, removals.json)
 Keep or drop? Campspot sells nightly only 4 of its 42 RV sites (the "Full Service 30 Amp" type), beside a posted C$975/month rate and seasonal rentals - just under the 1-in-10 nightly test. Google 3.8 from 58 reviews. Both the long-stay tests and the under-4-stars rule were written for private parks; this one is the town's. C$65.10 a night tax included. Season also unclear (town: year-round; Campspot: May 1 - Oct 12).
