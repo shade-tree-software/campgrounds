@@ -1,0 +1,44 @@
+{
+  "id": 5471,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232283",
+    "https://www.recreation.gov/api/camps/campgrounds/232283/rates",
+    "RIDB campsite catalog for facility 232283 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232283 (notice: 'All reservable sites, except 26, 33 and 41 (tent-only) have electric hookups; sites 5, 10, 15, 16, 18 and 62 have 20, 30 and 50 amp service available') + RIDB catalog (bookable sites 005/010/015/016/018/062 'Electricity Hookup 50'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 40, "pull_through": true},
+      "source": "RIDB campsite catalog for 232283 (fetched 2026-10-20): longest 'Max Vehicle Length' on an RV site is 40 ft (driveways run longer, up to 67 ft, but the posted vehicle limit is 40); 53 of 56 RV sites allow 23 ft or more; 5 pull-through sites (005, 010, 015, 016, 018). rec.gov: 'Many sites at Fall Lake are made to accommodate RVs including pull-through sites.' Read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "flush_toilets": true, "showers": true, "potable_water": true, "camp_store": true, "note": "Store, canoe rentals, firewood and ice; swimming beach and playground; host on site in season."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232283 (amenities 'Showers', 'Accessible Flush Toilets', 'Accessible Vault Toilets', 'Drinking Water'; description 'A store, canoe rentals, firewood and ice are available at the facility, and a campground host is on-site during the season'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": "some_sites", "max_stay_nights": 14, "note": "A reserved site is held until noon the day after the arrival date, then released."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232283 ('This lake has some sites that can be reserved and some that are first-come, first-served'; maxConsecutiveStay 14; RIDB catalog: 14 non-reservable standard electric sites; notice on held reservations), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 40, "nightly_high": 40, "currency": "USD", "checked": "2027", "tax": {"included": false}, "extra_vehicle": {"included": 1, "per": "night"}, "note": "recreation.gov 2026 and 2027 peak seasons: standard electric $40; the $30 non-electric rate applies only to tent-only sites. One RV with tow vehicle per site; most sites take one extra vehicle for a per-night fee (amount not stated)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232283/rates (2026-05-01..09-26 and 2027-05-01..09-25 Peak Season: STANDARD ELECTRIC 40, STANDARD NONELECTRIC 30 (no such RV site in the catalog), TENT ONLY NONELECTRIC 30) + facility rules hasTaxes 1 + notice 'One RV with tow vehicle per single site ... Most sites can accommodate 1 extra vehicle that is not included with the reservation fee', read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Superior NF (Kawishiwi District) campground ~6 mi E of Ely with direct access into the Boundary Waters (a BWCAW permit is needed past the wilderness line on the lake); swimming beach, boat ramp and a 1.5-mile hiking trail. --Claude",
+  "summary": "rec.gov + RIDB read: 50-amp on six sites (all reservable non-tent sites electric), pull-throughs, showers/flush+vault toilets/water/store, some sites FCFS, 14-night max; changed max_rig_ft 52 -> 40 (posted vehicle limit) and nightly_low 30 -> 40 (the $30 rate is tent-only). Season dates not settled (rec.gov peak season 05-01..09-26 in 2026).",
+  "flags": [
+    "Fees: the stored $30 low was the STANDARD NONELECTRIC/TENT ONLY rate; the RIDB catalog has no non-electric RV site, so the cheapest site a 23-ft rig fits is standard electric at $40 (under US$50).",
+    "Waterfront: keep lakeview. rec.gov lists the amenity 'Waterfront Sites' and says 'located on the shores of Fall Lake', but the loops are under dense canopy on imagery and no site numbers could be placed on the shore. Lead only.",
+    "Phone: none stored; rec.gov gives 'KAWISHIWI RANGER DISTRICT: 218-365-7600, CONCESSIONAIRE (SUMMER): 218-365-2963' (apply.py does not write phones).",
+    "Pin 47.95244,-91.71633 matches rec.gov's 47.9525,-91.7163889 and lies at the campground loops: OK."
+  ]
+}

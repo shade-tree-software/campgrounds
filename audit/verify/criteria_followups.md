@@ -1572,3 +1572,10 @@ me drop and report); each needs the research named before a verdict.
 - 5696 Blue Earth: stored max_rig_ft 50 (derived) is not on the city page; consider clearing.
 - 5611 Big Falls: sites.count unwritten (map 1-32 vs Campspot "RV Sites 37").
 - 5513 Baker: closed for the 2026 season; no 2027 dates; Hwy 12 construction affects access.
+
+## p3-411 (MN, 2026-11-11)
+- 5616 Brown Park South HELD (result in scratch p3-411/5616.held.json): stored inclusion/hookups/note describe Brown Park (north) (30 electric sites, showers); South's own page says 18 camping sites + 4 cabins, ResNexus types unread (hCaptcha); satellite reads disagree (sweep: open apron to Loon Lake; p3-411: 483rd Ave + tree band between).
+- Leads not in the DB: Brown Park (north), Jackson Co. (30 electric sites, showers; county SEC=D6820B32-0AFC-444A-8F52-184C985155BE); Veterans' Park Campground, Dawson (6 full-hookup sites on the Lac qui Parle River, OSM 44.92676,-96.05638).
+- 5629 Fisherman's Point: lakefront kept on 49 "lake access" sites; site numbers not placed.
+- 5465 Devil Track / 5471 Fall Lake: lakeview kept; some spurs 20-40 m from shore under canopy, no site numbers.
+- 5623 Crosby: no 2027 rates posted. 5627 Dawson: rates/season/amperage unread. 5471: season dates unsettled. 5595/5528 dropped.

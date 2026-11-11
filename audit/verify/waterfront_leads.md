@@ -1105,3 +1105,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5611 Big Falls riverview -> not waterfront (sites 17-19 30-45 m behind loop road + tree band; open riverbank is day-use).
 - 5454 Birch Lake CG lakefront kept: sites 6, 12, 18, 19 water past the table on rec.gov photos.
 - 5601 Anderson: county sells a "designated lakeside" site type; sites unplaced, kept not waterfront.
+
+## p3-411 (MN, 2026-11-11)
+- 5627 Dawson riverview -> not waterfront (Gnome Park ~1 km from the river); Veterans' Park (river frontage) is a lead.
+- 5376 Fort Ridgely: evidence corrected (creek valley, not upland); east spurs face Fort Ridgely Creek under canopy; a creekside upgrade needs open ground at named sites.
+- 5616 Brown Park South held (lakefront vs lakeview conflict, see followups).
