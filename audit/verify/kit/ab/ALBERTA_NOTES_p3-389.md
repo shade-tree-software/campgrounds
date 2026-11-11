@@ -1,0 +1,11 @@
+# Alberta notes from p3-389 (2026-11-11)
+
+- Wayback: CDX was "Temporarily Offline" early in the day; later `archive.org/wayback/available` and the CDX worked, but `web.archive.org/web/<ts>id_/...` returns a bot-block page to curl. Rendering the snapshot with bw.py (under the flock) works.
+- westernerpark.ca answers 403 to curl; the main page loads in bw.py, the /rvresort/ and amenities pages hit a Cloudflare check. Westerner's Campspot slug is `westerner-park-rv-resort-red-deer-ab` (park 4898); it also sells 15-amp overflow and equestrian RV lots at C$32.
+- Warner Lions RV Park: Village Council Policy 702 ("Lions Campground Rules", effective 2024-06-19) is at https://www.warner.ca/Home/DownloadDocument?docId=bec5cc25-a44d-47ca-b6fd-e965a291a661 and calls it "the municipally owned campground".
+- Westward Ho (Sundre): Wix site; the full-size campground map is a PDF linked from /camping (`_files/ugd/03d95f_d6a7c484bd894b4396c73a00e60c008a.pdf`); yellow = weekend sites (~19), green = monthly, orange = group.
+- Whitecourt Lions: WordPress; `wp-json/wp/v2/pages?_fields=modified,link` gives page modified dates (all 2026-11-08). No source found on land ownership.
+- Willey West (Eagle Point PP): Alberta Parks page now says "Leaseholder: Brazeau County"; the county page lists it with "Booking information pending". elevatedexperiencecamping.com and the willeywest subdomain no longer resolve. The old Campspot listing (slug `elevated-experience-camping-willey-west-campground`, park 1961) still exists but returned nothing for June 2027.
+- Willow Grove (Bashaw): rates on the live reservations page are "$TBA"; availability is a published Google Sheet (`.../pub?gid=0&single=true&output=csv` works with curl); requests go through a Cognito form (needs a browser to render). The 2024 rate is on the 2025-05-15 Wayback snapshot.
+- Alberta Parks shop parkIds: Whitney Lakes 330132 (slug whitney-lakes-provincial-park), Switzer 330112, Winagami 330373, Wyndham-Carseland 330318 (slug wyndhamcarseland-provincial-park). Wolf Lake West is FCFS and not on the shop; its camping page is /parks/central/wolf-lake-west-pra/information-facilities/camping/wolf-lake-west/.
+- Shop "Near Water" tags this batch: Ross Lake D-091 only; Jarvis, Winagami, Wyndham-Carseland none.
