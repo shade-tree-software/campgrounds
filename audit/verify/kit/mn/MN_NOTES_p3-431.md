@@ -1,0 +1,12 @@
+- 5379 WRITTEN: conf $24/$34 50A, 37 sites 45ft, yr-round, phone 320-239-2860, lakeview lead 7/1E/2E/4E
+- 5384 WRITTEN: conf $24/$34 30A, 37 back-in 45ft, Apr1-3rd wkd Oct, phone 651-539-4500, WF LEAD 7 sites tagged Water Front
+- 5655 WRITTEN: $45 conf, Peek booking, May1-Sep30, 40 sites (4 seasonal), pin move ~450 m to 45.3249,-94.7339
+- 5664 WRITTEN: no official page (presence q), G 4.5/35, $20 reported 2025
+- 5677 WRITTEN: lakeview kept, lakefront lead sites 9-18 (~20-27 m, thin bank fringe), 28 RV + 6 tent, G 4.6/108
+- 5701 WRITTEN: $25 W/E conf, phone -> 507-317-5701, monthly community, G 4.7/128
+- 5703 WRITTEN: 11 sites $35, 50A sewer 9-11, riverview -> not WF candidate, closed for season, G 4.4/77
+- 5425 WRITTEN: 57 sites $24, usedirect, 50ft, phone 218-635-0410, Anglers split candidate
+- 5598 WRITTEN: DROP CAND 7-night min on all RV sites, $63 city, lakefront kept (photos), May1-Sep30, G 4.5/99
+- 5359 WRITTEN: FCFS only (group camps reservable), $17 paid online same day, pin move 700m -> 45.4243,-93.6947, phone 763-272-4040, link hyphen
+- 5428 WRITTEN: 29 sites FCFS, $17 online same-day; not waterfront kept (canopy), lakeview lead; phone 320-616-2525 vs DNR 320-223-7841; link hyphen
+- apply.py dry run: 11 ready, 0 !! (5598 min_stay fixed to list form). Driver stopped.

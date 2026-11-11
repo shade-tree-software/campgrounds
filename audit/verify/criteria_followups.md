@@ -1726,3 +1726,9 @@ me drop and report); each needs the research named before a verdict.
 - 5608 Benton Beach: all 39 RV sites also sold as season blocks; seasonal share unmeasured.
 - 5625 Dakota County Fairgrounds: operator is the Agricultural Society - ownership local vs private open.
 - 5593 Willow Acres exactly $50 on an undated page.
+
+## p3-431 (MN, 2026-11-11)
+- DROPPED 5598 Akeley City Park (standing 7-night minimum on every online RV site).
+- SPLIT CANDIDATE 5425 Zippel Bay: Anglers Campground (16 sites, 48.85454,-94.86007) ~1.7 km west of the other three loops, one park entrance - not split yet.
+- 5428 Birch Lake: phone 320-616-2525 not on DNR record/map (Sauk Rapids office named) - left.
+- 5664 Magnolia: no official web page (local city campground; directories + Google only) - kept.

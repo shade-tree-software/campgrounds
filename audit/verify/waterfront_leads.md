@@ -1193,3 +1193,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-430 (MN, 2026-11-11)
 - 5510 Winnie lakefront -> lakeview (canopy, 60-65 m). 5426 Ash River not waterfront -> riverview (road between). 5620 DeLagoon lakeview lead (rebuilt spurs ~30-35 m from Pebble Lake, no site numbers yet). 5602 Appleton riverview unconfirmed (tree band).
+
+## p3-431 (MN, 2026-11-11)
+- 5384 Interstate not waterfront -> riverview (ReserveMN "Water Front" 5/6/10/13/14/18/21 under canopy). 5703 Welles riverview -> not waterfront. Leads: 5379 Glacial Lakes lakeview (Lower 7/1E/2E/4E), 5677 Pomme de Terre lakefront (09-18, brush fringe), 5428 Birch Lake lakeview (canopy, no site numbers).
