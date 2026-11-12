@@ -2018,3 +2018,11 @@ me drop and report); each needs the research named before a verdict.
 - Corps site counts: 1697 Lone Point 80 -> 61, 1696 Opossum Creek 70 -> 64. 1696 first-come left unwritten (record says both "100% reservable" and "has first-come, first-served sites").
 - Phones: 1665 None -> 618-423-2215; 1710 None -> 618-658-0607; 1775 '' -> 217-595-5692. Pin 1696 ~270 m.
 - UNREAD: 1775 Middle Fork Forest Preserve (champaignforests.org Cloudflare 403; not retried). Still queued.
+
+## p3-465 (IL, 2026-11-12)
+- 10 applied, 1 dropped. DROPPED 1799 Roodhouse Community Park (city): looks mostly long-stay and iffy - only a 2016 rate page with $175/month and $110/month 3-month+ rates, no booking channel, no Google reviews, ~45 trailers packed in rows. A call to the city (217-589-4463) could reinstate it.
+- 1751 Robin Hood Woods kept with the seasonal caveat (50 of 250 sites nightly, 20%; $35-43; Google 4.1/163). 1730 Taylor Lake kept on a camper-reported $35 (no operator page; Google 4.8/36 + phone = presence); RV Life website cleared. 1742 Camp A While kept ($30-40, books on parkwith.us, Google 4.7/173).
+- 1718 World Shooting Complex: open to ordinary campers outside events; 1,002 units 50 A; season 04-01..10-31 with the Grand American blackout (2027-07-28..08-15); booking -> usedirect #!park/72. Coneflower's 64 units not on the engine (no reason given).
+- 1652 Cave-in-Rock: NOT on ExploreMoreIL (permits from the host/superintendent) - platform none set so the state:IL row's usedirect doesn't apply; 2027 $28 (was $20).
+- 1768 Blackwell: weekends only (Fri/Sat nights May - Columbus Day, plus holiday nights). 1766 Big Rock: horse loop separate, residents pay less but no priority.
+- Pins: 1751 ~520 m, 1766 ~470 m, 778 ~320 m, 1652 ~550 m, 1768 ~250 m. Phones: 1713, 1659, 1718, 778, 1652 added; 1799 (dropped).

@@ -1,0 +1,12 @@
+# p3-465 (third IL batch) working notes, 2026-11-12
+- 1713 Redbud: DONE. FS page; reopened 11-09 after 7/15 closure; season 3/15-12/15; $10 cash/check; phone 618-658-2111; not on rec.gov.
+- 1751 Robin Hood Woods: DONE. $35-43 (page LM 2026-07-12); 250 = 200 permanent + 50 nightly (20%); Google 4.1/163; pin move ~520 m to 39.4092,-88.7458.
+- 1799 Roodhouse: DONE. rates page headed 2016; no city page, Google no reviews; ~45 RVs on imagery; phone 217-589-4463; lakeview kept; presence/long-stay drop question.
+- 1659 Sam Dale: DONE. 68 B-E 30/50A, $28 2027; phone 618-835-2292; LV closed Jan-Mar; no waterfront (lakeview lead LV 041-046).
+- 1730 Taylor Lake: DONE. $35 camper-reported (RV Life 4/2026, 11/2026); no op site; lakefront -> pond (~1 ha); Google 4.8/36; pin ~140m ok.
+- 1718 WSRC: DONE. open to campers (quoted), 04-01..10-31 w/ Grand blackout; 1002 units; $28/$35; phone 618-295-2700; operator->usedirect.
+- 1766 Big Rock: DONE. horse oval separate -> keep; no resident-only window; pin move 470m to 41.7545,-88.5155; pond lead 78-84.
+- 1768 Blackwell: DONE. 64 sites, Fri/Sat only May-Columbus Day; $25/$40 no res restriction; pin ~250m (41.8381,-88.1730).
+- 778 Boulder: DONE. rec.gov 82 sites, $20/$30, 04-16..10-10; AWH lakefront agrees (riprap); phone 618-226-3586; pin move 320m.
+- 1742 Camp A While: DONE. $30-40 2026, parkwith.us, 12 sites, Google 4.7/173, passes.
+- 1652 Cave-in-Rock: DONE. not in ExploreMoreIL; fcfs always confirmed; $28 2027; pin move 550m; phone 618-289-4325.

@@ -1323,3 +1323,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - CONFIRMED 795 Lithia Springs --AWH lakefront (C-loop 055-060, 25-40 m over open sand, 4-6 m above pool). 1794 Keithsburg riverfront kept (front row 30-40 m from the Mississippi over open sand, river side of the high ground). 1732 Hickory Holler pond kept (~2 acres, sites 60-66 10-20 m; nightly vs seasonal unread). 1710 Oak Point lakeview kept.
 - LEAD 1665 Ramsey Lake (not waterfront): the engine tags 15 units "Waterfront Site"; nearest 045/046 are ~14 m above the lake, 35-40 m through woods; no photo shows a view, so not upgraded.
 - DISAGREE (--AWH, not changed) 1697 Lone Point lakefront: see asks.md.
+
+## p3-465 (IL, 2026-11-12)
+- APPLIED 1730 Taylor Lake lakefront -> pond (~1 ha; ~10 gravel pads 10-25 m along the south shore, no site numbers published).
+- CONFIRMED 778 Boulder --AWH lakefront (outer row 011-036, 15-35 m over mown grass); riprap caveat added as a --Claude line.
+- LEADS (not applied): 1659 Sam Dale L View 041-046 lakeview? (45-55 m under canopy); 1766 Big Rock pond for 78-84? (35-45 m across prairie grass and cattails).
