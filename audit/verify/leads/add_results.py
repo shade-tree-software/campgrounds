@@ -3,7 +3,8 @@
 Each result already carries its waterfront audit and structured fields, so the entry is written whole:
 rating from the result's `rvlife` ("4.5*/$$$"), fees and every structured group (hookups, sites,
 facilities, season, booking) with its provenance. Ids continue from max(id) over BOTH location files. A result whose name or pin (300 m) is already in the database is
-refused. Skips go to verdicts.jsonl. Dry run by default; --apply writes.
+refused unless the result names that id in `separate_from` (checked by hand). `curation_note` is carried.
+Skips go to verdicts.jsonl. Dry run by default; --apply writes.
 """
 import glob, json, math, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -23,7 +24,7 @@ def pt(loc):
     return tuple(map(float, loc.split(',')))
 
 
-GROUPS = ('hookups', 'sites', 'facilities', 'season', 'booking')
+GROUPS = ('hookups', 'sites', 'facilities', 'season', 'booking', 'status')
 
 
 def provenance(r, g):
@@ -56,7 +57,7 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
         skips.append({k: r.get(k) for k in ('name', 'state', 'decision', 'kind_of_no', 'why')} | {'decided': TODAY})
         continue
     loc = pt(r['location'])
-    clash = [i for q, i in pins if km(loc, q) < 0.3]
+    clash = [i for q, i in pins if km(loc, q) < 0.3 and i not in r.get('separate_from', [])]
     if norm(r['name']) in names or clash:
         sys.exit(f"{r['name']}: already in the database ({clash})")
     m = re.fullmatch(r'([\d.]+)\*/(\$*)', r.get('rvlife', '') or '')
@@ -75,6 +76,8 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
         if r.get(g):
             e[g] = r[g]
             prov[g] = provenance(r, g)
+    if r.get('curation_note'):
+        e['curation_note'] = r['curation_note']
     if prov:
         e['provenance'] = prov
     adds.append(e)
