@@ -7,7 +7,7 @@ a phone answer is a valid source. No call is placed without AWH's go-ahead; the 
 **Ask every call (the standard set):**
 1. Is it open to overnight RV campers, and can you stay just one night?
 2. The nightly rate.
-3. The season.
+3. The season: ask first whether it is open all year or closed in winter; only if closed and no dates are offered, ask for the opening and closing dates (AWH 2026-11-12).
 4. Hookups: is there electric at the sites, and water somewhere? (Amperage and where the water is are not worth a call: AWH 2026-11-12.)
 5. The number of RV sites, and how many go to monthly or seasonal campers rather than nightly. Under 10% nightly is a drop; 10-50% means a caveat.
 6. Would a 23-ft motorhome fit?
