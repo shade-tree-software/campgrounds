@@ -1301,3 +1301,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-459 (ND, 2026-11-12)
 - APPLIED 6026 Kota Ray lakefront -> lakeview (S9-S11 12-20 m but behind a continuous brush band; S1-S8 behind road/beach/shelters). APPLIED 6025 Lake Tschida Rimrock lakefront -> lakeview (old evidence point ~1 km west; Loop A 35-50 m behind road + tree belt; primitive 30-31 under trees).
 - Stands: 6030 Lake Upsilon lakeview (20-30 m through a continuous tree band), 6027 McVille lakeview (75-95 m), 5916 Magpie not waterfront (creek ~40 m under canopy).
+
+## p3-460 (ND, 2026-11-12)
+- APPLIED 6038 New Town Marina lakefront -> lakeview (no site map; nearest units 55-60 m, look long-term). APPLIED 6046 Parshall Bay lakefront -> lakeview (old evidence at the wrong pin; nearest pads 60-85 m from the high-water edge). Both "unsure -> down"; an upgrade needs a site map naming pads within ~50 m.
+- Stands: 6045 Parkhurst lakeview (130-160 m over open prairie).
