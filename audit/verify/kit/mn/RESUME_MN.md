@@ -1,14 +1,14 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-437** (commit 15520ad1). Next batch **p3-438**. Next new id **15669**.
+Applied through **p3-438**. Next batch **p3-439**. Next new id **15669**.
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
 
-    python3 -I audit/verify/queue.py --batch p3-438 --state MN --limit 11
-    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-438
-    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-438 $SCRATCH/p3-438_para.txt
-    mkdir -p $SCRATCH/p3-438 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-438/tools
+    python3 -I audit/verify/queue.py --batch p3-439 --state MN --limit 11
+    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-439
+    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-439 $SCRATCH/p3-439_para.txt
+    mkdir -p $SCRATCH/p3-439 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-439/tools
 
 Then launch ONE background general-purpose agent with `agent_prompt_template.txt`
 (replace SCRATCH, p3-NNN and the id list; the brief may say "twelve", the batch has eleven).
@@ -32,6 +32,7 @@ Then launch ONE background general-purpose agent with `agent_prompt_template.txt
 - **Unread sweep** (queue.py never re-issues ids sitting in a batch file, so these need a manual
   batch): 5518 Bray Park, 5669 Moose Lake City, 5576 Spafford (seasonal-only concern),
   5633 Gilbert Olson (proposal riverfront -> creekside; earlier read was a Wayback copy = unread),
+  5651 Lake Allie County Park (Renville County Cloudflare + ResNexus Incapsula, p3-438),
   Cloudflare-refused city sites 5649 Karlstad, 5689 Sherin, 5702 Warroad, 5705 Wildcat (its Firefly
   portal is readable), 13342 J.F. Jacobson Park (Madison), 5694 Sunnybrook.
 - **Leads to vet:** Red Pine Campground (Saginaw), Horseshoe Park (Hallock; find a non-refusing
@@ -40,4 +41,6 @@ Then launch ONE background general-purpose agent with `agent_prompt_template.txt
 
 ## After Minnesota
 
-The other 33 Vermont entries (`queue.py --state VT`; kit in audit/verify/kit/vt/).
+AWH 2026-11-11: "After Minnesota, do North Dakota, then Illinois." (Then the other 33 Vermont
+entries - `queue.py --state VT`, kit in audit/verify/kit/vt/ - AWH: "After Illinois".)
+ND and IL need their own brief header (model on kit/mn/mn_head.txt).

@@ -1214,3 +1214,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-437 (MN, 2026-11-11)
 - 5436 Huntersville riverfront -> riverview (25-27 m river, leaf-on canopy). 5382 Greer Lake lakeview -> not waterfront. 13331 Grove City not waterfront -> lakeview (sites 1-14 behind a single tree line). Lead: 5434 Hay Lake lakeview ("some have views of the lake", no site resolved).
+
+## p3-438 (MN, 2026-11-11)
+- 5438 Larson Lake lakefront -> lakeview (spurs behind a continuous tree fringe 15-25 m from the water; the old evidence read the day-use clearing). 5481 Lake Jeanette: lakeview candidate (rec.gov "some are located on the lakeshore", catalog flags none; 05-07 40-50 m under canopy). 5479 Kawishiwi Lake: lakeview lead (northern spurs ~47.8391,-91.1034, 10-15 m through birch).

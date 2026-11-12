@@ -1,0 +1,49 @@
+{
+  "id": 5650,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.montevideomn.org/parks-rec (City of Montevideo Parks & Recreation), read 2026-11-11",
+    "https://www.montevideomn.org/vertical/sites/%7B1E588D02-EF04-451F-809A-685A67AFCE61%7D/uploads/2026feescharges.pdf (City of Montevideo 2026 Fees and Charges), read 2026-11-11",
+    "CampLife campground 1331 'Montevideo Lagoon Park' (https://www.camplife.com/campground/montevideo+lagoon+park; the page is script-rendered and returns an empty shell to plain HTTP), as read 2026-10-14 in audit/price_research/camplife_tier_2026-10-14.jsonl",
+    "Esri World_Imagery frames at 44.9495,-95.7278 (230 m) and 44.9508,-95.7285 (110 m)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 35,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "City of Montevideo 2026 fee schedule: $35 a night, $200 a week, for up to 21 days in any 30. CampLife quoted the same $35 a night (one night, before tax, read 2026-10-14)."
+      },
+      "source": "https://www.montevideomn.org/vertical/sites/%7B1E588D02-EF04-451F-809A-685A67AFCE61%7D/uploads/2026feescharges.pdf ('Lagoon Park Campgrounds'; '* Nightly 35.00'; '* Weekly 200.00'; 'Campers may camp @ Lagoon Park for a period of 21 days out of 30 days (Resolution #2906)'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "CampLife 1331 site records (every site: amenities '30-Amp', '50-Amp', 'Water'; description 'Each site features electric hookup and water'), read 2026-10-14 (audit/price_research/camplife_tier_2026-10-14.jsonl) + https://www.montevideomn.org/parks-rec ('eight with water and electrical hookups'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true
+      },
+      "source": "https://www.montevideomn.org/parks-rec ('provides modern bathroom and shower facilities'), read 2026-11-11 + CampLife 1331 amenity 'Public Restroom / Showers', read 2026-10-14",
+      "method": "manual"
+    }
+  },
+  "summary": "City parks page and 2026 fee schedule re-read: $35 night / $200 week, 21 days in 30, modern bathroom and showers confirmed; hookups 30/50-amp + water confirmed from CampLife's site records (2026-10-14 read). City page says 10 sites (8 with hookups) against CampLife's 14 sold online: kept 14, flagged. CampLife lists no motorhome equipment type: flagged. Not waterfront kept. Website root -> parks page.",
+  "flags": [
+    "SITES conflict: the city's parks page says 'Lagoon Park has ten campsites, eight with water and electrical hookups', while CampLife (the city's booking engine) describes 'This beautiful 14 RV camp site park' and sells sites 1-14, each '12 ft by 60 ft camp stall' with 30/50-amp and water. Stored count 14 kept (the engine is the live inventory); the city page may be stale.",
+    "BOOKING ENGINE has no motorhome type (flag, no drop): CampLife's only site type 'Back In' permits 5TH WHEEL, POP UP, TENT, TRAVEL TRAILER and VAN (read 2026-10-14). A 23-ft Class C would have to book as 'VAN' or 'TRAVEL TRAILER'; the 60-ft stalls fit it.",
+    "SEASON: stored 05-01..10-20 (CampLife's refusal message 'Park is open from May 1st to October 20th each year.'); the same CampLife record's events text says 'Planned opening on May 1st' / 'Planned closure on October 31st'. Left as stored; the city page gives no dates.",
+    "WEBSITE: stored first line https://www.montevideomn.org/ is the city home page. Replace with https://www.montevideomn.org/parks-rec (the Lagoon Park paragraph and reservation link). Keep the CampLife line.",
+    "WATERFRONT not waterfront kept: on Esri imagery the camp loop sits under continuous canopy on the east bank of the Chippewa River, which measures about 25 m wide here (under 30 m, so creekside at most); the nearest visible pads (about 44.9504,-95.7290) are 25-40 m from the bank through dense trees. No open apron, no official site photos showing the river.",
+    "Pin 44.95052,-95.72821 is on the camp loop in the woods. CampLife's point 44.948622,-95.727529 (~215 m SSE) is the street address on Canton Avenue, not the sites. No move.",
+    "Phone 320-269-6575 confirmed (CampLife campground phone; publicworks@montevideomn.org)."
+  ]
+}

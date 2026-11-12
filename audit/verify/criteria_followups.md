@@ -1762,3 +1762,11 @@ me drop and report); each needs the research named before a verdict.
 - No drops. 13342 J.F. Jacobson Park (Madison) UNREAD: cityofmadisonmn.gov Cloudflare block; add to the MN unread sweep.
 - 5639 Hole in the Mountain: seasonal leases ($1,500 May 1 - Oct 15), share unpublished; derived reservable:true and season 05-15..10-31 not stated by the county. Possible horse camp (Horse Hill) on the 1A-15B loop.
 - 13184 Gulch Lake: sites written 6 (drive-in); 10 with walk-in + group.
+
+## p3-438 (MN, 2026-11-11)
+- No drops. 5651 Lake Allie County Park UNREAD: renvillecountymn.gov Cloudflare 403 and ResNexus Incapsula; add to the MN unread sweep (imagery fits the stored lakeview).
+- 5645 Jacobson: OHV side ("ATV access to the Rabey Line trail"); general campground, kept.
+- 5650 Lagoon Park: site count conflict (city page ten sites, eight with hookups; CampLife sells 14, kept 14); CampLife has no motorhome type; season close Oct 20 vs Oct 31 left as stored.
+- 5656 Lake Marion: PerfectMind needs an account to book, but rates and season are public (not a login-to-see-rates case). Optional ~120 m pin nudge to 44.7854,-94.3769 not done.
+- 5438 Larson Lake: DNR alert "South Lofgren Road - Closed due to flooding"; self-pay envelopes no longer accepted (note corrected).
+- 5394 Lake Louise: site CH20 named like a host pad but bookable at $30 and counted in the DNR's 11 electric.

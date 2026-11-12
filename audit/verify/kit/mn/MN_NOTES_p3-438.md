@@ -1,0 +1,13 @@
+# MN NOTES p3-438
+- 5645 WRITTEN: 12 sites 0, OneGov 7-day cutoff then FCFS, pin ~2.1km -> 47.0228,-93.2758, phone 218-927-7364, NW kept
+- 5479 WRITTEN: 5 sites free FCFS 05-08..10-01, NW kept + lakeview lead, phone 218-663-8060
+- 5480 WRITTEN: 10 sites 2 FCFS 05-08..10-19, fit caveat, NW kept, phone 218-387-1750
+- 5650 WRITTEN: fees/hookups/facilities confirmed; city says 10 sites vs CampLife 14 (kept); no motorhome equip type; web root->parks-rec; NW kept
+- 5651 NOT WRITTEN: renvillecountymn.gov Cloudflare 403 (security block); not retried. Imagery: RV strip between CR road and 20-30 m tree belt on Lake Allie shore -> lakeview plausible, unconfirmed; ~20 RVs, seasonal $1,630 in 2025 report (search snippet)
+- 15667 WRITTEN (no groups): verified today in split; NW confirmed imagery; pin ok
+- 5481 WRITTEN: rec.gov 12 sites/9 RV 35ft/6 reservable, $18, $9 xveh; outside closure (Exhibit B: Echo Trail open); NW kept, lakeview candidate; phone (218) 666-0020
+- 5394 WRITTEN: 20 sites 9NE/11E 30A, $20/$30, pads 47-73 vs 45 limit; PIN MOVE 43.5262,-92.5148 -> 43.52854,-92.52262; NW kept; phone 507-352-5111
+- 5656 WRITTEN: 39 sites (27 RV 50A shared water, 12 tent), $37/$27, 2027 04-30..10-17, PerfectMind, phone 320-328-4479 -> 320-484-4334; NW kept
+- 5438 WRITTEN: 12 sites, $17 same-day online, lakefront->lakeview (evidence was day-use pier clearing), PIN 47.76410,-93.42000 -> 47.765902,-93.418718, website hyphen, phone 218-571-2600
+- 13336 WRITTEN: 3 sites $25/$15 tent, FCFS no reservations, lakeview kept (tree belt 25-35 m; open ground is the boat landing), phone 507-836-1195, electric unconfirmed
+- 5651 FINAL: ResNexus (Renville booking) also Incapsula-challenged -> no result file; search-snippet details NOT used as evidence
