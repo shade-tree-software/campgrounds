@@ -50,7 +50,7 @@ The "Settle" column lists only what is specific to each entry.
 | 5964 | Glen Ullin Memorial Park | park district (site refuses) | season | Season only (electric, water and dump already on record). |
 | 5998 | Golva City Park | stored 701-527-0319 / Google 701-872-3412 | fees, season | Which number; where the 5 licensed sites are (no pads on imagery). |
 | 6009 | Hendrickson Park (Sheyenne) | 701-996-3576 | fees, season | Are there designated sites, or do people "pull off the road into grass"? (padless = caveat) |
-| 5991 | West Side Park/Campground (Harvey) | 701-324-2070 | fees, season, hookups | Is it the same as the city's "HaRVey Campground" (ND lead 13) or a separate park? |
+| 5991 | West Side Park/Campground (Harvey Park District) | stored 701-324-2070 / Google 701-324-2604 / RV Life 701-324-2628 | season, booking | Which number; season; how sites are taken; operator rate (only a Sept 2024 camper rate on file). Separate from 15690 HaRVey (settled). |
 | 6005 | Berthold RV Park (City Park) | City Hall 701-453-3622 | fees, season | Standard set ("many campsites ... please inquire"). |
 | 6036 | City of Munich Park Campground | stored 701-370-0063 / Campendium 701-682-5466 | fees, season | Which number; standard set (4 licensed sites). |
 | 6040 | CAB Park (Hannaford) | stored 701-769-2218 / Google 701-769-2298 | fees, season | Which number; standard set. |
