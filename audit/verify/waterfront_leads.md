@@ -1208,3 +1208,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-435 (MN, 2026-11-11)
 - 5449 Clint Converse lakefront -> lakeview (pin was in the lake). 5455 Cadotte lakefront -> lakeview (canopy). 5461 Clubhouse not waterfront -> lakeview (rec.gov "Lakefront" 002/005 under canopy). Lead: 13328 Clarissa creekside (Eagle Creek, no site placement).
+
+## p3-436 (MN, 2026-11-11)
+- 5462 Crescent Lake, 5432 Esther Lake, 5472 Fenske Lake lakefront -> lakeview (canopy / no placeable site). Lead: 5462 rec.gov "Lakefront" first-come sites 002/004/007/014/018/029 have no coordinates.

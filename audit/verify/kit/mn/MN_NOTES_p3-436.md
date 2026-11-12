@@ -1,0 +1,12 @@
+# MN NOTES p3-436
+- 5462 WRITTEN: 32 (20 res/13 fcfs) $20, lakefront->lakeview, pin->47.8286,-90.7740 (550m), phone 218-663-7150 (Sawbill) / 218-663-8060
+- 5431 WRITTEN: 5 prim, free->$17 (2026 DNR list), lakeview kept, phone ->218-387-6300 (Magney), web hyphen
+- 5466 WRITTEN: 3 sites $18 FCFS, season May8-Oct1, lakeview confirmed by FS photo site 1, phone 218-663-8060
+- 5467 WRITTEN: 28 sites (26 RV 30ft, 13 res/13 FCFS), $24, season 05-08..10-31, lakeview kept, phone 218-388-2292
+- 5468 WRITTEN: 13 FCFS $16, season 05-01..10-31, lakeview kept (sites 7/9/11/12/13 20-35m under canopy), phone 218-246-2123
+- 5469 WRITTEN: 22 sites 45ft, $18/group $30, lakeview kept, season conflict flagged (rec.gov FCFS to 10-19), phone 218-666-0020
+- 5432 WRITTEN: 3 sites $17 (was free), lakefront->lakeview proposed, pin in water -> 47.98191,-90.10775, phone 218-387-6300, website hyphen
+- 15665 WRITTEN: light check, no changes
+- 5472 WRITTEN: 16 sites (10 RV), $22/group $65, lakefront->lakeview proposed, season 05-08..10-31 (no fees after Sep), phone 218-365-2963
+- 5433 WRITTEN: 39+group, $17 same-day online, booking -> false/always (group only reservable), OHV side flag (15 ATV sites), phone 218-353-8800, website hyphen
+- 5631 WRITTEN: 11 elec sites $20 FCFS (no reservations), 7-night max, 6 people; booking -> false/always

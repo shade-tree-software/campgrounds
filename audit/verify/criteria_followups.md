@@ -1753,3 +1753,7 @@ me drop and report); each needs the research named before a verdict.
 
 ## p3-435 (MN, 2026-11-11)
 - No drops. 13328 Clarissa City Park: presence question - the city site never mentions camping, Explore Minnesota 403 (unread); kept pending a readable source.
+
+## p3-436 (MN, 2026-11-11)
+- No drops. 5469 Echo Lake: manual season (May 8 - Sep 26, matches FS) vs rec.gov first-come nights to Oct 19, 2026 - close not changed.
+- 5433 Finland: 15 of 39 sites allow ATVs with direct trail access (general campground; caveat kept).
