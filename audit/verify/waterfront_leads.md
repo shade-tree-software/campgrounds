@@ -1239,3 +1239,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-445 (MN, 2026-11-12)
 - 5705 Wildcat riverfront -> riverview; 5633 Gilbert Olson riverfront -> creekside (channel 22-26 m, imagery only).
 - Lead: 5669 Moose Lake City - south pad row on the lower lane (~46.4537,-92.7540) 5-15 m from Moosehead Lake over open lawn; lakefront plausible, needs site numbers + nightly status (Campspot CloudFront-refused). 5651 Lake Allie / 5702 Warroad: lakeview plausible.
+
+## p3-446 (ND, 2026-11-12)
+- 6006 Brewer Lake lakefront -> lakeview (own lower loop road + shrub/reed fringe between RV ground and shore; open shore = swim beach and picnic point; county site map 403).
+- 5989 Harmon Lake lakeview stands (nearest pads ~150 m, loop road + beach between). 5970 Belmont (Red River ~50 m, continuous canopy), 6007 Carbury, 5881 Graham's Island, 5975 Fordville: not waterfront stands.

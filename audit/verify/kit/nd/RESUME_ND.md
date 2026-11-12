@@ -1,6 +1,6 @@
 # North Dakota phase 7 - resume notes
 
-Running: **p3-446** (first ND batch). Next batch **p3-447**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
+Applied through **p3-446** (2026-11-12; 5975 Fordville + 5980 Hazelton unread, phone candidates). Next batch **p3-447**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
 
 ## Build a batch (11 ids; the agent template says ELEVEN)
 ```

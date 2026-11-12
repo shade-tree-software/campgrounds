@@ -1,0 +1,47 @@
+{
+  "id": 5881,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.parkrec.nd.gov/grahams-island-state-park",
+    "https://ndparksrdr.usedirect.com/rdr/rdr/search/place + search/grid (reserveNDparks PlaceId 56, 2027-06-15)",
+    "Esri World_Imagery around 48.0440,-99.0630"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD",
+                 "surcharges": {"electric": 10, "full_hookup": 15, "weekend": 0}, "checked": "2026",
+                 "note": "Primitive $15 every night; modern (electric and water) $25, $30 on a Saturday; premium (full hookups) $30, $35 on a Saturday; group sites the same per unit. Park page read 2026-11-12."},
+      "source": "https://www.parkrec.nd.gov/grahams-island-state-park ('45 Premium Campsites (electricity, water & sewer) Price: $30-35 per night', '70 Modern Campsites (electricity & water) Price: $25-30 per night', '9 Primitive Campsites Price: $15 per night'); Saturday split from reserveNDparks sampled rates (audit/state_park_fees/nd_booking_rates_2026-10-12.jsonl: modern $25 Tue / $30 Sat, premium $30 / $35, primitive $15 / $15); primitive sites post 40-60 ft in the reservation system so a 23-ft rig fits the base; read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 156, "note": "45 premium, 70 modern and 9 primitive single sites plus 32 group sites, in the Ziebach, Howard, LaRose and primitive loops. Every bookable site posts 40 ft or more in the reservation system (primitive 40-60 ft, modern and premium mostly 75-130 ft)."},
+      "source": "https://www.parkrec.nd.gov/grahams-island-state-park (45 premium + 5 premium group + 70 modern + 15 modern group + 9 primitive + 12 primitive group = 156); reserveNDparks grid VehicleLength per unit (147 campsites listed, none under 40 ft), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true, "sewer": true, "note": "Sewer only at the premium sites; modern sites have electric and water. Amperage not posted."},
+      "source": "https://www.parkrec.nd.gov/grahams-island-state-park ('Premium Campsites (electricity, water & sewer)', 'Modern Campsites (electricity & water)'), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "https://www.parkrec.nd.gov/grahams-island-state-park (Additional Park Amenities: 'Sewage dump station', 'Showers & flush toilets'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "https://www.parkrec.nd.gov/grahams-island-state-park ('Campsites can be booked 95 days in advance'; 'Reservations can be made online or by calling the call center'), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Large wooded campground on a peninsula in Devils Lake, in the Ziebach, Howard, LaRose and primitive loops; four-lane boat ramp, bait shop, fish cleaning station, swim beach, visitor center and dog park. --Claude",
+  "summary": "Park page confirms 156 sites and the per-class prices ($15 primitive, $25/$30 Sat modern, $30/$35 Sat premium); fees unchanged, note cleaned of booking boilerplate and counts. reserveNDparks lists 147 campsites, all 40 ft+. Pin on the campground; not waterfront stands. Amperage not posted.",
+  "flags": [
+    "POLICY ROW: consistent. Saturday +$5 confirmed on modern and premium (not on primitive, the base, so surcharges.weekend stays 0 and the split is in the fees note). The stored fees.reservation_fee 6 and fees.entrance ($7/vehicle-day) duplicate the state:ND row; the park page does not state them, so left as stored.",
+    "Website: https://www.parkrec.nd.gov/grahams-island-state-park answers 200 with no redirect; keep. Phone (701) 766-4015 confirmed on the park page.",
+    "Season: the stored year_round (manual, from the limited-service-season page) stands; the park page describes winter use (groomed ski trails, ice fishing) and gives no campground dates.",
+    "Count: the park page says 156 sites; the reservation system lists 147 campsites (Ziebach 40 + 6 cabins, Howard 45, LaRose 41, primitive 21). Kept the agency's 156.",
+    "Waterfront (no change, not waterfront): the loops lie in woods roughly 300-400 m from the Devils Lake shore on imagery."
+  ]
+}

@@ -1826,3 +1826,15 @@ me drop and report); each needs the research named before a verdict.
 - 5705 Wildcat Park read (county site down, so its archive was allowed; Firefly portal live): reservable on Firefly via Wildcat Creek Management; 51 electric (40-51, 60-107), 8 primitive (120-127), 35 seasonal (1-35); rates/amperage/season unread (2026 fee PDF never archived, Firefly has no open dates). Renters 21+. Pin moved ~260 m to the nightly sites.
 - Still UNREAD (Cloudflare/CloudFront/Akamai, retried once 2026-11-11): 5518 Bray Park, 5669 Moose Lake City, 5633 Gilbert Olson, 5651 Lake Allie, 13327 Sebeka, 5649 Karlstad, 5689 Sherin Memorial, 5702 Warroad, 13342 J.F. Jacobson. Phone-call list with numbers and questions: kit/mn/MN_NOTES_p3-445.md ("Phone questions"); calls wait for AWH.
 - The verifier's apply.py dry run was refused by the permission classifier; it checked via plan()/apply_update on a copy, and the orchestrator ran the real dry run (clean) before applying.
+
+## p3-446 (ND, 2026-11-12) - first ND batch
+- No drops. 9 of 11 applied; 5975 Fordville Dam (gfcounty.nd.gov 403) and 5980 Hazelton City Park (ndtourism 403, no city page) UNREAD - no result files.
+- 5975 Fordville: possible long-stay character - Grand Forks County's 2027 price list (captured 2026-10-16) "Annual RV Camping $1500 / Monthly $450 / Weekly $150 / Overnight RV $40" and imagery shows a loop full of trailers; nightly share unmeasured. Three phones in circulation: stored (701) 360-0515, Google 701-270-8493, unclaimed RoverPass 701-229-3341. Phone-call candidate.
+- 5980 Hazelton: Google 4.4/26 at 46.48409,-100.28139 (on the pin), phone 701-429-3004 matches stored. Phone-call candidate.
+- 6002 Cando: PIN UNCONFIRMED - stored 48.49330,-99.20010 is a gravel yard at the north edge of town; city says "northeast edge of Cando. Go East on 1st St approx. 1/2 mile"; Overpass down. Needs a human/imagery look.
+- 23-ft fit not confirmed by any operator source: 5987 Anamoose (2 designated W/E sites), 5970 Belmont (primitive, limited electric, under canopy). 5970 has no phone ((701) 636-4458 only in an unread ndtourism snippet); reported "closed on and off during the pandemic" (Dyrt, unread).
+- 6006 Brewer Lake: built from the county rates page captured 2026-10-16 (in-repo dated read); site 403s today; season (May-Sep snippet) and reservation link unread; phone 701-241-5600 unconfirmed (directories 701-541-1636).
+- 5914 Burning Coal Vein: hand pump out for maintenance (no date); Little Missouri NG fire closure/restriction order unread; access - FS names only private-land road crossings, no road problem.
+- 5881 Graham's Island: 156 sites on the park page vs 147 in reserveNDparks (kept 156); amperage not posted.
+- Long-stay rates beside nightly first-come sites, nothing discouraging nightly guests (kept): 6002 Cando (weekly $150 / monthly $450), 6007 Carbury ("Monthly camping Available by swimming Beach").
+- Applied by post script: pin 5897 Schnell -> 46.8849,-102.2576 (~760 m, from the ranch HQ to the six spurs); phones 5914 (701) 227-7800, 6007 (701) 263-1766; websites 5987, 5970, 6006, 6007 to operator pages.
