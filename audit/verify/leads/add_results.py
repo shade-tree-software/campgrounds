@@ -64,8 +64,11 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
     e = {'id': next_id, 'kind': 'campground', 'name': r['name'], 'location': r['location'],
          'elevation_meters': r['elevation_meters'], 'state': r['state'], 'ownership': r['ownership'],
          'waterfront': r['waterfront'], 'waterfront_evidence': r['waterfront_evidence'],
-         'inclusion_evidence': r['inclusion_evidence'], 'website': r['website'], 'phone': r['phone'],
+         'inclusion_evidence': r['inclusion_evidence'], 'website': r.get('website'), 'phone': r.get('phone'),
          'note': r['note']}
+    for k in ('website', 'phone'):  # absent is unknown: omit, never store an empty value
+        if not e[k]:
+            del e[k]
     if m:
         e['rating'] = {'stars': float(m.group(1)), 'price_tier': len(m.group(2)), 'source': 'rvlife'}
     prov = {}
