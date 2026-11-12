@@ -599,3 +599,6 @@ Keep or drop? The Forest Service has no page for it: it is not on the Chippewa N
 
 ## 5498 Tamarack Point Campground (MN, Chippewa NF) - p3-442, 2026-11-11 - OPEN
 Keep (temporarily closed) or drop as abandoned? It is gone from the forest's 2026 Deer River District campground table and its 20-item camping list, the FS page (recid=26742) now redirects to the forest home page, and RIDB holds only a stub. The Dyrt: "Another padlocked campground" (Oct 2021); "it has not been upkeep at all... none of the sites are cleared, and the roads are overgrown" (Aug 31, 2025). Imagery shows no recognisable loop. A transfer to the Leech Lake Band is possible but unconfirmed. For now: status temporarily_closed with that evidence. A call to the Deer River District (218-246-2123) could settle it.
+
+## 5504 West Seelye Bay Campground (MN, Chippewa NF) - p3-443, 2026-11-11 - OPEN
+Same question as Tamarack Point 5498: keep or drop? The forest's full recreation listing has East Seelye Bay (5468, ~380 m across the bay) but not West; recreation.gov has no record; the stored FS link redirects to the forest index. A search result showed an alert "west seelye campground temporarily open", but its page is 404 with no archive copy. Kept with a dated caveat in the note (no status set). A call to the Deer River District (218-246-2123) could settle both.

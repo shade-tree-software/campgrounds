@@ -1807,3 +1807,10 @@ me drop and report); each needs the research named before a verdict.
 - 5446 Sullivan Lake: boat launch closed for very low water (long-term); campground open.
 - 5501 Trail's End: max_rig 45 -> 40, pull_through and water hookup false per rec.gov; 006/011/020/025/026 too short for 23 ft.
 - Process: the p3-442 verifier ran one read-only `git log -S` (against its no-git rule); stopped, nothing changed.
+
+## p3-443 (MN, 2026-11-11)
+- No drops. 5504 West Seelye Bay: no longer on the Chippewa NF recreation listing (East Seelye is) or rec.gov; a 2025 "west seelye campground temporarily open" alert is 404 (unread); stored website recid=26744 dead. Kept with a dated caveat, aggregator max_rig_ft 70 cleared; asked (asks.md).
+- 5505 White Pine Lake: "Two of the three sites are longer than 21 feet and may accommodate an RV" - unclear fit, kept with caveat.
+- 5700 Vermilion Trail: no official rate (no fee written); derived 59 sites / season 05-01..09-30 left vs CampLife's 30 online sites; OHV side ("Direct access to ATV/OHV trail"); daily/monthly/seasonal sold, mostly nightly online.
+- 5663 Twin Lakes: Lyon County page Akamai 403, Firefly site search reCAPTCHA (booking page itself read). 13338 Traverse: sites 8 -> 60, first come only, rate sheet undated. 13343 Trollskogen: free -> $15 (city fee chapter 2026-07-27). 5457 Wanaki: FS says 46 sites, rec.gov 25 used.
+- Bad third-party points: Firefly 5663 (farm field), CampLife 5700 (house ~800 m NE), rec.gov 5457 facility (~1.3 km SW).

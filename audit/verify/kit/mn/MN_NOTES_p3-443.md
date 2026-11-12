@@ -1,0 +1,12 @@
+# MN NOTES p3-443
+- 13338 WRITTEN: 60 sites (30E) map, FCFS, vault/well/dump, LF->LV (sites inside shore road; 35-38 by beach/harbor), phone 320-563-4848, website domain
+- 13343 WRITTEN: fee $15/night (2026 fee chapter), note cleaned, https website
+- 5663 WRITTEN: Firefly desc: 29 sites (N15 incl host, S14), 7 N reservable, $25, showers/flush/dump; county site Akamai, Firefly search reCAPTCHA = unread; LV kept
+- 5502 WRITTEN: 38 sites, $22, 05-08..10-19, FCFS (rec.gov info stub), NW kept
+- 5700 WRITTEN: CampLife 1190 (30 online sites, 20/30/50A water, 2027 opens Jan 14), no rate; NW kept; Explore MN 403
+- 15661 WRITTEN flags only (no change; possible riverview flagged)
+- 5448 WRITTEN: 21 sites (15 RV), season 05-15..11-21, LF->LV proposed, phone 218-235-2520, hyphen link
+- 5457 WRITTEN: 25 sites NONELECTRIC (22 res/3 fcfs), $21, 05-22..09-08, min wknd 2, NW kept, phone 218-835-4291
+- 5503 WRITTEN: 15 FCFS nonelectric, $14, rec.gov season 05-09..10-14, NW kept (09-11 ~40 m canopy), phone -> 218-835-4291
+- 5504 WRITTEN flags + note: FS/rec.gov no longer list West Seelye Bay; status for reviewer
+- 5505 WRITTEN: 3 sites, fit caveat flag, free, 05-08..10-01, phone 218-663-8060

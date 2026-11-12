@@ -1229,3 +1229,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-442 (MN, 2026-11-11)
 - 5446 Sullivan Lake, 5447 Thistledew lakefront -> lakeview; 13341 Sundquist lakeview -> not waterfront; 5501 Trail's End not waterfront -> riverfront on 008/009 (010 not counted). 13321 Talcot Lake lakefront kept on nightly sites 2, 3, 6, 7 (4, 5, 8-22 seasonal).
+
+## p3-443 (MN, 2026-11-11)
+- 13338 Traverse County Park and 5448 Wakemup Bay lakefront -> lakeview. Possible view leads: 15661 Veterans' Park Dawson (site lane ~44.9263,-96.0558, 45-75 m over lawn to the river), 5503 Webster Lake sites 09-11 (35-45 m under canopy), 5457 Wanaki ("some sites have lake views"), 5700 Vermilion Trail ("premium lakeside sites", unnumbered).

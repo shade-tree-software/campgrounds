@@ -1,14 +1,14 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-442**. Next batch **p3-443**. Next new id **15669**.
+Applied through **p3-443**. Next batch **p3-444**. Next new id **15669**.
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
 
-    python3 -I audit/verify/queue.py --batch p3-443 --state MN --limit 11
-    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-443
-    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-443 $SCRATCH/p3-443_para.txt
-    mkdir -p $SCRATCH/p3-443 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-443/tools
+    python3 -I audit/verify/queue.py --batch p3-444 --state MN --limit 11
+    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-444
+    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-444 $SCRATCH/p3-444_para.txt
+    mkdir -p $SCRATCH/p3-444 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-444/tools
 
 Then launch ONE background general-purpose agent with `agent_prompt_template.txt`
 (replace SCRATCH, p3-NNN and the id list; the brief may say "twelve", the batch has eleven).
