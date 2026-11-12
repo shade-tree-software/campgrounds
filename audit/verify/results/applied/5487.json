@@ -1,0 +1,54 @@
+{
+  "id": 5487,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.fs.usda.gov/r09/superior/recreation/ninemile-lake-campground (Superior NF, Tofte district), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/campgrounds/240958 (description, notices, rules, amenities) and /rates, read 2026-11-11",
+    "RIDB campsite catalog 240958 (trip_data/ridb_campsites.json, fetched 2026-10-20) + recreation.gov campsite search and per-site APIs (reservable flags, permitted equipment, site photos 1-25), read 2026-11-11",
+    "Esri World_Imagery frame at 47.5780,-91.0740 (400 m, winter)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 26, "max_rig_ft": 50, "pull_through": false, "note": "All back-in. Driveways run 20 to 50 ft: 23 of the 26 sites are 25 ft or longer; site 14 is 20 ft and sites 5 and 15 are 22 ft."},
+      "source": "RIDB catalog 240958 (sites 1-26 STANDARD NONELECTRIC, plus Host and Overflow MANAGEMENT; 'Driveway Entry: Back-in' on all; Driveway Length 20-50 ft) + rec.gov '13 first come, first served campsites and 13 reservable sites', read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "RIDB catalog 240958 (every site STANDARD NONELECTRIC) + rec.gov notice 'Water faucets are for drinking water only, do not use as wash areas. Hose hookups are not permitted.', read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "rec.gov 240958 ('Trash collection, solar powered water pump, and restrooms are provided'; amenities 'Vault Toilets', 'Drinking Water', 'Water (Seasonal)') + FS page ('Water faucets are for drinking water only'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-08", "closes": "10-01"},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/ninemile-lake-campground ('Seasons of Use May 8 - October 1'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Sites 1, 4, 5, 7, 10, 16, 18, 19, 21, 22 and 24 book on recreation.gov up to 7 days before arrival; the rest are first come."},
+      "source": "rec.gov campsite search 240958 (reservable: 1, 4, 5, 7, 10, 16, 18, 19, 21, 22, 24; the other 15 'Not Reservable') + rules reservationCutOff 7, maxConsecutiveStay 14, read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 18, "currency": "USD", "checked": "2026", "extra_person": {"max_people": 9}, "extra_vehicle": {"included": 1, "amount": 9, "per": "night"}, "note": "An extra vehicle pays half the site fee and parks on the spur; one towed vehicle such as a boat trailer is included."},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/ninemile-lake-campground ('Single Site: $18 per night'; 'Maximum of nine people per site. There is space for one vehicle and one towed vehicle (such as a boat trailer). Additional vehicles on the site require additional half fee and must park on the spur.') + https://www.recreation.gov/api/camps/campgrounds/240958/rates (Peak Season 2026-05-08..09-30 and 2027-05-12..09-30: PeakStandard 18), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Campground on 300-acre Ninemile Lake (walleye, northern, bass), with islands and hidden bays, on Lake County 7 about 14 mi from Schroeder via Cramer Road or NE of Finland. Boat ramp and dock; a half-mile trail through boreal hardwoods starts across the road. The Forest Service says the spurs are not designed for RVs and some may not suit one. The campground road is not plowed in winter. --Claude",
+  "summary": "FS page + rec.gov/RIDB read: 26 back-in sites, driveways 20-50 ft (23 of 26 at 25 ft+), 11 reservable up to 7 days out (prose says 13), $18 in 2026 and 2027, half-fee extra vehicle, 9 people, 14 nights, vault toilets + solar-pump water, May 8 - Oct 1. Proposed upgrade not waterfront -> lakeview on rec.gov site photos.",
+  "flags": [
+    "WATERFRONT not waterfront -> lakeview (proposed upgrade): the rec.gov site photos (spring, leaf-off) show Ninemile Lake through the trees from sites 19, 21, 22 and 23 (21 straight down its driveway); 19, 21 and 22 are reservable by the night. The doc's filtered-view rule (South Bass Island, West Branch) earns lakeview. Not on-water: every photo shows woods between the spur and the shore, and the winter Esri frame shows continuous conifer forest of about 50-80 m between the loop roads and the shoreline. RIDB gives no site coordinates, so the sites can't be placed on the imagery; no 'Proximity to Water' flag on any site.",
+    "SITES: max_rig_ft set to 50 (RIDB Driveway Length of site 20; no Max Vehicle Length posted). The old note's 'most sites fit small RVs under ~24 ft' had no source and is dropped. FS 'No. of Sites 24' vs RIDB 26 standard sites; 26 kept. FS/rec.gov say 'pull-in'; RIDB types every site Back-in. 'Not specifically designed for RVs' is Superior NF boilerplate, not a drop.",
+    "EQUIPMENT: rec.gov per-site permitted equipment lists only Tent and Car (no RV, trailer or fifth-wheel type), so the Availability page's EKKO filter will show no site here. FS lists the sites under 'RV Camping' and rec.gov lists 'RV Parking'.",
+    "BOOKING prose vs catalog: rec.gov/FS say '13 reservable sites'; the live campsite search marks 11 reservable (list in booking.note).",
+    "PHONE 218-663-8060 confirmed (FS Tofte Ranger District and rec.gov 'please call (218) 663-8060'); RIDB facility_phone is 218-663-8063. Websites current.",
+    "Pin 47.57780,-91.07400 sits on the campground loop on Esri imagery, ~107 m S of the RIDB facility point 47.578762,-91.074015. No move.",
+    "TRIBAL: rec.gov rule tribalDiscount for the Fond du Lac, Bois Forte and Grand Portage Bands. Not written.",
+    "Status: FS 'Closed-No fees or services' (and the 'Site Partially Closed' banner seen on every Superior NF page) is the ordinary end of season; not in post-wildfire closure order 09-09-00-26-11."
+  ]
+}

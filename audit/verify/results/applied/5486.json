@@ -1,0 +1,53 @@
+{
+  "id": 5486,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.fs.usda.gov/r09/chippewa/recreation/mosomo-mooz-ah-moo-point-campground (Chippewa NF, Deer River district; updated 2026-08-28), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/campgrounds/233848 (description, notices, rules, amenities) and /rates, read 2026-11-11",
+    "RIDB campsite catalog 233848 (trip_data/ridb_campsites.json, fetched 2026-10-20) + recreation.gov campsite search and per-site APIs (site points, 'Proximity to Water', permitted-equipment lengths, site photos for 06, 13, 15), read 2026-11-11",
+    "Esri World_Imagery frame at 47.5180,-94.0482 (220 m) with the rec.gov site points; USGS NAIP frame at 47.5178,-94.0481 (240 m)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 22, "max_rig_ft": 45, "pull_through": false, "note": "22 public back-in sites plus a host site (10). Driveways run 35 to 90 ft; rec.gov allows RVs up to 45 ft on most sites and 35 ft on site 20."},
+      "source": "RIDB catalog 233848 (sites 01-23: 22 STANDARD NONELECTRIC, 10 MANAGEMENT; 'Driveway Entry: Back-in' on all; Driveway Length 35-90 ft) + rec.gov per-site permitted equipment (RV/Trailer/Fifth Wheel max_length 45, site 20 35) + FS 'There are 23 sites', read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "RIDB catalog 233848 (every site STANDARD NONELECTRIC) + rec.gov 'single-unit sites, each equipped with a picnic table and campfire ring', read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "https://www.fs.usda.gov/r09/chippewa/recreation/mosomo-mooz-ah-moo-point-campground ('Vault toilets are available.') + rec.gov amenities ('Vault Toilets', 'Fish Cleaning Stations', 'Trash Collection'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-07", "closes": "10-31"},
+      "source": "https://www.fs.usda.gov/r09/chippewa/recreation/mosomo-mooz-ah-moo-point-campground ('Seasons of Use 5/7/26 - 10/31/26') + rec.gov rates (Peak Season 2026-05-07..09-07, First-come First-served Season 2026-09-08..10-31), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "note": "Sites 4-9, 13, 15-19 and 21 book on recreation.gov at least 4 days ahead, then go first come; the other sites are always first come, and every site is first come after Labor Day."},
+      "source": "RIDB catalog 233848 (reservable: 04-09, 13, 15-19, 21; not: 01-03, 11, 12, 14, 20, 22, 23) + rec.gov notice 'Reservations must be made at least 4 days in advance. After this window, sites are considered first-come first-serve.' + rules reservationCutOff 4 + rates (First-come, First-served Season 2026-09-08..10-31), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 16, "nightly_high": 16, "currency": "USD", "checked": "2026", "note": "The fee covers one camping unit; a second unit is not allowed on a single site. Leech Lake Band citizens camp free."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233848/rates (Peak Season 2026-05-07..09-07 and 2027-05-07..09-07: STANDARD NONELECTRIC 16; FCFS season 16) + FS 'Overnight Use: $16 per night' and 'Leech Lake Citizens enjoy free camping across the National Forest' + rec.gov notice 'Fee includes one camping unit per site. Double occupancy is not permitted on single unit sites.', read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Chippewa NF campground on Mosomo Point, a wooded point in red and white pine between Little and Big Cut Foot Sioux Lakes (next to Lake Winnibigoshish), 19 mi N of Deer River off Hwy 46. A sheltered cove for boats and paddling; boat access just down the road and a fishing pier on the way in; Cut Foot Sioux Visitor Center half a mile away. --Claude",
+  "summary": "FS page + rec.gov/RIDB read: 22 public back-in sites + host site, driveways 35-90 ft (rec.gov RV limit 45 ft, 35 on site 20), 13 reservable 4+ days out, $16 in 2026 and 2027, May 7 - Oct 31, vault toilets, fish-cleaning station; FS says no potable water but rec.gov lists hand pumps. Lakefront kept on rec.gov's per-site flag plus site photos for 13 and 15.",
+  "flags": [
+    "WATERFRONT lakefront kept, on sites 13 (47.517612,-94.048677) and 15 (47.517888,-94.048762), both reservable by the night: rec.gov per-site 'Proximity to Water: Lakefront' (also on 06), and the rec.gov site photos show an open grass apron under scattered pines running to a reed fringe and open water. On Esri imagery the open water of Little Cut Foot Sioux is about 40-45 m west of both points. Site 06 (47.517645,-94.047437) is also flagged Lakefront, but its photo shows only woods and no water; it does not support the value.",
+    "FACILITIES conflict on drinking water: FS 'Potable water is not available at this site.' vs rec.gov 'Vault toilets and hand pumps for drinking water are provided' and amenity 'Drinking Water'. potable_water left unwritten; a reviewer may want to ask Deer River RD.",
+    "SITES 23 -> 22: RIDB types site 10 MANAGEMENT (host); FS counts 23.",
+    "BOOKING after_cutoff -> some_sites: 9 sites are never reservable; the 4-day cutoff is in booking.note.",
+    "TRIBAL: rec.gov rule tribalDiscount 'Leech Lake Band of Ojibwe (407)'; FS 'Leech Lake Citizens enjoy free camping'. In fees.note only.",
+    "PHONE: none stored -> 218-246-2123 (Deer River Ranger District; FS page and RIDB facility_phone).",
+    "Pin 47.5180,-94.0482 is within 5 m of the site centroid 47.518005,-94.048217. No move. Status: FS 'Closed for the Season' is the ordinary end of season. Websites current."
+  ]
+}

@@ -1217,3 +1217,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-438 (MN, 2026-11-11)
 - 5438 Larson Lake lakefront -> lakeview (spurs behind a continuous tree fringe 15-25 m from the water; the old evidence read the day-use clearing). 5481 Lake Jeanette: lakeview candidate (rec.gov "some are located on the lakeshore", catalog flags none; 05-07 40-50 m under canopy). 5479 Kawishiwi Lake: lakeview lead (northern spurs ~47.8391,-91.1034, 10-15 m through birch).
+
+## p3-439 (MN, 2026-11-11)
+- 5439 Lost Lake lakeview -> not waterfront; 13332 Maka-Oicu lakeview -> not waterfront; 5487 Ninemile Lake not waterfront -> lakeview (sites 19/21/22/23 leaf-off photos). 5486 Mosomo Point lakefront kept on sites 13 and 15 (caveat in note); site 06 flagged Lakefront by rec.gov but photo shows woods.

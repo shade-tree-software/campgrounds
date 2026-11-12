@@ -1,14 +1,14 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-438**. Next batch **p3-439**. Next new id **15669**.
+Applied through **p3-439**. Next batch **p3-440**. Next new id **15669**.
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
 
-    python3 -I audit/verify/queue.py --batch p3-439 --state MN --limit 11
-    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-439
-    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-439 $SCRATCH/p3-439_para.txt
-    mkdir -p $SCRATCH/p3-439 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-439/tools
+    python3 -I audit/verify/queue.py --batch p3-440 --state MN --limit 11
+    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-440
+    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-440 $SCRATCH/p3-440_para.txt
+    mkdir -p $SCRATCH/p3-440 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-440/tools
 
 Then launch ONE background general-purpose agent with `agent_prompt_template.txt`
 (replace SCRATCH, p3-NNN and the id list; the brief may say "twelve", the batch has eleven).
@@ -35,7 +35,7 @@ Then launch ONE background general-purpose agent with `agent_prompt_template.txt
   5651 Lake Allie County Park (Renville County Cloudflare + ResNexus Incapsula, p3-438),
   Cloudflare-refused city sites 5649 Karlstad, 5689 Sherin, 5702 Warroad, 5705 Wildcat (its Firefly
   portal is readable), 13342 J.F. Jacobson Park (Madison), 5694 Sunnybrook.
-- **Leads to vet:** Red Pine Campground (Saginaw), Horseshoe Park (Hallock; find a non-refusing
+- **Leads to vet:** Fury's Island County Park (Nobles County, ~1 mi S of Maka-Oicu 13332; p3-439), Red Pine Campground (Saginaw), Horseshoe Park (Hallock; find a non-refusing
   source), Snake River Campground (Aitkin County, south of McGrath).
 - **Open questions** are in audit/verify/criteria_followups.md (p3-428 .. p3-437 sections).
 

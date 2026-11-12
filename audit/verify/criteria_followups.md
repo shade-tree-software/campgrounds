@@ -1770,3 +1770,12 @@ me drop and report); each needs the research named before a verdict.
 - 5656 Lake Marion: PerfectMind needs an account to book, but rates and season are public (not a login-to-see-rates case). Optional ~120 m pin nudge to 44.7854,-94.3769 not done.
 - 5438 Larson Lake: DNR alert "South Lofgren Road - Closed due to flooding"; self-pay envelopes no longer accepted (note corrected).
 - 5394 Lake Louise: site CH20 named like a host pad but bookable at $30 and counted in the DNR's 11 electric.
+
+## p3-439 (MN, 2026-11-11)
+- No drops. RIDB equipment at Superior NF 5483/5485/5487 lists no RV/trailer type (5483 none, 5485 tent + VEHICLE, 5487 tent + car), so the Availability page's EKKO filter shows no sites there.
+- Potable water conflicts (FS "not available" vs rec.gov "drinking water"): 5483 and 5486 left unset; 5459 written true (showers + rec.gov).
+- 13332 Maka-Oicu: sells monthly ($450) and season ($950) lots; seasonal share unpublished, Google 4.5/2. Not called mostly seasonal; a phone call to the parks office could settle it. hookups.water true unconfirmed by the county. Pin ~390 m S of Google's park point; loop not placeable under canopy, not moved.
+- 5441 McFarland Lake: now $17 (formerly free); no DNR source gives pad size, 23-ft fit unconfirmed.
+- 5485 McDougal: sites 17 and 19 closed since the 2021 Greenwood Fire; 17-21 long-term at $504.
+- 14621 Lum Park: page says opens May 1 but lists an April rate, and says no weekly rates but lists them.
+- Lead: Fury's Island County Park (Nobles County, ~1 mi S of Maka-Oicu), camping + showers, not in DB, unvetted.

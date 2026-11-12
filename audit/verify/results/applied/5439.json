@@ -1,0 +1,42 @@
+{
+  "id": 5439,
+  "checked": "2026-11-11",
+  "sources": [
+    "MN DNR feature detail sft00021 (George Washington State Forest; facility cmp00023 Lost Lake Campground record, manager, alerts), read 2026-11-11",
+    "https://www.dnr.state.mn.us/state-forests/fees-reservations.html (state forest fees and same-day payment), read 2026-11-11",
+    "Esri World_Imagery frames at 47.6855,-93.4055 (500 m) and 47.6860,-93.4064 (180 m)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 15},
+      "source": "DNR sft00021 facility cmp00023 ('camping': campsites 15, accessible_campsites 1; 'The campground features nature trails, 15 campsites, and a boat ramp along Lost Lake.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "DNR sft00021 facility cmp00023 ('vault toilets, garbage cans, and drinking water are available'; water_and_sanitation drinking_water 1, wells 1, toilets 2), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "https://www.dnr.state.mn.us/state-forests/fees-reservations.html ('Same day advance payment is available on your arrival date, you may not pay ahead for camping on a future date.'; 'Upon arrival at the campground, choose an unoccupied campsite.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 17, "nightly_high": 17, "currency": "USD", "checked": "2026", "note": "Taxes included. Paid online on the arrival day before occupying a site, or at a state park ranger station; no self-pay envelopes on site."},
+      "source": "https://www.dnr.state.mn.us/state-forests/fees-reservations.html ('Individual and equestrian campsites $17 - $22'; 'Fees include taxes.'; 'Pay fee online'; 'DNR does not accept self-payment envelopes on site or mail-in payments.') + DNR cmp00023 ('fee': 1), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Primitive DNR state forest campground on a loop in the woods south of Lost Lake (panfish), with a boat ramp, a dock and nature trails. Sites are a cleared area with fire ring and table. --Claude",
+  "summary": "DNR re-read: 15 sites (1 accessible), vault toilets, well water, boat ramp, $17 tax-included, same-day online payment (old 'paid at the campground' was wrong). Manager Scenic State Park 218-571-2600. Stored lakeview is not supported on imagery: spurs end 40-50 m from the shore behind continuous forest; recommend not waterfront. Website to hyphen form. Pin within ~100 m of the DNR point.",
+  "flags": [
+    "WATERFRONT DOWNGRADE lakeview -> not waterfront (stored value is not --AWH): on the 180 m Esri frame the nearest spurs on the north side of the loop (about 47.68587,-93.40660 and 47.68545,-93.40563) end about 40-50 m from the south shore of Lost Lake through a continuous band of dense forest; the only opening to the water is the dock path (dock about 47.6861,-93.4057). The stored evidence itself says the site clearing 'sits ~35-40m back behind a continuous shoreline treeline'. DNR gives no site map or campsite photos showing a lake view, so nothing supports a view value; default down.",
+    "WEBSITE underscore -> hyphen: https://www.dnr.state.mn.us/state_forests/forest.html?id=sft00021 -> https://www.dnr.state.mn.us/state-forests/forest.html?id=sft00021",
+    "PHONE: none stored; manager 'Scenic State Park' 218-571-2600 (DNR facility record cmp00023).",
+    "Pin 47.6858,-93.4050 sits at the lake edge ~100 m NE of the DNR facility point 47.685101,-93.40587 (which is inside the loop). Under 250 m; optional move to the DNR point.",
+    "NOTE correction: the fees note said 'paid at the campground'; DNR says fees are paid online on the arrival day and 'DNR does not accept self-payment envelopes on site'. Note cleaned of the site count, toilets, water and hookups (fields hold them).",
+    "ACCESS alert (no effect on the campground): DNR sft00021 alert 'South Lofgren Road - Closed due to flooding'.",
+    "Season: no DNR statement of open dates for this campground; nothing written."
+  ]
+}

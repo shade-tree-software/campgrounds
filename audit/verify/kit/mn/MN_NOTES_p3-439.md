@@ -1,0 +1,12 @@
+# MN NOTES p3-439
+- 5483 WRITTEN: 11 sites back-in, 7-11 res, $18, May8-Oct1, LT sites 1-4 $504, water conflict, NW kept (creek 25-35m canopy)
+- 5439 WRITTEN: 15 sites, $17 same-day online, lakeview->NW (40-50m dense forest), website hyphen, phone 218-571-2600
+- 14621 WRITTEN: 29 sites, $55 tax incl, $25 off-season, Rec1, NW confirmed, website -> brainerdmn.gov
+- 13332 WRITTEN: FCFS, $25/$15, lakeview->NW (canopy), lead Fury's Island
+- 5440 WRITTEN: 36 sites, $17, NW confirmed, phone 218-699-7251, website hyphen
+- 5485 WRITTEN: 21 sites (17 drive-in), $18, May8-Oct1, LT 17-21, max_rig 24->45, NW kept
+- 5441 WRITTEN: 6 sites, $0->$17, NW kept, phone 218-387-6300, hyphen
+- 15666 WRITTEN (no groups): split today, NW confirmed
+- 5486 WRITTEN: lakefront kept (13,15 photos+flag), 22 sites, $16, water conflict, phone 218-246-2123
+- 5487 WRITTEN: NW->lakeview proposed (photos 19,21,22,23), 26 sites, $18, 11 reservable, equip tent/car only
+- 5459 WRITTEN: NW confirmed (~125 m), 50 sites, $21, min weekend 2/holiday 3, phone 218-835-4291

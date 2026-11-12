@@ -1,0 +1,88 @@
+{
+  "id": 5483,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.fs.usda.gov/r09/superior/recreation/little-isabella-river-campground (Superior NF, Tofte district), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/campgrounds/271446 (description, notices, rules, amenities) and /rates, read 2026-11-11",
+    "RIDB campsite catalog 271446 (trip_data/ridb_campsites.json, fetched 2026-10-20) + recreation.gov campsite search API (site points), read 2026-11-11",
+    "https://www.fs.usda.gov/r09/superior/alerts/post-wildfire-closures-effective-october-1-2026 + Exhibit A (Order 09-09-00-26-11), read 2026-11-11",
+    "Esri World_Imagery frame at 47.6480,-91.4246 (500 m) with the rec.gov site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 11,
+        "pull_through": false
+      },
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/little-isabella-river-campground ('No. of Sites 11 / 4 long term sites.') + RIDB catalog 271446 (sites 1-11, every one 'Driveway Entry: Back-in', no lengths posted), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "RIDB catalog 271446 (all 11 sites STANDARD NONELECTRIC) + rec.gov notice 'Water faucets are for drinking water only, do not use as wash areas. Hose hookups are not permitted.', read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true
+      },
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/little-isabella-river-campground ('Restrooms Vault toilet(s)') + rec.gov amenities 'Vault Toilets', read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "opens": "05-08",
+        "closes": "10-01"
+      },
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/little-isabella-river-campground ('Seasons of Use May 8 - October 1'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "note": "Sites 7-11 book on recreation.gov; 1-6 are first come. Sites 1-4 also take long-term campers May 1 - October 30, reserved by phone with the Tofte Ranger District."
+      },
+      "source": "RIDB catalog 271446 (sites 7-11 reservable, 1-6 not) + rec.gov 'six first come first served campsites, and five reservable campsites', rules maxConsecutiveStay 14, notice 'Sites # 1-4 are available for long term seasonal camping from May 1 to October 30 ... Contact the Tofte Ranger District Office at 218-663-8060 to reserve long term sites.', read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 18,
+        "nightly_high": 18,
+        "currency": "USD",
+        "checked": "2026",
+        "extra_person": {
+          "max_people": 9
+        },
+        "extra_vehicle": {
+          "included": 1,
+          "amount": 9,
+          "per": "night"
+        },
+        "note": "Long-term sites 1-4: $504 a season or for any stay over two weeks. An extra vehicle pays half the site fee; one towed vehicle such as a boat trailer is included."
+      },
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/little-isabella-river-campground ('Single Site: $18 per night; $504 per season'; 'Maximum of nine people per site. There is space for one vehicle and one towed vehicle (such as a boat trailer). Additional vehicles on the site require additional half fee') + https://www.recreation.gov/api/camps/campgrounds/271446/rates (Peak Season 2026-05-08..09-30 and 2027-05-12..09-30: PeakStandard 18) + notice 'Site rate is $504 per season or any period greater than two weeks', read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Small, secluded campground in a grove of red and white pines along the Little Isabella River, a brook-trout stream, 4.5 mi W of Isabella. The Forest Service says the spurs are not designed for RVs and some may not suit one; no site lengths are posted, so fit for a 23-ft rig is unconfirmed. --Claude",
+  "summary": "FS page + rec.gov/RIDB read: 11 back-in non-electric sites (7-11 reservable, 1-6 FCFS; 1-4 also long-term seasonal at $504), $18 in 2026 and 2027, half-fee extra vehicle, 9 people, 14 nights, vault toilets, season May 8 - Oct 1. No posted site lengths. Not in the post-wildfire closure order. Not waterfront kept. Pin and phone confirmed.",
+  "flags": [
+    "FIT (no posted lengths): RIDB lists no Max Vehicle Length or Driveway Length on any site, and both FS and rec.gov say 'Sites are pull-in and not specifically designed for RVs. Most can accommodate a moderately sized vehicle, some may not be suitable for an RV.' The same wording appears on other Superior NF pages (agency boilerplate), so it is not a drop; the old note's 'most sites fit small RVs to ~24 ft' had no source and is replaced by a caveat. No review with a 23 ft+ rig was searched for.",
+    "DRINKING WATER conflict: the FS page says 'Potable water is not available at this site' but its own rules and rec.gov say 'Water faucets are for drinking water only' and rec.gov lists 'Drinking Water', 'Water (Seasonal)', 'Water Spigot'. potable_water left unset.",
+    "CATALOG vs prose: rec.gov/FS say the sites are 'pull-in'; the RIDB catalog types all 11 'Back-in'. pull_through false written from the catalog.",
+    "LONG-TERM sites: 4 of 11 sites (1-4) are offered for seasonal long-term camping at $504 May 1 - Oct 30 (federal campground; nightly sites remain). Information only.",
+    "WATERFRONT not waterfront kept: the Little Isabella River is a narrow stream (well under 30 m; creekside at most). On Esri imagery the nearest site points (11 at 47.64859,-91.42658; 10 at 47.64832,-91.42608; 9 at 47.64826,-91.42577) sit roughly 25-35 m south of the stream under continuous red-pine canopy, with no open ground to the bank. rec.gov's 'All sites are private and close to the water' is marketing prose. No change.",
+    "Pin 47.6480,-91.4246 is at the centroid of the rec.gov site points (47.64808,-91.42465); FS page point 47.64686,-91.42313 is ~170 m SE toward the entrance. No move.",
+    "PHONE 218-663-8060 confirmed (FS Tofte Ranger District; rec.gov 'please call (218) 663-8060'). Websites current.",
+    "STATUS: FS page shows 'Closed - No fees or services' (ordinary end of season). Not named in post-wildfire closure order 09-09-00-26-11 Exhibit A (Gunflint, Kawishiwi and LaCroix BWCAW sites only).",
+    "EQUIPMENT: RIDB lists no permitted equipment on any site (no RV, trailer or fifth-wheel type), so the Availability page's EKKO filter will show no site here. FS lists the sites under 'RV Camping'; same Superior NF pattern as McDougal and Ninemile."
+  ]
+}
