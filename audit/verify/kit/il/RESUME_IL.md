@@ -1,8 +1,8 @@
 # Phase 7 — Illinois (RESUME)
 
 Started 2026-11-12 after ND (kit/nd/RESUME_ND.md). Queue at start: 203 (state 82, local 52, private 42, federal 27).
-Batches: p3-463 (first, 11 ids: 1731 1747 1748 14611 777 1740 1700 1699 1741 1695 1683) running.
-Next new id **15700**. ONE verifier at a time (AWH 2026-11-11).
+Batches applied: p3-463 (2026-11-12; 1747 dropped, 1700 split -> 15700).
+Next new id **15701**. ONE verifier at a time (AWH 2026-11-11).
 
 ## Build a batch (11 ids; the agent template says ELEVEN)
 ```

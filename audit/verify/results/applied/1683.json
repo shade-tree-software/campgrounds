@@ -1,0 +1,74 @@
+{
+  "id": 1683,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://dnr.illinois.gov/parks/park.foxridge.html ('More than 40 campsites and two rustic cabins are available at Fox Ridge, with camping reservations available online at ExploreMoreIL'; Park Phone 217-345-6416; reservation link https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/20), read 2026-11-12",
+    "https://dnr.illinois.gov/parks/camp/park.foxridge.html ('Picnic tables, cooking grills, drinking water, toilet facilities, and a sanitary dumping station are available to campers. The shower building is closed by November 1 (may be earlier if bad weather) and reopens April 15 (may be earlier-weather depending).'), read 2026-11-12",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (the API behind recreation.exploremoreil.com) search/place PlaceId 20 (facilities: Back Loop 201, Cabin 202, Front Loop 203, Shelter 204, Youth Group Camp 205; no horse or equestrian facility) and search/details for all 43 units of 201 and 203 at 2027-06-15: 42 'Class A' electric units (21 at 50 A, 17 at 30 A, 2 at 20 A; engine still prices them at the 2026 $20) and 1 'Class B-S' non-electric unit #021 ($10 on the 2026 schedule); Max Vehicle Length 40 at 36 units, 50 at 3 (012, 040, 042), 55 at 019 (Pull-Through), 35 at 018, 32 at 016, 20 at the unit named 'Tent'; every other unit Back-In; Driveway Surface Gravel; no water or sewer attribute on any unit; per-unit coordinates; grid calls for 2027-01-15 and 2027-03-10 return no sellable nights, read 2026-11-12",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 schedule: Premium Electric $35 only at the named premium campgrounds, not Fox Ridge; Electric (formerly A, B/E) $28 = $14 camping + $14 utility, 'Electric, vehicle access (showers only at former A and B/E Premium sites)'; Non-Electric with showers (formerly B/S) $11), read 2026-11-12",
+    "Esri World_Imagery (~1 m/px) with the 43 engine unit points plotted: two wooded loops west of the park office, the stored pin on the entrance road ~640 m east"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 11,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2027",
+        "surcharges": null,
+        "reservation_fee": null,
+        "note": "Site 21 is the one site without electric ($11); the 42 electric sites are $28."
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric, formerly A, $28; Non-Electric with showers, formerly B/S, $11) applied to the ExploreMoreIL unit classes (42 Class A, 1 Class B-S #021, Max Vehicle Length 40), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "ExploreMoreIL unit details, park 20 (Electricity Hookup 50 Amp at 21 units, 30 Amp at 17, 20 Amp at 2; no water or sewer attribute); 2027 fee schedule class definition 'Electric, vehicle access' (sewer only at former AA sites), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 43,
+        "max_rig_ft": 55,
+        "pull_through": true,
+        "note": "Site 19 is the only pull-through; most sites are listed at 40 ft, three at 50 ft. The site named Tent takes 20 ft."
+      },
+      "source": "ExploreMoreIL unit details, park 20 (43 units in Front Loop 203 and Back Loop 201; Max Vehicle Length 20-55; 019 Pull-Through), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "potable_water": true,
+        "dump": true
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.foxridge.html ('drinking water, toilet facilities, and a sanitary dumping station'; shower building open about April 15 to November 1), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/20"
+      },
+      "source": "https://dnr.illinois.gov/parks/park.foxridge.html (reservations online at ExploreMoreIL, link park/20); every unit Reservable on the engine, read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park south of Charleston, in wooded ravines and ridges above the Embarras River. Two loops under full or partial shade; the shower building closes by November 1 and reopens about April 15. Two rustic cabins and a youth group camp. --Claude",
+  "summary": "DNR park and camping pages, ExploreMoreIL engine (all 43 units) and the 2027 fee PDF read: 43 sites (42 electric 20/30/50 A, 1 non-electric), no water/sewer, 42 take 23 ft+ (max 55, one pull-through), $11 non-electric / $28 electric on the 2027 schedule (the stored $11 low already reflected 2027; the high was wrong); showers seasonal, dump, water. No horse camp. Groups written manual; booking platform operator -> usedirect; note cleaned. Pin ~640 m off: move.",
+  "flags": [
+    "PIN: stored 39.4026,-88.1363 is on the entrance road ~640 m east of the sites; move to 39.40178,-88.14372 (43-unit centroid; Front Loop 39.4017,-88.14309, Back Loop 39.40197,-88.14518). Imagery confirms both loops at the engine points.",
+    "FEES: stored 11/11 + electric surcharge 17 (= $28) already followed the 2027 schedule; rewritten as low 11 / high 28 with the surcharge and the per-entry reservation fee removed (the $10 fee and the holiday $10 are in the state:IL policy row). The engine still shows the 2026 prices ($20 Class A, $10 Class B-S). Fox Ridge is not a Premium campground, so no $35 sites.",
+    "MAX LENGTH: not a uniform placeholder: 36 units at 40 ft, 012/040/042 at 50, 019 at 55 (pull-through), 018 at 35, 016 at 32, 'Tent' at 20 (with 25-ft driveway). 42 of 43 take 23 ft+. The stored note's 'back-in only' was wrong (019).",
+    "HORSE: no equestrian facility at Fox Ridge (facilities are Back Loop, Front Loop, Cabin, Shelter, Youth Group Camp).",
+    "SEASON (not written; stored year_round derived, left): the DNR camping page gives only the shower building's dates (closed by Nov 1, reopens Apr 15). The engine sells no nights for 2027-01-15 or 2027-03-10, consistent with the state's reservation pause; no statement that the campground closes in winter.",
+    "PHONE: keep 217-345-6416 (DNR page). WEBSITE: keep both stored links; https://camp.exploremoreil.com/ now lands on https://recreation.exploremoreil.com/IllinoisWeb/, and the stored #!park/20 link resolves.",
+    "WATERFRONT: stored not waterfront; sites on a wooded ridge, no change."
+  ]
+}

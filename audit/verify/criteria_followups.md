@@ -2002,3 +2002,11 @@ me drop and report); each needs the research named before a verdict.
 ## p3-462 (ND, final batch, 2026-11-12)
 - 3 applied, no drops. 13574 Weaver Park (Edgeley): sites 15 -> 28 (HHS 28, Edgeley Park District), 50 A added, booking operator via Firefly, season 04-15..10-01; Dyrt-only 40-ft max and dump cleared; phone None -> City Hall 701-493-2208; website Dyrt -> Firefly. $20 nightly / $450 monthly; the ambulance-building sites are "generally used for extended camping" - main areas nightly, kept (Firefly site list behind reCAPTCHA, nightly share unmeasured). 14594 Westside Trailer Park (Mott): Mott Park District, 12 lots, $30 nightly only, long-stay tests clean. 13259 Wolf Creek (USACE): 67 non-electric sites, $14, all reservable, 2/3-night weekend/holiday minimums; season not written (rate season 05-15..09-14 only).
 - ND FIRST READ COMPLETE. Remaining ND work: the unread/phone list (RESUME_ND.md) and the leads file (audit/verify/leads/nd_leads.txt).
+
+## p3-463 (IL, first batch, 2026-11-12)
+- 10 applied, 1 dropped, 1 split. DROPPED 1747 Bay Creek Ranch (Simpson): a horse campground first, horse camping not separated from the RV sites (MDC horse rule): "Horse Campground | Bay Creek Ranch", stalls "conveniently located close to the campsites", "plenty of horse stalls adjacent to your campsite".
+- SPLIT 1700 Dam East - McNair: the Spillway loop (sites 33-47, ~1.55 km west below the dam, own road, open year-round) is new 15700 Dam East Spillway Campground; both still book inside recreation.gov facility 233786. McNair keeps 31 sites, season 04-02..11-01.
+- 14611 Clad & Cordon Vineyard kept: $50 standard (not over the gate), $100 four holiday weekends; 9 water/electric sites sold to the public by phone/email with slot numbers (not a Harvest Hosts allowance). Google 4.9/62.
+- 1741 Evening Star kept with its seasonal caveat (~40 seasonal units of 229 sold on Campspot; cheapest real night $29.18). 1731 Arrowhead kept on RV Life $$ + Wix site (no posted rate; Google 4.7/22); RV Life directory link removed from website.
+- Pins: 777 ~440 m, 1695 ~520 m, 1683 ~640 m, 1740 ~240 m, 1741 ~235 m. Phone 777 None -> 618-226-3211 (rec.gov facility).
+- ASK: 1748 Cedar Lake (Vienna) horse features - see asks.md.
