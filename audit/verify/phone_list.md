@@ -4,7 +4,7 @@ Entries the web pass could not read: the operator's site refuses us or doesn't e
 a phone answer is a valid source. No call is placed without AWH's go-ahead; the first is Karlstad
 5649. Record each answer as a dated phone call in `curation_note`.
 
-**dialmcp and phone menus (2026-11-12):** its answering-machine detection treats an automated menu as voicemail and hangs up, so a number that answers with a menu needs AWH to call. Prefer numbers that reach a person or a single voicemail.
+**dialmcp and phone menus (2026-11-12):** dialmcp hangs up on anything its answering-machine detection calls a machine, menus included, and leaves no message. At Madison that was right (AWH pressed 2 and also got voicemail), so small-town offices simply may not pick up; retry on another day rather than rewording.
 
 **Ask every call (the standard set):**
 1. Is it open to overnight RV campers, and can you stay just one night?
@@ -25,10 +25,10 @@ The "Settle" column lists only what is specific to each entry.
 | 5518 | Bray Park (Blue Earth County) | 507-243-3885 | fees, season, hookups, sites | Everything in the standard set. |
 | 5669 | Moose Lake City Campground | 218-485-4761 | fees, season | Site numbers of the south lower-lane row on the shore (5-15 m from the water); lakefront rests on them. |
 | 5633 | Gilbert Olson Campground (Hallock) | none (Hallock City Hall 218-843-2737?) | season, hookups, booking | Creekside value: which sites sit by the river. |
-| 5651 | Lake Allie County Park (Renville Co.) | 320-523-3747 | season | Season only. |
+| 5651 | Lake Allie County Park (Renville Co.) | 320-523-3747 (Renville County Public Works) | season | Season only. 2026-11-12: dialmcp failed to connect; AWH's call went straight to voicemail. Try again another day. |
 | 13327 | Sebeka City Park & Campground | Sebeka City Hall 218-837-5773 (snippet) | season, sites, booking | Site count; how to book. |
 | 5702 | Warroad City Campground | 218-386-1004 | fees, sites, booking | Rate, sites, booking. |
-| 13342 | J.F. Jacobson Park Campground (Madison) | 320-598-7373 | season | Season only. **Not by dialmcp:** 2026-11-12 two calls hit the City Hall menu (1 utility, 2 clerk) and the service read it as voicemail and hung up; a third wording was refused by its screen. AWH to call directly (press 2). |
+| 13342 | J.F. Jacobson Park Campground (Madison) | 320-598-7373 | season | Season only. 2026-11-12 09:10-09:30 CST: two dialmcp calls and AWH's own call (pressing 2 for the clerk) all reached voicemail; a third dialmcp wording was refused by its screen. Try again another day. |
 | 15672 | Horseshoe Park Campground (Hallock) | 218-843-2737 | season, hookups, sites | Sites and how many are monthly or multi-month; hookups; longest rig; season. Could share the call with 5633. |
 
 ## North Dakota (first-read unread list)
@@ -64,7 +64,7 @@ The "Settle" column lists only what is specific to each entry.
 | 6037 | New England South Park Campground | none found | fees, season, hookups, sites | Hookups or none (a tourism snippet says none); standard set. |
 | 13570 | Page City Park Campground | City Hall 701-668-2226 | fees, season, booking | Standard set (8 licensed lots). |
 | 6048 | Sarles City Park | stored 701-697-5270 (unverified) / 701-697-5100 | fees, season, sites | Is there camping with sites at all (pin is a treed lawn, no pads)? |
-| 6053 | Turtle Lake City Park | city 701-448-2596 | fees, season | Standard set; is Lake Brekken (ND lead 12) a separate campground? |
+| 6053 + 15689 | Turtle Lake City Park and Lake Brekken Campground (both Turtle Lake Park District) | city hall 701-448-2596 | 6053: fees, season; 15689: hookups, season, operator rate | One call covers both. 6053: is there sewer at the sites (stored true, no source)? 15689: how many of the 21 lots are seasonal. |
 | 6011 | Short Creek Dam (Burke Co.) | 701-939-5681 | fees, season, hookups | Does Game and Fish's Tuesday/Wednesday camping ban cover the county campground? |
 
 ## Leads skipped pending a call
