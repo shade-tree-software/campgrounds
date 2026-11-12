@@ -1284,3 +1284,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5908 Eggerts Landing not waterfront -> lakeview? Site 041 (47.09765,-98.01184) on mown grass ~20 m above a reed-fringed bay; other loops under continuous forest. One site - left.
 - 5955 Lindenwood riverview -> riverfront? South pad row (~46.8490,-96.7805 to 46.8497,-96.7775) ~30 m from the ~60 m Red River over an open grass bank, no levee between; no site numbers (WebTrac unread) - left at riverview.
 - 5911 not waterfront stands (RV sites behind the shoreline tree band; open shore is the swim beach). 5985 not waterfront stands (Knife ~10-15 m, behind trees). 5965 riverview stands (pads indistinct).
+
+## p3-456 (ND, 2026-11-12)
+- No changes. 6015 Coldwater Lake (unread): north row west end (~46.01185,-99.0669 to -99.0662) 15-40 m from shore over open grass - lakefront only if those sites sell nightly (~25 RVs in tight rows look seasonal). 5981 Powers Lake lakeview is the ceiling (pads ~25 m but behind the campground loop road). 5898, 5959 (Sheyenne 40-45 m, 60 m+ behind a wooded bank), 5977 (Pembina 120-170 m through woods) not waterfront stand.
