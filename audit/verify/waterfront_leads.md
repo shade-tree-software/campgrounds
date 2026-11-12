@@ -1202,3 +1202,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-433 (MN, 2026-11-11)
 - 5604 Bagley lakefront -> lakeview (only the 10 seasonal pads locatable, behind reeds). 13323 Aitkin riverview kept. 5702 Warroad (unread) lakeview plausible.
+
+## p3-434 (MN, 2026-11-11)
+- 5452 Baker Lake lakefront -> not waterfront. 5606 Bass Lake lakefront -> lakeview (tree fringe). 13213 Knutson Dam riverfront -> creekside (channel 20-25 m). 13318 Burlington Bay lakeview -> coastal walk. Lead: 5427 Bear Lake SF possible lakefront (two units 16-28 m over grass, no site numbers).

@@ -1745,3 +1745,8 @@ me drop and report); each needs the research named before a verdict.
 - 5618 Cedar Lake Memorial Park ownership local -> private (American Legion Post 350).
 - 5678 Rice County Fairgrounds: "$65 / $40" with no unit; fair association (ownership left local).
 - LEAD: Snake River Campground (Aitkin County, south of McGrath; $20, 12 primitive sites) - not in DB (5445 is the Chengwatana one).
+
+## p3-434 (MN, 2026-11-11)
+- No drops. 13325 Bear Lake (Barnum) possibly mostly seasonal - no site counts published; kept.
+- 5427/5430 George Washington SF: "South Lofgren Road - Closed due to flooding" alert not checked against access.
+- 5364 Big Stone Lake: "Campground is CLOSED for the Year".

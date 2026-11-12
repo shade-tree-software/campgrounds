@@ -1,0 +1,74 @@
+{
+  "id": 13213,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233145 (description, notices, facility_rules, amenities) and /rates, read 2026-11-11",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233145 (13 sites with coordinates), read 2026-11-11; RIDB per-site catalog cached in trip_data/ridb_campsites.json (fetched 2026-10-20)",
+    "Esri World_Imagery frame at 47.4507,-94.4833 (220 m) with the rec.gov site points plotted, and zoom-19 tiles at 47.4500,-94.4831"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 11,
+        "pull_through": false,
+        "note": "11 back-in RV/tent sites plus 2 walk-to tent sites."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233145 ('The campground offers 11 single family campsites and two walk-to tent sites') + RIDB catalog (sites 001-011 STANDARD NONELECTRIC, 'Driveway Entry: Back-in'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233145 ('Picnic tables and campfire rings are provided, as are vault toilets, drinking water and trash collection'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0
+      },
+      "source": "RIDB catalog: all 13 sites typed NONELECTRIC (11 STANDARD NONELECTRIC, 2 TENT ONLY NONELECTRIC), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233145",
+        "fcfs": "after_cutoff",
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          }
+        ],
+        "note": "Reservable in the peak season; recreation.gov says first-come sites may be available after the reservation season."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233145 (notice 'First-come, first-served sites may be available after the reservation season'; facility_rules minWeekendStay 2, 2008-2050; reservationCutOff 4) + /rates (Peak Season 2026-05-08 to 2026-09-04, First-come First-served Season 2026-09-05 to 2026-09-08), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 16,
+        "nightly_high": 16,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$16 a night for every site, reserved or first-come; the fee covers one camping unit, and each additional unit is charged extra."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233145/rates (Peak Season 2026 and 2027: STANDARD NONELECTRIC $16, TENT ONLY NONELECTRIC $16; First-come First-served Season 2026: $16) + notice ('Fee includes one camping unit ... per site; additional units will be charged an additional fee'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Chippewa National Forest campground, formerly Knutson Dam, where the Mississippi River leaves Cass Lake; 6 miles east of Cass Lake on US-2, then 5 miles north on County Road 10. A single loop on mown lawn under oak, spruce and pine. Boat ramps on both the lake and the river, and easy canoe access to the Mississippi. --Claude",
+  "summary": "rec.gov read: 11 back-in sites + 2 walk-to tent, no hookups, vault toilets + water, $16 (2026/2027), 2-night weekend minimum, FCFS after the reservation season. Riverfront -> creekside flagged (outlet channel ~20-25 m wide at sites 001-002). Uniform 40-ft lengths not written. No season written.",
+  "flags": [
+    "WATERFRONT riverfront -> creekside (channel-width rule, reviewer to confirm). Sites 001 (47.45022,-94.48348) and 002 (47.45019,-94.48309) sit on open lawn about 15-18 m from the Mississippi's outlet channel below Knutson Dam, but the channel there is only about 20-25 m wide on zoom-19 imagery (measured at 47.4500,-94.4831), under the doc's ~30 m line ('decided by SIZE, not by name ... Measure at the campground'). Site 003 (47.45020,-94.48267) is about 10 m from the bank but under trees. If the reviewer reads the Mississippi as a river regardless of width, riverfront stands on 001-002. Sites 009 and 011 face Cass Lake about 37-43 m away through a continuous tree band (a view, not lakefront). The campground is beside the dam but level with the lake, not below a berm; 001-003 face the tailwater. All sites are sold by the night.",
+    "Site lengths: the RIDB catalog gives every site, including the management and tent sites, exactly 40 ft Driveway Length and Max Vehicle Length. That looks like a placeholder, so max_rig_ft is not written. A 23-ft rig is not in doubt.",
+    "Discount not written (the schema has no key for it): rec.gov facility_rules carry tribalDiscount 1, 'Leech Lake Band of Ojibwe (407)'.",
+    "Rec.gov 'Paved Sites' and 'Paved Roads' amenities and 'Waterfront Sites' are listed; the description says 'Every site affords scenic lake views' (marketing, not used).",
+    "Season: rec.gov rate seasons (Peak 05-08 to 09-04 in 2026, FCFS 09-05 to 09-08) are not a campground season statement; season left absent.",
+    "Phone 218-835-4291 (rec.gov facility phone) and website confirmed. Pin 47.450576,-94.483249 is in the middle of the loop, about 60 m from the rec.gov facility point; no move.",
+    "Note cleaned: dropped '11 single sites plus 2 walk-to tent sites' and 'Reservable online in season, first-come first-served after' (fields hold them)."
+  ]
+}

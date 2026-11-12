@@ -1,0 +1,14 @@
+# p3-434 MN notes
+- 5452 WRITTEN: free, 5 sites, May8-Oct1, lakefront->not wf (canopy, 70 m), pin in water -> 47.8445,-90.8171, phone 218-663-8060
+- 5606 WRITTEN: lakefront->lakeview (tree fringe 12-25 m), $20/$30, 43 sites, campspot 403 plain
+- 13325 WRITTEN: $50 daily (brochure docx), May15-Oct1, lakeview kept, G 4.2/45, long-stay unresolved
+- 5430 prelim: DNR cmp00020 drive_in 10, walk-in 2 (sites 1-2), map sites 1-12, ATVs prohibited in cg, mgr Scenic SP 218-571-2600 (map PDF 2014 says McCarthy Beach 218-254-7979); imagery 47.8535,-93.2885 sites under canopy
+- 5427 WRITTEN: 27 sites, FCFS same-day pay, lakeview kept + lakefront candidate (no site map), web+phone flags
+- 5609 WRITTEN: $30, 9 sites 50A, OneGov operator after_cutoff, not wf kept, ATV-side flag, website/phone flags
+- 5364 WRITTEN: $24/$34, 37 sites 30A, 48ft, lakeview kept (13 lakeside behind tree fringe), link spk00115
+- 13213 WRITTEN: rec.gov $16, 11+2, 2-night wknd min, riverfront->creekside flag (channel 20-25 m), 40ft uniform not written
+- 13326 WRITTEN: county page Cloudflare 403 (unread); ResNexus 7 sites, $27 RV matches AWH manual; phone 320-523-3747
+- 13337 WRITTEN: $10-35, 30A, sewer some, FCFS no reservations, wk/mo rates but no seasonal look
+- 13318 WRITTEN: fees 45-68 +2 wknd, 13.375% tax, seasonal spans, season 05-07..10-18 (Firefly 2027), operator Firefly; flag lakeview->coastal walk; map still says reserveamerica
+- 5430 WRITTEN: 12 sites (10 drive-in), FCFS same-day pay, $17, lakeview kept (canopy), website hyphen fix, ATV prohibited in cg
+- apply.py dry run: 11 results ready, 11 note rewrites, no '!!'. DONE.
