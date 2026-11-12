@@ -1211,3 +1211,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-436 (MN, 2026-11-11)
 - 5462 Crescent Lake, 5432 Esther Lake, 5472 Fenske Lake lakefront -> lakeview (canopy / no placeable site). Lead: 5462 rec.gov "Lakefront" first-come sites 002/004/007/014/018/029 have no coordinates.
+
+## p3-437 (MN, 2026-11-11)
+- 5436 Huntersville riverfront -> riverview (25-27 m river, leaf-on canopy). 5382 Greer Lake lakeview -> not waterfront. 13331 Grove City not waterfront -> lakeview (sites 1-14 behind a single tree line). Lead: 5434 Hay Lake lakeview ("some have views of the lake", no site resolved).

@@ -1757,3 +1757,8 @@ me drop and report); each needs the research named before a verdict.
 ## p3-436 (MN, 2026-11-11)
 - No drops. 5469 Echo Lake: manual season (May 8 - Sep 26, matches FS) vs rec.gov first-come nights to Oct 19, 2026 - close not changed.
 - 5433 Finland: 15 of 39 sites allow ATVs with direct trail access (general campground; caveat kept).
+
+## p3-437 (MN, 2026-11-11)
+- No drops. 13342 J.F. Jacobson Park (Madison) UNREAD: cityofmadisonmn.gov Cloudflare block; add to the MN unread sweep.
+- 5639 Hole in the Mountain: seasonal leases ($1,500 May 1 - Oct 15), share unpublished; derived reservable:true and season 05-15..10-31 not stated by the county. Possible horse camp (Horse Hill) on the 1A-15B loop.
+- 13184 Gulch Lake: sites written 6 (drive-in); 10 with walk-in + group.

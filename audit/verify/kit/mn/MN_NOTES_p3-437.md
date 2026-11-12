@@ -1,0 +1,12 @@
+# MN NOTES p3-437
+- 5474 WRITTEN: 4 sites free FCFS, season 05-08..10-01, NW confirmed, phone 218-663-8060
+- 5382 WRITTEN: 31 prim, $17, lakeview->NW proposed (55-65m conifer band), OHV side flag, phone 218-772-3690, website hyphen
+- 13331 WRITTEN: 14 sites 50A/W/S, $30, season ~05-01..10-01, NW->lakeview lead (natural lake ~18ha, thin tree line), website 404->campground-1, phone 320-857-2322
+- 13184 WRITTEN: 6 drive-in (+3 walk-in +group), $17, NW kept, manager Itasca 218-699-7251, website hyphen
+- 5476 WRITTEN: 6 sites (4>21ft) free FCFS, season, NW kept, pin->47.6570,-91.1177 (~275m), phone 218-663-8060
+- 5434 WRITTEN: 20 prim, $17 (fee note fixed), NW kept + lakeview lead (DNR 'some have views'), phone 218-419-1500, web hyphen
+- 5477 WRITTEN: 3 sites free FCFS season, NW kept (35m conifer stand), phone 218-663-8060, max_rig 34 unverified
+- 5639 WRITTEN: 33 sites e/w, $30 (undated page), seasonal offered ($1500), booking/season unverified, NW kept
+- 5436 WRITTEN: 24 prim, $17, riverfront->creekside (26 m wide), phone 218-266-2100->218-699-7251, web hyphen
+- 13183 WRITTEN: 25 drive-in + group, $17 (high 22->17), NW kept, phone ->218-834-1430, web hyphen
+- 13342 NOT WRITTEN: cityofmadisonmn.gov Cloudflare block (403 'Sorry, you have been blocked'); not retried
