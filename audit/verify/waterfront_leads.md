@@ -1287,3 +1287,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-456 (ND, 2026-11-12)
 - No changes. 6015 Coldwater Lake (unread): north row west end (~46.01185,-99.0669 to -99.0662) 15-40 m from shore over open grass - lakefront only if those sites sell nightly (~25 RVs in tight rows look seasonal). 5981 Powers Lake lakeview is the ceiling (pads ~25 m but behind the campground loop road). 5898, 5959 (Sheyenne 40-45 m, 60 m+ behind a wooded bank), 5977 (Pembina 120-170 m through woods) not waterfront stand.
+
+## p3-457 (ND, 2026-11-12)
+- APPLIED 13539 Beulah Bay not waterfront -> lakeview (sites 1-10, 45-65 m over open grass with a gravel lane).
+- 13540 Blacktail Dam lakeview -> lakefront? Sites 14-19 (~48.4294,-103.7346 to 48.4301,-103.7359) 20-45 m over gravel/grass and 20-25 (~48.4295,-103.7385) 26-44 m, nightly except 5 unnumbered seasonal lottery sites - but scaled from the county's May-2026 aerial (Esri predates the rebuild; lower area closed for construction 2026). Left at lakeview until current imagery confirms.
+- 6035 Clausen Springs: creekside lead at a gravel lot by the creek mouth (~46.6826,-98.0461), 13-30 m from a ~10 m channel over mown grass; sketch map suggests sites ~26-31, numbers and nightly status unconfirmed. Lake: not waterfront stands. 6040 CAB Park creekside not supported (~110-130 m).

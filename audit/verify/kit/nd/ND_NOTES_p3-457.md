@@ -1,0 +1,23 @@
+# p3-457 ND notes
+## HHS registry (statewide-licensed-rv-parks-campgrounds-exception.pdf, https://www.hhs.nd.gov/sites/default/files/documents/DOH%20Legacy/FL/F%26L%20PDF/statewide-licensed-rv-parks-campgrounds-exception.pdf, updated 07.17.2025):
+- ANTELOPE CREEK R.V. PARK 220 10 Street NE Hazen / HAZEN PARK BOARD / 45
+- CENTENNIAL RV PARK 411 TYLER ST BERTHOLD / CITY OF BERTHOLD / 11 (also Farmers Union Oil Berthold 10; J. Bruhn RV Park 32)
+- ARNEGARD: only ARNEGARD ESTATES 208 Main St (private, Fulford) 10 - no city park listed
+- BEULAH BAY 610 Beulah Bay Rd / BEULAH PARKS AND RECREATION / 100
+- Blacktail Dam: NOT listed (Williams Co. lists Epping Springbrook, Little Egypt, McGregor, Trenton Lake, Whitetail Bay, Confluence, Little Beaver Bay)
+- CENTER RV PARK 304 Square Butte St SE / CITY OF CENTER / 20; CENTER PARK BOARD CAMPGROUND 314 Hwy 25 E / City of Center / 12
+- MUNICH CITY PARK CAMPGROUND 410 7 Avenue / CITY OF MUNICH / 4
+- CLAUSEN SPRINGS PARK 5036 114th Ave SE Kathryn / BARNES COUNTY PARK BOARD / 53
+- CAB Park Hannaford: NOT listed (Griggs: Binford City Park 6, Cooperstown City Park 12, Red Willow COA)
+- Columbus: NOT listed as a city park; COLUMBUS SPORTSMAN CLUB - SHORT CREEK (G&F) 32; NORTH GOLD RV PARK (Eagle Ford Rentals) 20
+## 5966 Antelope Creek: done. hazenparks + webreserv: 45 PT year-round W/S/50, call 701-880-8212 (online off line); no rate; PIN 2 km off -> 47.30394,-101.62057; G 4.2/25; ~4 RVs on imagery
+## 6005 Berthold: NO RESULT. City site berthold-nd.gov read: only 'Many campsites are also available; please inquire' (about.html); no RV park page/rates; city hall 701-453-3622. ndtourism 403 (Centennial Park listing: 6 RV electric sites, tents, dump, shelter, 453-3641 per search snippet). Registry: CENTENNIAL RV PARK 411 Tyler St, City of Berthold, 11. Google 'Berthold RV Park' 48.31724,-101.73395 4.2/6 701-453-3641 = stored pin; imagery: gravel RV block ~8 RVs beside a park w/ playground, by the school - pin ok. Derived hookups 50/W/S, max 40, fcfs rest on Campendium/ndtourism -> phone sweep.
+## 13571 Arnegard: result (no groups). City site silent (Park District = Nelson Park only; lodging = hotels in Watford City); not in HHS; ndtourism 403; Google 'Arnegard Campground' -> Nelson Park 47.80619,-103.44054; pin at ballfield junction, no pads. Drop candidate on existence. City Hall 701-586-3453.
+## 5919 Bennett: done. FS page year-round, FCFS, 13 sites 3 PT, pads 60 ft, $10, 50% senior, phone 701-842-8500; pin ok (~110 m)
+## 13539 Beulah Bay: done. WebReserv 59 RV units online of ~111; 05-08..09-13; $15-35; pin -> 47.5012,-101.7733 (~300 m); lakeview lead sites 1-10 (3,4,7-10 nightly) 45-65 m; phone 701-873-5916
+## 13540 Blacktail: done. E/W 20/30/50 $20, FHU site13 $25, prim $10 RV ok, group $80; bookmysites; 5 seasonal lottery; lakefront lead 14-19 & 20-25 (county aerial map); HAB advisory 9/8/26; water off rest of 2026; pin ok
+## 6019 Center: done. $50 nt/$150 wk/$450 mo; ~18 trailers full; long-stay drop candidate; phone (701) 794-3650; leads Ball Park RV Park (314 ND-25, 12 elec $15 FCFS, G 3.7/24), Nelson Lake free primitive
+## 6036 Munich: NO RESULT. No city page found (searches); ndtourism 403; HHS: MUNICH CITY PARK CAMPGROUND 410 7 Ave, City of Munich, 4 units (stored 5). Imagery: ~6 RVs around ballfield at pin 48.6688,-98.8372 (pin ok). Campendium phone 701-682-5466 vs stored 701-370-0063 (unverified).
+## 6035 Clausen: done. all sites reserved RoverPass, $25/$20 +$5 res fee, 7-night max, 05-01..10-31, 53 sites; pin -> 46.6835,-98.0472 (~470 m); creekside possible lead gravel lot by creek mouth; G&F rules
+## 6040 CAB Park: NO RESULT. No Griggs County/Hannaford page found; ndtourism 403; not on HHS (Griggs: Binford, Cooperstown, Red Willow only). Imagery (centre 47.3128,-98.1785): ~6 trailers in a row at ~47.3122,-98.1795 and the west loop; the creek is a narrow channel ~110-130 m E of the RV row beyond the tree-lined loop road and a mown field; the pond is ~250 m N across the county road -> creekside NOT supported, downgrade lead to not waterfront. Stored pin 47.3123,-98.1807 is in the west loop: ok. Google 'Hannaford Campground' 10960 7th St SE 47.31332,-98.17443 5.0/3 701-769-2298 (vs stored 701-769-2218).
+## 6039 Columbus: NO RESULT. townofcolumbus.com Cloudflare 403 (wpewaf block), ndtourism 403; not on HHS (Columbus listings: Columbus Sportsman Club - Short Creek (G&F) 32 = DB 6011 Short Creek Dam; North Gold RV Park - Columbus, Eagle Ford Rentals LLC, 20, private - not in DB). Imagery: pin 48.9048,-102.7752 inside a road-loop park with a shelter; one trailer parked at ~48.9045,-102.7726 by the loop road east; no pads visible. Google 'Columbus Park' 48.90561,-102.78112 3.3/3.
