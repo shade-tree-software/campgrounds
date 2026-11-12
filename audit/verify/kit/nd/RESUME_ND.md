@@ -22,3 +22,5 @@ explicit paths. Leads -> audit/verify/leads/nd_leads.txt, vetted one at a time a
 
 ## After North Dakota
 ILLINOIS (203 queued; needs kit/il like this one), then the 33 Vermont entries (kit/vt).
+
+**After each commit (AWH 2026-11-12, disk space):** copy any result JSON still in `$S/p3-NNN/` (drops, held) to `$S/kept_results/`, then `rm -rf $S/p3-NNN $S/p3-NNN_agent.txt $S/p3-NNN_prompt.txt $S/post_p3-NNN.py`. Keep only the newest `_para.txt` and `post_p3-446.py`.

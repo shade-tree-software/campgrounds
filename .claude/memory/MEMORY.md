@@ -127,6 +127,7 @@
 - [Hold asks for later](feedback_hold_asks_offline.md) — AWH 2026-10-17 (weak internet): keep logging questions in asks.md, keep working, present them when AWH is ready
 - [Published info supersedes old --AWH text](feedback_published_info_supersedes_awh.md) — AWH 2026-10-20: operator/agency's own clear statement may replace outdated --AWH note text; not silence/aggregators
 - [One agent at a time](feedback_one_verifier.md) — AWH 2026-11-11: back to ONE phase-7 verifier (four allowed 11-10..11); let running batches drain, then one at a time
+- [Clean scratch after every batch](feedback_clean_scratch_after_batch.md) — AWH 2026-11-12: disk hit 98%; after each commit save held results to kept_results/, then rm the batch folder
 - [Agency boilerplate is silent](feedback_agency_boilerplate_silent.md) — rig-length wording on most of an agency's pages = silent, keep; singled out = counts (AWH 10-22)
 - [Split multi-campground parks](feedback_split_multi_campground_parks.md) — only when phase 7 runs into one, and only campgrounds at separate places (~1 km+, own entrance); no DB-wide hunt…
 - [EKKO: no open-beach sand](user_ekko_no_sand.md) — AWH 2026-11-04/05: bare open-beach camping = drop and report; packed gravel/sand pads on a maintained road are…
