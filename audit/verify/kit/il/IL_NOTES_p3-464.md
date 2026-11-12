@@ -1,0 +1,12 @@
+# p3-464 (second IL batch) working notes, 2026-11-12
+- 1732 Hickory Holler: DONE. $29-43 posted; Google 4.8/144; pond kept (main pond ~2 ac; sites 60-66 NW bank per operator map); pool claim dropped. Campspot API curl -> CloudFront 403, not retried.
+- 1794 Keithsburg: DONE. riverfront kept (front row 30-40 m over sand; ridge/levee 230-260 m inland); city page confirms 2/25, FCFS, 5/1-9/30.
+- 15429 Lena KOA: DONE from 2026-10-19 dump (koa.com 403 Cloudflare, not retried). $47 cheapest (May 2027), Google 4.8/449.
+- 1710 Oak Point: DONE. FS page read; FCFS, year-round, phone 618-658-0607, lakeview kept.
+- 1665 Ramsey Lake: DONE. 89 Class A 30A, no water; $28 2027; horse camp separate; phone 618-423-2215; lakeview candidate 045-048 (14 m bluff).
+- 14618 Oakwood: DONE. no rate; remote-worker pitch; long-term units on imagery; test-2 question to reviewer; Google 4.3/30.
+- 1733 Pine View: DONE. $45-65 2026; ~28% nightly; roverpass -> phone (unclaimed); Google 4.4/53.
+- 795 Lithia: DONE. AWH lakefront supported (C 055-060). pin keep.
+- 1697 Lone Point: DONE. AWH lakefront disputed (lakeview, 50-53 10-12 m above). count 80->61.
+- 1696 Opossum: DONE. lakefront->lakeview recommended; pin move 39.44321,-88.77176; count 70->64.
+- 1775 Middle Fork: NO RESULT (champaignforests.org Cloudflare 403).

@@ -1,7 +1,7 @@
 # Phase 7 — Illinois (RESUME)
 
 Started 2026-11-12 after ND (kit/nd/RESUME_ND.md). Queue at start: 203 (state 82, local 52, private 42, federal 27).
-Batches applied: p3-463 (2026-11-12; 1747 dropped, 1700 split -> 15700).
+Batches applied: p3-463 (2026-11-12; 1747 dropped, 1700 split -> 15700), p3-464 (14618 dropped). Unread (Cloudflare, still queued): 1775 Middle Fork.
 Next new id **15701**. ONE verifier at a time (AWH 2026-11-11).
 
 ## Build a batch (11 ids; the agent template says ELEVEN)

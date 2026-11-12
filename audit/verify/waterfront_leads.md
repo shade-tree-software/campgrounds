@@ -1317,3 +1317,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 1695 Bo Wood lakefront -> lakeview (rec.gov "steep descent down to the water"; tagged sites 9-11 m above pool, water 38-42 m through a wooded fringe at the most open, site 133).
 - APPLIED 1700 Dam East - McNair lakefront -> lakeview (North Loop on a wooded bluff 55-65 m through canopy); new 15700 Dam East Spillway riverfront with a caveat naming sites 35 and 37 (21-23 m over lawn to the Kaskaskia tailwater, trail and riprap between).
 - CONFIRMED 1699 Dam West lakefront (sites 049-055, 18-25 m over lawn, riprap - caveat in note); 777 Coles Creek --AWH lakefront agrees (Loop 1 sites 016-030, 12-32 m). 1740 D & W Lake lakeview kept (the park's loop drive runs between the south row and the ~3 ha lake).
+
+## p3-464 (IL, 2026-11-12)
+- APPLIED 1696 Opossum Creek lakefront -> lakeview (only RV site tagged lakefront, 011, is 120-150 m through forest).
+- CONFIRMED 795 Lithia Springs --AWH lakefront (C-loop 055-060, 25-40 m over open sand, 4-6 m above pool). 1794 Keithsburg riverfront kept (front row 30-40 m from the Mississippi over open sand, river side of the high ground). 1732 Hickory Holler pond kept (~2 acres, sites 60-66 10-20 m; nightly vs seasonal unread). 1710 Oak Point lakeview kept.
+- LEAD 1665 Ramsey Lake (not waterfront): the engine tags 15 units "Waterfront Site"; nearest 045/046 are ~14 m above the lake, 35-40 m through woods; no photo shows a view, so not upgraded.
+- DISAGREE (--AWH, not changed) 1697 Lone Point lakefront: see asks.md.

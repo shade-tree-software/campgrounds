@@ -1,0 +1,65 @@
+{
+  "id": 1697,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233541 (facility 'LONE POINT', USACE Lake Shelbyville; facility phone 217-774-3951; Facilities: 'Lone point is 100% reservable. All campsites are equipped with electricity. The facility provides amenities like flush toilets, showers, a playground, dump station and boat ramp. It offers a separate area of camping for large groups of up to 80 people. The group camp area consists of 10 paved electric sites ...'; Natural Features 'The Lone Point area is heavily forested with plenty of shade'; notices 'Must have a reservation prior to setting up on site.', 'The banks are steep and it may be difficult to get to the water from many sites'; rules maxStay 14 nights Rolling 30 Days, minWeekendStay 2, minHolidayWeekendStay 3; amenities Drinking Water, Dump Station, Flush Toilets, Boat Ramp), read 2026-11-12",
+    "https://www.recreation.gov/api/camps/campgrounds/233541/rates (Peak 2026-05-14..09-07 and 2027-05-20..09-05: STANDARD ELECTRIC $16, FULL HOOKUP $24, BUDDY SITE $32, GROUP CAMP $240), read 2026-11-12",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233541 (61 STANDARD ELECTRIC sites, all reservable; Max Vehicle Length 30-80 ft; Electricity Hookup 30 at 56, 50 at 5; water + sewer at 15; 5 Pull-Through (48, 52, 65, 66, 67); 'Lakefront' tag on 12-15, 16-19 and 33-38, 42, 43, 47-53), read 2026-11-12",
+    "Esri World_Imagery (leaf-on) with the catalog points plotted: east-shore sites 50-53 above a sand strip at the lake edge through a band of trees",
+    "USGS 3DEP (epqs.nationalmap.gov) transects to the 182.8 m summer pool: 53 (39.451413,-88.739535) pad 192.9 m, 184.0 m at 30 m, pool at ~38 m; 52 194.5 m, ~38 m; 51 194.6 m, ~40 m; 50 (39.449820,-88.740389) 192.6 m, ~33 m; 19 198.4 m, ~80 m; 13 199.5 m, ~95 m; 33 193.1 m, ~85 m; 16, 36, 42, 47 no pool within 100 m on the bearing run"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 16,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Full-hookup sites $24; buddy (double) sites $32."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233541/rates (2026 and 2027 Peak: STANDARD ELECTRIC $16, FULL HOOKUP $24, BUDDY SITE $32), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233541",
+        "fcfs": "never",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "100% reservable; a reservation must be made before setting up. 14 nights in any 30. Weekend and holiday minimums are recreation.gov booking rules and may be relaxed for same-day bookings."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233541 ('Lone point is 100% reservable'; notice 'Must have a reservation prior to setting up on site.'; rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 nights Rolling 30 Days), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233541 (Electricity Hookup 50 at 5 reservable sites, 30 at 56; water and sewer at 15), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 61, "max_rig_ft": 80, "pull_through": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233541 (61 STANDARD ELECTRIC sites; Max Vehicle Length 30-80 ft; 5 Pull-Through), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "potable_water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233541 ('flush toilets, showers, a playground, dump station and boat ramp'; amenity Drinking Water), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground on Lake Shelbyville, some waterfont. --AWH\nSecluded and heavily wooded, on the west shore; the banks are steep and the water is hard to reach from many sites. A separate group camp has 10 paved electric sites. --Claude",
+  "awh_superseded": [
+    {"old": "USACE campground on Lake Shelbyville. ~80 electric sites, some waterfont. Reserve online. --AWH", "source": "redundant: sites.count (61 per the recreation.gov catalog, plus 10 group sites: '~80' is not right) and booking.reservable/platform ('Lone point is 100% reservable'); the lake and 'some waterfont' kept in AWH's words"}
+  ],
+  "summary": "recreation.gov record, rates and catalog read: USACE, 61 electric sites (30 A at 56, 50 A at 5), water+sewer at 15, 30-80 ft, 5 pull-throughs; $16 ($24 full hookup; 2026, 2027); 100% reservable, 2-night weekend / 3-night holiday minimums, 14 in 30; showers, flush toilets, dump, water. Stored count 80 (derived) -> 61. AWH note trimmed (count/booking), --Claude line added. Waterfront --AWH lakefront: measurements DISAGREE (lakeview by the bluff rule): report only. Pin fine.",
+  "flags": [
+    "WATERFRONT (stored lakefront, --AWH 'some waterfont': NOT changed; disagreement reported): the best tagged sites, east-shore 50 (39.449820,-88.740389), 51 (39.450557,-88.739938), 52 (39.450932,-88.739705) and 53 (39.451413,-88.739535), sit 10-12 m above the 182.8 m summer pool with water at ~33-40 m down a steep bank (e.g. 52: 194.5 m pad, 189.8 at 20 m, 183.9 at 30 m); imagery shows a band of trees between the pads and a sand strip at the water. The other tagged sites (12-19, 33-38, 42, 43, 47-49) are 80 m+ from the pool or have none within 100 m. rec.gov: 'The banks are steep and it may be difficult to get to the water from many sites'; 'heavily forested'. By the same bluff/canopy rule p3-463 applied at Bo Wood and McNair this is LAKEVIEW; AWH's value stands for the reviewer.",
+    "SITE COUNT: stored 80 (derived from the --AWH '~80 electric sites') -> 61 (catalog); the 10 group-camp sites are separate ($240 group camp).",
+    "PIN: stored 39.4522222,-88.7402778 (= the recreation.gov facility point) is ~25 m from the 61-site centroid 39.45202,-88.74039: keep.",
+    "PHONE: 217-774-3951 matches the recreation.gov facility phone: keep. WEBSITE: keep https://www.recreation.gov/camping/campgrounds/233541.",
+    "SEASON (not written): rate Peak 2027-05-20..09-05 is a rate season only; no open dates stated.",
+    "DISCOUNTS: recreation.gov militaryDiscount rule not written (brief)."
+  ]
+}

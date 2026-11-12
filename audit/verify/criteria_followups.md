@@ -2010,3 +2010,11 @@ me drop and report); each needs the research named before a verdict.
 - 1741 Evening Star kept with its seasonal caveat (~40 seasonal units of 229 sold on Campspot; cheapest real night $29.18). 1731 Arrowhead kept on RV Life $$ + Wix site (no posted rate; Google 4.7/22); RV Life directory link removed from website.
 - Pins: 777 ~440 m, 1695 ~520 m, 1683 ~640 m, 1740 ~240 m, 1741 ~235 m. Phone 777 None -> 618-226-3211 (rec.gov facility).
 - ASK: 1748 Cedar Lake (Vienna) horse features - see asks.md.
+
+## p3-464 (IL, 2026-11-12)
+- 9 applied, 1 dropped, 1 unread. DROPPED 14618 Oakwood RV Park (Kincaid): mostly long-stay and iffy - no nightly rate (Book Now is a contact form), "your efficient affordable home away from home" for remote workers, skirted units with sheds, Google 4.3/30.
+- 1733 Pine View kept: ~28% nightly (Section H + primitive T vs Sections A-G seasonal, ~101 sites); note says most sites are seasonal; $45-65 (cheapest real night $45); booking roverpass -> phone (RoverPass listing unclaimed). Google 4.4/53.
+- 1665 Ramsey Lake: White Oak 89 Class A sites, electric 50 -> 30, water hookup false (hydrants only), platform operator -> usedirect; stored note's "sites 1-30 first-come" removed (all 89 book online). Stored year_round left; the engine shows Dec 16 - Mar 31 out of season but DNR posts no campground dates.
+- Corps site counts: 1697 Lone Point 80 -> 61, 1696 Opossum Creek 70 -> 64. 1696 first-come left unwritten (record says both "100% reservable" and "has first-come, first-served sites").
+- Phones: 1665 None -> 618-423-2215; 1710 None -> 618-658-0607; 1775 '' -> 217-595-5692. Pin 1696 ~270 m.
+- UNREAD: 1775 Middle Fork Forest Preserve (champaignforests.org Cloudflare 403; not retried). Still queued.

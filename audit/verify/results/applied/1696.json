@@ -1,0 +1,61 @@
+{
+  "id": 1696,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233567 (facility 'OPOSSUM CREEK', USACE Lake Shelbyville; facility phone 217-774-3951; Facilities: 'Opossum Creek Campground is 100% reservable. Most of the campsites have electricity and accommodate both RVs and tents, though there are several tent-only non-electric sites as well. Flush toilets, showers, a playground and dump station ...'; Natural Features 'Opossum Creek overlooks the lake shore and provides plenty of shade'; notices 'Must have a reservation prior to setting up on site.', 'This campground has first-come, first-served sites', 'The banks are steep and it may be difficult to get to the water from many sites'; rules maxStay 14 nights Rolling 30 Days, minWeekendStay 2, minHolidayWeekendStay 3; amenities Drinking Water, Dump Station, Flush Toilets, Playground), read 2026-11-12",
+    "https://www.recreation.gov/api/camps/campgrounds/233567/rates (Peak 2026-05-14..09-07 and 2027-05-20..09-05: STANDARD ELECTRIC $16, variants $20 / $24 / $32, TENT ONLY ELECTRIC $16), read 2026-11-12",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233567 (64 sites, all reservable: 47 STANDARD ELECTRIC (RV/Trailer/Tent) with Max Vehicle Length 30-100 ft and 17 TENT ONLY ELECTRIC; Electricity Hookup 50 at 20, 30 at 27 RV sites; water + sewer at 13, water only at 2; 1 Pull-Through; 'Lakefront' tag on RV site 011 only, the rest on tent-only 012-017, 025-029, 040-043), read 2026-11-12",
+    "Esri World_Imagery (leaf-on) with the catalog points plotted: site 011 (39.442956,-88.772543) and RV sites 002-010 ~120-150 m from the Opossum Creek arm through continuous forest; the stored pin at the north end of the campground road"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 16,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Some sites $20 or $24 (hookup classes); double sites $32."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233567/rates (2026 and 2027 Peak: STANDARD ELECTRIC $16, variants $20/$24, double $32), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233567",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "14 nights in any 30. Weekend and holiday minimums are recreation.gov booking rules and may be relaxed for same-day bookings."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233567 ('100% reservable'; rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 nights Rolling 30 Days), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233567 (Electricity Hookup 50 at 20 reservable RV sites; water and sewer at 13), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 64, "max_rig_ft": 100, "pull_through": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233567 (47 RV sites + 17 tent-only; Max Vehicle Length 30-100 ft, 100 at site 23; 1 Pull-Through), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "potable_water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233567 ('Flush toilets, showers, a playground and dump station'; amenity Drinking Water), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Quiet USACE campground on the west shore of Lake Shelbyville, in shaded oak-hickory woods above the Opossum Creek arm; the sites nearest the water are tent-only, and the banks are steep. --Claude",
+  "summary": "recreation.gov record, rates and catalog read: USACE, 64 sites (47 RV + 17 tent-only electric), 50 A at 20, water+sewer at 13, 30-100 ft; $16 ($20/$24 classes; 2026, 2027); reservable, 2-night weekend / 3-night holiday minimums, 14 in 30; showers, flush toilets, dump, water. Count 70 -> 64. Note cleaned. Waterfront: stored lakefront -> recommend LAKEVIEW (only RV 'lakefront' site 011 is ~120-150 m from the arm through forest). Pin ~270 m north of the centroid: move recommended. FCFS conflict on rec.gov left unwritten.",
+  "flags": [
+    "WATERFRONT (stored lakefront, not --AWH): DOWNGRADE to LAKEVIEW recommended (or lower). The catalog's only lakefront-tagged RV site is 011 (39.442956,-88.772543, 60 ft, 30 A): imagery puts it ~120-150 m from the Opossum Creek arm through continuous forest. Every other tagged site is tent-only (012-017, 025-029, 040-043) and cannot carry the value. RV sites 002-010 are ~150 m from the arm through forest. rec.gov says only that it 'overlooks the lake shore' and 'The banks are steep and it may be difficult to get to the water from many sites.' Not measured with 3DEP (distance alone settles it).",
+    "PIN: stored 39.4455556,-88.7725 (= the recreation.gov facility point) is at the north end/entrance, ~45 m north of site 57 and ~270 m north of the 64-site centroid; move to 39.44321,-88.77176.",
+    "FCFS (not written): conflicting statements on the same record: 'Opossum Creek Campground is 100% reservable' and 'Must have a reservation prior to setting up on site' vs notice 'This campground has first-come, first-served sites'. All 64 catalog sites are reservable.",
+    "SITE COUNT: stored 70 (derived) -> 64 (47 RV + 17 tent-only electric).",
+    "PHONE: 217-774-3951 matches the recreation.gov facility phone: keep. WEBSITE: keep https://www.recreation.gov/camping/campgrounds/233567.",
+    "SEASON (not written): rate Peak 2027-05-20..09-05 is a rate season only; no open dates stated.",
+    "DISCOUNTS: recreation.gov militaryDiscount rule not written (brief)."
+  ]
+}

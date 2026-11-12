@@ -1,0 +1,55 @@
+{
+  "id": 15429,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://koa.com/campgrounds/lena/ - plain HTTP answered 403 (Cloudflare challenge) on 2026-11-12; not retried by any route, so koa.com was not read this pass",
+    "audit/koa_backlog_2026-10-19/dumps/lena_05.txt and quotes.jsonl (koa.com/campgrounds/lena/reserve/ step 2, read 2026-10-19 through the driver: Tue 2027-05-18, 1 night, RV, Motorhome 23 ft, 2 adults, no slide-outs: 'Pull Thru, 30/20 Amps, Water/Electric' $47.00 avg/night; 'Back In, 50/30/20 Amps, Water/Electric' $50.00; 'Pull Thru, 50/30/20 Amps, Full Hookups' $51.00 (two types); 'Back In / Pull Thru, 50/30/20 Amps, Full Hookups, Patio' $81.00 (Deluxe Patio); each 'Up to 6 people', 'Gravel'; 'Save 10% at check out with KOA Rewards.'; W/E pull-thrus 'near the playground, pool, store and office'; address 10982 US Highway 20 West, 1-815-369-2612)",
+    "Google Maps panel 'Lena KOA Holiday', 10982 US-20, Lena: 4.8 over 449 reviews, phone +1 815-369-2612, website koa.com/campgrounds/lena/, read 2026-11-12",
+    "Esri World_Imagery (0.67 m/px): one gravel-loop campground north of US 20 with pool and playground; the stored pin is inside the loops; no water body"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 47,
+        "nightly_high": 81,
+        "currency": "USD",
+        "checked": "2027",
+        "extra_person": {"max_people": 6},
+        "note": "Read for a Tuesday in May 2027, 23-ft motorhome, 2 adults: 30-amp water and electric pull-through $47; full hookups $51; deluxe patio sites $81. KOA Rewards members save 10%."
+      },
+      "source": "koa.com/campgrounds/lena/reserve/ step 2 as read 2026-10-19 (audit/koa_backlog_2026-10-19/dumps/lena_05.txt): $47-81 avg/night for 2027-05-18, 'Up to 6 people'",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "koa.com/campgrounds/lena/reserve/ step 2 as read 2026-10-19 ('50/30/20 Amps, Full Hookups' types)",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true},
+      "source": "koa.com/campgrounds/lena/reserve/ step 2 as read 2026-10-19 (Pull Thru types)",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"koa_value_kard": true},
+      "source": "koa.com/campgrounds/lena/reserve/ step 2 as read 2026-10-19 ('Save 10% at check out with KOA Rewards.')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/lena/reserve/"},
+      "source": "koa.com/campgrounds/lena/reserve/ (KOA's own booking form, read 2026-10-19)",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Holiday on US 20 west of Lena among farm fields; pool, playground and store. Deluxe patio sites come with furniture and a grill. --Claude",
+  "summary": "koa.com refused plain HTTP (Cloudflare 403) - not retried; groups written from the dated 2026-10-19 read of KOA's own engine: $47 (30 A W/E pull-through) to $81 (patio), 23-ft motorhome, May 2027; 50 A full hookups; pull-throughs; up to 6 people; KOA Rewards 10%. Google 4.8/449. Under the gate. Pin fine. Note cleaned (dropped hookup/pull-through repeats).",
+  "flags": [
+    "PRICE GATE (private): cheapest real night for a 23-ft motorhome on the one date read, Tue 2027-05-18: $47.00 ('Pull Thru, 30/20 Amps, Water/Electric', KOA engine, read 2026-10-19), next $50.00 (back-in 50 A W/E). Under $50 before tax, so it passes without help; KOA Rewards would take 10% off. Not a Good Sam Park; no gateway within 40 km. Other seasons were NOT read this pass (koa.com answered a Cloudflare 403 to plain HTTP and was not retried), so whether a shoulder night is cheaper than $47 is unknown.",
+    "GOOGLE: 'Lena KOA Holiday' 4.8 over 449 reviews (read 2026-11-12). RV Life 5* $$$ (stored).",
+    "PRESENCE: KOA page + KOA booking engine + Google listing with phone 815-369-2612 (matches stored). LONG-STAY: KOA sells nightly on its own engine, six RV types; not long-stay in character.",
+    "WATERFRONT: not waterfront confirmed (no water on imagery).",
+    "PIN: stored 42.35866,-89.82239 is inside the loops (Google 42.357625,-89.822361, ~115 m south near the office): keep.",
+    "SEASON: not read (koa.com unread); left unset.",
+    "UNREAD: koa.com campground page and engine this pass (Cloudflare 403)."
+  ]
+}
