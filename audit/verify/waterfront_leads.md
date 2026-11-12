@@ -1309,3 +1309,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-461 (ND, 2026-11-12)
 - APPLIED lakefront -> lakeview: 6044 Tobacco Gardens (no site map; unnamed units 25-45 m), 6051 Tolna Dam (no named sites/pads; north arc 10-20 m over grass - upgrade lead if a site map appears), 6052 Trenton (nearest pad 45-50 m past road and trees), 5899 Sheep Creek Dam (imagery only; loop road 30-40 m between units and water).
 - 5917 Sather Lake lakeview -> lakefront? Shelters/sites 13-35 m from the arm (47.6695,-103.8102 / 47.6686,-103.8104 / 47.6676,-103.8102) but no site numbers exist - left.
+
+## p3-462 (ND, 2026-11-12)
+- APPLIED 13259 Wolf Creek lakeview -> lakefront with a caveat naming sites 7, 8, 18, 19, 21, 22 (lidar: 40-54 m down open mowed grass, no road; rec.gov "sites being right on the water"). Point sites 34-44 on a 5-6 m bank stay lakeview-grade.
