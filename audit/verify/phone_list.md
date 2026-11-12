@@ -66,3 +66,9 @@ The "Settle" column lists only what is specific to each entry.
 | 5899 | Sheep Creek Dam Rec Area (Grant Co.) | none found (Grant County WRB) | hookups | Hookups. |
 | 6053 | Turtle Lake City Park | city 701-448-2596 | fees, season | Standard set; is Lake Brekken (ND lead 12) a separate campground? |
 | 6011 | Short Creek Dam (Burke Co.) | 701-939-5681 | fees, season, hookups | Does Game and Fish's Tuesday/Wednesday camping ban cover the county campground? |
+
+## Leads skipped pending a call
+
+| Lead | Campground | Number | Settle |
+|---|---|---|---|
+| ND 5 stump-lake | Stump Lake Park Campground (Nelson County Park Board, Pekin) | manager 701-797-7234 (county page); Google/Dyrt 701-662-3928 | How many of the 131 sites are sold by the night? The 2013 map marks only Cottonwood Corner (10 + 3 primitive = 7.6-9.7%, a skip), but a 2021 camper paid one night on Circle Drive (53-64); if those sell nightly too it is ~17% = keep with the long-term caveat. Result file already holds the full record. |
