@@ -1235,3 +1235,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-444 (MN, 2026-11-11)
 - 5508 Williams Narrows lakefront -> lakeview (rec.gov "Lakefront" 008/011/014/015 all under canopy 30-65 m). Lead: 5450 Willow River west loop (map 18-30, ~46.3263,-92.8314) 20-40 m behind trees from the flowage - filtered view plausible, no photo.
+
+## p3-445 (MN, 2026-11-12)
+- 5705 Wildcat riverfront -> riverview; 5633 Gilbert Olson riverfront -> creekside (channel 22-26 m, imagery only).
+- Lead: 5669 Moose Lake City - south pad row on the lower lane (~46.4537,-92.7540) 5-15 m from Moosehead Lake over open lawn; lakefront plausible, needs site numbers + nightly status (Campspot CloudFront-refused). 5651 Lake Allie / 5702 Warroad: lakeview plausible.

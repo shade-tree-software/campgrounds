@@ -1820,3 +1820,9 @@ me drop and report); each needs the research named before a verdict.
 - 5507 Whitefish Lake / 5509 Wilson Lake: "longer than 21 feet and may accommodate an RV" - unclear fit, caveats kept; 5507 "access road ... can be difficult to navigate in an oversized vehicle" - warn (11-10 rule).
 - 13335 Woods Lake: stored $25-40 / "lakefront $30" were Pihl's Park's column of the shared county table; corrected to $25, veterans $2 off. Occupancy / nightly share unread (ResNexus Incapsula; off-season imagery). Google 4.2/20.
 - 5508 Williams Narrows: potable water true from rec.gov (FS says none); 16 sites (FS 17).
+
+## p3-445 (MN unread sweep, 2026-11-12)
+- DROP 5576 Spafford Park (Cloquet): the city's own page (browser read 2026-10-16, audit/price_research/local_browser_2026-10-16/browser.jsonl) sells seasonal/monthly/weekly only - no nightly stay; standing minimum of a week. Site Akamai-refused 2026-11-11.
+- 5705 Wildcat Park read (county site down, so its archive was allowed; Firefly portal live): reservable on Firefly via Wildcat Creek Management; 51 electric (40-51, 60-107), 8 primitive (120-127), 35 seasonal (1-35); rates/amperage/season unread (2026 fee PDF never archived, Firefly has no open dates). Renters 21+. Pin moved ~260 m to the nightly sites.
+- Still UNREAD (Cloudflare/CloudFront/Akamai, retried once 2026-11-11): 5518 Bray Park, 5669 Moose Lake City, 5633 Gilbert Olson, 5651 Lake Allie, 13327 Sebeka, 5649 Karlstad, 5689 Sherin Memorial, 5702 Warroad, 13342 J.F. Jacobson. Phone-call list with numbers and questions: kit/mn/MN_NOTES_p3-445.md ("Phone questions"); calls wait for AWH.
+- The verifier's apply.py dry run was refused by the permission classifier; it checked via plan()/apply_update on a copy, and the orchestrator ran the real dry run (clean) before applying.
