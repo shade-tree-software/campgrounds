@@ -1,0 +1,13 @@
+# MN NOTES p3-441
+- 13330 WRITTEN: 8 RV W/E 34-60ft, $35 2027 (city page $30 2026), RoverPass claimed, season 05-01..10-18, NW confirmed (~55-70m behind trail/trees)
+- 5681 WRITTEN: 11 E (30A only, no water) + 5 tent, $30, 7-day, 05-01..11-01, riverview kept, name flag
+- 15663 WRITTEN: flags only + note fix (above the dam, not below)
+- 5682 WRITTEN: 50A, $27 county schedule, ResNexus Incapsula unread, season 05-01..10-31, phone 507-849-7251, website -> park page
+- 5443 WRITTEN: 44 sites (15 lakeside), $17 SF, LF->lakeview proposed (canopy band 30-70 m), Sept-Oct closure past, website hyphen, phone 218-825-3075
+- 5685 WRITTEN: 50 FHU (42 nightly/8 seasonal) + 3 tent, $40, 7-day, pull-throughs 42-50 temp closed, RV->NW proposed (Big Cottonwood ~17-21 m behind trees), website consolidated
+- 13327 UNREAD: cityofsebeka.org Cloudflare challenge (403, cf-mitigated) - no result file; fee PDF on cdn.townweb.com not fetched (would route around)
+- 5688 WRITTEN: 14 sites (5 seasonal, host 7) not 19, $25, FCFS 14n, NW confirmed (~70 m behind trees), phone 507-227-3925
+- 5444 WRITTEN: drop candidate (indistinct horse camp; DNR wording quoted), lead Shell City Landing cmp00027 19 sites, phone 218-266-2100->218-699-7251, website hyphen, pin ~360 m off DNR point (no move)
+- 5494 WRITTEN: 8 sites >21 ft, free, 05-08..10-01, no water/trash, LF->lakeview proposed (no site map; open area may be launch)
+- 5495 WRITTEN (flags only): no FS page, not on FS lists/dispersed maps; aggregator-only ~8 sites; NW kept; phone suggestion 218-335-8600
+- apply.py dry run: 10 results ready, 0 !! (5494 facilities.trash removed). 13327 no result (Cloudflare).

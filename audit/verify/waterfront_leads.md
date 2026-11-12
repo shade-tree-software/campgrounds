@@ -1223,3 +1223,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-440 (MN, 2026-11-11)
 - 5672 Norwegian Creek lakefront -> lakeview (lone pad ~44.2883,-96.2602, maybe 10A, open to the shore: lead). 5491 Poplar River riverfront -> creekside. 5680 Riverside Park (Ortonville) not waterfront -> riverview. 5488 Onegume lakefront kept (rec.gov lakefront 011/012/014/015/018/024/026/028/030/032/033). 14624 Pine Acres lakefront kept (shoreline row with docks). Lead: 13324 Pierz sites 11-12 by the river's swimming pond (~45.9763,-94.0905).
+
+## p3-441 (MN, 2026-11-11)
+- 5443 Rock Lake lakefront -> lakeview; 5685 Rothenburg riverview -> not waterfront (17-21 m river behind trees); 5494 Silver Island Lake lakefront -> lakeview (gravel area with docks at ~47.7275,-91.1485 may be the launch - lead if a campsite).

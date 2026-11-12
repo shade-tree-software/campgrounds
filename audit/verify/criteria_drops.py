@@ -520,6 +520,7 @@ DROPS = {
     15291: ('2026-11-10', 'AWH', "Sproul SS017 on Beech Creek Road, beside a gas compressor station per the agency's description. Dropped by AWH 2026-11-10."),
     15300: ('2026-11-10', 'AWH: ATV-system campsites', "Sproul WS011, WS012, WS013 on Robbins Road: the booking pages call them part of the Northcentral Regional ATV Trail System, and imagery shows ATV tracks running through the sites. Dropped by AWH 2026-11-10."),
     15321: ('2026-11-10', 'AWH: beside the ATV trail system', "Tiadaghton MF 001 on Manor Fork Road: the booking page says it is 'adjacent to the Northcentral Regional ATV Trail System. Expect road noise and trail noise during ATV season.' Dropped by AWH 2026-11-10."),
+    5444: ('2026-11-11', 'Indistinct horse camp (AWH 2026-11-09 MDC horse-camp rule)', "Shell City Horse Camp - Huntersville State Forest (MN): p3-441. DNR facility record cmp00058 (updated 2026-06): 'The campground offers tie lines, corrals, stalls, and open space for horses', horse_campsites 8 and no individual sites; state forest camping page: 'Horse campsites allow horses... picket lines and compost bins for manure disposal'; the 2017-18 forest guide's 'eight individual campsites, 27 horse campsites' sit inside the horse campground with no separate non-horse loop anywhere. The stored '8 general drive-in individual sites open to all campers' is not DNR wording. The general campground there is Shell City Landing (cmp00027, ~120 m west), not in the DB: lead."),
 }
 
 if __name__ == "__main__":

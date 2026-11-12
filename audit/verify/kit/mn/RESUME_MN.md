@@ -1,14 +1,14 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-440**. Next batch **p3-441**. Next new id **15669**.
+Applied through **p3-441**. Next batch **p3-442**. Next new id **15669**.
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
 
-    python3 -I audit/verify/queue.py --batch p3-441 --state MN --limit 11
-    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-441
-    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-441 $SCRATCH/p3-441_para.txt
-    mkdir -p $SCRATCH/p3-441 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-441/tools
+    python3 -I audit/verify/queue.py --batch p3-442 --state MN --limit 11
+    python3 -I audit/verify/kit/mn/mkpara_mn.py $SCRATCH p3-442
+    python3 -I audit/verify/kit/mkbrief_mo.py $SCRATCH p3-442 $SCRATCH/p3-442_para.txt
+    mkdir -p $SCRATCH/p3-442 && cp -r audit/verify/kit/mn/tools $SCRATCH/p3-442/tools
 
 Then launch ONE background general-purpose agent with `agent_prompt_template.txt`
 (replace SCRATCH, p3-NNN and the id list; the brief may say "twelve", the batch has eleven).
@@ -33,9 +33,10 @@ Then launch ONE background general-purpose agent with `agent_prompt_template.txt
   batch): 5518 Bray Park, 5669 Moose Lake City, 5576 Spafford (seasonal-only concern),
   5633 Gilbert Olson (proposal riverfront -> creekside; earlier read was a Wayback copy = unread),
   5651 Lake Allie County Park (Renville County Cloudflare + ResNexus Incapsula, p3-438),
+  13327 Sebeka City Park (cityofsebeka.org Cloudflare, p3-441),
   Cloudflare-refused city sites 5649 Karlstad, 5689 Sherin, 5702 Warroad, 5705 Wildcat (its Firefly
   portal is readable), 13342 J.F. Jacobson Park (Madison), 5694 Sunnybrook.
-- **Leads to vet:** Fury's Island County Park (Nobles County, ~1 mi S of Maka-Oicu 13332; p3-439), Red Pine Campground (Saginaw), Horseshoe Park (Hallock; find a non-refusing
+- **Leads to vet:** Shell City Landing Campground (DNR cmp00027, 46.791808,-94.948024, Huntersville SF; p3-441), Fury's Island County Park (Nobles County, ~1 mi S of Maka-Oicu 13332; p3-439), Red Pine Campground (Saginaw), Horseshoe Park (Hallock; find a non-refusing
   source), Snake River Campground (Aitkin County, south of McGrath).
 - **Open questions** are in audit/verify/criteria_followups.md (p3-428 .. p3-437 sections).
 

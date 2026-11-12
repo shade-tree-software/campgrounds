@@ -1787,3 +1787,12 @@ me drop and report); each needs the research named before a verdict.
 - 5673 Peterson: eviivo booking engine Cloudflare-refused (unread); stored derived WiFi/dump no longer on the city page, left.
 - 5488 Onegume and 13340 Picnic Point: potable-water / sewer conflicts left unwritten. 13333 Pine Tree Park: sewer true -> false; derived showers true unsupported, left.
 - 13324 Pierz: OHV side (Soo Line Trail), general city campground; stored $53 Campspot rate not re-quoted.
+
+## p3-441 (MN, 2026-11-11)
+- DROPPED 5444 Shell City Horse Camp (indistinct horse camp; DNR cmp00058 counts 8 horse sites and no individual sites, no non-horse loop anywhere). Lead: Shell City Landing Campground (DNR cmp00027, 46.791808,-94.948024, 19 primitive sites on the Shell River, $17 FCFS), not in DB.
+- 5495 Six Mile Lake (Chippewa NF): no FS page, not on the Chippewa camping page or any of the 22 dispersed-site maps; only camper reports (Campendium 2023: ~8 primitive sites, pit toilet, free). Kept pending AWH (asks.md); phone 218-335-8600 (SO) not added.
+- 13327 Sebeka City Park UNREAD (cityofsebeka.org Cloudflare); add to the MN unread sweep.
+- 5443 Rock Lake: closed from 2026-09-08 ~6 weeks for road/culvert work, now "CLOSED for camping for the season"; one-third of the 44 sites fit a 30-ft RV. Sites 48 -> 44.
+- 5685 Rothenburg: sites 42-50 (the 100-ft pull-throughs) "temporarily closed until sites are inspected by the State of MN"; 8 of 50 hookup sites seasonal.
+- 5682 Robertson: ResNexus Incapsula-refused (site count 22, water left as stored); electric 30 -> 50.
+- 5688 Seven Mile Lake: sites 19 -> 14 (5 seasonal). 15663 Lanesboro: campground is ABOVE the dam (note + evidence corrected). 5681 renamed to the city's "Riverside Park - Mill Pond Municipal Campground".
