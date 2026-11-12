@@ -1,6 +1,6 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-443**. Next batch **p3-444**. Next new id **15669**.
+Applied through **p3-444** (queue EMPTY for MN). Next batch **p3-445** = the unread sweep (manual batch file). Next new id **15669**.
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)

@@ -1,0 +1,76 @@
+{
+  "id": 5508,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233850 (description, notices, rules, amenities) and /rates, read 2026-11-11",
+    "recreation.gov campsite search API for facility 233850 (16 sites: reservable flags, driveway lengths, Proximity to Water, site points, site photos), read 2026-11-11",
+    "https://www.fs.usda.gov/r09/chippewa/recreation/williams-narrows-campground (Chippewa NF page), read 2026-11-11",
+    "Esri World_Imagery frame at 47.5033,-94.0637 (150 m half-width) and MnGeo WMS nc13ft (2013 spring leaf-off) frame, both with the 16 rec.gov site points; rec.gov site photos of 008, 011, 014, 015"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 16,
+        "pull_through": false,
+        "max_rig_ft": 70,
+        "note": "All back-in single-unit sites, driveways 30-70 ft (008 is the shortest at 30 ft). The FS page lists 17 sites; recreation.gov's catalog has 16 (no 009)."
+      },
+      "source": "recreation.gov campsite search 233850 (16 STANDARD NONELECTRIC sites 001-008, 010-017; 'Driveway Entry: Back-in' on all; Driveway Length 30-70 ft; Max Vehicle Length '0' on all = not posted) + FS page ('has 17 campsites'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "recreation.gov campsite search 233850 (all 16 sites 'STANDARD NONELECTRIC') + rec.gov 'single-unit campsites, each equipped with a picnic table and campfire ring', read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": true,
+        "showers": false
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233850 ('Vault toilets and hand pumps for drinking water are provided in each loop.'; amenities 'Drinking Water (hand pump)', 'Vault Toilets'; no showers listed) + FS page ('Outhouse toilets are on site'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "season": {
+          "opens": "05-08",
+          "closes": "09-06"
+        },
+        "note": "Sites 001, 004, 005, 006, 008, 010, 011, 013, 014 and 015 book on recreation.gov at least 4 days ahead (inside 4 days they go first come); 002, 003, 007, 012, 016 and 017 are first come only. Reservation season 2026 May 8 - Sept 6 (2027: May 7 - Sept 7); the campground runs first come after that to Oct 31. Pay on site by fee envelope or scan-and-pay."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233850 (notice 'Reservations must be made at least 4 days in advance. After this window, sites are considered first-come first-serve.'; rules reservationCutOff 4, scanAndPay 1; no minimum-stay rules) + /rates (Peak Season 2026-05-08..09-06, 2027-05-07..09-07; 'First-come, First-served Season' 2026-09-07..10-31) + campsite search (10 reservable, 6 not), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 16,
+        "nightly_high": 16,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "The fee covers one camping unit; single-unit sites take no second unit. Leech Lake Band citizens get a tribal discount."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233850/rates (Peak Season 2026-05-08..09-06 and 2027-05-07..09-07: STANDARD NONELECTRIC 16; FCFS season 16) + FS page ('Single Site: $16 per night') + rec.gov notice ('Fee includes one camping unit per site. Double occupancy is not permitted on single unit sites') + rules tribalDiscount 'Leech Lake Band of Ojibwe (407)', read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Chippewa NF campground on the east shore of Cut Foot Sioux Lake at the narrows, next to Lake Winnibigoshish, 2 mi W of Highway 46 about 15 mi N of Deer River: upper and lower loops in birch, oak and pine with a boat landing and swimming beach between them. Sites 008, 014 and 015 look out on the lake through the trees. The Simpson Creek trailhead is a short boat crossing away. --Claude",
+  "summary": "rec.gov + catalog + FS page read: 16 back-in nonelectric sites (FS says 17), driveways 30-70 ft, 10 reservable 4+ days ahead and 6 first come, $16 in 2026 and 2027, hand-pump water and vault toilets. Lakefront -> lakeview proposed (sites under canopy 30-45 m from shore; rec.gov 'A few campsites have lake views'). Phone corrected. Season (manual) agrees.",
+  "flags": [
+    "WATERFRONT lakefront -> lakeview proposed (stored value is not --AWH; no waterfront_evidence on file). recreation.gov tags four sites 'Proximity to Water: Lakefront' - 008 (47.50397,-94.06329), 011 (47.50314,-94.06406), 014 (47.50292,-94.06485), 015 (47.50271,-94.06500) - but its own description says only 'A few campsites have lake views.' On Esri leaf-on imagery every site sits under continuous canopy: 015 and 014 are about 30-35 m from the shore and 008 about 45 m (behind the shoreline reeds), 011 about 65 m, all through trees. The 2013 leaf-off frame shows deciduous woods, not open ground, between those sites and the water. The rec.gov photos show the lake through tree trunks from 008, 014 and 015 (filtered view) and no lake from 011. No site is on open ground within ~50 m of the water, so lakefront fails; a filtered view from three RV sites supports lakeview.",
+    "FACILITIES conflict: FS page 'Potable water is not available at this site.' vs rec.gov 'hand pumps for drinking water are provided in each loop' (amenity 'Drinking Water (hand pump)'); potable_water written true from rec.gov, overturning the derived false. The same FS line appeared on Mosomo Point and Norway Beach (p3-439).",
+    "SITES: FS '17 campsites' vs 16 catalog sites (no 009); 16 written. max_rig_ft 70 is the longest driveway (rec.gov posts Max Vehicle Length 0 on all = not posted); every site is 30 ft+, so a 23-ft rig fits all.",
+    "BOOKING: the derived fcfs 'after_cutoff' replaced by 'some_sites' (six sites are never reservable; the reservable ten go first come inside 4 days), with the split in booking.note.",
+    "SEASON (manual 05-07..10-31, FS '5/7/26 -10/31/26') agrees with rec.gov (reservable 05-08..09-06, first come 09-07..10-31); not touched. FS page shows 'Closed for the Season' now.",
+    "PIN 47.50367,-94.06248 is the FS point at site 004 in the upper loop; the 16-site centroid is 47.50326,-94.06361, about 95 m away (under 250 m); confirmed.",
+    "PHONE: 218-335-8600 (forest-wide Chippewa NF number) -> 218-246-2123 (Deer River Ranger District; rec.gov facility phone and FS page). WEBSITE confirmed (FS page + rec.gov 233850)."
+  ]
+}

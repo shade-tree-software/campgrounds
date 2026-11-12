@@ -1814,3 +1814,9 @@ me drop and report); each needs the research named before a verdict.
 - 5700 Vermilion Trail: no official rate (no fee written); derived 59 sites / season 05-01..09-30 left vs CampLife's 30 online sites; OHV side ("Direct access to ATV/OHV trail"); daily/monthly/seasonal sold, mostly nightly online.
 - 5663 Twin Lakes: Lyon County page Akamai 403, Firefly site search reCAPTCHA (booking page itself read). 13338 Traverse: sites 8 -> 60, first come only, rate sheet undated. 13343 Trollskogen: free -> $15 (city fee chapter 2026-07-27). 5457 Wanaki: FS says 46 sites, rec.gov 25 used.
 - Bad third-party points: Firefly 5663 (farm field), CampLife 5700 (house ~800 m NE), rec.gov 5457 facility (~1.3 km SW).
+
+## p3-444 (MN, 2026-11-11) - last regular MN batch
+- No drops. 5450 Willow River: not a horse camp, not an OHV base (OHV parking at McCormick/Dago Lake day-use); individual sites first come (only the group camp is reservable); "Zalesky Lake" in the old note was wrong (Stanton Lake / Willow River Flowage).
+- 5507 Whitefish Lake / 5509 Wilson Lake: "longer than 21 feet and may accommodate an RV" - unclear fit, caveats kept; 5507 "access road ... can be difficult to navigate in an oversized vehicle" - warn (11-10 rule).
+- 13335 Woods Lake: stored $25-40 / "lakefront $30" were Pihl's Park's column of the shared county table; corrected to $25, veterans $2 off. Occupancy / nightly share unread (ResNexus Incapsula; off-season imagery). Google 4.2/20.
+- 5508 Williams Narrows: potable water true from rec.gov (FS says none); 16 sites (FS 17).

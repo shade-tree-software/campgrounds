@@ -1232,3 +1232,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-443 (MN, 2026-11-11)
 - 13338 Traverse County Park and 5448 Wakemup Bay lakefront -> lakeview. Possible view leads: 15661 Veterans' Park Dawson (site lane ~44.9263,-96.0558, 45-75 m over lawn to the river), 5503 Webster Lake sites 09-11 (35-45 m under canopy), 5457 Wanaki ("some sites have lake views"), 5700 Vermilion Trail ("premium lakeside sites", unnumbered).
+
+## p3-444 (MN, 2026-11-11)
+- 5508 Williams Narrows lakefront -> lakeview (rec.gov "Lakefront" 008/011/014/015 all under canopy 30-65 m). Lead: 5450 Willow River west loop (map 18-30, ~46.3263,-92.8314) 20-40 m behind trees from the flowage - filtered view plausible, no photo.
