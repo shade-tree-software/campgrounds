@@ -1,0 +1,12 @@
+- 5455 WRITTEN: 27 sites (2 LT), $26/28, May1-Sep11, lakefront->lakeview, phone 218-453-8650
+- 15664 WRITTEN: light check, no change
+- 5456 WRITTEN: 4 sites free May8-Oct1, not wf kept (creek ~20-25m), not coastal, phone 218-387-1750
+- 13334 WRITTEN: 12 RV 40ft back-in + 2 tent, $35, wknd 2-night confirmed, Lakeside tags lead (tree band), phone 320-762-2999
+- 5460 WRITTEN: 3 sites free, Tofte not Gunflint, pin move ->47.7744,-90.7523 (330m), phone 218-663-8060
+- 13328 WRITTEN: no groups; presence flag (city site silent on camping, Explore MN 403), Google phone 218-756-2450, creekside lead
+- 13339 WRITTEN: 2026 sheet $25/$10, 15 FHU 30A (5x50A), FCFS, showers; phone 218-776-3213; G 3.9/16
+- 5449 WRITTEN: 31 prim, FCFS same-day pay $17, lakefront->lakeview (pin was in lake on private docks), pin->46.849777,-93.978481, phone 866-857-2757->218-772-3690 (Cuyuna), web hyphen
+- 5461 WRITTEN: $16, 47 (28 res/19 fcfs), cutoff 4d, season confirmed, rec.gov 002/005 Lakefront -> lakeview candidate
+- 13319 WRITTEN: 17 prim, $17 (eff 2025-10-07), FCFS (only Old Wadena reservable), horse/ATV trail flag, G 4.6/70
+- 5429 WRITTEN: 10 prim, FCFS same-day $17, not wf confirmed by DNR text, mgr Grand Rapids P&T 218-328-8982, web hyphen
+- apply.py dry run: 11 results ready, 9 note rewrites, no '!!'. DONE.

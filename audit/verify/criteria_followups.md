@@ -1750,3 +1750,6 @@ me drop and report); each needs the research named before a verdict.
 - No drops. 13325 Bear Lake (Barnum) possibly mostly seasonal - no site counts published; kept.
 - 5427/5430 George Washington SF: "South Lofgren Road - Closed due to flooding" alert not checked against access.
 - 5364 Big Stone Lake: "Campground is CLOSED for the Year".
+
+## p3-435 (MN, 2026-11-11)
+- No drops. 13328 Clarissa City Park: presence question - the city site never mentions camping, Explore Minnesota 403 (unread); kept pending a readable source.

@@ -1,0 +1,53 @@
+{
+  "id": 5455,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.fs.usda.gov/r09/superior/recreation/cadotte-lake-campground (last updated October 13, 2026), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/campgrounds/232189 (description, notices, facility_rules) and /rates, read 2026-11-11",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232189 (10 STANDARD sites with coordinates), read 2026-11-11; RIDB catalog cached in trip_data/ridb_campsites.json (29 records: 10 STANDARD NONELECTRIC, 17 numbered MANAGEMENT, 2 XXX)",
+    "Esri World_Imagery frames at 47.3800,-91.9165 (280 m) and 220 m frames at 47.3793,-91.9172 and 47.3815,-91.9152 with the rec.gov site points plotted"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 27, "max_rig_ft": 45, "note": "Two of the 27 are long-term sites let by the season. Recreation.gov lists 10 sites with lengths (40-45 ft, all back-in); the rest are not on the catalog."},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/cadotte-lake-campground ('27 campsites, including 2 long-term campsites (over 14 days)'; 'Some campsites can accommodate RVs up to 45 ft. in length') + RIDB catalog (Max Vehicle Length 40 on 6 sites, 45 on 4), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/cadotte-lake-campground ('Restrooms: Vault toilet(s)'; 'Potable water is available at this site. Solar Powered Well'), read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "RIDB catalog for 232189: every campsite typed STANDARD NONELECTRIC (10) or MANAGEMENT, no electric attribute, read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "09-11"},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/cadotte-lake-campground ('Seasons of Use: May 1 - September 11'); recreation.gov rate seasons agree (Peak 2026-05-01 to 09-06, First-come 09-07 to 09-12), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232189", "window_opens_days": 180, "fcfs": "some_sites", "max_stay_nights": 14, "note": "Only some sites are on recreation.gov (8 reservable there); the others are first come, and every site is first come for the week after Labor Day. Reservations close 4 days before arrival."},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/cadotte-lake-campground ('Some sites are reservable through Recreation.gov') + https://www.recreation.gov/api/camps/campgrounds/232189 (facility_rules reservationWindow 6 Months, reservationCutOff 4 days prior, maxConsecutiveStay 14; /rates 'First-come, First-served Season' 2026-09-07 to 09-12), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 28, "currency": "USD", "checked": "2026", "extra_vehicle": {"included": 1, "per": "night"}, "extra_person": {"max_people": 9}, "note": "$26 a night for a single site; $28 for a premium site (water access or view). Long-term sites $1,150 a season. An additional vehicle pays half the site fee a night (an older fee block on the same page says $8)."},
+      "source": "https://www.fs.usda.gov/r09/superior/recreation/cadotte-lake-campground ('Single Site: $26/night; Premium Single Site: $28/night; Season: $1,150'; 'Additional vehicles at the site require additional half fee'; 'Maximum of 9 people per site') + https://www.recreation.gov/api/camps/campgrounds/232189/rates (2026 and 2027 Peak: STANDARD NONELECTRIC $26 / premium variant $28), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Superior National Forest (Laurentian district) campground on the west shore of Cadotte Lake, 21 miles southeast of Hoyt Lakes off Forest Roads 425 and 778. Wooded sites in mixed evergreen, birch and aspen, some with lake views and trails down to the water; boat ramp, fishing dock and a sandy swimming beach. Run by a concessionaire. --Claude",
+  "summary": "FS page + rec.gov read: 27 sites (2 long-term), 10 on rec.gov (8 reservable) at 40-45 ft, no hookups, vault toilets + well water, $26/$28 (2026/2027), season May 1-Sep 11, FCFS after Labor Day. Lakefront -> lakeview flagged (no pad within ~35 m over open ground). Phone missing.",
+  "flags": [
+    "WATERFRONT lakefront -> lakeview (reviewer to confirm; defaults down). On Esri imagery every pad sits under continuous canopy behind a tree band on the shore: the nearest rec.gov points, 007 (47.38120,-91.91547) and 009 (47.38096,-91.91574), are about 35-45 m from the water through trees, and 023 (47.37899,-91.91733) / 024 (47.37922,-91.91717) about 55 m. The only open ground on the shore is the swimming beach and boat ramp (day use) around 47.3804,-91.9160. The FS page itself says 'some of which have views of the lake and access to trails that lead to the water'. The 17 sites typed MANAGEMENT carry no coordinates, so a shore spur south of 023 (about 47.3787,-91.9166) could not be matched to a number; nothing there shows an open apron either.",
+    "PHONE missing: the FS page names 'Contact Name: Concessionaire' and gives the Laurentian Ranger District, (218) 453-8650. Suggest 218-453-8650.",
+    "Notice on recreation.gov: 'Some campsites are available for long-term occupancy; contact the project office'. The FS page counts 2 long-term (season) sites of 27; the rest sell by the night. Not a long-stay problem.",
+    "Discount not written (no schema key): rec.gov tribalDiscount for the Fond du Lac, Bois Forte and Grand Portage bands.",
+    "Status: the FS page shows 'Closed for the season - No fees or services (gated)', the ordinary end of season; no status written. ATVs not allowed in the campground.",
+    "Pin 47.37999,-91.91668 is about 20 m from the centroid of the rec.gov site points (47.37986,-91.91691); no move. Website lines confirmed.",
+    "Note cleaned: dropped '27 wooded sites', 'vault toilets' and 'Mix of Recreation.gov-reservable and FCFS sites' (fields hold them) and 'near Brimson' (the FS page places it 21 miles southeast of Hoyt Lakes, near Fairbanks)."
+  ]
+}

@@ -1205,3 +1205,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-434 (MN, 2026-11-11)
 - 5452 Baker Lake lakefront -> not waterfront. 5606 Bass Lake lakefront -> lakeview (tree fringe). 13213 Knutson Dam riverfront -> creekside (channel 20-25 m). 13318 Burlington Bay lakeview -> coastal walk. Lead: 5427 Bear Lake SF possible lakefront (two units 16-28 m over grass, no site numbers).
+
+## p3-435 (MN, 2026-11-11)
+- 5449 Clint Converse lakefront -> lakeview (pin was in the lake). 5455 Cadotte lakefront -> lakeview (canopy). 5461 Clubhouse not waterfront -> lakeview (rec.gov "Lakefront" 002/005 under canopy). Lead: 13328 Clarissa creekside (Eagle Creek, no site placement).
