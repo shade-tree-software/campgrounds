@@ -2047,3 +2047,14 @@ me drop and report); each needs the research named before a verdict.
 - 1701 Gun Creek: $18 (+$8 water/sewer), season 03-12..11-22. 1776 Friends Creek: $25-30 + $5 reservation fee, season 05-02..11-02 (2025 dates).
 - Pin: 1701 ~380 m. Phones: 1651, 779, 1719, 1690. Websites: 1656 (historic-sites page added), 1719 (campground page added first).
 - UNREAD: 1769 Illiniwek Forest Preserve (ricfpd.org Cloudflare 403). Still queued. Google 4.4/173, 309-496-2620. Imagery: pads 120-150 m from the main Pool 14 channel past a shore road and lawn, no levee - riverview looks right.
+
+## p3-468 (IL, 2026-11-12)
+- 10 applied, 0 dropped, 1 unread, 1 split. SPLIT 1638 Kankakee River SP: two campgrounds 6.3 km apart; 1638 is now Potawatomi (pin moved 6.3 km, $35 Premium 2027, 110 sites, showers); NEW 15701 Chippewa Campground (98 sites: 49 electric-only + 45 non-electric, no showers, $11-28). Equestrian camp separate.
+- METHOD: ExploreMoreIL gives per-unit coordinates (grid with WebOnly false, Units[].MapInfo.Latitude/Longitude) - use them for IDNR waterfront calls by site number.
+- 1756 Lazy Days: $50 posted 2026, exactly at the gate; any 2027 increase fails it (no exception). About half long-term; caveat kept. Nightly sites 30 A + water, no sewer.
+- 1744 Kamp Komfort: $45-50 2026, Good Sam Park, "We do not offer seasonal sites"; booking by phone (was roverpass). 1738 Kentuckiana $40, about a third nightly, caveat. 1736 Leisure Lake is not the Joliet membership resort; no posted rate, RV Life $$, Google 4.1/57. 1754 Kaskaskia Dragon: no groups (shell site, ReserveAmerica 403); Google 4.5/68 + RV Life $.
+- 1684 Lincoln Trail: 6 Lakeside pads are 20 ft (rest fit), 183 sites, 45 ft max. 1681 Kickapoo: Erie/Sauk non-electric 20 ft; Fox/Erie/Redear close at first snowfall (stored manual year_round left - season.note candidate); river access closed by embankment seepage.
+- 1646 Johnson-Sauk: 70 electric sites (tent sites are walk-in), open all winter (dry), closed Nov 2-8 for a hunt.
+- 1782 Jurgens Park run by the Arthur Park District (phone and website changed); stored $20 not re-read (village page Cloudflare).
+- Unsupported stored lengths left alone: 1744 max_rig_ft 90, 1782 75, 1754 60.
+- UNREAD: 1773 Loud Thunder FP (ricfpd.org + WebTrac Cloudflare 403); Google 4.5/619, 309-795-1040; horse separation not established. Still queued.

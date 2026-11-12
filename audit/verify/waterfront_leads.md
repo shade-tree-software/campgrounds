@@ -1338,3 +1338,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - CONFIRMED 779 Hickory Point --AWH lakefront: engine flags 23 units "Waterfront Site" (004, 007-011, 013-017, 019-024, 026-028, 031, 032); leaf-off imagery shows a pad ~12 m from shore over open ground at ~39.6442,-89.4644.
 - KEPT 1690 Jim Edgar lakeview (nearest pads ~50 m down an open lawn, ~26 ft above; cabins take the shore).
 - 1769 Illiniwek (unread): riverview looks right from imagery (pads 120-150 m back from the riprapped main channel); no sites identifiable.
+
+## p3-468 (IL, 2026-11-12)
+- APPLIED 1646 Johnson-Sauk lakeview -> not waterfront (100-130 m, canopy, 11 m up); 1681 Kickapoo lakeview -> riverview (Fox 88/90 over open meadow 40-48 m, 11 m up); 1684 Lincoln Trail lakefront -> not waterfront (default down: 40-65 m, canopy, 14 m up a 30% slope - agent offered lakeview at most); 1756 Lazy Days lakeview -> not waterfront (1 ha pond, long-term-only edge sites).
+- KEPT 1736 Leisure Lake lakefront, north-shore row only (~6.5 ha lake, open grass ~12 m), caveat in note.
+- NEW 15701 Chippewa (Kankakee River) not waterfront (Class C 73-79 ~30 m from a wooded backwater channel).
