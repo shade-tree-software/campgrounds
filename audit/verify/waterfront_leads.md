@@ -1270,3 +1270,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-452 (ND, 2026-11-12)
 - 5910 East Totten Trail lakefront stands (outer row 016-030, 034-035 at 18-38 m over grass/riprap, ~47.6171,-101.2628; inner-row rec.gov "Lakefront" tags are views). 5907 Hazelton lakeview stands (~150 m). 5895 Hazen Bay lakeview stands (east loop behind its own road; cabins only within 30 m).
+
+## p3-453 (ND, 2026-11-12)
+- APPLIED 5940 Lazy Fish at Pelican Point lakefront -> lakeview: nearest RV sites 55-57 (~47.0063,-98.7397) ~65-80 m from the waterline with the park's own swim beach, bollards, lawn and playground between; old evidence point was the park road.
+- 5951 McGregor Dam lakefront stands: sites 1-6 NE knoll ~48.58518,-102.93170 (~18 m), sites 10-17 SW peninsula ~48.5823,-102.9387 (35-50 m, open grass). 5892 Mirror Lake lakeview left (no site positions). Not waterfront stands at 5888, 5936, 5904.

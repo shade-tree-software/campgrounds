@@ -1908,3 +1908,14 @@ me drop and report); each needs the research named before a verdict.
 - 5997 Homme Dam: booking stored "not reservable / fcfs always" -> reservable on claimed RoverPass; $7 mandatory day pass ($42 all-in); 13 electric sites post 24 ft incl. table (tight); veterans 10%.
 - 5933 Jan's: kept (RV park its own section, 14 FHU, $40, Google 4.7/62); stored military true (Good Sam) not on the operator page.
 - Leads (not in DB, unvetted): Kulm's "KCDC Campground" and "Pesek Campground" (city page phones only); Whitestone Hill Lake Campground; Edgeley-Kulm Dam Campground (ndtourism titles only).
+
+## p3-453 (ND, 2026-11-12)
+- 11 applied, no drops. Pins: 6003 Mohall ~310 m (south end of the fairgrounds per city page), 5936 Lakeside ~380 m (Campspot park record, in the loop). Phones 5936 (-> 701-368-1365), 5951 (county parks; Google shows 701-580-1628, unexplained), 5958, 5946. Websites: 5936 county parks page + Campspot engine; 5958 ndtourism (403) -> claimed RoverPass listing; 5940 Campspot marketplace -> engine link.
+- POLICY ROW state:ND: says "Saturday nights cost $5 more", but reserveNDparks charges the +$5 on Friday AND Saturday at Lake Metigoshe and Fort Stevenson East #01 (Thu $25, Fri $30, Sat $30). Two parks only - next ND state-park batches to confirm before the row is reworded.
+- 5951 McGregor Dam: ND Game and Fish WMA rule - no camping Tuesday or Wednesday nights (in booking.note). Judgement call for AWH whether that matters.
+- 5940 Lazy Fish: county park run by an LLC concession (stored local); trailer-court-style residential block south of the campground, not on its map or Campspot. Sold only nightly, Google 4.6/35.
+- 5960 Lewis and Clark (Hazen): sites 1-14 short-term (1-30 nights), 15-28 long-term monthly = 50% nightly; no workforce wording; Google 4.5/35. Passes.
+- 5904 Mel Rieman: rec.gov rules carry a militaryDiscount flag - not written. Sites 05/10/12 25-ft driveways.
+- 5888 Metigoshe: tent sites post 40x40, #123 20x20, #124 26x26 (placeholders); premium #78 empty record -> full_hookup cleared.
+- Monthly rates beside nightly at 5967 Leistikow and 6003 Mohall (city parks, no discouraging wording).
+- Unread: 5892 Mirror Lake (no operator page beyond chamber listing); 5936 2027 season not on sale; amperage at 5967, showers/dump at 6003 unconfirmed.
