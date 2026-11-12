@@ -1848,3 +1848,16 @@ me drop and report); each needs the research named before a verdict.
 - 6000 Mouse River: water hookup derived wrong (spigots only) - false; most of 150 lots leased (seasonal $2,000 / annual $2,200).
 - Pin 5999 Minto ~380 m NE to a 6-post strip (imagery only).
 - Leads (not in DB, unvetted): Baukol-Noonan Trout Pond and Campground (Divide County; dividecountynd.org 403), Clemens Family Campground (Noonan; ndtourism only). Super 16 RV Park (Rolla) already screened out in audit/nd_private/list.json.
+
+## p3-448 (ND, 2026-11-12)
+- DROP 5944 Stonehouse RV Park (private): weekly/monthly lots only ("Monthly and Weekly lots available by reservation", $700/mo, $200/wk, lease) - standing week minimum.
+- DROP 5937 The Haven (private): presence - domain for sale (GoDaddy), Google 5.0/19 (under 25), no posted rate (Passport America $20 behind login).
+- 6013 Warsing Dam UNREAD and possibly closed - asks.md; phone candidate.
+- 5976 Silver Lake: base set to the $15 primitive RV rate (verifier wrote $25, the electric/water rate); 14 of 86 seasonal.
+- 5983 Sweet Briar $0 -> $15 (county FAQ).
+- 5968 Tommy Turtle $20 -> $25 (lots 1-13); 50 A and season 05-01..10-15 not on the current page, left as stored.
+- 5931 Twin Butte: "Call for nightly rates" (RV Life $$ stands in); "Limited motorhome sites available" (flag); booking.reservable true is derived, left; pin moved ~120 m off the neighbouring Ridge RV Camp.
+- 5906 Buffalo Gap: FS page contradicts itself on potable water (left true); stored dump true backed by neither FS nor rec.gov (left; absent is not no); reservable sites FS 5 vs rec.gov 16.
+- 6012 Tioga: flags-only (no rate/season/hookups published; Park Board Facebook unread); phone was Tioga Dam's - now the park manager's 701-641-1533.
+- 5912 Summit: Summit Trail closed past the first ridge (note).
+- Leads (not in DB): Tioga Dam - Peaceful Valley Campground (City of Tioga, 6 lots); The Ridge RV Camp, Bowman (private, 17 lots, Google 4.4/18 - under the 25 bar, ridgervcamp.com).

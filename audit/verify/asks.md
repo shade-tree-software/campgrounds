@@ -605,3 +605,6 @@ Same question as Tamarack Point 5498: keep or drop? The forest's full recreation
 
 ## 5961 Larimore Dam Recreation Area (ND, Grand Forks County Park District) - p3-447, 2026-11-12 - OPEN
 Long-stay question on a county park. Posted rates: season $1,500, monthly $450, weekly $175, nightly $35. The HHS roster gives 144 lots; imagery shows ~140-150 long-parked units; a review says "a lot of fulltimers". The stored note's "12 overnight sites" (unsourced; gfcounty.nd.gov 403s) would make nightly ~8%, under the 1-in-10 line of test 4, but a nightly rate is posted and nothing discourages nightly guests. Kept for now. Keep, or drop as mostly seasonal? A phone call to the park district would settle the nightly-site count (same county as 5975 Fordville Dam, also unread and seasonal-looking).
+
+## 6013 Warsing Dam Campground (ND, Eddy County, stored lakefront) - p3-448, 2026-11-12 - OPEN
+Unread (ndtourism 403; no Eddy County domain resolves) and possibly closed to camping: Campendium marks it "permanently closed"; a camper 2023-09-14: "there was a tiny sign at the entrance that says it is closed overnight"; a snippet of the ndtourism listing says "tenting only". Imagery: loop road ~15-25 m from the water behind a reed/shrub fringe, shelters among trees, no pads seen. Nothing official either way. Drop, or hold for a phone call (stored 701-996-3020)?

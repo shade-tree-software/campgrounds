@@ -1248,3 +1248,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6000 Mouse River riverfront -> riverview (river 45-60 m, RVs 12-20 m on the north bank but the sites look seasonal; Firefly "Waterfront" filter behind reCAPTCHA). Lead: confirm a nightly waterside site (engine/phone) and it returns to riverfront.
 - 5990 Sandager riverfront -> riverview (campground road + thin fringe between North Campground rears and the Sheyenne, 29-33 m).
 - 5950 Lake Hoskins and 5954 Lake LaMoure lakeview stand (LaMoure: 4-5 RVs 15-40 m on open ground with private docks, likely seasonal, no site numbers).
+
+## p3-448 (ND, 2026-11-12)
+- 5909 Beaver Creek (USACE, Lake Oahe) lakefront -> lakeview: every rec.gov "Lakefront" site is 60-70 m+ from water across reed/rip-rap/willow (DEM 6 m above the water).
+- 5976 Silver Lake lakefront kept (west-shore peninsula row 10-25 m, 46.0228,-97.5752..46.0250,-97.5740; no site numbers published). 5983 Sweet Briar lakefront kept (point loop tables 12-30 m, ~46.87355,-101.27455; no numbers).
+- 6013 Warsing Dam (unread) stored lakefront: loop road 15-25 m behind reed/shrub fringe, no pads seen - would go down if read.

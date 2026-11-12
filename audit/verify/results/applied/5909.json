@@ -1,0 +1,79 @@
+{
+  "id": 5909,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/camping/campgrounds/234677",
+    "https://www.recreation.gov/api/camps/campgrounds/234677 (facility description, notices, rules, amenities)",
+    "https://www.recreation.gov/api/camps/campgrounds/234677/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A234677 (61-site catalog with coordinates)",
+    "Esri World_Imagery at 46.2500,-100.5360 (330 m), 46.2520,-100.5410 (150 m), 46.2485,-100.5310 (120 m) with rec.gov site points",
+    "Open-Meteo elevation API (DEM) at sites 31 and 3 and the adjacent water"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 22,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Peak (mid-May to mid-September) $16 non-electric, $22 30-amp electric; shoulder weeks (May 1 to mid-May, mid-September to Sept 30) $14 and $18. Tent-only sites priced as non-electric."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234677/rates (2026: Non-Peak 05-01..05-13 STANDARD NONELECTRIC 14 / ELECTRIC 18; Peak 05-14..09-13 16 / 22; Non-Peak 09-14..09-30 14 / 18), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 30
+      },
+      "source": "https://www.recreation.gov/camping/campgrounds/234677 ('61 reservable campsites, 45 of which have 30-amp electric hookups'); RIDB catalog: 45 STANDARD ELECTRIC sites, Electricity Hookup 30 on all 45, read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 61,
+        "note": "45 electric and 14 non-electric sites take RVs, trailers and fifth wheels (driveways 34-75 ft); 2 tent-only sites."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A234677 (61 sites: 45 STANDARD ELECTRIC, 14 STANDARD NONELECTRIC, 2 TENT ONLY; Max Vehicle Length 34-75 where posted), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "showers": true,
+        "dump": true,
+        "note": "Flush toilets, showers and drinking water are seasonal (peak season); vault toilets otherwise."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234677 (amenities: 'Flush Toilets (Seasonal)', 'Showers (Seasonal)', 'Drinking Water (peak season)', 'Vault Toilets', 'Dump Station'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/234677",
+        "fcfs": "never",
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "max_stay_nights": 14,
+        "note": "Every site is reservable, up to the day of arrival (zero-day booking window); arriving without a reservation risks a full campground. 14 nights in any 30. Weekend and holiday minimums are recreation.gov booking rules and may be relaxed for same-day bookings."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234677 (notice: 'All campsites at Beaver Creek Recreation area are 100-percent Reserveable with Zero-Day Booking Window ... failure to reserve a site prior to arrival may result in campground being full'; rules: minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 nights rolling 30 days, reservationCutOff 0), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on the north side of Beaver Bay, Lake Oahe, 16 mi W of Linton off ND 1804. Three-lane boat ramp and docks, a second ramp on the bay's SE side, fish cleaning station, playgrounds and a nature trail. --Claude",
+  "summary": "rec.gov confirms 61 sites (45 30-amp, 14 non-electric RV, 2 tent), $14-22, 100% reservable with zero-day window, 2-night weekend / 3-night holiday minimums, 14-night max, seasonal flush toilets/showers/water, dump. Fit fine (34-75 ft driveways; RV/trailer/fifth wheel). Stored lakefront looks like a view on imagery: every rec.gov 'Lakefront' site sits 60-130 m from the water across a brushy drawdown bench.",
+  "flags": [
+    "WATERFRONT: suggest lakefront -> lakeview (stored value is not --AWH; apply.py does not write it). rec.gov tags 14 sites 'Proximity to Water: Lakefront' (2-6, 9, 11, 13, 15, 31, 33, 35, 49, 50; all sold nightly). On Esri imagery none has water within 50 m over open ground: east loop site 3 (46.24832,-100.53052) is ~63 m from open water across a shrub and reed belt, sites 2/4/5/6 farther; site 15 (46.25057,-100.53699) ~60 m across a rip-rap band and a vegetated bench, sites 9/11/13 ~100-130 m; west loop site 31 (46.25161,-100.53987) sits just above a rip-rap beach with open water ~70 m beyond across a willow flat, 33/35 ~80 m through shrubs, 49/50 (46.25195,-100.54211) behind marsh and willows. DEM: site 31 ~494 m (1,621 ft) and site 3 ~492 m against water ~488-489 m, so at a normal Oahe pool (~1,600-1,610 ft) the shoreline stays 60+ m out; only near the top of the flood pool would the rip-rap line at sites 31 and 15 be lapped. Woody growth on the bench says it has been dry for years. Defaults down.",
+    "FIT / EQUIPMENT: 59 of 61 sites permit RV/Trailer/Fifth Wheel; posted lengths 34-75 ft. A 23-ft rig fits easily.",
+    "SEASON: rec.gov sells nights May 1 - Sept 30 (rate seasons); that is the reservable window and no open season is stated, so season is left unset.",
+    "PHONE: 701-255-0015 (Oahe Project office) confirmed on rec.gov.",
+    "WEBSITE: rec.gov link confirmed. USACE district pages give Akamai 403 and were not tried.",
+    "PIN: stored 46.24972,-100.53333 is rec.gov's facility point, between the east and central loops (~200 m from site 9); no move.",
+    "DISCOUNT: rec.gov rules carry militaryDiscount 1 (not written; check against the discounts group policy)."
+  ]
+}
