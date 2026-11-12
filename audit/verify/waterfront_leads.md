@@ -1259,3 +1259,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5890 Fort Ransom: stored evidence corrected (sites 22/20B 10-16 m from a 20-25 m Sheyenne through a tree fringe); not waterfront stands absent a view photo.
 - 5901 Cottonwood: sites 49, 50, 52 ~35-46 m from the Little Missouri under scattered cottonwoods - riverview at most, lead only.
 - 5903 Downstream: rec.gov "Riverfront" tag on site 002 spurious (~400 m). 5886 Fort Stevenson lakeview stands (bluff sites 82/89, water 70-90 m, 10 m below).
+
+## p3-450 (ND, 2026-11-12)
+- 5885 Lake Sakakawea lakeview -> lakefront (caveat: Fishing Point sites 241, 242, 244, 20-40 m over open grass).
+- 5887 Icelandic lakeview -> not waterfront (continuous woods, 60-85 m).
+- 5882 Lewis & Clark lakeview stands (~100 m open grass). 5902 Juniper evidence corrected (20-35 m behind riparian trees, creek-width channel). 5938 LaMoure not waterfront (James ~20-25 m, 50-95 m back).

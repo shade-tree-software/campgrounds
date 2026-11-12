@@ -1872,3 +1872,15 @@ me drop and report); each needs the research named before a verdict.
 - Count mismatches page vs reserveNDparks: 5890 16 vs 21 standard; 5880 51 vs 66 modern; 5905 FS intro 38 vs 25 (used 25). 5890 water: per-site "Yes" vs park footnote hydrant (written true).
 - 5956 Buffalo (city, Firefly): monthly beside nightly; occupancy unread (reCaptcha).
 - 5903 Downstream: Garrison project camping page 403; note's "Loop 4 primitive free FCFS off-season" unverified.
+
+## p3-450 (ND, 2026-11-12)
+- DROP 5889 Little Missouri State Park: designated horse park (81 corrals); 26 of 31 sites horse sites; the 5 non-horse sites share the Main loop - indistinct horse camp (AWH 2026-11-09).
+- 10 applied. Pins: 5902 Juniper ~470 m (rec.gov site centroid), 5885 Lake Sakakawea ~610 m, plus 5925 Hillcrest Acres ~225 m (was on the commercial buildings) and 5922 North Park Dickinson ~230 m. Phones 5984, 5938 (park manager), 5939; 5984 website ndtourism -> city page.
+- 5922 North Park (Dickinson): $55 for two, passes only via the operator-posted Good Sam 10% ($49.50); no gateway (Medora ~57 km). Courts nightly guests; nightly share uncounted (no map). Google 4.5/387.
+- 5925 Hillcrest Acres: "call for rates" (RV Life $$); mobile-home block inside; Google 4.4/170; derived 52 sites cleared (map 55, story 66).
+- 5939 North Park (New Salem): camper "Some are very short, 20'ish" - kept with caveat; RoverPass claimed listing; facilities reported.
+- 5902 Juniper: high $10 -> $20 (May-Sep); fcfs some_sites cleared (all reservable year-round).
+- 5938 LaMoure: newest stated rate from 2022 ($25); 28 nightly / 28 seasonal.
+- 5885 season (manual, not overwritten) - suggested fuller wording in its result flag (Elbowoods year-round; Vanhook/Sanish Apr 1-Nov 30; water off Oct 4). Sewer left unknown (amenity list yes, catalog none).
+- 5882 Lewis & Clark base $25 (its primitive sites are walk-in tent).
+- Second website line https://www.reservendparks.com/Web/ on ND state parks repeats the state:ND row - a DB-wide tidy, not done piecemeal.

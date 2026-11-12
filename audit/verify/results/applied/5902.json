@@ -1,0 +1,84 @@
+{
+  "id": 5902,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10386756 (description, notices, amenities)",
+    "https://www.recreation.gov/api/camps/campgrounds/10386756/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10386756 (all 46 campsites with equipment lengths and coordinates)",
+    "https://www.recreation.gov/api/camps/availability/campground/10386756/month (2026-11, 2027-01, 2027-05, 2027-06)",
+    "https://www.nps.gov/thro/planyourvisit/juniper-campground.htm (static text only; the page's campground data block loads by script and stayed unread)",
+    "Esri World_Imagery at 47.5957,-103.3385 (900 m) and 47.5952,-103.3410 (260 m) with the rec.gov site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 10,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$20 a night May 1-September 30, $10 the rest of the year, every site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386756/rates (Peak Season 2026-05-01..09-30 and 2027-05-01..09-30: Standard Nonelectric $20, Tent Nonelectric $20; Non-Peak 2026-01-01..04-30, 2026-10-01..12-31, 2027: $10), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386756 ('There are no hookups'); catalog: all 37 drive-in sites STANDARD NONELECTRIC, read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 46,
+        "max_rig_ft": 57,
+        "pull_through": true,
+        "note": "37 drive-in sites and 9 walk-to tent sites, plus a group site booked separately. The 27 pull-throughs post 30-57 ft; the back-ins post 20-33 ft, and site 29 takes no RV. Trees may not clear vehicles over 13 ft."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10386756 (46 sites: 37 STANDARD NONELECTRIC, 9 WALK TO tent-only; RV max_length per site 20-57; Driveway Entry Pull-through on 27); notice 'Vehicle (RV) Height over 13 feet (4 m). Trees and branches in the campground may not accommodate vehicles of this height'; NPS page 'Back-in sites accomodate vehicles up to about 20 feet in length', read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "showers": false,
+        "laundry": false
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386756 (amenities 'Flush Toilets (Seasonal)', 'Drinking Water', 'Dump Station'; 'A water fill and dump station is available for campers (from May through October 1 each year)'; notice 'Water is not always available by May or after October 1. Vault toilets will be available'; 'There are no shower or laundry facilities located in the park'), read 2026-11-12",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Water, flush toilets and the dump station from May to October 1; vault toilets otherwise."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386756 ('the campground is open year-round'; water/dump May through October 1); availability: every site bookable through 2027-01, read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/10386756",
+        "fcfs": null,
+        "note": "Every site, walk-to tent sites included, is bookable on recreation.gov in every month, including November-April. Stays May 1-October 31 are limited to 14 nights, and 30 nights a calendar year."
+      },
+      "source": "https://www.recreation.gov/api/camps/availability/campground/10386756/month (2026-11: all 46 sites Available/Reserved; 2027-01: all 46 Available; 2027-05: Available/Open, NYR later); notice 'Maximum Stay. During the busy season of May 1 through October 31, campers may stay a maximum of 14 night total ... and a maximum of 30 days total in a calendar year. This includes the non-reservation, self-registration season of November through April', read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "NPS campground in the North Unit of Theodore Roosevelt National Park, 5 mi in from the entrance, on a cottonwood and juniper flat beside the Little Missouri River; bison often walk through. About 30 miles of trails start nearby. Watford City, 20 mi north, is the nearest town for supplies and firewood. --Claude",
+  "summary": "rec.gov catalog: 46 sites (37 drive-in nonelectric: 27 pull-throughs 30-57 ft, back-ins 20-33 ft; 9 walk-to tent), no hookups, $20 May-Sep / $10 otherwise (stored high 10 corrected to 20), year-round, seasonal water/flush/dump, no showers. All sites bookable year-round now: derived fcfs some_sites cleared, note's odd/even claim removed. Pin ~470 m east of the sites: move. Waterfront stays not waterfront (evidence distance wrong: western sites ~20-25 m from the channel behind a riparian tree band).",
+  "flags": [
+    "PIN MOVE: stored 47.59524,-103.33324 is ~470 m east of the campsites (on the grassland across the park road from the loops; nearest site 14 at 371 m). Target 47.59575,-103.33944 = centroid of all 46 rec.gov site points.",
+    "WATERFRONT (stored not waterfront, not --AWH): keep. The stored evidence says the loop is 100 m+ from the river; on imagery the west-side sites 33 (47.59546,-103.34054), 36 (47.59517,-103.34037), 39 (47.59486,-103.34041) and 40 (47.59466,-103.34065) sit about 20-35 m from the low-water channel of the Little Missouri, but a continuous riparian tree band (~15-25 m) runs between every pad and the water, and the channel itself was ~20-30 m wide on the imagery. No open ground to the water and no official photo of a river view from a site: at most a filtered view. Suggest correcting waterfront_evidence with these distances.",
+    "FCFS: stored fcfs 'some_sites' (derived from the old note's 'odd-numbered sites reservable May-Sep, remainder first-come') is contradicted by the current calendar: all 46 sites are reservable in November, January and May. Cleared. The max-stay notice still mentions a 'self-registration season of November through April', so walk-ups may still self-register on unreserved sites; not derivable from the calendar.",
+    "FEES: stored nightly_high 10 was the off-peak rate only; peak (May-Sep) is $20.",
+    "Phone 701-623-4466 (rec.gov and NPS page) and both website lines answer; keep."
+  ]
+}

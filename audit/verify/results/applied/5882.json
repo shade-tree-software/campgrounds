@@ -1,0 +1,52 @@
+{
+  "id": 5882,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.parkrec.nd.gov/lewis-clark-state-park",
+    "https://www.parkrec.nd.gov/limited-service-season",
+    "https://ndparksrdr.usedirect.com/rdr/rdr/search/grid + search/details (reserveNDparks facilities 106 Sandstone, 103 Limestone, 107 Ironstone, 99 Siltstone; 2027-06-15 and Saturday 2027-06-19; every unit)",
+    "Esri World_Imagery at 48.1290,-103.2290 (800 m) with the reservation system's site points; Open-Meteo DEM across the east shore"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "surcharges": {"full_hookup": 5, "weekend": 5}, "checked": "2026",
+                 "note": "Modern (electric and water) $25, $30 on a Saturday; premium (full hookups) $30, $35 on a Saturday; group sites the same per unit. The eight $15 primitive sites are walk-in tent sites. Park page and reserveNDparks, read 2026-11-12."},
+      "source": "https://www.parkrec.nd.gov/lewis-clark-state-park ('41 Premium Campsites Price: $30-35 per night'; '47 Modern Campsites Price: $25-30 per night'; '8 Primitive Campsites Price: $15/night'); reserveNDparks search/details 2027-06-15 / 2027-06-19: Modern $25/$30, Premium $30/$35, Primitive Tent Site $15 (grass, 110-255 ft from parking), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true,
+                 "note": "Sewer only at the premium sites; modern sites have electric and water."},
+      "source": "reserveNDparks per-unit 'Amp Service 20/30/50' on every modern and premium site and 'Water Hook-up on Site yes'; park page premium/modern classes and amenities 'Sewer and electrical hookups', read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 101,
+                 "note": "41 premium and 47 modern sites with 2 premium and 3 modern group sites in the Sandstone, Limestone and Ironstone loops (gravel, many pull-throughs; every RV site posts 40 ft or more), plus 8 walk-in primitive tent sites on the east shore. Two camping cabins."},
+      "source": "https://www.parkrec.nd.gov/lewis-clark-state-park (41 + 47 + 2 + 3 + 8 = 101); reserveNDparks facilities 106/103/107/99 (Sandstone 12 modern + 13 premium; Limestone 35 modern + 3 modern group; Ironstone 24 premium + 2 premium group; Siltstone 8 primitive tent + 2 cabins; Vehicle Length 40-80 on modern, 62-175 on premium), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "https://www.parkrec.nd.gov/lewis-clark-state-park (amenities 'Sewage dump station', 'Showers and flush toilets'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "https://www.parkrec.nd.gov/lewis-clark-state-park ('Campsites can be booked 95 days in advance'); reserveNDparks AllowWebBooking true on every campsite, read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "On a point between the open lake and a bay of Lake Sakakawea, about 15 mi east of Williston near Epping. Three RV loops among pine shelterbelts on a bench above the shore; swim area and day-use beach on the east shore by the cabins. Marina (when the lake is above 1830 ft), four-lane boat ramp, fish-cleaning station, and canoe, kayak, paddleboard, fat-tire bike and snowshoe rentals. --Claude",
+  "summary": "Park page + reserveNDparks: 101 sites (41 premium full hookup $30/$35, 47 modern 50-amp + water $25/$30, 5 group, 8 walk-in primitive tent sites $15), showers, flush toilets, dump; base $25 stands (primitive sites are tent-only). Hookups/sites/facilities manual; note cleaned. Lakeview stands (nearest RV pads ~100 m over open grass to the bay; east-shore tent sites don't count). Pin ~180 m from site centroid: fine.",
+  "flags": [
+    "WATERFRONT (stored lakeview, not --AWH): keep. The only sites near the water are the walk-in Primitive Tent Sites 50-57 on the east shore (~30 m to the edge of the beach, ~80 m to the water on imagery; DEM 568 m at the pads, 564 m = full pool at the beach), which don't count for an RV. The nearest RV pads, Limestone 35-38 and Sandstone 22-26, look south across ~100 m of open grass to the bay; the Limestone east loop (58-73) is behind a dense shelterbelt ~140 m from the open lake.",
+    "BASE: the $15 primitive sites are 'Primitive Tent Site' units set 110-255 ft from parking on grass (walk-in), so the base stays $25 (modern). POLICY ROW consistent (Saturday +$5). Stored reservation_fee/entrance duplicate the state:ND row; left as stored.",
+    "MAX LENGTH: reserveNDparks Vehicle Length = Pad Length; modern 40-80 ft (varied, look real), premium 62-175 ft (pull-through drive lengths). Primitive tent sites post 50-60 (placeholder-like, irrelevant). No max_rig_ft written.",
+    "COUNT: reserveNDparks lists 37 premium + 47 modern + 5 group + 8 primitive = 97 single units; park page 101 (41 premium). Kept 101.",
+    "SEWER: no reserveNDparks unit carries a sewer attribute; premium = full hookup by the state's class definition and the page's amenity list, so sewer stays true with the 'premium only' note.",
+    "SEASON: stored year_round (manual) stands. Limited-service page: 'The comfort station closes and water is turned off on October 4.' The reservation system's season dates for these four facilities could not be read (the API answered 403 after earlier reads; not retried).",
+    "PIN: stored 48.12874,-103.23048 is 37 m from Ironstone site 01 and ~180 m from the centroid of all 97 site points (48.12974,-103.22856); no move.",
+    "Website line 1 https://www.parkrec.nd.gov/lewis-clark-state-park answers 200 (keep); line 2 https://www.reservendparks.com/Web/ duplicates the state:ND booking row (could be dropped). Phone (701) 859-3071 on the page (keep)."
+  ]
+}
