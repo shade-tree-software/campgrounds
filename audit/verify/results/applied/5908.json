@@ -1,0 +1,50 @@
+{
+  "id": 5908,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233813 (description, rules, amenities, phone) and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233813 (per-site catalog: type, equipment, lengths, electric, coordinates)",
+    "Esri World_Imagery 520 m frame at 47.09874,-98.01369 with the catalog's site points, and zoom-19 tiles at 47.09740,-98.01200 and 47.10010,-98.01525"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026",
+                 "note": "Standard electric sites $26; walk-to tent sites $20. recreation.gov rate table (peak season 2026-05-15 to 09-30 and 2027-05-14 to 09-30), read 2026-11-12."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233813/rates (Peak Season 2026-05-15..2026-09-30 and 2027-05-14..2027-09-30: STANDARD ELECTRIC 26, TENT ONLY NONELECTRIC 20), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "recreation.gov site catalog for 233813: all 36 STANDARD ELECTRIC sites 'Electric Hookup' 30 and 'Electricity Hookup' 30, read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 40, "max_rig_ft": 75,
+                 "note": "36 electric RV sites (001-031, 033, 034, 039-041) and four walk-to tent sites (035-038). The recreation.gov description still says 41 sites, 37 with electric."},
+      "source": "recreation.gov site catalog for 233813: 40 sites, 36 STANDARD ELECTRIC (RV/Tent/Trailer, Max Vehicle Length 29-75 ft, back-in gravel) and 4 WALK TO (Tent only), no site 032, read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233813 ('Other features of the campground include a swimming beach, flush toilets, playground and hiking trail'; amenities 'Flush Toilets', 'Showers'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14,
+                 "note": "Stay limit 14 nights in any 30 days. Check-in and check-out 1 p.m."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233813 (rules: maxStay 14 nights 'Rolling 30 Days'; every catalog site reservable; site 'Checkin Time'/'Checkout Time' 1:00 PM), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground in thick woods on a point of Lake Ashtabula (Baldhill Dam), about 10 miles north of Valley City; swim beach, playground and hiking trail, with a dump station, boat ramp and fishing pier within walking distance. --Claude",
+  "summary": "rec.gov record + catalog: 40 sites (36 30-amp electric RV/Tent/Trailer sites 29-75 ft, 4 walk-to tent); $26 standard, $20 tent; 14 nights in 30; showers, flush toilets. PIN MOVE ~525 m to the catalog centroid. Not waterfront stands for the wooded loops; LEAD: site 041 sits on open grass ~20 m above the reed-fringed bay (lakeview floor). Phone missing -> 701-845-2970.",
+  "flags": [
+    "PIN MOVE: stored 47.09572,-98.00832 is ~525 m SE of the campground, across the bay near the marina/landing. Target 47.0987,-98.0137 (catalog centroid of the 40 site points; the loop runs from 001 at 47.09798,-98.01186 to 020 at 47.10045,-98.01523).",
+    "WATERFRONT LEAD (stored not waterfront; upgrade to lakeview suggested for one site): site 041 (47.09765,-98.01184; RV max 29 ft, sold nightly on rec.gov) sits on mown grass sloping SE to the reed- and shrub-fringed bay ~20 m away (zoom-19 tile at 47.0974,-98.0120). By the open-ground floor rule that is at least a lakeview. The fringe of reeds and brush along that shore keeps it from a clear on-water call. Sites 039/040 (about 47.0973,-98.0122) are behind a tree band ~25 m from the bay. The west-shore loop (020-025, about 47.0995,-98.0150) sits under continuous forest ~35-50 m from the lake, and rec.gov says 'heavily wooded'. Candidate: lakeview with a caveat naming site 041, else not waterfront as stored.",
+    "PHONE (missing): recreation.gov facility_phone 701-845-2970 (Corps Lake Ashtabula / Baldhill Dam office). Suggest '' -> 701-845-2970.",
+    "SITE COUNT: the catalog has 40 sites (no 032); the stored 41 and the description's '41 campsites with 37 ... electrical' are older. Written 40.",
+    "DUMP: stored facilities.dump true (derived) is left alone. The rec.gov description places the dump station 'within walking distance' (with the boat ramp and pier) rather than in the campground.",
+    "SEASON: stored 05-01..09-30 ('Approximate', derived) left alone. rec.gov posts only rate seasons (2026-05-15..09-30; 2027-05-14..09-30), and its past-month calendar is not served, so the open date is unconfirmed; the rate season suggests mid-May.",
+    "FIT: all 36 RV sites take 23 ft (29-75 ft); RV, Tent and Trailer permitted on each."
+  ]
+}

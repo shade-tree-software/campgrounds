@@ -1931,3 +1931,14 @@ me drop and report); each needs the research named before a verdict.
 - 6011 Short Creek: stored reservable true unconfirmed (county page: call). 5962 Stanley: only a thin city page; stored fields unconfirmed.
 - 5963 Old Settlers: 2026 season ended early (closed from Sep 10). 5932 Patterson: blue-green algae advisory 2026-08-28; GS/PA/ATB honoured, seniors 50%.
 - LEAD: Prairie Knights Marina campground (same operator; 32 full RV sites + tent on Lake Oahe, ~46.2662,-100.5812, 4.4 km E of the casino lot; Google 4.7/12; 701-854-7777; rates unposted).
+
+## p3-455 (ND, 2026-11-12)
+- DROP 5893 Cross Ranch SP Primitive Campground: tent-only (sites #37-#50 primitive tent; walk-in or sleeper-van parking pads). LEAD: the park's modern Governors Centennial Loop is not in the DB (reserveND Facility 36, ~47.21305,-100.99616, 28 standard 50 A gravel sites 30-45 ft, $25 Tue/$30 Fri; park page "35 Standard Campsites").
+- UNREAD, no result: 5979 Strasburg City Park (ndtourism 403, strasburgnd.com hijacked by gambling spam) - pin moved ~490 m off a residential lawn to Google's "Strasburg Campground" (46.13533,-100.16793; gravel loop with RVs on imagery; 4.6/11); stored inclusion source conflated with Strasburg VA (RV Life "1000 John Galt Way ... 22657"). 5971 Willowood, Mayville (mayvilleportland.com Cloudflare 403; no park-district site). 6010 Bisbee City Campground (no city site; HHS licence PDF hung; HHS snippet "Bisbee RV Park, 302 Main St, capacity 5"). All three phone/sweep candidates.
+- 7 applied. Pins: 5908 Eggerts Landing ~525 m (RIDB site-catalog centroid), 5979 above. Phones: 5911/5908 '' -> 701-845-2970 (Lake Ashtabula project office); 5985 after-8pm check-in line -> office (701) 873-5852. Website: 5955 perfectmind -> WebTrac (the city page's current booking link; Cloudflare refused, unread).
+- 5911 East Ashtabula: electric 50 -> 30 (site 15's lone "50" contradicts its own 30 entry).
+- 5978 Cooperstown: monthly $500 posted, ~7 parked trailers on imagery, no discouraging wording - long-stay watch only; stored 12 sites / 50 A / season unconfirmed.
+- 5965 Kidder (Wahpeton): on the Red (2.5 km below the Bois de Sioux/Otter Tail confluence), note says "the river". Monthly $900 only when an extended stay is approved.
+- 5985 Beulah Riverside: all 8 sites "Electric Only" -> water false. Eagles Park & Campground across Hwy 49 is already 6018 (agent missed it); its page says "CLOSED FOR THE 2026 SEASON" - check when 6018 comes up.
+- 6014 Sportsmen's Centennial: Firefly prices unread; sells Seasonal Electric/Primitive classes but 10+ short-term sites open every July 2026 night, Google 4.6/19; stored fcfs "some_sites" unsupported (Firefly sells primitive online) - left.
+- LEADS (unvetted): Chahinkapa Park Campground, Wahpeton (~46.265,-96.606, $35-40, zoo 701-642-8709); Big Coulee Dam Campground (City of Bisbee, HHS capacity 100, ~48.639,-99.360).

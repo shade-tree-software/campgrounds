@@ -1,0 +1,50 @@
+{
+  "id": 5911,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233419 (description, rules, amenities, phone) and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233419 (per-site catalog: type, equipment, lengths, electric, coordinates)",
+    "Esri World_Imagery 400 m frame at 47.15845,-98.00411 with the catalog's site points, and zoom-19 tiles at 47.15912,-98.00395 and 47.15855,-98.00510"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026",
+                 "note": "Standard electric sites $26; the double site 23/24 $52; walk-to tent sites $20. recreation.gov rate table (peak season 2026-05-15 to 09-30 and 2027-05-14 to 09-30), read 2026-11-12."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233419/rates (Peak Season 2026-05-15..2026-09-30 and 2027-05-14..2027-09-30: STANDARD ELECTRIC 26, STANDARD ELECTRIC double 52, WALK TO 20), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "recreation.gov site catalog for 233419: all 30 STANDARD ELECTRIC sites 'Electricity Hookup' 30; 'Electric Hookup' 30 on 29 and 50 on site 15 alone (whose own 'Electricity Hookup' says 30), so 30 amps, snapped down; read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 36, "max_rig_ft": 79,
+                 "note": "30 electric RV sites (one of them the double site 23/24) and six walk-to tent sites (01-03, 18-20). The recreation.gov description still says 38 sites, 32 with electric."},
+      "source": "recreation.gov site catalog for 233419: 36 sites, 30 STANDARD ELECTRIC (RV/Tent/Trailer, Max Vehicle Length 27-79 ft, back-in gravel) and 6 WALK TO (Tent only), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233419 ('The facility also features a swimming beach, drinking water, flush toilets, a playground and a picnic shelter'; amenities list 'Showers'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14,
+                 "note": "Stay limit 14 nights in any 30 days. Check-in and check-out 1 p.m."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233419 (rules: maxStay 14 nights 'Rolling 30 Days'; every catalog site reservable; site 'Checkin Time'/'Checkout Time' 1:00 PM), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on a wooded hillside beside Lake Ashtabula (Baldhill Dam), about 15 miles north of Valley City; swim beach, playground and picnic shelter in the campground, with a dump station, boat ramp and fishing pier within walking distance. --Claude",
+  "summary": "rec.gov record + catalog: 36 sites (30 electric RV/Tent/Trailer sites, 27-79 ft, plus 6 walk-to tent sites); $26 standard, $20 walk-to, $52 double; 14 nights in 30; showers, flush toilets, drinking water. Electric 50 -> 30 (the lone '50' attribute on site 15 contradicts that site's own 30). Not waterfront stands (RV sites behind the shoreline tree band; the open shore is the swim beach). Phone missing -> 701-845-2970. Pin ok.",
+  "flags": [
+    "ELECTRIC 50 -> 30: the stored 50 (RIDB-derived) rests on site 15's 'Electric Hookup: 50', but the same site's 'Electricity Hookup' is 30, and every other electric site is 30 on both attributes. Snapped down to 30.",
+    "PHONE (missing): recreation.gov gives facility_phone 701-845-2970 (the Corps' Lake Ashtabula / Baldhill Dam office, the same number on Eggerts Landing). Suggest '' -> 701-845-2970.",
+    "WATERFRONT: not waterfront stands. North RV sites 21, 22 and 23/24 (about 47.1592,-98.0035) sit 20-30 m from the shore, but behind a continuous shoreline tree band. West sites 12-14 (about 47.1585,-98.0050) are ~25-30 m from the water through the same woods, beside the swim beach (day use). The open sand clearing on the north shore holds walk-to tent sites 18-20, not RV sites. The rec.gov description calls it 'a wooded hillside'. At most a filtered lakeview from 21/22 that imagery cannot confirm, so no change.",
+    "SITE COUNT: the catalog has 36 sites (30 electric, 6 walk-to tent); the stored 38 and the description's '38 campsites, 32 of which offer electric' are older. Written 36.",
+    "SEASON: rec.gov rate seasons run 2026-05-15..09-30 and 2027-05-14..09-30; that is a rate season, not a campground statement. No season written; none stored.",
+    "FIT: all 30 RV sites take 23 ft (27-79 ft); RV, Tent and Trailer permitted on every one.",
+    "PIN: stored 47.15789,-98.00422 is ~60 m from the catalog centroid 47.15845,-98.00411; keep. The USACE district page was not tried (earlier batches found the Corps' ND pages refuse plain HTTP); rec.gov is the authority."
+  ]
+}

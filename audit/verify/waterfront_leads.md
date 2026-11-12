@@ -1278,3 +1278,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-454 (ND, 2026-11-12)
 - APPLIED 5963 Old Settlers riverview -> creekside: Des Lacs channel 14-20 m; sites 5-7 (~48.2811,-101.4322) 15-25 m over mown grass, nightly; note names them.
 - 5932 Patterson Lake lakeview stands narrowly (M21/M22 ~80 m over open grass). 6011 Short Creek lakeview is a ceiling (undesignated spots ~48.9908,-102.7826, 50-60 m behind a shelterbelt and the loop road). 5896 Beaver Lake not waterfront stands (east pads 30-40 m but behind the ramp road and a tree band).
+
+## p3-455 (ND, 2026-11-12)
+- APPLIED 5971 Willowood riverfront -> creekside (Goose River ~15-18 m; east loop sites ~35 m over open grass; site numbers unread).
+- 5908 Eggerts Landing not waterfront -> lakeview? Site 041 (47.09765,-98.01184) on mown grass ~20 m above a reed-fringed bay; other loops under continuous forest. One site - left.
+- 5955 Lindenwood riverview -> riverfront? South pad row (~46.8490,-96.7805 to 46.8497,-96.7775) ~30 m from the ~60 m Red River over an open grass bank, no levee between; no site numbers (WebTrac unread) - left at riverview.
+- 5911 not waterfront stands (RV sites behind the shoreline tree band; open shore is the swim beach). 5985 not waterfront stands (Knife ~10-15 m, behind trees). 5965 riverview stands (pads indistinct).
