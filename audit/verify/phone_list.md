@@ -42,7 +42,7 @@ The "Settle" column lists only what is specific to each entry.
 | 5982 | Northwood City RV Park | none found (city site refuses) | fees, season | Find the city number first. |
 | 5979 | Strasburg City Park | none found | fees, season, sites | Find the number; confirm the gravel loop at the new pin is the campground. |
 | 5971 | Willowood Campground (Mayville) | 701-430-7177 | fees, booking | Rate, booking; which sites are by the Goose River. |
-| 6010 | Bisbee City Campground | none found | fees, season, hookups, sites | Find the number; is Big Coulee Dam (ND lead 7) a separate city campground? |
+| 6010 + 15679 | Bisbee City Campground and Big Coulee Dam Campground (both City of Bisbee) | city hall not found; RV Life gives 701-656-3569 for 6010 (holder unconfirmed) | 6010: fees, season. 15679: fees, season, hookups, booking | One call covers both. Big Coulee Dam: 100 licensed lots but ~8 units on imagery - how many are nightly vs seasonal (test 4); any sites near the water (lakeview lead, north clearing). |
 | 5992 | Bowdon Park and Campground | none found | fees, season | Who runs it (licence holder Bowdon Development Center Inc - private?); where the sites are (pin is on a house lot). |
 | 6015 | Coldwater Lake Park (McIntosh Co.) | none found | fees, season, booking | **Long-stay share** (tight trailer rows look seasonal); whether the north-row shore sites are sold nightly (lakefront lead). |
 | 5964 | Glen Ullin Memorial Park | park district (site refuses) | season | Season only (electric, water and dump already on record). |
