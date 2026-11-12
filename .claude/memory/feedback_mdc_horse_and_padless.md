@@ -1,9 +1,11 @@
 ---
 name: feedback-mdc-horse-and-padless
-description: AWH 2026-11-09 - an agency camp the map labels a horse camp is dropped unless it is obviously separate from a general camp; roadside camping with no pad is kept with a caveat
+description: AWH 2026-11-12 - any campground that does not EXPLICITLY separate horse areas from general camping is dropped (mixed horse sites, horses at all sites); roadside camping with no pad is kept with a caveat
 metadata:
   type: feedback
 ---
+
+**AWH 2026-11-12 (tightened):** "campgrounds that do not explicitly separate the horse areas from the general camping areas are not allowed." Horse sites interspersed in the general loops (Jorgen's Hollow 13708), "horses permitted at all sites" (Magpie 5916), or horse-trailer pads with no separate general loop (Parkhurst 6045) are all drops. Only a separate horse loop/camp, or an explicit no-horses rule for the general campground, keeps one. An agency silent on horses with no horse facilities is just a campground.
 
 AWH 2026-11-09, answering three phase-7 asks:
 
