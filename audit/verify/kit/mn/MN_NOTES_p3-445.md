@@ -30,3 +30,6 @@ Phones: Sebeka City Hall 218-837-5773 (search snippet of cityofsebeka.org/how-do
   Fees not read (2026 fee PDF mdocs 9508 not archived). Riverfront -> riverview lead (40-51 ~50 m back across beach road + beach). Pin -> 43.6854,-91.2735 (~260 m).
 - apply.py dry run refused by the permission classifier; validated instead by importing apply.plan + campground_schema.apply_update on a deepcopy: 0 problems.
 - All other ten ids: NO RESULT FILE (own sites refuse; no independent official source found).
+
+## Added later (2026-11-12): 15672 Horseshoe Park Campground (Hallock) phone check
+218-843-2737 (City Hall): number of sites and how many go to monthly/multi-month campers; hookups (30/50 A, water, sewer); longest rig; season.
