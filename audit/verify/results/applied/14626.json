@@ -1,0 +1,48 @@
+{
+  "id": 14626,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://reserve.campgroundbooking.com/ringler-family-campground -> https://reserve.campgroundreservations.com/search_sites?gs_campground_id=202422737 (Good Sam campground reservations engine), read 2026-11-11",
+    "api.campgroundreservations.com GraphQL behind that engine: campground, campgroundPolicy, campgroundBlocks, guestReservationSiteTypes quoted for a 23-ft Class C, 2 adults, on 2027-04-30, 05-01, 05-11 (2 nights), 06-15, 07-03, 08-07, 09-14, 10-02 and 10-03, read 2026-11-11",
+    "Google Maps place panel 'Ringler Family Campground' (4.3, 46 reviews), read 2026-11-11",
+    "RV Life park index around 45.9262,-93.1376: no listing for this park, read 2026-11-11",
+    "Esri World_Imagery frame at 45.9262,-93.1376 (300 m)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 15, "max_rig_ft": 70, "pull_through": true, "note": "10 RV sites with water and electric (9 back-in, 1 pull-through, length 70 ft) and 5 primitive tent sites."},
+      "source": "guestReservationSiteTypes 2027-06-15: 'Back In Water & Electric' sites_amount 9, 'Pull Through Water & Electric' sites_amount 1, both length 70; tent kind 'Primitive Tent' sites_amount 5, read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "guestReservationSiteTypes: both RV types electrical ['15A','30A','50A'], water true, sewer false, read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://reserve.campgroundreservations.com/search_sites?gs_campground_id=202422737"},
+      "source": "Good Sam campground reservations engine (instant_booking true; one-night stays quote on every date read), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 50, "nightly_high": 50, "currency": "USD", "checked": "2027", "note": "Water and electric sites $50 a night before tax (one night quotes $56.68 with tax and a small booking charge); primitive tent sites $25. Cancellation with 14 days' notice costs $25."},
+      "source": "guestReservationSiteTypes: RV types daily_rate 5000 on every 2027 date read (1 night total_price 5668, 2 nights 11235); 'Primitive Tent' daily_rate 2500; campgroundPolicy ('Refunds wil be issued less a $25 cancellation fee'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-03"},
+      "source": "campgroundBlocks (closed '01-01'..'04-30' and '10-04'..'12-31'); reservationSetting working dates 2027-04-30..2027-10-04, read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Small family campground in an open field off MN-23 at Brook Park, between Mora and Hinckley; booked online. --Claude",
+  "summary": "Booking engine read: 10 water/electric RV sites (15/30/50 A, 70 ft, one pull-through) at $50 before tax on every 2027 date read, 5 tent sites $25, open May 1 - Oct 3, no minimum. Passes the price gate at exactly $50 and the long-stay tests; Google 4.3/46, not on RV Life. Sewer false added. Not waterfront confirmed. Note cleaned.",
+  "flags": [
+    "PRICE GATE pass at the line: 'daily_rate 5000' ($50.00 before tax) for both RV types on 2027-04-30, 05-01, 05-11, 06-15, 07-03, 08-07, 09-14, 10-02, 10-03. Not a Good Sam Park (stored discounts.good_sam false). No gateway needed.",
+    "LONG-STAY tests pass: (1) $50; (2) one-night stays sold online with instant booking, phone +1 320-293-7075; (3) no minimum (1-night quotes on a July 3 Saturday too); (4) all 15 sites are sold by the night through the engine; no seasonal offer seen; (5) not a home community. Imagery shows a nearly empty loop of about ten gravel spurs. No wording discourages nightly guests.",
+    "GOOGLE 4.3 from 46 reviews. RV Life: no listing within 20 km by name (nearest results are other parks).",
+    "WATERFRONT not waterfront confirmed: gravel loop in an open field, no water in a 300 m frame.",
+    "FACILITIES: the engine lists no restrooms or showers; none stored, left absent.",
+    "WEBSITE: https://reserve.campgroundbooking.com/ringler-family-campground now redirects -> suggest https://reserve.campgroundreservations.com/search_sites?gs_campground_id=202422737. PHONE 320-293-7075 confirmed (engine contact)."
+  ]
+}

@@ -1,0 +1,13 @@
+# MN NOTES p3-440
+- 5672 WRITTEN: 92 sites, $30, seasonal 2000/1700, lakefront->lakeview (10A maybe), pin ~490m, seasonal-heavy north block
+- 13340 WRITTEN: lakeview kept, $25/$30, phone 507-368-9350, full-hookup conflict
+- 5488 WRITTEN: lakefront kept (011,014,015,028,030 photos), 47 sites (42 elec), $23, phone 218-246-2123
+- 5408 WRITTEN: 66 sites $25/$35, 50A, season conflict (seasonal Apr2-Nov7 vs manual year-round), phone 320-280-7880
+- 5673 WRITTEN: 10 FHU $40, eviivo booking (Cloudflare unread), NW confirmed, pin 160m
+- 13324 WRITTEN: 38 nightly (36 W/E) + 11 seasonal, 50A starred 4, NW kept w/ lead sites 11-12 pond, ATV side flag
+- 14624 WRITTEN: keep; $48 base ($55 lakefront), phone booking, 80 sites, G 4.5/61, RVL unrated, lakefront kept shoreline row
+- 13333 WRITTEN: 33 sites $22/28/30, sewer->false, season May-Oct, phone booking 218-835-4803, NW confirmed
+- 5491 WRITTEN: riverfront->creekside (6-10 m stream), free FCFS, season 05-08..10-01
+- 14626 WRITTEN: keep; $50 exactly, 10 RV W/E + 5 tent, season 05-01..10-03, G 4.3/46, no RVL, website redirect
+- 5680 WRITTEN: 9 RV $25 FCFS 40ft, NW->riverview suggested, pin on substation ~150m, phone 320-839-3428
+- dry run: 11 ready, no !!

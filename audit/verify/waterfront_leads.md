@@ -1220,3 +1220,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-439 (MN, 2026-11-11)
 - 5439 Lost Lake lakeview -> not waterfront; 13332 Maka-Oicu lakeview -> not waterfront; 5487 Ninemile Lake not waterfront -> lakeview (sites 19/21/22/23 leaf-off photos). 5486 Mosomo Point lakefront kept on sites 13 and 15 (caveat in note); site 06 flagged Lakefront by rec.gov but photo shows woods.
+
+## p3-440 (MN, 2026-11-11)
+- 5672 Norwegian Creek lakefront -> lakeview (lone pad ~44.2883,-96.2602, maybe 10A, open to the shore: lead). 5491 Poplar River riverfront -> creekside. 5680 Riverside Park (Ortonville) not waterfront -> riverview. 5488 Onegume lakefront kept (rec.gov lakefront 011/012/014/015/018/024/026/028/030/032/033). 14624 Pine Acres lakefront kept (shoreline row with docks). Lead: 13324 Pierz sites 11-12 by the river's swimming pond (~45.9763,-94.0905).

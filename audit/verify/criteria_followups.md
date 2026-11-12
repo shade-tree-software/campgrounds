@@ -1779,3 +1779,11 @@ me drop and report); each needs the research named before a verdict.
 - 5485 McDougal: sites 17 and 19 closed since the 2021 Greenwood Fire; 17-21 long-term at $504.
 - 14621 Lum Park: page says opens May 1 but lists an April rate, and says no weekly rates but lists them.
 - Lead: Fury's Island County Park (Nobles County, ~1 mi S of Maka-Oicu), camping + showers, not in DB, unvetted.
+
+## p3-440 (MN, 2026-11-11)
+- No drops. Private: 14624 Pine Acres passes ($48 other sites; lakefront/sewer $55; Google 4.5/61; ~two dozen trailers look seasonal, share unpublished); 14626 Ringler passes at exactly $50.00 before tax every 2027 date read (Google 4.3/46).
+- 5408 Paint Rock Springs: stored manual year-round season was the park-wide DNR line; replaced with 04-02..11-07 (ReserveMN 2027 + DNR map "seasonal"; Riverview is the year-round loop).
+- 5672 Norwegian Creek: north block's 53 sites look full of seasonal setups (seasonal $2,000/$1,700); booking method not stated anywhere. Google 4.5/65.
+- 5673 Peterson: eviivo booking engine Cloudflare-refused (unread); stored derived WiFi/dump no longer on the city page, left.
+- 5488 Onegume and 13340 Picnic Point: potable-water / sewer conflicts left unwritten. 13333 Pine Tree Park: sewer true -> false; derived showers true unsupported, left.
+- 13324 Pierz: OHV side (Soo Line Trail), general city campground; stored $53 Campspot rate not re-quoted.
