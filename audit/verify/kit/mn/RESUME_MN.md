@@ -1,6 +1,6 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-445** (the unread sweep: 5705 read, 5576 Spafford DROPPED, 9 still unread = phone list in MN_NOTES_p3-445.md, calls wait for AWH). Next: vet the MN leads below, then North Dakota. Next new id **15673** (15669 Shell City Landing, 15670 Fury's Island, 15671 Red Pine, 15672 Horseshoe Park added from the leads).
+Applied through **p3-445** (the unread sweep: 5705 read, 5576 Spafford DROPPED, 9 still unread = phone list in MN_NOTES_p3-445.md, calls wait for AWH). Next: vet the MN leads below, then North Dakota. Next new id **15674** (15669 Shell City Landing, 15670 Fury's Island, 15671 Red Pine, 15672 Horseshoe Park, 15673 Snake River (Aitkin) added from the leads - MN LEADS DONE).
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
