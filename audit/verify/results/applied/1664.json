@@ -1,0 +1,69 @@
+{
+  "id": 1664,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://dnr.illinois.gov/parks/park.eldonhazlet.html (read 2026-11-12: 'The Illini Campground has 328 Class A campsites with 30 and 50 amp electrical hookups, and 36 Class C campsites for walk-in tent camping'; 'A campground store and public swimming pool are located at the campground'; Park Phone 618-594-3015; 20100 Hazlet Park Rd.; Park Latitude 38.669, Longitude -89.324)",
+    "https://dnr.illinois.gov/parks/camp/park.eldonhazlet.html and https://dnr.illinois.gov/parks/activity/park.eldonhazlet.html (read 2026-11-12: 'The campground occupies almost 1 1/2 miles of the Carlyle Lake shoreline, and most of the campsites are within easy reach of the water. Three shower buildings are located in the campground, plus numerous privy toilets.'; 'To register for a campsite, see one of the campground hosts on site 66, 120, 136, 233, or 308.'; 'Reservations can be made online at ExploreMoreIL for Class A sites 1-65, Handicap Site 93, and shelters.'; store 'at the entrance to the Illini Campground ... A public laundry room and outdoor patio also are available'; pool 'open from Memorial Day weekend through Labor Day weekend'. No dump station named.)",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (the API behind recreation.exploremoreil.com) search/place PlaceId 16 (facilities Illini 190, Shelter 192) and search/details for all 328 units of 190 at 2027-06-15: every unit 'Class A', Electricity Hookup '30 Amp' at 310 and '50 Amp' at 18, no water or sewer attribute, all Back In, Max Vehicle Length 40 at 327 and 30 at 1 (Driveway Length 40 throughout), engine price $20 (2026 schedule), AllowWebBooking true only at 001-065 and 093A; 'Waterfront Site' tag on 008, 009, 010, 011 and 025; only 001-065, 093A and the host sites 066H/119H/120H/136H/233H/308H carry map points; grid season: in season every date 2026-11-12..2028-01-05, read 2026-11-12",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric $28; Premium Electric $35 only at the named Premium campgrounds, not Eldon Hazlet), read 2026-11-12",
+    "USGS 3DEP DEM (~2 m): lake surface in the lidar 135.3 m; Carlyle Lake normal summer pool 445.0 ft (135.6 m), measured to 135.7 m from each mapped unit: 009 (38.64803,-89.33083) 140.6 m, water 21 m at bearing 68; 010 (38.64824,-89.33092) 25 m bearing 0; 025 (38.64924,-89.33158) 34 m to a cove; 011 38 m; 008 (38.64781,-89.3311) 39 m bearing 125; 001-007 and 012-014 40-58 m, mostly to the harbor-side inlet; the drop is ~5 m over the last 20 m (riprap bank)",
+    "Esri World_Imagery (leaf-off, z19 ~0.3 m/px, and 0.6 m/px with the engine points plotted): the south loop (001-015) occupies the point between the main lake and the sailboat-harbor inlet; east of 007-010 a grass strip with scattered trees runs to a ~15 m riprap band on the open lake; the stored pin lies in the woods beside the entrance road ~150 m west of the campground store"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "note": "All 328 Illini sites are the Electric class; the 36 walk-in tent sites are Non-Electric ($11)."
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric $28) applied to the ExploreMoreIL unit classes (328 Class A electric units), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ExploreMoreIL unit details, park 16 facility 190 ('30 Amp' at 310 units, '50 Amp' at 18; no water or sewer attribute); DNR camping page ('30 and 50 amp electrical hook-ups'), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 328,
+        "pull_through": false
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.eldonhazlet.html ('328 Class A campsites ... and 36 Class C campsites for walk-in tent camping'); ExploreMoreIL facility 190 (328 Class A units, all Back In), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "camp_store": true, "laundry": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.eldonhazlet.html ('Three shower buildings are located in the campground'; 'The Eldon Hazlet Campground Store, located at the entrance to the Illini Campground ... A public laundry room and outdoor patio also are available'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/16",
+        "fcfs": "some_sites"
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.eldonhazlet.html ('Reservations can be made online at ExploreMoreIL for Class A sites 1-65, Handicap Site 93'; 'To register for a campsite, see one of the campground hosts'); engine: AllowWebBooking true only at 001-065 and 093A, read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR recreation area on the west shore of Carlyle Lake, north of Carlyle. The Illini Campground runs along about 1.5 miles of shoreline; only sites 1-65 and 93 take reservations, the rest are first-come through the campground hosts. The lakeside sites face riprap. Pool (Memorial Day to Labor Day) behind the campground store; 36 walk-in tent sites and lakeshore cottages as well. --Claude",
+  "summary": "DNR park/camp/activity pages, ExploreMoreIL engine (all 328 units) and the 2027 fee PDF read: Illini Campground 328 Class A sites, 30 A (50 A at 18), no water/sewer at sites, all back-ins; only 1-65 and 93 web-bookable, the rest FCFS via hosts; $28 Electric 2027 (engine still $20, 2026); showers, store, laundry; count 364 -> 328 (36 walk-in tent sites dropped from the RV count); booking operator -> usedirect, fcfs some_sites. Lakefront kept on sites 008-010 (21-39 m over grass and riprap, ~5 m drop). Phone 618-594-3015 (none stored). Pin kept.",
+  "flags": [
+    "WATERFRONT (stored lakefront, KEPT with a riprap caveat): engine tags 008, 009, 010, 011, 025 'Waterfront Site'. Measured to the 135.6 m normal pool (3DEP): 009 (38.64803,-89.33083) 21 m, 010 (38.64824,-89.33092) 25 m, 008 (38.64781,-89.3311) 39 m, all on the open main lake, ~5 m above it, over a grass strip with scattered trees and a ~15 m riprap band (Esri z19). All three are web-bookable nightly sites. 011 (38 m) and 025 (34 m) face the harbor inlet / a cove behind a tree belt: view at best. The 263 unmapped FCFS sites (066-328) along the north shoreline could not be measured from the engine; the old evidence points (38.6595,-89.3205) are there. Lakefront rests on 008-010.",
+    "SITE COUNT: stored 364 -> 328 (the 36 'Class C campsites for walk-in tent camping' are not RV sites).",
+    "BOOKING: stored platform operator (derived) -> usedirect; fcfs some_sites: the DNR says reservations only 'for Class A sites 1-65, Handicap Site 93', and the engine marks only those web-bookable; the other 262 register with the hosts.",
+    "MAX RIG (not written): the engine gives Max Vehicle Length 40 and Driveway Length 40 at 327 of 328 units, a uniform figure that reads as a default rather than a measured pad; left unwritten. Every unit takes 23 ft by it.",
+    "FEES: 2027 Electric $28 at all 328 (Eldon Hazlet is not a named Premium campground); stored $28 already reflected 2027; per-entry $10 reservation fee removed (state:IL row). The camp page still describes the old $5 reservation fee.",
+    "FACILITIES: showers, store, laundry confirmed. Stored dump true (derived) is not named on any of the park's pages; left as stored, not re-sourced. The page names privy toilets; flush toilets not stated.",
+    "PHONE: none stored -> 618-594-3015 (DNR 'Park Phone'). Store/cottages 618-598-6049. apply.py does not write phones.",
+    "WEBSITES: both stored links work (dnr.illinois.gov park page; ExploreMoreIL #!park/16 = Eldon Hazlet SRA). No change.",
+    "PIN: stored 38.6546,-89.3302 is in woods beside the entrance road ~150 m west of the campground store at the Illini entrance, within the campground's span (engine points 38.6478-38.6608): keep.",
+    "SEASON: none stored; the engine shows every date in season through 2028-01-05 and the DNR states no closing. Not written.",
+    "LEAD (not vetted): Carlyle Lake Cottages inside the park are cabins, not a campground. No other lead."
+  ]
+}

@@ -2026,3 +2026,13 @@ me drop and report); each needs the research named before a verdict.
 - 1652 Cave-in-Rock: NOT on ExploreMoreIL (permits from the host/superintendent) - platform none set so the state:IL row's usedirect doesn't apply; 2027 $28 (was $20).
 - 1768 Blackwell: weekends only (Fri/Sat nights May - Columbus Day, plus holiday nights). 1766 Big Rock: horse loop separate, residents pay less but no priority.
 - Pins: 1751 ~520 m, 1766 ~470 m, 778 ~320 m, 1652 ~550 m, 1768 ~250 m. Phones: 1713, 1659, 1718, 778, 1652 added; 1799 (dropped).
+
+## p3-466 (IL, 2026-11-12)
+- 9 applied, 1 dropped, 1 unread. DROPPED 1728 EZ Camp Now (Benton): no live web presence (domain NXDOMAIN, Facebook only, no rate, Google 10 reviews).
+- 1760 Driftwood kept in the long-stay caveat band (15-22 nightly of ~50, 30-45%; monthly at $22/night); $45-50 + $3 reservation fee; rig-age "over 15 years old, please contact us" (2023 rig passes).
+- 1714 Crab Orchard (The REEF LLC concession): now books online via Firefly (stored "reservable false" out of date), $21-45, 74 sites, opens 03-26. Bluegill Bay = 14617.
+- 1664 Eldon Hazlet: 328 Class A (36 walk-in tents excluded); only 1-65 and 93 reservable, 262 first-come via hosts; 30 A (50 A at 18); engine 40 ft at 327 of 328 units = default, max rig not written.
+- 1662 Eagle Creek: count 75 -> 130 (engine units; DNR page still says 75), $28-35 2027 (premium 1AA/2AA). Stored year_round kept; engine reservation season 04-01..10-31. 1650 Ferne Clyffe: RV loop is Deer Ridge (59 sites), equestrian camp separate; same engine season, not written.
+- 1705 Fishermans Corner: 46 public RV sites, 50 A, max 70 ft, 2027 $26, season 05-01..10-23, reservation only.
+- Pins: 1785 ~790 m, 1650 ~1.2 km. Phones: 1745, 1714, 1662, 1664, 1650, 1781 (Google only). Websites: 1785, 1714.
+- UNREAD: 1781 Fairview Park, Casey (cityofcaseyil.org Akamai Access Denied). Still queued. Google: 4.5/120; review ~3 months old "$25/night - Cash, $15 for residents".

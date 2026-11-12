@@ -1,0 +1,49 @@
+{
+  "id": 1698,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233465 (read 2026-11-12: 'Coon Creek Campground is 100% reservable with 181 campsites. All sites are equipped with electric hookups. The facility has flush toilets, showers, a playground, bicycle pump track, basketball court, sand volleyball court, swimming beach, Hide N Seek Nature Tail, dump stations, and boat ramp.'; 'This facility overlooks the lake shore and is heavily forested'; notices 'Must have a reservation prior to setting up on site.', 'The banks are steep and it may be difficult to get to the water from many sites'; rules maxStay 14 (rolling 30 days), minWeekendStay 2, minHolidayWeekendStay 3; phone 217-774-3951; amenity 'Drinking Water')",
+    "https://www.recreation.gov/api/camps/campgrounds/233465/rates (2026 Peak 05-07..10-12 and 2027 Peak 05-06..10-10: STANDARD ELECTRIC 18, FULL HOOK-UP 24, BUDDY SITE 36, BUDDY SITE & FULL HOOK-UP 48, TENT ONLY ELECTRIC 18), read 2026-11-12",
+    "recreation.gov campsite catalog (api/search/campsites asset_id 233465), read 2026-11-12: 180 sites - 167 bookable STANDARD ELECTRIC (RV/Tent/Trailer), 1 unbookable standard (144), 12 TENT ONLY ELECTRIC (20 ft); Electricity 30 A at 145, 50 A at 32; water+sewer at 22 bookable sites (033-038, 045, 048, 053, 057, 059, 112, 113, 152, 176, 206, 207, 225-229); Max Vehicle Length 20-99 (167 standard sites 25 ft+); 13 Pull-Through + 1 Pull-through; 40 sites tagged 'Proximity to Water: Lakefront'",
+    "USGS 3DEP DEM (elevation.nationalmap.gov exportImage, ~2 m) around the campground: lake surface 181.4 m at capture; transects from each 'Lakefront' site to the 182.8 m line (Lake Shelbyville summer pool 599.7 ft)",
+    "Esri World_Imagery with the 40 'Lakefront' site points plotted: every loop under continuous oak-hickory canopy on fingers between coves; sand fringe only below the banks"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 24, "currency": "USD", "checked": "2027", "note": "$18 for an electric site, $24 for one of the 22 full-hookup sites. Buddy (double) sites $36, or $48 with full hookups."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233465/rates (2027 Peak 05-06..10-10: STANDARD ELECTRIC 18, FULL HOOK-UP 24, BUDDY SITE 36, BUDDY SITE & FULL HOOK-UP 48), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "recreation.gov campsite catalog 233465 (Electricity 50 A at 32 sites, 30 A at 145; water and sewer hookups at 22 bookable sites, priced as FULL HOOK-UP), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 180, "max_rig_ft": 99, "pull_through": true, "note": "167 electric RV sites (25-99 ft) and 12 tent-only electric sites; 22 full-hookup sites; 14 pull-throughs."},
+      "source": "recreation.gov campsite catalog 233465 (180 sites; Max Vehicle Length 20-99; Driveway Entry Pull-Through at 14), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233465 ('flush toilets, showers ... dump stations'; amenity 'Drinking Water'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233465", "fcfs": "never", "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "note": "Every site must be reserved before setting up ('100% reservable'). recreation.gov's 2-night weekend and 3-night holiday-weekend minimums are not marked soft. 14 nights in any rolling 30."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233465 ('100% reservable'; notice 'Must have a reservation prior to setting up on site.'; facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 rolling 30 days), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on the western shore of Lake Shelbyville, in heavy oak-hickory woods on fingers of high ground between coves; the banks down to the water are steep. Swim beach, playground, bike pump track, basketball and volleyball courts, a 0.7-mile nature trail and a boat ramp. --Claude",
+  "summary": "rec.gov facility, rates and full catalog read: 180 sites (167 RV electric 25-99 ft, 12 tent-only), 30/50 A, 22 full-hookup sites, $18 electric / $24 full hookup (2027, unchanged from 2026), 100% reservable (fcfs some_sites -> never), 2-night weekend / 3-night holiday minimums, 14-night max. Count 181 -> 180, max 90 -> 99. Note cleaned ('~half reservable' was wrong). STORED LAKEFRONT FAILS: every rec.gov 'Lakefront' site sits 6-20 m above summer pool on steep wooded banks -> lakeview recommended.",
+  "flags": [
+    "WATERFRONT (stored lakefront, not --AWH): recommend LAKEFRONT -> LAKEVIEW. rec.gov tags 40 sites 'Lakefront', and rec.gov's own notice says 'The banks are steep and it may be difficult to get to the water from many sites'. Measured on 3DEP to the 182.8 m summer-pool line (599.7 ft): the closest RV sites are 199 (39.44683,-88.76575; pad 188.5 m, water 15 m away, 5.7 m below), 200 (39.44717,-88.76521; 190.6 m, 20 m, 7.8 m below), 159 (39.44691,-88.76278; 190.0 m, 21 m, 7.2 m below), 216 (39.44940,-88.76553; 193.3 m, 23 m, 10.5 m below), 182 (39.44699,-88.76359; 192.8 m, 26 m), 185 (39.44515,-88.76358; 189.6 m, 28 m); the 001-016 row on the east finger is 45-100 m from the water and 12-20 m above it. Imagery shows continuous canopy on every finger with sand only at the foot of the banks; 188 sits behind the swim beach (day use). Every site is a climb down a wooded bank, so by the bluff rule none is on-water; the point sites (199, 200) and the south fingers (159, 160, 182-191) overlook coves through the trees -> lakeview.",
+    "BOOKING: stored fcfs some_sites (derived) -> never: rec.gov says '100% reservable' and 'Must have a reservation prior to setting up on site.' The old note's '~half reservable' is contradicted and dropped.",
+    "SITES: count 181 (derived) -> 180 (catalog; the description still says 181); max_rig_ft 90 -> 99 (site 227). 12 tent-only electric sites are 20 ft; 167 standard sites take 25 ft+ (all fit a 23-ft rig).",
+    "FEES: rec.gov's 2027 Peak table is $18 electric / $24 full hookup, the same as 2026. Buddy sites $36/$48.",
+    "SEASON: not written. The rate table's Peak season (2027-05-06..10-10) is not a campground statement; recreation.gov offers no other season text.",
+    "PHONE 217-774-3951 matches rec.gov - keep. Website (rec.gov page) fine. PIN: stored 39.45139,-88.7625 is ~60 m from the 180-site centroid 39.45126,-88.76190 - keep.",
+    "rec.gov militaryDiscount rule present - not written (not a discount claim)."
+  ]
+}

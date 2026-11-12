@@ -1,0 +1,12 @@
+# p3-466 (fourth IL batch) working notes, 2026-11-12
+- 1785 Charley Brown: DONE. 2024 fee sheet $20/$120wk; 85 E+W; pin move ~790 m to 38.6672,-88.5392; website -> /parks; Google 4.6/306.
+- 1698 Coon Creek: DONE. 180 sites, $18/$24, 100% reservable; lakefront -> lakeview (closest 199 15 m/5.7 m below, banks steep, canopy).
+- 1745 Countryside: DONE. $45, phone -> 217-840-0008, pond -> not waterfront (0.17 ha, no site named), Google 4.8/51.
+- 1714 Crab Orchard: DONE. REEF LLC; $35/$45; Firefly reservable; lakefront kept (A south row, B west, E point); phone->618-364-6289; website redirect.
+- 1760 Driftwood: DONE. $45/$50+$3; riverview -> not waterfront; nightly ~30-45% caveat; Google 4.7/281.
+- 1728 EZ Camp: DONE. Drop candidate (domain NXDOMAIN, FB only, Google 4.5/10). Real overnight stop, not rental.
+- 1662 Eagle Creek DONE: 130 units, $28-35, 50A, usedirect, not wf (71 m), phone 217-756-8260
+- 1664 Eldon Hazlet DONE: 328, $28, 50A, usedirect some_sites, lakefront kept 008-010 riprap, phone 618-594-3015
+- 1781 Fairview Park NO RESULT: cityofcaseyil.org Akamai Access Denied (own page refuses); Google 4.5/120, (217) 932-4885, 704 E Monroe Ave; review ~3 mo ago: $25/night cash, $15 residents; water+electric, dump at exit
+- 1650 Ferne Clyffe DONE: Deer Ridge 59, $28, 50A, usedirect some_sites, pin move 1.2 km -> 37.5385,-88.9778, horse separate, phone 618-995-2411
+- 1705 Fishermans Corner DONE: 46 RV, $26, 50A, rec.gov never, season 05-01..10-23, riverfront kept 008/009/011/012/013 riprap

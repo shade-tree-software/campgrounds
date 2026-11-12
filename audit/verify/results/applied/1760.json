@@ -1,0 +1,38 @@
+{
+  "id": 1760,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://driftwoodquincy.com/ (read 2026-11-12): 'Pull Through FHU - $50/night / Back In FHU - $45/night / Monthly - $22/night which includes 800 kwh of electric (please call for availability) / There will be a $3 reservation fee added to your booking / Site fee covers up to 2 adults and 2 children per site. Occupancy exceeding this will be charged $1 per extra person per night. / Note: Over Memorial Day and Labor Day weekends there is a minimum 3-night stay. / (If your RV is over 15 years old, please contact us before making a reservation.)'; amenities 'WiFi', 'Pool - FOR PAYING CAMPERS ONLY', 'Laundry', 'Shower house'; 'Open year-round.'",
+    "https://driftwoodquincy.com/directions-%26-warning (read 2026-11-12): '(Note: DO NOT TAKE CEDAR STREET! Some maps will bring you that route but it passes under a low, narrow train bridge.)'; https://driftwoodquincy.com/rules: 'The laundry and bathrooms are located in the office building.'",
+    "audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot API read 2026-10-13, park 1834): two nightly types, 'Back In' (12 sites listed, 50 ft, full hookup 30/50 A, concrete pad) and 'Pull Through' (3 sites, 50 ft); sites free for one night: 12+3 on 2026-10-20, 18+3 on 2027-01-26/30, 19+3 on 2027-06-08/12",
+    "Esri World_Imagery: the park sits in woods east of Bonansinga Drive; west of the road is bottomland forest, wetland and lagoons, with the nearest open water (the Quincy Bay backwater) 175-400 m away through trees; ~50 pads counted, many with trailers parked",
+    "Google Maps panel 'Driftwood Campground & Rv Park', 2300 Bonansinga Dr: 4.7 stars / 281 reviews, phone 217-577-2066, read 2026-11-12; trip_data/goodsam_parks.json: 'Driftwood Campground RV Park' gs False, military True; audit/price_research/gateways.py 39.95981,-91.41488 -> none within 40 km"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 50, "currency": "USD", "reservation_fee": 3, "checked": "2026", "extra_person": {"included": 2, "included_children": 2, "amount": 1, "child": 1, "per": "night"}, "note": "$45 back-in, $50 pull-through, full hookup, plus a $3 reservation fee. Monthly $22 a night with 800 kWh of electric included."},
+      "source": "https://driftwoodquincy.com/ ('Pull Through FHU - $50/night', 'Back In FHU - $45/night', 'Monthly - $22/night which includes 800 kwh of electric', '$3 reservation fee', 'Site fee covers up to 2 adults and 2 children per site. Occupancy exceeding this will be charged $1 per extra person per night.'), read 2026-11-12; agrees with Campspot's $45/$50 + $3 'Booking Fee' read 2026-10-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"wifi": true, "laundry": true, "showers": true},
+      "source": "https://driftwoodquincy.com/ (amenities 'WiFi', 'Laundry', 'Shower house') + /rules ('The laundry and bathrooms are located in the office building.'), read 2026-11-12",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://driftwoodquincy.com/ ('Hours of Operation / Open year-round.'), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Former KOA on the Great River Road at the north edge of Quincy, in woods at the foot of the bluff, with mostly concrete pads, a pool and a playground. More than half the sites are rented by the month. The operator warns against routing via Cedar Street, which passes under a low, narrow rail bridge; rigs over 15 years old must call before booking. --Claude",
+  "summary": "Operator site read: $45 back-in / $50 pull-through FHU + $3 reservation fee, monthly $22/night, open year-round, WiFi/laundry/showers/pool, 3-night Memorial/Labor Day minimum. Campspot sells 15-22 nightly sites of ~50 (30-45%) -> keep with a long-term caveat (10-50% band). Google 4.7/281. STORED RIVERVIEW FAILS: nearest water is a backwater 175-400 m away across Bonansinga Dr through bottomland forest -> not waterfront.",
+  "flags": [
+    "WATERFRONT (stored riverview, not --AWH): recommend RIVERVIEW -> NOT WATERFRONT. The park is in woods east of Bonansinga Drive (39.9595,-91.4140); west of the road lie continuous bottomland forest, wetland and lagoons, and the nearest open water - the Quincy Bay backwater, not the main channel - is 175-400 m away behind trees (Esri imagery at 0.9 and 2.9 m/px). No site can see it; the operator's own aerial shows woods all round. The old note's 'some sites have a distant view' is dropped.",
+    "LONG-STAY (caveat band, keep): operator sells 'Monthly - $22/night ... (please call for availability)'. Campspot's two nightly types listed 12-19 back-in + 3 pull-through sites free for one night (2026-10-20, 2027-01, 2027-06), i.e. at most ~22 nightly sites of the ~50 counted on imagery / 51 stored = ~30-45% nightly. Note now says more than half the sites are rented by the month. No wording discouraging nightly guests; no standing minimum (3 nights only Memorial Day and Labor Day weekends, already in booking). Google 4.7/281.",
+    "GATE: $45 back-in (pull-through $50) before tax, plus a $3 per-stay reservation fee - under the line on the back-in rate. Not a Good Sam Park (gs False; military True already stored); no gateway within 40 km.",
+    "RIG AGE: 'If your RV is over 15 years old, please contact us before making a reservation.' - a 2023 rig passes until 2038; in the note.",
+    "PHONE 217-577-2066 matches Google and Good Sam - keep. WEBSITE (operator + Campspot links) fine. PIN 39.95981,-91.41488 is on the loop, keep.",
+    "Booking group (campspot, holiday-weekend minimum) and hookups (50 A FHU) re-confirmed by the operator page and the Campspot read; not rewritten. Sites count 51 (derived) not stated by the operator - left."
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": 1662,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://dnr.illinois.gov/parks/park.eaglecreek.html (read 2026-11-12: 'UPDATE: The equestrian trails are CLOSED. The golf course is OPEN!'; 'the small, friendly, wooded campgrounds'; Park Phone 217-756-8260; 2341 Eagle Creek Rd, Findlay; Park Latitude 39.510, Longitude -88.719)",
+    "https://dnr.illinois.gov/parks/camp/park.eaglecreek.html and https://dnr.illinois.gov/parks/activity/park.eaglecreek.html (read 2026-11-12: 'There are 75 Class A reservable sites with electricity, showers, water hydrants, fire blocks, and picnic tables. Reservations can be made at ExploreMoreIL. Class B/S and Class D sites are available but not reservable. The organized group camp area is reservable. Shower buildings are closed by November 1st (maybe earlier if there is bad weather) and reopen on May 1st (maybe earlier if there is good weather).' The camp page names no dump station; the dump sentence in its embedded fragments belongs to Illinois Beach)",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (the API behind recreation.exploremoreil.com) search/place PlaceId 14 (facilities Hawk Lane 181, Hickory Lane 182, Quail Drive 184, Squirrel Lane 186, Eagle Point Drive In Tent 180, Oak Ridge Walk In Tent 183, plus campfire/shelter/SRA entries) and search/details for every unit at 2027-06-15: 128 'Class A' units (019-070, 072-078, 080-148 across the four lanes; Electricity Hookup '30 Amp' at 109, '50 Amp' at 19, one with no amp attribute) and 2 'Class AA' units (1AA, 2AA: 50 Amp, Water Hookup and Sewer Hookup, Max Vehicle Length 60); engine price $20 Class A / $25 Class AA (2026 schedule); every unit Back In; Max Vehicle Length 35-80 (019 the longest at 80; most 42-63); AllowWebBooking true at all but Class A #111; no unit carries a waterfront tag; Eagle Point (15 'Class B-S' drive-in tent units, $10, 30 ft) and Oak Ridge (11 'Class C' walk-in tent units) are tent areas; grid season in season 2027-04-01..2027-10-31, out of season 2026-11-12..2027-03-31 and from 2027-11-01, read 2026-11-12",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric $28; Premium Electric $35, with 'Premium Campsites: Clinton Lake, Jim Edgar Panther Creek, Eagle Creek, Red Hills' and a premium campsite defined as one 'that has full hookup amenities'; Non-Electric $11), read 2026-11-12",
+    "USGS 3DEP DEM (~2 m) over the campground: lake surface in the lidar 181.4 m, normal summer pool 599.7 ft (182.8 m); every engine unit point measured to the 182.8 m contour: nearest 047 (197.5 m) at 71 m bearing 11, down a ~15 m bank; 094 at 110 m; 097 at 138 m; all others 200 m+"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 35,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "surcharges": null,
+        "note": "The Class A sites are the Electric class; the two full-hookup sites (1AA, 2AA) are Premium Electric. The drive-in and walk-in tent areas are Non-Electric ($11)."
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric $28; Premium Electric $35, Eagle Creek named among the parks with Premium campsites) applied to the ExploreMoreIL unit classes (128 Class A, 2 Class AA full hookup), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ExploreMoreIL unit details, park 14 (Electricity Hookup '30 Amp' at 109 units, '50 Amp' at 19 Class A units and both Class AA units), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 130,
+        "max_rig_ft": 80,
+        "pull_through": false,
+        "note": "Four wooded lanes (Hawk, Hickory, Quail, Squirrel); every site is a back-in, most listed at 42-63 ft. Sites 1AA and 2AA have water and sewer as well."
+      },
+      "source": "ExploreMoreIL unit details, park 14 facilities 181/182/184/186 (130 Class A/AA units, all Back In, Max Vehicle Length 35-80), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.eaglecreek.html ('sites with electricity, showers, water hydrants'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/14",
+        "fcfs": "some_sites"
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.eaglecreek.html ('Class A reservable sites ... Reservations can be made at ExploreMoreIL. Class B/S and Class D sites are available but not reservable'); engine: 129 of 130 Class A/AA units web-bookable, read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR recreation area on the west side of Lake Shelbyville, southeast of Findlay. The campground's lanes sit in woods on the bluff above the lake. Shower buildings close from November 1 to May 1. Non-reservable Class B/S and D sites and two tent areas (Eagle Point drive-in, Oak Ridge walk-in). --Claude",
+  "summary": "DNR park/camp pages, ExploreMoreIL engine (every unit of park 14) and the 2027 fee PDF read: 130 Class A/AA sites on four lanes (page still says 75), 30 A at most, 50 A at 21, two full-hookup Premium sites (1AA/2AA); all back-ins, 35-80 ft; $28 Electric / $35 Premium on the 2027 schedule (stored $11 was the Non-Electric tent class; engine still $20/$25, 2026); showers and hydrants; booking operator -> usedirect, fcfs some_sites. Not waterfront kept (nearest site 71 m from the pool down a 15 m wooded bank). Phone 217-756-8260 (none stored). Pin fine. Dump not confirmed on the park's own pages.",
+  "flags": [
+    "FEES: stored base $11 (the Non-Electric class, which here is only the tent areas) with electric/premium surcharges -> $28-35 (2027 Electric at the 128 Class A sites; Premium Electric $35 at the two full-hookup AA sites, Eagle Creek being named among the Premium-campsite parks). Stored per-entry $10 reservation fee removed (state:IL row). The engine still prices $20/$25 (2026).",
+    "SITE COUNT: stored 75 (from the DNR page's '75 Class A reservable sites') -> 130: the engine lists 128 Class A + 2 Class AA web units (019-070, 072-078, 080-148, 1AA, 2AA). The page figure looks stale. Reviewer may prefer to keep 75.",
+    "HOOKUPS (none stored) -> electric 50: 50 A at 19 Class A units and both AA units, 30 A elsewhere. Water and sewer only at 1AA and 2AA (two sites; not written as a campground-wide yes).",
+    "WATERFRONT (stored not waterfront, kept): no engine unit carries a waterfront tag. 3DEP to the 182.8 m normal pool: nearest site 047 (39.50045,-88.70745, Hawk Lane) is 71 m from the water and ~15 m above it down a wooded bank; 094 110 m, 097 138 m; all others 200 m+. Not even a lakeview candidate on distance.",
+    "PHONE: none stored -> 217-756-8260 (DNR park page 'Park Phone'). apply.py does not write phones.",
+    "WEBSITES: both stored links work (dnr.illinois.gov park page; ExploreMoreIL #!park/14 is Eagle Creek SRA's place). No change.",
+    "PIN: stored 39.4991,-88.7088 is the engine's Hawk Lane facility point, inside the campground (Hickory Lane centroid 39.49863,-88.70881; all-lane centroid ~39.4990,-88.7070, ~150 m east): keep.",
+    "SEASON (not written; stored year_round derived from the old note, left): the DNR says only that shower buildings close Nov 1 - May 1; the engine's reservation season is 04-01..10-31. Neither states the campground closes. Reviewer may want to clear year_round or set 04-01..10-31.",
+    "FACILITIES: stored dump true (derived) is not confirmed by the park's own pages (the camp page's dump sentence is Illinois Beach's text); left as stored, not re-sourced.",
+    "HORSE: the park page says 'The equestrian trails are CLOSED'; no equestrian campground is on the engine and the camp page names none. Nothing to separate.",
+    "EXPLOREMOREIL: the park is on the engine (PlaceId 14, all four RV lanes web-bookable)."
+  ]
+}
