@@ -76,3 +76,4 @@ The "Settle" column lists only what is specific to each entry.
 ## Closed without a call
 
 - 5689 Sherin Memorial Park and 5899 Sheep Creek Dam (AWH 2026-11-12): electric at the sites and water on the grounds are already on record (Sherin also has a dump station); amperage and the water location do not justify a call.
+| ND 14 lone-tree (added 15691) | Lone Tree Campground (City of Powers Lake) | city parks 701-705-5369 | Is Lone Tree (boat ramp, south-east shore) still a campground, with electric? Rate, season. Nothing published beyond the state licence (8 lots). |
