@@ -1292,3 +1292,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 13539 Beulah Bay not waterfront -> lakeview (sites 1-10, 45-65 m over open grass with a gravel lane).
 - 13540 Blacktail Dam lakeview -> lakefront? Sites 14-19 (~48.4294,-103.7346 to 48.4301,-103.7359) 20-45 m over gravel/grass and 20-25 (~48.4295,-103.7385) 26-44 m, nightly except 5 unnumbered seasonal lottery sites - but scaled from the county's May-2026 aerial (Esri predates the rebuild; lower area closed for construction 2026). Left at lakeview until current imagery confirms.
 - 6035 Clausen Springs: creekside lead at a gravel lot by the creek mouth (~46.6826,-98.0461), 13-30 m from a ~10 m channel over mown grass; sketch map suggests sites ~26-31, numbers and nightly status unconfirmed. Lake: not waterfront stands. 6040 CAB Park creekside not supported (~110-130 m).
+
+## p3-458 (ND, 2026-11-12)
+- APPLIED 6020 Fort Rice riverview -> not waterfront (water 450-800 m). APPLIED 6042 Dickey riverfront -> riverview (James ~35-40 m wide; RVs 40-55 m behind the bank's tree band; imagery only).
+- 5918 Douglas Creek Bay lakeview -> lakefront? East site row (~47.5784,-101.5702 to 47.5774,-101.5700) on mown grass 25-30 m from shoreline vegetation, 50-60 m to water on Esri (30-40 m on NAIP at higher water); site numbers behind USACE 403 - left.
+- 6041 Dead Colt lakeview stands (RV 1-9 110-130 m across a spruce row; 31-37 ~110 m behind shelterbelts).
