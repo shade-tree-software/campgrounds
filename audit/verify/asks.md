@@ -596,3 +596,6 @@ Keep coastal woods? Your note describes the campground as half a mile from the b
 
 ## 5495 Six Mile Lake Campground (MN, Chippewa NF) - p3-441, 2026-11-11 - OPEN
 Keep or drop? The Forest Service has no page for it: it is not on the Chippewa NF camping page, and none of the 22 dispersed-site maps covers Six Mile Lake. The only evidence is camper reports (Campendium 2023: "Only about 8 sites, vault toilet and a boat launch ... Free"; "8 primitive sites, one pit toilet. 14 days"), none giving an RV length. Stored site count 12 is above every report (6-8). Kept for now. A call to the Chippewa NF office (218-335-8600) could confirm it.
+
+## 5498 Tamarack Point Campground (MN, Chippewa NF) - p3-442, 2026-11-11 - OPEN
+Keep (temporarily closed) or drop as abandoned? It is gone from the forest's 2026 Deer River District campground table and its 20-item camping list, the FS page (recid=26742) now redirects to the forest home page, and RIDB holds only a stub. The Dyrt: "Another padlocked campground" (Oct 2021); "it has not been upkeep at all... none of the sites are cleared, and the roads are overgrown" (Aug 31, 2025). Imagery shows no recognisable loop. A transfer to the Leech Lake Band is possible but unconfirmed. For now: status temporarily_closed with that evidence. A call to the Deer River District (218-246-2123) could settle it.

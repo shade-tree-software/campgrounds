@@ -1226,3 +1226,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-441 (MN, 2026-11-11)
 - 5443 Rock Lake lakefront -> lakeview; 5685 Rothenburg riverview -> not waterfront (17-21 m river behind trees); 5494 Silver Island Lake lakefront -> lakeview (gravel area with docks at ~47.7275,-91.1485 may be the launch - lead if a campsite).
+
+## p3-442 (MN, 2026-11-11)
+- 5446 Sullivan Lake, 5447 Thistledew lakefront -> lakeview; 13341 Sundquist lakeview -> not waterfront; 5501 Trail's End not waterfront -> riverfront on 008/009 (010 not counted). 13321 Talcot Lake lakefront kept on nightly sites 2, 3, 6, 7 (4, 5, 8-22 seasonal).

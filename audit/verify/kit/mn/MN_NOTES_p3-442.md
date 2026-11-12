@@ -1,0 +1,12 @@
+# MN NOTES p3-442
+- 5692 WRITTEN: DUPLICATE of 15665 (same city page, CampLife, phone, 16 sites); pin 480 m NW; flags only
+- 5693 WRITTEN: 70 back-ins 40-65, sewer->null (seasonal only), season 05-01..10-01, request form, $33 (2023 table), $5 pass, camplinq out, phone 507-829-0394?, NW kept
+- 5446 WRITTEN: 11 primitive, $17, LF->lakeview (conifer fringe, low water), boat launch closed 2026-05-01, pin move 47.3792,-91.6703 (~280 m), website hyphen, phone 218-834-1430
+- 13341 WRITTEN: 20 sites (6 seasonal), $25, FCFS, vault+shower, dump, potable cleared, LV->NW proposed (70-80 m behind road+tree belt), phone 507-836-1195
+- 13322 WRITTEN: 18 camper sites (map), showers/flush, dump false, May-Oct, ResNexus Incapsula unread (fees $30 stand), NW kept
+- 13321 WRITTEN: 64 W/E 50A, 18 daily (map), LF kept on daily sites 2,3,6,7 (~15-25 m, lawn+scattered trees), $32, phone booking, season 05-01..10-31
+- 5498 WRITTEN: DROP CANDIDATE, not on FS site (2026 table/list), recid redirect, RIDB stub, Dyrt 2025 overgrown/2021 padlocked; no groups
+- 5447 WRITTEN: NOT horse camp (Togo/Stony Brook are), 21 sites, LF->LV (sites 1-7 25-35 m behind conifers), phone Scenic SP 218-571-2600, website hyphen, ATV flag
+- 5698 WRITTEN: 30 sites (20E/10P), $37.58, seasonal rates posted, long-stay flagged, NW kept, phone=host cell
+- 5500 WRITTEN: 7 sites (3 >21ft), no fee, 05-08..10-01, FCFS, phone Tofte RD 218-663-8060, NW kept
+- 5501 WRITTEN: 33 sites (18 vehicle back-in, 15 tent), water hookup false, max 40, PT false, $22-24, 05-04..10-18, NW->riverfront proposed sites 008-010

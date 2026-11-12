@@ -1796,3 +1796,14 @@ me drop and report); each needs the research named before a verdict.
 - 5685 Rothenburg: sites 42-50 (the 100-ft pull-throughs) "temporarily closed until sites are inspected by the State of MN"; 8 of 50 hookup sites seasonal.
 - 5682 Robertson: ResNexus Incapsula-refused (site count 22, water left as stored); electric 30 -> 50.
 - 5688 Seven Mile Lake: sites 19 -> 14 (5 seasonal). 15663 Lanesboro: campground is ABOVE the dam (note + evidence corrected). 5681 renamed to the city's "Riverside Park - Mill Pond Municipal Campground".
+
+## p3-442 (MN, 2026-11-11)
+- DROPPED 5692 St. Louis County Fairgrounds and Red Head Camping: duplicate of 15665 (same city page, CampLife park, phone, 16 sites).
+- 5498 Tamarack Point (Chippewa NF): set temporarily_closed - gone from the 2026 Deer River District table, FS page redirects, RIDB stub; Dyrt 2025 "sites not cleared, roads overgrown". Kept pending AWH (asks.md). Possible transfer to Leech Lake unconfirmed.
+- 5447 Thistledew: not a horse camp (DNR names Togo and Stony Brook as the horse campgrounds); OHV side (Thistledew ATV Trail, parking on Co. Rd. 542, ATVs prohibited in the campground). Sites 23 -> 21.
+- 5693 Stonehill: only posted rate table is "2023 Rates" ($33); separate weekender and seasonal sites, "Seasonal sites are currently filled"; nightly share unpublished. camplinq (unclaimed aggregator) link removed.
+- 5698 Tilberg: rules read like a lease ("leased dock slips"); season lease $2,190.99/$1,861.45; nightly share, season, booking channel and amperage unpublished. Sites 37 -> 30.
+- 13341 Sundquist: "limited park space available for overnight camping"; 14 of 20 nightly. 13322 Swift Falls: ResNexus Incapsula (unread), $30 stands.
+- 5446 Sullivan Lake: boat launch closed for very low water (long-term); campground open.
+- 5501 Trail's End: max_rig 45 -> 40, pull_through and water hookup false per rec.gov; 006/011/020/025/026 too short for 23 ft.
+- Process: the p3-442 verifier ran one read-only `git log -S` (against its no-git rule); stopped, nothing changed.

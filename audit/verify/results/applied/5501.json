@@ -1,0 +1,55 @@
+{
+  "id": 5501,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.fs.usda.gov/r09/superior/recreation/trails-end-campground (Superior NF page), read 2026-11-11",
+    "https://www.recreation.gov/api/camps/campgrounds/232428 (facility record, rules, notices, amenities) and /rates (2019-2028 rate seasons), read 2026-11-11",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232428 (33 campsites with type, Max Vehicle Length, Driveway Entry, Water Hookup, reservability, coordinates), read 2026-11-11",
+    "trip_data/ridb_campsites.json facility 232428 (fetched 2026-10-20; same 33 sites)",
+    "recreation.gov campsite photos of sites 007 (17603), 008 (17604) and 010 (17605)",
+    "Esri World_Imagery z19 tiles at 48.1603,-90.8992 and frame at 48.1600,-90.8985 (110 m); MnGeo fsa2025 frames (110 m, 350 m)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog (every site STANDARD NONELECTRIC or TENT ONLY NONELECTRIC; 'Water Hookup: No' on every RV site, with 'Water Spigot' listed) + FS page ('some sites with water faucets; however, the faucets were not designed as water hook-ups.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 33, "max_rig_ft": 40, "pull_through": false, "note": "18 sites take a vehicle (posted limits 15-40 ft; 13 of them 25 ft or more), all back-in; the other 15 are walk-to tent sites."},
+      "source": "recreation.gov campsite catalog (33 sites; RV/TRAILER sites 001-013, 020, 024-026, 031 with Max Vehicle Length 15-40 and 'Driveway Entry: Back-In'; 15 TENT ONLY sites at 0 ft), read 2026-11-11. FS page says 32 sites and 'a few pull through sites'; rec.gov outranks it.",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Vault toilet(s)'; 'Potable water is available at this site. Solar powered faucet, some sites have individual faucets.'; 'Host, pay phone, firewood vendor') + rec.gov amenities ('Vault Toilets', 'Drinking Water', 'Water Spigot'), read 2026-11-11",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-04", "closes": "10-18", "note": "Reservations run to about mid-October (2026 rate season May 4-Oct 11; 2027 May 8-Oct 10)."},
+      "source": "FS page ('Seasons of Use May 4 - October 18') + rec.gov rates (Peak Season 2026-05-04..2026-10-11, 2027-05-08..2027-10-10), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232428", "fcfs": "some_sites", "note": "Booked up to 6 months ahead and no later than 4 days before arrival; sites 007, 015, 029, 030, 032 and 033 are first come."},
+      "source": "rec.gov facility rules (reservationWindow 6 Months; reservationCutOff 4 days prior to arrival) + campsite catalog (007, 015, 029, 030, 032, 033 'Not Reservable') + FS page ('Some sites are reservable through Recreation.gov.'), read 2026-11-11",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 22, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$24 in the RV loop, $22 for the tent-loop sites (two of which, 024 and 031, take a 30-ft vehicle). A second vehicle pays half the site fee, collected on site."},
+      "source": "rec.gov rates (2026 and 2027 Peak Season: TRAI-STANDARD NONELECTRIC 24, TEND-STANDARD NONELECTRIC 22, TEND-TENT ONLY 22) + FS page ('Single Site: $24 per night'; 'Additional vehicles on the site require additional half fee') + rec.gov notice ('Additional fee for campers arriving in a second vehicle collected on-site'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Superior NF campground at the end of the Gunflint Trail, about 57 mi from Grand Marais, on the Seagull River beside four BWCAW entry points (day and overnight permits at the campground). Sites 008, 009 and 010 open onto the river; the rest are in the trees. Black bears are common. --Claude",
+  "summary": "FS page, rec.gov facility/rates/campsite catalog and site photos read: 33 sites (18 vehicle sites, all back-in, 15-40 ft; 15 walk-to tent), no hookups (faucets are not hookups), vault toilets, drinking water, $22-24, May 4-Oct 18, rec.gov with six first-come sites. Not waterfront -> riverfront proposed on sites 008-010. Pin confirmed. Note rewritten.",
+  "flags": [
+    "WATERFRONT not waterfront -> riverfront (proposed upgrade, few-sites caveat in the note): the Seagull River here is ~200 m wide. Site 008 (reservable, 30-ft limit; rec.gov point 48.16014,-90.89934, open pad on imagery at ~48.16026,-90.89948) is a gravel spur running straight to the shore over open ground, water ~20 m from the pad on the rec.gov photo and z19 imagery. Site 009 (reservable, 25 ft; ~48.16026,-90.89915) has an open grass strip ~18 m to the shore on imagery (no photo). Site 010 (reservable, 30 ft; ~48.16025,-90.89882) ends at a table with open water beyond on its photo, but imagery shows a band of shoreline trees ~8-12 m deep north of the pad; weakest of the three. All three are sold by the night. Site 007 (first come, 25 ft) photo shows the water only through trees. The other RV sites (001-006, 011-013) sit ~40-120 m back in forest. If the reviewer reads 010 as a view, 008 and 009 still carry the value.",
+    "HOOKUPS water true -> false: rec.gov lists 'Water Hookup: No' on every RV site and the FS page says the faucets 'were not designed as water hook-ups'.",
+    "SITES: count 32 -> 33 (rec.gov catalog; FS page says 32). max_rig_ft 45 -> 40: the FS/rec.gov prose says '45-foot RVs' but no site posts over 40. pull_through true -> false: every vehicle site is 'Driveway Entry: Back-In' on rec.gov, against the FS page's 'a few pull through sites'. Five vehicle sites (006 at 15 ft; 011, 020, 025, 026 at 20 ft) are too short for a 23-ft rig.",
+    "STATUS: FS page shows 'Site Temporarily Closed / Closed-No fees or services' today, consistent with the season ending Oct 18; read as the seasonal closure, no status written.",
+    "PIN 48.15910,-90.89911 matches the FS page (48.15910194,-90.89911055) and sits in the RV loop (sites 001-013); confirmed. rec.gov's facility point (48.16028,-90.89361) is the BWCAW parking lot ~430 m east; not used.",
+    "PHONE 218-387-1750 (Gunflint Ranger District) confirmed on the FS page and rec.gov. WEBSITES unchanged.",
+    "OTHER: rec.gov notice 'No off-road vehicles allowed'; 14-night maximum stay (rec.gov rule); tribal discount listed for Fond du Lac, Bois Forte and Grand Portage bands."
+  ]
+}
