@@ -1264,3 +1264,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5885 Lake Sakakawea lakeview -> lakefront (caveat: Fishing Point sites 241, 242, 244, 20-40 m over open grass).
 - 5887 Icelandic lakeview -> not waterfront (continuous woods, 60-85 m).
 - 5882 Lewis & Clark lakeview stands (~100 m open grass). 5902 Juniper evidence corrected (20-35 m behind riparian trees, creek-width channel). 5938 LaMoure not waterfront (James ~20-25 m, 50-95 m back).
+
+## p3-451 (ND, 2026-11-12)
+- No changes. Leads: 5883 Rough Rider riverview -> riverfront? Wrangler 33 (46.89265,-103.53872) and 34 (46.89283,-103.53876) ~50 m from the Little Missouri over open grass + the Maah Daah Hey trail (imagery predates the rebuilt loops; same trail question as 5880). 5923 Roughrider: south lot's two west sites 25-35 m from a 17-24 m Souris oxbow (creekside class at most, no numbers). 5957: Cherry Creek 10-15 m, RV area 25-30 m behind trees.

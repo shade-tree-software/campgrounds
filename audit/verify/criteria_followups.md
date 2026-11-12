@@ -1884,3 +1884,14 @@ me drop and report); each needs the research named before a verdict.
 - 5885 season (manual, not overwritten) - suggested fuller wording in its result flag (Elbowoods year-round; Vanhook/Sanish Apr 1-Nov 30; water off Oct 4). Sewer left unknown (amenity list yes, catalog none).
 - 5882 Lewis & Clark base $25 (its primitive sites are walk-in tent).
 - Second website line https://www.reservendparks.com/Web/ on ND state parks repeats the state:ND row - a DB-wide tidy, not done piecemeal.
+
+## p3-451 (ND, 2026-11-12)
+- DROP 5942 Sun Valley RV Park (Beulah): every lot seasonal or year-round, lease/eviction rules, ~42/47 occupied, Google 3.9/23 - mostly seasonal under 4 stars.
+- DROP 5969 Pierce County Fairgrounds (Rugby): no official page shows ordinary-night camping outside events (camper reports only); fair relocating to new grounds (2025).
+- UNREAD, no result: 5986 Seeman Park, Linton (Sucuri bot challenge + ndtourism 403; phones Google 701-680-1864 vs Campendium 701-254-4985); 5995 Buffalo Lodge Lake, McHenry County (park board page empty, camping area not distinguishable from lake-lot cabins; phones stored 701-728-6942 vs Google/ndtourism 701-537-5724). Phone/sweep candidates.
+- 7 applied. Pins: 5884 Turtle River ~750 m (modern-unit centroid), 5883 Rough Rider ~250 m. Phone 5957 -> (701) 842-3665 (park district). Websites: 5924 ndtourism -> Good Sam profile (no operator site); 5923 and 5929 Campspot marketplace lines dropped (booking.url holds the engine).
+- 5923 Roughrider (Minot): $50 + $2 fee; passes via Good Sam Park 10% ($47); markets to "energy and construction workforce" but 88-100 of 118 RV sites sell nightly on Campspot. Name now "Roughrider RV Resort" on its site (not renamed).
+- 5884 Turtle River: reserveNDparks sells South/North only 2027-05-01..10-31 while season year_round is manual - conflict noted, not overwritten.
+- 5883 Rough Rider: 12 of 14 primitive pads post a uniform 24 ft (placeholder?); if shorter the base is $25. Horse camp distinct (Wrangler north end; Rancher/Rustler no horses). Note's loop names obsolete.
+- 5957 Watford City Tourist Park: derived hookups/count/dump cleared; no official rate. 5926 Viking Vines: Firefly reCAPTCHA - price/sites/hookups unverified; only booking written.
+- 5929 Butte View: city says "Seasonal ... May - November" but Campspot sells January nights; season unset.
