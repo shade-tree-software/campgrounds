@@ -20,3 +20,5 @@ web fetches, so the [[project-phase7-verification]] unread sweep can't otherwise
 with an AI agent that discloses itself and the recording; US/CA only, 08:00-21:00 destination local
 time. AWH said 2026-11-11 to wait until they say when to try the FIRST call (planned: Karlstad,
 5649), and confirm each call with AWH before dialling. Offer AWH the listen_url.
+
+**Phone menus (2026-11-12):** the first call (J.F. Jacobson 13342, Madison City Hall 320-598-7373) failed twice: dialmcp's answering-machine detection reads an automated menu ("press 2 for a clerk") as voicemail and hangs up. An objective spelling out menu navigation and "not voicemail" was REFUSED by its screen as a possible bypass of a government office's channels. Don't keep rewording past a refusal; a menu number goes to AWH to call directly.

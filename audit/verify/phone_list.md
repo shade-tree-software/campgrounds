@@ -4,6 +4,8 @@ Entries the web pass could not read: the operator's site refuses us or doesn't e
 a phone answer is a valid source. No call is placed without AWH's go-ahead; the first is Karlstad
 5649. Record each answer as a dated phone call in `curation_note`.
 
+**dialmcp and phone menus (2026-11-12):** its answering-machine detection treats an automated menu as voicemail and hangs up, so a number that answers with a menu needs AWH to call. Prefer numbers that reach a person or a single voicemail.
+
 **Ask every call (the standard set):**
 1. Is it open to overnight RV campers, and can you stay just one night?
 2. The nightly rate.
@@ -26,7 +28,7 @@ The "Settle" column lists only what is specific to each entry.
 | 5651 | Lake Allie County Park (Renville Co.) | 320-523-3747 | season | Season only. |
 | 13327 | Sebeka City Park & Campground | Sebeka City Hall 218-837-5773 (snippet) | season, sites, booking | Site count; how to book. |
 | 5702 | Warroad City Campground | 218-386-1004 | fees, sites, booking | Rate, sites, booking. |
-| 13342 | J.F. Jacobson Park Campground (Madison) | 320-598-7373 | season | Season only. |
+| 13342 | J.F. Jacobson Park Campground (Madison) | 320-598-7373 | season | Season only. **Not by dialmcp:** 2026-11-12 two calls hit the City Hall menu (1 utility, 2 clerk) and the service read it as voicemail and hung up; a third wording was refused by its screen. AWH to call directly (press 2). |
 | 15672 | Horseshoe Park Campground (Hallock) | 218-843-2737 | season, hookups, sites | Sites and how many are monthly or multi-month; hookups; longest rig; season. Could share the call with 5633. |
 
 ## North Dakota (first-read unread list)
