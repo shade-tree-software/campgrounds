@@ -1,0 +1,24 @@
+# North Dakota phase 7 - resume notes
+
+Running: **p3-446** (first ND batch). Next batch **p3-447**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
+
+## Build a batch (11 ids; the agent template says ELEVEN)
+```
+S=<session scratchpad>; N=p3-NNN
+python3 -I audit/verify/queue.py --batch $N --state ND --limit 11 && python3 -I audit/verify/kit/nd/mkpara_nd.py $S $N && python3 -I audit/verify/kit/mkbrief_mo.py $S $N $S/${N}_para.txt >/dev/null && mkdir -p $S/$N && cp -r audit/verify/kit/nd/tools $S/$N/tools
+IDS=$(python3 -I -c "import json;print(', '.join(str(x['entry']['id']) for x in json.load(open('audit/verify/batches/$N.json'))))")
+sed -e "s#SCRATCH#$S#g" -e "s/p3-NNN/$N/g" -e "s/: IDS\./: $IDS./" audit/verify/kit/nd/agent_prompt_template.txt > $S/${N}_agent.txt
+```
+Brief = kit/brief_mo.txt + the ND paragraph (kit/nd/nd_head.txt + per-entry lines). The agent
+prompt's hard rules override the long brief (notably: NO Wayback/archive route around a refusal;
+an archive is allowed only for a site that is down/does not resolve).
+
+## Apply (same as MN, see kit/mn/RESUME_MN.md steps)
+Drops -> DROPS in audit/verify/criteria_drops.py, `--apply`; then `apply.py <ids> --apply`; then a
+post script for pins/phones/websites/waterfront (apply.py writes none of those); tests; copy
+ND_NOTES_p3-N.md here; append criteria_followups.md + waterfront_leads.md (+ asks.md); commit with
+explicit paths. Leads -> audit/verify/leads/nd_leads.txt, vetted one at a time after the queue
+(add_results.py does NOT write booking/hookups/sites/facilities - copy them with provenance).
+
+## After North Dakota
+ILLINOIS (203 queued; needs kit/il like this one), then the 33 Vermont entries (kit/vt).
