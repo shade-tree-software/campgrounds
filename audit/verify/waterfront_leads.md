@@ -1243,3 +1243,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-446 (ND, 2026-11-12)
 - 6006 Brewer Lake lakefront -> lakeview (own lower loop road + shrub/reed fringe between RV ground and shore; open shore = swim beach and picnic point; county site map 403).
 - 5989 Harmon Lake lakeview stands (nearest pads ~150 m, loop road + beach between). 5970 Belmont (Red River ~50 m, continuous canopy), 6007 Carbury, 5881 Graham's Island, 5975 Fordville: not waterfront stands.
+
+## p3-447 (ND, 2026-11-12)
+- 6000 Mouse River riverfront -> riverview (river 45-60 m, RVs 12-20 m on the north bank but the sites look seasonal; Firefly "Waterfront" filter behind reCAPTCHA). Lead: confirm a nightly waterside site (engine/phone) and it returns to riverfront.
+- 5990 Sandager riverfront -> riverview (campground road + thin fringe between North Campground rears and the Sheyenne, 29-33 m).
+- 5950 Lake Hoskins and 5954 Lake LaMoure lakeview stand (LaMoure: 4-5 RVs 15-40 m on open ground with private docks, likely seasonal, no site numbers).

@@ -1838,3 +1838,13 @@ me drop and report); each needs the research named before a verdict.
 - 5881 Graham's Island: 156 sites on the park page vs 147 in reserveNDparks (kept 156); amperage not posted.
 - Long-stay rates beside nightly first-come sites, nothing discouraging nightly guests (kept): 6002 Cando (weekly $150 / monthly $450), 6007 Carbury ("Monthly camping Available by swimming Beach").
 - Applied by post script: pin 5897 Schnell -> 46.8849,-102.2576 (~760 m, from the ranch HQ to the six spurs); phones 5914 (701) 227-7800, 6007 (701) 263-1766; websites 5987, 5970, 6006, 6007 to operator pages.
+
+## p3-447 (ND, 2026-11-12)
+- DROP 5949 Kathryn RV Park (private): no live web presence (no operator site, Facebook, engine or Google listing; only the 2025 HHS roster; Idaho-area-code phone).
+- 6001 Neameyer Field (Rolla) NOT applied: rests on silence (Rolla's site and all 32 of its 2026 minutes PDFs never mention it; ndtourism 403). Result held in scratch; left in the queue for the unread sweep / a call to Rolla City Hall (701) 477-3610.
+- 5961 Larimore Dam: long-stay ask (asks.md) - 144 lots, ~8% nightly if the note's 12 overnight sites is right; county page 403.
+- 6004 Noonan Lions: priced from a dated camper report ($15, Dyrt 2026-09-15; no web page) which also reports grounding faults on 3 of 4 pedestals checked; in the note.
+- 5945 Linton: "a 50 Site RV and Mobile Home Park" (6 mobile homes on the map); 36/37 RV sites free 2026-11-17, 37/37 June 2027 - nightly-selling; Google 1.5/2.
+- 6000 Mouse River: water hookup derived wrong (spigots only) - false; most of 150 lots leased (seasonal $2,000 / annual $2,200).
+- Pin 5999 Minto ~380 m NE to a 6-post strip (imagery only).
+- Leads (not in DB, unvetted): Baukol-Noonan Trout Pond and Campground (Divide County; dividecountynd.org 403), Clemens Family Campground (Noonan; ndtourism only). Super 16 RV Park (Rolla) already screened out in audit/nd_private/list.json.

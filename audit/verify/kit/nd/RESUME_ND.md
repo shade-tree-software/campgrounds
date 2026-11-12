@@ -1,6 +1,6 @@
 # North Dakota phase 7 - resume notes
 
-Applied through **p3-446** (2026-11-12; 5975 Fordville + 5980 Hazelton unread, phone candidates). Next batch **p3-447**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
+Applied through **p3-447** (2026-11-12). Unread/held for the sweep or phone: 5975 Fordville, 5980 Hazelton, 6001 Neameyer (result in scratch, rests on silence). Ask open: 5961 Larimore long-stay. Next batch **p3-448**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
 
 ## Build a batch (11 ids; the agent template says ELEVEN)
 ```

@@ -602,3 +602,6 @@ Keep (temporarily closed) or drop as abandoned? It is gone from the forest's 202
 
 ## 5504 West Seelye Bay Campground (MN, Chippewa NF) - p3-443, 2026-11-11 - OPEN
 Same question as Tamarack Point 5498: keep or drop? The forest's full recreation listing has East Seelye Bay (5468, ~380 m across the bay) but not West; recreation.gov has no record; the stored FS link redirects to the forest index. A search result showed an alert "west seelye campground temporarily open", but its page is 404 with no archive copy. Kept with a dated caveat in the note (no status set). A call to the Deer River District (218-246-2123) could settle both.
+
+## 5961 Larimore Dam Recreation Area (ND, Grand Forks County Park District) - p3-447, 2026-11-12 - OPEN
+Long-stay question on a county park. Posted rates: season $1,500, monthly $450, weekly $175, nightly $35. The HHS roster gives 144 lots; imagery shows ~140-150 long-parked units; a review says "a lot of fulltimers". The stored note's "12 overnight sites" (unsourced; gfcounty.nd.gov 403s) would make nightly ~8%, under the 1-in-10 line of test 4, but a nightly rate is posted and nothing discourages nightly guests. Kept for now. Keep, or drop as mostly seasonal? A phone call to the park district would settle the nightly-site count (same county as 5975 Fordville Dam, also unread and seasonal-looking).
