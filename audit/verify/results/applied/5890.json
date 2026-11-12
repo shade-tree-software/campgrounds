@@ -1,0 +1,53 @@
+{
+  "id": 5890,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.parkrec.nd.gov/fort-ransom-state-park",
+    "https://www.parkrec.nd.gov/fort-ransom-state-park-camping",
+    "https://www.parkrec.nd.gov/limited-service-season",
+    "https://ndparksrdr.usedirect.com/rdr/rdr/search/grid + search/details (reserveNDparks facilities 49 'West Side Campground', 45 'East Side Campground', 47 'River Side Horse Camp', 48 'Sunne Farm Horse Camp', 2027-06-15, every unit)",
+    "audit/state_park_fees/nd_booking_rates_june_2026-10-12.jsonl (Saturday samples)",
+    "Esri World_Imagery around 46.545,-97.9325 with the reservation system's site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "surcharges": {"electric": 10, "weekend": 0}, "checked": "2026",
+                 "note": "Primitive $15 every night (East Side gravel pads 35-50 ft); standard (electric and water) $25, $30 on a Saturday; group sites the same per unit. Park page and reserveNDparks, read 2026-11-12."},
+      "source": "https://www.parkrec.nd.gov/fort-ransom-state-park-camping ('16 Standard Campsites (electricity & water*) Price: $25-30 per night'; '10 Primitive Campsites Price: $15 per night'); reserveNDparks facility 45 Primitive Campsite #01-#06 $15, Pad Length 35-50, gravel; facility 49 Standard $25; repo samples Standard #12 $30 on 2026-10-24 and 2027-06-19, Primitive #01 $15 the same nights, read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "reserveNDparks facility 49 search/details 2027-06-15: every standard and modern group site 'Amp Service 20/30/50', 'Water Hook-up on Site Yes'; park page 'Standard Campsites (electricity & water*)', read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 42, "max_rig_ft": 81,
+                 "note": "West Side: 21 standard electric sites (gravel pads 34-81 ft), 4 modern group sites and 6 primitive group sites; East Side across the river: 6 primitive gravel sites (35-50 ft), 4 primitive tent sites and a primitive group site. Every RV pad takes a 23-ft rig. The two horse camps are separate."},
+      "source": "reserveNDparks facilities 49 and 45 grid + search/details 2027-06-15 (42 campsites plus 3 lodging units; Pad Length per unit); facilities 47 and 48 horse camps; park page counts ('16 Standard', '10 Primitive', '4 Group Modern', '7 Group Primitive', '24 Modern Horse', '9 Primitive Horse'), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true},
+      "source": "https://www.parkrec.nd.gov/fort-ransom-state-park ('Additional Park Amenities: Flush toilets; Playground; Sewage dump station; Showers; Visitor center'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "https://www.parkrec.nd.gov/fort-ransom-state-park-camping ('Campsites and seasonal lodging can be booked 95 days in advance ... Reservations can be made online or by calling 800-807-4723'); reserveNDparks facilities 49/45 all campsites AllowWebBooking true, read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "State park in the wooded Sheyenne River valley. The West Side loop holds the electric sites under trees beside the river; the East Side primitive loop is across the river bridge. Designated horse park with two horse camps and corrals; a homestead house, yurts, a wagon and a cabin for rent. --Claude",
+  "summary": "Park page + reserveNDparks confirm $15 primitive (East Side gravel 35-50 ft, a 23-ft rig fits) / $25 standard ($30 Sat) 20/30/50-amp with water; 42 non-horse campsites, pads 34-81 ft (max_rig 50 -> 81); flush toilets, showers, dump. Electric 50 added; groups manual; note trimmed. Not waterfront stands with a creekside lead (sites 20B, 22); pin ~240 m from the site centroid.",
+  "flags": [
+    "WATERFRONT: not waterfront stands, but the stored waterfront_evidence ('loops set back ~150m+ across open meadow') is wrong for the West Side loop's river edge: standard site 22 (46.54439,-97.93293) is ~10 m and 20B (46.54416,-97.93309) ~16 m from the Sheyenne through a narrow fringe of trees and brush, and 21/20A ~30-45 m. The channel there is ~20-25 m wide, under the 30 m line, so at most creekside, and a tree fringe screens it: defaults down, no upgrade. East Side primitive 01-06 are 35-60 m from the river through dense woods.",
+    "WATER HOOKUP: reserveNDparks posts 'Water Hook-up on Site Yes' on all 21 standard and 4 modern group sites, but the park page footnotes 'electricity & water*' with '*Water hydrant available for filling at the visitor center or dump station.' Written water true from the per-site listing; a reviewer may read the footnote as no water at the site.",
+    "COUNT: park page says 16 standard sites; reserveNDparks sells 21 (12-19, 20A, 20B, 21-26 in the south loop plus 32-36 along the west lane). Primitive (10) and group counts agree.",
+    "Max length: varied pad lengths (34-81 ft standard, 35-50 ft East Side primitive), not a placeholder. Horse sites all post 70 ft, which looks uniform. Stored sites.pull_through true (derived) is not confirmed or contradicted (no pad type posted); left as is.",
+    "BASE: primitive $15 base, weekend surcharge 0 with the Saturday split in fees.note (Graham's Island precedent). POLICY ROW consistent (Saturday +$5 on standard confirmed). Stored reservation_fee 6 / entrance duplicate the state:ND row; left as stored.",
+    "PIN: stored 46.54688,-97.93125 is on the park road by primitive group sites 37-42, ~240 m from the centroid of the West Side sites 46.54545,-97.93352 and ~370 m from the main electric loop (12-26, ~46.5442,-97.9341). Under 250 m to the all-site centroid; optional move to 46.5442,-97.9341.",
+    "SEASON: stored year_round (manual) with its note stands; limited-service page: 'Comfort & dump stations will close and water in the modern campground will be turned off on October 1.'",
+    "Website: https://www.parkrec.nd.gov/fort-ransom-state-park-camping answers 200 without redirect (keep; the main park page https://www.parkrec.nd.gov/fort-ransom-state-park carries the same camping section). Phone 701-973-4331 on the park page (keep)."
+  ]
+}

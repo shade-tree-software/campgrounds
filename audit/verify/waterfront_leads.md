@@ -1253,3 +1253,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5909 Beaver Creek (USACE, Lake Oahe) lakefront -> lakeview: every rec.gov "Lakefront" site is 60-70 m+ from water across reed/rip-rap/willow (DEM 6 m above the water).
 - 5976 Silver Lake lakefront kept (west-shore peninsula row 10-25 m, 46.0228,-97.5752..46.0250,-97.5740; no site numbers published). 5983 Sweet Briar lakefront kept (point loop tables 12-30 m, ~46.87355,-101.27455; no numbers).
 - 6013 Warsing Dam (unread) stored lakefront: loop road 15-25 m behind reed/shrub fringe, no pads seen - would go down if read.
+
+## p3-449 (ND, 2026-11-12)
+- 5880 Fort Abraham Lincoln riverview -> riverfront? primitive 100-114 at 31-46 m over mown grass + trail + riprap (asks.md).
+- 5890 Fort Ransom: stored evidence corrected (sites 22/20B 10-16 m from a 20-25 m Sheyenne through a tree fringe); not waterfront stands absent a view photo.
+- 5901 Cottonwood: sites 49, 50, 52 ~35-46 m from the Little Missouri under scattered cottonwoods - riverview at most, lead only.
+- 5903 Downstream: rec.gov "Riverfront" tag on site 002 spurious (~400 m). 5886 Fort Stevenson lakeview stands (bluff sites 82/89, water 70-90 m, 10 m below).

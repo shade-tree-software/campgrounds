@@ -1,0 +1,54 @@
+{
+  "id": 5880,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.parkrec.nd.gov/fort-abraham-lincoln-state-park",
+    "https://www.parkrec.nd.gov/sites/www/files/documents/Fort%20Lincoln/FALSP%20-%20Campground%20Map.pdf",
+    "https://www.parkrec.nd.gov/limited-service-season",
+    "https://ndparksrdr.usedirect.com/rdr/rdr/search/grid + search/details (reserveNDparks facility 125 'Main Campground' and 40 'Horse Camp', 2027-06-15, every unit)",
+    "audit/state_park_fees/nd_booking_rates_june_2026-10-12.jsonl (Saturday samples)",
+    "Esri World_Imagery around 46.766,-100.843 with the reservation system's site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "surcharges": {"electric": 10, "weekend": 0}, "checked": "2026",
+                 "note": "Primitive $15 every night (gravel pads 36-55 ft); modern (electric and water) $25, $30 on a Saturday; group sites the same per unit. Park page and reserveNDparks, read 2026-11-12."},
+      "source": "https://www.parkrec.nd.gov/fort-abraham-lincoln-state-park ('51 Modern Campsites (electricity & water) Price: $25-30 per night'; '15 Primitive Campsites (water) Price: $15 per night'); reserveNDparks facility 125 search/details 2027-06-15 (Modern $25, Primitive $15, primitive Pad Length 36-55 gravel); repo samples Modern #01 $30 on 2026-10-24 and 2027-06-19, Primitive #100 $15 the same nights, read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "reserveNDparks facility 125 search/details 2027-06-15: 'Amp Service 50' and 'Water Hook-up on Site Yes' on the modern and modern group sites; park page 'Modern Campsites (electricity & water)', read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 97, "max_rig_ft": 86,
+                 "note": "reserveNDparks lists 66 modern sites, 15 modern group sites, 15 primitive sites and a primitive group site in the main campground (the park page says 51 modern); pads run 34-86 ft and every one takes a 23-ft rig. A separate 4-site primitive horse camp is about 1.3 km southwest."},
+      "source": "reserveNDparks facility 125 grid + search/details 2027-06-15 (99 units incl. 2 cabins; Pad Length 34-86 on modern, 36-55 on primitive, 80 on group G1); facility 40 Horse Camp (4 units); park page counts, read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "potable_water": true},
+      "source": "https://www.parkrec.nd.gov/fort-abraham-lincoln-state-park ('Additional Park Amenities ... Sewage dump station; Showers & flush toilets'; 'Primitive Campsites (water)'); limited-service page ('Campground water and comfort station will be turned off/closed on October 18'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "https://www.parkrec.nd.gov/fort-abraham-lincoln-state-park ('Campsites can be booked 95 days in advance ... Reservations can be made online or by calling 800-807-4723'); reserveNDparks facility 125, all campsites AllowWebBooking true, read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Two modern loops about 1000 ft apart on the west bank of the Missouri River at the Heart River mouth, south of Mandan; the primitive sites line the riprapped riverbank. Two camping cabins and group sites; Custer House and On-A-Slant Village tours in summer. --Claude",
+  "summary": "Park page + reserveNDparks confirm $15 primitive (36-55 ft gravel pads, a 23-ft rig fits) / $25 modern ($30 Sat) with 50-amp + water; 97 campsites (66 modern, 15 modern group, 15 primitive, 1 primitive group) with pads 34-86 ft; showers, flush toilets, dump. Groups now manual; note trimmed. Waterfront upgrade candidate (primitive sites 100-114 ~31-46 m from the river over open ground); pin ~290 m off the sites.",
+  "flags": [
+    "WATERFRONT: suggest riverview -> riverfront with a caveat naming the primitive row (stored value is not --AWH; apply.py does not write it). Primitive sites 100-114 ($15, sold nightly on reserveNDparks, gravel pads 36-55 ft) run along the riprapped bank of the Missouri at the Heart River mouth. On Esri imagery (leaf-off) the ground between is mown grass under scattered cottonwoods, a paved trail and the riprap: 104 (46.76775,-100.84358) ~34 m to open water, 108 (46.76817,-100.84388) ~36 m, 111 (46.76852,-100.84412) ~33 m, 113 (46.76876,-100.84428) ~31 m, 114 (46.76886,-100.84436) ~31 m, 100 (46.76721,-100.84332) ~46 m. The river here is several hundred metres wide. The modern loops are 60 m+ back (62-68 ~60-80 m; south loop 01-12 ~80 m through trees). The stored waterfront_evidence measured the modern pads (40-70 m) and missed the primitive row.",
+    "PIN: stored 46.76440,-100.84290 lies in the brush between the south loop and the river, ~60 m east of the sites and ~290 m from the centroid of all 97 campsites 46.76679,-100.84443 (on the north loop road). Suggest 46.7668,-100.8444, or keep if the south loop is preferred (stored is ~60 m off it).",
+    "COUNT: the park page says 51 modern + 15 modern group + 15 primitive + 1 primitive group tent site + 4 horse sites; reserveNDparks lists 66 modern sites. Written 97 from the reservation system.",
+    "Max length: varied pad lengths 34-86 ft, not a uniform placeholder; all 96 modern/primitive pads and the group site take 23 ft.",
+    "Pull-through: the stored sites.pull_through true (derived) is not confirmed or contradicted by any page read (reserveNDparks posts no pad type); left as is.",
+    "BASE: primitive $15 kept as base (gravel pads 36-55 ft), following the Graham's Island precedent: weekend surcharge 0 with the Saturday split in fees.note. POLICY ROW consistent (Saturday +$5 on modern confirmed). The stored fees.reservation_fee 6 and entrance duplicate the state:ND row; left as stored.",
+    "SEASON: stored year_round (manual) with its note stands; limited-service page 2026: 'Campground water and comfort station will be turned off/closed on October 18. Camping cabins close on November 1.'",
+    "Horse camp: facility 40 'Horse Camp', 4 primitive horse sites H1-H4 ($15, grass, pads 50-80 ft) at ~46.7567,-100.8525, ~1.3 km SW; equestrian, not a split candidate.",
+    "Website/phone: parkrec page answers 200 (keep); (701) 667-6340 on the campground map PDF and page (keep)."
+  ]
+}

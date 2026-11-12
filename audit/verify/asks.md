@@ -608,3 +608,6 @@ Long-stay question on a county park. Posted rates: season $1,500, monthly $450, 
 
 ## 6013 Warsing Dam Campground (ND, Eddy County, stored lakefront) - p3-448, 2026-11-12 - OPEN
 Unread (ndtourism 403; no Eddy County domain resolves) and possibly closed to camping: Campendium marks it "permanently closed"; a camper 2023-09-14: "there was a tiny sign at the entrance that says it is closed overnight"; a snippet of the ndtourism listing says "tenting only". Imagery: loop road ~15-25 m from the water behind a reed/shrub fringe, shelters among trees, no pads seen. Nothing official either way. Drop, or hold for a phone call (stored 701-996-3020)?
+
+## 5880 Fort Abraham Lincoln State Park (ND, stored riverview) - p3-449, 2026-11-12 - OPEN
+Upgrade riverview -> riverfront with a caveat naming the primitive sites? Primitive sites 100-114 sit ~31-46 m from the Missouri across mown grass, a trail and riprap: 113 (46.76876,-100.84428) ~31 m, 114 ~31 m, 104 (46.76775,-100.84358) ~34 m, 108 (46.76817,-100.84388) ~36 m, 100 (46.76721,-100.84332) ~46 m. All nightly on reserveNDparks; they are also the $15 base sites. The open-apron rule allows open ground within ~50 m but no day use between - is a riverside trail day use? Left riverview (an upgrade, so not written without you).

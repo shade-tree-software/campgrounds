@@ -1,0 +1,55 @@
+{
+  "id": 5903,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233490",
+    "https://www.recreation.gov/api/camps/campgrounds/233490/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233490",
+    "https://www.recreation.gov/api/camps/availability/campground/233490/month (2026-11, 2027-04, 2027-05, 2027-09)",
+    "Esri World_Imagery over the four loops with the catalog's site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026",
+                 "note": "Electric sites $26 (peak season, mid-May to mid-September). The 16-site primitive loop is $16 but posts no vehicle length."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233490/rates (Peak Season 2026-05-15..2026-09-14 and 2027-05-14..2027-09-14: 'STANDARD ELECTRIC' 26, 'TENT ONLY NONELECTRIC' 16), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233490 ('98 electrical sites with either a 50/30/20 amp or 30/20 amp service'); RIDB catalog: Electricity Hookup 50 on 42 sites, 30 on 52, read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 111, "max_rig_ft": 79,
+                 "note": "Three paved electric loops (95 back-in sites in the catalog, posted 40-79 ft) and a 16-site primitive loop with no posted length; the description still says 98 electric sites. A 23-ft rig fits every electric site."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233490 (111 sites: 95 STANDARD ELECTRIC, Driveway Entry Back-In, Driveway Surface Paved, Max Vehicle Length 40-79; 16 STANDARD NONELECTRIC in loop 4, Max Vehicle Length 0; RV/Trailer/Fifth Wheel permitted on 110), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "showers": true, "potable_water": true, "dump": true,
+                 "note": "Showers and drinking water are seasonal."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233490 ('flush and vault toilets, showers, drinking water, a fill and dump station'; amenities 'Showers (Seasonal)', 'Water (Seasonal)', 'Dump Station', 'Vault Toilets'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233490",
+                 "max_stay_nights": 14,
+                 "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+                 "note": "110 of 111 sites are reservable, up to the day of arrival. 14 nights in any 30. Weekend and holiday minimums are recreation.gov booking rules and may be relaxed for same-day bookings."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233490 (rules: maxStay 14 nights Rolling 30 Days; minWeekendStay 2; minHolidayWeekendStay 3; reservationCutOff 0; 'FOR RESERVATIONS, PLEASE CALL 877-444-6777'); catalog 110 reservable / 1 not (site 032), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "US Army Corps of Engineers (Garrison Dam) campground on the east bank of the Missouri River just below the dam at Riverdale, in cottonwood forest; trails lead to the National Fish Hatchery and a trout pond. Loop 4 primitive is free, first-come, in the off-season. --Claude",
+  "summary": "rec.gov confirms 30/50-amp electric ($26 peak) in three paved back-in loops (catalog 95 sites, 40-79 ft) plus a 16-site $16 primitive loop with no posted length; reservable to day of arrival, 14 in 30, weekend 2 / holiday 3 minimums. Derived fees nightly_low 0 replaced with $26; sites 114 -> 111; groups now manual; note trimmed. Not waterfront stands; pin is on the entrance road.",
+  "flags": [
+    "FEES: the stored nightly_low 0 (derived from the note's off-season free primitive loop) is replaced with the rec.gov peak electric $26. The primitive loop's $16 is not used as base: rec.gov's rate table calls it 'TENT ONLY NONELECTRIC' and the catalog posts Max Vehicle Length 0, though the catalog permits RV/Motorhome on it. A reviewer may prefer $16.",
+    "OFF-SEASON: the note's 'Loop 4 primitive is free, first-come, in the off-season' rests on the Corps page, which answered 403 Access Denied (https://www.nwo.usace.army.mil/Missions/Dam-and-Lake-Projects/Missouri-River-Dams/Garrison/Camping/); left unread and the sentence kept. rec.gov sells nights only from 2027-05-14 (the 2026-11 and 2027-04 calendars return nothing). Stored season year_round (derived) left as is: no page read states a campground season.",
+    "PIN: stored 47.48208,-101.42632 is on the entrance road by the fee booth, ~340 m from the centroid of the three electric loops 47.48029,-101.43005 (all 111 sites 47.47837,-101.43101, ~540 m, pulled south by the primitive loop 1.3 km away). Suggest 47.4803,-101.4300.",
+    "WATERFRONT: not waterfront stands. rec.gov tags site 002 'Riverfront', but 002 (47.48272,-101.42677) sits by the entrance ~170 m from the nearest water (a side channel) and ~400 m from the river; the nearest electric sites to the river (044, 047, 085, 087) are ~90-115 m from the bank through cottonwoods. Primitive loop 4 (e.g. 107, 47.4672,-101.4370) is ~140 m from the river across open sand and grass.",
+    "FIT / EQUIPMENT: 110 of 111 sites permit RV, Trailer or Fifth Wheel; electric sites post 40-79 ft. No pull-throughs in the catalog (all back-in).",
+    "DISCOUNT: rec.gov rules carry militaryDiscount 1 ('Military Discount'); not written (no page says what it is).",
+    "Phone: rec.gov gives (701) 654-7411 for the park rangers (stored) and 701-654-7440 for campground information from May 15 to Sept 15; keep the stored phone. Website keep."
+  ]
+}

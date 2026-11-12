@@ -1861,3 +1861,14 @@ me drop and report); each needs the research named before a verdict.
 - 6012 Tioga: flags-only (no rate/season/hookups published; Park Board Facebook unread); phone was Tioga Dam's - now the park manager's 701-641-1533.
 - 5912 Summit: Summit Trail closed past the first ridge (note).
 - Leads (not in DB): Tioga Dam - Peaceful Valley Campground (City of Tioga, 6 lots); The Ridge RV Camp, Bowman (private, 17 lots, Google 4.4/18 - under the 25 bar, ridgervcamp.com).
+
+## p3-449 (ND, 2026-11-12)
+- No drops; 11 applied. Pins moved: 5901 Cottonwood ~320 m, 5903 Downstream ~340 m, 5880 Fort Abraham Lincoln ~290 m, 5886 Fort Stevenson ~500 m. Phones: 5956 701-633-2356, 5905 701-842-8500 (McKenzie RD), 5913 (701) 404-8950 (Sheyenne RD).
+- 5913 Hankinson Hills: reservable true (derived) -> false, fcfs always (FS + rec.gov "Not Reservable"); sites 10-15 equestrian, 1-9 not (4-5 are 60-ft pull-throughs).
+- 5972 Fort Daer: stored note called it tent-only; it is an RV campground ($25, full hookups 50 A, 14 sites, FCFS). "CLOSED UNTIL MAY" - season left unset.
+- 5901 Cottonwood: all sites by reservation since 2026-05-01 (rec.gov's Nov-Apr self-registration notice stale).
+- 5894 Cross Ranch-Sanger: 8 primitive sites post 10-18 ft (none fit); 7 standard 30-40 ft.
+- 5886 Fort Stevenson: 32 premium sites post length = width (12-14 ft placeholders); East loop uniform 48/50 ft; max_rig_ft 95.
+- Count mismatches page vs reserveNDparks: 5890 16 vs 21 standard; 5880 51 vs 66 modern; 5905 FS intro 38 vs 25 (used 25). 5890 water: per-site "Yes" vs park footnote hydrant (written true).
+- 5956 Buffalo (city, Firefly): monthly beside nightly; occupancy unread (reCaptcha).
+- 5903 Downstream: Garrison project camping page 403; note's "Loop 4 primitive free FCFS off-season" unverified.
