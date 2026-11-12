@@ -1,7 +1,7 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
 Applied through **p3-437** (commit 15520ad1). Next batch **p3-438**. Next new id **15669**.
-Nothing after c033717f (p3-427) is pushed or deployed. ONE verifier at a time.
+Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
 

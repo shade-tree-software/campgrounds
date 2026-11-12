@@ -12,7 +12,7 @@
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check…
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary…
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts; decides fit, open/closed, inclusion_evidence), then per-site coords
-- [Phase 7 verification](project_phase7_verification.md) — STOPPED 2026-11-11 after p3-437 (MN; then MN unread sweep, then 33 VT); resume from audit/verify/kit/mn/RESUME_MN.md; next id 15669; ONE agent at a time; nothing pushed since c033717f
+- [Phase 7 verification](project_phase7_verification.md) — STOPPED 2026-11-11 after p3-437 (MN; then MN unread sweep, then 33 VT); resume from audit/verify/kit/mn/RESUME_MN.md; next id 15669; ONE agent at a time; pushed through 15520ad1 (p3-437); hand-off commit 0de5cd4e local
 - [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way; next id 15631 (2026-11-07)
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11…
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183…
@@ -146,3 +146,4 @@
 - [EKKO road-grade limit](user_ekko_grade_limit.md) — Spade Road to SH001 (10% over 1.2 km, last 450 m ~14%) is about the limit, dry weather only (AWH 2026-11-10)
 - [Look it up before asking](feedback_look_up_before_asking.md) — AWH 2026-11-10: a keep/drop question one easy lookup settles (RV Life tier, Google reviews) gets looked up; ask only when completely stuck
 - [Coastal walk (was coastal woods)](feedback_coastal_walk.md) — AWH 2026-11-11: any setting within ~1 mile walk of ocean/Great Lake/big saltwater bay; own day-use beach may lie between; highway/town/rail rule it out
+- [Phone answers are a valid source](feedback_phone_call_source.md) — AWH 2026-11-11: operator phone answer counts (dated, in curation_note); dialmcp calls only on AWH go-ahead, first one (Karlstad) waits for AWH
