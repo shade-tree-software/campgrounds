@@ -1861,8 +1861,13 @@ function cgFactsHtml(d) {
 function cgPopupHtml(cg) {
   const d = cg._detail;
   let popup = `<strong>${escapeHtml(cg.name)}</strong>`;
-  if (cg.state) popup += `<br>${escapeHtml(cg.state)}`;
-  if (d && d.elevation_feet) popup += ` &middot; ${d.elevation_feet} ft`;
+  // Who runs it rides on the state line rather than a line of its own (AWH
+  // 2026-11-12). The filter's bare "Local" reads oddly in a sentence, so the
+  // popup spells it out; every other value uses the filter's label.
+  const owner = cg.ownership === 'local' ? 'Local government' : (cg.ownership ? ownerLabel(cg.ownership) : '');
+  const placeBits = [cg.state, owner].filter(Boolean).map(escapeHtml);
+  if (placeBits.length) popup += `<br>${placeBits.join(' &middot; ')}`;
+  if (d && d.elevation_feet) popup += `${placeBits.length ? ' &middot; ' : '<br>'}${d.elevation_feet} ft`;
   const wf = cg.waterfront || 'not waterfront';
   if (wf === 'not waterfront') {
     popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
