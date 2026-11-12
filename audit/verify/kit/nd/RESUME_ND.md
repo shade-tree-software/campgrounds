@@ -1,6 +1,6 @@
 # North Dakota phase 7 - resume notes
 
-Applied through **p3-451** (2026-11-12). Unread/held for the sweep or phone: 5975 Fordville, 5980 Hazelton, 6001 Neameyer (result in scratch, rests on silence), 6013 Warsing Dam (maybe closed), 5986 Seeman Park, 5995 Buffalo Lodge Lake. Asks open: 5961 Larimore long-stay, 6013 Warsing, 5880 Fort Lincoln riverfront upgrade. Next batch **p3-452**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
+Applied through **p3-452** (2026-11-12). Unread/held for the sweep or phone: 5975 Fordville, 5980 Hazelton, 6001 Neameyer (result in scratch, rests on silence), 6013 Warsing Dam (maybe closed), 5986 Seeman Park, 5995 Buffalo Lodge Lake, 5994 Drake. Asks open: 5961 Larimore long-stay, 6013 Warsing, 5880 Fort Lincoln riverfront upgrade. Next batch **p3-453**. Next new id **15674**. ND queue at start: 179 (local 120, federal 22, private 19, state 18). ONE verifier at a time (AWH 2026-11-11).
 
 ## Build a batch (11 ids; the agent template says ELEVEN)
 ```

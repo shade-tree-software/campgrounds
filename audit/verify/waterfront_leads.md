@@ -1267,3 +1267,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-451 (ND, 2026-11-12)
 - No changes. Leads: 5883 Rough Rider riverview -> riverfront? Wrangler 33 (46.89265,-103.53872) and 34 (46.89283,-103.53876) ~50 m from the Little Missouri over open grass + the Maah Daah Hey trail (imagery predates the rebuilt loops; same trail question as 5880). 5923 Roughrider: south lot's two west sites 25-35 m from a 17-24 m Souris oxbow (creekside class at most, no numbers). 5957: Cherry Creek 10-15 m, RV area 25-30 m behind trees.
+
+## p3-452 (ND, 2026-11-12)
+- 5910 East Totten Trail lakefront stands (outer row 016-030, 034-035 at 18-38 m over grass/riprap, ~47.6171,-101.2628; inner-row rec.gov "Lakefront" tags are views). 5907 Hazelton lakeview stands (~150 m). 5895 Hazen Bay lakeview stands (east loop behind its own road; cabins only within 30 m).

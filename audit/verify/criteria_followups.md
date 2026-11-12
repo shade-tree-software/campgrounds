@@ -1895,3 +1895,16 @@ me drop and report); each needs the research named before a verdict.
 - 5883 Rough Rider: 12 of 14 primitive pads post a uniform 24 ft (placeholder?); if shorter the base is $25. Horse camp distinct (Wrangler north end; Rancher/Rustler no horses). Note's loop names obsolete.
 - 5957 Watford City Tourist Park: derived hookups/count/dump cleared; no official rate. 5926 Viking Vines: Firefly reCAPTCHA - price/sites/hookups unverified; only booking written.
 - 5929 Butte View: city says "Seasonal ... May - November" but Campspot sells January nights; season unset.
+
+## p3-452 (ND, 2026-11-12)
+- DROP 5935 Camp on the Heart (Dickinson, private): Google 3.9/65 (standing under-4 rule) and mostly long-term residents per reviews; no posted nightly rate.
+- UNREAD, no result: 5994 Drake City Park (city domain parked, ndtourism 403; RV Life undated $10) - sweep/phone candidate.
+- 9 applied. Pins: 6008 Carpio ~530 m (was a house lot), 5933 Jan's ~195 m (was across US-2 by grain bins). Phones 5910, 5895, 5993 (city reservation line). Websites: 5895 + hazenparks.com; 5993 ndtourism line dropped.
+- 5993 Kulm: mixed long-stay - 2019 review "a residential trailer park with no overnighter facilities", positive 2021/2026 stays; imagery ~8 empty back-in pads vs ~10 trailers with sheds (~40-50% nightly est.); Google 3.6/8 (under 25). Kept; reserve by phone; no posted rate/season/hookups.
+- 5996 Fessenden: priced $15 from a dated camper report (Campendium 2026-05-21) because the city's site is down (Cloudflare 520/525) and .org unpublished - treated as no operator web page; same camper: electric sites "taken by construction workers" (workforce flag). Stored year_round doubtful (ParkAdvisor May-Oct). Phone unconfirmed.
+- 6008 Carpio: $15 / 3-night max camper-reported (Campendium June 2025; no city page); potable water cleared (off in 2018/2020/2025); grass sites, small rigs - caveat.
+- 5891 Fort Buford: policy_ref none (State Historical Society); free; no booking; stored potable_water and count 10 doubted by 2026 campers ("No water or dump sites"; sites unnumbered) - left.
+- 5895 Hazen Bay: 48 seasonal-lottery sites vs 61 nightly RV (~56% nightly) - kept; stored 50 A not on the operator page (30 A only).
+- 5997 Homme Dam: booking stored "not reservable / fcfs always" -> reservable on claimed RoverPass; $7 mandatory day pass ($42 all-in); 13 electric sites post 24 ft incl. table (tight); veterans 10%.
+- 5933 Jan's: kept (RV park its own section, 14 FHU, $40, Google 4.7/62); stored military true (Good Sam) not on the operator page.
+- Leads (not in DB, unvetted): Kulm's "KCDC Campground" and "Pesek Campground" (city page phones only); Whitestone Hill Lake Campground; Edgeley-Kulm Dam Campground (ndtourism titles only).
