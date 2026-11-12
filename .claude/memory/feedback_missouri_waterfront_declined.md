@@ -13,4 +13,6 @@ Then: "10-35 m across open grass counts as clearly waterfront. You can upgrade t
 
 Then AWH pointed to the About panel on the campground map as the definitive wording: on the water = at least some sites within about 50 m with nothing between but open ground (no road, parking lot, day-use area or tree screen); a thin line of trees, a slope or a road = a view. Six more leads changed under it.
 
+AWH 2026-11-12 (Fort Abraham Lincoln 5880, Spruce Run 616): "A single walking trail, not for motor vehicles, is OK. RipRap is annoying because it usually means you cannot easily enter the water, but it's still riverfront. Just add a caveat." A footpath between the pads and the water does not break "open ground"; a riprapped bank gets a caveat, not a downgrade.
+
 **How to apply:** a few sites within about 50 m of the water across open ground, nothing between, seen on imagery = upgrade without asking, with the note saying how many and which sites. Farther back, screened, or unclear stays at the stored value and is logged in `audit/verify/waterfront_leads.md`. Related: [[feedback_waterfront_unsure_downgrade]], [[feedback_reaudit_contrary_waterfront_claims]].
