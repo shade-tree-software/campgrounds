@@ -1,0 +1,63 @@
+{
+  "id": 1651,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://dnr.illinois.gov/parks/park.fortmassac.html (read 2026-11-12: Park Phone 618-524-4712; 1308 E. 5th Street, Metropolis 62960; Park Latitude 37.144, Longitude -88.712; alert 'The replica 1802 fort at Fort Massac State Park remains closed pending structural rehabilitation')",
+    "https://dnr.illinois.gov/parks/camp/park.fortmassac.html and /parks/activity/park.fortmassac.html (read 2026-11-12: 'Campers enjoy Fort Massac's 50 Class A vehicular campsites, complete with electricity, a disposal station, and a shower building. Tent camping and a separate group campground also are available. Camping reservations can be made through ExploreMoreIL'; 'The boat dock and launch ramp easy river access')",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (the API behind recreation.exploremoreil.com) search/place PlaceId 19 (facilities Area 1 197, Area 2 198, Group Area 199, Shelter 200) and search/details for all 50 units of 197 and 198 at 2027-06-15: units 001-050 all 'Class A', Electricity Hookup '30 Amp' at 42 and '50 Amp' at 8 (008, 009, 016, 018, 031, 034, 042, 045), no water or sewer attribute, all Back-In gravel, Max Vehicle Length 53-72 ft (varies by site), 49 web-bookable (002 not), engine price $20 (2026 schedule); grid: in season 2027-04-01..2027-09-30, out of season 2026-11-12..2027-03-31 and 2027-10-01 on, read 2026-11-12",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric $28; Premium Electric only at the named Premium campgrounds, not Fort Massac), read 2026-11-12",
+    "Esri World_Imagery (450 m half-width at 37.1466,-88.7085): the campground's paved loops sit in woods east of the park road, the Ohio River ~350 m south through woods; the stored pin 37.1467,-88.7108 is ~200 m west, on the park road by the campground entrance"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "note": "All 50 Class A sites are the Electric class; tent sites are Non-Electric ($11)."
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: Electric $28) applied to the ExploreMoreIL unit classes (50 Class A electric units), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ExploreMoreIL unit details, park 19 facilities 197/198 ('30 Amp' at 42 units, '50 Amp' at 8; no water or sewer attribute), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 50, "max_rig_ft": 72, "pull_through": false},
+      "source": "https://dnr.illinois.gov/parks/camp/park.fortmassac.html ('50 Class A vehicular campsites'); ExploreMoreIL facilities 197/198 (50 units, Max Vehicle Length 53-72, all Back-In), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.fortmassac.html ('a disposal station, and a shower building'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/19",
+        "season": {"opens": "04-01", "closes": "09-30"}
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.fortmassac.html ('Camping reservations can be made through ExploreMoreIL'); ExploreMoreIL facilities 197/198 grid (in season 2027-04-01..2027-09-30), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park at Metropolis, Illinois' first state park, above the Ohio River. The campground's two loops are in woods about 350 m from the river; boat dock and launch ramp on the river. The replica 1802 fort is closed pending structural rehabilitation (noted 2026-11). --Claude",
+  "summary": "DNR park/camp/activity pages, ExploreMoreIL engine (all 50 units) and the 2027 fee PDF read: 50 Class A back-in gravel sites, 30 A with 50 A at eight, no water/sewer at sites, 53-72 ft; showers and dump; $28 Electric 2027 (engine $20, 2026); reservation season 04-01..09-30 on the engine; booking -> usedirect. Phone 618-524-4712 (none stored). Not waterfront kept (~350 m through woods). Note corrected (the 'reconstructed 1757 fort' is a replica 1802 fort, now closed).",
+  "flags": [
+    "PHONE: none stored -> 618-524-4712 (DNR 'Park Phone'). apply.py does not write phones.",
+    "PIN (under 250 m, optional): stored 37.1467,-88.7108 is on the park road at the campground entrance, ~200 m west of the loops' centre 37.1464,-88.7085.",
+    "SEASON: stored year_round (derived from the old note, 'walk-in off-season') left alone: the DNR pages say nothing about when the campground is open. The engine's RESERVATION season is 04-01..09-30 (written as booking.season); outside it the engine shows the units out of season.",
+    "FEES: 2027 Electric $28 (Fort Massac is not a named Premium campground); stored $28 already reflected 2027; engine still $20 (2026). Per-entry $10 reservation fee removed (state:IL row).",
+    "SITE LENGTHS: engine lengths vary site by site (53-72 ft), so they look measured, not the 40-ft default; all 50 take 23 ft+.",
+    "STATUS: the park alert closes only the replica fort ('remains closed pending structural rehabilitation'); the campground is not affected.",
+    "NOTE CORRECTION: stored 'reconstructed 1757 fort' -> the DNR says the replica is of the 1802 American fort (the 1757 French fort survives only as an archeological outline), and it is closed. The 'new bathhouse' could not be confirmed (the page says 'a shower building') and was dropped.",
+    "WEBSITES: both stored links work (dnr.illinois.gov park page; ExploreMoreIL #!park/19 = Fort Massac). No change.",
+    "WATERFRONT: not waterfront kept; the loops are ~350 m from the Ohio River through woods."
+  ]
+}

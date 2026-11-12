@@ -1332,3 +1332,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-466 (IL, 2026-11-12)
 - APPLIED 1698 Coon Creek lakefront -> lakeview (pads 15-21 m but 5.7-7.8 m up steep wooded banks); 1745 Countryside pond -> not waterfront (0.17 ha swim pond, unnamed pad behind saplings); 1760 Driftwood riverview -> not waterfront (Quincy Bay 175-400 m through forest across a road).
 - CONFIRMED with riprap caveats in notes: 1714 Crab Orchard lakefront (A-1..A-11, B-4..B-10, loop E point); 1664 Eldon Hazlet lakefront (008-010 21-39 m; 263 first-come sites unmapped); 1705 Fishermans Corner riverfront (008-013 17-26 m to the main Pool 14, no levee).
+
+## p3-467 (IL, 2026-11-12)
+- APPLIED 1701 Gun Creek lakefront -> lakeview (best pad Blue 049 ~33 m and ~12 ft above pool past a shrub clump; the rest in woods).
+- CONFIRMED 779 Hickory Point --AWH lakefront: engine flags 23 units "Waterfront Site" (004, 007-011, 013-017, 019-024, 026-028, 031, 032); leaf-off imagery shows a pad ~12 m from shore over open ground at ~39.6442,-89.4644.
+- KEPT 1690 Jim Edgar lakeview (nearest pads ~50 m down an open lawn, ~26 ft above; cabins take the shore).
+- 1769 Illiniwek (unread): riverview looks right from imagery (pads 120-150 m back from the riprapped main channel); no sites identifiable.

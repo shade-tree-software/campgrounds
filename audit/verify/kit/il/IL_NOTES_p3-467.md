@@ -1,0 +1,12 @@
+# p3-467 (fifth IL batch) working notes, 2026-11-12
+- 1656 Fort Kaskaskia DONE: 36 B-E 30A (page says 32), $28 2027, usedirect some_sites, website -> dnrhistoric page
+- 1651 Fort Massac DONE: 50 A 30/50A, 53-72ft, $28, booking.season 04-01..09-30, phone 618-524-4712, note fort corrected
+- 1749 Four Seasons DONE: no rate (RV Life $$), Google 4.2/78, no gateway, ordinary park w/ some 2-month stays
+- 1776 Friends Creek DONE: 35 elec 30/50, no water hookup, $25/30 +$5 fee, 05-02..11-02 (2025), WebTrac Cloudflare unread -> operator
+- 1734 Geneseo DONE: rol.camp engine $48 W/E /$56 /$62 FHU (2026), 71 units, Google 4.6/529, no gateway; gate passes on W/E only
+- 1701 Gun Creek DONE: lakefront -> lakeview (049 ~33m/12ft above pool w/ clump, 055 behind road+trees); pin move 380 m -> 38.0820,-88.9310; season 03-12..11-22; $18/$26
+- 779 Hickory Point DONE: AWH lakefront AGREES (23 engine WF units, pad 12 m/9 ft on NW lobe); $28; season contradiction (open all year vs closed mid-Jan-Mar); phone 217-498-9208; booking.season 04-01..10-31
+- 1750 Hilltop DONE: $45 nightly/$280 wk/$685 mo, 35 FHU, Google 4.6/184, monthly marketed; nightly >= ~1/3 -> keep w/ long-term caveat
+- 1719 State Fairgrounds DONE: public Apr1-Oct31 (closed Nov-Mar, year_round wrong), $35/$40/$50 fair, no reservations, phone 217-524-9894, IL row contradiction (IDOA not IDNR)
+- 1690 Jim Edgar DONE: 83 units (18 AA Premium $35 / 65 A $28), lakeview kept (~50 m/26 ft), Questing Hills separate 7 km, phone 217-452-7741
+- 1769 Illiniwek NOT WRITTEN: ricfpd.org (only own site, per Google) Cloudflare 403; imagery only

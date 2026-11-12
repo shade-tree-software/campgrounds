@@ -1,0 +1,58 @@
+{
+  "id": 1719,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html (read 2026-11-12): 'The campground operates April 1st through October 31st with water and electric hookups available. Please note: Reservations are not required, nor accepted.'; 'From November 1st through March 31st, the campground is closed.'; 'There are 300 sites available that can accommodate motor homes, RV's, fifth wheels, and tents with electric and water and limited sewer hook-ups. Shower facilities and permanent restrooms are available.'; 'Office: 217/524-9894 ... Hours: 12:30 pm - 9:00 pm, Tuesday through Saturday; After hours, contact security at 217/725-0120'; 'April to October Rates (excluding August)': Tent $25 ($30 holiday, 'Limited to 5 consecutive days'), Regular $35 ($40), 60 and older $30 ($35), Veteran $30 ($35), Outside of main Campground $40 ($45, no discounts); 'Holiday rates apply to the Monday before through Sunday nights of both Memorial Day and Labor Day weeks'; 'Rates not applicable during the Illinois State Fair in August'; Clientele 'Concessionaires, General Public, Livestock Exhibitors, Vendors'",
+    "https://statefair.illinois.gov/info/camping.html (read 2026-11-12): 'Our campground is open to the public from April - October 31st.'; 'The Illinois State Fair Campground is currently full August 8th through Tuesday August 18th. Camping from August 19th -August 24th will be offered at a first come, first serve basis.'; 'State Fair Camping Fees (August 1 - August 31) are $25 per night for tent camping ... and $50 per night for all other types of camping.'"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 40,
+        "currency": "USD",
+        "checked": "2026",
+        "reservation_fee": null,
+        "note": "$40 in the Memorial Day and Labor Day weeks and for sites outside the main campground; $50 during the State Fair in August. Campers 60 and older and veterans pay $30. Tent sites $25, five nights at most. Card or money order only."
+      },
+      "source": "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html (April to October Rates, excluding August) + https://statefair.illinois.gov/info/camping.html (State Fair camping fees), read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true, "sewer": true},
+      "source": "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html ('Electric and Water Utilities', 'Limited Sewer Hook-Ups'), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 300},
+      "source": "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html ('There are 300 sites available'), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true},
+      "source": "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html ('Shower facilities and permanent restrooms are available'), read 2026-11-12",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-31"},
+      "source": "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html ('operates April 1st through October 31st'; 'From November 1st through March 31st, the campground is closed'), read 2026-11-12",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always"},
+      "source": "https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html ('Reservations are not required, nor accepted.'), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois Department of Agriculture campground on the State Fairgrounds in Springfield, open to the public outside events; a host assigns sites on arrival. Full during the State Fair in August and busy during horse shows. Near the Lincoln historic sites. --Claude",
+  "summary": "Both fairgrounds camping pages read: 300 sites with electric and water, limited sewer, showers; open to the general public April 1-October 31 (closed November-March, so stored year_round was wrong); $35 regular ($40 holiday weeks/outside the main campground, $50 State Fair, $30 seniors/veterans); no reservations, first come first served. Phone 217-524-9894 (none stored).",
+  "flags": [
+    "FAIRGROUNDS TEST: passes. 'Our campground is open to the public from April - October 31st'; Clientele lists 'General Public'; a nightly rate table for April-October excluding August. Ordinary nights are sold outside events.",
+    "SEASON: stored year_round true (note prose) -> 04-01..10-31: 'From November 1st through March 31st, the campground is closed.'",
+    "POLICY ROW (state:IL) CONTRADICTION: this is a Department of Agriculture campground, not IDNR. The row's ExploreMoreIL/usedirect booking, $10 reservation fee, 72-hour cutoff, 2-night holiday minimum and 14-night maximum do not apply: 'Reservations are not required, nor accepted.' Written booking reservable false / platform none / fcfs always and reservation_fee null; the row's min_stay and max_stay_nights may still show through and need suppressing (only tent stays are capped, at 5 nights).",
+    "STATE FAIR: the campground was full August 8-18 (2026 fair) and first come first served August 19-24; State Fair camping $50.",
+    "PHONE: none stored -> 217-524-9894 (campground office, Tue-Sat 12:30-9 pm; after hours security 217-725-0120). apply.py does not write phones.",
+    "WEBSITES: stored https://statefair.illinois.gov/info/camping.html works but is the State Fair page; suggest adding https://statefair.illinois.gov/non-fair-events/facilities/campgrounds.html (season, rates, no-reservation rule) as the first link.",
+    "WATERFRONT: not waterfront kept. Pin not checked against a site map (campground map PDF not read); stored 39.831,-89.647 is inside the fairgrounds."
+  ]
+}

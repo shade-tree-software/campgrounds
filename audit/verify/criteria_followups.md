@@ -2036,3 +2036,14 @@ me drop and report); each needs the research named before a verdict.
 - 1705 Fishermans Corner: 46 public RV sites, 50 A, max 70 ft, 2027 $26, season 05-01..10-23, reservation only.
 - Pins: 1785 ~790 m, 1650 ~1.2 km. Phones: 1745, 1714, 1662, 1664, 1650, 1781 (Google only). Websites: 1785, 1714.
 - UNREAD: 1781 Fairview Park, Casey (cityofcaseyil.org Akamai Access Denied). Still queued. Google: 4.5/120; review ~3 months old "$25/night - Cash, $15 for residents".
+
+## p3-467 (IL, 2026-11-12)
+- 10 applied, 0 dropped, 1 unread. 1750 Hilltop (Goreville) kept with a long-term-campers line: markets monthly/seasonal ($685/mo) but posts $45 nightly with 24-hour online booking; ResNexus showed ~11 of 35 sites open for a midweek stay (roughly a third nightly, 10-50% band). I-57 road noise in 13 reviews.
+- 1719 Illinois State Fairgrounds: passes the fairgrounds test (public April-October, "General Public" clientele, nightly rate table); no reservations; season 04-01..10-31 (stored year_round was wrong). Run by the Dept of Agriculture, so policy_ref none (state:IL row declined). $50 during the State Fair.
+- 1734 Geneseo: rol.camp rates 2026-01-26 $42-62; only the $48 30 A water/electric class is under the $50 gate. Google 4.6/529.
+- 1749 Four Seasons: no posted rate (RV Life $$), Google 4.2/78, some two-month stays but not mostly seasonal.
+- 1651 Fort Massac: note fixed (the replica is of the 1802 fort and is closed pending rehabilitation). Reservation season 04-01..09-30 as booking.season; stored year_round left. 1656 Fort Kaskaskia: 36 sites, $28 2027.
+- 1690 Jim Edgar Panther Creek: Questing Hills equestrian camp is a separate facility ~7 km away. 83 units (18 AA $35 / 65 A $28).
+- 1701 Gun Creek: $18 (+$8 water/sewer), season 03-12..11-22. 1776 Friends Creek: $25-30 + $5 reservation fee, season 05-02..11-02 (2025 dates).
+- Pin: 1701 ~380 m. Phones: 1651, 779, 1719, 1690. Websites: 1656 (historic-sites page added), 1719 (campground page added first).
+- UNREAD: 1769 Illiniwek Forest Preserve (ricfpd.org Cloudflare 403). Still queued. Google 4.4/173, 309-496-2620. Imagery: pads 120-150 m from the main Pool 14 channel past a shore road and lawn, no levee - riverview looks right.
