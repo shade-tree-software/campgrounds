@@ -1,8 +1,8 @@
 """Append phase-7 lead adds (results/*.json, decision "add") to campgrounds.json.
 
-Each result already carries its waterfront audit, fees and any standing min_stay, so the entry is written
-whole: rating from the result's `rvlife` ("4.5*/$$$"), fees and booking with their provenance. Ids continue
-from max(id) over BOTH location files. A result whose name or pin (300 m) is already in the database is
+Each result already carries its waterfront audit and structured fields, so the entry is written whole:
+rating from the result's `rvlife` ("4.5*/$$$"), fees and every structured group (hookups, sites,
+facilities, season, booking) with its provenance. Ids continue from max(id) over BOTH location files. A result whose name or pin (300 m) is already in the database is
 refused. Skips go to verdicts.jsonl. Dry run by default; --apply writes.
 """
 import glob, json, math, os, re, sys
@@ -21,6 +21,17 @@ def km(a, b):
 
 def pt(loc):
     return tuple(map(float, loc.split(',')))
+
+
+GROUPS = ('hookups', 'sites', 'facilities', 'season', 'booking')
+
+
+def provenance(r, g):
+    """A group's provenance: its own *_source, else the lead's inclusion evidence; checked = last 'read' date."""
+    src = r.get(g + '_source') or 'phase-7 lead result (the sources in inclusion_evidence)'
+    dates = re.findall(r'\b(20\d\d-\d\d-\d\d)\b', src + ' ' + (r.get('inclusion_evidence') or ''))
+    dates = [d for d in dates if d <= TODAY]  # a quote's stay date is not a read date
+    return {'source': src, 'checked': max(dates) if dates else TODAY, 'method': 'manual'}
 
 
 def norm(s):
@@ -60,9 +71,10 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
     if r.get('fees'):
         e['fees'] = r['fees']
         prov['fees'] = {'source': r['fees_source'], 'checked': TODAY, 'method': 'manual'}
-    if (r.get('booking') or {}).get('min_stay'):
-        e['booking'] = {k: r['booking'][k] for k in ('min_stay', 'note') if r['booking'].get(k)}
-        prov['booking'] = {'source': r['booking_source'], 'checked': TODAY, 'method': 'manual'}
+    for g in GROUPS:
+        if r.get(g):
+            e[g] = r[g]
+            prov[g] = provenance(r, g)
     if prov:
         e['provenance'] = prov
     adds.append(e)
