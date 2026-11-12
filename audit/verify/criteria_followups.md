@@ -1919,3 +1919,15 @@ me drop and report); each needs the research named before a verdict.
 - 5888 Metigoshe: tent sites post 40x40, #123 20x20, #124 26x26 (placeholders); premium #78 empty record -> full_hookup cleared.
 - Monthly rates beside nightly at 5967 Leistikow and 6003 Mohall (city parks, no discouraging wording).
 - Unread: 5892 Mirror Lake (no operator page beyond chamber listing); 5936 2027 season not on sale; amperage at 5967, showers/dump at 6003 unconfirmed.
+
+## p3-454 (ND, 2026-11-12)
+- DROP 5920 Red Trail Campground (Medora, private): Google 3.7/481 - standing under-4 rule (otherwise passed: GS 10%, TRNP gateway).
+- POLICY ROW state:ND reworded: Friday AND Saturday +$5 (three parks read: Metigoshe, Fort Stevenson, Beaver Lake; Thu/Sun $25, Fri/Sat $30).
+- UNREAD, no result: 5982 Northwood City RV Park (ndtourism 403, northwoodnd.org Cloudflare challenge) - phone/sweep candidate.
+- 9 applied. Pins: 5896 Beaver Lake ~790 m (entrance junction -> modern loop), 5988 Carrington ~215 m (gravel pad lot). Phones: 5948 -> (701) 854-7777 (RV page), 5974 city office, 5988 -> City Hall (701) 652-2911 (stored 652-2524 on no page; the page's booking contact is a board member's cell, not used). Websites: ndtourism -> city/county pages at 5974, 6011, 5962; 5988 ndtourism line dropped.
+- 5988: name "Carrington Lions RV Park" appears on no page (city: camping in Carrington City Park); left as is - rename candidate. Sewer cleared.
+- 5896 Beaver Lake: base kept at $15 primitive; those units post placeholder sizes (100x100 etc.) on grass, a trail page calls them "the tent campground" - if tent-only, base $25.
+- 5948 Prairie Knights: casino-lot test passes (16 dedicated concrete pads, $40, own engine); Google 4.1/1,856 (resort).
+- 6011 Short Creek: stored reservable true unconfirmed (county page: call). 5962 Stanley: only a thin city page; stored fields unconfirmed.
+- 5963 Old Settlers: 2026 season ended early (closed from Sep 10). 5932 Patterson: blue-green algae advisory 2026-08-28; GS/PA/ATB honoured, seniors 50%.
+- LEAD: Prairie Knights Marina campground (same operator; 32 full RV sites + tent on Lake Oahe, ~46.2662,-100.5812, 4.4 km E of the casino lot; Google 4.7/12; 701-854-7777; rates unposted).

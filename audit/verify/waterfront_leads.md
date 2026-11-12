@@ -1274,3 +1274,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-453 (ND, 2026-11-12)
 - APPLIED 5940 Lazy Fish at Pelican Point lakefront -> lakeview: nearest RV sites 55-57 (~47.0063,-98.7397) ~65-80 m from the waterline with the park's own swim beach, bollards, lawn and playground between; old evidence point was the park road.
 - 5951 McGregor Dam lakefront stands: sites 1-6 NE knoll ~48.58518,-102.93170 (~18 m), sites 10-17 SW peninsula ~48.5823,-102.9387 (35-50 m, open grass). 5892 Mirror Lake lakeview left (no site positions). Not waterfront stands at 5888, 5936, 5904.
+
+## p3-454 (ND, 2026-11-12)
+- APPLIED 5963 Old Settlers riverview -> creekside: Des Lacs channel 14-20 m; sites 5-7 (~48.2811,-101.4322) 15-25 m over mown grass, nightly; note names them.
+- 5932 Patterson Lake lakeview stands narrowly (M21/M22 ~80 m over open grass). 6011 Short Creek lakeview is a ceiling (undesignated spots ~48.9908,-102.7826, 50-60 m behind a shelterbelt and the loop road). 5896 Beaver Lake not waterfront stands (east pads 30-40 m but behind the ramp road and a tree band).

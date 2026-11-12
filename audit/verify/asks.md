@@ -611,3 +611,7 @@ Unread (ndtourism 403; no Eddy County domain resolves) and possibly closed to ca
 
 ## 5880 Fort Abraham Lincoln State Park (ND, stored riverview) - p3-449, 2026-11-12 - OPEN
 Upgrade riverview -> riverfront with a caveat naming the primitive sites? Primitive sites 100-114 sit ~31-46 m from the Missouri across mown grass, a trail and riprap: 113 (46.76876,-100.84428) ~31 m, 114 ~31 m, 104 (46.76775,-100.84358) ~34 m, 108 (46.76817,-100.84388) ~36 m, 100 (46.76721,-100.84332) ~46 m. All nightly on reserveNDparks; they are also the $15 base sites. The open-apron rule allows open ground within ~50 m but no day use between - is a riverside trail day use? Left riverview (an upgrade, so not written without you).
+
+## p3-454 (ND, 2026-11-12)
+- 6011 Short Creek Dam (and 5951 McGregor Dam, p3-453): ND Game and Fish lists "Overnight camping prohibited Tuesdays and Wednesdays, except holidays" for these WMA reservoirs. McGregor's county page repeats it; at Short Creek it's unclear whether the county's 40-site campground falls under it. Keep both with the rule in booking.note, or treat a two-night weekly ban as disqualifying? (Short Creek: a call to Burke County, 701-939-5681, would settle which.)
+- 5930 Red River Valley Fair Campground (West Fargo, fair association, stored local): passes the fairgrounds test (18 short-term sites sold nightly 04-15..11-01, "Daily Rate $55.00"), but 57 of 75 sites are monthly ($1,150, 31-night minimum) - 24% nightly. No discouraging wording. Kept; drop as mostly long-stay?
