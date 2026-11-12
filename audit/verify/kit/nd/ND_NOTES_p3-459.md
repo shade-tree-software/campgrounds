@@ -1,0 +1,12 @@
+# p3-459 ND notes
+## 13708 Jorgen's Hollow: done. FS+rec.gov: 14 sites 8 gen/6 horse interleaved (flag), $10 FCFS, 14d, yr-round limited, max 40 non-horse; pin ok
+## 5916 Magpie: done. FS: 8 spurs $10 FCFS 14d yr-round, horses at all sites (general), no alert; pin ok; creek under canopy -> not wf
+## 6026 Kota Ray: done. county: 14+2grp, $20/$50, bookmysites Mar-Oct, open winter FCFS; lakefront->lakeview (S1-8 behind loop rd/beach; S9-11 12-20 m behind brush band); phone 701-577-4557
+- 6025 Rimrock: written. 28 single E (30/50) + D/E group loops 16 + 18 primitive = 62; $24/$14; Peek; lakefront->lakeview (evidence pt was ~1 km west, not Rimrock); PIN 46.59297,-101.83257 -> 46.5901,-101.8158 (~1.3 km). Leads: other Lake Tschida areas.
+- 6029 Lidgerwood: written, no groups. City page lidgerwoodnd.com RVCamping (2007): $10, dump, call 538-7443. HHS PARK DISTRICT OF LIDGERWOOD 5 units. Pin on golf grass; no pads seen. Website -> city page.
+- 6030 Lion Park Upsilon: written. County page: 12 electric hookups, restroom, swim/fish. Lakeview stands (20-30 m tree band). Pin ok. Phone 477-3149 not on page; county 701-477-5665. Not on HHS.
+- 6031 Elgin: NO RESULT. elginnd.com is a parked GoDaddy domain; no city/park-board page found (search: only ndtourism/aggregators); ndtourism refuses. HHS: ELGIN PARK BOARD CAMPGROUND, City of Elgin, 15 units. Google 4.3/3, 701-584-3045 (= stored). Imagery: gravel RV loop with drive-through lanes ~46.40296,-101.83674, stored pin on the courts ~55 m S: ok. Not waterfront.
+- 6033 Little Yellowstone: written. 34 (16 E 20-50A, 18 non-E small campers/tents), $25 ($20), $5 res fee, RoverPass, honor box late single night, 7 max, May-Oct. low 20->25. Not waterfront, pin ok.
+- 6027 McVille: written. SYS API 39 sites; $10/35/45; walk-up all; res stop Oct 1; power-only winter -> year_round; seasonal 3/24; lakeview stands 75-95 m; phone -> (701) 331-0028; lead Lee Street Camping (HHS 11).
+- 6028 Milnor: written. City page: 4 full-service sites, showers, FCFS, $30 ($150/wk). fee 25->30. Phone (701) 427-9455 -> 701-427-5272. HHS 6. Pin ok (~60 m).
+- 6032 Monango: NO RESULT. No city page (domains don't resolve; search finds only Campendium/AllStays); not on HHS. Campendium review: two 30A outlets on the park building wall, RVs park on grass along a dirt lane behind the building -> lawn-allowance question for the phone sweep. Pin on a dirt street beside the park block; no pads visible.

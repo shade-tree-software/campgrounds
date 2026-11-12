@@ -1,0 +1,56 @@
+{
+  "id": 13708,
+  "checked": "2026-11-12",
+  "sources": [
+    "https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground (USFS Dakota Prairie Grasslands page: 'Open year-round. Limited services after Labor Day and before Memorial Day.'; '14 primitive campsites: seven are designated for campers and seven for horse camping'; 'No reservations. All campsites operate on a first-come, first-served basis.'; 'No electrical hook-ups are available.'; 'Stay limit of 14 consecutive days.'; 'Single Site: $10 per night'; 'Parking pads up to 60-feet long.'; 'Potable water is available from spring to fall seasons (turned off during winter).'; phones 701-683-4342 and (701) 404-8950)",
+    "https://www.recreation.gov/api/camps/campgrounds/10369381 (description: 'fourteen (14) designated campsites separated into three loops. Sites 1-3,5,6,12-14 are designated as non-equestrian and 4, 7-11 are designated equestrian sites. Two vault toilets and one potable water hand-pump ... no electric or water hookups ... no RV dump station'; rules: reservationCutOff 'Not Reservable', maxConsecutiveStay 14)",
+    "https://www.recreation.gov/api/camps/campgrounds/10369381/rates (First-come, First-served Season 2026: $10 for every site type)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A10369381 (per-site catalog: Max Vehicle Length and loop per site)",
+    "Esri World_Imagery around 46.52456,-97.20178 (250 m half-width)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14,
+                 "note": "Pay at the fee tube by the entrance kiosk or by Scan & Pay at the kiosk."},
+      "source": "https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground ('No reservations. All campsites operate on a first-come, first-served basis.'; 'Stay limit of 14 consecutive days.'; 'Via the Fee Tube ... Via the Scan & Pay feature'); recreation.gov rules 'Not Reservable', read 2026-11-12",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground ('No electrical hook-ups are available.'); https://www.recreation.gov/api/camps/campgrounds/10369381 ('There are no electric or water hookups at any location.'; catalog Water Hookup 'No' on all 14 sites), read 2026-11-12",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 14, "max_rig_ft": 40,
+                 "note": "8 non-equestrian sites (1-3, 5, 6, 12-14) and 6 equestrian sites (4, 7-11) mixed through three loops; the non-equestrian sites post 30-40 ft except 12 (20 ft) and 14 (15 ft). Horse sites post 30-50 ft and are open to campers without horses only when every other site is taken. The Forest Service page counts seven and seven."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A10369381 (Max Vehicle Length: sites 3, 5, 6 = 40; 1, 2, 13 = 30; 12 = 20; 14 = 15; equestrian 4, 7 = 50, 8, 9, 10 = 40, 11 = 30) and the recreation.gov notice ('CAMPERS WITHOUT HORSES—Please select a campsite with a non-equestrian image on the site post (Sites 1-3,5,6,12-14). If all such sites are occupied when you arrive, you may select an unoccupied site in an equestrian site.'); https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground ('14 primitive campsites: seven are designated for campers and seven for horse camping'), read 2026-11-12",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10369381 ('Two vault toilets and one potable water hand-pump are available.'; 'There is no RV dump station or manure pit available.'); https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground ('Potable water is available from spring to fall seasons (turned off during winter).'), read 2026-11-12",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true,
+                 "note": "Limited services after Labor Day and before Memorial Day: the hand pump is off in winter and one vault toilet by the kiosk stays open."},
+      "source": "https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground ('Seasons of Use Year-round.'; 'Open year-round. Limited services after Labor Day and before Memorial Day.'; 'One vault toilet near the kiosk is available during winter.'; 'Potable water is available from spring to fall seasons (turned off during winter).'), read 2026-11-12",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 10, "currency": "USD", "checked": "2026"},
+      "source": "https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground ('Single Site: $10 per night'); https://www.recreation.gov/api/camps/campgrounds/10369381/rates (2026 season: $10 every site type), read 2026-11-12",
+      "method": "manual"
+    }
+  },
+  "note": "Semi-primitive Forest Service campground in the oak savanna of the Sheyenne National Grassland, for campers with and without horses. Gravel pads; access to the North Country Scenic Trail and the Oak Leaf Trail; cattle grazing and prescribed fire on the surrounding grassland. --Claude",
+  "summary": "USFS page + rec.gov read: 14 sites (8 general, 6 equestrian per rec.gov; FS says 7/7), $10, FCFS only, 14-day limit, no hookups, vault toilets, hand pump (spring-fall), no dump, open year-round with limited services. Groups written; max_rig 50 -> 40 for non-horse sites. Pin ok. Horse-camp question flagged.",
+  "flags": [
+    "HORSE CAMP (reviewer): the equestrian sites (4, 7-11) are not physically separate - they are interleaved with the non-equestrian sites in the same three loops (East: 2, 3 general + 4, 7, 8 horse; Central: 1, 6, 12-14 general + 9 horse; West: 5 general + 10, 11 horse). But it is a general campground that offers horse sites, not a horse camp with a few extra sites: the non-equestrian sites are the majority (8 of 14 on rec.gov; FS says 7 and 7), one is typed RV, and rec.gov describes it as 'a semi-primitive recreation opportunity for most camping types and equestrian use'. Read as a keep under the curation doc's 'a general campground that merely offers horse sites is OK'; the reviewer decides.",
+    "FIT: 6 non-equestrian sites post 30-40 ft (1, 2, 3, 5, 6, 13); FS says 'Parking pads up to 60-feet long'. County Road 23 gravel; no FS road warning read.",
+    "PIN: stored 46.52456,-97.20178 is on the campground loops (FS page 46.524659,-97.20144, 27 m): ok.",
+    "PHONE: keep 701-404-8950 (Sheyenne Ranger District office on the FS page; the page's contact line also gives 701-683-4342).",
+    "WEBSITE: the stored rec.gov link is fine; the FS page https://www.fs.usda.gov/r01/dpg/recreation/jorgens-hollow-campground carries the season and fee - suggest adding it as the first website line.",
+    "WATERFRONT: not waterfront stands (no water at the campground; the Sheyenne River access is 1.5 mi away)."
+  ]
+}

@@ -1297,3 +1297,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 6020 Fort Rice riverview -> not waterfront (water 450-800 m). APPLIED 6042 Dickey riverfront -> riverview (James ~35-40 m wide; RVs 40-55 m behind the bank's tree band; imagery only).
 - 5918 Douglas Creek Bay lakeview -> lakefront? East site row (~47.5784,-101.5702 to 47.5774,-101.5700) on mown grass 25-30 m from shoreline vegetation, 50-60 m to water on Esri (30-40 m on NAIP at higher water); site numbers behind USACE 403 - left.
 - 6041 Dead Colt lakeview stands (RV 1-9 110-130 m across a spruce row; 31-37 ~110 m behind shelterbelts).
+
+## p3-459 (ND, 2026-11-12)
+- APPLIED 6026 Kota Ray lakefront -> lakeview (S9-S11 12-20 m but behind a continuous brush band; S1-S8 behind road/beach/shelters). APPLIED 6025 Lake Tschida Rimrock lakefront -> lakeview (old evidence point ~1 km west; Loop A 35-50 m behind road + tree belt; primitive 30-31 under trees).
+- Stands: 6030 Lake Upsilon lakeview (20-30 m through a continuous tree band), 6027 McVille lakeview (75-95 m), 5916 Magpie not waterfront (creek ~40 m under canopy).
