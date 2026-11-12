@@ -1,6 +1,6 @@
 # Resuming phase 7 in Minnesota (saved 2026-11-11, stopped by AWH after p3-437)
 
-Applied through **p3-445** (the unread sweep: 5705 read, 5576 Spafford DROPPED, 9 still unread = phone list in MN_NOTES_p3-445.md, calls wait for AWH). Next: vet the MN leads below, then North Dakota. Next new id **15669**.
+Applied through **p3-445** (the unread sweep: 5705 read, 5576 Spafford DROPPED, 9 still unread = phone list in MN_NOTES_p3-445.md, calls wait for AWH). Next: vet the MN leads below, then North Dakota. Next new id **15670** (15669 Shell City Landing added from the leads).
 Pushed through 15520ad1 (p3-437); deploy not confirmed. ONE verifier at a time.
 
 ## Build a batch (from the repo root; SCRATCH = the new session's scratchpad)
