@@ -629,7 +629,7 @@ Upgrade riverview -> riverfront with a caveat naming the primitive sites? Primit
 - **779 Hickory Point (Sangchris Lake), season (your stored year_round, manual).** The DNR contradicts itself: the camp page says "Hickory Point and Deer Run are open all year"; the activity page says "closed the second week in January through March 31st"; the 2023 brochure says "Campgrounds are closed from mid-January through March 31". Keep year_round, or set a mid-January to March 31 closure? (Your lakefront is confirmed - 23 units flagged waterfront on the engine.)
 
 ## p3-471 (IL, 2026-11-13)
-- 15428 Chicago Northwest KOA Holiday: the only class under $50 is "Pull In, No Hookups" ($43-45, 2027). The 30 A water/electric back-in ($47-52) says 30 A class C motorhomes should rent the 30 A pull-through, which is $63 ($56.70 with KOA Rewards). Kept on the no-hookup class - drop it instead?
+- 15428 Chicago Northwest KOA Holiday: the only class under $50 is "Pull In, No Hookups" ($43-45, 2027). The 30 A water/electric back-in ($47-52) says 30 A class C motorhomes should rent the 30 A pull-through, which is $63 ($56.70 with KOA Rewards). Kept on the no-hookup class - drop it instead? **RESOLVED AWH 2026-11-13: keep (close enough to Chicago for an exception); curation_note written.**
 
 ## p3-472 (IL, 2026-11-13)
-- 1687 Jubilee College SP: your season 04-15..11-01 matches the park page, but the page also says the Coyote Cove loop stays open for winter camping (electric, privies, no water). Change to year-round with a winter caveat?
+- 1687 Jubilee College SP: your season 04-15..11-01 matches the park page, but the page also says the Coyote Cove loop stays open for winter camping (electric, privies, no water). Change to year-round with a winter caveat? **RESOLVED AWH 2026-11-13: year-round with a caveat; season.note names the Coyote Cove winter loop.**
