@@ -1,0 +1,52 @@
+{
+  "id": 1673,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.argylelake.html (IDNR camping page, read 2026-11-13): 'The Twisted Oak campground contains 86 Class A (showers and electricity) campsites, and the Big Oaks campground contains 24 Class B/E (electric only) and 18 Class C campsites (featuring vehicle access and restrooms). The Twin Oaks campground has 31 Class D (primitive) sites. A disposal station and restrooms with showers also are available.'",
+    "https://dnr.illinois.gov/parks/park.argylelake.html (IDNR park page, read 2026-11-13): Park Phone 309-776-3422; 'NOTICE: Shower House is OPEN May 1 - November 1.'",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/publications/documents/00000927.pdf (park brochure, read 2026-11-13): '86 Class A campsites, 24 Class B sites, 12 Class C sites ... and 31 Class D (primitive) sites. Electrical hook-ups, a sanitary dumping station and restrooms with showers'; 'For horseback riding ... there is a rugged 11 mile trail. An equestrian campground also is available.'; 'Open year-round'",
+    "camp.exploremoreil.com / IllinoisRDR API place 5 (search/place and search/grid for 2027-06-15, read 2026-11-13): Twisted Oak (144) 85 'Class A' units, 64 web-bookable, VehicleLength 40 on every unit (uniform, likely a placeholder), median point 40.45319,-90.79765; Big Oak (140) 24 'Class B-E' (21 at 42 ft, one at 20, two at 10; 18 web-bookable) + 12 'Class C' (not web-bookable, no length), median 40.45254,-90.78346; Twin Oaks (143) 31 'Class D', none web-bookable; a separate 'Equestrian' facility (141) of 24 Class C units at 40.45576,-90.80733; in-season (bookable) 2027-04-01..2027-10-31",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 schedule as stored in fees.provenance: Premium Electric $35, Electric $28, Non-Electric $11): Class A and B/E are the Electric class ($28); Class C/D are Non-Electric ($11); no Premium (water/sewer) class at this park",
+    "Esri World_Imagery with the ExploreMoreIL unit points (40.4545,-90.7950 at 900 m half-width): Twisted Oak occupies a wooded ridge between two arms of Argyle Lake, its nearest sites (013-017 and 056-058) roughly 80-120 m from the water through forest; Big Oak's B-E row sits east of the dam; Twin Oaks across the lake on the north-east; the Equestrian camp ~870 m west of Twisted Oak"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"water": null, "sewer": null},
+      "source": "https://dnr.illinois.gov/parks/camp/park.argylelake.html (Class A 'showers and electricity', Class B/E 'electric only') and the 2027 fee schedule (no Premium electric/water/sewer class here), read 2026-11-13; amperage not published",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 159, "max_rig_ft": null},
+      "source": "https://dnr.illinois.gov/parks/camp/park.argylelake.html (86 Class A + 24 Class B/E + 18 Class C + 31 Class D = 159), read 2026-11-13; ExploreMoreIL lengths (40 ft on every Class A, 42 on most B-E) look like defaults",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.argylelake.html ('A disposal station and restrooms with showers'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/5", "fcfs": "some_sites", "season": {"year_round": false, "opens": "04-01", "closes": "10-31"}},
+      "source": "camp.exploremoreil.com place 5 (64 Twisted Oak and 18 Big Oak units web-bookable; Class C, Class D and the rest first-come; in-season 2027-04-01..10-31), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 11, "nightly_high": 11, "currency": "USD", "surcharges": {"electric": 17}, "reservation_fee": null, "checked": "2027", "note": "Class A and B/E electric sites $28; Class C drive-in sites without electric $11."},
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28, Non-Electric $11) applied to the classes on https://dnr.illinois.gov/parks/camp/park.argylelake.html, read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park near Colchester, 7 mi west of Macomb, around 93-acre Argyle Lake. Twisted Oak (86 Class A sites) sits on a wooded ridge between two arms of the lake; Big Oaks (24 electric-only and 18 Class C sites) is east of the dam and Twin Oaks (31 primitive) across the water. The shower house is open May 1 - November 1. A separate equestrian campground lies about 1 km west. --Claude",
+  "summary": "IDNR camping + park pages, brochure, ExploreMoreIL place 5 units, imagery. 159 sites (86 Class A showers+electric, 24 B/E electric-only, 18 C, 31 D); no water or sewer class at sites, so stored water/sewer true cleared; amps unpublished. 2027 fees $28 electric / $11 non-electric (stored structure kept). Booking operator -> usedirect. Reservation season 04-01..10-31; showers May 1 - Nov 1. Equestrian camp is its own facility ~870 m west. Not waterfront confirmed. Pin within ~95 m of Twisted Oak.",
+  "flags": [
+    "HOOKUPS: stored water true / sewer true came from note prose ('some full hookup') and nothing supports them: IDNR lists Class A as 'showers and electricity' and B/E as 'electric only'; ExploreMoreIL has no Premium units here. Cleared to unknown (null) rather than written false. Electric amperage is not published anywhere read (not written).",
+    "HORSE CAMP: separate. ExploreMoreIL lists 'Equestrian' as its own facility (24 Class C units) at 40.45576,-90.80733, ~870 m west of Twisted Oak and ~2 km from Big Oak; the brochure calls it 'An equestrian campground'. The entry is the general campground. No action.",
+    "SITES/FIT: 159 (unchanged). VehicleLength 40 on all 85 Class A units and 42 on 21 B-E units (one 20, two 10) are uniform values, likely placeholders; stored max_rig 35 had no source and is cleared. Pads under 23 ft: Big Oak B-E units with 10 and 20 ft (three units) only, per the engine.",
+    "SEASON: no camping season published (brochure: park 'Open year-round'). ExploreMoreIL in-season 04-01..10-31 written as booking.season; the shower house is open May 1 - November 1 (in the note).",
+    "FEES: stored $11 + $17 electric surcharge structure kept (Class C drive-in non-electric $11; Class A/B-E electric $28); checked 2026 -> 2027; fees.note boilerplate (reservation fee, holiday surcharge, residency discounts) stripped as policy-row facts.",
+    "BOOKING: platform operator -> usedirect with the ExploreMoreIL park/5 link; fcfs some_sites.",
+    "WATERFRONT: not waterfront confirmed; Twisted Oak's closest sites are ~80-120 m from the lake through forest.",
+    "PIN: stored 40.4540,-90.7980 is ~95 m from the Twisted Oak median point; no move.",
+    "PHONE: 309-776-3422 stored and matches the IDNR park page. WEBSITE: https://dnr.illinois.gov/parks/park.argylelake.html and the ExploreMoreIL park/5 line both work; no change."
+  ]
+}

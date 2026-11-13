@@ -1,0 +1,83 @@
+{
+  "id": 1727,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://www.whittingtonwoodscampground.com/newpage (operator 'Policies & Rates', read 2026-11-13): 'Rate Schedule for Party of Two.'; 'Full Hook-up Back in Site Daily $45.00'; 'Full Hook-up Pull Thru Site or Premium Back-In Daily 30AMP/50 AMP $55.00'; weekly $260 / $300; '$2.50 charge for Additional Vehicle(s) per registered unit overnight'; 'We are an RV Park only (no tents). We offer monthly sites, please call for information.'; 'We honor Good Sam, AAA, AARP, Ex or active military and FMCA, 10% discount on daily rates'; 'There is a 3.62% convenience fee for credit card transactions'; one rental cabin $129",
+    "https://www.whittingtonwoodscampground.com/ (operator home, read 2026-11-13): 'Open all year round! Reservation must be confirmed via telephone'; 'We are I-57's most convenient campground and we are open year round, clubs welcome!'; tel (618) 435-3401",
+    "https://www.whittingtonwoodscampground.com/facilities (read 2026-11-13): 'Our main restrooms have central heating and air conditioning'; 'propane, dump station and our laundry room'; 'Free Wi-Fi internet access is available throughout the park'; 'Pull-Thru Sites', '30 & 50 Amp Service', 'Big Rig Friendly', 'Clean Restrooms/Hot Showers'",
+    "https://www.whittingtonwoodscampground.com/news (read 2026-11-13): '2025 Camping Season ... Camping season is now over for 2025, we have turned the water off to most of the sites. Please call to make reservations. 618-435-3401'",
+    "Google Maps place 'Whittington Woods Campground', 14297 IL-37, Whittington, IL 62897 (read 2026-11-13 via gm.py): 4.7 stars over 399 reviews; phone +1 618-435-3401; place point 38.07074,-88.91555",
+    "RV Life park 1049 (Algolia + reviews API, read 2026-11-13): price_level 2, avg_rate 40; 5 reviews Sept-Nov 2026 paying $50-55 a night (one $36 on a weekly rate, two $50 with Military/AAA discounts); 'Good for an overnighter'",
+    "Esri World_Imagery (38.0705,-88.9150 at 220 m; 38.0695,-88.9175 at 260 m half-width): the park lies west of IL-37 under continuous oak canopy; office/pool by the entrance at 38.0707,-88.9155; a pond at the south-west corner sits outside the site loops; the stored pin is on the east side of IL-37",
+    "audit/price_research/gateways.py 38.07,-88.914 (2026-11-13): none within 40 km (Gateway Arch NP 127 km)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://www.whittingtonwoodscampground.com/newpage ('Full Hook-up ... 30AMP/50 AMP') and /facilities ('30 & 50 Amp Service'), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "dump": true,
+        "laundry": true,
+        "wifi": true
+      },
+      "source": "https://www.whittingtonwoodscampground.com/facilities ('Clean Restrooms/Hot Showers', 'dump station', 'laundry room', 'Free Wi-Fi internet access is available throughout the park'), read 2026-11-13",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Water is turned off at most sites in winter."
+      },
+      "source": "https://www.whittingtonwoodscampground.com/ ('Open all year round!') and /news ('we have turned the water off to most of the sites'), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 45,
+        "nightly_high": 55,
+        "currency": "USD",
+        "checked": "2026",
+        "extra_person": {
+          "included": 2
+        },
+        "extra_vehicle": {
+          "included": 1,
+          "amount": 2.5,
+          "per": "night"
+        },
+        "note": "Full-hookup back-ins $45; pull-throughs and premium back-ins $55. Weekly $260-300. Credit cards carry a 3.62% fee."
+      },
+      "source": "https://www.whittingtonwoodscampground.com/newpage ('Rate Schedule for Party of Two'; $45 / $55 daily; '$2.50 charge for Additional Vehicle(s) per registered unit overnight'), read 2026-11-13",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "good_sam": true,
+        "military": true,
+        "note": "10% off daily rates for Good Sam, AAA, AARP, military and FMCA members; not a directory Good Sam Park."
+      },
+      "source": "https://www.whittingtonwoodscampground.com/newpage ('We honor Good Sam, AAA, AARP, Ex or active military and FMCA, 10% discount on daily rates'), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded RV-only park (no tents) on IL-37 by I-57 Exit 77 at Whittington, near Rend Lake; pool, store, meeting room, propane. Also rents monthly sites. Reservations are confirmed by phone. --Claude",
+  "summary": "Operator site (rates, policies, facilities, news), Google 4.7/399, RV Life 5 reviews (Sept-Nov 2026, $50-55), imagery. $45 back-in / $55 pull-through for two, 10% member discount (Good Sam, military etc.) brings $55 to $49.50; passes the gate on the $45 back-in. Year-round, water off at most sites in winter. Monthly sites exist but transient trade dominates the reviews. Phone 618-435-3401 (none stored). Pin is across IL-37, ~245 m east of the sites.",
+  "flags": [
+    "PRICE GATE: passes. Cheapest site a 23-ft rig fits is the $45 full-hookup back-in; pull-throughs and premium back-ins are $55, $49.50 after the operator-posted 10% Good Sam/AAA/AARP/military/FMCA discount. RV Life reviewers paid $50-55 in Sept-Nov 2026. No gateway within 40 km. Not a directory Good Sam Park; good_sam written true from the operator's posted discount (schema §4.4).",
+    "LONG-STAY: 'We offer monthly sites, please call for information' and weekly rates, but no wording discourages nights; 399 Google reviews and the RV Life reviews read as overnighters and clubs. No site count published; imagery is all canopy, so the nightly share could not be measured. Not a candidate.",
+    "PIN: stored 38.07,-88.914 is on the east side of IL-37, ~245 m from the site loops. Suggested 38.0699,-88.9168 (centre of the wooded loops west of the office).",
+    "SEASON: year_round confirmed; the 2025 news says water is turned off at most sites after the season.",
+    "FEES: extra_person included 2 ('Rate Schedule for Party of Two'; no per-person amount posted); extra_vehicle $2.50 a night past one.",
+    "NOTE: hookups, amps, pull-through and 'Year-round' removed as repeating fields; '~70 ft' rig length has no source on the operator's pages (left in sites.max_rig_ft as stored, unconfirmed).",
+    "PHONE: none stored -> 618-435-3401 (operator site and Google). WEBSITE: https://www.whittingtonwoodscampground.com/ works; no change."
+  ]
+}

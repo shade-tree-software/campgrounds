@@ -1,0 +1,51 @@
+{
+  "id": 14606,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://www.arrowheadacrescampground.com/ (operator, read 2026-11-13): 'Book 2027 Holiday Weekends Now'; 'Book 2027 Overnight Stays Now'; 'Closed for the Winter of 26-27'; Seasonal Sites '$1600 per Season with direct Sewer hookup ... $1500 per Season without direct sewer hookup', 'Season is April - October*'; Monthly Sites '$575 per month for 30 amp Site', '$675 per month for 50 amp Site'; Overnight Sites 'All come with Water and Electric', 'Dump Station Available', 'Campground Access Bath House Open April - October*', '$20 per night Primitive Tent Camping - no hookups', '$30 per night for 30 amp hookup with water', '$40 per night for 50 amp hookup with water', '*Season opening and closing dependent on weather.', 'Long term stays may be available upon request'; 'Non Sewer Sites will have a pump out service available'; '2 Fishing Ponds - no swimming, no boating, no floating'; game room, community center, pavilion, playground; phone (309) 868-2732",
+    "https://forms.gle/9tdVmun9qgugL82d8 (the operator's 'Camping Site Inquiry' Google form, linked as the booking button, read 2026-11-13): 'Please provide the information requested below and we will be in contact with you within 48 hours.' (name, phone, email, dates); no online booking engine",
+    "Google Maps place 'Arrowhead Acres Campground', 3315 Weldon Springs Rd, Clinton, IL 61727 (read 2026-11-13 via gm.py): 4.4 stars over 90 reviews; phone +1 309-868-2732; place point 40.10190,-88.91838",
+    "RV Life park 252026 (Algolia + reviews API, read 2026-11-13): price_level 2; 5 reviews 2021-2026 ($24 in 6/2026; $40 weekly-discounted 8/2025); 'The overnight sites dont have sewer hook ups but the long term site do' (5/2022); 'The overnight hookups are scattered randomly in an open but shaded grassy area, think public park with hookups in the grass' (5/2021)",
+    "Esri World_Imagery (40.1015,-88.9200 at 300 m half-width; a winter scene): roughly 80-100 rigs left on sites through the wooded north and centre loops around two ponds (seasonal set-ups), and an open lawn at the south with a handful of units; office by Weldon Springs Rd at the stored pin",
+    "audit/price_research/gateways.py 40.10190,-88.91838 (2026-11-13): none within 40 km"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false, "note": "Sewer only at monthly and some seasonal sites; a pump-out service is offered."},
+      "source": "https://www.arrowheadacrescampground.com/ (overnight 'All come with Water and Electric', '$40 per night for 50 amp hookup with water'; sewer listed only for monthly/seasonal sites) and an RV Life review ('The overnight sites dont have sewer hook ups'), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true},
+      "source": "https://www.arrowheadacrescampground.com/ ('Dump Station Available'), read 2026-11-13",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-31", "note": "Opening and closing depend on the weather."},
+      "source": "https://www.arrowheadacrescampground.com/ ('Season is April - October*', '*Season opening and closing dependent on weather.', 'Closed for the Winter of 26-27'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "phone", "note": "Requests go through an inquiry form on the website; the office replies within 48 hours."},
+      "source": "https://forms.gle/9tdVmun9qgugL82d8 ('we will be in contact with you within 48 hours'), linked from 'Book 2027 Overnight Stays Now' on https://www.arrowheadacrescampground.com/, read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 40, "currency": "USD", "checked": "2026", "note": "30-amp with water $30, 50-amp with water $40; primitive tent sites $20."},
+      "source": "https://www.arrowheadacrescampground.com/ (Overnight Sites rates), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Family campground of mostly seasonal and monthly sites on Weldon Springs Rd, beside Weldon Springs State Recreation Area south of Clinton. Overnight hookups are scattered across an open, partly shaded lawn; two fishing ponds, game room, community center. --Claude",
+  "summary": "Operator page (rates, season, amenities), its booking inquiry form, Google 4.4/90, RV Life 5 reviews, winter imagery. Overnight $30 (30 A + water) / $40 (50 A + water), tent $20; no sewer at overnight sites; season April-October, closed winter 2026-27; booking by inquiry form (callback), not online. Mostly seasonal/monthly; nightly share not measurable, estimated 10-25%: keep with the mostly-seasonal caveat. Pin at the office, ~160 m from the park centre (no move).",
+  "flags": [
+    "LONG-STAY (caveat, not a drop): the operator sells seasonal ($1,500-1,600) and monthly ($575-675) sites first and overnight sites third, but posts nightly rates on its own site with a phone and a booking button for 2027 overnight stays (test 2 passes); no wording discourages nights; no minimum. Winter imagery shows roughly 80-100 rigs left on sites in the wooded loops (seasonals) and an open lawn at the south for overnights ('hookups scattered randomly in an open but shaded grassy area', RV Life 5/2021). No count is published; nightly share estimated 10-25%. Note says mostly seasonal. Google 4.4/90; RV Life 5 reviews (one 2/10 from 2021 on management).",
+    "BOOKING: stored note claimed 'Online booking for overnight stays'; the 'Book 2027 Overnight Stays Now' button is a Google inquiry form with a 48-hour callback. Written platform 'phone' with that note.",
+    "HOOKUPS: electric 30 -> 50 ($40 50-amp overnight sites); sewer false at overnight sites (sewer only for monthly/some seasonal; pump-out offered).",
+    "SEASON: none stored -> 04-01..10-31 ('April - October', weather dependent); the site says 'Closed for the Winter of 26-27'.",
+    "PRICE GATE: $30-40, under $50; no gateway needed.",
+    "WATERFRONT: not waterfront confirmed; the two ponds sit among the seasonal loops and the overnight lawn is away from them.",
+    "PIN: stored 40.10190,-88.91838 is the office by Weldon Springs Rd (Google's point); park centre ~160 m west; no move.",
+    "PHONE: 309-868-2732 stored and matches the operator and Google. WEBSITE: https://arrowheadacrescampground.com/ redirects to https://www.arrowheadacrescampground.com/ and works; no change."
+  ]
+}

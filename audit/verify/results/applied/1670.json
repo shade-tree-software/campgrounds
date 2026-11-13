@@ -1,0 +1,58 @@
+{
+  "id": 1670,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.beaverdam.html (IDNR camping page, read 2026-11-13): 'The Beaver Dam State Park trailer camping area has electricity at each pad and a sanitary dump station. A shower building with flush toilets is located in the center of the trailer camping area. Water is available, but individual sites do not have water hookups. There are 40 reservable campsites; all others are first-come, first-served. Tent camping is in a separate area, with nearby restrooms and water.'; youth-group area; a rent-a-cabin next to the shower house",
+    "https://dnr.illinois.gov/parks/park.beaverdam.html (IDNR park page, read 2026-11-13): 14548 Beaver Dam Lane, Plainview; Park Phone 217-854-8020",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/publications/documents/00000053.pdf (park brochure, older, read 2026-11-13): 'The park facilities are open year round; however, please call ahead in the winter months.'; 'Reservations cannot be made for tent camping.'",
+    "camp.exploremoreil.com / IllinoisRDR API place 6 (search/place and search/grid for 2027-06-15, read 2026-11-13): facility 146 holds 66 'Class A' units (001-066 with 027/028 as accessible 27H/28H), 40 web-bookable (011-050), VehicleLength 0 on every unit (no length published); a group camp and a cabin; in-season every date checked from 2026-11-14 to 2028-01-08; unit median point 39.21563,-89.97683",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 schedule as stored in fees.provenance: Electric $28, Non-Electric $11): every trailer site is the Electric class",
+    "Esri World_Imagery with the ExploreMoreIL unit points (39.2140,-89.9750 at 600 m half-width): the trailer loops sit in oak-hickory woods along the park's north edge, 300 m+ north of the lake; the stored pin is by the lake at the south of the park"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"water": false, "sewer": false},
+      "source": "https://dnr.illinois.gov/parks/camp/park.beaverdam.html ('electricity at each pad'; 'individual sites do not have water hookups'), read 2026-11-13; amperage not published",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 66, "pull_through": null},
+      "source": "camp.exploremoreil.com place 6 (66 Class A units, 40 of them web-bookable; the IDNR page says '40 reservable campsites; all others are first-come'), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "potable_water": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.beaverdam.html ('sanitary dump station'; 'A shower building with flush toilets'; 'Water is available'), read 2026-11-13",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Call ahead in winter."},
+      "source": "park brochure 00000053.pdf ('The park facilities are open year round; however, please call ahead in the winter months') and ExploreMoreIL place 6 (in season on every date 2026-11-14..2028-01-08), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/6", "fcfs": "some_sites"},
+      "source": "https://dnr.illinois.gov/parks/camp/park.beaverdam.html ('There are 40 reservable campsites; all others are first-come, first-served') and ExploreMoreIL place 6 (40 web-bookable units), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "reservation_fee": null, "checked": "2027", "note": "Every trailer site is in the Electric class; tent sites $11."},
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28, Non-Electric $11) applied to ExploreMoreIL place 6 (all trailer units Class A), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park near Plainview, 7 mi southwest of Carlinville. The trailer camping area sits under oak and hickory along the park's north edge, with water spigots and a shower building in its centre; tent sites are in a separate area. The park lake lies about 300 m south. --Claude",
+  "summary": "IDNR camping + park pages, brochure, ExploreMoreIL place 6 units, imagery. 66 Class A electric sites (40 reservable, 26 first-come), no water/sewer at sites, shower building with flush toilets, dump. $28 (2027 Electric) confirmed. Year-round (call ahead in winter). Booking operator -> usedirect. Pin moves ~830 m from the lake to the trailer loops. Phone 217-854-8020 (none stored). Not waterfront confirmed.",
+  "flags": [
+    "PIN: stored 39.2087,-89.9733 is by the lake at the south of the park, ~830 m from the trailer area. Move to 39.2156,-89.9768 (median of the 66 ExploreMoreIL unit points).",
+    "SITES: stored 59 -> 66 (ExploreMoreIL Class A units 001-066; IDNR names 40 reservable + 'all others' first-come but gives no total). Stored pull_through true and the note's '5 pull-throughs' have no source on any page read: cleared. No vehicle length is posted (0 on every unit).",
+    "HOOKUPS: water false / sewer false confirmed ('individual sites do not have water hookups'). Stored electric 50 (from the old note's '30/50A') is not confirmed by any IDNR page; left as stored, unverified.",
+    "SEASON: none stored -> year_round (brochure 'open year round; however, please call ahead in the winter months'; the reservation engine is in season continuously).",
+    "FEES: $28 confirmed (2027 Electric), checked 2026 -> 2027; fees.note boilerplate stripped (policy-row facts).",
+    "BOOKING: platform operator -> usedirect with the ExploreMoreIL park/6 link; fcfs some_sites.",
+    "NOTE: 'on-site vineyard' and '30/50A, 5 pull-throughs' not found on any page read; removed. 'Reserve via ExploreMoreIL' removed (policy row).",
+    "WATERFRONT: not waterfront confirmed; the trailer loops are 300 m+ from the lake through woods.",
+    "HORSE: no equestrian camping at this park.",
+    "PHONE: none stored -> 217-854-8020 (IDNR park page). WEBSITE: https://dnr.illinois.gov/parks/park.beaverdam.html and the ExploreMoreIL park/6 line both work; no change."
+  ]
+}

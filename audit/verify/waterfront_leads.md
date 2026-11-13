@@ -1348,3 +1348,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 1668 Sam Parr lakeview -> not waterfront (95-120 m under canopy); 1677 Siloam Springs lakeview -> not waterfront (75 m through forest, 60 ft up).
 - KEPT NARROWLY 1704 North Sandusky lakefront (WO047 ~30 m over open grass to a cove; PI010 25-35 m past scattered trees); if PI010's trees read as a screen, lakeview.
 - LEAD 1648 Prophetstown: units 030-035 37-50 m from the Rock River behind a dense wooded bank, 6-9 ft up - riverview at most, left not waterfront.
+
+## p3-470 (IL, 2026-11-13)
+- APPLIED 1703 South Sandusky lakefront -> lakeview (185/186 20-25 m but ~6 m up over a 4-5 m bank).
+- KEPT NARROWLY 1702 South Marcum lakefront on 056/057 (caveat in note); 083/084 lakeview only.
+- CONFIRMED --AWH 776 Thomson Causeway riverfront (060 ~25 m to the open river; 034-038 by a ~90 m backwater; RIVE loop riverview) and 791 Wayne Fitzgerrell lakefront (080 ~16 m, 079 ~30 m, 045 ~29 m).
+- LEAD (not applied) 15427 Benton KOA pond: KOA sells "Next to Ponds waters edge" back-ins and "Next to Pond" pull-throughs nightly; pond ~45 x 80 m; NE-end pads (~38.0138,-88.9301) open, 15-25 m; no site numbers published, so left not waterfront.

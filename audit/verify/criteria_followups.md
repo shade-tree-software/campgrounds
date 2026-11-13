@@ -2065,3 +2065,11 @@ me drop and report); each needs the research named before a verdict.
 - Private: 1726 Marion $49.95 passes, Good Sam Park + operator 10% military; 1758 Percival Springs a real 24-site full-hookup park beside a turf airstrip (13 ft 10 in IL-37 underpass clears); 1743 Prairie Pines kept with a long-term caveat, booking -> operator Firefly, nightly rate unread (reCAPTCHA).
 - Unsourced max_rig left: 1640 40, 1641 35 (from notes; engine shows only its 40 default).
 - Pins: 1641 ~510 m, 1645 ~545 m, 1803 ~290 m, 1704 ~460 m (east peninsula; the centroid fell in the cove). Phones: 1640, 1641, 1648, 1677, 1726 added; 1758, 1743 changed. 1726 RV Life link removed.
+
+## p3-470 (IL, 2026-11-13)
+- 10 applied, 1 dropped. DROPPED 1755 Timber Trails (private): mostly seasonal (~6-8% transient pads on imagery) and no posted rate, season or booking. A call to 618-326-8264 could reinstate it.
+- 1727 Whittington Woods: $45 back-in passes; $55 sites $49.50 after the operator's posted 10% Good Sam/military discount (not a directory Good Sam Park). 15427 Benton KOA: 23-ft motorhome quote $45.32 water/electric back-in (May/July 2027), full hookups $50.99+. 14606 Arrowhead Acres kept with the mostly-seasonal caveat (~10-25% nightly), booking is an inquiry form (phone), closed winter 2026-27.
+- 1788 Bicentennial (Lake Lou Yaeger): 10 sites, $45 daily / $50 holiday, books on Campspot (listing unread), 04-01..10-31; the city's Bicentennial detail page is 404.
+- 1673 Argyle Lake: unsourced water/sewer and max_rig 35 cleared; three Big Oak B-E units 10-20 ft. 1670 Beaver Dam: 66 sites, no water/sewer; vineyard and "5 pull-throughs" unsourced, removed; electric 50 unconfirmed. 776 Thomson Causeway: sites 105 (20 ft) and 051 (25 ft).
+- 791 Wayne Fitzgerrell: no season published (engine window 04-01..01-05); not written.
+- Pins: 1702 ~520 m, 776 ~600 m, 791 ~370 m, 1670 ~830 m (1727 ~245 m left). Phones: 776, 791, 1727, 1670 added; 1788 -> campground number 217-324-4771.

@@ -1,0 +1,57 @@
+{
+  "id": 15427,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://koa.com/campgrounds/benton/reserve/ (KOA booking form via the persistent browser driver, audit/private_gap_browser/koa.py: RV, 2 adults, a 23-ft motorhome, no slide-outs; one night 2027-05-18 and one night 2027-07-10, read 2026-11-13): 10 RV site types, the same prices both dates, before tax, 'Up to 6 people': Water/Electric Only Back-In $45.32; Water/Electric Pull Thru $47.60; Back-In 50 amp Full Hook Up $50.99; Full Hook-Up Pull In (30/20 A) $50.99; Big Rig Friendly Full Hook-up pull-thru $52.17; 'Full Hook-up Back-in sites overlooking the pond' ('Most Requested Sites. Next to Ponds waters edge') $52.44; Full Hook-up Back-in (30 A) $52.99; 'Full Hook-up sites overlooking the pond' pull-thru ('Next to Pond') $56.66; Deluxe Buddy Patio pull-thru $60.34; Deluxe Pull-thru Patio ('Overlooking pond') $66.29; 'Save 10% at check out with KOA Rewards'",
+    "https://koa.com/campgrounds/benton/ (KOA campground page via the same driver, read 2026-11-13): 'We are OPEN All YEAR!!!!'; 'Benton KOA is Open Year-round.'; 'Reserve: 1-618-439-4860'; '50 Max Amp', \"98' Max Length\", 'Wi-Fi', 'Pool (5/15 - 9/8)', 'Propane ($)', 'Fishing Pond'; '1 ½ miles off the highway at Exit 71'; 'two easy miles from the 19,000-acre Rend Lake'",
+    "Google Maps place 'Benton KOA Journey', 1500 N DuQuoin St, Benton, IL (read 2026-11-13 via gm.py): 4.4 stars over 615 reviews; phone 618-439-4860",
+    "RV Life park 4472 (Algolia, read 2026-11-13): price_level 3 ($$$), avg_rate 49",
+    "Esri World_Imagery (38.0130,-88.9310 at 200 m; 38.0136,-88.9302 at 110 m half-width): a loop of gravel pads around a ~45 x 80 m pond partly covered in vegetation; tree rows stand between the west loop road and the pond and along much of the east side; the pads at the loop's north-east end (about 38.0138,-88.9301) open onto the pond's north end ~15-25 m away; the stored pin sits on the west loop",
+    "audit/price_research/gateways.py 38.01317,-88.93077 (2026-11-13): none within 40 km (Gateway Arch NP 129 km)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://koa.com/campgrounds/benton/reserve/ (site types 'Pull Thru, 50/30/20 Amps, Full Hookups'), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true, "max_rig_ft": 98},
+      "source": "https://koa.com/campgrounds/benton/ (\"98' Max Length\") and the reserve form (pull-thru site types), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"wifi": true},
+      "source": "https://koa.com/campgrounds/benton/ ('Wi-Fi'), read 2026-11-13",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://koa.com/campgrounds/benton/ ('Benton KOA is Open Year-round.'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/benton/reserve/"},
+      "source": "https://koa.com/campgrounds/benton/reserve/ (online booking form), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 45.32, "nightly_high": 66.29, "currency": "USD", "checked": "2027", "extra_person": {"max_people": 6}, "note": "Water/electric back-ins $45.32 and pull-throughs $47.60; full-hookup sites $50.99-56.66; patio sites $60.34-66.29. KOA Rewards members save 10%."},
+      "source": "https://koa.com/campgrounds/benton/reserve/ (one night 2027-05-18 and 2027-07-10, 2 adults, a 23-ft motorhome; prices before tax; 'Up to 6 people'), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Journey on the north edge of Benton, 1.5 mi from I-57 Exit 71 and about 2 mi from Rend Lake; gravel sites on a loop around a catch-and-release fishing pond, pool in summer, propane. --Claude",
+  "summary": "KOA reserve form quoted for a 23-ft motorhome (May and July 2027, same prices) and the KOA page, both through the browser driver; Google 4.4/615; RV Life $$$ (avg 49); imagery. Cheapest site $45.32 (water/electric back-in), so it passes the gate; full hookups $50.99-56.66. Year-round, 50 A, 98 ft, pull-throughs, Wi-Fi, pool 5/15-9/8. Waterfront lead: KOA sells 'Next to Ponds waters edge' site types; imagery shows open pads at the pond's north end; no site numbers. Pin fine.",
+  "flags": [
+    "PRICE GATE: passes. Cheapest motorhome site type $45.32 (Water/Electric Only Back-In) and $47.60 (Water/Electric Pull Thru), both 2027 dates quoted; full-hookup types $50.99+ are over $50 (the 10% KOA Rewards saving needs a paid membership). Not a Good Sam Park (stored good_sam false); no gateway within 40 km. Stored low $47.60 -> $45.32.",
+    "WATERFRONT LEAD (not waterfront -> pond, for review): the engine offers a 23-ft motorhome 'Full Hook-up Back-in sites overlooking the pond ... Most Requested Sites. Next to Ponds waters edge' ($52.44) and 'Full Hook-up sites overlooking the pond ... Next to Pond' pull-thrus ($56.66), both nightly. The pond is about 45 x 80 m (under 5 acres, so 'pond'). Imagery: tree rows separate the west loop road from the pond and line much of the east side, but the pads at the loop's north-east end (about 38.0138,-88.9301) open onto the pond's north end ~15-25 m away. KOA gives no site numbers and no site map was read, so the pond-edge sites cannot be named; left not waterfront.",
+    "SEASON: none stored -> year_round ('Benton KOA is Open Year-round'); pool 5/15-9/8.",
+    "SITES: max_rig 98 ft (KOA amenity list), pull_through true confirmed. RV Life lists 52 sites (not written).",
+    "FEES: extra_person max_people 6 ('Up to 6 people' on every type); no per-person charge shown for 2 adults.",
+    "BOOKING: platform operator with the koa.com reserve URL (was operator without a URL).",
+    "LONG-STAY: KOA Journey, all site types sold nightly online; no long-stay concern.",
+    "PIN: stored 38.01317,-88.93077 is on the campground's west loop; no move.",
+    "PHONE: 618-439-4860 stored and matches koa.com and Google. WEBSITE: https://koa.com/campgrounds/benton/ works (through the browser; a plain fetch gets Cloudflare's challenge, per koa.py); no change."
+  ]
+}
