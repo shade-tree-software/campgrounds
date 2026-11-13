@@ -1,0 +1,77 @@
+{
+  "id": 1687,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.jubileecollege.html (read 2026-11-13): 'Campground facilities, open from April 15 to November 1, accommodate recreational vehicles or tents and include a shower building with flush toilets, a trailer dump station, graveled pads and grills, water hydrants, and primitive toilets. Campsites are Class A electric and Class C with showers. ... Permits are required and can be obtained from site staff or the campground host. Reservations can be made at ExploreMoreIL.' 'Equestrian-only camping is located on the north side of the park. Equestrian sites are not reserveable; there is a campground host located at the front of the campground ... There is no electricity ... the water is not potable.' 'In the main camping area, the Coyote Cove loop is open to winter camping with Class B sites with electric and primitive privies. No running water is available.'",
+    "https://dnr.illinois.gov/parks/park.jubileecollege.html (read 2026-11-13): alert 'Attention: Due to an issue with the well pump, there is currently no water on in the park. We are working dilligently to fix this issue.' (undated); 'Park Phone 309-446-3758'",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read 2026-11-13): 2027 Electric $28 (formerly A, B/E)",
+    "ExploreMoreIL / Tyler engine, place 33 (search/place + search/grid + search/details for every unit, 2027-06-15, read 2026-11-13): facility 245 A 35 units, 246 B 26 units, 247 C 46 units = 107, every unit 'Class A', Drive-In Back-In, gravel, Max Vehicle Length 40; 30 A except B 001, 010, 021 at 50 A; A and B all web-bookable, all 46 C units not web-bookable; engine 2026 price $20; facility 245 SeasonDates in-season 2027-05-01..10-31",
+    "Esri World_Imagery with every unit point (40.8238,-89.8145, 450 m half-width): loops A and B centre ~40.8224,-89.8123, loop C ~700 m NW at ~40.8263,-89.8177; the stored pin 40.8104,-89.8139 is the park entrance at the highway, ~1.35 km south"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50
+      },
+      "source": "ExploreMoreIL facility 246 unit details ('Electricity Hookup: 50 Amp' on B 001, 010, 021; 30 Amp elsewhere), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 107
+      },
+      "source": "ExploreMoreIL place 33 (A 35 + B 26 + C 46 units), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": true
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.jubileecollege.html ('a shower building with flush toilets, a trailer dump station, graveled pads and grills, water hydrants'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/33",
+        "fcfs": "some_sites",
+        "season": {
+          "year_round": false,
+          "opens": "05-01",
+          "closes": "10-31"
+        }
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.jubileecollege.html ('Permits are required and can be obtained from site staff or the campground host. Reservations can be made at ExploreMoreIL') + ExploreMoreIL place 33 (loop C's 46 units AllowWebBooking false), read 2026-11-13 + ExploreMoreIL facility 245 grid SeasonDates (in-season 2027-05-01..2027-10-31, probed 2026-11-14..2027-12-31), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "reservation_fee": null,
+        "checked": "2027",
+        "note": null
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28) applied to ExploreMoreIL place 33 (all 107 units electric Class A), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park near Brimfield: three wooded loops with graveled pads. The Coyote Cove loop stays open for winter camping with electric sites and privies but no running water. Equestrian-only camping is on the park's north side. As of 2026-11-13 the park page reports no water anywhere in the park (well pump problem). --Claude",
+  "summary": "IDNR camping/park pages, 2027 fees, all 107 ExploreMoreIL units and imagery read. Confirmed showers/flush toilets/hydrants/dump, 107 electric sites at $28 (2027), 50 A on 3 sites, loop C walk-up only (fcfs some_sites). Stored season (manual) matches the page's facilities season, but one loop is open all winter. Pin is the highway entrance ~1.35 km from the loops. Water outage alert on the park page.",
+  "flags": [
+    "WATER OUTAGE: park page alert (undated, read 2026-11-13): 'Due to an issue with the well pump, there is currently no water on in the park.' Dated caveat added to the note; potable_water left true (the campground has hydrants when the well works).",
+    "PIN MOVE (~1.35 km): stored 40.8104,-89.8139 is the park entrance at the highway junction; loops A/B centre 40.8224,-89.8123 (loop C at 40.8263,-89.8177).",
+    "CLASSES / 2027 RATES: the engine types all 107 units Class A (30 A; 50 A on B 001, 010, 021) -> Electric $28 (engine 2026 price $20). The page's 'Class C' and the winter 'Class B' sites are not separate classes in the engine. Stored fees.note's '$11 tent and walk-in sites' has no engine unit behind it; fees.note cleared, reservation_fee cleared to inherit the row, checked 2026 -> 2027.",
+    "FCFS: loop C (46 units, 001-046 incl. hosts 029H/030H) is not web-bookable; A and B (61) are -> fcfs some_sites. Booking platform operator -> usedirect.",
+    "FIT: Max Vehicle Length 40 on every unit (engine default), gravel back-ins; a 23-ft rig fits.",
+    "SEASON: stored 04-15..11-01 (manual) matches 'Campground facilities, open from April 15 to November 1', but the Coyote Cove loop is open for winter camping (Class B electric, privies, no running water), so camping runs year-round in one loop. Not overwritten (manual); consider year_round with a season.note. Reservations run 05-01..10-31 (engine SeasonDates, facility 245; a brief 403 from the engine cleared on a later plain call).",
+    "HORSE CAMP: equestrian-only camping is a separate campground on the park's north side with its own host, no electric, not reservable - separate from the family loops (not located on imagery).",
+    "PHONE: 309-446-3758 confirmed.",
+    "WATERFRONT: 'not waterfront' confirmed (only small ponds in the woods)."
+  ]
+}

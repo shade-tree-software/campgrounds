@@ -1358,3 +1358,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-471 (IL, 2026-11-13)
 - APPLIED 1674 Delabar riverfront -> riverview (no levee; ~85 m back channel; nearest pads 38-64 m but 10+ m up behind a continuous wooded bank).
 - KEPT 1706 Blanding Landing riverview (01/02 through trees, channel ~110 m); 1637 Chain O'Lakes lakeview (043-048 ~44 m through woods and reeds); 799 Clinton Lake --AWH lakeview consistent (J15-J18 ~40-50 m through woods).
+
+## p3-472 (IL, 2026-11-13)
+- APPLIED 1804 Hamilton County SFWA lakefront -> lakeview (engine 'Waterfront Site' units 13-40 m behind trees/canopy).
+- APPLIED 1680 Moraine View lakefront -> lakeview (P018-022 17-55 m, 2-3.5 m up, continuous tree band; P018-019 close, unsure -> down).
+- KEPT 1679 Illini riverview (Great Falls 003-018 25-45 m behind a tree fringe, ~4 m drop). CONFIRMED --AWH 570 Illinois Beach coastal dunes (east row 110-140 m across the park's own dune scrub and beach).

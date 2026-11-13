@@ -1,0 +1,52 @@
+{
+  "id": 1649,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.giantcity.html (read 2026-11-13): 'There are 85 campsites in the Class A Campground which provides water, electricity, showers, and sanitary facilities for tent and trailer camping. The shower building in the Class A site closes the day after the first shotgun deer season (weather-dependent) and re-opens April 1st. A separate Class A equestrian campground is located off the horse trail in the southwest corner of the park. Camping reservations may be made for Class A sites ... Campers without a reservation may register upon arrival with the \"silent host\" self-registration system.'; 'A Class C camping area is located at the south end of the campground and offers 14 walking sites'",
+    "https://dnr.illinois.gov/parks/park.giantcity.html (read 2026-11-13): Visitor Center 'Daily Phone: 618-457-4836'",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read 2026-11-13): 2027 Electric $28 (formerly A), Non-Electric $11 (formerly C and D)",
+    "ExploreMoreIL / Tyler engine, place 24 (search/place + search/grid + search/details for every unit, 2027-06-15, read 2026-11-13): facility 215 Family Campground 84 Class A units 001-085, all Drive-In, 'Electricity Hookup' 30 Amp (75) / 50 Amp (9: 027-030, 034, 035, 039-041), no water or sewer hookup amenity, Driveway Entry Back-In 61 / Pull-Through 23, Driveway Length 32-100, Max Vehicle Length 40 (81) / 30 (025-027), 59 web-bookable and 25 not; engine 2026 price $20; SeasonDates in-season 2027-04-01..2027-11-30 (and 2026-11-14..30), FutureBookingStarts 2026-11-16; facility 214 Equestrian 25 Class A (30 A) at 37.5902,-89.1924; facility 219 Tent 14 Class C walk-in (Max Vehicle Length 0); facility 217 Primitive 4 Class C",
+    "Esri World_Imagery with every unit's MapInfo point (37.6050,-89.1680, 350 m half-width): one wooded loop system, centroid 37.60486,-89.16827, ~205 m from the stored pin; only water nearby is a farm pond (~0.3 acre) ~130 m west of sites 016-023"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ExploreMoreIL facility 215 unit details ('Electricity Hookup: 50 Amp' on 027-030, 034, 035, 039-041; 30 Amp on the other 75), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 85, "pull_through": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.giantcity.html ('85 campsites in the Class A Campground') + ExploreMoreIL facility 215 ('Driveway Entry: Pull-Through' on 23 units), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true, "note": "The shower building closes the day after the first shotgun deer season (weather permitting) and reopens April 1."},
+      "source": "https://dnr.illinois.gov/parks/camp/park.giantcity.html ('provides water, electricity, showers, and sanitary facilities'; 'The shower building in the Class A site closes the day after the first shotgun deer season (weather-dependent) and re-opens April 1st.'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/24", "fcfs": "some_sites", "season": {"year_round": false, "opens": "04-01", "closes": "11-30"}},
+      "source": "https://dnr.illinois.gov/parks/camp/park.giantcity.html ('Camping reservations may be made for Class A sites'; 'Campers without a reservation may register upon arrival with the \"silent host\" self-registration system') + ExploreMoreIL facility 215 (25 of 84 units AllowWebBooking false; SeasonDates in-season 04-01..11-30), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "reservation_fee": null, "checked": "2027", "note": "Every RV site is the Electric class; the walk-in tent sites are $11."},
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28 'formerly A'; Non-Electric $11 'formerly C and D') applied to ExploreMoreIL place 24's classes (Class A x84, Class C walk-in), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park near Makanda in the Shawnee Hills: one wooded electric campground with a walk-in tent area at its south end. A separate equestrian campground sits in the park's southwest corner. Campers without a reservation take an unreserved site and use the self-registration box if the host is away. --Claude",
+  "summary": "IDNR camping page, 2027 fees, all 127 ExploreMoreIL units and imagery read. Confirmed: 85 Class A electric sites (engine lists 84), 50 A on 9 units, 23 pull-throughs, showers + water, $28 (2027; stored checked 2026 -> 2027), fcfs some_sites (25 units walk-up). Booking platform operator -> usedirect; reservation season 04-01..11-30 written to booking.season. Not waterfront confirmed. Pin ok (~205 m). Phone added.",
+  "flags": [
+    "PHONE: none stored -> 618-457-4836 (park page, Visitor Center 'Daily Phone'). The Lodge is 618-457-4921, the horse stables 618-529-4110.",
+    "CLASSES / 2027 RATES: 84 Class A electric units (30 A x75, 50 A x9), all drive-in -> Electric $28 (engine's 2026 price $20); 14 Class C walk-in tent sites + 4 Class C primitive -> Non-Electric $11. Stored $28 already reflected 2027; fees.checked 2026 -> 2027; reservation_fee cleared to inherit the row; boilerplate stripped from fees.note.",
+    "AMPS / WATER: 50 A on 027-030, 034, 035, 039-041; no unit lists a water or sewer hookup (the page's 'water' is campground water).",
+    "FIT: Max Vehicle Length 40 on 81 units and 30 on 025-027 (a 23-ft rig fits every one); Driveway Length 32-100 ft. The uniform 40 looks like the engine default, so no max_rig_ft written.",
+    "FCFS: 25 of 84 Class A units are not web-bookable (001-006, 009, 010, 012, 014, 016, 018, 022, 028, 031, 033, 039, 048, 050, 052, 054, 063, 070, 072, 081) -> fcfs some_sites confirmed.",
+    "SEASON: stored season 04-01..11-30 ('Approximate: Closed December to March', derived from old note prose) matches the engine's reservation season exactly; the camping page states only that the shower building closes after the first shotgun deer season and reopens April 1, and never that the campground closes. Season left as stored (not confirmed); reservation season written to booking.season.",
+    "HORSE CAMP: the 25-site Class A equestrian campground (facility 214, 37.5902,-89.1924) is ~2.7 km southwest of the family campground on its own road ('A separate Class A equestrian campground is located off the horse trail in the southwest corner of the park') - separate.",
+    "DUMP: stored dump true (derived) - the camping page names no dump station ('sanitary facilities'); left, not confirmed.",
+    "WATERFRONT: stored 'not waterfront' confirmed (only a ~0.3-acre farm pond west of the loop).",
+    "BOOKING: platform operator -> usedirect with the ExploreMoreIL park/24 link (stored website line already carries it)."
+  ]
+}

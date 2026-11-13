@@ -1,0 +1,46 @@
+{
+  "id": 1679,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.illini.html (read 2026-11-13): 'Both tent and trailer sites, including electric and sanitation service, are offered, and some of the sites offer breathtaking views of the river. A youth area is available for youth groups. Camping reservations can be made online at ExploreMoreIL.'",
+    "https://dnr.illinois.gov/parks/park.illini.html (read 2026-11-13): 'Park Phone 815-795-2448'; concession '(815) 313-9416'",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read 2026-11-13): 2027 Electric $28 (formerly A), Non-Electric $11 (formerly B/S)",
+    "ExploreMoreIL / Tyler engine, place 30 (search/place + search/grid + search/details for every unit, 2027-06-15, read 2026-11-13): facility 230 Great Falls 57 units = 26 Class A (30 A x22, 50 A on 009-012; Max Vehicle Length / Pad Length 40) + 31 Class B-S 028-058 (no electric, Max Vehicle Length 20, Pad Length 20); 'Waterfront Site' on 003-018; 001-003 not web-bookable. Facility 234 Whitetail 46 units = 22 Class A (30 A; Max Vehicle Length 40 x15, 30 x4, 25 x3) + 24 Class B-S 081-104 (Max Vehicle Length 20); 059, 066, 073-076 not web-bookable. All Drive-In, Back-In. Engine 2026 prices: A $20, B-S $10. SeasonDates in-season 2027-05-01..2027-10-31 for both",
+    "Esri World_Imagery (leaf-off) and USGS USGSImageryOnly (leaf-on) with every unit point + USGS 3DEP: Great Falls 004-018 are back-in pads on the south bank of the Illinois River main channel (~270 m wide, Marseilles pool above the dam; no levee) facing open mown grass with scattered trees; the water's edge is 25-45 m from the pads beyond a tree fringe along the bank, and the ground drops ~4 m (pads 151-153 m, pool 147.0 m) in the last ~15 m. Whitetail lies ~1.15 km west, set back in woods"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ExploreMoreIL facility 230 unit details ('Electricity Hookup: 50 Amp' on Great Falls 009-012; 30 Amp on all other Class A units), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 103},
+      "source": "ExploreMoreIL place 30 (Great Falls 26 Class A + 31 Class B-S; Whitetail 22 Class A + 24 Class B-S), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/30", "fcfs": "some_sites", "season": {"year_round": false, "opens": "05-01", "closes": "10-31"}},
+      "source": "https://dnr.illinois.gov/parks/camp/park.illini.html ('Camping reservations can be made online at ExploreMoreIL') + ExploreMoreIL place 30 (9 of 103 units AllowWebBooking false: 001-003, 059, 066, 073-076; SeasonDates in-season 05-01..10-31), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "surcharges": null, "reservation_fee": null, "checked": "2027", "note": "The $11 non-electric sites take rigs up to 20 ft only."},
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28 'formerly A'; Non-Electric $11 'formerly B/S') applied to ExploreMoreIL place 30's classes (Class A Max Vehicle Length 25-40; every Class B-S unit Max Vehicle Length 20 / Pad Length 20), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park at Marseilles on the Illinois River. Two campgrounds: Great Falls, whose front row of electric sites faces the river across open lawn, and Whitetail, about a kilometre west in the woods. Electric boxes are shared, so an extension cord can help. --Claude",
+  "summary": "IDNR camping/park pages, 2027 fees, all 103 ExploreMoreIL units, imagery (leaf-on and leaf-off) and 3DEP read. Base corrected $11 -> $28: every B/S site is capped at 20 ft, so a 23-ft rig needs a Class A electric site. 50 A on Great Falls 009-012 (stored 30 -> 50). 103 sites; fcfs some_sites (9 walk-up units); reservation season 05-01..10-31. Riverview kept: the engine's 'Waterfront Site' row (003-018) sits 25-45 m back over lawn, a tree fringe and a ~4 m bank. Split candidate Great Falls / Whitetail.",
+  "flags": [
+    "BASE RATE (23-ft fit): stored $11 (+$17 electric) is the Class B-S rate, but all 55 B-S units (Great Falls 028-058, Whitetail 081-104) carry Max Vehicle Length 20 / Pad Length 20 - a 23-ft rig does not fit them. Base corrected to Class A Electric $28 (2027; engine 2026 price $20); surcharge cleared.",
+    "WATERFRONT (riverview kept; engine claim lead): the engine tags Great Falls 003-018 'Waterfront Site'. Those back-in pads (e.g. 013 at 41.32055,-88.70601, 015 at 41.32059,-88.70551) face the Illinois River main channel (~270 m wide, Marseilles pool, no levee - the pads are on the natural bank) over open mown grass with scattered trees, but the water's edge is 25-45 m from the pads beyond a tree fringe along the bank, and the ground drops ~4 m (3DEP: 151.1 m at 18 m from pad 015, pool 147.0 m) to it - a climb-down bank. Best case is 'riverfront with a caveat' for 004-018 if the bank is judged walkable; on the rule (bench above a graded slope, tree fringe) it stays riverview. Whitetail is set back in woods, no water value.",
+    "AMPS: 50 A on Great Falls 009-012 (all four waterfront-tagged, web-bookable); 30 A on the other 44 Class A units. No unit lists a water or sewer hookup; stored water false left (absence of an amenity is not a statement).",
+    "FIT: Class A Max Vehicle Length 40 on 41 units, 30 on 064 and 066-068, 25 on 060, 061 and 077 - a 23-ft rig fits every Class A site. All B-S sites 20 ft max (see base rate).",
+    "FCFS: 9 units not web-bookable (Great Falls 001-003; Whitetail 059, 066, 073-076, the last four plus 059 also carry no map point - possibly out of service) -> fcfs some_sites.",
+    "SEASON: the camping page states no season; the engine's reservation season is 05-01..10-31 (written to booking.season). Campground season left absent.",
+    "SPLIT CANDIDATE: Great Falls (facility 230, 57 units, centroid 41.3198,-88.7068; stored pin 41.3206,-88.7065 is on it) and Whitetail (facility 234, 46 units, centroid 41.3217,-88.7203) are ~1.15 km apart on opposite sides of the river bridge, both reached from the same park road; both book at https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/30. Own entrance not confirmed.",
+    "PHONE: none stored -> 815-795-2448 (park page). Concession (bike rentals) (815) 313-9416.",
+    "BOOKING: platform operator -> usedirect with the ExploreMoreIL park/30 link."
+  ]
+}

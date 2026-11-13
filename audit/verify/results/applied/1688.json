@@ -1,0 +1,56 @@
+{
+  "id": 1688,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnrhistoric.illinois.gov/experience/sites/site.lincolns-new-salem-state-historic-site.html (read 2026-11-13): 'There is camping at this site. Online reservations for camp sites and shelters can be made through the ExploreMoreIL website'; 'Lincoln's New Salem State Historic Site, operated by the Illinois Department of Natural Resources'; 'The campground contains eighty electrified and eighty primitive campsites. Two toilet-shower facilities are located in the campground area.'; 'three accessible campsites: site 67 (non-electric), site 57 (50-amp), and site 145 (30-amp). All campsites are asphalt and on even ground.'; site phone 217-632-4000",
+    "ExploreMoreIL / Tyler engine place 40 description (search/place, read 2026-11-13): 'It has 200 campsites, of which 100 are electrified. The sites do not have hookups for water nor sewer, however, hydrants are available for campers to fill their storage tanks. There also exists a sewage and gray water dump station at the edge of the campground. ... Campground is open April-October.'",
+    "ExploreMoreIL / Tyler engine, place 40 units (search/grid + search/details, 2027-06-15, read 2026-11-13): facility 275 Class A 90 units (all 30 A per the engine, incl. ADA 057), facility 425 Class B/S 83 units; all Drive-In Back-In, Max Vehicle Length 40; not web-bookable: A 028, 128-151 and B/S 101; facility 275 SeasonDates in-season 2027-04-01..10-31",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read 2026-11-13): 2027 Electric $28 (formerly A), Non-Electric $11 (formerly B/S)",
+    "Esri World_Imagery with every unit point (39.9805,-89.8440, 700 m half-width): loops centre 39.9815,-89.8459 (~200 m from the pin), in woods north of the visitor-centre lot; the Sangamon River is ~500 m east beyond IL 97"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://dnrhistoric.illinois.gov/experience/sites/site.lincolns-new-salem-state-historic-site.html ('site 57 (50-amp)') + ExploreMoreIL place 40 description ('The sites do not have hookups for water nor sewer'), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 173},
+      "source": "ExploreMoreIL place 40 units (Class A 90 + Class B/S 83), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true, "dump": true},
+      "source": "https://dnrhistoric.illinois.gov/experience/sites/site.lincolns-new-salem-state-historic-site.html ('Two toilet-shower facilities') + ExploreMoreIL place 40 description ('hydrants are available for campers to fill their storage tanks. There also exists a sewage and gray water dump station at the edge of the campground'), read 2026-11-13",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-31"},
+      "source": "ExploreMoreIL place 40 description ('Campground is open April-October'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/40", "fcfs": "some_sites", "season": {"year_round": false, "opens": "04-01", "closes": "10-31"}},
+      "source": "https://dnrhistoric.illinois.gov/experience/sites/site.lincolns-new-salem-state-historic-site.html ('Online reservations for camp sites and shelters can be made through the ExploreMoreIL website') + ExploreMoreIL place 40 (26 units AllowWebBooking false; facility 275 SeasonDates in-season 04-01..10-31), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 11, "nightly_high": 11, "currency": "USD", "surcharges": {"electric": 17}, "reservation_fee": null, "checked": "2027", "note": null},
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28, Non-Electric $11 'formerly B/S') applied to ExploreMoreIL place 40 (83 Class B/S drive-in back-ins; 'All campsites are asphalt and on even ground'), read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR historic site near Petersburg; the campground's asphalt sites sit in woods beside the reconstructed New Salem village. --Claude",
+  "summary": "IDNR historic-site page, engine place text, all 173 ExploreMoreIL units, 2027 fees and imagery read. Operator is IDNR itself (no concessionaire), booked on ExploreMoreIL. Confirmed 50 A (page: site 57), no water/sewer at sites, showers/hydrants/dump; season April-October (new); 173 units; fcfs some_sites; $11 B/S / $28 electric (2027). Not waterfront confirmed; pin ok.",
+  "flags": [
+    "OPERATOR / BOOKING: 'operated by the Illinois Department of Natural Resources' (historic-site page); reservations on ExploreMoreIL park/40. The only concession named is the Railsplitter gift shop/eatery. Platform operator -> usedirect.",
+    "AMPS CONFLICT: the historic-site page names 'site 57 (50-amp)' but the engine lists unit 057 (ADA) and every other Class A unit at 30 A. Electric 50 written on the page's statement; the engine disagrees.",
+    "SITE COUNT CONFLICT: page '80 electrified and 80 primitive' (160); engine place text '200 campsites, of which 100 are electrified'; engine units 90 Class A + 83 Class B/S = 173 (written).",
+    "CLASSES / 2027 RATES: Class A -> Electric $28; Class B/S -> Non-Electric $11, asphalt drive-in back-ins ('All campsites are asphalt and on even ground'), so a 23-ft rig fits the $11 base. fees.checked 2026 -> 2027; boilerplate fees.note cleared; reservation_fee cleared to inherit the row.",
+    "SEASON: none stored -> 04-01..10-31 ('Campground is open April-October', engine place text); reservations also 04-01..10-31 (facility 275).",
+    "FCFS: 26 units not web-bookable (A 028, 128-151; B/S 101) -> some_sites.",
+    "FIT: Max Vehicle Length 40 on every unit is the engine default; stored max_rig_ft 40 (derived) left unchanged.",
+    "PHONE: none stored -> 217-632-4000 (site number given on the historic-site page for volunteer contact; no separate campground number published).",
+    "WATERFRONT: 'not waterfront' confirmed - the river is ~500 m east beyond IL 97."
+  ]
+}

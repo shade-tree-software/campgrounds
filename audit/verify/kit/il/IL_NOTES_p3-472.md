@@ -1,0 +1,12 @@
+- 1649 Giant City DONE: 85 A (84 engine) 30/50A, 23 PT, $28 2027, fcfs some (25), booking.season 04-01..11-30, season left (flag), phone 618-457-4836, horse camp separate 2.7 km, pin ok 205 m
+- 1804 Hamilton DONE: 51 A 30A + 8 BS + 10 C drive-in; $11/28; all web; fcfs cleared; lakefront -> lakeview LEAD (tagged 007-017,034-038 all behind trees 13-40 m); booking.season yr
+- 1667 Hidden Springs DONE: class C, permits on rounds -> reservable false/fcfs always/platform none; $11; phone 217-644-3091 new; pin unresolved (picnic loop?)
+- 1770 Hononegah DONE: FCFS only, 57 sites, $15 res/$25 nonres +$10 elec (2026), max 14; season year_round contradicted (no winter camping, closed 11-19-2026); pin move ~530 m to ~42.4369,-89.0440; amps unpublished
+- 1679 Illini DONE: base 11->28 (B-S all 20 ft); 50A on 009-012; 103 sites; fcfs some_sites; booking season 05-01..10-31; riverview kept (003-018 tagged WF 25-45 m, 4 m bank, tree fringe); split cand Great Falls/Whitetail 1.15 km; phone 815-795-2448
+- 570 Illinois Beach DONE: 220 Premium $35; 50A x16; water/sewer false (page); 180-day; coastal dunes (AWH) holds, east row 110-140 m, all <0.5 km; phone 847-662-4811
+- 1687 Jubilee DONE: 107 elec $28; 50A B001/010/021; loop C non-web; pin move 1.35 km to 40.8224,-89.8123; water outage alert; winter loop vs manual season; ENGINE 403 from here
+- 1642 Le-Aqua-Na DONE: 169 sites (140 A), 50A x19, $11 (HH B/S 40ft)/$28; yr-round confirmed; fcfs some_sites; name SRA; phone 815-369-4282
+- 1688 New Salem DONE: IDNR-operated, ExploreMoreIL; 173 units; 50A per page vs engine 30A; season Apr-Oct (engine text); $11/$28; phone 217-632-4000. Engine 403 was transient - reran seasons: 245 05-01..10-31, 267 05-01..10-31, 275 04-01..10-31, 290 04-16..10-31
+- 1786 Main Brothers DONE: Village of Karnak; 19 sites, 50/30A, water all, sewer 7; $25 undated; phone booking + $20 deposit
+- 1680 Moraine View DONE: 102 units 30A $28; lakefront->lakeview lead (P18-22 17-55 m behind tree band); count 137 vs 102 left; maxrig 35 vs engine 46; horse camp west side separate; phone 309-724-8032
+- dry run: 11 ready, no !!

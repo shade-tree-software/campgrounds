@@ -2083,3 +2083,15 @@ me drop and report); each needs the research named before a verdict.
 - 1653 Dixon Springs: only 12 RV sites (B/E 006-017), all back-in, 30 A (50 A at 008/010). 1706 Blanding Landing: 37 sites, max_rig 40, railroad 30-40 m from the east sites (caveat). 1637 Chain O'Lakes: closed Nov 2 - Dec 27 for hunting; A-Premium $35. 799 Clinton Lake: 17 AA full hookups $35; one Loop E unit 20 ft.
 - 14609 Cozy Corners kept on thin evidence (no operator site; Google 4.2/74, RV Life $$ avg $31). Phone 815-326-3227 matches Google; directories list 815-667-4886.
 - Pins: 799 ~1.4 km, 1689 ~410 m, 1653 ~260 m. Phones added: 799, 1637, 1689, 1674. 1706 stored 815-591-2326 is the entrance station (ranger 563-582-0881), left.
+
+## p3-472 (IL, 2026-11-13)
+- 11 applied, no drops.
+- 1667 Hidden Springs SF: not reservable (ExploreMoreIL sells only the youth camp and a shelter; staff issue permits on rounds); campground location not pinned down - pin may sit on a picnic loop.
+- 1679 Illini SP: SPLIT candidate NOT split - Whitetail (facility 246, 46 units, ~41.3217,-88.7203) is ~1.15 km from Great Falls across the bridge, but its own entrance is unconfirmed. Base $28 (all B-S 20 ft max).
+- 1680 Moraine View: stored sites 137 is the page's Class A total, Gander Bay has 102; stored max_rig 35 (old prose) vs engine 46 ft on every unit. Both left.
+- 1642 Lake Le-Aqua-Na: now "State Recreation Area" on the IDNR page (name not changed). $11 base rests on 10 Hickory Hill B-S drive-ins listed at 40 ft (engine default?); if not real, base is $28.
+- 1688 New Salem: IDNR-operated; site 57 50 A per the page (engine says 30 A); units page 160 / engine description 200 / engine list 173 (written).
+- 1687 Jubilee College: undated well-pump alert "no water on in the park" (dated caveat in note). Coyote Cove loop open for winter camping - season left 04-15..11-01 (--AWH/manual); asked.
+- 1770 Hononegah FP: winter camping no longer permitted, 2026 season closes Nov 19; $15 resident / $25 nonresident, +$10 electric; FCFS only; stored phone 815-877-6100 not on its pages; pin approximate.
+- 1786 Main Brothers (Village of Karnak): $25, phone/email booking with $20 deposit; no season or dump on the page.
+- Pins: 1687 ~1.35 km, 1770 ~530 m. Phones added: 1649, 1667, 1679, 570, 1642, 1688, 1680.
