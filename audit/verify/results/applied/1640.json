@@ -1,0 +1,69 @@
+{
+  "id": 1640,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.lowden.html (read 2026-11-13): 'There are 80 Class A campsites, which include electricity, a shower building, and a sanitary dumping station for trailers. Another option is the campground cabin ... Reservations are taken for the campsites and cabin at ExploreMoreIL. Also available are 38 Class B/S campsites, which do not offer electricity but do have access to showers. For the true wilderness experience, there are 8 Class D primitive hike-in-only campsites. During the summer, a refreshment stand provides cool drinks, ice, and wood.'",
+    "https://dnr.illinois.gov/parks/park.lowden.html (read 2026-11-13): 'Park Phone 815-732-6828'",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13: park 41 facilities 280 Shady Rest (56 Class A 30 A, 36 web-bookable and 20 not; 8 Class B-S), 282 Sun Valley (23 Class A 30 A, all web-bookable; 1 cabin), 283 White Oak (30 Class B-S, 21 web-bookable, 9 not); no 50 A unit anywhere; every unit back-in, Max Vehicle Length 40 at all of them (default); B-S driveways 50 ft; in season 2027-05-01..2027-10-31 (Shady Rest)",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13",
+    "Esri World_Imagery (unit points overlaid, ~42.035,-89.325): the three loops sit in wooded uplands; the Rock River is 350 m or more from the nearest units"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 30
+      },
+      "source": "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (every Class A unit at facilities 280 and 282 is '30 Amp'; none 50 A)",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 118
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.lowden.html ('80 Class A campsites' + '38 Class B/S campsites'; the 8 Class D hike-in sites not counted), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/41",
+        "fcfs": "some_sites",
+        "season": {
+          "year_round": false,
+          "opens": "05-01",
+          "closes": "10-31"
+        }
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.lowden.html ('Reservations are taken for the campsites and cabin at ExploreMoreIL'; 'Contact park staff upon arrival for a camping permit'); https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (20 Shady Rest Class A and 9 White Oak B-S units not web-bookable; in season 05-01..10-31)",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 11,
+        "nightly_high": 11,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "surcharges": {
+          "electric": 17
+        },
+        "note": "Class A electric sites $28; Class B/S sites without electric $11."
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13 applied to the park's Class A / Class B/S sites (camp page and engine)",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park at Oregon, on a wooded bluff above the Rock River (Black Hawk statue). Three loops (Shady Rest, Sun Valley, White Oak) sit in the uplands, about 350 m from the river. A summer refreshment stand sells drinks, ice and firewood. --Claude",
+  "summary": "DNR camp/park pages, ExploreMoreIL engine (all units) and the 2027 fee PDF read; imagery. 80 Class A (30 A only, not 50) + 38 B/S + 8 hike-in; showers, dump; 29 units walk-up; usedirect; reservation season 05-01..10-31. Not waterfront confirmed. Phone 815-732-6828 (none stored).",
+  "flags": [
+    "HOOKUPS: stored electric 50 (note '80 Class A electric (to 50A ...)') -> 30; the engine lists 30 A at all 79 Class A units and no 50 A.",
+    "SITES: stored max_rig_ft 40 (note 'RVs/trailers over 40 ft not permitted') is not on any page; the engine's 40 is the default on every unit. Left unchanged; consider clearing. Engine 79 Class A vs page 80.",
+    "NOTE: 'Sun Valley Area: 80 Class A ...' and the 40-ft line removed (redundant/unsourced; Sun Valley is one of three loops, not the whole campground); the refreshment stand added from the camp page.",
+    "WATERFRONT: not waterfront confirmed (units in the wooded uplands, the river 350 m+ away).",
+    "SEASON: engine reservation season 05-01..10-31 written to booking.season; camping season not stated, none written.",
+    "FEES: $10 reservation fee and holiday/residency boilerplate removed (state:IL row).",
+    "PHONE: none stored -> 815-732-6828 (DNR 'Park Phone'). WEBSITES: both stored links work (DNR page; ExploreMoreIL #!park/41 = Lowden). No change.",
+    "PIN: stored 42.0352,-89.3251 is ~150 m from the Shady Rest centroid; no move."
+  ]
+}

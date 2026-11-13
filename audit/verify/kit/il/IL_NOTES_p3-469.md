@@ -1,0 +1,13 @@
+# p3-469 (seventh IL batch) working notes, 2026-11-13
+- 1726 Marion DONE: $49.95 daily/$270 wk/$690 mo (undated page), op 10% GS/FMCA/Escapees/vets; 58 FHU 27 PT 50A; no pool; Google 4.4/402; phone 618-997-3484; drop RV Life website line
+- 1758 Percival DONE: real RV park beside 2T2 turf strip (~14 gravel PT spurs); 24 FHU 50A, year round, phone booking; no rate (RV Life $$, review "40.00"); Google 4.8/33; phone 217-536-9990 -> 217-994-6470
+- 1743 Prairie Pines DONE: Firefly (reCAPTCHA, rate unread), year round, no posted rate (RV Life $$), Google 4.5/213, mixed w/ long-term; phone -> 217-953-8543
+- 1704 North Sandusky DONE: lakefront kept narrowly (WO047 ~30 m open grass, PI010 ~30 m scattered trees); 97 sites 50A, water 29/sewer 21, to 90 ft; 2027 $20/24/28; season 03-26..10-31; pin -> 38.0668,-89.0041 (~495 m)
+- 1640 Lowden DONE: 30A not 50; 118 sites; walk-up 29; booking season 05-01..10-31; phone 815-732-6828
+- 1641 Palisades DONE: 241 sites, 14 at 50A, B/S tent pads -> $28 flat; pin -> 42.1450,-90.1625 (~510 m); phone 815-273-2731
+- 1645 Morrison DONE: woods 400 m+ from lake; pin -> 41.8529,-89.9639 (~545 m)
+- 1803 Pere Marquette DONE: electric only, all reservable (fcfs after_cutoff), max 62; pin -> 38.9697,-90.5383 (~290 m)
+- 1648 Prophetstown DONE: 30A, water/sewer cleared, count 105 unsourced (engine 44); river 37-50 m behind woods, not waterfront kept
+- 1668 Sam Parr DONE: lakeview -> not waterfront; 30A; 30 sites; 1-10 online only
+- 1677 Siloam DONE: lakeview -> not waterfront; water/sewer cleared; 104 sites, max 40; two 20-ft pads; horse camp separate
+- apply.py dry run: 11 ready, no !!

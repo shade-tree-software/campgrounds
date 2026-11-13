@@ -1,0 +1,67 @@
+{
+  "id": 1803,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.peremarquette.html (read 2026-11-13): 'The Class A campground has 80 sites, two of which are handicap accessible. These sites have electrical hookups only, with a sanitary dump station, drinking water, and a shower building available on the grounds. All spots are available for reservation.'; 'Class B (PRIMITIVE/TENT) ... Class B is NON-RESERVABLE ... Bring your driver's license and license plate number to the campground host (Class A sites 1 & 2)'; 'Within the Class A campground, the park offers two Rent-A-Camp cabins.'; 'All Class A sites have 20, 30, and 50 amp service.'",
+    "https://dnr.illinois.gov/parks/park.peremarquette.html (read 2026-11-13): 'Park Phone 618-786-3323'; 'The campground is open!'",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13: park 48 facility 303: 78 Class A, all '50 Amp', 76 web-bookable (001H and 002H, the host sites, are not); 2 cabins (C13, C15); Max Vehicle Length 40 (default) at 58 units, real values 25-62 at the rest (5 at 60, 4 at 61, 3 at 62); driveways 26-66 ft; in season all of 2027",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13",
+    "Esri World_Imagery (unit points overlaid, 38.970,-90.538): loops inland in woods, no water near"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.peremarquette.html ('These sites have electrical hookups only'; 'All Class A sites have 20, 30, and 50 amp service.'), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 80,
+        "max_rig_ft": 62
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.peremarquette.html ('The Class A campground has 80 sites'); https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (largest posted Max Vehicle Length 62 ft at three units)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/48",
+        "fcfs": "after_cutoff",
+        "season": {
+          "year_round": true
+        }
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.peremarquette.html ('All spots are available for reservation'); https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (76 of 78 Class A web-bookable, the other two are the host sites; nights sold all of 2027)",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "note": "Class B tent sites (not reservable) $11."
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13 applied to the Class A sites",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park near Grafton, in bluff country off the Great River Road by the Illinois River. The Class A campground sits inland behind trees, with no water view; the hosts are at sites 1 and 2. --Claude",
+  "summary": "DNR camp/park pages, ExploreMoreIL engine and the 2027 fee PDF read; imagery. 80 Class A, 20/30/50 A, electric only (no water/sewer), all reservable (hosts at 1-2), fcfs after the cutoff not some_sites; max rig 62 (engine) vs stored 68; year-round sales; $28. Pin should move ~290 m. Phone matches.",
+  "flags": [
+    "BOOKING: stored fcfs some_sites from the note 'Sites 2-30 reservable May-Oct via ExploreMoreIL, 31-80 FCFS' is contradicted: 'All spots are available for reservation' and the engine sells 76 of 78 Class A units (the other two are the host sites). Written after_cutoff (walk-up only after the state's 3-day cutoff).",
+    "SITES: stored max_rig_ft 68 (note 'fits 25-68 ft rigs') -> 62, the largest posted Max Vehicle Length; driveways run to 66 ft.",
+    "HOOKUPS: water false / sewer false written ('electrical hookups only').",
+    "PIN: stored 38.96817,-90.53555 is at the entrance on IL-100; move ~290 m to 38.9697,-90.5383 (loop centroid).",
+    "SEASON: stored year_round (derived) kept: the engine sells nights all year and the park page says 'The campground is open!'; booking.season year_round written.",
+    "NOTE: field text removed (hookups, fit, the wrong reservable/FCFS split); kept the inland/no-view caveat; host sites added.",
+    "HORSES: the equestrian concession (618-786-2156) runs trail rides only; no horse camp.",
+    "PHONE: 618-786-3323 stored and matches. WEBSITES: both work (#!park/48 = Pere Marquette)."
+  ]
+}

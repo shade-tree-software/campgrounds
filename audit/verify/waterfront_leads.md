@@ -1343,3 +1343,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 1646 Johnson-Sauk lakeview -> not waterfront (100-130 m, canopy, 11 m up); 1681 Kickapoo lakeview -> riverview (Fox 88/90 over open meadow 40-48 m, 11 m up); 1684 Lincoln Trail lakefront -> not waterfront (default down: 40-65 m, canopy, 14 m up a 30% slope - agent offered lakeview at most); 1756 Lazy Days lakeview -> not waterfront (1 ha pond, long-term-only edge sites).
 - KEPT 1736 Leisure Lake lakefront, north-shore row only (~6.5 ha lake, open grass ~12 m), caveat in note.
 - NEW 15701 Chippewa (Kankakee River) not waterfront (Class C 73-79 ~30 m from a wooded backwater channel).
+
+## p3-469 (IL, 2026-11-13)
+- APPLIED 1668 Sam Parr lakeview -> not waterfront (95-120 m under canopy); 1677 Siloam Springs lakeview -> not waterfront (75 m through forest, 60 ft up).
+- KEPT NARROWLY 1704 North Sandusky lakefront (WO047 ~30 m over open grass to a cove; PI010 25-35 m past scattered trees); if PI010's trees read as a screen, lakeview.
+- LEAD 1648 Prophetstown: units 030-035 37-50 m from the Rock River behind a dense wooded bank, 6-9 ft up - riverview at most, left not waterfront.

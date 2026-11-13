@@ -1,0 +1,72 @@
+{
+  "id": 1648,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.prophetstown.html (read 2026-11-13): 'The campground at Prophetstown is open from May 1st through October 31st annually. It is an open, well-shaded area available for both tent and trailer camping. There are electrical outlets and a dump station available for trailers, 43 of which are available for reservation through ExploreMoreIL. Water hydrants and privy toilets are located throughout the area. There also is a shower building with flush toilets. The campground is closed November 1st through April 30th annually.'",
+    "https://dnr.illinois.gov/parks/park.prophetstown.html (read 2026-11-13): 'Park Phone 815-537-2926'",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13: park 49 facility 307 Walnut Grove: 44 Class A, 43 at 30 A (one without an amp value), 42 web-bookable; no Water or Sewer attribute on any unit; Max Vehicle Length 40 (default); in season 2027-05-01..2027-10-31",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13",
+    "Esri World_Imagery (unit points overlaid, 41.672,-89.927): units 30-35 (030 at 41.67310,-89.92667; 035 at 41.67289,-89.92743) are ~37-50 m from the Rock River behind a dense wooded bank band",
+    "USGS 3DEP (read 2026-11-13): units 30-35 595-598 ft, river ~589 ft"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 30,
+        "water": null,
+        "sewer": null
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.prophetstown.html ('electrical outlets'; 'Water hydrants ... throughout the area'); https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (30 A at 43 units, none 50 A; no water/sewer attribute)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.prophetstown.html ('Water hydrants and privy toilets'; 'a shower building with flush toilets'; 'a dump station'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/49",
+        "fcfs": "some_sites",
+        "season": {
+          "year_round": false,
+          "opens": "05-01",
+          "closes": "10-31"
+        }
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.prophetstown.html ('43 of which are available for reservation through ExploreMoreIL'); https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (in season 05-01..10-31)",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "note": null
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13 applied to the electric sites",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR recreation area at Prophetstown beside the Rock River. Open, well-shaded campground; sites 30-35 sit 35-50 m from the river behind a wooded bank, without a view. --Claude",
+  "summary": "DNR camp/park pages, ExploreMoreIL engine and the 2027 fee PDF read; imagery + 3DEP. Electric 30 A (not 50), no water/sewer hookups (hydrants; 'half full-hookup' was wrong), showers + flush toilets + privies, 43 reservable; season May-Oct already manual; $28. Not waterfront kept (possible riverview). Phone 815-537-2926 (none stored).",
+  "flags": [
+    "HOOKUPS: stored electric 50 / water true / sewer true (note 'some 50A; about half are full-hookup') -> 30 / cleared / cleared: the page names only 'electrical outlets' and 'Water hydrants', and the engine has 30 A and no water/sewer attribute on any unit.",
+    "SITES: stored count 105 (note '105 sites in two loops') not on any page; engine facility 307 has 44 units (43 reservable per the page). Left unchanged; consider 44.",
+    "WATERFRONT: not waterfront kept. Units 30-35 (030 41.67310,-89.92667; 035 41.67289,-89.92743) are ~37-50 m from the Rock River but behind a dense wooded bank band, 6-9 ft above the river (3DEP 595-598 vs ~589 ft). At most riverview through the trees; not upgraded.",
+    "SEASON: manual 05-01..10-31 confirmed by the page; booking.season the same.",
+    "FEES: boilerplate note cleared (state:IL row).",
+    "PHONE: none stored -> 815-537-2926 (DNR 'Park Phone'). WEBSITES: both work (#!park/49 = Prophetstown).",
+    "PIN: stored 41.6722,-89.9266 is ~40 m from the unit centroid; no move."
+  ]
+}

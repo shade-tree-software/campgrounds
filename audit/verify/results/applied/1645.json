@@ -1,0 +1,66 @@
+{
+  "id": 1645,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.morrisonrockwood.html (read 2026-11-13): 'Ninety-two camping sites are available in heavily wooded areas of the park, with 59 available for reservation through the Reserve America website at ExploreMoreIL. Each site has electricity, a grill, and a table. A shower building with flush toilets is available from May 1 through October 31. A trailer dump station is conveniently located near the campground.'",
+    "https://dnr.illinois.gov/parks/park.morrisonrockwood.html (read 2026-11-13): 'Park Phone 815-772-4708'",
+    "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13: park 46 facility 300: 90 Class A 30 A (60 web-bookable; 29 viewable but not bookable = walk-up; 1 without an amp value), 25 Class B-S not web-viewable, 4 youth group units; Max Vehicle Length 40 (default); in season 2027-05-01..2027-10-31",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13",
+    "Esri World_Imagery (unit points overlaid, 41.853,-89.964): units in dense woods; Lake Carlton lies to the south, 400 m+ from the nearest unit (59)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 30
+      },
+      "source": "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (Class A units '30 Amp')",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "dump": true
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.morrisonrockwood.html ('A shower building with flush toilets'; 'A trailer dump station'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/46",
+        "fcfs": "some_sites",
+        "season": {
+          "year_round": false,
+          "opens": "05-01",
+          "closes": "10-31"
+        }
+      },
+      "source": "https://dnr.illinois.gov/parks/camp/park.morrisonrockwood.html ('59 available for reservation'); https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; search/place, search/grid and search/details for 2027-06-15, plus 2027 in-season dates), read 2026-11-13 (in season 05-01..10-31)",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2027",
+        "reservation_fee": null,
+        "note": null
+      },
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027: 'Electric $28 ... (formerly A, B/E and B/E Premium'; Non-Electric $11 'formally Class B/S, C & D'; Premium Electric $35 only at the named Premium campgrounds), read 2026-11-13 ('Each site has electricity')",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR park at Morrison. Sites are spread through heavily wooded ground north of Lake Carlton, 400 m or more from the water. Showers run May through October. --Claude",
+  "summary": "DNR camp/park pages, ExploreMoreIL engine and the 2027 fee PDF read; imagery. 92 wooded electric sites (30 A), 59 reservable, $28; shower/flush May-Oct, dump; usedirect; reservation season 05-01..10-31. Not waterfront (lake 400 m+). Pin should move ~545 m. Phone matches.",
+  "flags": [
+    "PIN: stored 41.855,-89.958 is on the entrance road east of the campground; move ~545 m to 41.8529,-89.9639 (unit centroid).",
+    "NOTE: 'on Lake Carlton' corrected (the campground is in the woods 400 m+ from the lake); counts/amps/showers/dump/booking text removed as redundant.",
+    "SITES: engine 90 Class A + 25 B-S vs page 92 sites 'Each site has electricity'; count 92 kept.",
+    "FEES: boilerplate note cleared (state:IL row); $28 unchanged.",
+    "SEASON: reservation season 05-01..10-31 written to booking.season; camping season not stated.",
+    "PHONE: 815-772-4708 stored and matches. WEBSITES: both work (#!park/46 = Morrison-Rockwood)."
+  ]
+}

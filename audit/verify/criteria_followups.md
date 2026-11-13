@@ -2058,3 +2058,10 @@ me drop and report); each needs the research named before a verdict.
 - 1782 Jurgens Park run by the Arthur Park District (phone and website changed); stored $20 not re-read (village page Cloudflare).
 - Unsupported stored lengths left alone: 1744 max_rig_ft 90, 1782 75, 1754 60.
 - UNREAD: 1773 Loud Thunder FP (ricfpd.org + WebTrac Cloudflare 403); Google 4.5/619, 309-795-1040; horse separation not established. Still queued.
+
+## p3-469 (IL, 2026-11-13)
+- 11 applied, 0 dropped. Seven IDNR parks re-read against every engine unit + the 2027 fee PDF: Lowden and Prophetstown and Sam Parr electric 50 -> 30; Prophetstown and Siloam water/sewer cleared (hydrants only); Mississippi Palisades $28 flat (B/S sites are 10-12 ft tent pads); Pere Marquette electric only, max 62 ft, all sites reservable (2 host units); Sam Parr books only sites 1-10 online; Siloam count 182 -> 104, two 20-ft Class A pads (Oak Ridge 095, Pine Grove 046) caveated; Siloam horse camp separate (~1.1 km).
+- 1704 North Sandusky (USACE): 97 sites 50 A, water at 29, sewer at 21, up to 90 ft; 2027 $20/$24/$28; season 03-26..10-31.
+- Private: 1726 Marion $49.95 passes, Good Sam Park + operator 10% military; 1758 Percival Springs a real 24-site full-hookup park beside a turf airstrip (13 ft 10 in IL-37 underpass clears); 1743 Prairie Pines kept with a long-term caveat, booking -> operator Firefly, nightly rate unread (reCAPTCHA).
+- Unsourced max_rig left: 1640 40, 1641 35 (from notes; engine shows only its 40 default).
+- Pins: 1641 ~510 m, 1645 ~545 m, 1803 ~290 m, 1704 ~460 m (east peninsula; the centroid fell in the cove). Phones: 1640, 1641, 1648, 1677, 1726 added; 1758, 1743 changed. 1726 RV Life link removed.
