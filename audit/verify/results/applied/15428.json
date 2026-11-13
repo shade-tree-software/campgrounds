@@ -1,0 +1,37 @@
+{
+  "id": 15428,
+  "checked": "2026-11-13",
+  "sources": [
+    "koa.com booking form https://koa.com/campgrounds/chicago/reserve/ via audit/private_gap_browser/koa.py (RV, 2 adults, 23-ft motorhome, no slide-outs; read 2026-11-13): 2027-06-15, 1 night, 16 of 18 site types priced before tax: 'Pull In, No Hookups, Convenient for After Hour Arrivals' $45.00 ('Located near entrance gate and main building/bathrooms; best suited for small RVs, vans and pop-ups!'); 'Back In, 30 Amps, Water/Electric, No Sewer Hookup! For smaller units' $52.00 ('ideal for pop-up campers and vans ... 30amp class C motorhome please rent a 30amp pull through site'); 'Pull Thru, 30 Amps, Water/Electric, No Sewer Hookup!' $63.00; 'Back In, 30 Amps, Full Hookups' $65.00; 'Back In, 50/30 Amps, Water/Electric' $75.00; top 'Pull Thru, 50/30 Amps, Full Hookups ... Patio' $112.00; every type 'Save 10% at check out with KOA Rewards'. 2027-05-18: no-hookup $43.00, 30 A water/electric back-in $47.00, 30 A full hookups back-in $53.00",
+    "Google Maps (gm.py, 2026-11-13): 'Chicago Northwest KOA Holiday' 4.1 (671 reviews), 8404 S Union Rd, Union, IL 60180, phone (815) 923-4206, website koa.com/campgrounds/chicago/",
+    "RV Life park 1046 (Algolia, 2026-11-13): commercial, KOA, 4 stars, $$$ (avg_rate 63), 195 ratings, 117 sites",
+    "Good Sam directory cache (trip_data/goodsam_parks.json): 'Chicago Northwest KOA Kampground' isGsPark false",
+    "audit/price_research/gateways.py 42.20763,-88.54814: no gateway within 40 km (Chicago 84 km)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "koa.com reserve form site types ('Pull Thru, 50/30 Amps, Full Hookups', 'Back In, 50/30 Amps, Water/Electric'), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 43, "nightly_high": 112, "currency": "USD", "checked": "2027", "note": "Lowest is a no-hookup pull-in near the entrance; 30 A water/electric sites from $47 (May) to $52 (June), though the park asks Class C motorhomes to take a 30 A pull-through ($63 in June). KOA Rewards members save 10%."},
+      "source": "koa.com reserve form for a 23-ft motorhome, 1 night 2027-05-18 ($43 no hookups ... ) and 2027-06-15 ($45 no hookups; $52 30 A W/E back-in; $63 30 A W/E pull-through; up to $112), before tax, read 2026-11-13",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"good_sam": false},
+      "source": "Good Sam directory (trip_data/goodsam_parks.json: 'Chicago Northwest KOA Kampground', isGsPark false)",
+      "method": "manual"
+    }
+  },
+  "summary": "koa.com quoted for a 23-ft motorhome: cheapest RV class 'Pull In, No Hookups' $45 (2027-06-15) / $43 (2027-05-18); hookup sites from $47-52 (30 A W/E back-in, 'for smaller units'); the operator steers Class C motorhomes to 30 A pull-throughs at $63. Price gate passes on the no-hookup class. Google 4.1 (671). Not a GS Park; no gateway. Nightly KOA, long-stay tests pass.",
+  "flags": [
+    "PRICE GATE (borderline pass): cheapest class a 23-ft motorhome can book is 'Pull In, No Hookups, Convenient for After Hour Arrivals' at $45.00 on 2027-06-15 and $43.00 on 2027-05-18 (before tax), which passes $50. The cheapest hookup site, 'Back In, 30 Amps, Water/Electric, No Sewer Hookup! For smaller units', is $52.00 (Jun) / $47.00 (May), but its description says '30amp class C motorhome please rent a 30amp pull through site' - that class is $63.00 in June; with KOA Rewards' posted 10% it is $56.70, still over $50. No Good Sam Park (isGsPark false), no gateway within 40 km (Chicago 84 km). A human may want to decide whether a no-hookup-only pass is enough.",
+    "LONG-STAY TESTS: (1) nightly share: KOA Holiday sold nightly through koa.com; 16 of 18 site types quotable for one night (no seasonal wording seen) -> passes; (2) posted rate: live engine quote -> pass; (3) booking engine: koa.com -> pass; (4) no wording discouraging nightly guests; (5) presence: Google Maps 4.1 from 671 reviews with phone, koa.com page -> pass.",
+    "FEES: stored $45-$99 (2026 quote of 2027-05-18) -> $43-$112, checked 2027.",
+    "PHONE/WEBSITE: 815-923-4206 and koa.com/campgrounds/chicago/ unchanged (Google matches).",
+    "PIN: stored 42.20763,-88.54814 vs Google 42.20647,-88.54853 (~130 m), RV Life 42.20613,-88.55016; no move.",
+    "SEASON: not read (koa.com pages need the browser; only the reserve form was used)."
+  ]
+}

@@ -1,0 +1,13 @@
+# p3-471 (ninth IL batch) working notes, 2026-11-13
+- 1706 Blanding DONE: 37 sites (7 NE 25-30 ft, 30 E 50A to 40); 2027 $14/$24; reservation only; riverview kept on 01/02 (rec.gov photos, ~110 m); pin ok; phone -> 563-582-0881 suggested
+- 1735 Hauberg DONE: DROP CANDIDATE (mostly seasonal/residents per Dyrt 2022/23 + imagery; only 2014 rates; Google 5.0/2 no phone); pin ~330 m -> 41.6458,-90.3375
+- 1765 Sullivan DONE: fpdcc.com Cloudflare-refused; fees corrected (tent table was stored) -> 30/56 + nonres 10 from Oct capture + Google snippet + 2026 brochures
+- 1637 Chain O'Lakes DONE: lakeview kept (HH 043-048 ~44 m under woods+reeds); 50A Fox Den; fcfs some_sites; season 03-01..10-25; phone 847-587-5512
+- 15428 KOA DONE: $45 no-hookup (6/15/27), $43 (5/18/27); 30A W/E $52/$47; Class C asked to take 30A PT $63; gate borderline pass; Google 4.1/671; no GS; no gateway; browser quit
+- 799 Clinton DONE: AWH lakeview consistent (J15-18 ~40-50 m woods); AA full hookups (16); 50A; fcfs some_sites (B, I); 308 sites; PIN MOVE 1.4 km -> 40.15784,-88.79736; phone 217-935-8722
+- 1759 Country Bend DONE: $48/$54 2026 confirmed; monthly $625 workers sideline; ~67% nightly; Google 4.5/257; keep
+- 14609 Cozy Corners DONE: no groups; Google 4.2/74; RV Life $$; phone conflict 326-3227 (Google) vs 667-4886 (directories); keep
+- 1689 Deer Run DONE: season -> year-round; booking 04-01..10-31; 130 sites; 50A; fcfs some_sites; not waterfront ~320-410 m; PIN MOVE ~400 m -> 39.6533,-89.4700; phone 217-498-9208
+- 1674 Delabar DONE: engine has no campsites -> reservable false/fcfs always; riverfront -> riverview suggested (38-64 m behind wooded bank, 10-13 m above); no levee; channel ~85 m; phone 309-374-2496
+- 1653 Dixon Springs DONE: 12 B-E (not 39); back-in; 30x10/50x2; showers cleared; $28; usedirect park/13; pin 260 m -> 37.38273,-88.66558
+- Leads: Kamper Kompanion (Litchfield), Pleasant Creek (Oglesby), Lehman's Lakeside (Marengo) all already screened in audit/il_private/list.json (price_only / rv_other) - not new. apply.py dry run: 11 ready, 10 note rewrites, no !!

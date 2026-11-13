@@ -627,3 +627,6 @@ Upgrade riverview -> riverfront with a caveat naming the primitive sites? Primit
 
 ## p3-467 (IL, 2026-11-12)
 - **779 Hickory Point (Sangchris Lake), season (your stored year_round, manual).** The DNR contradicts itself: the camp page says "Hickory Point and Deer Run are open all year"; the activity page says "closed the second week in January through March 31st"; the 2023 brochure says "Campgrounds are closed from mid-January through March 31". Keep year_round, or set a mid-January to March 31 closure? (Your lakefront is confirmed - 23 units flagged waterfront on the engine.)
+
+## p3-471 (IL, 2026-11-13)
+- 15428 Chicago Northwest KOA Holiday: the only class under $50 is "Pull In, No Hookups" ($43-45, 2027). The 30 A water/electric back-in ($47-52) says 30 A class C motorhomes should rent the 30 A pull-through, which is $63 ($56.70 with KOA Rewards). Kept on the no-hookup class - drop it instead?

@@ -1354,3 +1354,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - KEPT NARROWLY 1702 South Marcum lakefront on 056/057 (caveat in note); 083/084 lakeview only.
 - CONFIRMED --AWH 776 Thomson Causeway riverfront (060 ~25 m to the open river; 034-038 by a ~90 m backwater; RIVE loop riverview) and 791 Wayne Fitzgerrell lakefront (080 ~16 m, 079 ~30 m, 045 ~29 m).
 - LEAD (not applied) 15427 Benton KOA pond: KOA sells "Next to Ponds waters edge" back-ins and "Next to Pond" pull-throughs nightly; pond ~45 x 80 m; NE-end pads (~38.0138,-88.9301) open, 15-25 m; no site numbers published, so left not waterfront.
+
+## p3-471 (IL, 2026-11-13)
+- APPLIED 1674 Delabar riverfront -> riverview (no levee; ~85 m back channel; nearest pads 38-64 m but 10+ m up behind a continuous wooded bank).
+- KEPT 1706 Blanding Landing riverview (01/02 through trees, channel ~110 m); 1637 Chain O'Lakes lakeview (043-048 ~44 m through woods and reeds); 799 Clinton Lake --AWH lakeview consistent (J15-J18 ~40-50 m through woods).

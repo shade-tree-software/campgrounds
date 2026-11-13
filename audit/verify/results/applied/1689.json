@@ -1,0 +1,57 @@
+{
+  "id": 1689,
+  "checked": "2026-11-13",
+  "sources": [
+    "https://dnr.illinois.gov/parks/camp/park.sangchrislake.html (read 2026-11-13): 'the Deer Run Campground on the north end of the lake contains 80 Class A (electricity, showers, and vehicle access), 40 Class B/S (vehicle access with showers), 5 Class C (tent camping, walk-in, or backpack; no vehicle; with showers) campsites, and 5 additional Class C equestrian campsites. A sanitary dump station is provided in each campground. The shower building is located in the Hickory Point Campground.'; 'Water facilities (including the shower building) are closed the Monday prior to Thanksgiving through March 31st. Hickory Point and Deer Run are open all year.'; 'Camping and cabin reservations can be made at ExploreMoreIL'",
+    "https://dnr.illinois.gov/parks/park.sangchrislake.html (read 2026-11-13): phone 217-498-9208",
+    "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read 2026-11-13): Electric $28, Non-Electric $11 for 2027",
+    "ExploreMoreIL / Tyler engine, place 57 (search/grid + search/details for every unit, 2027-06-15, read 2026-11-13): facility 341 Deer Run A 36 Class A (8+1 at 50 A, rest 30 A; 34 web-bookable), 342 Deer Run B 43 Class A (10 at 50 A; 33 web-bookable), 343 Deer Run C 40 Class B-S (none web-bookable), 344 Equestrian 4 Class C, 345 Primitive 5 Class D hike-in; no unit carries a water or sewer hookup; every drive-in unit 'Max Vehicle Length 40' (a uniform default); facility 341 in-season (bookable) 2027-04-01 to 2027-10-31, not 2027-03-22..31 or 2027-11-01..11 or 2026-11-14..12-04",
+    "Esri World_Imagery with every unit's MapInfo point (39.6520,-89.4705, 450 m half-width) and USGS 3DEP: the three loops sit in woods on a plateau (pads ~180.1-180.6 m) ~320-410 m north of Sangchris Lake (177.6 m); equestrian sites ~150 m west of the Class B/S loop on their own spur; stored pin is on the park road by the lake, ~320 m south of the nearest site"
+  ],
+  "groups": {
+    "season": {
+      "values": {"year_round": true, "opens": null, "closes": null, "note": "Water and the shower building are shut off from the Monday before Thanksgiving through March 31."},
+      "source": "https://dnr.illinois.gov/parks/camp/park.sangchrislake.html ('Hickory Point and Deer Run are open all year.'; 'Water facilities (including the shower building) are closed the Monday prior to Thanksgiving through March 31st.'), read 2026-11-13",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "ExploreMoreIL unit details, place 57 facilities 341/342 ('Electricity Hookup: 50 Amp' on 19 Class A units), read 2026-11-13",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 130},
+      "source": "https://dnr.illinois.gov/parks/camp/park.sangchrislake.html (80 Class A + 40 Class B/S + 5 Class C + 5 Class C equestrian), read 2026-11-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true},
+      "source": "https://dnr.illinois.gov/parks/camp/park.sangchrislake.html ('Class A (electricity, showers, and vehicle access)'; 'A sanitary dump station is provided in each campground'), read 2026-11-13",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/57", "fcfs": "some_sites", "season": {"year_round": false, "opens": "04-01", "closes": "10-31"}, "note": "The Class B/S loop is not bookable online."},
+      "source": "ExploreMoreIL place 57 (AllowWebBooking false for all 40 Deer Run C Class B-S units and 3 Class A units; facility 341 bookable 2027-04-01..10-31 only), read 2026-11-13",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 11, "nightly_high": 11, "currency": "USD", "surcharges": {"electric": 17}, "reservation_fee": null, "checked": "2027", "note": "Class B/S sites (no electric) $11; Class A electric $28."},
+      "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 Electric $28, Non-Electric $11) applied to the camping page's classes, read 2026-11-13",
+      "method": "manual"
+    }
+  },
+  "note": "Illinois DNR campground at the north end of Sangchris Lake: three wooded loops a few hundred meters from the water (Hickory Point is the lakeside campground, a separate entry); the shower building is at Hickory Point. Equestrian and hike-in sites sit apart on the west side. --Claude",
+  "summary": "IDNR camping page, 2027 fees, all 128 ExploreMoreIL units and imagery + 3DEP read. Season corrected: open all year (water/showers off Monday before Thanksgiving-Mar 31), reservations Apr 1-Oct 31. 130 sites; 50 A on 19 units; no water/sewer hookups; B/S loop walk-up -> fcfs some_sites. Not waterfront confirmed (~320-410 m). Pin ~320 m off -> move. Phone added.",
+  "flags": [
+    "SEASON: stored 03-01..01-15 ('Closed mid-January to March', derived from note prose) contradicted by the page ('Hickory Point and Deer Run are open all year') -> year_round true with the water/shower shutoff in season.note. Reservation season 04-01..10-31 written to booking.season (engine probe).",
+    "PIN MOVE: stored 39.6497,-89.4689 is on the park road by the lake, ~320 m south of the nearest site (A136) and ~410 m from the loops' center. Suggest 39.6533,-89.4700 (between the A, B and B/S loops).",
+    "WATERFRONT: stored 'not waterfront' confirmed: nearest drive-in sites (Class B/S loop, e.g. 21 at 39.65253,-89.4724; Class A 136 at 39.65252,-89.46800) are ~320-410 m from the lake through woods.",
+    "CLASSES / 2027 RATES: 80 Class A electric (30 or 50 A) $28; 40 Class B/S (no electric, drive-in, showers) $11; 5 Class C walk-in and 5 Class C equestrian $11 (equestrian $8 in the engine's 2026 price); 5 Class D hike-in. Stored $11 is the B/S class, which a 23-ft rig fits (drive-in). reservation_fee cleared to inherit the policy row; fees.note boilerplate (holiday surcharge, reservation fee, seniors) stripped.",
+    "AMPS / WATER: 50 A on 19 Class A units (A loop 9, B loop 10); no water or sewer hookups on any unit; hookups electric 50 written (was absent).",
+    "FCFS: Deer Run C (40 Class B/S) and 3 Class A units are not web-bookable -> fcfs some_sites.",
+    "FIT: every drive-in unit lists Max Vehicle Length 40 ft (uniform engine default); no max_rig written.",
+    "HORSE CAMP: the 4-5 Class C equestrian sites are on their own spur ~150 m west of the Class B/S loop - separate.",
+    "BOOKING: platform operator -> usedirect with the ExploreMoreIL park/57 link.",
+    "PHONE: none stored -> 217-498-9208 (IDNR park page)."
+  ]
+}

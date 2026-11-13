@@ -2073,3 +2073,13 @@ me drop and report); each needs the research named before a verdict.
 - 1673 Argyle Lake: unsourced water/sewer and max_rig 35 cleared; three Big Oak B-E units 10-20 ft. 1670 Beaver Dam: 66 sites, no water/sewer; vineyard and "5 pull-throughs" unsourced, removed; electric 50 unconfirmed. 776 Thomson Causeway: sites 105 (20 ft) and 051 (25 ft).
 - 791 Wayne Fitzgerrell: no season published (engine window 04-01..01-05); not written.
 - Pins: 1702 ~520 m, 776 ~600 m, 791 ~370 m, 1670 ~830 m (1727 ~245 m left). Phones: 776, 791, 1727, 1670 added; 1788 -> campground number 217-324-4771.
+
+## p3-471 (IL, 2026-11-13)
+- 10 applied, 1 dropped. DROPPED 1735 Camp Hauberg (private): mostly seasonal (camper reports of permanent/resident sites, decked trailers, sheds, private docks) and the only rates are a 2014 page on an under-construction 2013 site.
+- 15428 Chicago NW KOA Holiday: passes ONLY on "Pull In, No Hookups" $43-45 (2027). The 30 A water/electric back-in is $47-52 but tells 30 A class C motorhomes to rent the 30 A pull-through, $63 ($56.70 KOA Rewards). Not a GS Park, no gateway. Kept; asked (asks.md).
+- 1765 Camp Sullivan: stored $25-50 was the walk-in TENT table; RV/Tent electric sites $30 Nov-Mar, $40 Sun-Wed / $56 Thu-Sat Apr-Oct (resident), nonresident +$10. fpdcc.com refused (Cloudflare) - fees from the 2026-10-15 capture and FPDCC 2026 brochures; amps and season not re-read.
+- 1689 Deer Run: season corrected to year-round (page: "Hickory Point and Deer Run are open all year"); water/showers off Mon before Thanksgiving to Mar 31. Sister 779 Hickory Point: page says 55 Class A + 10 Class C (stored 54, not edited).
+- 1674 Delabar: ExploreMoreIL park/12 books only the shelter; camping is by permit from park staff (reservable false, fcfs always); link removed. IL row contradiction noted.
+- 1653 Dixon Springs: only 12 RV sites (B/E 006-017), all back-in, 30 A (50 A at 008/010). 1706 Blanding Landing: 37 sites, max_rig 40, railroad 30-40 m from the east sites (caveat). 1637 Chain O'Lakes: closed Nov 2 - Dec 27 for hunting; A-Premium $35. 799 Clinton Lake: 17 AA full hookups $35; one Loop E unit 20 ft.
+- 14609 Cozy Corners kept on thin evidence (no operator site; Google 4.2/74, RV Life $$ avg $31). Phone 815-326-3227 matches Google; directories list 815-667-4886.
+- Pins: 799 ~1.4 km, 1689 ~410 m, 1653 ~260 m. Phones added: 799, 1637, 1689, 1674. 1706 stored 815-591-2326 is the entrance station (ranger 563-582-0881), left.
