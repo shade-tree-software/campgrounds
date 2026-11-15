@@ -2123,3 +2123,12 @@ me drop and report); each needs the research named before a verdict.
 - 1643 White Pines: deer-hunt closures Nov 15-18 and Nov 29-Dec 2, 2026. Uniform 40 ft (1643) and 25 ft (1644 Loop 2) possible placeholders.
 - Unsourced counts/lengths: 1658 (54/30), 1694 (100/64), 1795 (70 + hookups/showers), 1787 (max 40).
 - 1658 Pyramid: Boulder Lake and Heron campgrounds not located (Overpass down, Nominatim refused).
+
+## p3-476 (IL, 2026-11-15)
+- 1712 Camp Cadiz DROPPED (whole campground designated for equestrians and their stock; horse-separation rule).
+- Unread, still queued: 1709 Bear Creek USACE (mvr.usace.army.mil Akamai 403; --AWH riverfront looks plausible on imagery), 1784 Burrell Park Carmi (cityofcarmi.org Cloudflare 403; stored booking fcfs/not reservable contradicts the fee note's 'reserve online (FireFly)').
+- 1764 Camp Reinberg (FPDCC): fees + season only; site count, hookups, booking unread (fpdcc.com Cloudflare). 13416 Camp Bullfrog Lake lakefront kept from the 2026-10-15 capture; sites not re-read.
+- 1791 Carthage: booking corrected to reservable by phone (golf course 217-357-3625, now first in phone).
+- 1801 Carl Spindler: beach sites 1-5 are RVs on open beach sand (not counted for riverfront; no-sand rule) - caveat may be wanted. Stored 'pool' was wrong.
+- 1675 Big River SF: max_rig_ft 40, dump and water are old-note values with no source; separate equestrian campground north of the office. Pinned to Shady Pines.
+- 14617 Bluegill Bay: operator says both campgrounds 'offer waterfront sites' - imagery shows a continuous tree belt along D31/D33/D34; lakeview kept.

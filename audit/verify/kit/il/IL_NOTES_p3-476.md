@@ -1,0 +1,12 @@
+# p3-476 IL working notes (2026-11-15)
+- 1709 Bear Creek: mvr.usace.army.mil page 403 Akamai (unread, not retried); rec.gov none; RIDB 247950 stub only ('part of Mississippi River - Pools 11-22'); corpslakes gateway lists 'Bear Creek' w/o status. Imagery: clearing ~140 m WNW of pin(?) actually W/NW, sites along bank of ~130 m side channel; AWH riverfront plausible. NO RESULT FILE.
+- 1675 Big River: written. $11 kept; booking none confirmed (engine place 7 shelter only); pin -> 41.0470,-90.9311 (~660 m); not wf confirmed; equestrian separate per map.
+- 1707 Blanchard: written. riverfront kept (official photos + imagery, no site numbers); $14 2026-27; FCFS scan&pay; 15 nonelectric; season left (fee dates vs rate season).
+- 14617 Bluegill Bay: written. lakeview kept (operator claims waterfront sites; tree belt); $35; Firefly operator + FCFS some; 34 W/E, 45 ft.
+- 1784 Burrell: cityofcarmi.org 403 Cloudflare 'Just a moment' (burrellwoodsonline + burrell-park-campground); Firefly property not found by guess; NO result file.
+- 13416 Bullfrog: written (fpdcc 403; capture+brochure); lakefront kept on imagery, sites not reconfirmed; year_round; 26 sites/15 electric.
+- 1712 Cadiz: written. DROP CANDIDATE horses shared; 30 ft; 8 sites; phone -> 618-658-2111.
+- 1764 Reinberg: written minimal (fees+year_round from brochure); fpdcc 403.
+- 1801 Spindler: written. riverfront kept (49,53-55 harbor bay); beach 1-5 on sand; season 3/1-11/16; $26-35; roverpass claimed.
+- 1791 Carthage: written. booking -> phone reservable; $30; dump.
+- 15701 Chippewa: written; booking.season 05-01..10-31 from engine.
