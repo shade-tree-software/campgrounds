@@ -1,0 +1,84 @@
+{
+ "id": 8791,
+ "sources": [
+  "https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly",
+  "https://parks.canada.ca/pn-np/ab/waterton/visit/tarifs-fees",
+  "https://pcweb2.azureedge.net/-/media/pn-np/ab/waterton/WET4/pdf/2026/Maps/carte-ruisseau-belly-river-map-2026-4500x2550.pdf",
+  "https://parks.canada.ca/pn-np/ab/waterton/activ/camping",
+  "Esri World Imagery"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 22,
+    "nightly_high": 22,
+    "currency": "CAD",
+    "reservation_fee": null,
+    "checked": "2026",
+    "note": "C$22 a night; fire permit C$3.75 a day. Park entry pass extra."
+   },
+   "source": "Waterton Lakes NP fees page https://parks.canada.ca/pn-np/ab/waterton/visit/tarifs-fees (read 2026-11-11): 'Belly River Campground: Unserviced, basic sites, per night $ 22.00', 'Belly River, fire permit, per day $ 3.75'; Parks Canada Belly River Campground page https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (date modified 2026-10-27; read 2026-11-11): 'available only on a first-come, first-served basis' (no reservation fee applies)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "opens": "05-28",
+    "closes": "09-07",
+    "note": "2026 dates; 2027 not yet posted."
+   },
+   "source": "Parks Canada Belly River Campground page https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (date modified 2026-10-27; read 2026-11-11): 'Operating season: May 28 through September 7, 2026 (weather permitting)'; 'Belly River Campground is closed for the season.'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": false,
+    "fcfs": "always",
+    "max_stay_nights": 14,
+    "note": "Self-registration at the campground kiosk."
+   },
+   "source": "Parks Canada Belly River Campground page https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (date modified 2026-10-27; read 2026-11-11): 'This self-registration, primitive campground offers 24 unserviced sites, available only on a first-come, first-served basis.'; 'Maximum length of stay: 14 nights'",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 24,
+    "max_rig_ft": 21,
+    "pull_through": false
+   },
+   "source": "Parks Canada Belly River Campground page https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (date modified 2026-10-27; read 2026-11-11): '24 unserviced sites'; 'Sites can accommodate RVs up to 21' (6.4 m) in length. All sites are back-in only.'",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0,
+    "water": false,
+    "sewer": false
+   },
+   "source": "Parks Canada Belly River Campground page https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (date modified 2026-10-27; read 2026-11-11): '24 unserviced sites'",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "vault_toilets": true,
+    "potable_water": false,
+    "dump": false
+   },
+   "source": "Parks Canada Belly River Campground page https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (date modified 2026-10-27; read 2026-11-11): amenities 'Flush and pit toilets', 'Grey water disposal' (no sani-dump); 'There is no potable water available at Belly River Campground. Visitors are required to bring their own water or filtering systems.'",
+   "method": "manual"
+  }
+ },
+ "note": "Primitive Parks Canada campground in mixed aspen near the Belly River on the Chief Mountain Highway, 26 km from Waterton townsite and 5 km from the Chief Mountain border crossing. Parks Canada posts a 21-ft RV limit and back-in sites only. No drinking water; kitchen shelter, grey-water disposal and a food locker at every site. Cell service is very limited. --Claude",
+ "summary": "Parks Canada Belly River page (2026-10-27): FIRST-COME ONLY (stored reservable true is wrong), C$22 confirmed, season May 28 - Sep 7, 2026, flush + pit toilets, no potable water; posted 'RVs up to 21' (6.4 m)' = DROP CANDIDATE (site length).",
+ "flags": [
+  "DROP CANDIDATE (site length): the campground page says 'Sites can accommodate RVs up to 21' (6.4 m) in length. All sites are back-in only.' This is a campground-specific limit, not agency boilerplate, and it is under the ~23-ft minimum (sites capped near 20 ft = out). The result keeps the entry and records max_rig_ft 21; dropping is the reviewer's call.",
+  "BOOKING: stored reservable true (note-derived) is contradicted: 'available only on a first-come, first-served basis', self-registration. Wrote reservable false, fcfs always; the entry's own reservation_fee 11.5 is cleared (the schema drops the policy row's platform/url/fee once reservable is false). Only the group site is reservable, by phone 403-859-5133.",
+  "PHONE: stored 1-877-737-3783 is the Parks Canada reservation line, which does not serve a first-come campground. Recommend 403-859-5133 (map: 'VISITOR INFORMATION ... 403-859-5133'; page: group bookings 'Call 403-859-5133').",
+  "WEBSITE: the stored first URL is Waterton's general camping page; the campground's own page is https://parks.canada.ca/pn-np/ab/waterton/activ/camping/camping-belly (answered 200; it is this campground). The second stored URL reservation.pc.gc.ca does not apply (first-come only); recommend removing it.",
+  "STATUS: the page carries 'Belly River Campground is closed for the season.' (seasonal; not a status change).",
+  "PIN (49.02540,-113.68600): on the campground's loops on imagery; OK.",
+  "WATERFRONT (stored not waterfront): kept; LEAD only. On imagery the west loop's outer road runs 40-70 m from the Belly River across open grass and shrub; the map shows sites 9-15 on that loop, but the road lies between them and the river, so riverview at best. Not upgraded."
+ ],
+ "checked": "2026-11-11"
+}

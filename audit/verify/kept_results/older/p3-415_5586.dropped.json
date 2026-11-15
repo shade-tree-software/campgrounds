@@ -1,0 +1,53 @@
+{
+  "id": 5586,
+  "checked": "2026-11-11",
+  "sources": [
+    "https://www.troutlakecampground.com/ (operator home page: stays, seasonal sites, amenities; read 2026-11-11)",
+    "https://www.campspot.com/book/troutlakecampground (Campspot park page, availability for 2027-05-18, 2027-06-15, 2027-07-10 and 2027-09-14, one night each; read 2026-11-11)",
+    "audit/price_research/gateways.py 47.24655,-93.38450 (none within 40 km)",
+    "trip_data/goodsam_parks.json (not a Good Sam park; not in the directory)",
+    "Esri World_Imagery around 47.2466,-93.3845"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 54.5,
+        "nightly_high": 54.5,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Campspot list price for the nightly/weekly lakefront RV type, $54.50 a night on a Tuesday or a Saturday, May to September 2027, with Campspot's fees folded in, before tax. Seasonal sites are full with a waiting list."
+      },
+      "source": "Campspot troutlakecampground availability, 2027-05-18, 2027-06-15, 2027-07-10, 2027-09-14 ('Daily/Weekly In & Out (Lakefront) ... Starting at $54.50 night'), read 2026-11-11",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "campspot",
+        "url": "https://www.campspot.com/book/troutlakecampground"
+      },
+      "source": "https://www.troutlakecampground.com/ ('Check RV Site Availability' -> campspot.com/book/troutlakecampground) + Campspot park page, read 2026-11-11",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "Campspot 'Daily/Weekly In & Out (Lakefront)' type ('Site amenities: 30-Amp · 50-Amp · Accessible · Back-In') + operator ('Water + electric full hookups'), read 2026-11-11",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "camp_store": true, "wifi": true},
+      "source": "https://www.troutlakecampground.com/ ('Modern private showers & restrooms', 'Camp store for essentials, snacks & ice cream') + Campspot description ('public shower house, and modern amenities like Wi-Fi'), read 2026-11-11",
+      "method": "manual"
+    }
+  },
+  "note": "Family-owned campground on the west shore of Trout Lake near Bovey and Grand Rapids. Mostly a seasonal RV community; a limited block of nightly and weekly RV sites on the lake. Sand swimming beach, dock, sauna, kayak and fishing-boat rentals. --Claude",
+  "summary": "Operator + Campspot read: a mostly seasonal park (seasonal sites full, waiting list) with a limited nightly/weekly lakefront RV type at $54.50 a night (30/50-amp + water) on every date read, May-September 2027. DROP CANDIDATE: over the $50 price gate with no gateway within 40 km and no Good Sam park, on top of the mostly-seasonal profile.",
+  "flags": [
+    "DROP CANDIDATE (price gate): the only RV type sold by the night, 'Daily/Weekly In & Out (Lakefront)', is '$54.50 night' on Campspot for Tuesday 2027-05-18, Tuesday 2027-06-15, Saturday 2027-07-10 and Tuesday 2027-09-14. Even with Campspot's ~3% booking fee taken out, the site charge is about $52.90, over US$50. No gateway within 40 km (nearest Voyageurs NP 136 km); not a Good Sam park (not in the GS directory cache); no operator-posted member discount ('Deals Available' banner on Campspot, no deal named).",
+    "DROP CANDIDATE (long-stay): operator: 'We are primarily a seasonal RV community, with returning families who enjoy spending the entire summer on the lake. A limited number of sites are available for nightly and weekly stays throughout the season.'; 'Seasonal sites are currently full and operating with a waiting list.' Campspot lists 9 nightly locations. Mostly seasonal; with the price over the gate this falls under 'on the fence + mostly seasonal + iffy = drop'. Google 4.6 (100) from the brief; Campspot 13 verified ratings, 4.8.",
+    "Waterfront (if kept): the operator/Campspot 'lakefront' wording cannot carry the value. On imagery (winter) the campground is a narrow strip between the lake and County Rd 10; the camper rows on the south lawn are about 40-50 m from the shore over open grass, but the nightly sites were not placed or numbered, so a keep of `lakefront` is not earned; `lakeview` at most, pending the drop decision.",
+    "Pin 47.24655,-93.38450 is at the office/parking lot by the entrance; Google's place 47.24576,-93.38476 is ~90 m south: OK.",
+    "Phone 218-301-7171 and website https://www.troutlakecampground.com/ match the operator page.",
+    "Note cleaned: dropped '30-amp electric & water' (wrong amperage, field holds it), 'level gravel pads', the address and 'per operator'."
+  ]
+}
