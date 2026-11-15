@@ -2115,3 +2115,11 @@ me drop and report); each needs the research named before a verdict.
 - Uniform 40-ft engine lengths (likely placeholder): 1654, 1671, 1685. 1639 site 519 'Driveway Grade Severe' on the engine.
 - Official names: DNR calls 1682 'Weldon Springs State Park' and 1686 'Weinberg-King State Fish and Wildlife Area' (stored names unchanged).
 - Unread: Sugar River WebTrac (Cloudflare 403), greatriverroad-illinois.org (403).
+
+## p3-475 (IL, 2026-11-15)
+- 1795 Sturgeon Bay (City of New Boston): mostly seasonal (monthly/yearly rates, waterfront lots 'homesteaded'), nightly share unmeasured; not iffy (rate page 2026-06-12, Google 4.7/70, city-owned). Kept with a mostly-seasonal note.
+- 14010 Beall Woods temporarily_closed since 2026-08-17 (electrical installation); hookups/class/fee likely change on reopening. 1672 Horseshoe Lake (Madison) closed until May 2027 re-confirmed; ExploreMoreIL park/29 link removed from website (sells only the group camp and shelters).
+- Season conflicts left as stored: 1644 Apple River Canyon (engine Mar 1-Oct 31, page implies Apr 15 opening), 1663 Wolf Creek (stored year_round, engine Apr-Oct).
+- 1643 White Pines: deer-hunt closures Nov 15-18 and Nov 29-Dec 2, 2026. Uniform 40 ft (1643) and 25 ft (1644 Loop 2) possible placeholders.
+- Unsourced counts/lengths: 1658 (54/30), 1694 (100/64), 1795 (70 + hookups/showers), 1787 (max 40).
+- 1658 Pyramid: Boulder Lake and Heron campgrounds not located (Overpass down, Nominatim refused).

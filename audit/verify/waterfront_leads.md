@@ -1363,3 +1363,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 1804 Hamilton County SFWA lakefront -> lakeview (engine 'Waterfront Site' units 13-40 m behind trees/canopy).
 - APPLIED 1680 Moraine View lakefront -> lakeview (P018-022 17-55 m, 2-3.5 m up, continuous tree band; P018-019 close, unsure -> down).
 - KEPT 1679 Illini riverview (Great Falls 003-018 25-45 m behind a tree fringe, ~4 m drop). CONFIRMED --AWH 570 Illinois Beach coastal dunes (east row 110-140 m across the park's own dune scrub and beach).
+
+## p3-475 (IL, 2026-11-15)
+- APPLIED 1796 Warsaw Riverfront riverfront -> riverview (pads 120-140 m from the channel; harbor basin across the park road).
+- APPLIED 1658 Pyramid lakeview -> not waterfront (pinned loop ~100 m through closed forest; Boulder Lake / Heron campgrounds not placed).
+- LEAD 1793 Allison (Galesburg) not waterfront -> lakefront? Sites 73/74/75 at the peninsula tip (~40.9863,-90.3916), turnaround ~27 m from Lake Storey over open lawn; unconfirmed whether they are RV or among the 41 primitive/tent sites. Needs the city's site map.
+- KEPT 1694 Anderson Lake lakefront (North Campground east leg pull-ins ~40.1960,-90.2027 / ~40.1952,-90.2029, 10-25 m over mown grass; no site numbers published). KEPT 1795 Sturgeon Bay riverview, 1787 Arrowhead lakeview.
