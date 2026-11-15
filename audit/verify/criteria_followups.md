@@ -2104,3 +2104,14 @@ me drop and report); each needs the research named before a verdict.
 - 1669 Red Hills: every unit posts 40 ft (likely placeholder); separate equestrian campground not located.
 - 1771 Seward Bluffs: winter camping ended (year_round false, no dates); max_rig_ft 30 unverified (WebTrac behind Cloudflare).
 - 1647 Shabbona pin left on the Canvasback loop (unit centroid 41.7506,-88.8695 is ~300 m WSW).
+
+## p3-474 (IL, 2026-11-15)
+- 1685 Walnut Point lakefront -> lakeview (closest RV sites 40-70 m through continuous woods).
+- 1762 Timbered Meadows kept with a mostly-seasonal note: ~60-70 of ~95 sites set up with decks/sheds on imagery, but $30 nightly posted, Google 4.7/34, operator welcomes daily campers (not iffy).
+- 1797 Kampsville: stored pin in the residential grid; The Dyrt puts the campground on the riverside green ~39.2990,-90.6090 (~220 m); no pads visible at either. Unresolved - if the sites are on the green, a riverfront check is due.
+- 1654 Lake Murphysboro: $11 base kept on 20 BS units the engine lists as drive-in (50-ft driveways) though the DNR page calls them tent sites; base would be $28 if they are tent-only.
+- Engine vs page season conflicts (booking.season follows the engine, campground season left as stored): 1639 Rock Cut (page: winter camping, electric only; engine sells 05-03..10-31), 1682 Weldon Springs (page: open year-round; engine 05-03..10-31), 1676 Nauvoo (stored Apr-Oct note-derived; engine year-round).
+- 1676 Nauvoo: engine lists 30 Class A; page 35 A + 70 B; count 105 kept.
+- Uniform 40-ft engine lengths (likely placeholder): 1654, 1671, 1685. 1639 site 519 'Driveway Grade Severe' on the engine.
+- Official names: DNR calls 1682 'Weldon Springs State Park' and 1686 'Weinberg-King State Fish and Wildlife Area' (stored names unchanged).
+- Unread: Sugar River WebTrac (Cloudflare 403), greatriverroad-illinois.org (403).
