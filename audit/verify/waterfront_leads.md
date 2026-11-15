@@ -1377,3 +1377,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - APPLIED 1777 Comlara lakefront -> lakeview; 1800 Fulton County lakefront -> lakeview.
 - KEPT 13409 Colona pond (DELUXE WATERFRONT 130-144 ~41.4640,-90.3220; STANDARD WATERFRONT 112-120 ~41.4640,-90.3231; 5-20 m over mown grass). KEPT 15700 Dam East Spillway riverfront (35 at 38.615857,-89.355039; 37 at 38.615596,-89.355236; 25-30 m over lawn/path/riprap). KEPT 1661 Fort Defiance riverview.
 - LEAD 14613 Du Quoin fairgrounds lakeview -> lakefront? Mowed site stripes ~37.9903,-89.2280 end ~20 m from the lake over open lawn; no site map to name them.
+
+## p3-478 (IL, 2026-11-15)
+- Hennepin Canal (canal ~20-27 m wide = creekside class at most; open camping areas, no site numbers exist): LEADS not waterfront -> creekside? Lock 26 14019 (41.47316,-90.26197, open lawn 8-25 m from the canal wall), Lock 22 14016 (41.40058,-89.79931, open lawn 20-45 m from the basin, partial tree fringe), Lock 17 14013 (41.34415,-89.55810, ~25 m mostly open grass), Bridge 14 14015 (41.38329,-89.67094, ~40 m, open at the boat ramp). Others: canopy, road or trees between.
+- LEAD 1805 Henderson County CA lakeview -> lakefront? Shore road 8-15 m from the water over open grass (~40.853,-90.979 to 40.857,-90.975); the brochure says Class C sites 'completely surround all areas of the lake that have road access'; no site positions published.
+- KEPT 13410 Grayville Hilltop not waterfront (levee and floodplain to the Wabash).

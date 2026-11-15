@@ -2141,3 +2141,8 @@ me drop and report); each needs the research named before a verdict.
 - 1661 Fort Defiance and 1806 Green River: no ExploreMoreIL listing, written not reservable / fcfs always (overrides state:IL row). Fort Defiance DNR camp page is a blank template (16 sites / 8 electric unconfirmed).
 - 1806 Green River: pin on a marsh road unconfirmed; possible camping area ~41.6318,-89.5175 unofficial.
 - 1792 Francis Park: season 05-01..09-30 from a whole-park brochure statement.
+
+## p3-478 (IL, 2026-11-15)
+- Hennepin Canal (9 camps): $11 (2027 Non-Electric; pages still post $8), FCFS, fees collected in person, no hookups/water/dump; Lock 22 wells not working (closures page 10/9/26). Lock 21 equestrian camping restricted to the south side (separate). Park page 'Park Phone' 815-915-1354 vs stored visitor center 815-454-2328 (kept).
+- 1805 Henderson County CA and 13410 Grayville Hilltop: stored year_round is note-derived and unsupported by any page (left).
+- 13410 Grayville: Google 4.2/10; nightly share unmeasurable (no RVs on imagery); city posts $20.
