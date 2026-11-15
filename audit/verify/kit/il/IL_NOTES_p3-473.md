@@ -1,0 +1,13 @@
+# IL p3-473 notes
+- 1757 Mt CarMerriel: UNREAD - operator site 406 Mod_Security to Mozilla/5.0 (home + /rates/); no result file. Context: 2026-10-16 read of /rates/ ($50 all lots, G1 $60, weekly $200, monthly $500); Google 4.1/50, phone 618-263-2517, Google pin 38.40743,-87.75096 (~95 m from stored); gateways none <40 km; listing says 8 lots.
+- 1711 Pine Ridge DONE: FS page: 13 elec 20/30/50 + 22 (or 42) non-elec; $10 cash; FCFS; 03-15..12-15; trailer <25 ft; phone 618-658-2111; pin on loop ok; not wf.
+- 1790 Pittsfield City Lake: UNREAD - stored page pittsfieldil.org/page/pittsfield-city-lake 404; pittsfieldil.org root redirects to https://www.cityofpittsfieldil.gov/ which serves a JS 'Client Challenge' bot wall -> no result file. Website flag: stored link dead.
+- 1669 Red Hills DONE: 103 RV (93 A $28, 10 AA $35 w/s), 50A x19, 4 PT, 27 non-web, all 40 ft (placeholder?), engine season 04-01..11-30; lakeview kept (Lakeside 86-91 ~50 m through canopy); pin ok 46 m; phone 618-936-2469; equestrian campground named but not located
+- 1737 Ruffit DONE: RoverPass (UA patched copy tools/rp.py; page no longer carries data-token, works without) $55 every 2027 date -> DROP CANDIDATE (no gateway, no GS); Google 4.7/51; season 05-01..10-31; 28-31 RV sites open nightly
+- 1763 Sandy Oaks UNREAD: sandyoakscampground.com (and /booknow, the guidelines PDF) = Wix 'ConnectYourDomain Error' 404 on 2026-11-15 (domain disconnected, site down); archive.org temporarily offline; Facebook page meta only (3,680 followers, 486 talking about this; posts behind login); LandHub sale listing 403 (not retried). No result file.
+- 1771 Seward Bluffs DONE: fees 15 res/+10 nonres/+10 elec; season not year-round (winter banned, closed 11-19-2026); WebTrac CMPSW Cloudflare 403 unread; equestrian separate; pin ~210 m
+- 1647 Shabbona DONE: lakeview kept (114-119 on bank 25-35 m, DEM 8-14 m above lake); 150 premium, Teal Bay 60 FCFS; pin ~300 m off centroid 41.7506,-88.8695
+- 14608 Spring Creek DONE: $25 camper-reported 9/2025; Google 4.7/123; water true (few sites); FB url redirect; not waterfront kept
+- 1678 Starved Rock DONE: 133 sites, max 50, pin move to 41.3072,-88.9750 (~680 m), fcfs after_cutoff, phone 815-667-4726, engine East year-round vs page
+- 1666 Forbes DONE: base 11->28 (B-S sites are 5-8 ft tent pads), electric 30, equestrian separate 3 km S, phone 618-547-3381, pin OK
+- FINAL dry run run for 8 ids; 1757/1790/1763 unread, no result files

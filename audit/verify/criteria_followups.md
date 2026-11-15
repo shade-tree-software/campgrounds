@@ -2095,3 +2095,12 @@ me drop and report); each needs the research named before a verdict.
 - 1770 Hononegah FP: winter camping no longer permitted, 2026 season closes Nov 19; $15 resident / $25 nonresident, +$10 electric; FCFS only; stored phone 815-877-6100 not on its pages; pin approximate.
 - 1786 Main Brothers (Village of Karnak): $25, phone/email booking with $20 deposit; no season or dump on the page.
 - Pins: 1687 ~1.35 km, 1770 ~530 m. Phones added: 1649, 1667, 1679, 570, 1642, 1688, 1680.
+
+## p3-473 (IL, 2026-11-15)
+- 1737 Ruffit Park DROPPED (price gate, $55 on every 2027 date read; no exception).
+- Unread, still queued: 1757 Mt. CarMerriel (operator site 406 Mod_Security), 1790 Pittsfield City Lake (stored city page 404; new domain cityofpittsfieldil.gov serves a bot challenge - stored website is dead, no replacement read), 1763 Sandy Oaks (domain disconnected; a 76-acre for-sale listing and a members-only dirt-bike park raise OHV/closure questions). Phone-list candidates with 1775/1781/1769/1773.
+- 1678 Starved Rock: East Loop closes weekend before Thanksgiving..April 1 (season group, manual) but the engine sells both loops all winter - a booking.note warning may be worth adding.
+- 1666 Stephen A. Forbes: 37 of 109 Class A sites list 6-20 ft; stored water true but no engine unit carries a water hookup (may be hydrants).
+- 1669 Red Hills: every unit posts 40 ft (likely placeholder); separate equestrian campground not located.
+- 1771 Seward Bluffs: winter camping ended (year_round false, no dates); max_rig_ft 30 unverified (WebTrac behind Cloudflare).
+- 1647 Shabbona pin left on the Canvasback loop (unit centroid 41.7506,-88.8695 is ~300 m WSW).

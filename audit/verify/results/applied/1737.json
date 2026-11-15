@@ -1,0 +1,27 @@
+{
+  "id": 1737,
+  "checked": "2026-11-15",
+  "sources": [
+    "https://ruffitpark.com/ (read 2026-11-15): 'Our Rates | RV/Camper | Weekly: $250 per week | Monthly: $600 per month | Seasonal (May 1- Oct 31): $2,300 with monthly electric fee | Tent Camping | With electric: $40.00 per night | Without electric: $20.00 per night'; 'BOOK A SITE' links to https://www.roverpass.com/c/ruffit-park-sterling-il/booking; 779-861-0339; 'Public Swimming Pool', 'General Store', 'Creek Fishing'",
+    "https://ruffitpark.com/rules-policies/ (read 2026-11-15): 'Seasonal campers will be responsible for mowing around their camper'; '2 cars per camp site'",
+    "RoverPass booking API for ruffit-park-sterling-il (claimed, isBookable true, systemType CRS; read 2026-11-15): closeSeasonDates 2026-11-01..2027-04-30 and 2027-11-01..2028-04-30; one RV rate on sale, 'RV Sites - Less than 10 days', $55.00 a night on 2027-05-11 (Tue), 05-15 (Sat), 06-08, 06-12, 09-14, 09-18, maxLength 40, amenities amps_30, amps_50, back_in, cable_hookups; 'RV Sites - More than 10 days' $55 needs 10 nights; 28-31 RV sites open on each of those nights (gravel and grass lots, 40 ft x 10 ft); cart 2027-05-11 1 night: site $55.00, tax $0.00, + RoverPass platform fee $3.50 and processing fee $1.90",
+    "Google Maps panel (gm.py, 2026-11-15): 'Ruffit Park Campground' 4.7 (51 reviews), 24832 Rock Falls Rd, Sterling, phone +1 779-861-0339, website ruffitpark.com",
+    "audit/price_research/gateways.py 41.77237,-89.77023: none within 40 km (Chicago 178 km); trip_data/goodsam_parks.json: no Good Sam listing within 3 km"
+  ],
+  "groups": {
+    "fees": {"values": {"nightly_low": 55, "nightly_high": 55, "currency": "USD", "checked": "2027", "note": "RV sites $55 a night on the park's RoverPass engine (one rate, weekday and weekend alike, May-September 2027); RoverPass adds a $3.50 platform fee and a card processing fee. The park's own rate list gives RV/camper weekly $250, monthly $600 and season (May 1 - Oct 31) $2,300 plus monthly electric; tent sites $40 with electric, $20 without."}, "source": "RoverPass booking API, ruffit-park-sterling-il ('RV Sites - Less than 10 days' $55.00, one night from 2027-05-11, 05-15, 06-08, 06-12, 09-14, 09-18; cart $55.00 + $3.50 platform fee) + https://ruffitpark.com/ ('Our Rates'), read 2026-11-15", "method": "manual"},
+    "hookups": {"values": {"electric": 50}, "source": "RoverPass booking API ('RV Sites - Less than 10 days' amenities amps_30, amps_50), read 2026-11-15", "method": "manual"},
+    "sites": {"values": {"max_rig_ft": 40, "pull_through": false}, "source": "RoverPass booking API (RV rate maxLength 40, amenity back_in; every open site 40 ft x 10 ft, 'Gravel lot' or 'Grass lot'), read 2026-11-15", "method": "manual"},
+    "season": {"values": {"year_round": false, "opens": "05-01", "closes": "10-31"}, "source": "RoverPass booking API park record (closeSeasonDates 2026-11-01..2027-04-30, 2027-11-01..2028-04-30) + https://ruffitpark.com/ ('Seasonal (May 1- Oct 31)'), read 2026-11-15", "method": "manual"},
+    "booking": {"values": {"reservable": true, "platform": "roverpass", "url": "https://www.roverpass.com/c/ruffit-park-sterling-il/booking", "note": "Check-in 2-5 pm; late arrivals need prior approval."}, "source": "https://ruffitpark.com/ ('BOOK A SITE' -> RoverPass) + RoverPass park record (isBookable true; checkInProcedure 'Late check-ins will not be accepted without prior approval'; Check-In 2pm - 5pm), read 2026-11-15", "method": "manual"}
+  },
+  "note": "Family campground at 24832 Rock Falls Road, Sterling, open since 1965, with RV and tent sites on gravel and grass lots. It has a swimming pool, open to the public from late May to Labor Day, a general store, an arcade and creek fishing; seasonal campers share the park. --Claude",
+  "summary": "Operator site, rules, RoverPass engine (2027 dates), Google read. Only RV night sold is $55 (every 2027 date tried) - over the $50 gate with no gateway and no Good Sam listing: DROP CANDIDATE. Stored low $20 was the tent-without-electric rate; fees now $55. Season May 1 - Oct 31 confirmed; 30/50 A, 40-ft back-ins. Google 4.7/51.",
+  "flags": [
+    "PRICE GATE - DROP CANDIDATE: the only RV rate on the park's own RoverPass engine is 'RV Sites - Less than 10 days' at $55.00 a night before tax (2027-05-11, 05-15, 06-08, 06-12, 09-14, 09-18 all $55; RoverPass adds $3.50 + processing). No gateway within 40 km (gateways.py: none; Chicago 178 km), not in the Good Sam directory, no member discount posted. The operator's $40 'With electric' rate is listed under 'Tent Camping' and the engine sells no such type to an RV. Google Maps 4.7 (51 reviews) - a borderline price would lean on that, but $55 is $5 over in every season read.",
+    "FEES: stored nightly_low $20 was the tent-without-electric price; base -> $55 (RV), checked 2026 -> 2027.",
+    "LONG-STAY: operator leads its RV rates with weekly $250 / monthly $600 / seasonal $2,300 (May-Oct) and posts no nightly RV price on its own site; the engine sells one night, and 28-31 RV sites were open on each 2027 night tried, so nightly guests clearly have room (tests 2 and 4 pass via the engine). Rules page addresses 'Seasonal campers'. Not read as mostly seasonal.",
+    "PRESENCE: ruffitpark.com live with phone 779-861-0339 (matches stored); RoverPass listing claimed and bookable.",
+    "HOOKUPS: RV rate tags amps_30/amps_50 and cable, no water or sewer tag; stored water true (derived from old note) left as is - no page states site water."
+  ]
+}
