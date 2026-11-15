@@ -2132,3 +2132,12 @@ me drop and report); each needs the research named before a verdict.
 - 1801 Carl Spindler: beach sites 1-5 are RVs on open beach sand (not counted for riverfront; no-sand rule) - caveat may be wanted. Stored 'pool' was wrong.
 - 1675 Big River SF: max_rig_ft 40, dump and water are old-note values with no source; separate equestrian campground north of the office. Pinned to Shady Pines.
 - 14617 Bluegill Bay: operator says both campgrounds 'offer waterfront sites' - imagery shows a continuous tree belt along D31/D33/D34; lakeview kept.
+
+## p3-477 (IL, 2026-11-15)
+- Unread, still queued: 13412 Citizens Lake (cityofmonmouth.com Cloudflare 403), 1798 Great River Road Campground (greatriverroad-illinois.org Cloudflare 403).
+- 1800 Fulton County: asked (asks.md) - no nightly rate, website under maintenance, seasonal docks.
+- 13409 Colona's Scott Family Park: stored count 195 (derived) vs Campspot 149 RV + 17 tent; city sells seasonal leases but every site is sold nightly on Campspot; local, no price gate.
+- 1777 Comlara: stored extra_person $1/adult not on the county page (left).
+- 1661 Fort Defiance and 1806 Green River: no ExploreMoreIL listing, written not reservable / fcfs always (overrides state:IL row). Fort Defiance DNR camp page is a blank template (16 sites / 8 electric unconfirmed).
+- 1806 Green River: pin on a marsh road unconfirmed; possible camping area ~41.6318,-89.5175 unofficial.
+- 1792 Francis Park: season 05-01..09-30 from a whole-park brochure statement.

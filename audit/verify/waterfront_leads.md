@@ -1372,3 +1372,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-476 (IL, 2026-11-15)
 - KEPT 1707 Blanchard Island riverfront (open pad ~41.3465,-91.0566 10-15 m from the 230-m Blanchard Chute, river side of the levee; no site numbers exist). KEPT 1801 Carl Spindler riverfront on 49, 53-55 (open grass 20-30 m to a backwater bay of Upper Peoria Lake). KEPT 13416 Bullfrog Lake lakefront (sites not re-read). KEPT 14617 Bluegill Bay lakeview against the operator's waterfront claim.
+
+## p3-477 (IL, 2026-11-15)
+- APPLIED 1777 Comlara lakefront -> lakeview; 1800 Fulton County lakefront -> lakeview.
+- KEPT 13409 Colona pond (DELUXE WATERFRONT 130-144 ~41.4640,-90.3220; STANDARD WATERFRONT 112-120 ~41.4640,-90.3231; 5-20 m over mown grass). KEPT 15700 Dam East Spillway riverfront (35 at 38.615857,-89.355039; 37 at 38.615596,-89.355236; 25-30 m over lawn/path/riprap). KEPT 1661 Fort Defiance riverview.
+- LEAD 14613 Du Quoin fairgrounds lakeview -> lakefront? Mowed site stripes ~37.9903,-89.2280 end ~20 m from the lake over open lawn; no site map to name them.

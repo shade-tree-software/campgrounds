@@ -1,0 +1,15 @@
+# p3-477 IL working notes (2026-11-15)
+- 13412 Citizens Lake: cityofmonmouth.com 403 Cloudflare 'Just a moment' (unread, not retried). No other operator page found (search: aggregators only). Imagery 300 m: camp = spur loop E of park road, lake SW across the park road ~40-100 m, scattered trees -> lakeview plausible (road between = view at best). NO RESULT FILE.
+- 13409 Colona: colonail.com/scottpark read (rates table, season May1-Oct31, seasonal RV $3150/$2625/premium pond $2900; book link campspot.com/book/colonascott-fp; rules PDF v1.7 = seasonal contract). Imagery: U-shaped pond (~1.3 ha) with RV rows ringing it at the edge -> pond OK. Need campspot occupancy + waterfront type map (browser).
+- 1777 Comlara: county page read (106 elec 26x50/80x30, 23 nonelec, 11+16 walk-in; sites 1-33 yr-round, 34-126 + showerhouse + water Apr1-Nov1; rates 28/25/22, residents -2; CampLife booking; water spigots common). Imagery z 140: west outer-row RVs 22-35 m from Evergreen Lake through continuous wooded bank strip -> lakefront doubtful; needs photos.
+- 15700 Spillway: written, confirm only.
+- 14613 Du Quoin: written (season/booking/hookups/fac/fees+holiday10/military). lakeview kept; lakefront lead (stripes ~20 m from lake, no site numbers).
+- 1774 Forest Glen: written. fees 20-25; pin -> 40.0120,-87.5723 (~1.9 km); not wf reconfirmed at real camp (Willow Creek Pond wooded).
+- 1661 Fort Defiance: written. camp page blank template; not on ExploreMoreIL -> booking false/none/always; riverview kept; fee note trimmed.
+- 1792 Francis Park: written; season 05-01..09-30 brochure; all manual.
+- 1800 Fulton Co: written; season/facilities/max14 manual; wf lakefront->lakeview rec; mostly-seasonal+iffy drop?
+- 1798 Great River Road: own page greatriverroad-illinois.org 403 Cloudflare 'Just a moment'; no other operator page found (search: aggregators only). NO result file.
+- 1806 Green River: written; fees 11 (2027); booking fcfs/none; phone ''->815-379-2324; pin unconfirmed (alt 41.6318,-89.5175).
+- 13409 Colona: Campspot park 4510 read via driver (2026-11-18 list + map SVG): 149 RV / 17 tent / 6 cabins all nightly; pond sites 130-144 outer bank, 112-120 peninsula (121-129 tent); pond kept; result written.
+- 1777 Comlara: result written (season year_round, booking operator CampLife, 14/30, water false, count 156); lakeview rec; extra_person not on page.
+- apply.py dry run: 9 results ready, no '!!'. Browser quit.
