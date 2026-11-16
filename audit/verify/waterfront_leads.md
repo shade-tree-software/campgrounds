@@ -1417,3 +1417,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-486 (WI, 2026-11-16)
 - 3499 Herbster lakeview confirmed (front row 22-27, ~80 m from Lake Superior across road/tent strip/beach).
 - 3521 Castle Rock lakeview kept (shore row behind continuous tree fringe).
+
+## p3-487 (WI, 2026-11-16)
+- 3453 Kreher Park bayfront confirmed (sites 25-33, 15-30 m over open grass).
+- 3589 Washburn (unread): open lawn loop at the bluff edge ~30-60 m from Chequamegon Bay; needs site numbers.

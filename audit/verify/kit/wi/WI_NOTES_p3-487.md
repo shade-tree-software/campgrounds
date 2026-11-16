@@ -1,0 +1,13 @@
+# WI notes p3-487
+- 3413 Kilby DONE: 17/142 nightly (2024 map), Google 4.3 (116), phone 608-960-8030 on site.
+- 3453 Kreher DONE: bayfront confirmed 25-33; season 10-15 standing.
+- 3448 Lake Emily DONE: konect engine needs 2-night POST; North 54 + South 10; 650 m apart.
+- 3410 Loon Lagoon DONE: seasonal-only rate page -> drop candidate (iffy); hipcamp unread (browser denied).
+- 3519 Manitowoc Expo: manitowoccountywi.gov Cloudflare 403 (wpewaf) -> NO result file. 2026-10-15 capture: May1-Jul31 + Sep1-30, closed Jun 1-9 & Aug; $40/night $240/week; dump incl; Midway 54 E/W.
+- 3589 Washburn Memorial: cityofwashburnwi.gov Cloudflare challenge 403 -> NO result file. 10-16 browser capture: FCFS, kiosk, $40 / lakeside premium $50, weekly 240/300, seasonal 152 days $3344 ('Seasonal campsites are limited'). Imagery: open lawn loop at bluff edge ~46.6752,-90.8795, 30-60 m from shore.
+- 3411 Minong DONE: OHV flag (ATV campground); village site 406.
+- 3432 Monument Point DONE: 15/84 overnight (18%), 2025 $40, Google 4.0 (56).
+- 3509 Moon Lake DONE: lakefront->lakeview, 6 overnight sites only (drop cand).
+- 3414 Moonlite Trails DONE: no web presence -> drop candidate; website clear.
+- 3539 Muskego DONE: pin move 660 m to 42.8997,-88.1664; phone 262-899-8404.
+- dry run clean (0 !!); fcfs after_cutoff removed from 3448/3411 (moved to booking note). Browser never ran.

@@ -2223,3 +2223,10 @@ me drop and report); each needs the research named before a verdict.
 - 3521 Castle Rock: ~80 of 272 long-term (~70% nightly); Dec-May camping unknown, season not written.
 - 3439 Flatwaters: no posted rate anywhere (RV Life $$, Google 4.9/95); kept.
 - UNREAD: 3380 Eagle View RV Camp (406), 3398 Forest Pond (Cloudflare; Oct capture: phone 715-298-0601, May 1-Oct 1, contact for reservations, $30/35 nightly, seasonals $2,000-2,300).
+
+## p3-487 (WI, 2026-11-16)
+- DROPPED: 3410 Loon Lagoon (seasonal-only rate, no nights for sale); 3509 Moon Lake Park (town; ~20% nightly, 2024 rates, contradictory booking); 3414 Moonlite Trails (dead site, unclaimed RoverPass).
+- 3411 Minong Wild River Trail: the county calls it an ATV campground on the trail network, but it is a village full-hookup RV park taking all campers - kept (general campground with an OHV side; note says so). AWH may rule otherwise.
+- 3413 Kilby Lake ~12% nightly, 3432 Monument Point ~18% nightly (Google 4.0/56, on the line): kept with mostly-seasonal caveats.
+- 3448 Lake Emily North/South 650 m apart: one entry (under the split line).
+- UNREAD: 3519 Manitowoc County Expo (Cloudflare; Oct capture: $40/night, 54 W/E midway sites, closed Jun 1-9 and Aug); 3589 Washburn city campground (Cloudflare; lakeside premium sites at the bluff edge - lead).
