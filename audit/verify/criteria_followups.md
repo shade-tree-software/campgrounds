@@ -2246,3 +2246,10 @@ me drop and report); each needs the research named before a verdict.
 - 3386 Two Lakes: FS page $23 vs rec.gov $25 (rec.gov written).
 - OHV sides kept: 3474 Torch Lake, 3495 Wolf Creek.
 - 3544 Bay Shore: sites 83-88 have 16-23 ft pads.
+
+## p3-490 (WI, 2026-11-16)
+- DROPPED: 3579 Brown County Reforestation Camp (5 horse sites in the general loops, no separate horse area); 3366 DN Campground (7 of 132 nightly, test 4); 3422 Christian's (no website/price, mostly seasonal); 15520 Door County KOA Holiday (Google 3.8/420; koa.com Cloudflare).
+- 3501 Calumet County Park: construction closes N1-N24 and W1-W16 late Oct 2026 - May 26 2027 (W11-W14 to June 16) - in the note.
+- 3577 Crystal Lake (Strum): newest rates 2025; ~25 set-up units on 42 sites, seasonal share unmeasured; Google 4.4/61.
+- 3377 Buck 'n Beam's: ~11 of 31 nightly - mostly-seasonal line.
+- UNREAD: 3563 Cliffside (racinecounty.gov 403; Oct capture $35/$40 + $12 fee; Lake Michigan ~0.9 km through park woods - coastal walk lead).

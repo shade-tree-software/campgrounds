@@ -1431,3 +1431,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - DOWN 3433 Backyard on Amnicon Lake lakeview -> not waterfront (sites ~145 m across the road).
 - UP 3544 Bay Shore (Brown County) not waterfront -> coastal walk (~130 m through the park's woods to Green Bay; 'Trail to Beach'; escarpment).
 - 3459 Bay City lakefront kept (Lake Pepin row 35-44, riprap caveat). 3423 Twin Lakes / 3386 Two Lakes lakeview kept under canopy despite FS "on the water".
+
+## p3-490 (WI, 2026-11-16)
+- DOWN 3518 Columbia Park (Fond du Lac) lakeview -> not waterfront; DOWN 3462 Derge lakeview -> not waterfront.
+- LEAD 3563 Cliffside (unread): Lake Michigan ~0.9 km east via a park trail to a bluff overlook; shore access unconfirmed.

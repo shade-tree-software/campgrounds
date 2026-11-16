@@ -1,0 +1,13 @@
+# WI notes p3-490
+- 3579 DONE: $34/$44, pin 720 m to 44.6594,-88.0818, horse flag, WebTrac CF 403
+- 3377 DONE: $40/45, 11/31 nightly (CampLife capture), Google 4.6 (230, shared w/ bar)
+- 3501 DONE: lakeview kept (tree band), $22-34, 81 sites, 2-night res min, partial closure
+- 3422 DONE: drop candidate presence (FB only, Google 5.0/2), imagery ~60 set-up units; pin 360 m
+- 3563 UNREAD: racinecounty.gov 403 (refused); no result file. Imagery: loops ~42.8204,-87.8224; Lake Michigan shore ~0.9 km E through park woods (trail to bluff overlook)
+- 3518 DONE: lakeview -> not waterfront; 2027 May 9-Oct 11; $28; 40 sites
+- 3577 DONE: lakeview kept; 2025 rates $30/33; strumcampground.com for sale; seasonal share unmeasurable, Google 4.4 (61)
+- 3366 DONE: drop candidate, 7 nightly of 132 (~5%); Google 4.6/199 shared w bar
+- 3462 DONE: lakeview -> not waterfront (sites W of Cty CP); booking url new; Apr 15-Oct 31
+- 15520 NO RESULT: koa.com 403 Cloudflare; Google 3.8 (420) -> drop candidate (under-4 rule)
+- 3482 DONE: website .com -> .gov; FCFS; May 1-Oct 15; $22-25
+- apply.py dry run: 9 results ready, no !! lines. No result for 3563 (racinecounty.gov 403) or 15520 (koa.com 403).
