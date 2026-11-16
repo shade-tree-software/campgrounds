@@ -576,6 +576,7 @@ DROPS = {
     3428: ('2026-11-16', "Frontier Bar & Campground (WI, private): mostly seasonal with no posted nightly rate or booking site (long-stay parks need one - AWH 2026-10-14)", "p3-497: RV Life review (stay 9/2025) '90% of the place is seasonal campers'; no posted rate, site count or booking engine; Hipcamp listing unclaimed; camper reports $50-55 full hookup; Google 4.5/160 shared with the bar."),
     3391: ('2026-11-16', "Happy Ours RV Park (WI, private): dead website and mostly seasonal, no current rate", "p3-497: happyoursrvwisconsin.com NXDOMAIN; RoverPass listing unclaimed; newest rate a 2019 camper report ($25); imagery ~100 trailers with sheds and decks; Google 4.8/39 with 'seasonal spot' review topics."),
     3419: ('2026-11-16', "Hickory Oaks Campground (WI, private): ordinary electric sites over the price gate", "p3-497: operator rates (2026-10-16 capture; live site 406): $40 no hookup, $45 20A, $55 30A, $65 50A, $75 50A pull-through; no gateway within 40 km; Google 4.2/229 - Hi-Pines (3387) precedent."),
+    14490: ('2026-11-16', "Lake Joy Campground (WI, private): ordinary RV sites over the price gate", "p3-498: operator rate table: 20/30A electric/water site $60 summer weekdays, $65 weekends, $70 holidays, $50 only spring/fall; 50A and lakefront $70-80, plus 5.5% tax; the $40-45 rate is primitive tent/group only; not a Good Sam Park, no member discount, nearest gateway (Wisconsin Dells) 104 km; Google 4.3/229 - Hi-Pines (3387) precedent."),
 }
 
 if __name__ == "__main__":

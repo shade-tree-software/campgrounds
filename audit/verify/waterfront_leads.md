@@ -1460,3 +1460,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-497 (WI, 2026-11-16)
 - UP 3549 Holtwood not waterfront -> riverfront (nightly R-row sites on open bank 15-35 m from the Oconto River). 3397 Hiles Pine Lake lakefront confirmed (nightly shore row 4, 7-13, 12A). 3496 Hattie Sherwood lakeview kept (Campspot "Waterfront Site" tag not enough). 3409 evidence corrected (Red Cedar, not Chippewa).
+
+## p3-498 (WI, 2026-11-16)
+- DOWN 3497 Mead Lake lakefront -> lakeview (lake-side sites 35-39 behind a shoreline conifer belt). 14490 Lake Joy lakefront (nightly A/D on open grass with docks) - entry dropped on price. 3390 Kickapoo Stump Dodger riverview kept (creekside at most). 573 --AWH coastal walk agrees.

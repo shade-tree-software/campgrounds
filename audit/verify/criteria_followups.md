@@ -2314,3 +2314,14 @@ me drop and report); each needs the research named before a verdict.
 - 3496 Hattie Sherwood: city says no water hookups, Campspot lists "+ Water" types - stored water true left.
 - 3435 Grangers unread (Cloudflare); stored 30A vs a review's 50A; RV Life reports $35-38.
 - LEAD: Oconto City Park Campground (County Rd N, Oconto, 920-834-7725, on Green Bay) - not in the DB.
+
+## p3-498 (WI, 2026-11-16)
+- DROPPED: 14490 Lake Joy (20/30A sites $60-70 in summer; $50 only spring/fall; Hi-Pines precedent).
+- 3429 Leon Valley UNREAD (own site 403 everywhere). Capture 2026-10-16: $48 RV electric/water, $30 tent; RV Life 4*/$$ avg $36, 120 sites; Google 4.4/155. Nightly share unmeasured.
+- 14494 Lake Hilbert: ride ATVs from the site (Marinette County trail) - general campground with an OHV side, stays; ~30% nightly, caveat written; ownership changed May 2026.
+- 573 Kohler-Andrae: DNR camping page 137 sites/52 electric vs map 135/68; GoingToCamp unread (lengths, amps, surcharge).
+- 3530 Lake Mendota: stored phone 608-242-4576 on no current page (county gives the Parks Office 608-224-3730) - left.
+- 3572 Lucius Woods: "29 total sites" vs 23+9 listed; close date "Monday after Labor Day" ambiguous - left unset.
+- 3497 Mead Lake: 20A / 40 ft / pull-through values unsourced; Clark County extended-stay PDF unread.
+- 3514 La Farge: stored 50A unsourced.
+- SCHEMA: fcfs "after_cutoff" IS valid (schema §4.1; my earlier "only always/some_sites/never" lesson was wrong). Fixed WI 3512, 3566, 3550 always -> after_cutoff (reservations close N days out, then walk-up). Same pattern elsewhere, not yet touched: MD 63, 533; PA 1055; OR 11057, 11058, 11082, 11096 (some of these may genuinely be always - read before changing).
