@@ -1413,3 +1413,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - DOWN 3593 Audie Lake lakefront -> lakeview (sites 10-15 behind continuous canopy).
 - LEAD 3395 Callahan Lake (lakeview): operator says some sites are directly on the shoreline; no site numbers/canopy - unconfirmed.
 - 3396 Cedar Falls riverfront confirmed on sites 9-20.
+
+## p3-486 (WI, 2026-11-16)
+- 3499 Herbster lakeview confirmed (front row 22-27, ~80 m from Lake Superior across road/tent strip/beach).
+- 3521 Castle Rock lakeview kept (shore row behind continuous tree fringe).

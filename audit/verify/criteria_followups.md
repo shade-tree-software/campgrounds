@@ -2213,3 +2213,13 @@ me drop and report); each needs the research named before a verdict.
 - 3373 Eagle Cave: stored military true (Good Sam) backed on the operator site only by 50% off cave tours - left as stored; Google 4.7/406 is the cave's listing.
 - 3481 Brown County Fairgrounds: midway camping; no camping 2026-11-16..12-31; $70 on Lambeau event nights.
 - Leads to vet: Rusk County Perch Lake Campground (15 sites, parks.ruskcounty.org) and Murphy Campground - not in the DB (3347 'Perch Lake' is a federal one).
+
+## p3-486 (WI, 2026-11-16)
+- 3364 Fountain Lake RV Park DROPPED (member-maintained, sells 99-year lot leases; test 5).
+- 3403 Heaven's Up North: ~25% nightly (29 of 114) - mostly-seasonal caveat; connects to an ATV route (general campground, kept); renters 21+.
+- 3546 Kennedy Park (Juneau): sites listed only as Tent / Small / Medium Camper - fit caveat in the note.
+- 3531 Iowa County Fairgrounds: rates from a 2020 form ($25/$30); fair-week hillside camping exists (old note wrong).
+- 3574 Jordan Park: stored 50A from note prose, unsourced today (left).
+- 3521 Castle Rock: ~80 of 272 long-term (~70% nightly); Dec-May camping unknown, season not written.
+- 3439 Flatwaters: no posted rate anywhere (RV Life $$, Google 4.9/95); kept.
+- UNREAD: 3380 Eagle View RV Camp (406), 3398 Forest Pond (Cloudflare; Oct capture: phone 715-298-0601, May 1-Oct 1, contact for reservations, $30/35 nightly, seasonals $2,000-2,300).

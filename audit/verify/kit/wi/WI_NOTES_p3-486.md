@@ -1,0 +1,13 @@
+# WI notes p3-486
+- 3380 Eagle View: eagleviewrvcampllc.com 406 Mod_Security to curl -> REFUSED, not retried. No result.
+- 3439 Flatwaters DONE: AMP template site, no camping content; Google 4.9 (95).
+- 3398 Forest Pond: forestpondcampground.com Cloudflare 'Just a moment' 403 -> REFUSED. No result. 2026-10-16 capture: phone 715-298-0601, season May 1-Oct 1, 'Please Contact Us For Reservations', seasonal rates posted.
+- 3364 Fountain Lake DONE: membership/lot-lease drop candidate; Campspot fountainrvparkinc 32 non-member sites $44.60.
+- 3403 Heaven's Up North DONE: 29/114 nightly; ATV flag.
+- 3499 Herbster DONE: lakeview confirmed (row 22-27 ~80 m, road between); pin 720 m off.
+- 3565 Hoffman DONE. rfcity.org answers curl; activityreg booking.
+- 3531 Iowa Co Fairgrounds DONE (form: outside fair $25/$30).
+- 3574 Jordan DONE ($25+$8 elec; reservations engine POST search works with 2027 dates).
+- 3521 Castle Rock DONE: lakeview kept; konect engine POST s=1&z=1 gives fillgreen/fillred per site.
+- 3546 Kennedy DONE.
+- apply.py dry run: 9 results ready, no !!. No browser running. 3380/3398 refused (no result). Leads: none (Portage/Juneau siblings all present).
