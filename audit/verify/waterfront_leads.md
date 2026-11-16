@@ -1404,3 +1404,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-483 (VT, 2026-11-16)
 - DOWN 204 Woodford lakefront -> lakeview (conifer belt); 4075 Branbury lakeview -> not waterfront (70-110 m behind the beach); 4083 Winhall Brook riverfront -> riverview (bank trees/brush).
 - KEPT 4088 Prouty lakeview: the city's 'waterfront' sites 59-63 (~44.9459,-72.2079) are ~50 m with the shore bike path and public beach between. 615 Fort Dummer --AWH not waterfront agreed.
+
+## p3-484 (VT, 2026-11-16)
+- DOWN 344 Grand Isle lakeview -> not waterfront (cliffs; RV sites 70-110 m through forest).
+- UP 13960 Maidstone not waterfront -> lakeview (prime row 15-25 m behind a conifer fringe; T07 the only 23-ft site).

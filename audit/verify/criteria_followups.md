@@ -2192,3 +2192,14 @@ me drop and report); each needs the research named before a verdict.
 - 4083 Winhall Brook: 'North side closed for construction' stale (North booked Aug-Oct 2026); bridge 16 t passes; flood-retention notice in the note; 2026 opened late (06-12).
 - Manual seasons with a different 2027 date (flag only): 204 Woodford opens 05-28, 299 Emerald Lake 05-28, 615 Fort Dummer 05-28/09-06.
 - 4075 Branbury count 43 -> 36 (lean-tos out); inclusion evidence could be refreshed.
+
+## p3-484 (VT, 2026-11-16) - last VT batch
+- 4095 Groton Forest Road DROPPED (mostly seasonal + iffy: no website, no rate, unclaimed RoverPass, old reviews).
+- 4092 Getaway Mountain: no posted rate anywhere (RV Life $$); Google 4.0/89; ~18 of 100 sites occupied pre-opening = mixed; kept, borderline on the missing rate.
+- 4085 Greendale: FS singles it out - 'Most sites can accommodate small campers' (not boilerplate); kept with a small-rig caveat; max_rig 24 cleared.
+- 14370 Maple Hill: 'primarily for tent camping, with a few sites that include limited electrical hook up'; no length; kept with a caveat. Proprietor died 2024-09, still operating.
+- 4084 Hapgood Pond: only six sites (12, 16, 23, 25, 26, 27; 25 ft) take a 23-ft rig. 13960 Maidstone: four (T07, T09 30 ft; T35, T42 25 ft). 361 Smugglers' Notch: five RV sites (28-34 ft).
+- 360 Little River: Waterbury Dam spillway project will draw the reservoir down (no earlier than 2028).
+- 4086 North Beach: 50 A unverified; 9-ft clearance marked on the beach-side road (not the entrance); five full-hookup sites held for monthly stays.
+- Manual seasons with different 2027 dates (flag only): 344 05-14/10-17, 360 05-21/10-17, 13960 05-28/09-06, 361 opens 05-21. 4069 written 05-21/10-11 from the RA 2027 calendar (page says 'third weekend in October').
+- VT QUEUE DONE. Unread: 4097 Hazen's Notch (operator site 406).
