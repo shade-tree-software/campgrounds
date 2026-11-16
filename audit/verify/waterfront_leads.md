@@ -1463,3 +1463,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-498 (WI, 2026-11-16)
 - DOWN 3497 Mead Lake lakefront -> lakeview (lake-side sites 35-39 behind a shoreline conifer belt). 14490 Lake Joy lakefront (nightly A/D on open grass with docks) - entry dropped on price. 3390 Kickapoo Stump Dodger riverview kept (creekside at most). 573 --AWH coastal walk agrees.
+
+## p3-499 (WI, 2026-11-16)
+- DOWN 3548 Morgan Park lakefront -> not waterfront (200 m through forest); 3394 Reel Livin' lakefront -> lakeview (RVs behind shore cabins). 787 Merrick --AWH riverfront agrees (South campground 51-87, riprap - caveat in note); 454 Potawatomi --AWH coastal walk agrees; 3503 Pine Point lakefront kept (15 nightly dock sites). 14492 pond -> not waterfront per verifier (entry dropped). 3376 riverview (dropped).

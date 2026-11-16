@@ -2325,3 +2325,14 @@ me drop and report); each needs the research named before a verdict.
 - 3497 Mead Lake: 20A / 40 ft / pull-through values unsourced; Clark County extended-stay PDF unread.
 - 3514 La Farge: stored 50A unsourced.
 - SCHEMA: fcfs "after_cutoff" IS valid (schema §4.1; my earlier "only always/some_sites/never" lesson was wrong). Fixed WI 3512, 3566, 3550 always -> after_cutoff (reservations close N days out, then walk-up). Same pattern elsewhere, not yet touched: MD 63, 533; PA 1055; OR 11057, 11058, 11082, 11096 (some of these may genuinely be always - read before changing).
+
+## p3-499 (WI, 2026-11-16)
+- DROPPED: 14492 Red Barn (RV sites $60-90; also UTV trails, ~40% nightly); 3376 River's Edge, Bruce (unclaimed RoverPass, Facebook-only bar/mobile home park, no rate, mostly long-stay).
+- ASK: 3394 Reel Livin' price $50-55 (asks.md).
+- 14491 River Road RV kept: no website or posted rate, but RV Life 4*/$$ (price) + Google 4.3/33 open with phone (presence) - the 2026-10-02 re-add basis still holds. Reviews: no bathrooms, cash/check.
+- 3503 Pine Point: reservations 10+ days ahead with a 3-night minimum, but the caretaker sells unreserved sites nightly - kept, fcfs after_cutoff.
+- 3418 Omro RV Park: transient-only, minimum age 25, no tents/pop-ups/vans.
+- 3420 Osh Vegas Palms: stored sewer, 53 sites, store, dump, Mar 1-Dec 31 season unsourced.
+- 3536 Sanders Park: 9 of 19 sites take an RV; season sources disagree (stored 04-08..10-15; Good Sam Apr 15-Oct 15; 2023 county doc 2nd weekend Apr-Oct 31).
+- 787 Merrick: North loop (44.1597,-91.7622) 1.8 km from the South campground, one entrance - no split. Winter camping page stale.
+- 787, 454: GoingToCamp unread (amps, lengths, fees as stored).
