@@ -2377,3 +2377,6 @@ me drop and report); each needs the research named before a verdict.
 - 3581 Trego ~50% nightly; 3507 Twin Bear ~44% nightly - notes say so.
 - 3570 Shell Lake: stored 50A unsourced (map says 30A on 39-47).
 - 3575 Stockholm: stored vault_toilets unsourced.
+
+## Price-gate correction (AWH 2026-11-16)
+- I had briefed verifiers (p3-491..503) that summer-over / shoulder-under FAILS the gate; AWH's 2026-10-30 Shelby rule is the cheapest real RV night in any season. Reviewed the four drops made on it: 3370 Rivers Edge RESTORED (AWH; $45 May weeknights, Google 4.7/128; p3-493 result applied); 3387 Hi-Pines, 3419 Hickory Oaks, 14490 Lake Joy stay dropped (AWH; borderline price + mediocre reviews). HTR Door County 3486 kept (AWH), Reel Livin' 3394 dropped (AWH).
