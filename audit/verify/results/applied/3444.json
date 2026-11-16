@@ -1,0 +1,66 @@
+{
+  "id": 3444,
+  "checked": "2026-11-16",
+  "sources": [
+    "https://scenicridgecampground.com/camping-sites/ (page modified 2024-03-27 per the site's wp-json: 'Water and Electric (20-30-50 amp service) is available on all nightly sites. Sewer is not provided at any site however, there is a Dump Station located on premises'; 'Monthly Campsite Rates Available'; 'Limit of 6 people and 2 vehicles per camping site.'; 'RV/Tent Sites (includes W&E)—$50.00 + tax per night per site (Rates are based on a total of 2 adults & 4 children under the age of 18)'; 'Additional Adults—$15.00 per adult per night'; 'Concert Weekends—rates are slightly higher'; 'Reservations require a 2 night minimum on weekends and 3 night minimum on Holiday Weekends. Reservations are not accepted for a 1 night stay. A 1 night stay will be handled on a first come, first serve basis and is subject to availability'; 'Must be 21 years or older to register'), read 2026-11-16",
+    "https://scenicridgecampground.com/ (home: 'spacious, grassy or wooded camping sites to accommodate tents and any size RV'; 'Laundry Facilities | Restrooms with free showers | Free WIFI hotspot (located at camp store)'; 'Well stocked General Store'; 'Sandy swimming beach'; Book Now -> ResNexus), read 2026-11-16",
+    "https://scenicridgecampground.com/seasonal-camping/ ('we are currently working off a waiting list'; seasonal sites $2750 + tax), https://scenicridgecampground.com/amenities/ ('Seasonal sites (waiting list)', 'Dump station', 'Laundry facilities'), https://scenicridgecampground.com/contact/ (608-883-2920; 'Call Scenic Ridge or Fill in the Tentative Reservation Request Form'), read 2026-11-16",
+    "https://scenicridgecampground.com/wp-content/uploads/2026/04/campground-map-2026-scaled.png (2026 campground map: legend Seasonal / Nightly pull-thru W&E / Nightly W&E / Nightly tent; nightly sites P1-P41 (The Prairie), pull-throughs C1-C11, T1-T6 'Back in tree line', tent sites SR15 and SR16; roughly 140 numbered seasonal sites in the other loops; beach, boat launch and camp store at the lake road), read 2026-11-16",
+    "https://reserve2.resnexus.com/resnexus/reservations/lodging/6DB8E69B-6F3A-4663-98E2-F9D1C47A9C81 (operator's Book Now engine): plain HTTP returns an empty JS shell; one headless render 2026-11-16 also came back blank - unread",
+    "Google Maps 'Scenic Ridge Campground' 4.4 (315), phone +1 608-883-2920, website scenicridgecampground.com, ll 42.755367,-88.69657, read 2026-11-16",
+    "audit/price_research/gateways.py 42.7557,-88.6958: none within 40 km (Milwaukee 72 km), run 2026-11-16",
+    "Esri World Imagery at 42.7575,-88.6930 (hw 450 m) and 42.7535,-88.6935 (hw 400 m), read 2026-11-16"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 50,
+        "nightly_high": 50,
+        "currency": "USD",
+        "tax": {"included": false},
+        "extra_person": {"included": 2, "included_children": 4, "amount": 15, "per": "night", "max_people": 6},
+        "checked": "2026-11-16",
+        "note": "$50 a night plus tax for an RV or tent site with water and electric (rate page last updated March 2024); concert weekends 'slightly higher', no figure posted. Monthly rates by phone."
+      },
+      "source": "https://scenicridgecampground.com/camping-sites/ ('RV/Tent Sites (includes W&E)—$50.00 + tax per night per site (Rates are based on a total of 2 adults & 4 children under the age of 18)', 'Additional Adults—$15.00 per adult per night', 'Limit of 6 people'), read 2026-11-16",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "https://scenicridgecampground.com/camping-sites/ ('Water and Electric (20-30-50 amp service) is available on all nightly sites. Sewer is not provided at any site'), read 2026-11-16",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": null, "pull_through": true},
+      "source": "https://scenicridgecampground.com/ ('accommodate tents and any size RV') + 2026 campground map ('Nightly pull thru sites', C1-C11), read 2026-11-16; the stored 30-ft maximum came from old note prose and no operator page states it",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "laundry": true, "camp_store": true, "wifi": true, "note": "WiFi is a hotspot at the camp store."},
+      "source": "https://scenicridgecampground.com/ ('Laundry Facilities | Restrooms with free showers | Free WIFI hotspot (located at camp store)', 'Well stocked General Store') + /amenities/ ('Dump station'), read 2026-11-16",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://reserve2.resnexus.com/resnexus/reservations/lodging/6DB8E69B-6F3A-4663-98E2-F9D1C47A9C81",
+        "min_stay": [{"nights": 2, "applies": "always"}, {"nights": 3, "applies": "holiday"}],
+        "note": "Reservations take 2 nights or more (3 on holiday weekends) with a card deposit; a 1-night stay is first come, first served if a site is free. Also bookable by phone or the site's request form. The person registering must be 21 or older."
+      },
+      "source": "https://scenicridgecampground.com/camping-sites/ ('Reservations require a 2 night minimum on weekends and 3 night minimum on Holiday Weekends. Reservations are not accepted for a 1 night stay. A 1 night stay will be handled on a first come, first serve basis') + home Book Now link + /contact/, read 2026-11-16",
+      "method": "manual"
+    }
+  },
+  "note": "On Whitewater Lake in the Southern Kettle Moraine; the sandy beach, boat launch and camp store are at the lake road by the entrance, and the nightly sites are up the hill away from the water (the Prairie loop, the pull-throughs and the tree-line sites). Mostly seasonal: about 60 of its roughly 200 sites are sold by the night. --Claude",
+  "summary": "Operator pages + 2026 map + Google read; ResNexus engine blank. $50 + tax confirmed (W&E, 2 adults + 4 kids, +$15/extra adult, 6 max), 50A/water/no sewer, pull-throughs, dump/laundry/store/showers/WiFi hotspot; reservations 2-night (3 holiday), 1 night walk-up only. Stored 30-ft max cleared (unsourced; operator says any size RV). Passes price at exactly $50; Google 4.4 (315); mostly seasonal (~30% nightly) - caveat line written.",
+  "flags": [
+    "PRICE (private): $50.00 + tax for a W&E RV site (page last modified 2024-03-27) - exactly at the US$50 line, not over it; 'Concert Weekends - rates are slightly higher' (no figure). No Good Sam Park, no gateway within 40 km (Milwaukee 72 km). Google 4.4 (315); RV Life 4* $$. Presence passes (working website, phone 608-883-2920, ResNexus Book Now). Rate is dated only by the page edit (March 2024); the ResNexus engine could not be read to confirm a 2026/2027 figure.",
+    "LONG-STAY (mostly seasonal, kept on the tests): the 2026 map shows ~58 nightly RV sites (P1-P41 in The Prairie, pull-throughs C1-C11, T1-T6 'Back in tree line') plus 2 nightly tent sites (SR15, SR16) against roughly 140 seasonal sites - about 30% nightly (map count, approximate). Test 1/2: nightly rate posted ($50); test 3: nightly reservations by engine, phone or form; test 4: well over 1 in 10 nightly; test 5: no lots sold (seasonal sites leased by the season, waiting list). Nothing discourages nightly guests. Note now says 'Mostly seasonal: about 60 of its roughly 200 sites are sold by the night'.",
+    "MIN STAY: reservations need 2 nights at all times ('Reservations are not accepted for a 1 night stay'), 3 on holiday weekends; a single night is walk-up only. Not a 3+ standing minimum.",
+    "WATERFRONT: not waterfront confirmed. The nightly sites are up the hill east/south-east of the lake road, well away from Whitewater Lake behind wooded seasonal loops; only the beach, launch and store are at the water.",
+    "PIN 42.7557,-88.6958 is at the entrance/camp store by the beach on the lake road. The seasonal loops run south-east from there (~42.7533,-88.6945, ~300 m) and the nightly Prairie loop lies further east up the hill; the imagery available predates the Prairie loop shown on the 2026 map, so its pads can't be placed exactly. Reviewer may leave the pin at the registration office or move it to ~42.7540,-88.6935.",
+    "UNVERIFIED stored values: season 04-15..10-15 (derived from old note prose, 'Approximate') - no operator page read states the season; left. Stored max_rig_ft 30 cleared (no source; operator: 'any size RV').",
+    "WEBSITE https://scenicridgecampground.com/ and PHONE 608-883-2920 confirmed. Inclusion evidence current."
+  ]
+}

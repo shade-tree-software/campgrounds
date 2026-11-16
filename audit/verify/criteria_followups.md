@@ -2336,3 +2336,14 @@ me drop and report); each needs the research named before a verdict.
 - 3536 Sanders Park: 9 of 19 sites take an RV; season sources disagree (stored 04-08..10-15; Good Sam Apr 15-Oct 15; 2023 county doc 2nd weekend Apr-Oct 31).
 - 787 Merrick: North loop (44.1597,-91.7622) 1.8 km from the South campground, one entrance - no split. Winter camping page stale.
 - 787, 454: GoingToCamp unread (amps, lengths, fees as stored).
+
+## p3-500 (WI, 2026-11-16)
+- DROPPED: 3425 V & M Bar & Campground (spam domain, no operator rate, mostly seasonal); 3583 Village Inn on the Lake (GS "from $72", RV Life last $75; not a GS Park).
+- 3440 St. Croix Casino RV Park UNREAD (operator refuses): casino-lot rule does not apply on imagery (own wooded RV loop); re-pinned 330 m from the casino lot to the loop. Stored phone 715-986-4846 and 60 ft unverified.
+- 3437 Tomahawk: built from the 2026-10-15 /rates/ capture (site 403 today); booking platform, counts and nightly share unread.
+- 3430 Scenic View: mostly seasonal, share unmeasured; stored 30A/sewer/34 ft unsourced.
+- 3480 Token Creek: county $2 senior/military discount vs FAQ wording - military true written.
+- 3485 Tarrant: park map says water/sewer, booking page doesn't - sewer not set.
+- 3553 Smith Lake: stored 45 ft unsourced; ATV trail access only (stays).
+- 3568 Saxon Harbor: "Park Use $5.00/day" on the fee sheet - not written as an entrance fee.
+- 3476 Twin Bridges: ATV notice unread.

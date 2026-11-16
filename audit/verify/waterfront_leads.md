@@ -1466,3 +1466,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-499 (WI, 2026-11-16)
 - DOWN 3548 Morgan Park lakefront -> not waterfront (200 m through forest); 3394 Reel Livin' lakefront -> lakeview (RVs behind shore cabins). 787 Merrick --AWH riverfront agrees (South campground 51-87, riprap - caveat in note); 454 Potawatomi --AWH coastal walk agrees; 3503 Pine Point lakefront kept (15 nightly dock sites). 14492 pond -> not waterfront per verifier (entry dropped). 3376 riverview (dropped).
+
+## p3-500 (WI, 2026-11-16)
+- DOWN 3553 Smith Lake lakefront -> not waterfront (both loops 50-100 m through forest). UP 3568 Saxon Harbor not waterfront -> coastal walk (300-400 m to Lake Superior over the park's own marina/lot). 3476 Twin Bridges lakeview kept (weak, under canopy). 3583 lakeview right (WI-42 between) - entry dropped on price.

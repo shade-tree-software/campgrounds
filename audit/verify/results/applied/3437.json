@@ -1,0 +1,61 @@
+{
+  "id": 3437,
+  "checked": "2026-11-16",
+  "sources": [
+    "https://tomahawk-campground.com/ - REFUSED 2026-11-16 (Cloudflare 'Sorry, you have been blocked'); not retried. Its /rates/ page as captured 2026-10-15 in audit/price_research/note_priced_2026-10-15/pages.jsonl: 'ALL PRICES DO NOT INCLUDE SALES TAX – 5.5% | Higher rates may apply for special weekends and or events... Nightly Rates | Sites with water, sewer & electric – $43.00 nightly | Sites with water & electric – $34.00 nightly | Electric only site – $31.00 nightly | Additional units (tents or campers) are $10.00 a night. | Weekly Rates ... | Monthly Rates ... | Cabins w/ Bathrooms $125.00 per night ... | Holiday Weekends – 3 night minimum | Seasonal Rates | Sewer, Water & Electric – $2400.00 | Water & Electric – $2000.00 | Electric Only – $1700.00 | May 1 thru Sept 30'; 'Rates are based on one (1) camping unit with 2 adult parents and minor children. There is an extra charge per person of $10.00 per night for any additional adults over the allotted two. | Special rates and discounts apply for military and large groups. On holiday weekends, we require a minimum 3-night stay.'",
+    "https://maps.campendium.com/us/tomahawk-wi/camping-rv/tomahawk-campground-and-rv-park (camper reports: June 2026, one night in electric-only back-in site #58, '$33 per night, which includes the nightly rate, any booking fee, and sales tax'; 'Booking online was easy'; 'one 30A socket and one 15A socket for the two sites on either side of it'; 'a shared water fill station nearby, a dump station'; 'There were no laundry facilities'; driveway and interior roads gravel; earlier review: 'sites with water or not, Full hookup in the middle', 'two showers that required quarters. No laundry facility', 'plenty of room for our thirty five foot fifth wheel', site 75), read 2026-11-16",
+    "https://campgrounds.rvlife.com/regions/wisconsin/tomahawk/tomahawk-speedway-campground-10837 (unclaimed RV Life listing, formerly Tomahawk Speedway Campground: 'sites':'80', type commercial), read 2026-11-16",
+    "Google Maps 'Tomahawk Campground & RV Park' 4.2 (88), +1 715-525-9600, site tomahawk-campground.com, ll 45.516297,-89.705974, read 2026-11-16",
+    "audit/price_research/gateways.py 45.5160,-89.7075: none within 40 km (not needed: rates under $50), run 2026-11-16"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 31,
+        "nightly_high": 43,
+        "currency": "USD",
+        "tax": {"percent": 5.5},
+        "extra_person": {"included": 2, "amount": 10, "per": "night"},
+        "checked": "2026-10-15",
+        "note": "Electric only $31 a night, water and electric $34, full hookup $43; higher rates may apply on special weekends and events. A second camping unit is $10 a night."
+      },
+      "source": "https://tomahawk-campground.com/rates/ as captured 2026-10-15 (audit/price_research/note_priced_2026-10-15/pages.jsonl; the live site refused 2026-11-16), corroborated by a June 2026 Campendium report of $33 all-in for an electric-only site",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": true, "sewer": true},
+      "source": "https://tomahawk-campground.com/rates/ capture 2026-10-15 (electric-only, water/electric and full-hookup sites) + Campendium June 2026 camper report ('one 30A socket and one 15A socket' on shared pedestals), read 2026-11-16",
+      "method": "reported"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "laundry": false, "note": "Coin-operated showers."},
+      "source": "https://maps.campendium.com/us/tomahawk-wi/camping-rv/tomahawk-campground-and-rv-park (camper reports: 'two showers that required quarters. No laundry facility'; 'a dump station'; June 2026 'There were no laundry facilities available to use'), read 2026-11-16",
+      "method": "reported"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "min_stay": [{"nights": 3, "applies": "holiday"}]
+      },
+      "source": "https://tomahawk-campground.com/rates/ capture 2026-10-15 ('On holiday weekends, we require a minimum 3-night stay') + Campendium June 2026 ('Booking online was easy'), read 2026-11-16",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true},
+      "source": "https://tomahawk-campground.com/rates/ capture 2026-10-15 ('Special rates and discounts apply for military and large groups')",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded private RV park behind the old Tomahawk Speedway off Bill France Way, with cabins and tent sites. Gravel roads and sites that are not all level. Seasonal sites are sold alongside the nightly ones. --Claude",
+  "summary": "Operator site refused (Cloudflare) today; built from its 2026-10-15 rates capture, a June 2026 Campendium report and Google. $31/$34/$43 + 5.5% tax, extra adult $10, holiday 3-night min, military discount (unquantified). 30A shared pedestals, W/S at some sites, coin showers, dump, no laundry. Google 4.2 (88). Long-stay tests pass on what is readable; nightly share unmeasured. No gateway (none needed).",
+  "flags": [
+    "UNREAD: https://tomahawk-campground.com/ refused 2026-11-16 (Cloudflare block); not retried. Rates come from the operator's own /rates/ page captured 2026-10-15. The booking platform, site map (2024 JPG) and site counts stayed unread.",
+    "LONG-STAY TESTS: (1) nightly rates posted - pass; (2) not only a seasonal rate - pass (nightly, weekly, monthly and seasonal $1,700-2,400 May 1-Sept 30 all posted); (3) a nightly channel - pass (online booking per a June 2026 camper); (4) 1 in 10 nightly - not measurable, but a 2026 overnight guest was assigned among several open sites and a late-season reviewer was alone in the park; (5) no lot sales or leases seen - pass. No wording discouraging nightly guests in the capture. Nightly share UNMEASURED.",
+    "GOOGLE: 4.2 (88). RV Life listing is unclaimed (80 sites, unsourced).",
+    "PRICE GATE: pass - ordinary summer RV site $31-43 + 5.5% tax.",
+    "UNSOURCED: site count (RV Life says 80, the old note said 75+, Hipcamp's directory says 56); no operator count read. Not set.",
+    "PHONE 715-525-9600 confirmed (Google). WEBSITE unchanged (refuses bots, not dead).",
+    "SEASON 05-01..09-30 left as stored: the capture's May 1 - Sept 30 is the seasonal-site term; a reviewer stayed at 'the very end of the season'. No posted 2027 dates.",
+    "WATERFRONT 'not waterfront' kept (no claim anywhere). PIN 45.5160,-89.7075 ~125 m from Google's point: fine."
+  ]
+}
