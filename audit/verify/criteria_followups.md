@@ -2296,3 +2296,11 @@ me drop and report); each needs the research named before a verdict.
 - 3490 Waubedonia: fees $20-28 set (note's $10 wrong); booking phone -> Planyo.
 - UNREAD: 3472 Clear Lake Park (clearlake-wi.gov 403; Google 4.6/264; lakeview call needs the site map).
 - LEAD: Hawthorne Hills County Park (Saukville, Ozaukee County) - on the March 2026 fee table at $22-30, probably not open yet; not in the DB.
+
+## p3-496 (WI, 2026-11-16)
+- DROPPED: 3421 Deep Lake (seasonal park: ~6% nightly, nightly sites for family of registered guests, mobile-home lots for sale); 3406 Devil's River (~20% nightly with no posted rate or booking site - long-stay parks need one).
+- 3368 Fairgrounds RV Park (Beaver Dam): fairgrounds test passes (all 50 bookable single nights); legal operator is the Dodge County Fair Association (nonprofit) - kept local per the Red River Valley Fair precedent.
+- 14493 Fire Away Roadhouse: own gravel loop of ~15-18 spurs, Firefly nightly RV sites - not a bar lot; price unread (Firefly reCAPTCHA); ATV trailhead parking (general rest camp, kept).
+- 293 Devil's Lake: GoingToCamp API refused - fees/amps/lengths not re-read; Quartzite winter camping in the note.
+- Unsourced stored values: 3508 electric 50 / max_rig 36; 3558 pull_through.
+- UNREAD: 3384 Eagles Landing (St. Croix casino site Cloudflare 1014). Google 4.4/121, 715-349-2267 (stored 715-656-4402); price, long-stay and casino-lot tests undone.

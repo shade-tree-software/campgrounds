@@ -1454,3 +1454,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-495 (WI, 2026-11-16)
 - DOWN 3490 Waubedonia riverfront -> riverview; DOWN 3469 Cameron Veterans Memorial lakefront -> lakeview (tree strip). UP 3515 Big Bay Town Park not waterfront -> coastal walk (own Lake Superior beach 300-600 m by park road). 782 Blackhawk --AWH riverfront agrees (rec.gov West loop 40-57 Riverfront).
 - LEAD 3408 Wildwood Haven site 1 (~46.2603,-90.6426): possible single-site lakefront (imagery predates the layout). 3472 Clear Lake Park unread.
+
+## p3-496 (WI, 2026-11-16)
+- DOWN 3566 Collins Park lakeview -> not waterfront. UP/ACROSS 3461 Dalrymple (Bayfield) lakeview -> coastal walk (Lake Superior 100-150 m on park ground, walkway by site 22). 3558 Dexter and 3512 DuBay lakeview kept; 293 Devil's Lake --AWH not waterfront agrees.
