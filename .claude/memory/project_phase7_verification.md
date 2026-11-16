@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "RESUMED 2026-11-11 at p3-438 (MN; then MN unread sweep + leads, then ND, then IL; then the 33 VT); ONE verifier at a time; resume from audit/verify/kit/mn/RESUME_MN.md"
+description: "PAUSED 2026-11-16 after p3-504 (WI, 163 left; then SK, WY, SD); ONE verifier at a time; resume from audit/verify/kit/wi/RESUME_WI.md (RESUME HERE section)"
 metadata:
   node_type: memory
   type: project
@@ -120,3 +120,5 @@ AWH 2026-11-13 after the pause: 15428 kept (Chicago exception), 1687 year-round 
 **State order (AWH 2026-11-16), overrides the queue's own state ranking:** finish IL (p3-480 running, then the last 7), then VT (33), then **WI (383), SK (169), WY (244), SD (215)** in that order. Use queue.py --state XX per batch. Kits exist for il/vt; WI/SK/WY/SD need their own kit/<st>/ (mkpara + agent template + tools, adapted from kit/il; SK per the Canada adaptations). Whole-DB status 2026-11-16: 8,296 queued across 34 states/provinces; 24 complete (AB CO CT DE FL GA IA IN KS MA ME MI MO MT NC NE NJ NY OH PA RI SC VA WV).
 
 **2026-11-16:** IL queue done (p3-481; 14 unread behind bot walls, listed in kit/il/RESUME_IL.md). VT done (p3-482..484; 4095 Groton dropped; 4097 unread; nine VT state parks' second-Monday close fixed 10-14 -> 10-11). WI started with p3-485 from kit/wi/RESUME_WI.md.
+
+**Paused 2026-11-16 after p3-504** (WI p3-485..504 applied; pushed + deployed). Resume from the "RESUME HERE" section at the end of audit/verify/kit/wi/RESUME_WI.md: exact build/launch/apply commands, the verifier Lessons paragraph in kit/wi/lessons.txt, the day's rulings (price gate = cheapest real RV night in any season), unread list, leads, split candidate. Next batch p3-505.
