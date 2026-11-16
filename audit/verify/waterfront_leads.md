@@ -1408,3 +1408,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-484 (VT, 2026-11-16)
 - DOWN 344 Grand Isle lakeview -> not waterfront (cliffs; RV sites 70-110 m through forest).
 - UP 13960 Maidstone not waterfront -> lakeview (prime row 15-25 m behind a conifer fringe; T07 the only 23-ft site).
+
+## p3-485 (WI, 2026-11-16)
+- DOWN 3593 Audie Lake lakefront -> lakeview (sites 10-15 behind continuous canopy).
+- LEAD 3395 Callahan Lake (lakeview): operator says some sites are directly on the shoreline; no site numbers/canopy - unconfirmed.
+- 3396 Cedar Falls riverfront confirmed on sites 9-20.

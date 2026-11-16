@@ -2203,3 +2203,13 @@ me drop and report); each needs the research named before a verdict.
 - 4086 North Beach: 50 A unverified; 9-ft clearance marked on the beach-side road (not the entrance); five full-hookup sites held for monthly stays.
 - Manual seasons with different 2027 dates (flag only): 344 05-14/10-17, 360 05-21/10-17, 13960 05-28/09-06, 361 opens 05-21. 4069 written 05-21/10-11 from the RA 2027 calendar (page says 'third weekend in October').
 - VT QUEUE DONE. Unread: 4097 Hazen's Notch (operator site 406).
+
+## p3-485 (WI, 2026-11-16) - first WI batch
+- 3401 Broken Bow UNREAD (Mod_Security 406). Cached 2026-10-16 rates page: sites $36/$39/$30, but a line "30-amp Service and Camping/Travel Trailers... $45.00 | over 20' ... add $6.00" sits among the extras - if it is the nightly rate a 23-ft rig pays $51. Google 4.8/52 (tiebreaker favours keep). See asks.md.
+- 3449 Dells of the Eau Claire UNREAD: every marathoncounty.gov page is Akamai 403 (all Marathon County parks will be).
+- 3395 Callahan Lake: $50 2025 rate (exactly the gate), + 5.5% sales + 4% room tax; permanent sites exist, nightly share unmeasurable under canopy. Operator: "Some of the sites are directly on the shoreline" (lakeview kept; lead).
+- 3396 Cedar Falls (WVIC): 23 nightly of 40; 55-60% nightly, no caveat.
+- 3383 DOVR: military discount written (veterans' code on proof of service); ATVing mentioned, general campground.
+- 3373 Eagle Cave: stored military true (Good Sam) backed on the operator site only by 50% off cave tours - left as stored; Google 4.7/406 is the cave's listing.
+- 3481 Brown County Fairgrounds: midway camping; no camping 2026-11-16..12-31; $70 on Lambeau event nights.
+- Leads to vet: Rusk County Perch Lake Campground (15 sites, parks.ruskcounty.org) and Murphy Campground - not in the DB (3347 'Perch Lake' is a federal one).

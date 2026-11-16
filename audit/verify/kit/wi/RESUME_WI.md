@@ -13,4 +13,6 @@ Build a batch (repo root; S = scratch dir, N = p3-NNN):
 
 Apply exactly as for IL/VT: apply.py --apply, a post script on kit/post_head.py, drops via criteria_drops.py, logs, copy WI_NOTES into kit/wi/, commit, clean scratch.
 
-Batches applied: (none yet)
+Batches applied: p3-485 (2026-11-16; 3401 Broken Bow and 3449 Dells of the Eau Claire unread).
+
+Sources (p3-485): plain curl works for most county and operator sites, blackhawklake.com PDFs, wvic.com, park-maps.campspot.com; Campspot via cs1.py under flock. REFUSED: marathoncounty.gov (Akamai 403, all Marathon County parks), ruskcountywi.com (Cloudflare), brokenbowcampground.com (406).
