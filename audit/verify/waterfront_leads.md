@@ -1386,3 +1386,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-479 (IL, 2026-11-15)
 - LEAD 14007 Horseshoe Lake East lakeview -> lakefront? Units ~37.13847,-89.31698, dock on open water ~37.13842,-89.31739 35-40 m over mown grass; no site numbers.
 - ASKED 14615 Lake CampaLot --AWH lakeview -> not waterfront (shore units all annual).
+
+## p3-480 (IL, 2026-11-16)
+- WEAK 1660 Saline County SFWA lakeview: no site map, no site placed on imagery; fallback not waterfront on the next look.
+- KEPT riverview 1802 Havana Riverfront (~100-120 m) and 13414 Rosiclare (~45-55 m across a paved lot).

@@ -2157,3 +2157,12 @@ me drop and report); each needs the research named before a verdict.
 - 1657 Randolph County: old note's 'sites walk directly to the lake' wrong (~200 m through woods); water/sewer false; 95 Class C sites not located.
 - Unconfirmed facilities: dump at 1657 and 14008; 50 A at 14009. Unsourced max_rig_ft 1716 (80).
 - 13406 Mill Creek: OHV trails start 2.5 mi away (no access from the park) - keep.
+
+## p3-480 (IL, 2026-11-16)
+- UNREAD (own pages refused, no result file): 14612 Sandwich Fairgrounds (Cloudflare; fair-time-only not disproven; stored phone 989-309-0202 is a Michigan area code), 13407 Schuy-Rush Park (Cloudflare), 13408 Spring Lake Park Macomb (Mod_Security 406 + city 403). Phone-list candidates.
+- 1779 South Park, Gibson City: the city now calls it "Arrowsmith South Park and Campground" (rename = AWH's call); now on Campspot; city site down (read via archive).
+- 1778 Sherwood Forest: ~12% nightly (16 short-term of 129), keep-with-caveat band; Google 4.4/89.
+- 13414 Rosiclare: river side of the levee - flood-exposure caveat lead.
+- 13411 Riverside Park: page says "60+" sites vs stored 100; reservations line 217-546-4103 (tennis center) vs stored host 217-753-0630 (kept).
+- 1660 Saline County: lakeview kept on weak evidence (no site placed); season 04-01..09-30 unsourced; separate equestrian campground not located.
+- 1691 Sand Ridge: re-pinned 2.2 km to Pine Campground; max_rig_ft 52 -> 40.

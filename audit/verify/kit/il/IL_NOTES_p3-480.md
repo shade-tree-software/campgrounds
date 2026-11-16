@@ -1,0 +1,12 @@
+# p3-480 (IL) working notes, 2026-11-16
+- 1802 Havana DONE: riverview kept (~100-120 m over road/lawn), electric 50, phone booking, $35 2026
+- 13411 Springfield DONE: season 5/1-11/1, operator WebTrac (403), sewer true, pin in MHP -> 39.8570,-89.6217 (~155m)
+- 1783 Robinson DONE: confirm 25/8/50A/3-night; pads not located
+- 13414 Rosiclare DONE: riverview kept (pads 45-55 m, paved boat lot between; riverward of levee); wifi added
+- 1660 Saline DONE: lakeview kept weak (sites unlocated), FCFS permit, res-fee text removed, phone 618-276-4405
+- 1691 Sand Ridge DONE: 23 units 26-40ft, $11 kept, pin move 2.2 km -> 40.3901,-89.8675, phone 309-597-2212, year-round engine
+- 14612 Sandwich: sandwichfair.com/camping 403 Cloudflare 'Just a moment' -> own pages refuse, NO result file. Aggregators (Campendium Nov 2024) say $20/$140/$450, FCFS year-round except fair week; phone 989 is a Michigan code
+- 13407 Schuy-Rush: rushvilleillinois.us/parks Cloudflare 403 block -> own page refuses, NO result file. Aggregators only (Campendium $22 2022, 20/30/50 amp).
+- 1778 Sherwood DONE: 16/129 nightly (~12%) keep w/ caveat, Google 4.4 (89), phone -> 217-532-5211, Firefly not found
+- 1779 Gibson City DONE: city site 500, archived 2026-06-18 post: $20 Campspot, 9 sp, 30A; booking -> campspot; phone '' -> 217-784-5872; name Arrowsmith South Park
+- 13408 Spring Lake Macomb: macombspringlake.com 406 Mod_Security (page + home), cityofmacomb.com 403 -> NO result file

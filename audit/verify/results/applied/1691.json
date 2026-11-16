@@ -1,0 +1,51 @@
+{
+ "id": 1691,
+ "checked": "2026-11-16",
+ "sources": [
+  "https://dnr.illinois.gov/parks/camp/park.sandridge.html (read 2026-11-16): 'Pine Campground ... contains 27 Class \"C\" sites featuring water, pit-vault toilets, fire pads, and a place to park two vehicles. Oak Campground provides open space, water, pit toilets, and council rings for organized group camping. Horseman's Park offers a staging area for equestrian camping ...'; 'Oak Campground and Horseman's Park have shelters and campsites that can be rented by using the ExploreMoreIL website'; 'Backcountry camping is available at 12 primitive sites along 55 miles of trail'",
+  "https://dnr.illinois.gov/parks/park.sandridge.html (read 2026-11-16): Park Phone 309-597-2212; 7,550-acre forest southwest of Peoria",
+  "https://dnr.illinois.gov/closures/currentclosuresofdnrsitesandareas.html (read 2026-11-16): 'Sand Ridge State Forest - All seasonal venues are open'",
+  "https://il-rdr.recreation-management.tylerapp.com/IllinoisRDR/rdr/ (API behind recreation.exploremoreil.com; place 56, search/grid + search/details for facility 339 'Pine Campground', read 2026-11-16): 23 units A01-A08, B01-B08, C01-C05, C07, C08, all Class C, Drive-In, AllowWebBooking true; Electricity/Water/Sewer Hookup None; driveway lengths 26-75 ft, Pad Length / Max Vehicle Length 26-40 ft (smallest B01 26 ft); pull-through B05, B07, C03, C05, C08; Prox to Drink Water 300 ft; rate $8.00 (2026); in-season dates continuous 2026-01-01..2028-01-05. Facility 337 Horseman's Park units sit ~1.5 km west (40.3910,-89.8845)",
+  "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read 2026-11-16): 'Non-Electric (without showers) $11 (formerly C and D)'",
+  "Esri World Imagery with the engine's unit points around 40.3901,-89.8676 (viewed 2026-11-16): sites in a pine plantation south of the forest road; no water nearby"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 11, "nightly_high": 11, "currency": "USD", "checked": "2027",
+              "note": "Illinois DNR 2027 schedule: Non-Electric (formerly Class C) $11. Through 2026 Class C was $8."},
+   "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf + ExploreMoreIL facility 339 (all Class C, drive-in, pads 26-40 ft), read 2026-11-16",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "ExploreMoreIL facility 339 search/details (Electricity/Water/Sewer Hookup 'None' on all 23 units), read 2026-11-16",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 23, "max_rig_ft": 40, "pull_through": true},
+   "source": "ExploreMoreIL facility 339 (23 units; Max Vehicle Length 26-40 ft; pull-through B05, B07, C03, C05, C08), read 2026-11-16",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"potable_water": true, "vault_toilets": true},
+   "source": "https://dnr.illinois.gov/parks/camp/park.sandridge.html ('featuring water, pit-vault toilets'), read 2026-11-16",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "usedirect", "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/56", "fcfs": "some_sites", "season": {"year_round": true}},
+   "source": "ExploreMoreIL place 56 / facility 339 (all 23 units web-bookable; in season every date 2026-01-01..2028-01-05) + DNR camp page (permits from forest headquarters, campground host or silent host), read 2026-11-16",
+   "method": "manual"
+  }
+ },
+ "note": "Illinois DNR state forest near Forest City; Pine Campground sits in a pine plantation, with fire pads and room for two vehicles per site. Horseman's Park, a separate equestrian campground, is about 1.5 km west; Oak Campground is for organized groups; 12 backcountry sites along the trails. --Claude",
+ "summary": "DNR park/camp pages, closures page, 2027 fee PDF and the ExploreMoreIL engine (23 Pine Campground units with lengths) read; imagery viewed. $11 base kept: every unit is a drive-in Class C site taking 26-40 ft. Hookups none, sites 23 / max 40 ft / pull-throughs confirmed. Booking usedirect, year-round sellable. Pin is 2.2 km off the campground - move proposed. Phone none -> 309-597-2212. Not waterfront kept. '$10 reservation fee' text stripped (policy row).",
+ "flags": [
+  "PIN: stored 40.4089,-89.8758 is 2.2 km NNW of Pine Campground; move to 40.3901,-89.8675 (centroid of the engine's 23 unit points).",
+  "PHONE: none -> 309-597-2212 (DNR 'Park Phone'; closures page the same).",
+  "WEBSITE: both stored lines current (park page; ExploreMoreIL #!park/56 = Sand Ridge). No change.",
+  "SITES: DNR page says 27 Class C sites; the engine sells 23 (no A09+, no C06). Count written as 23 from the engine. Stored max_rig_ft 52 was a driveway length; Max Vehicle Length tops out at 40 ft (driveways run to 75 ft on pull-through B07).",
+  "SEASON: engine sells every date of the year (booking.season year_round); no campground season stored or published - left absent. Dump station (old note 'across the road') is not on the DNR page - facilities.dump left derived.",
+  "HORSES: passes - Horseman's Park is its own facility (337) about 1.5 km west of Pine Campground.",
+  "FEES NOTE: '$10 reservation processing fee from 2027' and the other class rates removed (policy row holds them)."
+ ]
+}
