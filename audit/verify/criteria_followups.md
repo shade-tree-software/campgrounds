@@ -2356,3 +2356,13 @@ me drop and report); each needs the research named before a verdict.
 - 3506 Weber Lake: 2027 opening ~05-02 per Campspot capture (stored 05-07 is 2026) - not written.
 - 3540 Wilderness: no reservations Sept 15-Dec 1 (self-register); pin at the park gate, camping spreads ~1 km along the shore.
 - Verifier opened ResNexus (3417) once in the headless browser against the rules; nothing used.
+
+## p3-502 (WI, 2026-11-16)
+- DROPPED: 3578 Harbour Village Resort (sites from $70, pull-through $90; membership park with privately owned condo sites).
+- 3524 Melrose City Park UNREAD and DOUBTFUL: melrosewisconsin.com NXDOMAIN; melrosewi.gov/recreation-park 403; the village's 5-12-26 reservation form lists shelters, ball diamond and pool but NO camping; inclusion evidence is aggregator-only. Village Hall (608) 488-3191. Drop candidate on a future read (or a call).
+- 3460 Little Sand Bay UNREAD (Town of Russell sites Cloudflare 403): likely coastal walk (loops ~100-200 m SW of pin, beach 145-250 m N over park roads/ballfield); phone conflict stored 715-779-5233 vs Google 715-779-5338.
+- 3522 Babcock: temporarily_closed for 2027 (US-51 rebuild), reopening 2028.
+- 3542 Morris-Erickson / 3503 Pine Point (Chippewa County): reservations 10+ days ahead with a 3-night minimum, caretaker sells walk-up nights - kept (one night possible as a walk-up).
+- 3491 Castle Rock: ~31% nightly (61 daily of 197), caveat written.
+- 3458 Avoca: seasonal share unpublished; directory-only values (105 sites, 50A, season, dump) cleared.
+- 3452 North Wood: stored fees had been Dexter's; inclusion_evidence 78 -> 76 electric.

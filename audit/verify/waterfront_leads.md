@@ -1472,3 +1472,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-501 (WI, 2026-11-16)
 - DOWN 3596 Wilton riverview -> not waterfront (Kickapoo a 5-6 m stream 45-110 m off). 3540 Wilderness lakefront confirmed (nightly 108-116 on open grass 15-30 m from the Petenwell Flowage; 117-127 behind trees). 3417 evidence corrected (on-site swim pond, not 600 m south). 3424 tent sites 81-88 lakeview lead (entry dropped). 3402 lakeside lawn with docks ~46.4585,-91.7425 unproven as the campground's.
+
+## p3-502 (WI, 2026-11-16)
+- DOWN 3491 Castle Rock lakefront -> lakeview (premium nightly 89-95 inland of the loop road); 3542 Morris-Erickson lakefront -> lakeview (only site 9 on shore, unconfirmed under canopy - lead if one dock site is enough). 3452 North Wood lakefront kept with caveat (sites 63-67 20-32 m from Lake Manakiki over grassy bank, scattered trees, "Shady") - could be *view. 3557 lakeview kept. LEAD 3460 Little Sand Bay -> coastal walk (unread).

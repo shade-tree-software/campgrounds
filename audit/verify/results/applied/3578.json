@@ -1,0 +1,55 @@
+{
+  "id": 3578,
+  "checked": "2026-11-16",
+  "sources": [
+    "https://harbourvillageresort.net/sites-rates/ (read 2026-11-16: 'Wooded Pull-Through ... SITES START AT $90/NIGHT'; 'Wooded Back-In ... SITES START AT $70/NIGHT'; 'Non-Wooded Back-In ... SITES START AT $70/NIGHT'; 'Group Sites ... SITES START AT $275/NIGHT'; 'Tent Village ... SITES START AT $45/NIGHT'; 'Rustic Tent Sites ... SITES START AT $35/NIGHT'; Park Models $190; 'Daily 1-Day Entrance Fee for Guests of Registered Campers ... $20')",
+    "https://harbourvillageresort.net/ (read 2026-11-16: 'Book your SITE here! 2027 Reservations Open on December 1st!' -> https://letscamp.ca/camps/harbour-village-resort; Member Login; 'Seasonal Site Agreement 2026'; 'Building Permit Information'; Office 920-743-0274)",
+    "https://harbourvillageresort.net/about-us/ (read 2026-11-16: 'offers many amenities from mid-May thru October. With over 470+ camping sites'; 'the park was founded but not open to the public. When the group got together they decided to make it open to the public in the early 90's')",
+    "https://harbourvillageresort.net/help/ and /properties-for-sale/ (read 2026-11-16: 'We have a waiting list for our seasonal sites'; 'we have Condo Sites that are privately owned and may be for sale ... the best way to find out what is for sale is to take a drive through the park and look for \"For Sale\" signs'; 'UDI Member Rules and Regulations'; 'Harbour Village members in good standing are allowed to make reservations ... beginning on November 1'; 'Guests of UDI members must make their own reservations starting on December 1'; 'All of our sites are BACK IN sites excluding our designated \"Pull Thru\" sites')",
+    "https://letscamp.ca/api/camps/harbour-village-resort?locale=en (Let's Camp JSON, read 2026-11-16: minimumPrice 35, minNights 2, maxNights 21; site types Condos, Group Sites, Rustic Tent Sites, Serviced Tent Sites, Cabins, Wooded Pull Through, Seasonal Sites, Work Camper/Employee Sites, Wooded Back-in, Non-Wooded Back-in, RV Oasis Sites)",
+    "trip_data/goodsam_parks.json (Good Sam directory cache 2026-10-02: 'Harbour Village Resort', gs false, military true, type MEMBERSHIP_PARK)",
+    "python3 audit/price_research/gateways.py 44.9538,-87.3368 (2026-11-16: 'none within 40 km; nearest: Sleeping Bear Dunes 102 km')"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 70,
+        "nightly_high": 90,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Operator's rate page: wooded and open back-in RV sites from $70 a night, wooded pull-through from $90; tent sites from $35-45. Guests of registered campers pay a $20 day fee each. Booked through Let's Camp with a two-night minimum."
+      },
+      "source": "https://harbourvillageresort.net/sites-rates/ ('Wooded Back-In ... SITES START AT $70/NIGHT'; 'Wooded Pull-Through ... SITES START AT $90/NIGHT'), read 2026-11-16",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://letscamp.ca/camps/harbour-village-resort",
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "always"
+          }
+        ],
+        "max_stay_nights": 21,
+        "note": "Public bookings for 2027 open December 1 on Let's Camp (association members from November 1)."
+      },
+      "source": "https://harbourvillageresort.net/ ('2027 Reservations Open on December 1st!') + https://letscamp.ca/api/camps/harbour-village-resort (minNights 2, maxNights 21), read 2026-11-16",
+      "method": "manual"
+    }
+  },
+  "note": "Large membership resort and water park in Carlsville, inland off Hwy 42, with condo sites owned by association members, UDI memberships and a waiting list for seasonal sites alongside public nightly sites. --Claude",
+  "summary": "DROP CANDIDATE: operator posts RV sites from $70 (pull-through $90), no Good Sam Park (directory gs false, listed as MEMBERSHIP_PARK), no member discount for the public, no gateway within 40 km. Also a member-owned condo/UDI association with privately owned condo sites for sale (test 5). 2-night minimum on Let's Camp. Google 4.2 / 639.",
+  "flags": [
+    "DROP CANDIDATE (price gate): 'Wooded Back-In ... SITES START AT $70/NIGHT', 'Non-Wooded Back-In ... SITES START AT $70/NIGHT', 'Wooded Pull-Through ... SITES START AT $90/NIGHT'. Not a Good Sam Park (directory gs false), no operator-posted member discount open to the public, and gateways.py finds no gateway within 40 km (nearest Sleeping Bear Dunes 102 km). The stored 'from $35' was Let's Camp's minimum - the rustic tent sites.",
+    "DROP CANDIDATE (long-stay test 5 / membership): 'we have Condo Sites that are privately owned and may be for sale ... look for \"For Sale\" signs'; UDI member rules; 'the park was founded but not open to the public ... open to the public in the early 90's'; Good Sam's directory types it MEMBERSHIP_PARK. Seasonal sites have a waiting list. Nightly share of the '470+' sites is not published (Let's Camp lists Condos, Seasonal and Work Camper/Employee site types beside the nightly ones).",
+    "WATERFRONT: not waterfront kept (inland off Hwy 42; on-site ponds and water park only).",
+    "GOOGLE: 'Harbour Village Campground and Water Park' 4.2 / 639 (5840 WI-42, Sturgeon Bay; pin 44.95380,-87.33674).",
+    "SEASON: 'mid-May thru October' (about page); Let's Camp's 2027 open block is 05-15 to 10-17. Stored 05-15/10-15 approximate left alone.",
+    "PIN 44.9538,-87.3368 matches Google; no move. PHONE 920-743-0274 confirmed. WEBSITES both live.",
+    "DISCOUNTS: military true (Good Sam directory, derived) left as a positive claim; the operator's pages don't mention it. good_sam false matches the directory.",
+    "PRICE GATE BASIS: the operator's 'SITES START AT $70/NIGHT' is its stated floor for any RV site type; Let's Camp's per-date prices were not read (its API gives only the camp-wide minimumPrice 35, the rustic tent rate), so a cheaper shoulder night is unverified."
+  ]
+}

@@ -266813,46 +266813,72 @@
     "state": "WI",
     "ownership": "local",
     "waterfront": "lakefront",
-    "inclusion_evidence": "Wood County Parks + Travel Wisconsin + Good Sam: 99 sites (78 electric) on Yellow River, drive-in RV, online reservations up to 1 yr, $22-30/night",
+    "inclusion_evidence": "Wood County Parks + Travel Wisconsin + Good Sam: 99 sites (76 electric) on Yellow River, drive-in RV, online reservations up to 1 yr, $22-30/night",
     "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.woodcountywi.gov/departments/parks/northpark.aspx\nhttps://parksreservations.woodcountywi.gov/parks/",
+    "website": "https://www.woodcountywi.gov/departments/parks/northpark.aspx\nhttps://parksreservations.woodcountywi.gov/parks/camping/north_campground/",
     "phone": "715-421-8422",
-    "note": "Wood County park on the Yellow River impoundments (Lake Kaunewinne 5 ac, Lake Manakiki 11 ac), 7500 Park Lane, Arpin. 99 sites: 76 electric, 23 non-electric, 5 waterfront, plus a 50-amp group site; showers, laundry, dump station. Reservable online. --Claude",
+    "note": "Wood County park on the Yellow River, where two small dams form Lake Kaunewinne and Lake Manakiki; suspension bridge, swim beach and an 18-hole disc golf course (fee). Only sites 63-67 are on the water (Lake Manakiki). Most non-electric sites (84-99) are grass tent or tent-trailer sites with no pad. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "sites": {
-      "count": 99
+      "count": 99,
+      "pull_through": false
     },
     "facilities": {
       "showers": true,
       "laundry": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true,
+      "flush_toilets": true,
+      "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://parksreservations.woodcountywi.gov/parks/camping/north_campground/",
+      "fcfs": "never",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Reservations required (online, by phone, at the campground or the county office), up to 12 months ahead and as late as the day of arrival. Check-in 2 pm, check-out noon."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.woodcountywi.gov/Departments/Parks/NorthPark.aspx ('a total of 99 campsites') + per-site pages ('Drive Thru Site: No' on all 99), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.woodcountywi.gov/Departments/Parks/NorthPark.aspx (Shower and Laundry Facilities; Dump Station & Potable Water; Toilets (Flush/Vault)), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.woodcountywi.gov/Departments/Parks/Doc/General%20Camping%20Policies.pdf ('RESERVATIONS ARE REQUIRED!'; 'Holidays = 3 nights'; 'maximum of 14 nights'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://parksreservations.woodcountywi.gov/parks/camping/dexter_campground/ (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.woodcountywi.gov/Departments/Parks/Doc/All%20Park%20Fees%20for%202027.pdf + https://parksreservations.woodcountywi.gov/parks/camping/north_campground/, read 2026-11-16 (the stored provenance cited the Dexter campground page)",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://parksreservations.woodcountywi.gov per-site pages (76 sites 'Electric: 50/30/20 Amp'; 'Water & Sewer: No' on every site), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "season": {
+        "source": "2027 Fee Schedule (off-season rates from 'May 1st') + county news release 2026-10-19 ('North Wood County Park campgrounds will close for the season on October 31st at noon' - last night October 30), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -266861,12 +266887,27 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 27,
-      "nightly_high": 40,
+      "nightly_low": 20,
+      "nightly_high": 31,
       "currency": "USD",
       "reservation_fee": 10,
-      "checked": "2026",
-      "note": "Wood County 2026: electric sites $27 a night, waterfront $30, sewer and water $40, non-electric $22; $10 reservation fee. Read 2026-10-15."
+      "checked": "2027",
+      "note": "Wood County 2027: non-electric $23, electric $28, waterfront (sites 63-67) $31; off-season (May 1-15 and October 1 to close) non-electric $20, electric $25, no waterfront premium. $10 non-refundable reservation fee. Group site $115."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false,
+      "sewer": false
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-30"
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://www.woodcountywi.gov/Departments/Parks/NorthPark.aspx (read 2026-11-16: 'Two small manmade dams create Lake Kaunewinne (5 acres) and Lake Manakiki (11 acres)'; 'a total of 99 campsites'; Non-Electric Campsites (23), Electric Campsites (76), Waterfront Campsites (5), Accessible Campsites (2), Group Campsite/50 amp (1); shower and laundry, dump station and potable water, toilets (flush/vault), swimming beach; main entrance 7500 Park Lane, Arpin; office 715-421-8422) https://www.woodcountywi.gov/Departments/Parks/Doc/All%20Park%20Fees%20for%202027.pdf (2027 Fee Schedule, read 2026-11-16: Non Electric $23, Electric $28, Waterfront $31 ('North: 63, 64, 65, 66, 67'), North Park group site $115; 'Off Season Rates: (May 1st -May 15th/ October 1-Close) *Waterfront rates are not in effect. Non Electric: $20 Electric: $25'; 'Non-Refundable Reservation Fee $10'; dump station $20 for non-campers) + the 2026 schedule ($22/$27/$30; off-season $19/$24) https://www.woodcountywi.gov/Departments/Parks/Doc/General%20Camping%20Policies.pdf (read 2026-11-16: 'RESERVATIONS ARE REQUIRED! Campsites must be reserved prior to setting up camping units'; 'as early as 12 months in advance, and as late as the same day of arrival'; 'minimum of 1 night (except for Holidays = 3 nights, Memorial Day, Independence Day and Labor Day); and for a maximum of 14 nights'; check-in 2 pm, check-out noon; North Park off-site camper storage only) https://www.woodcountywi.gov/FileService/GetFile.aspx?FileID=97285a01-f5d8-424a-8755-b374505b0f4e (news release 2026-10-19, read 2026-11-16: 'South Wood County Park and North Wood County Park campgrounds will close for the season on October 31st at noon') https://parksreservations.woodcountywi.gov/parks/camping/north_campground/ and per-site pages site_1 ... site_99, site_88a, site_89a, group_np (read 2026-11-16: 2026 fees $22/$27/$30, 2027 $23/$28/$31; 99 sites - 1-17, 20-99, 88A, 89A - plus the group site, all with Book Now; 76 typed '50/30/20 Amp', 23 Non-Electric; Waterfront: Yes on 63-67 only; Water & Sewer: No on every site; Drive Thru Site: No on every site; electric pads 30-60 ft; most non-electric sites 84-99 have no pad and are 'Tent/Tent Trailers' or 'Hard for large units to back into: Yes', but 82 and 83 say 'All types of campers will fit') https://www.woodcountywi.gov/Departments/Parks/Doc/North%20Park%20Campground%20Map.pdf (updated February 2022, read 2026-11-16: north loops 1-62 west of Lake Kaunewinne; waterfront sites 63-67 on the campground road's lake side just south of the Kaunewinne dam, facing Lake Manakiki; 68-81 farther south on the west road; 82-99 on the south loop toward the river) Esri World Imagery hw 350 m at 44.5175,-90.1410, hw 100 m at 44.5165,-90.1425 and z19 at 44.5163,-90.1428 (autumn, leaf-off), read 2026-11-16: the volleyball court across the road fixes sites 63-67 at ~44.5168-44.5158,-90.1428; pads and a camper ~20-32 m from the Lake Manakiki shore over a grassy bank with scattered deciduous trees and an open grass strip at the water; no road between the sites and the lake",
+      "note": "County park page, 2026/2027 fee PDFs, camping policies, closing notice, all 99 per-site pages and the map read: 76 x 50A electric + 23 non-electric, no water/sewer at sites, no pull-throughs; 2027 $23/$28/$31 (off-season $20/$25) + $10 fee; reservations required, same-day OK, 3-night holiday minimum, 14 max; May 1 - Oct 30; showers, laundry, dump. Lakefront kept with a caveat: only waterfront sites 63-67, ~20-32 m from Lake Manakiki (11 ac)."
     }
   },
   {
@@ -267306,60 +267347,54 @@
     "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C",
     "phone": "608-532-6831",
-    "note": "Village of Avoca municipal campground on Avoca Lake (a backwater/lake off the Wisconsin River). ~105 large, well-spaced sites; all 30-amp electric, 18 sites 50-amp; water at bath houses, dump station, boat ramp, swim beach. Seasonal sites also offered. Open ~Apr 15-Nov 30. Reservable by phone (608-532-6831 weekdays, 608-532-6188 after hours). Reviews report rigs up to ~25-30 ft fit; a 23-ft rig is fine. --Claude",
+    "note": "Village of Avoca campground near Avoca Lake, a backwater off the Wisconsin River, with swimming and fishing in the lake, a free boat launch, play areas and a ballfield. Seasonal sites are also sold; the village doesn't say how many. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50
-    },
-    "sites": {
-      "count": 105
+      "water": true
     },
     "facilities": {
-      "potable_water": true,
-      "dump": true
-    },
-    "season": {
-      "year_round": false,
-      "opens": "04-15",
-      "closes": "11-30"
+      "potable_water": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "fcfs": "always",
+      "note": "Reservations by phone, weekdays 8-5 at the village office, 608-532-6188 after hours; walk-in campers pay at the red box at the entrance."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C (every rate is an electric site, some with water: 'electric only' / 'electric & water'), read 2026-11-16. The stored 50 A rested only on directory prose (which disagree: 30 A vs 18 at 50 A); the village states no amperage, so it is cleared.",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "The stored 105 rested only on directory prose (directories give 75, 87 and 105); the village page states no count (read 2026-11-16), so it is cleared.",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C (water-hookup sites sold), read 2026-11-16. The dump station rested only on directory prose; the village page doesn't mention one, so it is cleared.",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "The stored Apr 15 - Nov 30 rested only on directory prose (AllStays/Campendium say April-November); the village page states no season (read 2026-11-16), so it is cleared.",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C ('Call 608-532-6831 to make reservations ... If you just a daily camper, you can drop your payment in the RED box at the entrance'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C ('$30.00 a night for camping (electric only)'; '$35.00 a night for camping (electric & water)'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -267372,7 +267407,12 @@
       "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "Village of Avoca: electric only $30 a night, electric and water $35; payment box. Read 2026-10-15."
+      "note": "Village of Avoca: electric-only site $30 a night, electric and water $35; seasonal $700/$800. Undated page."
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://villageofavocawi.gov/index.asp?SEC=2C6BA80D-0892-42D8-870F-DE0FEB0FBE8C (Village of Avoca campground page, read 2026-11-16: 'Call 608-532-6831 to make reservations between 8:00 a.m. and 5:00 p.m., Monday through Friday. After hours call 608-532-6188 to make a reservations. If you just a daily camper, you can drop your payment in the RED box at the entrance to the campground.'; '$30.00 a night for camping (electric only)'; '$35.00 a night for camping (electric & water)'; '$700.00.00 for a seasonal without water'; '$800.00 for a seasonal with water'; 'the use of the Avoca Lake for swimming and fishing'; 'Avoca has 1 boat launch area. While it is free to use'; no season, site count, amperage, showers or dump station stated) Directory snippets via web search, 2026-11-16 (not used for any value; they disagree): Good Sam 33 seasonal / 54 electric 30 A; campingroadtrip 87 sites, 18 at 50 A; AllStays/Campendium 75 sites, April-November; Passport America $30-35 Esri World Imagery hw ~300 m at the pin 43.1891,-90.3207, read 2026-11-16: the campground is the wooded loop SE of the pin (centre ~43.1884,-90.3195, ~120 m off); Avoca Lake lies ~250-300 m north, behind houses and the ballfield",
+      "note": "Village page read: $30 electric / $35 electric+water, seasonal $700/$800, phone reservations or pay at the box (fcfs always). Season, count, 50 A and dump rested only on disagreeing directories - cleared. Not waterfront confirmed (lake ~250-300 m north behind houses). Seasonal share unpublished. Phone confirmed."
     }
   },
   {
@@ -268101,53 +268141,69 @@
     "id": 3468,
     "kind": "campground",
     "name": "Brigham County Park",
-    "location": "43.0271,-89.8191",
-    "elevation_meters": 454.0,
+    "location": "43.0275,-89.8157",
+    "elevation_meters": 463.0,
     "state": "WI",
     "ownership": "local",
     "waterfront": "not waterfront",
     "inclusion_evidence": "Dane County Parks park page: 23-unit rustic campground with electric & non-electric camping sites, reservable via reservedane.com -> real drive-in RV campground",
     "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://parks-lwrd.danecounty.gov/park/Brigham\nhttps://www.reservedane.com",
-    "phone": null,
-    "note": "Dane County Parks. 23-unit rustic campground (electric and non-electric sites; some pull-through), pit toilets, no dump station. Reservations required via reservedane.com. Hilltop park with panoramic Wisconsin River Valley views; trails connect to Blue Mound State Park. --Claude",
+    "website": "https://www.danecountyparks.com/park/Brigham\nhttps://www.reservedane.com",
+    "phone": "608-224-3730",
+    "note": "Dane County hilltop park with views over the Wisconsin River Valley; trails connect to Blue Mound State Park and the Military Ridge State Trail. Eight of the 23 sites have electric (1-6, 8 and 10). --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "sites": {
-      "count": 23,
-      "pull_through": true
+      "count": 23
     },
     "facilities": {
       "vault_toilets": true,
-      "dump": false
+      "dump": false,
+      "flush_toilets": true,
+      "potable_water": true,
+      "showers": false
     },
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "fcfs": "never"
+      "fcfs": "never",
+      "url": "https://www.reservedane.com",
+      "max_stay_nights": 14,
+      "note": "Reservations required (ReserveDane); next season's bookings open November 1. Check-in 3 pm, check-out 2 pm."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.danecountyparks.com/park/Brigham ('a 23-unit rustic campground') + campground map, read 2026-11-16. The stored pull-through rested only on note prose; neither the page nor the map marks one, so it is cleared.",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.danecountyparks.com/park/Brigham (Restrooms (vault/pit), Drinking Water) + campground map (vault restrooms at the loop, flush restrooms at the west lot, no dump station) + fees page ('rustic: no showers'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.danecountyparks.com/recreation/camping ('Reservations are required.'; 'maximum stay of 14 days') + Parks-Opening-Closing-Schedule, read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.danecountyparks.com/about/fees (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.danecountyparks.com/about/fees ('Brigham (rustic: no showers) - Electric $33'; 'Non-Electric $23') + https://www.danecountyparks.com/recreation/camping, read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.danecountyparks.com/about/fees ('Senior (65+) / Military / Veteran Discount ($2)'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.danecountyparks.com/about/Parks-Opening-Closing-Schedule ('Brigham April 30, Friday / October 24, Sunday' - first and last night of camping 2027), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -268156,12 +268212,28 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 33,
+      "nightly_low": 23,
       "nightly_high": 33,
       "currency": "USD",
       "reservation_fee": 10,
-      "checked": "2026",
-      "note": "Dane County 2026: Brigham (rustic, no showers) electric sites $33 a night, non-electric $23; $10 administration fee per reservation. Read 2026-10-15."
+      "checked": "2027",
+      "note": "Dane County 2027 fee page: Brigham electric site $33 a night, non-electric $23 (same as 2026); $10 administration fee per reservation; $2 off for seniors (65+), military and veterans. Up to six people and two camping units per site.",
+      "extra_person": {
+        "max_people": 6
+      }
+    },
+    "discounts": {
+      "military": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-30",
+      "closes": "10-24"
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://www.danecountyparks.com/park/Brigham (stored https://parks-lwrd.danecounty.gov/park/Brigham redirects here; read 2026-11-16: 'a 23-unit rustic campground, group camp area, two shelters ... hiking trails that connect to Blue Mound State Park'; the Brigham Trail connects to the Military Ridge State Trail; amenities Camping (electric), Camping (non-electric), Drinking Water, Restrooms (vault/pit)) https://www.danecountyparks.com/documents/PDFs/Maps/Brigham-Campground-Web.pdf (01-2026, read 2026-11-16: 23 sites, electric 1-6, 8 and 10, non-electric 7, 9 and 11-23; vault/pit restrooms by the loop; flush restrooms and drinking water at the west parking lot; drinking water in the loop; no dump station shown) https://www.danecountyparks.com/about/Parks-Opening-Closing-Schedule (read 2026-11-16: 'Campgrounds 2027 ... Brigham April 30, Friday / October 24, Sunday' (first and last night); bookings for the next season open November 1) https://www.danecountyparks.com/about/fees (page titled '2027 Fees', read 2026-11-16: 'Brigham (rustic: no showers) - Electric $33', 'Non-Electric $23', 'Senior (65+) / Military / Veteran Discount ($2)', 'Administration Fee per Camping Reservation $10') https://www.danecountyparks.com/recreation/camping (read 2026-11-16: 'Reservations are required.'; check-in 3:00 p.m., check-out 2:00 p.m.; 'a maximum of six individuals and two camping units'; 'no minimum stay requirement but there is a maximum stay of 14 days'; ReserveDane links not opened - known to refuse) Esri World Imagery hw 220 m at 43.0271,-89.8180 and hw 150 m at 43.0275,-89.8155, read 2026-11-16: the stored pin is at the park road junction by the west parking lot; the camping row and loop lie ~290 m east under woods (~43.0275,-89.8157)",
+      "note": "County pages + campground map read: 23 sites (8 electric), vault toilets in the loop, flush restrooms by the lot, no showers or dump; 2027 Apr 30 - Oct 24; $33 electric / $23 non-electric + $10 admin fee, $2 military discount; reservations required (ReserveDane), 14-night max. Pin at the park road junction - campground ~290 m east. Phone null -> county office. Link redirects."
     }
   },
   {
@@ -270041,62 +270113,75 @@
     "elevation_meters": 272.0,
     "state": "WI",
     "ownership": "local",
-    "waterfront": "lakefront",
+    "waterfront": "lakeview",
     "inclusion_evidence": "Adams County Parks page: drive-in RV/tent campground, standard/premium-lakefront/tent nightly sites, year-round, online reservations -> real county RV campground",
-    "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message) | p3-502 (2026-11-16): the premium nightly sites 89-95 (~43.9094,-89.9405) sit on the inland side of the park loop road; no nightly site on the Castle Rock Lake shore. --Claude",
     "website": "https://www.co.adams.wi.us/parks/castle-rock-county-park\nhttps://www.adamscountyparks.com/parks/camping/castle_rock_county_park/",
     "phone": "608-339-7713",
-    "note": "Adams County park on Castle Rock Lake (Flowage), ~141 acres with 2,500+ ft of lake frontage and 200+ sites (individual, walk-in, lakefront/premium, group), 2397 County Rd Z. Electric & water hookups; sandy swim beach, boat launch/harbor, dump station, heated showers, visitor center. Open year-round, reservable online; sites fit campers 30-40 ft. --Claude",
+    "note": "Adams County park on Castle Rock Lake (Flowage), about 141 acres, with a sandy swim beach, boat launch and harbor. Mostly seasonal: about 61 of its 197 sites are sold by the night (the rest seasonal or yearly), and several of the nightly ones are walk-in tent sites. The lakeshore sites sit behind the park road. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 30
     },
     "sites": {
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "count": 197
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "camp_store": true
     },
     "season": {
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/",
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -120
+      },
+      "note": "Bookings open only for the current calendar year; unreserved sites are first come, first served inside 5 days of arrival. Check-in and check-out 2 pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ site pages (electric pedestals with 30 A and 20 A outlets; water at site), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ (197 site pages; unit size 'large camper (30-40 ft)'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ (heated showers and restrooms open 24 hours; concessions, ice, firewood) + campground map (dump station), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ ('Castle Rock Park is open year-round.'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ ('RESERVATIONS CAN NOT BE MADE WITHIN 5 DAYS OF ARRIVING! Unreserved open campsites become first come first serve'; 'YOU CAN ONLY BOOK FOR THE CURRENT YEAR.'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ (2027 rate table), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -270105,11 +270190,17 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 25,
-      "nightly_high": 30,
+      "nightly_low": 27,
+      "nightly_high": 35,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Adams County 2026: camper/RV $25 a night, premium/lakefront $30, including 2 car passes. Read 2026-10-15."
+      "checked": "2027",
+      "note": "Adams County 2027: camper/RV $27 a night ($162 a week), premium/lakefront $35 ($192 a week), tent $22; one camping unit and two car passes included; $10 non-refundable reservation fee. 2026 was $25/$30.",
+      "reservation_fee": 10
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/ (Adams County Parks' reservation site, read 2026-11-16: 'Castle Rock Park is open year-round.'; 'RESERVATIONS CAN NOT BE MADE WITHIN 5 DAYS OF ARRIVING! Unreserved open campsites become first come first serve'; 'YOU CAN ONLY BOOK FOR THE CURRENT YEAR.'; 2027 nightly camper/RV $27 regular, $35 premium/lakefront, weekly $162/$192, tents $22, fee includes 1 camping unit and 2 car passes; seasonal (153-night minimum) $1,720/$2,180, yearly $2,700/$3,100; '$10 reservation fee' non-refundable; check-in/out 2:00 pm; heated showers and restrooms open 24 hours, 365 days; concessions, ice and firewood; (608) 339-7713, office (608) 339-4230) https://www.adamscountyparks.com/parks/camping/castle_rock_county_park/<site>/ (197 site pages, read 2026-11-16: 'Length of Stay' Daily and Weekly at 61 (57 with 'Book Now'), Seasonal 59, Yearly 71, none 6 (walk-in tent sites 1-5, 134); unit sizes up to 'large camper (30-40 ft)'; pedestals 30 A and 20 A (site 54 20 A only); water at sites; site 143 the only pull-through; Lakefront/Premium RV sites 89-95 nightly, 21, 22, 126-133 seasonal/yearly) https://www.adamscountyparks.com/parks/i/lm/2026-1650x1272.jpg (campground map, north arrow pointing left, read 2026-11-16: dump station, shore row along the park loop road, sites 199-217 east of County Z) https://www.co.adams.wi.us/parks/castle-rock-county-park (200, read 2026-11-16) Esri World Imagery zoom 19 at 43.9094,-89.9405 and hw 300 m at the pin 43.9085,-89.9392, read 2026-11-16: the paved park loop road runs between every shore-row site and the lake, with a thin line of shore trees; water ~20-35 m beyond the road",
+      "note": "County reservation site read in full (197 site pages). 2027 $27/$35 + $10 res fee; year-round; reservations close 5 days out then FCFS; 30 A + water; rigs to 40 ft. Only ~61 of 197 sites sold nightly (59 seasonal, 71 yearly) - mostly seasonal caveat. Lakefront -> lakeview: the park loop road runs between every shore site and the water. Pin is in the campground; phone confirmed."
     }
   },
   {
@@ -272703,9 +272794,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Dane County Parks page: 25-unit campground, electric to all sites, bathhouse/showers/dump, reservable via ReserveDane -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.danecountyparks.com/park/Babcock\nhttps://reservation.danecountyparks.com/",
+    "website": "https://www.danecountyparks.com/park/Babcock\nhttps://www.reservedane.com",
     "phone": "608-224-3730",
-    "note": "Dane County Parks campground on the east side of Lake Waubesa at the Yahara River outflow, near McFarland off US-51. 25-unit campground, electric to all sites; bathhouse/showers, dump station, boat launch, fishing pier. Open ~late Apr-mid Oct. Reservable online or by phone. --Claude",
+    "note": "Dane County park on the east side of Lake Waubesa at the Yahara River outflow, with a boat launch, fish-cleaning station and accessible fishing pier. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -272716,7 +272807,9 @@
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "potable_water": true
     },
     "season": {
       "year_round": false,
@@ -272725,18 +272818,23 @@
       "note": "Approximate: About late April to mid-October."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.reservedane.com",
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "Reservations required (ReserveDane); next season's bookings open November 1. Check-in 3 pm, check-out 2 pm."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.danecountyparks.com/park/Babcock ('a 25-unit campground with electricity supplied to all sites'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.danecountyparks.com/park/Babcock ('a fully accessible bathroom and shower, and a sanitary dump station'; amenities Drinking Water, Restrooms (flush)), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -272744,13 +272842,24 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.danecountyparks.com/recreation/camping ('Reservations are required.'; 'maximum stay of 14 days'; check-in/out times) + Parks-Opening-Closing-Schedule ('can be made starting November 1st'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.danecountyparks.com/about/fees (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.danecountyparks.com/about/fees ('Camping - Electric $38'; 'Administration Fee per Camping Reservation $10') + https://www.danecountyparks.com/recreation/camping ('a maximum of six individuals and two camping units'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.danecountyparks.com/park/Babcock ('Campground: Closed for 2027 Season, Anticipated to Reopen for 2028 Season') + https://www.danecountyparks.com/about/Parks-Opening-Closing-Schedule ('Babcock - CLOSED 2027 due to DOT construction'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.danecountyparks.com/about/fees ('Senior (65+) / Military / Veteran Discount ($2)'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -272763,8 +272872,24 @@
       "nightly_high": 38,
       "currency": "USD",
       "reservation_fee": 10,
-      "checked": "2026",
-      "note": "Dane County 2026: electric sites $38 a night, non-electric $25; $2 off for seniors, military and veterans; $10 administration fee per reservation. Read 2026-10-15."
+      "checked": "2027",
+      "note": "Dane County 2027 fee page: electric site $38 a night (same as 2026); $10 administration fee per reservation; $2 off for seniors (65+), military and veterans. Up to six people and two camping units per site.",
+      "extra_person": {
+        "max_people": 6
+      }
+    },
+    "status": {
+      "operating": "temporarily_closed",
+      "reopens": "2028 (county's target)",
+      "note": "Closed for the 2027 season while WisDOT rebuilds US Highway 51; the county expects to reopen it for 2028. The boat launch is closed winter 2026 through about July 2027."
+    },
+    "discounts": {
+      "military": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://www.danecountyparks.com/park/Babcock (read 2026-11-16: 'Babcock County Park boat launch and campground will be temporarily closed in coordination with the Wisconsin Department of Transportation Highway 51 Reconstruction Project.'; 'Campground: Closed for 2027 Season, Anticipated to Reopen for 2028 Season'; 'a 25-unit campground with electricity supplied to all sites, a fully accessible bathroom and shower, and a sanitary dump station'; boat launch, fish cleaning facility, accessible fishing pier; amenities Drinking Water, Restrooms (flush), Showers) https://www.danecountyparks.com/documents/PDFs/Maps/Babcock-Campground-Web.pdf (campground map 10-2025, read 2026-11-16: 25 electric sites; the west row ~150-200 ft from the Yahara River across a maintained area and a paved trail) https://www.danecountyparks.com/about/Parks-Opening-Closing-Schedule (read 2026-11-16: 'Campgrounds and shelters have CLOSED for the 2026 season.'; 'Babcock - CLOSED 2027 due to DOT construction'; 'Reservations for the upcoming season (the following year) can be made starting November 1st') https://www.danecountyparks.com/about/fees (page titled '2027 Fees', read 2026-11-16: 'Camping - Electric $38', 'Camping - Non-Electric $25', 'Senior (65+) / Military / Veteran Discount ($2)', 'Administration Fee per Camping Reservation $10') https://www.danecountyparks.com/recreation/camping (read 2026-11-16: 'Reservations are required.'; 'Campsite check-in time is 3:00 p.m. / check-out time is no later than 2:00 p.m.'; 'a maximum of six individuals and two camping units (two tents or one RV and one tent) allowed per campsite'; 'There is no minimum stay requirement but there is a maximum stay of 14 days.'; booking links to reservedane.com / web2.myvscloud.com, not opened - known to refuse) https://www.danecountyparks.com/parksproject/detail/WisDOT-US-Highway-51-Improvements and https://lwrd.danecounty.gov/CurrentProjects/Detail/WisDOT-US-Highway-51-Improvements (200, read 2026-11-16: project text loads by script; no dates in the served page) https://reservation.danecountyparks.com/ (stored link, 2026-11-16: does not resolve) Esri World Imagery zoom 18 at 43.0108,-89.3046, read 2026-11-16: the campground loop sits between US-51 and the Yahara River channel (~15-20 m wide) to the west; a tree belt and the paved trail lie between the west-row sites and the channel",
+      "note": "County pages read: CLOSED for 2027 (WisDOT US-51 rebuild), reopening targeted 2028 -> status temporarily_closed. 25 electric sites, showers/flush/dump; $38 + $10 admin fee (2027 page), $2 military/veteran discount; reservations required on ReserveDane, 14-night max. Not waterfront kept. Stored reservation.danecountyparks.com link dead -> reservedane.com."
     }
   },
   {
@@ -274232,12 +274357,12 @@
     "elevation_meters": 327.0,
     "state": "WI",
     "ownership": "local",
-    "waterfront": "lakefront",
+    "waterfront": "lakeview",
     "inclusion_evidence": "Chippewa County reservations page: county park open May-Oct, 20/30/50A electric on all sites, nightly $20+$7 electric, reservable -> real county RV campground",
-    "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
+    "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message) | p3-502 (2026-11-16): only site 9 is on the shore ('the only campsite with a private dock attached', ~45.2538,-91.4144, under canopy, not confirmed on imagery); sites 2-7 are across the picnic area and 8/10 across from the day-use beach. One unconfirmed site -> down. --Claude",
     "website": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/",
     "phone": "715-726-7882",
-    "note": "Chippewa County park on the W shore of Long Lake (28 sites on ~5 acres of frontage), addr 28561 WI-40. 20/30/50A electric on all sites; swimming, fishing, playground. Reservable Mar-Oct via county system. --Claude",
+    "note": "Chippewa County park on Long Lake, a clear 936-acre lake with a boat launch, swim beach and five shared docks. Site 9 alone has its own dock on the shore; the other sites sit back across the picnic area or the beach. Site 28 is hard to back a longer rig into. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -274247,31 +274372,57 @@
       "electric": 50
     },
     "sites": {
-      "count": 28
+      "count": 27,
+      "pull_through": true
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/",
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -240
+      },
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "always"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "County booking site; reservations open the first working day of the year and cover May through mid-September, and must be made at least 10 days ahead. Unreserved sites are sold nightly by the caretaker, first come; mid-September through October is self-registration only. Check-in and check-out 1 pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ ('20-30-50 amp electricity is now installed on all sites'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "per-site pages /2/ through /28/ (27 sites; site 3 'a drive through site'), read 2026-11-16. The stored 28 came from note prose; the map numbers 1-28 but the booking site lists no site 1.",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ + Terms & Conditions PDF ('minimum of 10 days prior to park arrival date - three-night minimum, fourteen-night maximum per reservation'; 'Unreserved sites are sold by the park caretaker, first come, first served on the night you want to camp'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ + Terms & Conditions PDF me_terms_4-9-25.pdf, read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ ('first week in May through the last week in October'; 'closed for the season on 11/1/26') + Terms PDF ('first weekend in May thru November 1'; the first weekend of May 2027 is May 1), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ ('Restroom (Flushing)', 'sanitary dump station located inside the campground') + campground map (well), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -274280,11 +274431,30 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 27,
+      "nightly_low": 20,
       "nightly_high": 27,
       "currency": "USD",
       "checked": "2026",
-      "note": "Chippewa County: sites $20 a night plus $7 for 20/30/50-amp electricity. Read 2026-10-15."
+      "note": "Chippewa County: $20 a night, plus $7 for 20/30/50-amp electric (optional, at every site); a dock slip is $5 a night more. $7 reservation fee per reservation; the seventh night of a reservation is free. Up to six adults a site. Dump station $2 for campers.",
+      "reservation_fee": 7,
+      "extra_person": {
+        "max_people": 6
+      }
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-31"
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/ (read 2026-11-16: 'Sites are $20.00 per night Electricity is an additional $7.00 per night (optional, but available at all sites and the shelter) 20-30-50 amp electricity is now installed on all sites at all parks'; 'Docks are available for an additional $5.00 per night ... Only site 9 has a designated dock'; 'generally open from the first week in May through the last week in October. Reservations open the first working day of the year at 8:00 AM and run from May through mid-September ... From mid-September through October, self-registration camping is available on a first come, first served, basis'; 'Campgrounds closed for the season on 11/1/26'; 'Restroom (Flushing)'; 'sanitary dump station located inside the campground ... $2 for park guests, $6 for visitors'; check-in and check-out 1 pm) https://reservations.chippewacountywi.gov/parks/i/lr/me_terms_4-9-25.pdf (Chippewa County Parks Terms & Conditions, linked from the campground page, read 2026-11-16: 'generally open the first weekend in May thru November 1'; 'Reservation fee = $7/site'; 'All reservations must be made a minimum of 10 days prior to park arrival date - three-night minimum, fourteen-night maximum per reservation - seventh night is free'; 'Unreserved sites are sold by the park caretaker, first come, first served on the night you want to camp. Reservations are not accepted by the caretaker.'; 'No more than 6 adults occupying one site.') https://reservations.chippewacountywi.gov/parks/camping/morriserickson_campground/2/ through /28/ (per-site pages, read 2026-11-16: 27 sites numbered 2-28, every one with Book Now; pads 34-64 ft deep (site 11 34 ft, site 9 64 ft); site 3 'a drive through site'; site 9 'the only campsite with a private dock attached to the site. It is right next to the beach'; sites 2-7 'across the picnic area from the shared boat docks'; sites 8 and 10 'across from the beach'; site 28 'very hard to get a longer rig into') https://reservations.chippewacountywi.gov/parks/i/lm/morriserickson_web.jpg (campground map, read 2026-11-16: sites 1-28 between WI-40 and the lake, boat launch and parking at the east end, beach and site 9 (the one site with a dock) on the south shore, picnic shelter between sites 7-8 and the water) Esri World Imagery hw 250 m at the stored pin, hw 130 m at 45.2542,-91.4136 and z19 at 45.2537,-91.4140, read 2026-11-16: the stored pin is the boat launch; the sites lie west of it under continuous canopy, the swim beach is the only open shore; campers visible ~20-30 m back from the beach under trees",
+      "note": "County page, terms PDF, 27 per-site pages and map read: $20 + $7 electric (50A at every site), $7 reservation fee; reservations May to mid-Sept, 10 days ahead, THREE-NIGHT MINIMUM per reservation (caretaker sells unreserved sites nightly, first come); season May 1 - Oct 31; flush toilets, dump, water. Lakefront -> lakeview: only site 9 touches the shore. Pin is the boat launch, ~150 m from the loop (no move)."
     }
   },
   {
@@ -275547,7 +275717,7 @@
     "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.cityofphillips.com/campground.html",
     "phone": "715-339-3125",
-    "note": "City of Phillips campground on Elk Lake; sites all with electric, coin showers, beach, 8-boat dock. Season not stated (summer). --Claude",
+    "note": "City of Phillips campground on Elk Lake, half a mile from downtown, with a swim beach and an eight-boat dock. Every site has electric. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -275562,27 +275732,29 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "none"
     },
     "provenance": {
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cityofphillips.com/campground.html ('20 campsites') + campground map (1B-20B), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cityofphillips.com/campground.html ('Potable water is available at the building which houses the bathrooms and coin-operated showers'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cityofphillips.com/campground.html ('Campsites are first come, first served and cannot be reserved.'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.cityofphillips.com/campground.html (audit/price_research/local_wi_2026-10-15/wi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.cityofphillips.com/campground.html ('The nightly rate is $30 per campsite.'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -275595,7 +275767,12 @@
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of Phillips: electric sites $30 a night, first come, first served. Read 2026-10-15."
+      "note": "City of Phillips: $30 a night per site, all sites electric. Undated page."
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://www.cityofphillips.com/campground.html (City of Phillips, read 2026-11-16: 'The Chain-O-Lakes Campground features 20 campsites along beautiful Elk Lake'; 'Swim or sunbathe on the beach. Dock your boat ... The new dock system can dock eight boats.'; 'The downtown is about half a mile away'; 'All campsites have electric. Potable water is available at the building which houses the bathrooms and coin-operated showers (that take quarters).'; 'The nightly rate is $30 per campsite. Campsites are first come, first served and cannot be reserved.'; 'Contact the City at 715-339-3125'; no season or amperage stated) https://www.cityofphillips.com/index_html_files/2937.jpg (campground map on the city page, read 2026-11-16: sites 1B-20B along one loop road, 1B-7B south of it and 9B-19B north; 20B at the west end by the shore tree line; beach and docks SW of the turnaround; Elk Lake west, Lake Duroy east across C.T.H. 'H') Esri World Imagery hw 200 m at the pin 45.6968,-90.3973 and zoom 19 at 45.69692,-90.39861, read 2026-11-16: the west end of the loop and site 20B sit behind a ~30-40 m belt of shore trees; the beach and dock are open ground south-west of the turnaround; Lake Duroy lies across C.T.H. H from sites 1B/9B",
+      "note": "City page + its campground map read: 20 sites, all electric, $30, FCFS only, coin showers and water at the bathhouse. Lakeview kept: the west-end site 20B and the loop sit behind a ~30-40 m belt of shore trees; beach/dock open. Season and amperage unstated. Pin in the loop. Phone confirmed."
     }
   },
   {
@@ -277341,96 +277518,6 @@
     }
   },
   {
-    "id": 3578,
-    "kind": "campground",
-    "name": "Harbour Village Resort",
-    "location": "44.9538,-87.3368",
-    "elevation_meters": 222.0,
-    "state": "WI",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "Operator site harbourvillageresort.net: public nightly RV camping (back-in + pull-through) bookable online via letscamp.ca starting Dec 1, plus tent + cabins; condo/seasonal component but transient public sites confirmed -> real drive-in RV campground; re-check 2026-10-14 (Let's Camp pass): priced from https://letscamp.ca/camps/harbour-village-resort, from $35 a night",
-    "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://harbourvillageresort.net/\nhttps://letscamp.ca/camps/harbour-village-resort",
-    "phone": "920-743-0274",
-    "note": "Large private Door County resort campground/waterpark (~300 acres) in Carlsville. Public nightly RV sites bookable online (wooded/open pull-through + back-in, electric + water, dump station for sewer; no full hookups). Also runs UDI/condo and seasonal memberships, but transient public camping is confirmed across independent sources. Open ~mid-May to mid-Oct. Inland off Hwy 42 with on-site swim/fishing ponds + waterpark, not on Green Bay. --Claude",
-    "rating": {
-      "stars": 3.5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "water": true,
-      "sewer": false
-    },
-    "sites": {
-      "pull_through": true
-    },
-    "season": {
-      "year_round": false,
-      "opens": "05-15",
-      "closes": "10-15",
-      "note": "Approximate: Mid-May to mid-October."
-    },
-    "booking": {
-      "reservable": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://letscamp.ca/camps/harbour-village-resort ('startingAtPrice 35, per night (Let's Camp directory API)'), read 2026-10-14",
-        "checked": "2026-10-14"
-      }
-    },
-    "note_scan": {
-      "sig": "99c6f489e2d93580",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "discounts": {
-      "good_sam": false,
-      "military": true
-    },
-    "facilities": {
-      "dump": true
-    },
-    "fees": {
-      "nightly_low": 35,
-      "currency": "USD",
-      "checked": "2026",
-      "note": "Let's Camp lists RV sites from $35 a night. Read 2026-10-14."
-    }
-  },
-  {
     "id": 3580,
     "kind": "campground",
     "name": "Josie Creek County Park",
@@ -278297,7 +278384,7 @@
     "waterfront_evidence": "audited 2026-06 (WI local-government evidence-gate sweep, commit bcf7803); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://villageofwausaukee.com/campground\nhttps://www.campspot.com/park/evergreen-park-and-campground",
     "phone": "715-856-5341",
-    "note": "Village of Wausaukee park of about 40 acres on the village's northeast edge, with the Wausaukee River, a class 2 trout stream, and Evergreen Park Pond on site.  Deluxe full-hookup sites and rustic electric ones; the showers take coins. --Claude",
+    "note": "Village of Wausaukee park of about 40 acres on the village's northeast edge, with hiking trails and footbridges over the Wausaukee River (a class 2 trout stream) and Evergreen Park Pond on site. The showers take coins. ATVs aren't allowed in the park, though campers may drive from their site to the trails and roads. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 3,
@@ -278317,7 +278404,8 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/evergreenpark-wausaukee"
     },
     "provenance": {
       "hookups": {
@@ -278325,19 +278413,19 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.villageofwausaukee.com/campground ('40 sites to choose from - Deluxe full hook-up, Deluxe full hook-up/Pull through or cozy wooded Rustic Sites with Electric'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.villageofwausaukee.com/campground ('Brand new bathroom and coin operated shower facility'), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.villageofwausaukee.com/campground ('For Campsite & Pavilion Reservations: Reserve' -> https://www.campspot.com/book/evergreenpark-wausaukee), read 2026-11-16",
+        "checked": "2026-11-16",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -278373,6 +278461,11 @@
       "reservation_fee": 4,
       "checked": "2026",
       "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Rustic RV Site, Deluxe Full Hookup Pull-Through RV Site and Deluxe Full Hookup RV Site). June 2027: $29-43, Tuesday and Saturday alike. Campspot shows the park closed in October 2026 and January 2027. Plus the park's $4 '$4 Transaction Fee', once per stay. Read 2026-10-13."
+    },
+    "verify_scan": {
+      "checked": "2026-11-16",
+      "sources": "https://www.villageofwausaukee.com/campground (Village of Wausaukee, read 2026-11-16: 'The Wausaukee Evergreen Campground is owned by the Village of Wausaukee. Located on the northeast edge of the Village limits'; '40 sites to choose from - Deluxe full hook-up, Deluxe full hook-up/Pull through or cozy wooded Rustic Sites with Electric'; 'Brand new bathroom and coin operated shower facility'; 'Hiking trails with several bridges crossing the Wausaukee River'; 'Wausaukee River fishing (a class 2 trout stream)'; 'Access to the Evergreen Park Pond'; 'ATV's are not allowed in the park (campers may drive directly from site to trails/roads)'; Village Hall (715) 856-5341; Reserve button -> https://www.campspot.com/book/evergreenpark-wausaukee) https://www.campspot.com/park/evergreen-park-and-campground (403 to a plain fetch 2026-11-16 - unread today; the earlier capture audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13, shows: closed 2026-10-16 to 2027-04-30 and 2027-10-16 to 2028-04-30; nightly types Deluxe Full Hookup Pull-Through (9 + 1), Deluxe Full Hookup (9 + 2), Rustic RV (2), Rustic Pop-up/Tent (4, 20 ft), Water + Electric Pop-up/Tent (1), Water + Electric Waterfront Tent (2); Monthly Deluxe 3 sites with a 30-night minimum, Seasonal Deluxe 5 sites with a 125-night minimum; 20/30/50 A; June 2027 Rustic RV $29, Deluxe $43 before the $4 transaction fee) trip_data/goodsam_parks.json (Good Sam directory cache 2026-10-02: 'Evergreen Park & Campground', Wausaukee, gs true, type PUBLIC_PARK) Esri World Imagery hw 220 m at the pin 45.3806,-87.9501, read 2026-11-16: the pin is at the bathhouse by the park road; camping in the pines and an open loop to the east; Evergreen Park Pond ~150 m west; the Wausaukee River runs in a wooded ravine south of the camping",
+      "note": "Village page read: 40 sites (full-hookup, pull-through, rustic electric), coin showers, books on Campspot. Campspot 403 today; Oct capture: May 1 - Oct 15, $29-43 + $4 fee, 30 of 38 bookable sites nightly (5 seasonal, 3 monthly). Not waterfront kept (river in a wooded ravine, pond ~150 m). ATV access from sites noted. Good Sam directory gs true. Pin at the bathhouse."
     }
   },
   {
