@@ -1480,3 +1480,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - DOWN 3585 Sidie Hollow lakeview -> not waterfront (creekside lead: nightly 214-218 on open grass 20-30 m from Coe Hollow Creek); 3484 Twelve Foot Falls riverview -> not waterfront; 3573 Otter Lake lakefront -> lakeview (canopy to shore); 3575 Stockholm lakefront -> lakeview (tree band); 3581 Trego riverview -> not waterfront.
 - UP 3538 Victoria Riverside not waterfront -> riverview; RIVERFRONT LEAD if sites 1-7 are confirmed nightly (15-30 m from the Wisconsin over sand/grass).
 - Kept: 3570 Shell Lake lakefront (nightly 1-6, 9, 10 on open grass 10-25 m); 3528 East Arbutus lakefront (many nightly sites on open sand/grass 15-40 m); 3507 Twin Bear lakefront, narrowly (37-40, schematic map).
+
+## p3-504 (WI, 2026-11-16)
+- DOWN 3323 Ada Lake lakefront -> lakeview; 3335 Anvil Lake lakefront -> not waterfront; 3543 Southworth lakeview -> not waterfront. UP 13428 Banker Park not waterfront -> creekside (open grass 13-25 m from the Kickapoo). Kept: 3463 Doolittle lakefront (25-35 on open lawn, nightly status of dock sites unstated); 3348 Beaver Lake lakefront on site 7 alone (caveat; lakeview if one site is not enough); 15350 Bear Lake lakefront on L4 + the double; 3336 riverview, 3337 lakeview.

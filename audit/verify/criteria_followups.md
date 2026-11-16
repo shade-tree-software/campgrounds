@@ -2380,3 +2380,13 @@ me drop and report); each needs the research named before a verdict.
 
 ## Price-gate correction (AWH 2026-11-16)
 - I had briefed verifiers (p3-491..503) that summer-over / shoulder-under FAILS the gate; AWH's 2026-10-30 Shelby rule is the cheapest real RV night in any season. Reviewed the four drops made on it: 3370 Rivers Edge RESTORED (AWH; $45 May weeknights, Google 4.7/128; p3-493 result applied); 3387 Hi-Pines, 3419 Hickory Oaks, 14490 Lake Joy stay dropped (AWH; borderline price + mediocre reviews). HTR Door County 3486 kept (AWH), Reel Livin' 3394 dropped (AWH).
+
+## p3-504 (WI, 2026-11-16)
+- No drops. 13428 Banker Park (Viola) weakest: no official rate/site count/season (village page no longer shows $20; Campendium $12 undated); Google 4.6/69 is the whole park's. Horse arena/barns separate across the highway - passes.
+- 15350 Bear Lake (Manawa): basic W/E site $50 (2026 page), $48 Campspot quote - AT the gate; any 2027 increase on the basic site fails it. ~47% nightly (note says so). Google 4.5/633.
+- 2027 FS seasons differ by a day from the stored manual 2026 dates (not written): 3323 04-29..10-12, 3335 04-29..10-12, 3337 04-29..11-29, 3348 05-01..10-11.
+- 3296 Amnicon Falls temporarily closed through May 27, 2027 (road maintenance); GoingToCamp unread (fee, lengths; stored 50 ft unsourced).
+- 3336 Bagley Rapids now on rec.gov (10057827, 15 of 30 reservable) - booking fixed. 3337 Bear Lake max rig 30 -> 64. 3348 Beaver Lake max 35 (FS 25-30).
+- 3323 FS page "All sites first-come" vs rec.gov 9 reservable.
+- Renamed: 3463 Doolittle Park (village, not county), 3543 Southworth Memorial Park, 3552 Crowley Park Campground. 3463 dock sites nightly vs seasonal unstated; 29 of 40 sites fit 23 ft. 3543 ATV/UTV on park roads since 2025 (general campground).
+- 3552 Owen: old city site dead, new cityofowenwi.gov has no campground page; season only in a 2020 flyer.

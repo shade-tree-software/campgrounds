@@ -1,0 +1,53 @@
+{
+  "id": 15350,
+  "checked": "2026-11-16",
+  "sources": [
+    "https://www.bearlakecampground.com/rates (2026 rates: basic water/electric $50/nt, lakeview $56, lakefront $58, lakefront double $116, lakefront private beach $85, full hook-up 50 A $63; seasonal $2,600 / $3,200), read 2026-11-16",
+    "https://www.bearlakecampground.com/types-of-sites, /faq-1, /rules-policies, /amenities, read 2026-11-16",
+    "https://www.bearlakecampground.com/campground-map (operator's site map, legend: pink = seasonal site), read 2026-11-16",
+    "https://www.campspot.com/book/bearlakecampground (availability API for 2026-11-24, park closed: site types and site lists; Lakefront/Lakeview type photos), read 2026-11-16",
+    "Google Maps 'Bear Lake Campground' Manawa: 4.5 from 633 reviews, read 2026-11-16",
+    "trip_data/goodsam_parks.json: directory row, isGsPark false",
+    "audit/price_research/gateways.py 44.40911,-88.93656: none within 40 km (nearest Wisconsin Dells 110 km)",
+    "Esri World Imagery 300 m half-width at 44.4100,-88.9375 and zoom 19 at 44.4105,-88.9385"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.bearlakecampground.com/faq-1 ('Yes, all of our sites have water and electric. We have 20 sites that have Sewer/50 amp electric, they are sites 401-420'); /types-of-sites ('30amp Electric ( 50amp on sites 91-97)'), read 2026-11-16",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 209, "note": "About 99 RV/tent sites sold by the night on Campspot (60 basic, 7 lakeview, 10 lakefront, a private-beach site, a lakefront double, 20 full hook-up 401-420); about 110 seasonal sites (the pink sites on the operator's map: much of 1-22, 57-81, 100, 121-164, 301-319 and 421-459). Two deluxe cabins. Basic sites post 32-35 ft on Campspot."},
+      "source": "https://www.bearlakecampground.com/campground-map (map legend 'Seasonal Site with 50 Amp Electric', ~110 pink sites counted); https://www.campspot.com/book/bearlakecampground availability for 2026-11-24 (Basic Campsite 60, Full Hook-Up RV Site 20, Lakefront Campsite 10, Lakefront Campsite with Private Beach 1, Lakefront Double Site 1, Lakeview Campsite 7, Deluxe Cabin 2), read 2026-11-16",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "laundry": true, "camp_store": true, "note": "Pay showers (50 cents for eight minutes). Bar and grill on site; swimming beach, kayak and aqua-cycle rentals. No boat launch on the property (a public one is nearby)."},
+      "source": "https://www.bearlakecampground.com/amenities ('Restaurant/bar / Snack bar / Groceries / ... Dump station / Pay showers / Laundry'); /faq-1 ('They are $.50 for eight minutes'; 'Is there a boat launch on property? There is not'); /rules-policies ('flush bathrooms'), read 2026-11-16",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 48, "nightly_high": 63, "currency": "USD", "extra_person": {"included": 2, "amount": 10, "per": "night"}, "checked": "2026-11-16", "note": "Basic water/electric $50 ($48 quoted on Campspot for October 2026), lakeview $56, lakefront $58, 50-amp full hook-up $63, the private-beach site $85 and the lakefront double (two rigs) $116 a night; four adults at most on a site."},
+      "source": "https://www.bearlakecampground.com/rates (read 2026-11-16); Campspot quote for 2026-10-20 recorded in the entry's inclusion_evidence; /types-of-sites ('There will be an additional charge for extra adults of $10 per adult per night'; 'four adult max'), read 2026-11-16",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/bearlakecampground", "min_stay": [{"nights": 2, "applies": "always"}, {"nights": 3, "applies": "holiday"}], "note": "Next season's sites open online on January 2 at 8 am. Renter must be 21 or older."},
+      "source": "https://www.bearlakecampground.com/faq-1 ('There is a two night minimum. There is a three night minimum required for holiday weekends (Memorial Day, Fourth of July and Labor Day)'); /rules-policies ('You can book online starting January 2nd at 8:00am'; 'MUST BE 21 YEARS OR OLDER TO RENT A SITE'), read 2026-11-16",
+      "method": "manual"
+    }
+  },
+  "note": "Campground with a bar and grill on 200-acre Bear Lake, on WI-22 north of Manawa. Mostly seasonal: about 99 of its roughly 210 sites are sold by the night. The lakefront sites line the shore under tall pines, one with its own small sand beach; the lakefront double sits beside the bar and its weekend tiki hut and is never quiet. Full hook-up sites 401-412 run along the highway behind a tree line. Opens when the frost is out of the ground; the water is shut off on the third Monday in October. --Claude",
+  "summary": "Operator site (rates, site types, FAQ, rules, map), Campspot and Google read. Price gate passes at $50 (basic summer site; Campspot $48). Nightly share ~47% (99 nightly of ~209; ~110 seasonal on the map) -> keep with the 'Mostly seasonal' line. 2-night minimum, 3 on holiday weekends (not a 3+ standing minimum). Lakefront kept on the private-beach site L4 and the lakefront double.",
+  "flags": [
+    "LONG-STAY: ~99 nightly sites (Campspot) of ~209 (~110 pink 'Seasonal Site' on the operator's map) = ~47% nightly, inside the 10-50% keep-with-caveat band; the note says so. Seasonal $2,600 / $3,200 posted beside nightly rates; no wording discourages nightly guests. Google 4.5 from 633 reviews.",
+    "PRICE GATE: passes. Ordinary RV site (basic water/electric) $50/nt on the operator's 2026 rate page, $48 quoted on Campspot (Oct 2026); premium types run $56-63 (private beach $85, double $116). Not a Good Sam Park (directory row isGsPark false); no gateway within 40 km. At the line: a 2027 increase of even $1 on the basic site would fail it.",
+    "MINIMUM STAY: 2 nights always, 3 on Memorial Day / Fourth of July / Labor Day weekends (FAQ). Not a standing 3+ minimum. The stored min_stay lacked the holiday rule.",
+    "WATERFRONT: stored lakefront (a Claude value) kept. Site L4 ('Lakefront with Private Beach', its own sand beach at the water's edge, ~44.4110,-88.9384) and the Lakefront Double Site ('right on the lake', beside the bar's open grassy beach, ~44.4115,-88.9378) are at the water over open ground, both sold nightly ($85, $116). Lakefront sites L2-L12 (L5-L12 nightly on Campspot, along the shore ~44.4110,-88.9384 to ~44.4098,-88.9395) sit under a continuous tall-pine canopy on imagery; their Campspot photos show bare ground under high trunks to the water ~10-20 m off. By the canopy rule those are views, so the value rests on L4 and the double; the reviewer may prefer lakefront with a caveat naming them.",
+    "SEASON: no dates posted. 'We open when the frost is out of the ground... The water is shut off on the third Monday in October' (2027: October 18); Campspot shows the resort closed in late November. Season group left unwritten.",
+    "Not age-restricted (the 21+ rule is for renting a site). ATV/UTVs may be driven from the site to the county roads only; not an OHV park.",
+    "Phone 920-596-3308 (campground; bar 920-596-3940) confirmed. Websites current. Pin 44.40911,-88.93656 sits on the camping area by the ball field; fine.",
+    "Lead/split: none."
+  ]
+}
