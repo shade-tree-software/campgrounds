@@ -2269,3 +2269,12 @@ me drop and report); each needs the research named before a verdict.
 - 3479 Pecatonica River Trails: darlingtonwi.org links 404/Cloudflare - website now the claimed RoverPass listing; Cheese Country ATV trail side (town campground, kept).
 - 3561 Nugget Lake: season conflict (web Apr 1-Nov 30 vs 2025 handout Apr 1-Oct 31), stored kept.
 - UNREAD: 3374 Mohican RV Park (North Star casino; Cloudflare). Capture: real 57-site full-hookup RV loop, $35/$45, Google 4.1/10; pin 350 m off at the c-store (target 44.8740,-88.8600); RV line 715-787-2751 vs stored casino 715-787-3110 - apply on the next read.
+
+## p3-493 (WI, 2026-11-16)
+- DROPPED: 3442 Potawatomi Carter Casino (casino-lot RV parking, 3-day limit "so others may use the parking"); 3412 Rest EZ (Google 3.8/62); 3370 Rivers Edge (ordinary sites $55-65 in summer, 31% nightly; Hi-Pines precedent).
+- 3382 Rohr's Wilderness Tours: confirmed 27 drive-in RV sites sold nightly ($38-45); booking -> claimed RoverPass.
+- 3451 Petenwell: 44% nightly - mostly-seasonal line; stored 2-night minimum unsupported by any page read (left).
+- 3527 Russell Memorial: now year_round (Oct-Apr self-register); sites 31-39 construction closure from 2026-10-05; stored max_rig 25 / 30A unverified (WebTrac refuses).
+- 3488 Sheboygan Marsh: water spigots up to 200 ft from sites (note); sheboygancounty.com 403 (county link kept).
+- 574 Point Beach: GoingToCamp API 403 - fees/booking unread; pin moved 3.8 km to the campground.
+- OHV sides kept: 3451 (ATV sites 501-520), 3382, 3527.

@@ -1442,3 +1442,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-492 (WI, 2026-11-16)
 - DOWN 3525 Lake of the Falls riverfront -> riverview (canopy to shore); DOWN 3550 North Bay Shore bayfront -> bayview (60-90 m through trees/reeds); DOWN 3555 Peshtigo Badger Park riverview -> not waterfront (190-230 m); 3479 Pecatonica riverview -> creekside (sites 9-10 35-40 m over open bank; river 22-27 m wide). 3523 Medford riverview kept.
+
+## p3-493 (WI, 2026-11-16)
+- DOWN 3569 Shawano Lake lakeview -> not waterfront. 3451 Petenwell and 3527 Russell Memorial lakefront confirmed; 3545 Riverside (New Lisbon) riverfront kept (sites 48-54, channel 35-40 m wide - near the creekside line).
+- 3488 Sheboygan Marsh lakeview kept but weak (cattail bank may screen the pool; no site photos). 574 Point Beach --AWH coastal walk agrees with the DNR ("none of the sites offer a view of the lake").
