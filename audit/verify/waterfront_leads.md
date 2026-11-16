@@ -1450,3 +1450,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-494 (WI, 2026-11-16)
 - DOWN 3399 Top O' The Morn lakefront -> lakeview (45-50 m across its own beach/docks). Lakefront confirmed: 3597 South Wood (county waterfront sites 13-15, 36/37/39/41), 3532 Totogatic (50 county-flagged sites). 3588 Thompson's West End lakefront BORDERLINE (south row 45-50 m over lawn, seasonal mix unknown; fallback coastal walk).
 - LEAD 3592 Veterans Memorial West Salem (unread): west loop 25-40 m from the 30-35 m La Crosse River among scattered trees.
+
+## p3-495 (WI, 2026-11-16)
+- DOWN 3490 Waubedonia riverfront -> riverview; DOWN 3469 Cameron Veterans Memorial lakefront -> lakeview (tree strip). UP 3515 Big Bay Town Park not waterfront -> coastal walk (own Lake Superior beach 300-600 m by park road). 782 Blackhawk --AWH riverfront agrees (rec.gov West loop 40-57 Riverfront).
+- LEAD 3408 Wildwood Haven site 1 (~46.2603,-90.6426): possible single-site lakefront (imagery predates the layout). 3472 Clear Lake Park unread.

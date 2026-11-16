@@ -2287,3 +2287,12 @@ me drop and report); each needs the research named before a verdict.
 - 3597 South Wood: fees corrected $23-31 (stored $40 was Dexter Park's).
 - Unsourced values left: 3385 count 96, 3556 max_rig 40, 3475 max_rig 60, 3532 50A.
 - UNREAD: 3592 Veterans Memorial (West Salem; La Crosse County 403). Capture: 102 sites 50A/water $38, Apr 15-Oct 15; campground line 608-789-8599 vs stored county 608-786-4011.
+
+## p3-495 (WI, 2026-11-16)
+- No drops. 3446 Arbor Vitae: ~38 of ~109 nightly (109 unsourced) - mostly-seasonal line; Google 5.0/15; a holder's trailer-for-sale listing, not lot sales.
+- 3408 Wildwood Haven: monthly rates on most RV sites ($900-1,025) and a Firefly "Mellon Pipeline Project" workforce rate; occupancy check inconclusive (reCAPTCHA). Kept - watch for workforce/long-stay.
+- 3407 Central Wisconsin State Fair: fairgrounds test passes; fees from the 2025 form (no 2026 form).
+- 3469 Cameron Veterans Memorial: water false -> true; season closes 09-30.
+- 3490 Waubedonia: fees $20-28 set (note's $10 wrong); booking phone -> Planyo.
+- UNREAD: 3472 Clear Lake Park (clearlake-wi.gov 403; Google 4.6/264; lakeview call needs the site map).
+- LEAD: Hawthorne Hills County Park (Saukville, Ozaukee County) - on the March 2026 fee table at $22-30, probably not open yet; not in the DB.
