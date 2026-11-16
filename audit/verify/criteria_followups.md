@@ -2184,3 +2184,11 @@ me drop and report); each needs the research named before a verdict.
 - 4078 Button Bay: derived booking group repeats the statewide 2-night/7-day minimum (left). Stored max_rig 31 wrong (35).
 - 4073 Half Moon Pond: fcfs after_cutoff (from note prose) cleared to null - state:VT row says none held for walk-ins.
 - 362 Elmore: 18 of 38 RV-capable sites list exactly 23 ft (tight). 4072 Gifford Woods: 'third weekend in October' read as Sunday 10-18 (unchecked against the calendar). 675 Stillwater: 2027 opens May 21 (manual 05-15 left).
+
+## p3-483 (VT, 2026-11-16)
+- UNREAD 4097 Hazen's Notch (operator site Mod_Security 406; no result file). Google 4.5/17; stored $50 at the gate; lakeview + nightly share unverified. Phone-list candidate.
+- 4090 Kenolie Village: operator site down (HTTP 500); claimed RoverPass $37/$40; ~100 trailers with decks/sheds on 2024 imagery = mostly seasonal but not iffy (Google 4.7/103) - kept, note says so. RoverPass season Apr 16-Oct 14 vs stored 04-10/10-25.
+- 4088 Prouty Beach: count 44 (online) vs 82 numbered RV sites; ~60% nightly; fees now $55 resident / +$10 non-resident / prime $70 / waterfront $75; ATVs allowed on campsites (general campground).
+- 4083 Winhall Brook: 'North side closed for construction' stale (North booked Aug-Oct 2026); bridge 16 t passes; flood-retention notice in the note; 2026 opened late (06-12).
+- Manual seasons with a different 2027 date (flag only): 204 Woodford opens 05-28, 299 Emerald Lake 05-28, 615 Fort Dummer 05-28/09-06.
+- 4075 Branbury count 43 -> 36 (lean-tos out); inclusion evidence could be refreshed.

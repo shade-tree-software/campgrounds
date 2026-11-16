@@ -1400,3 +1400,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-482 (VT, 2026-11-16)
 - DOWN 4079 Ricker Pond pond -> lakeview (two RV shore sites behind a wooded strip).
 - KEPT 4073 Half Moon Pond pond (T14, T17, T25-T29 on open grass 10-20 m). 675 Stillwater --AWH lakefront agreed (T10, T14, T16). 4078 Button Bay lakeview (bluff). 4068 Wilgus riverview (steep wooded bank).
+
+## p3-483 (VT, 2026-11-16)
+- DOWN 204 Woodford lakefront -> lakeview (conifer belt); 4075 Branbury lakeview -> not waterfront (70-110 m behind the beach); 4083 Winhall Brook riverfront -> riverview (bank trees/brush).
+- KEPT 4088 Prouty lakeview: the city's 'waterfront' sites 59-63 (~44.9459,-72.2079) are ~50 m with the shore bike path and public beach between. 615 Fort Dummer --AWH not waterfront agreed.
