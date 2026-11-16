@@ -1439,3 +1439,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-491 (WI, 2026-11-16)
 - DOWN 3554 Hines Park riverfront -> riverview. 3378 Hoeft's lakefront confirmed (peninsula sites 1-10). 3547 Hatfield lakeview kept (sites 14-16 15-20 m behind a shrub fringe - lead).
 - LEAD 3576 Goose Island (unread): west row along the main Mississippi channel looks riverfront.
+
+## p3-492 (WI, 2026-11-16)
+- DOWN 3525 Lake of the Falls riverfront -> riverview (canopy to shore); DOWN 3550 North Bay Shore bayfront -> bayview (60-90 m through trees/reeds); DOWN 3555 Peshtigo Badger Park riverview -> not waterfront (190-230 m); 3479 Pecatonica riverview -> creekside (sites 9-10 35-40 m over open bank; river 22-27 m wide). 3523 Medford riverview kept.

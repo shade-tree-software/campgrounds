@@ -2262,3 +2262,10 @@ me drop and report); each needs the research named before a verdict.
 - OHV sides kept: 3483 Drummond Lake.
 - UNREAD: 3369 Featherstone (406; Oct capture $35, Google 4.6/35), 3576 Goose Island (La Crosse County Cloudflare; Oct capture 20 sites 50A $38; west row riverfront lead), 3494 James N. McNally (Grantsburg Cloudflare).
 - LEAD to vet: McNally West (Grantsburg, 400 W Olson Dr, opened 2025-09, 30 sites) - beside 3494; expansion or new entry.
+
+## p3-492 (WI, 2026-11-16)
+- No drops. 3372 Lost Falls ~82% nightly, $48, Google 4.6/228 - passes.
+- 3504 Ledge Park: closed Apr 15 - May 16, 2027 for resurfacing (season note).
+- 3479 Pecatonica River Trails: darlingtonwi.org links 404/Cloudflare - website now the claimed RoverPass listing; Cheese Country ATV trail side (town campground, kept).
+- 3561 Nugget Lake: season conflict (web Apr 1-Nov 30 vs 2025 handout Apr 1-Oct 31), stored kept.
+- UNREAD: 3374 Mohican RV Park (North Star casino; Cloudflare). Capture: real 57-site full-hookup RV loop, $35/$45, Google 4.1/10; pin 350 m off at the c-store (target 44.8740,-88.8600); RV line 715-787-2751 vs stored casino 715-787-3110 - apply on the next read.
