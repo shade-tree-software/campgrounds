@@ -647,6 +647,8 @@ Site unreadable now (406). The 2026-10-16 copy lists sites at $36/$39 (electric)
 
 ## 3486 HTR Door County (WI, private, Good Sam Park) - price gate? (p3-497, 2026-11-16)
 Cheapest RV type (Deluxe Back In, full hookup) on Newbook: $49 on May/September 2027 Tuesdays; $54 on a June Tuesday ($48.60 after the Good Sam 10%); $80.66 on a July Saturday ($72.59 after Good Sam). No gateway within 40 km. Google 4.4/584; engine sells 6+ full-hookup types nightly. The GS exception covers weekday summer nights but not peak weekends. Kept meanwhile - keep or drop?
+**AWH 2026-11-16: keep.**
 
 ## 3394 Reel Livin' Resort and Campground (WI, private) - price gate? (p3-499, 2026-11-16)
 Operator: "Full Hook-up Daily $50 - $55" (when each applies not stated). No Good Sam record, no member discount (a 2% Venmo discount only), no gateway within 40 km. Mostly seasonal: about 7 of 32 sites nightly (note says so). Google 4.9/216 shared with the bar; RV Life 4*/$$. Now lakeview (RVs behind the shore cabins). Kept meanwhile - keep or drop?
+**AWH 2026-11-16: drop** (dropped same day, criteria_drops.py).

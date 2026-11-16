@@ -586,6 +586,7 @@ DROPS = {
     3424: ('2026-11-16', "West Bay Camping Resort (WI, private): poor Google reviews", "p3-501: Google 3.8 over 80 reviews (private park under 4.0 with 25+ reviews); RV Life 5/2026 'Dirt sites, not very level ... not well kept up', low water pressure; no --AWH note."),
     3427: ('2026-11-16', "White Tail Ridge Campground & RV Park (WI, private): under 1 site in 10 sold by the night (long-stay test 4)", "p3-501: park map legend 'NO COLOR = WEEKEND SITES' - ~13 uncoloured vs ~135-140 red seasonal sites; RV Life reviews 'mostly seasonal', 'almost all permanent sites'; Checkfront booking refused; Google 4.7/140."),
     3578: ('2026-11-16', "Harbour Village Resort (WI, private): over the price gate; membership park with privately owned condo sites", "p3-502: operator 'SITES START AT $70/NIGHT' (back-ins), pull-through $90; Good Sam directory MEMBERSHIP_PARK, gs false; no public member discount; no gateway within 40 km (Sleeping Bear Dunes 102 km); 'Condo Sites that are privately owned and may be for sale', UDI member rules; stored 'from $35' was Let's Camp's rustic tent minimum; Google 4.2/639."),
+    3394: ('2026-11-16', "Reel Livin' Resort and Campground (WI, private): over the price gate (AWH ruling 2026-11-16)", "p3-499: operator 'Full Hook-up Daily $50 - $55'; no Good Sam record or posted member discount (2% Venmo only); no gateway within 40 km; ~7 of 32 sites nightly; Google 4.9/216 shared with the bar. AWH: drop."),
 }
 
 if __name__ == "__main__":
