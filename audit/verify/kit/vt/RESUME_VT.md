@@ -12,4 +12,4 @@ Build a batch (from the repo root, S = scratch dir, N = p3-NNN):
 
 Apply exactly as for IL (see kit/il/RESUME_IL.md): apply.py --apply, a post script on kit/post_head.py for pins/phones/websites/waterfront, drops via criteria_drops.py, logs, copy VT_NOTES into kit/vt/, commit, clean scratch.
 
-Batches applied: p3-409 (2026-11-11).
+Batches applied: p3-409 (2026-11-11), p3-482 (2026-11-16).

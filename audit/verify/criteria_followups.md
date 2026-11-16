@@ -2176,3 +2176,11 @@ me drop and report); each needs the research named before a verdict.
 - 1692 Woodford: count 12 / max_rig 30 unsourced. 13413 Wheeland: showers false from an old ordinance.
 - KIT: audit/private_gap_browser/roverpass_api.py session() fails (booking page no longer carries data-token); GraphQL still answers with cookie + csrf. Minimal working helper saved to audit/verify/kit/il/tools/rpq_cookie.py.
 - Verifier ran one read-only git log (against its rules); nothing written.
+
+## p3-482 (VT, 2026-11-16)
+- Season fix DB-wide: nine VT state parks (204 297 298 299 300 301 359 361 362) stored closes 10-14 for "second Monday in October" -> 10-11 (2027; 10-12 in 2026).
+- 4098 Barrewood: exactly $50 (water/electric, undated operator page); ~20 trailers on ~38 sites on leaf-off imagery (~45-60% nightly) - no caveat written; Google 4.8/39. Amperage/sites/length unconfirmed.
+- 4093 Country Village: exactly $50, military/first-responder 20% off; 'Seasonal sites are limited'; Google 4.7/72; reservations page stale (2024); extra-person $5/$10 unclear.
+- 4078 Button Bay: derived booking group repeats the statewide 2-night/7-day minimum (left). Stored max_rig 31 wrong (35).
+- 4073 Half Moon Pond: fcfs after_cutoff (from note prose) cleared to null - state:VT row says none held for walk-ins.
+- 362 Elmore: 18 of 38 RV-capable sites list exactly 23 ft (tight). 4072 Gifford Woods: 'third weekend in October' read as Sunday 10-18 (unchecked against the calendar). 675 Stillwater: 2027 opens May 21 (manual 05-15 left).

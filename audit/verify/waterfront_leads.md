@@ -1396,3 +1396,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - UP 13413 Wheeland Park not waterfront -> riverview (spurs 15-20 m from the Sangamon behind a thin line of bank trees).
 - LEAD 14616 New Athens riverview -> riverfront with a one-site caveat? 'The Point' premium lot (40x90 ft, sold nightly at $40, ~38.3215,-89.8856) ~15 m from the river/harbor over a riprap/brush bank; the other sites have the loop road between.
 - KEPT 1717 Tower Rock riverview (60-80 m through clearings and bank trees).
+
+## p3-482 (VT, 2026-11-16)
+- DOWN 4079 Ricker Pond pond -> lakeview (two RV shore sites behind a wooded strip).
+- KEPT 4073 Half Moon Pond pond (T14, T17, T25-T29 on open grass 10-20 m). 675 Stillwater --AWH lakefront agreed (T10, T14, T16). 4078 Button Bay lakeview (bluff). 4068 Wilgus riverview (steep wooded bank).
