@@ -2146,3 +2146,14 @@ me drop and report); each needs the research named before a verdict.
 - Hennepin Canal (9 camps): $11 (2027 Non-Electric; pages still post $8), FCFS, fees collected in person, no hookups/water/dump; Lock 22 wells not working (closures page 10/9/26). Lock 21 equestrian camping restricted to the south side (separate). Park page 'Park Phone' 815-915-1354 vs stored visitor center 815-454-2328 (kept).
 - 1805 Henderson County CA and 13410 Grayville Hilltop: stored year_round is note-derived and unsupported by any page (left).
 - 13410 Grayville: Google 4.2/10; nightly share unmeasurable (no RVs on imagery); city posts $20.
+
+## p3-479 (IL, 2026-11-15)
+- 1715 Johnson Creek DROPPED (equestrian camping allowed in the campground; horse-separation rule).
+- HELD SPLIT CANDIDATE 14007 Horseshoe Lake SFWA (Alexander): West (Class A) 37.13699,-89.34627, 38 sites, Google 4.7/23; East (Class B/E) 37.13707,-89.31638, 40 sites, Google 5.0/2; 2.65 km apart, own roads, both FCFS; entry pinned at East. Lakefront lead at East (units ~37.13847,-89.31698, dock on open water 35-40 m over mown grass).
+- 13415 Lake Sara: kept (Google 4.4/133, 'Now Accepting Reservations'); no rate or site count posted (RV Life ~150 sites ~$28); verifier suggests ownership local -> private (not changed - check who runs it).
+- 14614 Lake Alexander: 30 A at exactly $50 (passes), 50 A $52; ~40% nightly, long-term caveat in the note.
+- 14615 Lake CampaLot: mostly seasonal (24% nightly), noted; $15 rate read as water-only sites (if it is the tent rate, base is $25). Waterfront asked.
+- 14008 Marshall: engine blocks every unit Jan-May 2027 (fee changeover?); count 28 -> 22.
+- 1657 Randolph County: old note's 'sites walk directly to the lake' wrong (~200 m through woods); water/sewer false; 95 Class C sites not located.
+- Unconfirmed facilities: dump at 1657 and 14008; 50 A at 14009. Unsourced max_rig_ft 1716 (80).
+- 13406 Mill Creek: OHV trails start 2.5 mi away (no access from the park) - keep.

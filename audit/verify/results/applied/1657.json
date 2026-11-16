@@ -1,0 +1,61 @@
+{
+ "id": 1657,
+ "checked": "2026-11-15",
+ "sources": [
+  "https://dnr.illinois.gov/parks/camp/park.randolphcounty.html (read 2026-11-15): 'Fifty-one Class BE campsites, 95 Class C campsites, an equestrian site with eight stalls for horses, and four Class D (primitive) campsites are available throughout the area. A group camp area has its own shelter, stone fireplace, electricity, and tables. Some campsites at Randolph County SRA can be reserved online through the ExploreMoreIL™ website.'",
+  "https://dnr.illinois.gov/parks/park.randolphcounty.html and /parks/about/park.randolphcounty.html (read 2026-11-15): 1,101 acres, five miles northeast of Chester; 4301 S. Lake Drive; 'Park Phone 618-826-2706'; 65-acre lake completed 1961 with picnic shelters, toilets, a boat ramp and a concession stand",
+  "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/51 via the Tyler API (il-rdr.recreation-management.tylerapp.com, read 2026-11-15): facility 312 Pine Ridge, 52 grid units (51 named 001-051), 'Class of Camping': 'BE', 'Electricity Hookup': '30 Amp', 'Site Access': 'Drive-In', 'Pad Length': '42', 'Driveway Entry': 'Back-In', 'Prox to Drink Water' 120-360 ft, no water or sewer hookup attribute; 40 web-bookable (001-039), 040-051 not web-bookable; 2026 grid sellable every month Jan-Dec; 2027 not yet open. Facility 311 Equestrian, 7 Class B/E pull-through units 101-107 ~500 m west of Pine Ridge",
+  "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (read earlier this batch, 2026-11-15): 2027 Electric $28, Non-Electric $11, $10 reservation fee",
+  "Esri World Imagery export hw 450 m at 37.9690,-89.8030 (viewed 2026-11-15): Pine Ridge loops (engine coordinates 37.9682-37.9696, -89.8014 to -89.8003) under continuous canopy, ~200 m south of the lake's nearest arm"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 28,
+    "nightly_high": 28,
+    "currency": "USD",
+    "checked": "2027",
+    "reservation_fee": 10,
+    "note": "Illinois DNR 2027 schedule: electric sites $28; the 95 Class C non-electric sites are $11, but none is on the reservation engine and no pad size is published."
+   },
+   "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf ('Electric (formerly A, B/E and B/E Premium) $28'; 'Non-Electric (formerly B/S, C and D) $11'; $10 reservation fee) + DNR camp page site classes, read 2026-11-15",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "usedirect",
+    "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/51",
+    "fcfs": "some_sites",
+    "season": {"year_round": true},
+    "note": "Pine Ridge sites 001-039 and the equestrian sites book online; the rest are first-come."
+   },
+   "source": "https://dnr.illinois.gov/parks/camp/park.randolphcounty.html ('Some campsites at Randolph County SRA can be reserved online through the ExploreMoreIL™ website.') + ExploreMoreIL park 51 grid (2026 sellable Jan-Dec; 001-039 web-bookable), read 2026-11-15",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30, "water": false, "sewer": false},
+   "source": "ExploreMoreIL park 51, facility 312 unit details ('Electricity Hookup': '30 Amp'; 'Prox to Drink Water' 120-360 ft; no water/sewer hookup), read 2026-11-15",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 146, "max_rig_ft": 42, "pull_through": false},
+   "source": "https://dnr.illinois.gov/parks/camp/park.randolphcounty.html (51 Class BE + 95 Class C) + ExploreMoreIL Pine Ridge ('Pad Length': '42', 'Driveway Entry': 'Back-In'), read 2026-11-15",
+   "method": "manual"
+  }
+ },
+ "note": "Illinois DNR recreation area five miles northeast of Chester, around a 65-acre lake with a boat ramp and concession stand. Pine Ridge's electric sites sit in shaded woods south of the lake; Class C sites are scattered around the area, and the equestrian sites have their own loop to the west. --Claude",
+ "summary": "DNR park/camp/about pages, ExploreMoreIL park 51 (facilities 311/312 unit details, 2026/2027 grid) and imagery read. Fees 11-28 -> 28/28 2027 + $10 res fee (Class C not on engine, no size). Platform operator -> usedirect, fcfs some, booking.season year_round (engine). HOOKUPS water/sewer true -> false (engine: 30A only, drinking water 120-360 ft away); electric 30 added. 146 sites, 42-ft back-in pads. Not waterfront kept (~200 m through woods). Phone none -> 618-826-2706. Horse rule passes (separate equestrian facility).",
+ "flags": [
+  "HOOKUPS CORRECTION: stored water true / sewer true (derived from a note claiming 'some Class C full-hookup (water/sewer)') -> water false, sewer false. Class C is the non-electric class; the engine lists only 30-amp electric on Pine Ridge with drinking water 120-360 ft from each site. Electric 30 added.",
+  "BASE FEE: stored 11 -> 28. The $11 Class C sites are not on ExploreMoreIL and the DNR page gives no pad size, so none is shown to be a drive-in a 23-ft rig fits (same call as Horseshoe Lake 14007).",
+  "WATERFRONT: not waterfront KEPT. The old note's 'sites walk directly to the lake' is not borne out: Pine Ridge's nearest units (001/019/026, ~37.9692,-89.8009) are ~200 m from the lake's south arm through continuous woods. The 95 Class C sites are unlocated (not on the engine); some may sit nearer the shore - a reviewer lead only.",
+  "PHONE: none -> 618-826-2706 (DNR park page 'Park Phone').",
+  "WEBSITE: both stored lines current (dnr.illinois.gov park page + ExploreMoreIL #!park/51), kept.",
+  "PLATFORM: operator -> usedirect (ExploreMoreIL).",
+  "SEASON: no campground season stored or published; engine sells every month of 2026 (booking.season year_round); 2027 calendar not yet open.",
+  "HORSES: passes. The equestrian sites are their own ExploreMoreIL facility (311, units 101-107, ~37.9699,-89.8068), ~500 m west of Pine Ridge.",
+  "FACILITIES: stored dump true is not mentioned on any DNR page read (left as stored, unconfirmed). No showers (Class BE/C).",
+  "PIN: stored 37.9692,-89.8014 sits on Pine Ridge site 001; no move."
+ ]
+}

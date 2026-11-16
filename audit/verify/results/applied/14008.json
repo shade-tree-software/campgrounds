@@ -1,0 +1,58 @@
+{
+ "id": 14008,
+ "checked": "2026-11-15",
+ "sources": [
+  "https://dnr.illinois.gov/parks/camp/park.marshall.html (read 2026-11-15): 'Tent and trailer spaces with electricity and water are available. Camping permits must be obtained from the site.'; 'Canoe camping is permitted on the islands except during waterfowl hunting season.'; 'Reservations are accepted through the ExploreMoreIL website.' (button to recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/42)",
+  "https://dnr.illinois.gov/parks/park.marshall.html (read 2026-11-15): 'The area headquarters is found here, along with a small campground, boat ramp, fishing channel, hunter check station and hiking trails.'; Park Address 236 State Rt. 26, Lacon 61540; Park Phone 309-246-8351; no Marshall closure listed (DNR closures page also read 2026-11-15)",
+  "ExploreMoreIL / Tyler RDR API, place 42, facility 284 'Marshal State Fish and Wildlife Area' (read 2026-11-15): 22 units #001-022, all type 'Class B-E', 'Electricity Hookup 30 Amp', 'Site Access Drive-In', Pad Length / Maximum Vehicle Length 42, MaxStay 14, engine rate $18 (2026 class price); AllowWebBooking true for 004-010 only; no water hookup amenity listed; grid: 20 of 22 free on every probe 2026-11-01..2026-12-15, every unit IsBlocked 2027-01-01..2027-05-01, nothing returned from 2027-05-15",
+  "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf (2027 schedule, read earlier this batch): 'Electric (formerly A, B/E and B/E Premium) $28'; reservation fee $10",
+  "Esri World Imagery export hw 250 m at 40.9535,-89.4290 (viewed 2026-11-15)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 28,
+    "nightly_high": 28,
+    "currency": "USD",
+    "checked": "2027",
+    "reservation_fee": 10,
+    "note": "Every site is the Electric class under the 2027 schedule."
+   },
+   "source": "https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf ('Electric (formerly A, B/E and B/E Premium) $28'; reservation fee $10) + ExploreMoreIL facility 284 (all 22 units 'Class B-E'), read 2026-11-15",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "usedirect",
+    "url": "https://recreation.exploremoreil.com/IllinoisWeb/Default.aspx#!park/42",
+    "fcfs": "some_sites",
+    "note": "Seven sites (004-010) are bookable online; the rest by permit at the site."
+   },
+   "source": "https://dnr.illinois.gov/parks/camp/park.marshall.html ('Camping permits must be obtained from the site.' 'Reservations are accepted through the ExploreMoreIL website.') + ExploreMoreIL facility 284 (AllowWebBooking true on 004-010 only), read 2026-11-15",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30},
+   "source": "ExploreMoreIL facility 284 (all 22 units 'Electricity Hookup 30 Amp'), read 2026-11-15",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 22, "max_rig_ft": 42},
+   "source": "ExploreMoreIL facility 284 (22 units, all 'Maximum Vehicle Length 42' / 'Pad Length 42', 'Drive-In'), read 2026-11-15",
+   "method": "manual"
+  }
+ },
+ "note": "Small Illinois DNR campground at the area headquarters on Route 26 south of Lacon, under trees between the highway and the Illinois River backwaters. Canoe camping is allowed on the islands outside waterfowl season. Road noise from Route 26. --Claude",
+ "summary": "DNR park + camping pages, ExploreMoreIL facility 284 (units, details, grid), 2027 fee schedule, closures page, Esri imagery read. Fees 28/28 confirmed for 2027, reservation fee $10 (manual). Booking ExploreMoreIL/usedirect with url, 7 of 22 sites online, rest permit at site (fcfs some). 22 Class B-E 30-amp drive-in sites, pad 42 ft (manual): count 28 -> 22, electric 30 confirmed. No Class C on the engine. Water at sites unconfirmed. Not waterfront kept. Engine blocks Jan-May 2027 (season not set).",
+ "flags": [
+  "SITES: count 28 (note) -> 22 (ExploreMoreIL lists 22 units, all Class B-E 30-amp). The old note's 'Class C primitive sites that close when the river floods' appear nowhere on the DNR page or the engine; dropped from the note. Pad 42 ft on every unit looks like a placeholder but is what the engine posts.",
+  "HOOKUPS: DNR says 'Tent and trailer spaces with electricity and water are available.' but the engine lists no water hookup amenity; water at the site is not written.",
+  "FACILITIES: dump true (note-derived) is not on the DNR pages or the engine; left as stored. 'no showers' also unconfirmed.",
+  "SEASON/ENGINE: the engine sells 2026 nights through mid-December (20 of 22 free on every probe Nov 1-Dec 15) and blocks every unit 2027-01-01 to 2027-05-01, returning nothing from mid-May 2027 (outside its window). The Jan-May block looks like the 2027 schedule changeover rather than a season; booking.season not set. The DNR page states no camping season.",
+  "WATERFRONT: not waterfront KEPT. Unit points (40.9529-40.9541, -89.4287..-89.4292) sit in woods west of Route 26; the backwater shore is ~80-100 m west through continuous tree cover.",
+  "WEBSITE: stored has two lines (park page + camping page); both current: 'https://dnr.illinois.gov/parks/park.marshall.html\\nhttps://dnr.illinois.gov/parks/camp/park.marshall.html'. Booking link is in booking.url.",
+  "PHONE 309-246-8351 current, kept. PIN 40.954433,-89.428618 is at the north end of the unit row (within ~100 m of all units); fine.",
+  "STATUS: no Marshall closure on the DNR closures page; the park page warns 'Actions by nature can result in closed roads and other facilities. Please call ahead'."
+ ]
+}
