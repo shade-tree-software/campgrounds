@@ -1475,3 +1475,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-502 (WI, 2026-11-16)
 - DOWN 3491 Castle Rock lakefront -> lakeview (premium nightly 89-95 inland of the loop road); 3542 Morris-Erickson lakefront -> lakeview (only site 9 on shore, unconfirmed under canopy - lead if one dock site is enough). 3452 North Wood lakefront kept with caveat (sites 63-67 20-32 m from Lake Manakiki over grassy bank, scattered trees, "Shady") - could be *view. 3557 lakeview kept. LEAD 3460 Little Sand Bay -> coastal walk (unread).
+
+## p3-503 (WI, 2026-11-16)
+- DOWN 3585 Sidie Hollow lakeview -> not waterfront (creekside lead: nightly 214-218 on open grass 20-30 m from Coe Hollow Creek); 3484 Twelve Foot Falls riverview -> not waterfront; 3573 Otter Lake lakefront -> lakeview (canopy to shore); 3575 Stockholm lakefront -> lakeview (tree band); 3581 Trego riverview -> not waterfront.
+- UP 3538 Victoria Riverside not waterfront -> riverview; RIVERFRONT LEAD if sites 1-7 are confirmed nightly (15-30 m from the Wisconsin over sand/grass).
+- Kept: 3570 Shell Lake lakefront (nightly 1-6, 9, 10 on open grass 10-25 m); 3528 East Arbutus lakefront (many nightly sites on open sand/grass 15-40 m); 3507 Twin Bear lakefront, narrowly (37-40, schematic map).

@@ -2366,3 +2366,14 @@ me drop and report); each needs the research named before a verdict.
 - 3491 Castle Rock: ~31% nightly (61 daily of 197), caveat written.
 - 3458 Avoca: seasonal share unpublished; directory-only values (105 sites, 50A, season, dump) cleared.
 - 3452 North Wood: stored fees had been Dexter's; inclusion_evidence 78 -> 76 electric.
+
+## p3-503 (WI, 2026-11-16)
+- No drops. 3586 Vernon County Fairgrounds UNREAD (vernoncountyfair.com Cloudflare): fairgrounds rule unverified; 2026-10-15 capture tent $15, RV $30, 50A $35, 56 electric sites; Google phone 608-461-6590 vs stored 608-637-3165; Google pin 43.5653,-90.8881.
+- SPLIT CANDIDATE 3585 Sidie Hollow: Main 201-230 (~43.5468,-90.9603), Upper Ridge 301-330 (~43.5412,-90.9647, 0.72 km, own road), Boat Landing 101-125 (~43.5381,-90.9497, 1.3 km, own road); one Campspot listing. Do with the WI leads at the end of the queue.
+- 3484 Twelve Foot Falls: only sites 1, 9, 10, 12 are 24 ft+ (rest 12-20 ft) - kept, note says so.
+- 3538 Victoria Riverside: rate $35 (Book-a-Campsite, 2026-11-03) vs $25 (parks page, July 2026); water/sewer removed (seasonal sites only).
+- 3573 Otter Lake: Chippewa County 10-day / 3-night reservation rule, walk-ups nightly - kept (as Pine Point, Morris-Erickson).
+- 3528 East Arbutus: 3-night reservation minimum waived for day-of bookings; ATV loop 143-183 (general campground, stays).
+- 3581 Trego ~50% nightly; 3507 Twin Bear ~44% nightly - notes say so.
+- 3570 Shell Lake: stored 50A unsourced (map says 30A on 39-47).
+- 3575 Stockholm: stored vault_toilets unsourced.
