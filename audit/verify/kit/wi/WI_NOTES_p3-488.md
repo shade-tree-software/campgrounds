@@ -1,0 +1,13 @@
+# WI notes p3-488
+- 3551 Ojibwa: winterwi.com (town's pages) 403 whole domain -> NO result file
+- 3436 Pine View DONE: rates 35-65 public, phone 502-898-3517, 170 sites
+- 3445 Point Bluff DONE: $50, parkwith engine 24 RV+11 tent, ~24 seasonal, riverview kept (canopy), G 4.8(701)
+- 3454 Prentice DONE
+- 3594 Rock Dam DONE (OHV flag, WebTrac CF)
+- 3559 Sherwood DONE (36 sites, lakeview kept site 31 open, pin ~245m)
+- 3505 Schomberg DONE (ATV flag, campspot 403)
+- 3443 Hertel DONE (real campground, price unread, pin 380m, website new domain)
+- 3431 Stone Haven DONE: drop candidate, pin 1.8km
+- 3389 Sundown DONE ($50 line, long-stay flag)
+- 3375 Minihaha DONE (riverfront kept, 69 nightly/59 seasonal)
+- apply.py dry run on 10 ids: no !!; 10 results ready, 9 note rewrites. 3551 has no result file.

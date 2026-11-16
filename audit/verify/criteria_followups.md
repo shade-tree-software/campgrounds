@@ -2230,3 +2230,11 @@ me drop and report); each needs the research named before a verdict.
 - 3413 Kilby Lake ~12% nightly, 3432 Monument Point ~18% nightly (Google 4.0/56, on the line): kept with mostly-seasonal caveats.
 - 3448 Lake Emily North/South 650 m apart: one entry (under the split line).
 - UNREAD: 3519 Manitowoc County Expo (Cloudflare; Oct capture: $40/night, 54 W/E midway sites, closed Jun 1-9 and Aug); 3589 Washburn city campground (Cloudflare; lakeside premium sites at the bluff edge - lead).
+
+## p3-488 (WI, 2026-11-16)
+- 3431 Stone Haven RV Park DROPPED (no price anywhere, Facebook-only, mostly seasonal).
+- 3436 Pine View (Fort McCoy): open to the public (entrance off Hwy 21, outside the gate); 10 sites/week held for active duty, released Fridays; public $35-65; policy_ref set 'none' (federal row's rec.gov/pass terms don't fit Army MWR WebTrac); phone now 502-898-3517 (Fort McCoy numbers moved).
+- 3443 St. Croix Casino Hertel: a real 16-pad RV park on its own lane behind the casino (not a lot); rate unread (no 2027 dates loaded).
+- 3445 Point Bluff and 3389 Sundown Saloon both exactly $50 (kept).
+- OHV sides (kept as general campgrounds): 3594 Rock Dam (western half ATV sites), 3505 Schomberg (ATV wash + trail through the park).
+- UNREAD: 3551 Ojibwa Park (winterwi.com 403). Clark County WebTrac is Cloudflare.

@@ -1421,3 +1421,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-487 (WI, 2026-11-16)
 - 3453 Kreher Park bayfront confirmed (sites 25-33, 15-30 m over open grass).
 - 3589 Washburn (unread): open lawn loop at the bluff edge ~30-60 m from Chequamegon Bay; needs site numbers.
+
+## p3-488 (WI, 2026-11-16)
+- 3559 Sherwood lakeview kept; LEAD: site 31 alone is open grass ~30-35 m from the lake (one site - not "a few").
+- 3375 Sweet Minihaha riverfront kept (Loop A 63-71 open to the Sugar River, ~25-35 m wide).
+- 3445 Point Bluff riverview kept (canopy over the river row).
