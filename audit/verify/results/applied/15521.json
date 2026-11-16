@@ -1,0 +1,52 @@
+{
+  "id": 15521,
+  "checked": "2026-11-16",
+  "sources": [
+    "koa.com refuses bots (Cloudflare) - not fetched this session; the KOA booking form captured 2026-10-19 (audit/koa_backlog_2026-10-19/dumps/wisconsin-dells_05.txt, quotes.jsonl; https://koa.com/campgrounds/wisconsin-dells/reserve/, one night 2027-05-18, RV, a 23-ft motorhome) read 2026-11-16: 9 site types, 'Back In, 30/20 Amps, Water/Electric' '$60.00 avg/night' up to 'Pull Thru, 50/30/20 Amps, Full Hookups, KOA Patio ® Maximum Convenience- Paw Pen Attached' '$99.00 avg/night'; 'Up to 6 people.'; 'Save 10% at check out with KOA Rewards.'; 'Any additional vehicles that cannot fit on your site will be charged $10 per vehicle per day in our limited overflow parking.'; 'a modern laundry and bathhouse'; 'a short distance from the pool, camp store and comfort stations'",
+    "RV Life 'Wisconsin Dells KOA Holiday' (id 5046): 4 stars, $$$$, avg_rate 73; reviews read 2026-11-16: 10/2026 stays at $62-82 a night (KOA discount on most), 'Open until 1 Nov.', 'this campground is open 15 days longer than other campgrounds in the area', 'Train tracks right next to park were VERY active', 'tight turns in the older original park where check-in is. Newer side is wide open'",
+    "Google Maps 'Wisconsin Dells KOA Holiday': 4.3 (828), +1 608-254-4177, ll 43.636844,-89.786841 (gathered earlier this session)",
+    "audit/price_research/gateways.py 43.6364,-89.78688 -> 'Wisconsin Dells (attraction, 2 km)', run 2026-11-16"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 60, "nightly_high": 99, "currency": "USD",
+                 "extra_vehicle": {"amount": 10, "per": "night"},
+                 "checked": "2026",
+                 "note": "KOA booking form, one night in mid-May 2027: water/electric back-in $60, full-hookup sites $64-99 by type; up to 6 people per site; extra vehicle $10 a day."},
+      "source": "https://koa.com/campgrounds/wisconsin-dells/reserve/ (captured 2026-10-19 in audit/koa_backlog_2026-10-19/dumps/wisconsin-dells_05.txt: '$60.00 avg/night' to '$99.00 avg/night'), read 2026-11-16",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://koa.com/campgrounds/wisconsin-dells/reserve/ (captured 2026-10-19: 'Pull Thru, 50/30/20 Amps, Full Hookups'), read 2026-11-16",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true},
+      "source": "https://koa.com/campgrounds/wisconsin-dells/reserve/ (captured 2026-10-19: 'Pull Thru' site types), read 2026-11-16",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "camp_store": true},
+      "source": "https://koa.com/campgrounds/wisconsin-dells/reserve/ (captured 2026-10-19: 'a modern laundry and bathhouse'; 'the pool, camp store and comfort stations'), read 2026-11-16",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/wisconsin-dells/reserve/"},
+      "source": "https://koa.com/campgrounds/wisconsin-dells/reserve/ (KOA booking form, captured 2026-10-19), read 2026-11-16",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Holiday at S235A Stand Rock Road, about 2 miles from downtown Wisconsin Dells, with a pool, dog park and pickleball court. A busy rail line runs beside the park; the older section has tight turns. --Claude",
+  "summary": "koa.com refuses (Cloudflare) - used the 2026-10-19 booking-form capture: $60 W/E to $99 premium FHU (mid-May 2027 night), 50 A full hookups, pull-throughs; RV Life 10/2026 stays $62-82. Over $50 but passes via the gateway exception (gateways.py: Wisconsin Dells, 2 km); KOA Rewards 10% alone would not ($54). Google 4.3 (828). Not waterfront kept. Open to about Nov 1 (camper).",
+  "flags": [
+    "PRICE GATE: ordinary summer RV rate is over $50 ($60-99 for a mid-May 2027 night; RV Life 10/2026 $62-82). Passes ONLY by the gateway exception - audit/price_research/gateways.py: 'Wisconsin Dells (attraction, 2 km)'. Not a Good Sam Park (discounts.good_sam false); the operator-posted 'Save 10% at check out with KOA Rewards' gives $54, still over $50.",
+    "GOOGLE: 4.3 (828).",
+    "SEASON: not written. RV Life 10/2026: 'Open until 1 Nov.' and 'open 15 days longer than other campgrounds in the area'; opening date unread (koa.com refuses).",
+    "RAIL: camper 10/2026 'Train tracks right next to park were VERY active' - matches the stored waterfront evidence (loops beside the railroad). Informational.",
+    "WATERFRONT: not waterfront kept (Wisconsin River ~250 m east beyond tracks and woods, per stored evidence). Not re-imaged.",
+    "SITES: count not written; 129 (RV Life, cited in inclusion_evidence) unconfirmed by KOA.",
+    "PHONE 608-254-4177 (Google) and WEBSITE https://koa.com/campgrounds/wisconsin-dells/ unchanged (koa.com refuses bots; not dead).",
+    "UNREAD: koa.com itself (Cloudflare) this session; all KOA values come from the 2026-10-19 capture."
+  ]
+}

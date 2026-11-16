@@ -2347,3 +2347,12 @@ me drop and report); each needs the research named before a verdict.
 - 3553 Smith Lake: stored 45 ft unsourced; ATV trail access only (stays).
 - 3568 Saxon Harbor: "Park Use $5.00/day" on the fee sheet - not written as an entrance fee.
 - 3476 Twin Bridges: ATV notice unread.
+
+## p3-501 (WI, 2026-11-16)
+- DROPPED: 3371 Wildlife Bar (spam domain, 2010 price, permanent sites); 3400 Wildwood, Iron River (no site/rate, long-stay, for sale); 3424 West Bay (Google 3.8/80); 3427 White Tail Ridge (~13 of ~150 sites nightly).
+- 3402 Wasko's KEPT, borderline: no operator rate or booking; Travel Wisconsin "Seasonal sites available, full hook-ups, daily, weekly and monthly rates"; RV Life $35 (7/2023, "under construction"); Google 4.7/139 shared with the bar; nightly share unmeasured. Revisit if a later read shows it mostly seasonal.
+- 15521 Wisconsin Dells KOA: $60-99, passes on the Dells gateway (2 km); values from the 2026-10-19 KOA capture; opening date unread; beside a busy rail line.
+- 3596 Wilton: village page numbers sites two ways (rate graphic 1-32/33-50 vs map 1-27/28-45); no reservation method published.
+- 3506 Weber Lake: 2027 opening ~05-02 per Campspot capture (stored 05-07 is 2026) - not written.
+- 3540 Wilderness: no reservations Sept 15-Dec 1 (self-register); pin at the park gate, camping spreads ~1 km along the shore.
+- Verifier opened ResNexus (3417) once in the headless browser against the rules; nothing used.
