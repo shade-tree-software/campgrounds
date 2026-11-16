@@ -2253,3 +2253,12 @@ me drop and report); each needs the research named before a verdict.
 - 3577 Crystal Lake (Strum): newest rates 2025; ~25 set-up units on 42 sites, seasonal share unmeasured; Google 4.4/61.
 - 3377 Buck 'n Beam's: ~11 of 31 nightly - mostly-seasonal line.
 - UNREAD: 3563 Cliffside (racinecounty.gov 403; Oct capture $35/$40 + $12 fee; Lake Michigan ~0.9 km through park woods - coastal walk lead).
+
+## p3-491 (WI, 2026-11-16)
+- 3387 Hi-Pines DROPPED (only four 20A sites at $48 under the gate, ordinary $64-69; Google 4.2/192).
+- 3378 Hoeft's: ~31% nightly, exactly $50 - kept with the mostly-seasonal line.
+- 3554 Hines Park: cityofparkfalls.com now redirects to a hospital site (lapsed domain) - read via Wayback 2026-04; season unconfirmed.
+- 3547 Hatfield: beside the WI-64/65 interchange (noise in the note).
+- OHV sides kept: 3483 Drummond Lake.
+- UNREAD: 3369 Featherstone (406; Oct capture $35, Google 4.6/35), 3576 Goose Island (La Crosse County Cloudflare; Oct capture 20 sites 50A $38; west row riverfront lead), 3494 James N. McNally (Grantsburg Cloudflare).
+- LEAD to vet: McNally West (Grantsburg, 400 W Olson Dr, opened 2025-09, 30 sites) - beside 3494; expansion or new entry.

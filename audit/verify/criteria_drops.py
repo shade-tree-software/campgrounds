@@ -567,6 +567,7 @@ DROPS = {
     3366: ('2026-11-16', "DN Campground (WI, private): under 1 site in 10 sold nightly (long-stay test 4)", "p3-490: home page '125 seasonal campsites' and 'We have 7 daily or weekly travel trailer/motor home sites'; booking page sells only RV Sites 1-7 (~5% of 132); seasonals: 'With the current waiting list, we do not anticipate any openings.' Google 4.6/199 shared with the bar."),
     3422: ('2026-11-16', "Christian's Campground (WI, private): no website, no price anywhere, mostly seasonal", "p3-490: Google lists no website; Travel Wisconsin links only the WACO directory and Facebook; no rate anywhere; Google 5.0/2; imagery shows ~60 set-up seasonal-looking units against ~25 listed sites; ATV access on property."),
     15520: ('2026-11-16', "Door County KOA Holiday (WI, private): Google 3.8 from 420 reviews (AWH rule 2026-11-02: under 4.0 with 25+ reviews = drop)", "p3-490: Google Maps 'Door County KOA Holiday' 3.8 (420); koa.com refused (Cloudflare). Stored base $38 passed the price gate."),
+    3387: ('2026-11-16', "Hi-Pines Campground (WI, private): borderline price and so-so reviews (AWH standing call 2026-10-31)", "p3-491: only four 20-amp sites (11, 13, 96, 99) are under the gate at $48; ordinary 30/50A sites $64, pond-side $69, plus 6% tax; no gateway within 40 km (Isle Royale 141 km); not a Good Sam Park; Google 4.2/192 - not strong enough to break the tie."),
 }
 
 if __name__ == "__main__":

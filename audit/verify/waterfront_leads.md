@@ -1435,3 +1435,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-490 (WI, 2026-11-16)
 - DOWN 3518 Columbia Park (Fond du Lac) lakeview -> not waterfront; DOWN 3462 Derge lakeview -> not waterfront.
 - LEAD 3563 Cliffside (unread): Lake Michigan ~0.9 km east via a park trail to a bluff overlook; shore access unconfirmed.
+
+## p3-491 (WI, 2026-11-16)
+- DOWN 3554 Hines Park riverfront -> riverview. 3378 Hoeft's lakefront confirmed (peninsula sites 1-10). 3547 Hatfield lakeview kept (sites 14-16 15-20 m behind a shrub fringe - lead).
+- LEAD 3576 Goose Island (unread): west row along the main Mississippi channel looks riverfront.
