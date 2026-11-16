@@ -644,3 +644,6 @@ Upgrade riverview -> riverfront with a caveat naming the primitive sites? Primit
 
 ## 3401 Broken Bow Campground (WI, private) - price gate? (p3-485, 2026-11-16)
 Site unreadable now (406). The 2026-10-16 copy lists sites at $36/$39 (electric) and $30, then among the extras: "30-amp Service and Camping/Travel Trailers... $45.00 | over 20' ... add $6.00". If that is the nightly rate for a 30-amp RV, a 23-ft rig is $51 (over the $50 gate); if it is something else (a weekly or extra-unit fee) it stays. Google 4.8/52. Kept and unread meanwhile.
+
+## 3486 HTR Door County (WI, private, Good Sam Park) - price gate? (p3-497, 2026-11-16)
+Cheapest RV type (Deluxe Back In, full hookup) on Newbook: $49 on May/September 2027 Tuesdays; $54 on a June Tuesday ($48.60 after the Good Sam 10%); $80.66 on a July Saturday ($72.59 after Good Sam). No gateway within 40 km. Google 4.4/584; engine sells 6+ full-hookup types nightly. The GS exception covers weekday summer nights but not peak weekends. Kept meanwhile - keep or drop?

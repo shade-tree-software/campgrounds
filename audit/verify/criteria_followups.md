@@ -2304,3 +2304,13 @@ me drop and report); each needs the research named before a verdict.
 - 293 Devil's Lake: GoingToCamp API refused - fees/amps/lengths not re-read; Quartzite winter camping in the note.
 - Unsourced stored values: 3508 electric 50 / max_rig 36; 3558 pull_through.
 - UNREAD: 3384 Eagles Landing (St. Croix casino site Cloudflare 1014). Google 4.4/121, 715-349-2267 (stored 715-656-4402); price, long-stay and casino-lot tests undone.
+
+## p3-497 (WI, 2026-11-16)
+- DROPPED: 3428 Frontier Bar & Campground (~90% seasonal, no posted rate or booking); 3391 Happy Ours (dead domain, unclaimed RoverPass, 2019 rate, ~100 seasonal trailers); 3419 Hickory Oaks (30/50A sites $55-75; Hi-Pines precedent).
+- ASK: 3486 HTR Door County price (asks.md).
+- 3511 Jefferson County Fair Park: stored note, links and inclusion_evidence described the Port Townsend WA fairgrounds - all replaced; ownership private -> local (a Jefferson County department); good_sam false removed.
+- 3409 renamed "Ma's Irvington Campground & Rentals" (operator + Google); max_rig 65 -> 50; ~58% nightly.
+- 3534 Green County Fairgrounds: passes the fairgrounds test; map says "privately owned" - kept local (fair-association rule).
+- 3496 Hattie Sherwood: city says no water hookups, Campspot lists "+ Water" types - stored water true left.
+- 3435 Grangers unread (Cloudflare); stored 30A vs a review's 50A; RV Life reports $35-38.
+- LEAD: Oconto City Park Campground (County Rd N, Oconto, 920-834-7725, on Green Bay) - not in the DB.

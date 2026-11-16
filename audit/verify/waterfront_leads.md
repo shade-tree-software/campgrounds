@@ -1457,3 +1457,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-496 (WI, 2026-11-16)
 - DOWN 3566 Collins Park lakeview -> not waterfront. UP/ACROSS 3461 Dalrymple (Bayfield) lakeview -> coastal walk (Lake Superior 100-150 m on park ground, walkway by site 22). 3558 Dexter and 3512 DuBay lakeview kept; 293 Devil's Lake --AWH not waterfront agrees.
+
+## p3-497 (WI, 2026-11-16)
+- UP 3549 Holtwood not waterfront -> riverfront (nightly R-row sites on open bank 15-35 m from the Oconto River). 3397 Hiles Pine Lake lakefront confirmed (nightly shore row 4, 7-13, 12A). 3496 Hattie Sherwood lakeview kept (Campspot "Waterfront Site" tag not enough). 3409 evidence corrected (Red Cedar, not Chippewa).
