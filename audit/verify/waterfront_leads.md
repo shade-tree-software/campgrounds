@@ -1426,3 +1426,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3559 Sherwood lakeview kept; LEAD: site 31 alone is open grass ~30-35 m from the lake (one site - not "a few").
 - 3375 Sweet Minihaha riverfront kept (Loop A 63-71 open to the Sugar River, ~25-35 m wide).
 - 3445 Point Bluff riverview kept (canopy over the river row).
+
+## p3-489 (WI, 2026-11-16)
+- DOWN 3433 Backyard on Amnicon Lake lakeview -> not waterfront (sites ~145 m across the road).
+- UP 3544 Bay Shore (Brown County) not waterfront -> coastal walk (~130 m through the park's woods to Green Bay; 'Trail to Beach'; escarpment).
+- 3459 Bay City lakefront kept (Lake Pepin row 35-44, riprap caveat). 3423 Twin Lakes / 3386 Two Lakes lakeview kept under canopy despite FS "on the water".

@@ -2238,3 +2238,11 @@ me drop and report); each needs the research named before a verdict.
 - 3445 Point Bluff and 3389 Sundown Saloon both exactly $50 (kept).
 - OHV sides (kept as general campgrounds): 3594 Rock Dam (western half ATV sites), 3505 Schomberg (ATV wash + trail through the park).
 - UNREAD: 3551 Ojibwa Park (winterwi.com 403). Clark County WebTrac is Cloudflare.
+
+## p3-489 (WI, 2026-11-16)
+- No drops. 3404 Borderline RV Park: seasonal signals ("Tenants", monthly $450, seasonal clubhouse) but nightly $40 posted, weekend guests in reviews, no discouraging wording, share unmeasurable - kept.
+- 3433 Backyard on Amnicon Lake: ~10% nightly + adjoining mobile home park - kept, mostly-seasonal line in the note.
+- 3459 Bay City: 10 of 44 hookup sites non-seasonal - caveat in the note; rates from the 2025 page.
+- 3386 Two Lakes: FS page $23 vs rec.gov $25 (rec.gov written).
+- OHV sides kept: 3474 Torch Lake, 3495 Wolf Creek.
+- 3544 Bay Shore: sites 83-88 have 16-23 ft pads.
