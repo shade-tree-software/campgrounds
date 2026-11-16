@@ -1,0 +1,9 @@
+- 1655 Trail of Tears DONE: 14 Class C, all VL 20 (placeholder?) fit flag; season 05-15..12-23; phone 618-833-4910
+- 1693 Spring Lake DONE: count 60, FCFS, pin -> 40.4680,-89.8425 (~1.4 km, canopy), dump doubtful, south park closures
+- 1717 Tower Rock DONE: riverview kept (60-80 m), 4 sites, 40 ft, FCFS, phone 618-658-2111, incl evidence was WA facility
+- 1780 Twin Lakes DONE: stored evidence = Bluffton OH CampLife 564; cleared count/electric/dump/season/booking; pin move ~330 m to 39.6335,-87.6985
+- 14616 New Athens DONE: riverview kept; The Point possible riverfront; 33 RV nightly; 50A; year round
+- 13413 Wheeland DONE: facts confirmed; riverview proposed (8 spurs 15-20 m behind thin tree line)
+- 1692 Woodford DONE: lakeview -> not waterfront proposed; phone 309-246-8351; season sourced
+- apply.py dry run 2026-11-16: 7 results ready, 7 note rewrites, no "!!".
+- Kit note: audit/private_gap_browser/roverpass_api.py session() fails (booking page no longer carries data-token); GraphQL answers with csrf + cookie only (tools/rpq.py here).

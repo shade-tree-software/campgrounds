@@ -1390,3 +1390,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-480 (IL, 2026-11-16)
 - WEAK 1660 Saline County SFWA lakeview: no site map, no site placed on imagery; fallback not waterfront on the next look.
 - KEPT riverview 1802 Havana Riverfront (~100-120 m) and 13414 Rosiclare (~45-55 m across a paved lot).
+
+## p3-481 (IL, 2026-11-16)
+- DOWN 1692 Woodford SFWA lakeview -> not waterfront (channel ~28 m with the road between; lake 250-300 m behind forest).
+- UP 13413 Wheeland Park not waterfront -> riverview (spurs 15-20 m from the Sangamon behind a thin line of bank trees).
+- LEAD 14616 New Athens riverview -> riverfront with a one-site caveat? 'The Point' premium lot (40x90 ft, sold nightly at $40, ~38.3215,-89.8856) ~15 m from the river/harbor over a riprap/brush bank; the other sites have the loop road between.
+- KEPT 1717 Tower Rock riverview (60-80 m through clearings and bank trees).

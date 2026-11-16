@@ -2166,3 +2166,13 @@ me drop and report); each needs the research named before a verdict.
 - 13411 Riverside Park: page says "60+" sites vs stored 100; reservations line 217-546-4103 (tennis center) vs stored host 217-753-0630 (kept).
 - 1660 Saline County: lakeview kept on weak evidence (no site placed); season 04-01..09-30 unsourced; separate equestrian campground not located.
 - 1691 Sand Ridge: re-pinned 2.2 km to Pine Campground; max_rig_ft 52 -> 40.
+
+## p3-481 (IL, 2026-11-16) - last IL batch
+- 1655 Trail of Tears SF: KEPT with a caveat (engine posts a uniform 20 ft / driveway 0 on all 14 units - placeholder-looking; unclear-pad rule). Season contradiction: forest roads closed Dec 24 - ~mid-May vs engine 05-15..11-30. Drinking water 7,648-24,000 ft from sites (potable_water doubtful). No single campground to pin (units 0.26-3.6 km apart; centroid 37.4948,-89.3453).
+- 1780 Twin Lakes Park, Paris: stored inclusion evidence, count 85, 50 A, dump, year_round and CampLife booking were a different Twin Lakes Park (Bluffton, OH) - cleared and evidence replaced; fit/count/amperage unpublished (caveat in note).
+- 1717 Tower Rock: inclusion evidence cited rec.gov 232855 (Tower Rock, WA) - replaced; Shawnee NF takes no reservations.
+- 1693 Spring Lake SFWA: 2026 alert (South Park Road + South Lake closed from 2026-06-01, South Spring Lake dewatered 1.5-2 years) caveat in note; dump doubtful (2020 review: 'no longer in use').
+- 14616 New Athens: claimed RoverPass, ~100% nightly; Google 4.1/76.
+- 1692 Woodford: count 12 / max_rig 30 unsourced. 13413 Wheeland: showers false from an old ordinance.
+- KIT: audit/private_gap_browser/roverpass_api.py session() fails (booking page no longer carries data-token); GraphQL still answers with cookie + csrf. Minimal working helper saved to audit/verify/kit/il/tools/rpq_cookie.py.
+- Verifier ran one read-only git log (against its rules); nothing written.
