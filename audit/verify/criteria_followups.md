@@ -2278,3 +2278,12 @@ me drop and report); each needs the research named before a verdict.
 - 3488 Sheboygan Marsh: water spigots up to 200 ft from sites (note); sheboygancounty.com 403 (county link kept).
 - 574 Point Beach: GoingToCamp API 403 - fees/booking unread; pin moved 3.8 km to the campground.
 - OHV sides kept: 3451 (ATV sites 501-520), 3382, 3527.
+
+## p3-494 (WI, 2026-11-16)
+- No drops. 3405 Smokey Hollow: ordinary summer site $60-84 - kept only on the gateway exception (36 km Wisconsin Dells); ~18% nightly (mostly-seasonal line); Google 4.1/582; sells seasonal campers' units in place (unit resale, not lots) - for AWH to weigh.
+- 3438 Terrace View: exactly $50 (passes); stored sewer / count 45 / max_rig 32 unsupported (RV Life 20 sites).
+- 3399 Top O' The Morn: nightly share estimated ~50% (seasonal "call for prices"); RoverPass unclaimed -> phone booking.
+- 3367 Stop On Inn: nightly RV confirmed by a 2024 camper report ($39 FHU); season year_round -> May 1-Oct 1 (reported).
+- 3597 South Wood: fees corrected $23-31 (stored $40 was Dexter Park's).
+- Unsourced values left: 3385 count 96, 3556 max_rig 40, 3475 max_rig 60, 3532 50A.
+- UNREAD: 3592 Veterans Memorial (West Salem; La Crosse County 403). Capture: 102 sites 50A/water $38, Apr 15-Oct 15; campground line 608-789-8599 vs stored county 608-786-4011.

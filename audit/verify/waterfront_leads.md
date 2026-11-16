@@ -1446,3 +1446,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-493 (WI, 2026-11-16)
 - DOWN 3569 Shawano Lake lakeview -> not waterfront. 3451 Petenwell and 3527 Russell Memorial lakefront confirmed; 3545 Riverside (New Lisbon) riverfront kept (sites 48-54, channel 35-40 m wide - near the creekside line).
 - 3488 Sheboygan Marsh lakeview kept but weak (cattail bank may screen the pool; no site photos). 574 Point Beach --AWH coastal walk agrees with the DNR ("none of the sites offer a view of the lake").
+
+## p3-494 (WI, 2026-11-16)
+- DOWN 3399 Top O' The Morn lakefront -> lakeview (45-50 m across its own beach/docks). Lakefront confirmed: 3597 South Wood (county waterfront sites 13-15, 36/37/39/41), 3532 Totogatic (50 county-flagged sites). 3588 Thompson's West End lakefront BORDERLINE (south row 45-50 m over lawn, seasonal mix unknown; fallback coastal walk).
+- LEAD 3592 Veterans Memorial West Salem (unread): west loop 25-40 m from the 30-35 m La Crosse River among scattered trees.

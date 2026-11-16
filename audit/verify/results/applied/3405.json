@@ -1,0 +1,51 @@
+{
+  "id": 3405,
+  "checked": "2026-11-16",
+  "sources": [
+    "https://smokeyhollowcampground.com/ways-to-stay/campsites/ (rate table by site type and date span, site lists, rules, monthly camping line), read 2026-11-16",
+    "https://smokeyhollowcampground.com/ways-to-stay/seasonal-camping/ and /ways-to-stay/seasonals-sites/ ('Seasonal Sites For Sale': seasonal campers' units for sale on sites 517, 218, Y12, 111), read 2026-11-16",
+    "https://smokeyhollowcampground.com/wp-content/uploads/2026/02/2026-Seasonal-Admission-Agreement-Form-FINAL.pdf (2026 seasonal fee $3,975.59 + tax) and 2026-AGREEMENT-FOR-SELLING-A-CAMPING-UNIT-FINAL.pdf (unit sales on site need campground approval of the buyer), read 2026-11-16",
+    "Campspot park record and site types, audit/price_research/campspot_tier_2026-10-13.jsonl (RV types: Standard Back-In 28 sites to 35 ft, VIP Back-In 1, VIP Pull-Through 5 and Standard Pull-Through 7 to 50 ft, Tent/Pop-Up 4 to 20 ft; closed 2026-10-19 to 2027-04-15), read 2026-10-13",
+    "Good Sam directory listing (web search snippet, goodsam.com/campgrounds-rv-parks/wisconsin/lodi/smokey-hollow-campground-970000391): '246 total spaces, 56 available, 190 seasonal', read 2026-11-16",
+    "Google Maps 'Smokey Hollow Campground': 4.1 (582 reviews), phone 608-635-4806, at 43.3684,-89.4942, read 2026-11-16",
+    "python3 audit/price_research/gateways.py 43.3686,-89.4942: family home 33 km; Wisconsin Dells (attraction) 36 km"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 101,
+        "currency": "USD",
+        "checked": "2026-11-16",
+        "note": "Rates for 2 adults, 3 children and one vehicle. Standard back-in sites: $35 in the off season (April 17 - May 21, September 27 - October 18), $50 on weekdays May 26 - June 5 and September 1-25, $60 on summer weekdays (June 6 - August 27) and shoulder weekends, $78 on Halloween weekends, $84 on summer and holiday weekends. Pull-through and VIP sites run $40-45 off season to $90-101. A 1-night reservation on a VIP or pull-through site costs $25 more. The park adds a 3.5% processing fee and Campspot its own booking fee."
+      },
+      "source": "https://smokeyhollowcampground.com/ways-to-stay/campsites/ (Standard Back-In Sites: 'Holiday/June 5-Aug 27 Weekends $84/night', 'Halloween 1, 2, & 3 $78/night', 'Weekends May 25-June 4 & Aug 28-Sept 26 ... $60/night', 'Weekday May 26-June 5 & Sep 1-25 $50/night', 'Off Season (April 17-May 21)(September 27-October 18) $35/night', 'June 6-Aug 27 Weekdays $60/night'; VIP Pull-Thru '$101/night' high; '(* $25 fee for 1-night reservation)'); Campspot quote 2026-10-14 (Processing Fee 3.5%, Campspot booking fee)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "campspot",
+        "url": "https://www.campspot.com/book/smokeyhollow",
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "note": "Paid in full when booked and non-refundable; a change or cancellation at least a week out earns camping credit less $25. Monthly camping is quoted by phone. Renter must be 21 and someone 21+ must stay on the site."
+      },
+      "source": "https://smokeyhollowcampground.com/ways-to-stay/campsites/ ('*2-night minimum on all weekends except holidays. Holidays are a 3-night minimum.'; 'RESERVATIONS ARE NON-REFUNDABLE ... camping credit will be issued for changes/cancellations made at least 1 week before your arrival date (minus a $25 cancellation/reschedule fee)'; 'We offer monthly camping year-round ... Call us'; 'Must be 21 years old to rent site')",
+      "method": "manual"
+    }
+  },
+  "note": "Large family campground at Lodi, near Madison and the Wisconsin Dells, where a swimming pond has water inflatables and a beach; there is also mini golf, a jumping pillow, giant shopping-cart rides, two playgrounds and themed weekends through the season. Cabins, yurts, Conestoga wagons and park models are rented. Mostly seasonal: about 45 of its roughly 250 sites are sold by the night. --Claude",
+  "summary": "Operator rate page, seasonal pages and agreements read; Campspot capture of 2026-10-13. Rates confirmed $35 (off season) - $101; ordinary standard back-in summer rate $60 weekdays / $84 weekends, over the $50 gate but a gateway lies within 40 km (family home 33 km, Wisconsin Dells 36 km). Mostly seasonal: ~45 nightly RV/tent sites of ~246 (Good Sam: 190 seasonal) = ~18%, kept band with note line. Google 4.1 (582). Not waterfront confirmed (swimming pond only). Pin OK.",
+  "flags": [
+    "PRICE GATE: the ordinary RV site (Standard Back-In, 28 sites) is $60 on summer weekdays (June 6 - Aug 27) and $84 on summer weekends; only off-season ($35-45) and early-June/September weekday ($50) nights are at or under $50. Fails on the summer rate, PASSES on a gateway within 40 km: python3 audit/price_research/gateways.py 43.3686,-89.4942 -> 'family home (family, 33 km); Wisconsin Dells (attraction, 36 km)'. Not a Good Sam Park (stored good_sam false); no member discount posted.",
+    "LONG-STAY: mostly seasonal. Nightly sites: Campspot sells 45 RV/tent sites (Standard Back-In 28, VIP Back-In 1, VIP Pull-Through 5, Standard Pull-Through 7, Tent/Pop-Up 4); the operator's rate table names the same blocks (VIP1-5; Y6, R12-15, B13-15; Y16-21, P2-8, P11-16, R1-3, B5-9, B12; G1, G2, G8). Total: Good Sam directory '246 total spaces, 56 available, 190 seasonal' (directory figure). Nightly share ~18-23% -> 10-50% band: keep with the 'Mostly seasonal' note line (added). Five tests: (1) price passes on gateway; (2) nightly rates posted and sold one night on Campspot (weekday) - pass; (3) only 2-night weekend / 3-night holiday minimums - pass; (4) ~18% nightly - pass; (5) the park does not sell lots, but its 'Seasonal Sites For Sale' page lists seasonal campers' units for sale in place (e.g. 'Site 218 - 2024 Kropf Lakeside model ... Price $99,000'), under a 2026 'Agreement for selling a camping unit on site' that requires the campground to approve the buyer. Read as seasonal-campground unit resale, not a home community; reviewer may weigh it. No operator wording discouraging nightly guests; the seasonal page says 'There are seasonal sites available right now'.",
+    "Google Maps 4.1 (582 reviews), phone 608-635-4806 matches. RV Life stored 4.5/$$.",
+    "Not waterfront confirmed: the only water is the man-made swimming pond (amenity).",
+    "Pin OK: stored 43.3686,-89.4942 vs Google 43.3684,-89.4942 and Campspot 43.3703,-89.4934 (~200 m).",
+    "Monthly camping: 'We offer monthly camping year-round. Rates depend on the month(s) chosen ... Call us' - though Campspot shows the park closed 2026-10-19 to 2027-04-15. Season left as stored (Apr 17 - Oct 18).",
+    "Inclusion evidence describes this campground; still accurate."
+  ]
+}
