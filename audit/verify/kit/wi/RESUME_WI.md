@@ -1,0 +1,16 @@
+# Phase 7 Wisconsin - resume
+
+Order (AWH 2026-11-16): IL, VT, then WI (383), SK, WY, SD.
+
+Build a batch (repo root; S = scratch dir, N = p3-NNN):
+
+    python3 -I audit/verify/queue.py --batch $N --state WI --limit 11
+    python3 -I audit/verify/kit/wi/mkpara_wi.py $S $N
+    python3 -I audit/verify/kit/mkbrief_mo.py $S $N $S/${N}_para.txt
+    mkdir -p $S/$N && cp -r audit/verify/kit/il/tools $S/$N/tools
+    sed -e "s#SCRATCH#$S#g" -e "s/p3-NNN/$N/g" -e "s/: IDS\./: <ids>./" audit/verify/kit/wi/agent_prompt_template.txt > $S/${N}_agent.txt
+    (append the current "Lessons from recent batches" paragraph)
+
+Apply exactly as for IL/VT: apply.py --apply, a post script on kit/post_head.py, drops via criteria_drops.py, logs, copy WI_NOTES into kit/wi/, commit, clean scratch.
+
+Batches applied: (none yet)
