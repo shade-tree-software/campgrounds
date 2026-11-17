@@ -2439,3 +2439,15 @@ me drop and report); each needs the research named before a verdict.
 - 3498 renamed Hawkins Community Park -> Hawkins Lions Park (village's name); $15 / $25 electric, FCFS; mud bogs/pulls in June and Labor Day weekend (not an OHV park). Phone 715-415-4341 (Lions rentals) -> 715-585-6322 (village office).
 - 3276 Hartman Creek: open 04-02..11-30; old pin was the Horse Trail Parking loop (no horse camp; note line dropped). Stored 50A unsourced. 3288 Gov Thompson generators not permitted (note); stored max_rig 50 unsourced. 3287 High Cliff: entrance/office construction mid-Sep 2026 - spring 2027 (open); no horse camping (lot only).
 - Pins: 3295 (~900 m, was the Hwy 70 entrance), 3276 (~900 m).
+
+## p3-510 (WI, 2026-11-17)
+- No drops. 14499 Keyes Lake: ATV question in asks.md; nightly share unmeasured; RVs over 10 years need approval (2023 rig passes).
+- 14501 Iola Pines (private): cheapest RV night $45 incl. tax (~$42.65 pre-tax), summer $57, car-show weekend $67 with a 3-night minimum (event only); ~34 of 103 nightly (~33%, note says so); Google 4.5/129.
+- 13421 Kewaunee Marina (city): $40 tax incl., weekly/monthly/seasonal ($1,790) rates; nightly share not measurable (marina page 403); Google 4.6/100 shared with the boat marina.
+- 3450 Holden Park: potable water true, dump false ("Dumping is not available"); Campspot from the 2026-10-13 capture; all 18 RV sites took single nights; Google 4.0/24.
+- 3362 Highland Ridge (USACE): season 05-01..11-15; site 35 only 20 ft; horse loop 39E-48E separate (~1.3 km). USACE MVP page Akamai 403.
+- 3291 Interstate: season 05-01..11-14 (South loop tent-only from Nov 15); stored 50A unsourced. 3342 Kentuck: rec.gov notice "Hookups are not available" contradicts its catalog + FS fee page (electric kept); site 07 missing from catalog. 3268 Kegonsa electric 29 (DNR page) vs 33 (2026 map).
+- Unsourced: 3293 50A + pull_through; 3268/3293 old "fits a 23-ft rig" lines.
+- SPLIT CANDIDATE 3291 Interstate: North (~45.4043,-92.6478, 37 sites, 27 electric, from Hwy 8) and South (~45.391,-92.662, 45 rustic, park road), ~1.7 km apart, both on GoingToCamp - end of queue.
+- LEAD: Kewaunee RV & Campground, 333 Terraqua Dr, Kewaunee (~44.4757,-87.5047), kewauneerv.com, 920-388-4851, Google 4.5/224 - not in DB, unvetted.
+- 3306 phone -> 715-356-3668, website -> NHAL rustic (old 404). Pins: 3362 (~530 m), 3450 (~375 m), 3343 (~266 m).

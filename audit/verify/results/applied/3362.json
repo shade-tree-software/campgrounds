@@ -1,0 +1,60 @@
+{
+ "id": 3362,
+ "checked": "2026-11-17",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233510 (facility record: 'Highland Ridge has fourty-six campsites (thirty-five with electric) including eight walk-in tent sites. Showers, trash/recycle stations, an interpretive building, water fill stations, dump station, and a playground'; 'Equestrian Loop has ten electric campsites'; notices: opening in May and closing in November 'will vary depending on the weather conditions'; 'Each campsite ... is limited to 1 camper and 1 tent or 2 tents with 6 occupants maximum'; rules maxStay 14 nights; amenities Drinking Water, Dump Station, Flush Toilets (Seasonal), Showers (Seasonal); phone 715-778-5562), read 2026-11-17",
+  "https://www.recreation.gov/api/camps/campgrounds/233510/rates (Peak Season 2026-04-30..2026-11-15 and 2027-05-01..2027-11-15: STANDARD ELECTRIC $28, STANDARD NONELECTRIC $24, WALK TO $24, EQUESTRIAN NONELECTRIC $24), read 2026-11-17",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:233510 (per-site catalog: main loop 01-38 = 34 STANDARD ELECTRIC 50A + 1 STANDARD NONELECTRIC (25, RV 40 ft) + tent-only 26, 27, 37; Max Vehicle Length 20-60 ft, site 35 20 ft, every other RV site 25 ft+; walk-to A-G; Prairie Loop 39E-48E EQUESTRIAN ELECTRIC at ~44.8794,-92.2390; per-site coordinates), read 2026-11-17",
+  "https://www.recreation.gov/api/camps/availability/campground/233510/month (November 2026: nights through Nov 15; April 2027 none; May 2027 from May 1), read 2026-11-17",
+  "Esri World Imagery (sites plotted at 900 m and 800 m width)",
+  "https://www.mvp.usace.army.mil/Missions/Recreation/Eau-Galle-Lake/: 403 Access Denied (Akamai), not retried"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 24, "nightly_high": 28, "currency": "USD",
+              "note": "Site 25 is the only non-electric RV site ($24); the electric sites are $28.",
+              "extra_person": {"max_people": 6}},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233510/rates (Peak Season 2026-04-30..2026-11-15 and 2027-05-01..2027-11-15: STANDARD ELECTRIC $28, STANDARD NONELECTRIC $24), read 2026-11-17; facility notice '6 occupants maximum'",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:233510 (34 STANDARD ELECTRIC sites in the main loop, Electricity Hookup 50), read 2026-11-17",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 46, "max_rig_ft": 60,
+              "note": "35 drive-in RV sites in the main loop (01-38 less tent-only 26, 27 and 37); site 35 is listed at 20 ft, the rest 25-60 ft. Walk-to tent sites A-G."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233510 ('fourty-six campsites (thirty-five with electric) including eight walk-in tent sites') + per-site catalog https://www.recreation.gov/api/search/campsites?fq=asset_id:233510, read 2026-11-17",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233510 (Showers, water fill stations, dump station; amenities Flush Toilets (Seasonal), Showers (Seasonal), Drinking Water), read 2026-11-17",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233510 (reservable sites in the catalog; rules maxStay 14 nights, rolling 30 days), read 2026-11-17",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-01", "closes": "11-15",
+              "note": "The Corps says opening in May and closing in November vary with the weather. 2026 opened April 30."},
+   "source": "https://www.recreation.gov/api/camps/availability/campground/233510/month (Nov 2026 nights through Nov 15; May 2027 from May 1) + rates seasons 2026-04-30..11-15, 2027-05-01..11-15 + facility notice, read 2026-11-17",
+   "method": "manual"
+  }
+ },
+ "note": "Corps of Engineers campground in hardwoods on the north side of 150-acre Eau Galle Lake near Spring Valley, with trails to a swimming beach. The 10-site equestrian Prairie Loop is a separate area about 1.3 km north of the main loop. --Claude",
+ "summary": "recreation.gov facility record, rates, catalog and calendar read; USACE MVP page refuses (Akamai). $24 (site 25, non-electric RV) / $28 electric 2026 and 2027 confirmed; 50A; 46 sites, 35 RV sites in the main loop (25-60 ft but 35 at 20 ft); showers, flush toilets, dump; season May 1-Nov 15 from the calendar; max stay 14. Pin is the entrance road ~530 m north of the loop; re-pin proposed. Not waterfront confirmed.",
+ "flags": [
+  "PIN: 44.8726,-92.2433 -> 44.8678,-92.2439 (about 530 m; centroid of the catalog's main-loop site coordinates 01-38). The stored point is recreation.gov's facility point at the north end of the campground road.",
+  "WATERFRONT: not waterfront confirmed. The lake lies about 200 m+ south of the southernmost sites (17-21) through continuous forest on Esri imagery; no view either.",
+  "HORSES: the equestrian Prairie Loop (39E-48E) is a separate loop ~1.3 km north of the main loop with its own road; not mixed. Fine.",
+  "FIT: 34 of 35 main-loop RV sites list 25 ft+; site 35 is 20 ft. A few sites (08, 20, 32, 38) list Trailer/Fifth Wheel but not RV - a catalog quirk, plenty of RV sites remain.",
+  "SEASON: added 05-01..11-15 from the calendar (2026 opened Apr 30); the Corps notice says opening/closing dates vary with weather.",
+  "PHONE 715-778-5562 confirmed (recreation.gov). WEBSITE: rec.gov link live; the MVP Eau Galle page answers 403 (Akamai) to plain HTTP; keep.",
+  "rec.gov militaryDiscount rule value not written (per brief).",
+  "Policy row federal:usace: nothing contradicts it."
+ ]
+}

@@ -1505,3 +1505,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-509 (WI, 2026-11-17)
 - UP 3361 Grant River riverview -> riverfront with a caveat (note names them): sites 28 (42.64975,-90.69952) ~30 m and 30 (42.64973,-90.69920) ~50 m from the Mississippi over open lawn to a riprapped shore; nightly reservable electric; rec.gov photos confirm. UP 3286 Harrington Beach not waterfront -> coastal walk (~1 km on park trails/service road to the South Picnic Area Lake Michigan beach, nothing between).
 - 3276 Hartman Creek evidence corrected (old pin was the horse-trail lot); not waterfront stands. 3287 High Cliff evidence's "farmland" is the algae-green lake; not waterfront stands. Others confirmed not waterfront.
+
+## p3-510 (WI, 2026-11-17)
+- DOWN 3306 Indian Mounds lakefront -> lakeview (forest; road, tree band, walk-to tent sites and day-use beach between drive-ins and water). DOWN 3293 Lake Wissota lakeview -> not waterfront (sites 90-130 m from shore under canopy, ~20 m above the lake, bluff between).
+- Kept 3342 Kentuck lakeview (nightly 06 45.99123,-88.98208 ~35 m, 05 ~40 m, 04 ~47 m, 02/08 ~65 m, all under maple canopy behind a shore tree band). Confirmed not waterfront: 3362, 3450, 3291, 14501, 13421 (Lake Michigan ~1 km through downtown - no coastal walk), 14499 (lake across WI-101), 3343, 3268.
