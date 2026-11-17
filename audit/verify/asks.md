@@ -669,6 +669,7 @@ Not changed (--AWH value). The shore sites on the 632-644 road (~45.1705-45.1735
 **ANSWERED (AWH 2026-11-17): keep.** Campspot capture 2026-10-13 sells exactly one "Rustic Horse" site ("Only 1 left!") beside Water + Electric / Electric Only / Group types; its position could not be read (no headless browser installed). Kept. The county lists "one new horse camping site" and Campspot sells a "Rustic Horse" type, but neither says where it sits. The horse rule drops horse sites mixed into general loops with no separate area; does a single horse site in a county park trigger it, or only a horse area/loop?
 
 ## 3562 Pioneer Park, Prairie Farm (WI, village) - no operator presence (p3-515, 2026-11-17)
+**ANSWERED (AWH 2026-11-17): keep with a call-the-village caveat** (The Dyrt review 2025-03-12, 5 stars: camps there a few times a year).
 Kept for now (re-pinned out of the flowage, riverfront -> not waterfront). No village, county or tourism page mentions camping; only aggregators (The Dyrt, AllStays, RV Life unclaimed with 0 reviews). Google "Pioneer Park" 4.7/101 covers the whole village park, no phone/website. No rate, booking method, site count, season or hookups from any operator source; 715-455-1024 is aggregator-only. Drop on presence (like Melrose 3524), or keep with a "call the village" caveat?
 
 ## 453 South Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-516, 2026-11-17)
