@@ -2400,3 +2400,13 @@ me drop and report); each needs the research named before a verdict.
 - 3317 Bois Brule 22 -> 17 drive-in sites (+5 walk-in); no current season dates (2020 brochure: late March - mid-November).
 - GoingToCamp unread: stored DNR prices/amperages/lengths for 3298, 3278, 3308, 3263, 3317 unconfirmed. 3278 stored season 04-20/10-15 not on any DNR page read.
 - Phones: 3513 none -> 715-339-6371; 3353 715-264-2511 -> 715-638-7243 (FS page's Hayward Office). Website 3308 -> dnr.wisconsin.gov/topic/StateForests/nhal/recreation/camping/rustic (old 404). Pins moved: 3298 (~930 m), 3278 (~580 m), 13685 (~460 m), 3353 (~430 m), 3513 (~350 m).
+
+## p3-506 (WI, 2026-11-17)
+- No drops. 3526 Camp New Wood was stale: now electric (1-5 50A, 6-7 30A), online reservations only, $35, Apr 15 - Dec 15; inclusion_evidence replaced. 100% nightly, Google 4.7/84.
+- 3339 Chipmunk Rapids carried Lauterman NRA's website and $5 fee; now its own page: 6 back-in sites 25-40 ft, $15, FCFS, 04-30..11-30, not on rec.gov. FS page says "Restrooms are not available" but describes a vault toilet (kept true).
+- 3357 Chippewa: max rig 40 -> 65 (catalog; FS page contradicts itself). OHV: Rustic loop 61-78 rides to the Perkinstown trailhead in the campground; ATVs barred in the other loops (every electric site) - general campground.
+- 3537 Chute Pond: 19 of 70 daily sites posted "Up to 20'" (51 take 20-30 or 46-48 ft); 2-night minimum (3 holiday weekends); reservations close 2 days out then walk-up; ATV sites 84-100 (17 of 70) with trail access - general campground. 67% nightly; Google 4.5/331 shared with beach/day-use.
+- 13436 Chapman Park (Stanley): 29 sites, 25 30A, $35, reservations by phone to City Hall; 100% nightly, Google 4.4/47.
+- Manual seasons not overwritten: 3324 2027 04-29..10-12; 14020 Columbus Day close 10-12 (2026) / 10-11 (2027) vs stored 10-14; 3315 2027 05-27..09-06.
+- 3275 Buckhorn 2026 road-construction line kept dated (no current notice). Amperage unknown 3275, 3321; 3294 stored 30A unconfirmed (GoingToCamp 403).
+- Phones: 3526 -> 715-539-1034, 13436 -> 715-644-5758, 3339 715-528-4464 -> 715-479-2827, 3537 -> 920-834-6995. Websites: 3324 FS line, 3315 (old 404), 3321 camping page added, 3339, 3526 reservation site added. Pins: 3324 (~660 m), 3294 (~700 m), 3537 (~400 m), 3526 (~215 m).
