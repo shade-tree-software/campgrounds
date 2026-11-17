@@ -643,6 +643,7 @@ Upgrade riverview -> riverfront with a caveat naming the primitive sites? Primit
 - 14615 Lake CampaLot (Percy, private; your lakeview) - p3-479: every unit on the shore looks annual - east shore (~38.0124-38.0132,-89.5985) trailers with roofs, decks and private docks; west peninsula (~38.0128,-89.6010) trailers under permanent roofs with a dock. 90 of 119 sites are annual (24% nightly); no site map shows any nightly site near the water (the beach is ~38.0118,-89.5990). Downgrade lakeview -> not waterfront? Left as yours. RESOLVED 2026-11-15: AWH said downgrade -> not waterfront.
 
 ## 3401 Broken Bow Campground (WI, private) - price gate? (p3-485, 2026-11-16)
+**ANSWERED (AWH 2026-11-17): keep with a caveat that pricing is confusing and may be $45+$6.**
 Site unreadable now (406). The 2026-10-16 copy lists sites at $36/$39 (electric) and $30, then among the extras: "30-amp Service and Camping/Travel Trailers... $45.00 | over 20' ... add $6.00". If that is the nightly rate for a 30-amp RV, a 23-ft rig is $51 (over the $50 gate); if it is something else (a weekly or extra-unit fee) it stays. Google 4.8/52. Kept and unread meanwhile.
 
 ## 3486 HTR Door County (WI, private, Good Sam Park) - price gate? (p3-497, 2026-11-16)
