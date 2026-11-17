@@ -2501,3 +2501,12 @@ me drop and report); each needs the research named before a verdict.
 - 3464 Sawmill Lake: reserve + pay online before occupying (fcfs never; old "FCFS off-season" wrong). 13440 Siskiwit Lake: FCFS cash/check $30, max rig 26.
 - 3355 Sailor Lake: Flambeau Trail access (OHV side), FS length table mentions "Corrals: RV up to 35 Feet" - flag only. 3303 manual season approx; DNR 2027 is 05-27..09-06 (not overwritten). Unsourced: 3272 electric 30 A, fcfs some_sites; 3274 max_rig 40.
 - Pins: 3303 ~950 m (DNR GPS point), 3274 ~250 m (was on SH 13). Phones 453/3303 filled; websites 3303/3307 -> NHAL rustic page; 453 goingtocamp added.
+
+## p3-517 (WI, 2026-11-17)
+- DROPPED 14503 Tranquil Vista (private): mostly seasonal + iffy (seasonal wording, yearly rates, sheds/decks on most units, no count, phone-only, stale 2025 events page; $30 nightly; Google 4.6/44) - on-the-fence rule.
+- 14502 Timber Trail: ~38 of 107 nightly (~36%), $50 + tax 30 A passes exactly; horse question in asks.md; season 04-22..10-12 from a banner still saying 2025 - recheck in spring.
+- 14496 Reel Inn: "50 seasonal and overnight sites", no split (test 4 = pass with no count); $40 Mon-Thu, $45-55 weekends/holidays; Google 4.2/364 shared with restaurant/bars.
+- 3584 Upson Community Park -> Upson Town Park (county name + sign): 4 sites (not 31), pit toilets, no showers; removed camplinq-derived hookups.electric 50 and fees 23/28 (donation park, amperage unknown); website -> Iron County facility page; phone 715-561-3356; inclusion_evidence replaced.
+- 3333 Stevens Lake: rec.gov 10238157 is Scan & Pay only (reservable false), max_rig 40, phone -> 715-479-2827, rec.gov link added, inclusion_evidence replaced. 3356 Stockfarm Bridge max_rig 45 -> 40 (45+ was the group site), phone -> Hayward 715-638-7243; rec.gov trash vs FS "no garbage" (note follows FS).
+- 450 Tennison Bay --AWH coastal walk agrees. 2027 dates differing from manual seasons: 3312 04-30..10-11, 3304 05-27..10-01, 3332 04-29..10-12 (not written).
+- Pins: 3332 ~660 m (rec.gov site centroid), 3584 ~150 m. Websites 3312/3304 -> NHAL rustic page.

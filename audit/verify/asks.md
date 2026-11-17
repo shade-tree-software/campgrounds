@@ -670,3 +670,6 @@ Kept for now (re-pinned out of the flowage, riverfront -> not waterfront). No vi
 
 ## 453 South Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-516, 2026-11-17)
 Same question as 452 North Nicolet Bay. Not changed (--AWH). Bay-side row 844-872 (~45.1650-45.1660, -87.2215 to -87.2170) sits ~40-60 m from Green Bay behind a continuous conifer band and a sand strip; imagery alone would support bayview.
+
+## 14502 Timber Trail Campground (WI, private) - "Equestrian camping" (p3-517, 2026-11-17)
+Kept (price passes at exactly $50 + tax for 30 A, peak $55; Google 4.7/309; ~36% nightly with the mostly-seasonal caveat). The park lists "Equestrian camping" but its 2024 map draws no horse area and the Campspot site types were not read, so whether horses share the general loops is unknown. Same question as 13433 Pietrek: drop under the horse rule, or keep unless a horse loop is shown mixed in?

@@ -1536,3 +1536,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - DOWN 13422 SARA Park lakefront -> lakeview (sites 1-10 30-35 m behind an unbroken shrub/tree band). DOWN 3307 Sandy Beach Lake lakefront -> lakeview (lake-side sites under continuous canopy).
 - 453 --AWH bayfront not changed; imagery suggests bayview (asks.md, with 452).
 - Kept: 3355 Sailor lakeview (FS: "none of the sites are near the water"), 3464 Sawmill lakeview (county "Water Front" 23-25 under canopy - contrary claim), 3303 not waterfront (shore road 20-40 m under canopy; brochure "lake views are a must-see" - lakeview lead). Others not waterfront.
+
+## p3-517 (WI, 2026-11-17)
+- DOWN 3358 Spearhead Point lakefront -> lakeview (rec.gov 'Lakefront' P001-P018 under unbroken canopy - contrary claim, P012/13 15-20 m). DOWN 3332 Spectacle Lake lakefront -> lakeview (25-35 m behind conifers). DOWN 3312 Starrett Lake lakefront -> lakeview (continuous canopy).
+- 450 Tennison Bay --AWH coastal walk agrees. Kept: 3304 lakeview, 3333 lakeview, 3356 not waterfront (27 m river, 45-55 m back), 3584 not waterfront (creek-size Potato River). 14503 dropped (lakeview lead moot).

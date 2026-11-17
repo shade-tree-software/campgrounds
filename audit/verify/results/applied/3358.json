@@ -1,0 +1,48 @@
+{
+ "id": 3358,
+ "checked": "2026-11-17",
+ "sources": [
+  "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/spearhead-point-recreation-area ('a popular campground with 27 campsites equipped with a parking spur, campfire rings with grill, picnic table, vault toilets and drinking water. There is boat access and many sites have small docks provided. Sites may be reserved through recreation.gov.'; 'Site numbers that begin with a P are deemed premium and have a small dock at the site.'; 'Most sites are spacious, and some are over 40' long.'; 'No. of Sites: 27'; 'Seasons of Use May 1- October 15'; 'Single Site: $15 per night / Premium Single Site: $18 per night'; '5 Vault toilets'; 'Potable water is available at this site.'; 'Operation of all ATVs & UTVs are prohibited in campground.'; Medford Office 715-748-4875; Lat 45.327694 Long -90.445694; current conditions: 'the campground is closed for the season'), read 2026-11-17",
+  "https://www.recreation.gov/api/camps/campgrounds/233766 ('Some sites are available on a first-come, first-served basis. No hookups are available.'; 'Accessible vault toilets and drinking water are provided. A concession stand, coin-operated showers, a boat ramp and pay phone are available at the nearby Mondeaux Picnic Area.'; 'Shady sites are nestled along the shore of 411-acre Mondeaux Flowage.'; rules maxConsecutiveStay 14, reservationCutOff 4 day(s) prior to arrival; rate table: Peak 2026-05-21..09-07 / 2027-05-28..09-06, First-come First-served seasons May 1-20 and Sept 8-Oct 12 (2026), $18 P sites / $15 S sites) + /rates, read 2026-11-17",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:233766 (26 sites: 15 reservable P001-P015/S002-S010, 11 not reservable P017-P018/S019-S027; all STANDARD NONELECTRIC, RV/Tent/Trailer; 'Proximity to Water: Lakefront' on P001-P018 only; Max Vehicle Length 15 ft on P003, 30 ft on P004, blank elsewhere; site lengths 36-90 ft; S002 pull-through) + site preview photos P003, P004, P008, P011, P013, P014, read 2026-11-17",
+  "Esri World Imagery (400 m crop with the rec.gov site points plotted)"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 27, "pull_through": true, "note": "P sites (premium) have a small dock; S sites lack one. Site lengths on recreation.gov run 36-90 ft; P003 is capped at 15 ft and P004 at 30 ft."},
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/spearhead-point-recreation-area ('No. of Sites: 27'; P/S site wording) + recreation.gov campsite catalog (S002 'Driveway Entry: Pull-through'; per-site lengths), read 2026-11-17",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233766 ('No hookups are available.'), read 2026-11-17",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true, "showers": false, "flush_toilets": false},
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/spearhead-point-recreation-area ('5 Vault toilets'; 'Potable water is available at this site.') + recreation.gov 233766 (showers are 'at the nearby Mondeaux Picnic Area', not in the campground), read 2026-11-17",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "max_stay_nights": 14, "note": "15 of the 26 listed sites are reservable in the peak season (2027: May 28 - Sept 6); P017-P018 and S019-S027 are first-come, and the whole campground is first-come before and after the peak season. Reservations close 4 days before arrival."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233766 (reservationCutOff 4 days; maxConsecutiveStay 14; 'Some sites are available on a first-come, first-served basis'; Peak vs First-come First-served rate seasons) + campsite catalog (15 reservable / 11 not), read 2026-11-17",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 15, "nightly_high": 18, "currency": "USD", "checked": "2026", "note": "S sites $15; premium P sites (with a small dock) $18."},
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/spearhead-point-recreation-area ('Single Site: $15 per night / Premium Single Site: $18 per night') + recreation.gov rates (2026-2028 schedules, $15 S / $18 P), read 2026-11-17",
+   "method": "manual"
+  }
+ },
+ "note": "Rustic Chequamegon-Nicolet National Forest campground (Medford-Park Falls district) on the 411-acre Mondeaux Flowage, with a campers-only boat landing. Premium P sites each have a small dock; the sites are wooded and set back from the shore. Coin showers and a concession stand are at the nearby Mondeaux picnic area. --Claude",
+ "summary": "FS page + rec.gov read. 27 sites (FS; rec.gov lists 26), no hookups, 5 vault toilets + hand pump, $15 S / $18 P confirmed, 15 reservable + 11 FCFS, 4-day cutoff, 14-night max, season May 1-Oct 15 unchanged (manual). WATERFRONT LEAD lakefront -> lakeview (P sites under continuous canopy, water seen through trees). Pin fine (~85 m from the site centroid).",
+ "flags": [
+  "WATERFRONT LEAD lakefront -> lakeview: recreation.gov tags P001-P018 'Lakefront' and the FS says each P site has a small dock, but on Esri the whole point is unbroken canopy and the plotted P-site points sit about 15-50 m up from the shore (P003 45.32725,-90.44635 ~50 m; P004 45.32717,-90.44589 ~35 m; P012 45.32673,-90.44368 and P013 45.32651,-90.44341 ~15-20 m, all under trees). The rec.gov site photos show the pads in open-understory woods with the flowage glimpsed between trunks (P004, P011) and no open ground to the water; P003/P008/P013/P014 show only woods. Under continuous canopy / behind trees = a view, so lakeview (the P sites, sold by the night at $18; 10 of them reservable in summer, P017-P018 first-come). The dock is a walk down through the trees.",
+  "SITES: FS posts 27 sites; the recreation.gov catalog lists 26 (no P016). No campground-wide rig limit: rec.gov caps P003 at 15 ft and P004 at 30 ft; other sites list 36-90 ft site lengths with no vehicle limit, and FS says 'some are over 40' long'. max_rig_ft left unset (no stated campground maximum).",
+  "SEASON: stored manual 05-01..10-15 matches the FS page; not rewritten.",
+  "STATUS: FS page currently shows 'Site Closed ... the campground is closed for the season' - the ordinary end-of-season closing, not a status.",
+  "PHONE 715-748-4875 and websites (rec.gov + FS page) confirmed current.",
+  "NOTE: rewritten - dropped 'Hand-pump drinking water', 'some sites over 40 ft' and 'Reservable online' (fields hold them); added the campers-only landing and the nearby showers (rec.gov).",
+  "Policy rows federal / federal:usfs: nothing contradicts them ($8 rec.gov reservation fee applies to the reservable sites)."
+ ]
+}
