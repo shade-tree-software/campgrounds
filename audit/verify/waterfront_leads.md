@@ -1496,3 +1496,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - DOWN 3302 Crystal Lake lakefront -> lakeview (rows 464-482/443-449 under canopy; open sand strip is the designated day-use beach). DOWN 3350 Day Lake lakeview -> not waterfront (nearest sites 60-100 m through unbroken pines).
 - LEAD 13430 E.O. Schultz: not waterfront kept; creekside possible (8 back-in pads 43.7294-43.7300,-90.2686..-90.2680 end 10-25 m from a 10-12 m Baraboo River over mown grass; imagery only, no site numbers or photo).
 - Kept: 3314 lakeview (701-703, 711-712), 3305 lakeview (1124, 1126, 1127), 3457 lakeview (24 'L' sites behind a pine band), 3318 lakeview WEAK (all under canopy, no pad placed). Not waterfront: 3299, 3316, 3289, 14495 (pond fronted only by seasonal 24, 44-48 and cabins).
+
+## p3-508 (WI, 2026-11-17)
+- DOWN 14497 Eureka Dam riverfront -> riverview (RV lane 20-35 m from the Fox behind a tree fringe; shore sites tent-only). DOWN 3300 Firefly lakefront -> lakeview (canopy over the north shore). DOWN 3359 Eastwood lakeview -> not waterfront (no site photo shows water).
+- Kept lakefront with caveat: 3351 East Twin (5 46.19156,-90.85943 ~15 m; 8 46.19125,-90.85860 ~18 m; 9 46.19153,-90.85798 ~13 m; open understory, reservable); 3340 Emily Lake (2 and 5 on open ground 20-30 m, FCFS). 3341 Franklin lakeview kept (rec.gov tags 29 'Lakefront' but a 25-30 m tree strip everywhere; closest 070 45.93889,-88.98680). 3322 riverview confirmed.
+- Not waterfront kept: 14021 (weak lakeview lead 1621-1622 50-80 m from the bay), 13427 (5-10 m trout stream, rustic 13-16 20-40 m behind brush), 3455, 13426 (shore loop 30-40 m under canopy).

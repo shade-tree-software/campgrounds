@@ -2420,3 +2420,13 @@ me drop and report); each needs the research named before a verdict.
 - Site counts: 3314 100 -> 101, 3302 99 -> 100, 3305 34 -> 33. 3305 manual season 2027 = 05-27..09-06.
 - Websites: 3314/3302 -> NHAL modern camping page, 3305 -> rustic, 3318 -> Flambeau camping page. Pins: 3302 (~1.1 km), 3289 (~1.0 km), 3350 (~720 m), 3299 (~540 m), 3305 (~360 m), 3457 (~340 m).
 - LEAD: Harstad County Park (Eau Claire County), campground May 1-Sep 15 per eccountyparks.com - not in DB, unvetted.
+
+## p3-508 (WI, 2026-11-17)
+- No drops. 14497 Eureka Dam (private): $35 (30A, tax incl.) / $40 (50A), daily only, cash/check; Google 4.4/82.
+- 13426 Gordon Dam: now reservable online (Premier Campground, operator) since 2023 + unreserved FCFS; 22-23 electric (19 with water); inclusion_evidence + note replaced (were "12 electric, FCFS"). 50A rests on the 2011 brochure only; county 33 vs booking site 32 sites. Season written 05-21..10-31 (standard opening two Fridays before Memorial Day; staff may extend May 1-Oct 31; FCFS electric-only until snow) - reviewer may prefer another close.
+- 13427 Esofea/Rentz: Campspot, 2-night minimum, 2026 fee sheet $20-55 + $8 reservation fee; phone -> 608-637-5480.
+- Manual seasons not overwritten: 3322 DNR self-contradicts (May 1 - Monday after 2nd October weekend vs mid-April - mid-October), stored close 10-16 is late (Oct 12 2026 / Oct 11 2027); 3300 "April 30 to Columbus Day" (stored 10-14); 14021 2027 05-27..09-06.
+- 3359 Eastwood drinking water: FS says on site, rec.gov says at Glacial Springs. 3340 Emily Lake: "not specifically designed for RVs" but 45 ft+ sites and pull-through 9 stated.
+- OHV (general campgrounds, stay): 3455 Goodman ATV/UTV spur + parking; 13426 trail access; 3351 trail access, no ATVs in the campground. 3322 Black River SF bans generators (note).
+- SPLIT CANDIDATE 3341 Franklin Lake: South 1-40 (~45.9305,-88.9945) and North 41-77 (~45.9395,-88.9865), ~1.1 km apart, own loops, one rec.gov facility 233774 - do with Sidie Hollow at the end of the queue (check own entrances).
+- Phones: 3351 -> Hayward 715-638-7243. Websites: 3322 camping page, 3300 NHAL modern (old 404). Pins: 3300 (~1.2 km, was in a bog), 3455 (~1.1 km).

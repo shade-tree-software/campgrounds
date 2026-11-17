@@ -1,0 +1,66 @@
+{
+ "id": 3359,
+ "checked": "2026-11-17",
+ "sources": [
+  "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/eastwood-recreation-area ('The site has 12 campsites equipped with a parking spur, campfire rings with grill, picnic table, vault toilets and drinking water'; 'fishing pier at nearby Lakeview Day Use Site'; 'This campground mixes first-come, first-serve, and reservable sites'; 'the beautiful 411-acre Mondeaux Flowage'; 'While close to the lake, the sites need access to the water. Most sites are spacious and over 35' long'; 'No. of Sites: 12'; 'Seasons of Use May 1- October 15'; 'Single Site: $15 per night'; '2 Vault Toilets'; 'Potable water is available at this site'; Medford Office Phone: 715-748-4875; Latitude 45.331593 Longitude -90.445408; 'Site Closed'), read 2026-11-17",
+  "https://www.recreation.gov/api/camps/campgrounds/233763 and /rates (description: 'a dozen sites for tent or RV camping. No hookups are available. Sites not listed are available on a first come, first served basis'; 'Accessible vault toilets are provided. Drinking water is available at Glacial Springs, located on Park Road (FR 1563)'; 'Shady sites are nestled along the Mondeaux Flowage, with the Ice Age National Scenic Trail traversing the campground'; maxConsecutiveStay 14; reservationCutOff 4 days; rates $15 every season; 2027 Peak 05-28..09-06, first-come 04-29..05-27 and 09-07..10-12; phone 715-748-4875), read 2026-11-17",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:233763 (11 sites 001-012 with no 006: 008-012 reservable, 001-007 first come; all STANDARD NONELECTRIC, Water Hookup 'No'; RV/Trailer max lengths 42-65 ft; site photos for all 11), read 2026-11-17",
+  "Esri World Imagery at 220 m half-width with catalog points 8-12 (the only ones with coordinates), the stored pin and the FS point plotted"
+ ],
+ "groups": {
+  "sites": {
+   "values": {
+    "count": 12,
+    "max_rig_ft": 65,
+    "note": "recreation.gov's catalog lists 11 (no site 6); every listed site takes an RV or trailer of 42 ft or more."
+   },
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/eastwood-recreation-area ('No. of Sites: 12'; 'Most sites are spacious and over 35' long'); https://www.recreation.gov/api/search/campsites?fq=asset_id:233763 (RV max length 42-65 ft per site, 65 on site 8), read 2026-11-17",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0,
+    "water": false,
+    "sewer": false
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233763 ('No hookups are available'); https://www.recreation.gov/api/search/campsites?fq=asset_id:233763 (STANDARD NONELECTRIC, Water Hookup 'No'), read 2026-11-17",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "vault_toilets": true
+   },
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/eastwood-recreation-area ('2 Vault Toilets'), read 2026-11-17",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "some_sites",
+    "max_stay_nights": 14,
+    "note": "Sites 8-12 are reservable for the summer peak (2027: May 28-Sep 6); sites 1-7, and every site in spring and fall, are first come."
+   },
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/eastwood-recreation-area ('This campground mixes first-come, first-serve, and reservable sites'); https://www.recreation.gov/api/camps/campgrounds/233763 (maxConsecutiveStay 14; Peak vs first-come rate seasons); https://www.recreation.gov/api/search/campsites?fq=asset_id:233763 (reservable flags), read 2026-11-17",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 15,
+    "nightly_high": 15,
+    "currency": "USD"
+   },
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/eastwood-recreation-area ('Single Site: $15 per night'); https://www.recreation.gov/api/camps/campgrounds/233763/rates ($15 every season), read 2026-11-17",
+   "method": "manual"
+  }
+ },
+ "note": "Rustic campground in hardwood forest beside the 411-acre Mondeaux Flowage, part of the Mondeaux Recreation Area; the Ice Age National Scenic Trail runs through it. The sites sit back in the trees; a fishing pier is at the nearby Lakeview day-use site and a boat ramp is a short drive away. --Claude",
+ "summary": "FS page, recreation.gov facility/rates, catalog and all 11 site photos read. 12 sites (catalog 11), $15, no hookups, 2 vault toilets, 5 reservable/6 FCFS, 14-night max, season (manual) matches, phone matches. Lakeview -> not waterfront proposed (no site photo shows water; nearest catalog site ~30-40 m back under canopy; FS: 'the sites need access to the water'). Drinking water conflict between FS and rec.gov flagged.",
+ "flags": [
+  "WATERFRONT: lakeview -> not waterfront proposed (no --AWH on it). None of the 11 recreation.gov site photos (001-012) shows any water - every one looks into hardwood forest, several leaf-off. On Esri imagery (220 m half-width) the only catalog site near the flowage is 8 (45.33131,-90.44718), roughly 30-40 m from the shore under continuous canopy; 9-12 are about 55-70 m+ back, and 1-7 have no coordinates (none of their photos shows water). The FS page itself says 'While close to the lake, the sites need access to the water' (sic, apparently 'lack'). The only support for a view is rec.gov's 'Shady sites are nestled along the Mondeaux Flowage' (prose). No qualifying source confirms a view from any RV site, so it goes down.",
+  "DRINKING WATER: conflicting official pages - FS 'Potable water is available at this site' vs recreation.gov 'Drinking water is available at Glacial Springs, located on Park Road (FR 1563)'. Stored potable_water true (derived) left alone.",
+  "SITE COUNT: FS and rec.gov prose say 12; the rec.gov catalog lists 11 (no 006). Count 12 written with the catalog gap in sites.note.",
+  "PIN: 45.3316,-90.4454 matches the FS page's point (45.331593,-90.445408), ~110 m north of catalog site 9 and within the loop area - OK.",
+  "STATUS: FS page shows 'Site Closed' (end of season) - no status."
+ ]
+}
