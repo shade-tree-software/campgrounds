@@ -2518,3 +2518,8 @@ me drop and report); each needs the research named before a verdict.
 - Renamed: 13425 -> Jack Lake Campground; 451 -> Welcker's Point Campground. 3502 White Mound: removed hookups.water (only site 48E of 46); horse camp H1-H7 is a separate area (kept); FareHarbor link added.
 - Phones: 13425 -> 715-627-6300; filled 3466, 451, 3529, 13424. Pins: 13424 ~815 m, 3502 ~590 m (was beach/office lot), 13425 ~300 m, 3466 ~275 m (was in the lake), 3313 ~260 m, 3529 ~215 m.
 - LEADS: Weborg Point campground (Peninsula SP, 12 electric reservable sites) - not in DB; Picnic Point (Mondeaux Flowage) - not in DB, unchecked.
+
+## p3-519 (WI, 2026-11-17) - last WI batch
+- DROPPED 3595 Wild Rock County Park (Clark County): picket lines beside sites 3/4/9/11/12/18/22 and a manure bunker by 14 in the one loop, no separate horse area (AWH 11-12 rule); also marketed as an ATV/horse trail base ("ATV Camping Welcome on All Sites").
+- 14498 Wilson Lake (private): $50 weekday water/electric passes exactly, $55 Fri-Sat; Google 4.5/70; nightly share unmeasured (Firefly reCAPTCHA; imagery shows many shed/deck units on the western grid) - no count = test 4 pass; Firefly booking link written.
+- 3277 Wildcat Mountain 30 -> 25 drive-in sites (cart-in 101-120 tent only); horse camp separate. Wyalusing map 54+54 vs DNR 109, 14 / 24 electric; stored 30 A at 3259/3260 unsourced. 3292 Willow River fee high $50 looks odd. 13439 Wonewoc phone -> 608-464-3114 (village office). 3284 re-pinned ~340 m (was the dump lot).

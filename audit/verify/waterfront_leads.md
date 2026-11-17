@@ -1546,3 +1546,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - UP LEAD 13425 Jack Lake (not changed): county tags "Lakefront: Yes" on 7-15 (~45.3282,-89.1005) and 50-57 - contrary claim, audit at end of queue.
 - 3529 West Arbutus lakefront kept: sites 1-16 on open lawn 10-30 m from the water (~44.4170,-90.7245), but they may be seasonal - re-check if the park is confirmed seasonal-only.
 - 451 Welcker's Point --AWH coastal walk agrees. Kept: 3465, 3344, 3466 lakeview; 13424, 3502 not waterfront.
+
+## p3-519 (WI, 2026-11-17)
+- DOWN 3260 Wyalusing Wisconsin Ridge riverview -> not waterfront (ridge sites back onto forest ~147 m above the river; no site view confirmed). DOWN 3262 Yellowstone Lake lakeview -> not waterfront (leaf-off misread; 180 m and 40 m above the shore through forest).
+- 14498 Wilson Lake not waterfront kept with corrected evidence (lake at NE corner, nearest sites 60-90 m behind lawn + treeline). 3292 Willow River lakeview kept (313-319, 352-360 on a wooded bluff 60-90 m back).
