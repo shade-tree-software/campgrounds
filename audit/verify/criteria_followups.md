@@ -2430,3 +2430,12 @@ me drop and report); each needs the research named before a verdict.
 - OHV (general campgrounds, stay): 3455 Goodman ATV/UTV spur + parking; 13426 trail access; 3351 trail access, no ATVs in the campground. 3322 Black River SF bans generators (note).
 - SPLIT CANDIDATE 3341 Franklin Lake: South 1-40 (~45.9305,-88.9945) and North 41-77 (~45.9395,-88.9865), ~1.1 km apart, own loops, one rec.gov facility 233774 - do with Sidie Hollow at the end of the queue (check own entrances).
 - Phones: 3351 -> Hayward 715-638-7243. Websites: 3322 camping page, 3300 NHAL modern (old 404). Pins: 3300 (~1.2 km, was in a bog), 3455 (~1.1 km).
+
+## p3-509 (WI, 2026-11-17)
+- No drops. 14505 Green Valley (private, Baraboo): operator base rate $50 (30A + water, 2 adults) passes; Campspot quotes $52.25 (flat +4.5%) - if that counts, gateway Wisconsin Dells 22 km covers it. No summer premium. Google 4.6/91. "10ft x 20ft concrete pads", no site lengths read - unclear pad size, kept (length check if wished).
+- 3265 Twin Valley electric conflict: map ~97 public electric vs camping page 80 for the whole park; neither written. 3264 Cox Hollow: only 16 and 55 public electric; ~116 sites on the map (stored count unconfirmed).
+- 3361 Grant River (USACE): 73 -> 72 sites (62 electric 02-63 at 50/30/20A, 10 tent-only 64-73; 01 management); water hookup false (fill only); season 05-01..10-24 (2027 rate season ends 10-23). USACE MVR page Akamai 403.
+- 13432 Greenwood Park (Clark County): 15 -> 9 sites during 2026 construction (1, 2, 4, 6, 8, 9, 11, 13, 15); $30 (+$3 Fri/Sat/holidays), $26 Oct-Apr; walk-in self-registration; no ATV camping. Phone -> 715-743-5140.
+- 3498 renamed Hawkins Community Park -> Hawkins Lions Park (village's name); $15 / $25 electric, FCFS; mud bogs/pulls in June and Labor Day weekend (not an OHV park). Phone 715-415-4341 (Lions rentals) -> 715-585-6322 (village office).
+- 3276 Hartman Creek: open 04-02..11-30; old pin was the Horse Trail Parking loop (no horse camp; note line dropped). Stored 50A unsourced. 3288 Gov Thompson generators not permitted (note); stored max_rig 50 unsourced. 3287 High Cliff: entrance/office construction mid-Sep 2026 - spring 2027 (open); no horse camping (lot only).
+- Pins: 3295 (~900 m, was the Hwy 70 entrance), 3276 (~900 m).
