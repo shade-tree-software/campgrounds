@@ -2478,3 +2478,11 @@ me drop and report); each needs the research named before a verdict.
 - 3266 New Glarus Woods: "tent, pop-up and small (RV)" drive-ins; "fits a 23-ft rig" unsourced, no posted cap - kept. 14022 Old Veteran's Lake: 21-ft Campendium caveat kept (no DNR length). 3309 dump is at Crystal Lake (unset).
 - 452 --AWH bayfront question in asks.md; phone -> 920-868-3258; goingtocamp line added.
 - Pins: 3301 (~1.33 km, was in Trout Lake), 3261 (~1.14 km), 3309 (~1.09 km, was Crystal Lake's point). Websites 3309/3301 -> NHAL camping pages (old 404).
+
+## p3-514 (WI, 2026-11-17)
+- DROPPED 14500 Pelican Lake Campground (private): own About page "100 Total Sites / 91 Seasonal Sites" = ~9% nightly, fails test 4 (Google 4.8/47; $43 + tax nightly; cash/money order).
+- 3492 Otter Lake (Lincoln Co.): now reservation-only online (Konect Parks), $25, 16 camper/tent sites of 24 (was FCFS, 25); inclusion_evidence replaced; parks.co.lincoln.wi.us link added.
+- 3320 Pigeon Creek: reservations required (fcfs never), year-round with limited plowing. 3283 Pike Lake closes third weekend in October (10-17). 3330 Pine Lake 04-29..10-12 (2027).
+- 3290 Perrot: stored year_round and max_rig 45 unsourced. 3564 Pier Natural Bridge: county silent on RV size/fee, fit caveat kept; phone 608-647-4673 (unsourced) -> Parks Commission 608-475-1487.
+- 13433 Pietrek: phone -> 715-538-1914; one horse site, location unstated (asks.md). 3347/3330 manual booking: could add max_stay_nights 14.
+- Pins: 3281 ~265 m (was entrance station), 3297 ~260 m (was day-use lawn).

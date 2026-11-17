@@ -661,3 +661,6 @@ New owners since Oct 1, 2025. Home page: "Direct access to hundreds of miles of 
 
 ## 452 North Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-513, 2026-11-17)
 Not changed (--AWH value). The shore sites on the 632-644 road (~45.1705-45.1735, -87.2215 to -87.2200) are ~35-45 m from Green Bay with a conifer band and a sand beach between; imagery alone would support bayview. Keep bayfront or go to bayview?
+
+## 13433 Pietrek Park (WI, Trempealeau County) - one horse site (p3-514, 2026-11-17)
+Kept. The county lists "one new horse camping site" and Campspot sells a "Rustic Horse" type, but neither says where it sits. The horse rule drops horse sites mixed into general loops with no separate area; does a single horse site in a county park trigger it, or only a horse area/loop?

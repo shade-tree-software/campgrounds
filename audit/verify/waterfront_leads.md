@@ -1522,3 +1522,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-513 (WI, 2026-11-17)
 - DOWN 3301 North Trout Lake lakefront -> lakeview (shore row 1402-1414 under canopy to a narrow sand edge). 452 North Nicolet Bay --AWH bayfront not changed: imagery suggests bayview (asks.md).
 - Kept: 3309 lakeview, 3346 lakeview (017 46.24257,-91.08553 and 019 ~20-25 m under canopy - lakefront lead only if canopy reads open), 3471 riverview (river row 13-21 m behind a tree band; only D7 and 15-ft D13 nightly), 14022 not waterfront (11-16 30-60 m through woods; possible view unconfirmed). Others not waterfront.
+
+## p3-514 (WI, 2026-11-17)
+- DOWN 3347 Perch Lake lakefront -> lakeview (north-loop 5-8 ~15 m inside the tree edge, 30-35 m from open water; hemlock-filtered view).
+- Kept with corrected evidence: 3281 Ottawa Lake lakeview (spurs 20-35 m behind a wooded slope, not open grass), 3290 Perrot bayview (sites 34-47 ~30 m under canopy, not an open overlook). 3564 Pier Natural Bridge riverview kept (Pine River 8-12 m - creekside at most). 3492 Otter Lake: only walk-in tent sites 12-19 are on the water. Others not waterfront.
