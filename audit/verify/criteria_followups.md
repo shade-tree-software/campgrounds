@@ -2390,3 +2390,13 @@ me drop and report); each needs the research named before a verdict.
 - 3323 FS page "All sites first-come" vs rec.gov 9 reservable.
 - Renamed: 3463 Doolittle Park (village, not county), 3543 Southworth Memorial Park, 3552 Crowley Park Campground. 3463 dock sites nightly vs seasonal unstated; 29 of 40 sites fit 23 ft. 3543 ATV/UTV on park roads since 2025 (general campground).
 - 3552 Owen: old city site dead, new cityofowenwi.gov has no campground page; season only in a 2020 flyer.
+
+## p3-505 (WI, 2026-11-17)
+- No drops. 3535 Big Eau Pleine and 13434 Blackhawk Memorial UNREAD (marathoncounty.gov Akamai; lafayettecountywi.org refuses). 3535 snippets only: May 1-Sep 30, 30A, dump, West + South units 106 sites, phones 715-261-1550 / 715-261-1566. 13434: Argyle directory caretaker 608-220-5529; Campendium $10 (May 2026); ordinance snippet season Apr 15-Oct 15.
+- 3298 Big Bay temporarily_closed Sept 8, 2026 - ~June 30, 2027 (construction); stored manual winter season left alone. Dump is at the Madeline Island Airport.
+- 3263 Blue Mound: stored manual year_round, but winter sites are walk-in only (no vehicle access) - season note for AWH to rule.
+- 3338 Boot Lake FIT QUESTION: every RIDB site permits "Tent, Trailer" only (no RV/motorhome); FS page describes RV camping to 35 ft+ - likely a catalog gap. Site count sources differ (FS 36, rec.gov 34, catalog 33); 34 kept.
+- 13685 Birch Grove max_rig_ft 45 -> 40 (45 was the vehicle length); reservations only May 22 - Sep 7 2026 / May 28 - Sep 26 2027. Tribal discount on rec.gov not written.
+- 3317 Bois Brule 22 -> 17 drive-in sites (+5 walk-in); no current season dates (2020 brochure: late March - mid-November).
+- GoingToCamp unread: stored DNR prices/amperages/lengths for 3298, 3278, 3308, 3263, 3317 unconfirmed. 3278 stored season 04-20/10-15 not on any DNR page read.
+- Phones: 3513 none -> 715-339-6371; 3353 715-264-2511 -> 715-638-7243 (FS page's Hayward Office). Website 3308 -> dnr.wisconsin.gov/topic/StateForests/nhal/recreation/camping/rustic (old 404). Pins moved: 3298 (~930 m), 3278 (~580 m), 13685 (~460 m), 3353 (~430 m), 3513 (~350 m).

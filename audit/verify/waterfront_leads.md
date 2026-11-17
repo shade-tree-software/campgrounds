@@ -1483,3 +1483,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## p3-504 (WI, 2026-11-16)
 - DOWN 3323 Ada Lake lakefront -> lakeview; 3335 Anvil Lake lakefront -> not waterfront; 3543 Southworth lakeview -> not waterfront. UP 13428 Banker Park not waterfront -> creekside (open grass 13-25 m from the Kickapoo). Kept: 3463 Doolittle lakefront (25-35 on open lawn, nightly status of dock sites unstated); 3348 Beaver Lake lakefront on site 7 alone (caveat; lakeview if one site is not enough); 15350 Bear Lake lakefront on L4 + the double; 3336 riverview, 3337 lakeview.
+
+## p3-505 (WI, 2026-11-17)
+- DOWN 3353 Black Lake lakefront -> lakeview (pads 30-60 m from shore under continuous birch/pine canopy; rec.gov tags 16 sites 'Lakefront', FS says "most are lakefront" - contrary claim, canopy rule). DOWN 3338 Boot Lake lakefront -> lakeview (rec.gov 'Lakefront' sites 13/14/15 at 25/22/40 m under pine canopy; if the open pine floor reads as an apron, those three nightly sites are the caveat). UP 13685 Birch Grove not waterfront -> lakeview (sites 4, 8 ~20-40 m from West Twin Lake through brush/birch).
+- Confirmed: 3308 lakeview (shore sites under canopy); 3298 coastal walk (18-21 ~200 m from Lake Superior by park trail); 3513, 3278, 3263, 3317 not waterfront (Bois Brule river ~15-20 m wide, nearest sites walk-ins). 3535 lakeview unchecked (unread).
