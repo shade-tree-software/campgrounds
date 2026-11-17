@@ -21,7 +21,7 @@ Sources (p3-485): plain curl works for most county and operator sites, blackhawk
 
 Queue: 0 WI entries left - the WI verification queue is done (p3-485..p3-519). Remaining WI work is the "Open after the WI queue" list below (leads, splits, unread, asks). Next batch number is **p3-520** (first SK batch). ONE verifier at a time, 11 per batch. After WI: SK, WY, SD (AWH order), each with its own kit/<st>/ (copy kit/wi/ and adapt mkpara + the template; SK = Canada: provincial ownership, CAD, C$69 gate).
 
-Build + launch (S = session scratch dir):
+Build + launch (S = session scratch dir; this is the WI form - for SK first build kit/sk/ and swap the --state flag, the mkpara script and the template path):
 
     N=p3-520; python3 -I audit/verify/queue.py --batch $N --state WI --limit 11 && python3 -I audit/verify/kit/wi/mkpara_wi.py $S $N && python3 -I audit/verify/kit/mkbrief_mo.py $S $N $S/${N}_para.txt >/dev/null && mkdir -p $S/$N && cp -r audit/verify/kit/il/tools $S/$N/tools
     IDS=$(python3 -I -c "import json;print(', '.join(str(x['entry']['id']) for x in json.load(open('audit/verify/batches/$N.json'))))")

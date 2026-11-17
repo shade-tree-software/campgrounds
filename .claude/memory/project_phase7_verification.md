@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "PAUSED 2026-11-16 after p3-504 (WI, 163 left; then SK, WY, SD); ONE verifier at a time; resume from audit/verify/kit/wi/RESUME_WI.md (RESUME HERE section)"
+description: "WI queue COMPLETE 2026-11-17 (p3-485..519); next SK (build kit/sk/ first, batch p3-520), then WY, SD; WI open list (leads, splits, unread, asks) in audit/verify/kit/wi/RESUME_WI.md; ONE verifier at a time"
 metadata:
   node_type: memory
   type: project
