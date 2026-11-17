@@ -1526,3 +1526,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-514 (WI, 2026-11-17)
 - DOWN 3347 Perch Lake lakefront -> lakeview (north-loop 5-8 ~15 m inside the tree edge, 30-35 m from open water; hemlock-filtered view).
 - Kept with corrected evidence: 3281 Ottawa Lake lakeview (spurs 20-35 m behind a wooded slope, not open grass), 3290 Perrot bayview (sites 34-47 ~30 m under canopy, not an open overlook). 3564 Pier Natural Bridge riverview kept (Pine River 8-12 m - creekside at most). 3492 Otter Lake: only walk-in tent sites 12-19 are on the water. Others not waterfront.
+
+## p3-515 (WI, 2026-11-17)
+- DOWN 3311 Razorback lakefront -> lakeview (unbroken canopy to shore, sites 50-80 m back). DOWN 3562 Pioneer Park riverfront -> not waterfront (old pin in the flowage; loop 60-90 m back behind lawn/courts).
+- UP LEAD 13431 Rieck's Lake (unread): Esri at 44.3540,-91.9315 shows ~20 angled paved pads on the WI-35 causeway strip ~15-25 m from the lake over open grass with scattered trees -> lakefront if sites confirmed nightly.
+- Kept: 3331 Richardson lakeview (22/24/26 at 45-60 m under canopy), 3310 Plum Lake lakeview. Others not waterfront.

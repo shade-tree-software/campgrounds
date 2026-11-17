@@ -2486,3 +2486,10 @@ me drop and report); each needs the research named before a verdict.
 - 3290 Perrot: stored year_round and max_rig 45 unsourced. 3564 Pier Natural Bridge: county silent on RV size/fee, fit caveat kept; phone 608-647-4673 (unsourced) -> Parks Commission 608-475-1487.
 - 13433 Pietrek: phone -> 715-538-1914; one horse site, location unstated (asks.md). 3347/3330 manual booking: could add max_stay_nights 14.
 - Pins: 3281 ~265 m (was entrance station), 3297 ~260 m (was day-use lawn).
+
+## p3-515 (WI, 2026-11-17)
+- No drops. 3562 Pioneer Park presence question in asks.md.
+- 13431 Rieck's Lake UNREAD (cityofalmawi.gov WP Engine WAF); Google phone 608-685-3330 unconfirmed; lakefront upgrade lead below.
+- 14506 River's Edge Apple River: claimed RoverPass Instant Book (updated 11/16/2026); nightly RV 20/30/50 A no full hookup; $15/adult (2026-10-10 capture) + site $10/15/20 -> ~$45 for two on 30 A, passes. Google 4.3/687 shared with the tubing outfitter; ~400 of ~422 sites tent; aggregators call it party-like (no caveat written).
+- 3282 Pinewoods electric 0 -> unknown (accessible sites 1E/177E/290E). 3285 Bong ~57 electric, no amperage; OHV area is a side area. 3331 Richardson rec.gov 16 reservable vs FS 10 (rec.gov trusted), max rig 56. 3567 Potato River Falls max_rig 30 (county: not for campers over 30 ft). 3467 Blair derived max_rig 30 cleared ("Big Rig sites available"); 2024 rates still posted.
+- Pins: 3311 ~1.36 km (DNR GPS point), 3516 ~600 m (was inside Camp Nebagamon), 3562 ~255 m (was in the flowage). Websites 3310/3311 -> NHAL rustic page (old 404); 14506 RoverPass added.
