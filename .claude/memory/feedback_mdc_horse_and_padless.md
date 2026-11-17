@@ -21,4 +21,6 @@ AWH 2026-11-09, answering three phase-7 asks:
 
 **Lot-adjacent camping (AWH 2026-11-09):** Dark Hollow 13874 and Charlie Heath 13763 were kept because MDC marks designated camping points beside the lots, even though the brochure says camping is "on or adjacent to all graveled parking lots". An allowance to camp inside a ramp or parking lot, with no designated point, is still a drop (Cross Timbers 13897, Bird's Blue Hole 13931).
 
+**A horse mention is not a horse camp (AWH 2026-11-17):** a general campground whose only horse content is an amenity line ("Equestrian camping" beside an adjoining riding trail, Timber Trail 14502) or a single sold horse site (Pietrek 13433, one "Rustic Horse" site among ~35) is kept. AWH leaned keep before the check; the check found no horse area on Timber Trail's map. Drop only when the horse sites are the RV sites or are shown mixed into the general loops (Smith Rapids 3354: every RV-fit site a horse site).
+
 **No DB-wide horse sweep (AWH 2026-11-12):** the separation rule was meant to be in the curation all along, so few mixed horse camps should exist. Apply it only to entries a pass already touches; don't hunt for them.
