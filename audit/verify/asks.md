@@ -660,6 +660,7 @@ About 60 of 196 sites nightly (31%, 2026 map legend; note carries the mostly-sea
 New owners since Oct 1, 2025. Home page: "Direct access to hundreds of miles of ATV/UTV and snowmobile trails"; About: "We are proudly ATV and UTV friendly, with direct trail access to hundreds of miles of trails"; the layout map draws "ATV Trail Access" leaving the grounds by site 7. It also sells the lake beach, ski hill and general camping. Water + 30/50A from $45 + tax (passes; summer peak unposted); 2-night weekend / 3-night holiday minimums only; booking by phone/email/form; Google 4.5/90. Seasonal $2,150 posted, 46-site map doesn't mark seasonal vs nightly (share unmeasured). Kept meanwhile as a general campground with an OHV side - keep or drop?
 
 ## 452 North Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-513, 2026-11-17)
+**ANSWERED (AWH 2026-11-17): go with the imagery - bayfront -> bayview.**
 Not changed (--AWH value). The shore sites on the 632-644 road (~45.1705-45.1735, -87.2215 to -87.2200) are ~35-45 m from Green Bay with a conifer band and a sand beach between; imagery alone would support bayview. Keep bayfront or go to bayview?
 
 ## 13433 Pietrek Park (WI, Trempealeau County) - one horse site (p3-514, 2026-11-17)
@@ -669,6 +670,7 @@ Not changed (--AWH value). The shore sites on the 632-644 road (~45.1705-45.1735
 Kept for now (re-pinned out of the flowage, riverfront -> not waterfront). No village, county or tourism page mentions camping; only aggregators (The Dyrt, AllStays, RV Life unclaimed with 0 reviews). Google "Pioneer Park" 4.7/101 covers the whole village park, no phone/website. No rate, booking method, site count, season or hookups from any operator source; 715-455-1024 is aggregator-only. Drop on presence (like Melrose 3524), or keep with a "call the village" caveat?
 
 ## 453 South Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-516, 2026-11-17)
+**ANSWERED (AWH 2026-11-17): go with the imagery - bayfront -> bayview.**
 Same question as 452 North Nicolet Bay. Not changed (--AWH). Bay-side row 844-872 (~45.1650-45.1660, -87.2215 to -87.2170) sits ~40-60 m from Green Bay behind a continuous conifer band and a sand strip; imagery alone would support bayview.
 
 ## 14502 Timber Trail Campground (WI, private) - "Equestrian camping" (p3-517, 2026-11-17)
