@@ -1540,3 +1540,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-517 (WI, 2026-11-17)
 - DOWN 3358 Spearhead Point lakefront -> lakeview (rec.gov 'Lakefront' P001-P018 under unbroken canopy - contrary claim, P012/13 15-20 m). DOWN 3332 Spectacle Lake lakefront -> lakeview (25-35 m behind conifers). DOWN 3312 Starrett Lake lakefront -> lakeview (continuous canopy).
 - 450 Tennison Bay --AWH coastal walk agrees. Kept: 3304 lakeview, 3333 lakeview, 3356 not waterfront (27 m river, 45-55 m back), 3584 not waterfront (creek-size Potato River). 14503 dropped (lakeview lead moot).
+
+## p3-518 (WI, 2026-11-17)
+- DOWN 3360 West Point lakefront -> lakeview (aggregator-only claim; continuous canopy). DOWN 3313 West Star Lake lakefront -> lakeview (wooded loop, DNR "shady... great view of the lake").
+- UP LEAD 13425 Jack Lake (not changed): county tags "Lakefront: Yes" on 7-15 (~45.3282,-89.1005) and 50-57 - contrary claim, audit at end of queue.
+- 3529 West Arbutus lakefront kept: sites 1-16 on open lawn 10-30 m from the water (~44.4170,-90.7245), but they may be seasonal - re-check if the park is confirmed seasonal-only.
+- 451 Welcker's Point --AWH coastal walk agrees. Kept: 3465, 3344, 3466 lakeview; 13424, 3502 not waterfront.

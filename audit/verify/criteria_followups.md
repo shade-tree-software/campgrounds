@@ -2510,3 +2510,11 @@ me drop and report); each needs the research named before a verdict.
 - 3333 Stevens Lake: rec.gov 10238157 is Scan & Pay only (reservable false), max_rig 40, phone -> 715-479-2827, rec.gov link added, inclusion_evidence replaced. 3356 Stockfarm Bridge max_rig 45 -> 40 (45+ was the group site), phone -> Hayward 715-638-7243; rec.gov trash vs FS "no garbage" (note follows FS).
 - 450 Tennison Bay --AWH coastal walk agrees. 2027 dates differing from manual seasons: 3312 04-30..10-11, 3304 05-27..10-01, 3332 04-29..10-12 (not written).
 - Pins: 3332 ~660 m (rec.gov site centroid), 3584 ~150 m. Websites 3312/3304 -> NHAL rustic page.
+
+## p3-518 (WI, 2026-11-17)
+- No drops. 14504 Waupaca S'more Fun UNREAD (operator site 406 Mod_Security; ResNexus off-limits): Google 4.7/255, phone 715-258-8010 matches; earlier captures $42-65.
+- 3529 West Arbutus: status unclear - gone from the county booking system and Camping menu though its page still says "2024 Reservations are LIVE!"; 2026 seasonals walk-in/phone only ($2600 waterfront); 3-night minimum Memorial Day-Labor Day (time-of-year, stays); stored fees under a 2024 heading. Dead jacksoncountyparks.us link removed; phone 715-284-8475 (a call would settle it). Google 4.8/44.
+- 3466 Wazee Lake: 3-night minimum on advance bookings, none same-day (waivable, kept); Google 3.7/6. 13424 West Bass Lake now reservation-only, 2-night Fri / 3-night holiday minimums, year-round. 3465 Waldo Carlson fcfs never -> always (walk-ins), 36 sites.
+- Renamed: 13425 -> Jack Lake Campground; 451 -> Welcker's Point Campground. 3502 White Mound: removed hookups.water (only site 48E of 46); horse camp H1-H7 is a separate area (kept); FareHarbor link added.
+- Phones: 13425 -> 715-627-6300; filled 3466, 451, 3529, 13424. Pins: 13424 ~815 m, 3502 ~590 m (was beach/office lot), 13425 ~300 m, 3466 ~275 m (was in the lake), 3313 ~260 m, 3529 ~215 m.
+- LEADS: Weborg Point campground (Peninsula SP, 12 electric reservable sites) - not in DB; Picnic Point (Mondeaux Flowage) - not in DB, unchecked.

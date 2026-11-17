@@ -1,0 +1,12 @@
+# p3-518 WI notes
+- 13425 done: 57 sites, $40/45, lakeview lead (7-15, 50-57), pin -> 45.3276,-89.1002, phone 715-627-6300
+- 3465 done
+- 3344 done
+- 14504 NO RESULT: operator site 406 Mod_Security (both / and /rates-policies/), ResNexus off-limits. Google 4.7 (255) ph 715-258-8010. RV Life 115 sites $48 4.5*(26) price 3. prior read 2026-10-10 rates 42-65.
+- 3466 done; pin in lake -> 44.2934,-90.7289
+- 451 done; lead Weborg Point; name Welcker's
+- 3529 done (flags only: gone from county booking system/menu; status unclear)
+- 13424 done; pin 815 m -> 45.7768,-88.3328; now reservation-only
+- 3360 done; lakefront->lakeview (canopy, aggregator-only)
+- 3313 done; lakefront->lakeview (canopy); pin ~260 m to SW loop; website 404 -> rustic page
+- 3502 done; horse camp separate (keep); pin ~590 m to campground; water=48E only
