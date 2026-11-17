@@ -654,6 +654,7 @@ Operator: "Full Hook-up Daily $50 - $55" (when each applies not stated). No Good
 **AWH 2026-11-16: drop** (dropped same day, criteria_drops.py).
 
 ## 14495 Dells Camping Resort (WI, private) - "Seasonal Sites For Sale"? (p3-507, 2026-11-17)
+**ANSWERED (AWH 2026-11-17): keep - strong on nightly sales, good enough.** Campsites page (saved copy read 2026-11-17) confirms the stored rates ($43.50-77) and the 3-night holiday minimum; nothing on lot sales.
 About 60 of 196 sites nightly (31%, 2026 map legend; note carries the mostly-seasonal caveat). Cheapest RV night $43.50 (W/E spring/fall), summer W/E $46.50, deluxe $63, holidays $77; Staylist booking; Google 4.6/172. Its seasonal page says "stay up to date on the seasonal sites available for sale at the park" under a "Seasonal Sites For Sale" heading (listing empty) - reads like campers' units changing hands on seasonal sites, but test 5 drops a park that sells or leases lots. No lot-sale or lease terms found. Kept meanwhile - keep or drop?
 
 ## 14499 Keyes Lake Campground (WI, private, Florence) - ATV park? (p3-510, 2026-11-17)
