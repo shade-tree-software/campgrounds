@@ -2460,3 +2460,12 @@ me drop and report); each needs the research named before a verdict.
 - 3325 Laura Lake: 2027 04-29..10-12; rec.gov types 10 and 20 tent-only. 3328 Luna-White Deer nightly_high 15 -> 18 (lakeshore sites).
 - 13438 Maiden Rock: site count 12 cleared (Campendium only); $25 from maidenrock.org (community association, "Not affiliated with the village"), Travel WI $20 - no dated operator rate; no season published. Phone -> 715-448-2205.
 - 3456 McClintock: the one Marinette County park where ATVs/UTVs may ride (general 10-site rustic campground, stays); $20 + $10 reservation fee; fcfs some_sites; Google 4.8/214.
+
+## p3-512 (WI, 2026-11-17)
+- DROPPED 13419 Menomonee Park (Waukesha County): 2026 fee table "Vehicle/Camper Maximum Lengths: Menomonee Park: 20 feet max" (min-length + trailer-limit rules).
+- 3560 Merlin Lambert: 13 sites (not 30), now booked online; 3-night minimum on advance bookings, none same-day (waived_if booking_within_days 0) - kept under the waivable-minimum rule. Every site ATV-accessible (general campground). Re-pinned ~1.85 km (was in the causeway marsh).
+- 3533 Mondovi Tourist Park: re-pinned ~1.48 km (was in the millpond); 6 FCFS electric+water sites, $20; Google 4.4/76.
+- 13435 Mound View (Platteville): reservable online via ActiveNet since Nov 3, 2025; RV sites 10-15 to 50 ft. 13429 McKellar: village-approved Outlook Bookings requests, $25, Apr 1-Oct 30.
+- 3273 Mill Bluff: derived fcfs some_sites contradicts the state:WI row (never) with no DNR source; derived dump true and max_rig 40 also unsourced - flagged, not changed.
+- 3271 Bluewater Bay: DNR page says both 63 and 57 sites; map + GTC capture 57. 3270 Sandstone Ridge year-round (winter: 58-65 only). 3269/3270 2026 construction caveat in curation_note is now past.
+- Phones: 13429 -> 608-523-4521; 3352 -> 715-638-7243; 3329 715-528-4464 -> 715-479-2827. inclusion_evidence replaced: 13429, 3560, 3329, 13435.
