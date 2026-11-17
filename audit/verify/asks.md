@@ -658,6 +658,7 @@ Operator: "Full Hook-up Daily $50 - $55" (when each applies not stated). No Good
 About 60 of 196 sites nightly (31%, 2026 map legend; note carries the mostly-seasonal caveat). Cheapest RV night $43.50 (W/E spring/fall), summer W/E $46.50, deluxe $63, holidays $77; Staylist booking; Google 4.6/172. Its seasonal page says "stay up to date on the seasonal sites available for sale at the park" under a "Seasonal Sites For Sale" heading (listing empty) - reads like campers' units changing hands on seasonal sites, but test 5 drops a park that sells or leases lots. No lot-sale or lease terms found. Kept meanwhile - keep or drop?
 
 ## 14499 Keyes Lake Campground (WI, private, Florence) - ATV park? (p3-510, 2026-11-17)
+**ANSWERED (AWH 2026-11-17): keep - general campground with ATV access.**
 New owners since Oct 1, 2025. Home page: "Direct access to hundreds of miles of ATV/UTV and snowmobile trails"; About: "We are proudly ATV and UTV friendly, with direct trail access to hundreds of miles of trails"; the layout map draws "ATV Trail Access" leaving the grounds by site 7. It also sells the lake beach, ski hill and general camping. Water + 30/50A from $45 + tax (passes; summer peak unposted); 2-night weekend / 3-night holiday minimums only; booking by phone/email/form; Google 4.5/90. Seasonal $2,150 posted, 46-site map doesn't mark seasonal vs nightly (share unmeasured). Kept meanwhile as a general campground with an OHV side - keep or drop?
 
 ## 452 North Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-513, 2026-11-17)
