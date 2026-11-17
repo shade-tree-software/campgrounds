@@ -1509,3 +1509,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-510 (WI, 2026-11-17)
 - DOWN 3306 Indian Mounds lakefront -> lakeview (forest; road, tree band, walk-to tent sites and day-use beach between drive-ins and water). DOWN 3293 Lake Wissota lakeview -> not waterfront (sites 90-130 m from shore under canopy, ~20 m above the lake, bluff between).
 - Kept 3342 Kentuck lakeview (nightly 06 45.99123,-88.98208 ~35 m, 05 ~40 m, 04 ~47 m, 02/08 ~65 m, all under maple canopy behind a shore tree band). Confirmed not waterfront: 3362, 3450, 3291, 14501, 13421 (Lake Michigan ~1 km through downtown - no coastal walk), 14499 (lake across WI-101), 3343, 3268.
+
+## p3-511 (WI, 2026-11-17)
+- DOWN 3319 Lake of the Pines lakeview -> not waterfront (nearest 113-114 85-100 m under canopy). DOWN 3326 Laurel Lake lakefront -> lakeview (sedge marsh 90-100 m+ between; rec.gov tags 'Lakefront' - contrary). DOWN 3456 McClintock riverfront -> not waterfront (Peshtigo 22-24 m = creek-size; site 7 ~10 m from the bank, 4/6 20-30 m, all under canopy) - CREEKSIDE LEAD on site 7, same question as Chute Pond 3537: does a creek-size bank under canopy earn creekside?
+- UPGRADE LEADS (kept lakeview): 3325 Laura Lake site 7 (45.70441,-88.50628, FCFS) ~35 m with the shore visible across open forest floor in its rec.gov photo; 15 (45.70329,-88.50505) ~40 m, 16 ~45 m, 18 ~50 m; rec.gov tags 18 'Lakefront'. 3327 Lost Lake 8 (45.88302,-88.56121) and 9 show water 25-40 m off in leaf-off photos; row ~50-60 m under canopy; FS "waterfront sites".
+- Kept: 3328 lakeview (rows 40-60 m through dense forest despite FS/rec.gov claims), 13438 lakeview, 3279 lakeview (DNR map 'lake view' 101-110, 215-223; reed mat + trail between), 3280 not waterfront.

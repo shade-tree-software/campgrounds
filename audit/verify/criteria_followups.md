@@ -2451,3 +2451,12 @@ me drop and report); each needs the research named before a verdict.
 - SPLIT CANDIDATE 3291 Interstate: North (~45.4043,-92.6478, 37 sites, 27 electric, from Hwy 8) and South (~45.391,-92.662, 45 rustic, park road), ~1.7 km apart, both on GoingToCamp - end of queue.
 - LEAD: Kewaunee RV & Campground, 333 Terraqua Dr, Kewaunee (~44.4757,-87.5047), kewauneerv.com, 920-388-4851, Google 4.5/224 - not in DB, unvetted.
 - 3306 phone -> 715-356-3668, website -> NHAL rustic (old 404). Pins: 3362 (~530 m), 3450 (~375 m), 3343 (~266 m).
+
+## p3-511 (WI, 2026-11-17)
+- DROPPED 3470 Lakeview Park (Cecil, village): mostly seasonal + iffy (village offers only "Camping lots available seasonally"; last rate letter 2019, ~10 of 46 daily; Google 4.4/66 shared with dock/beach). Reviewer rule 2026-11-11.
+- 13420 Marathon Park UNREAD (marathoncounty.gov Akamai): fairgrounds rule unmet. Good Sam cache PUBLIC_PARK, 715-261-1566; snippets: county moving to new recreation software, 2027 reservations delayed to late 2026, parks office 715-261-1550; Google 3.7/25.
+- 3279 Mauthe Lake + 3280 Long Lake: DNR conditions page (9/28/26) "closed from Sept. 6, 2027 through spring 2028" - in the notes; set status temporarily_closed when that starts. Mauthe pin was ~2.2 km off (west of the lake's marshes). Electric 51 / 22 with no amperage posted (hookups not written).
+- 3319 Lake of the Pines: season Apr 15 - Dec 15 (manual), lower loop plowed in heavy snow.
+- 3325 Laura Lake: 2027 04-29..10-12; rec.gov types 10 and 20 tent-only. 3328 Luna-White Deer nightly_high 15 -> 18 (lakeshore sites).
+- 13438 Maiden Rock: site count 12 cleared (Campendium only); $25 from maidenrock.org (community association, "Not affiliated with the village"), Travel WI $20 - no dated operator rate; no season published. Phone -> 715-448-2205.
+- 3456 McClintock: the one Marinette County park where ATVs/UTVs may ride (general 10-site rustic campground, stays); $20 + $10 reservation fee; fcfs some_sites; Google 4.8/214.
