@@ -667,3 +667,6 @@ Kept. The county lists "one new horse camping site" and Campspot sells a "Rustic
 
 ## 3562 Pioneer Park, Prairie Farm (WI, village) - no operator presence (p3-515, 2026-11-17)
 Kept for now (re-pinned out of the flowage, riverfront -> not waterfront). No village, county or tourism page mentions camping; only aggregators (The Dyrt, AllStays, RV Life unclaimed with 0 reviews). Google "Pioneer Park" 4.7/101 covers the whole village park, no phone/website. No rate, booking method, site count, season or hookups from any operator source; 715-455-1024 is aggregator-only. Drop on presence (like Melrose 3524), or keep with a "call the village" caveat?
+
+## 453 South Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-516, 2026-11-17)
+Same question as 452 North Nicolet Bay. Not changed (--AWH). Bay-side row 844-872 (~45.1650-45.1660, -87.2215 to -87.2170) sits ~40-60 m from Green Bay behind a continuous conifer band and a sand strip; imagery alone would support bayview.

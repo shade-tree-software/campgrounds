@@ -2493,3 +2493,11 @@ me drop and report); each needs the research named before a verdict.
 - 14506 River's Edge Apple River: claimed RoverPass Instant Book (updated 11/16/2026); nightly RV 20/30/50 A no full hookup; $15/adult (2026-10-10 capture) + site $10/15/20 -> ~$45 for two on 30 A, passes. Google 4.3/687 shared with the tubing outfitter; ~400 of ~422 sites tent; aggregators call it party-like (no caveat written).
 - 3282 Pinewoods electric 0 -> unknown (accessible sites 1E/177E/290E). 3285 Bong ~57 electric, no amperage; OHV area is a side area. 3331 Richardson rec.gov 16 reservable vs FS 10 (rec.gov trusted), max rig 56. 3567 Potato River Falls max_rig 30 (county: not for campers over 30 ft). 3467 Blair derived max_rig 30 cleared ("Big Rig sites available"); 2024 rates still posted.
 - Pins: 3311 ~1.36 km (DNR GPS point), 3516 ~600 m (was inside Camp Nebagamon), 3562 ~255 m (was in the flowage). Websites 3310/3311 -> NHAL rustic page (old 404); 14506 RoverPass added.
+
+## p3-516 (WI, 2026-11-17)
+- DROPPED 3354 Smith Rapids (USFS): horse base camp; RV-fit sites 5-11 are all horse sites (spurs, hitching rails, tie stalls), 1-4 tent/truck-camper - no separate horse area (AWH horse rule 11-12).
+- 3541 Snyder County Park: "All Sites Available for ATV Camping", camp-and-ride marketing, but a general county lake park (launch, shelters, shower house) - kept with the ATV line in the note (general campground with ATV access). 49 sites (stored 35 unsourced); reservable May-Sep, self-registration Oct-Apr ($26) -> year_round. Re-pinned ~740 m.
+- 13422 SARA Park (Tomahawk): $50, RoverPass 3.9/48; city also sells sites 11-30 at Vision Pointe ~500 m west (~45.4741,-89.7466, own loop; under 1 km so not split - count could fold to 30). Phone -> City Hall 715-453-4040.
+- 3464 Sawmill Lake: reserve + pay online before occupying (fcfs never; old "FCFS off-season" wrong). 13440 Siskiwit Lake: FCFS cash/check $30, max rig 26.
+- 3355 Sailor Lake: Flambeau Trail access (OHV side), FS length table mentions "Corrals: RV up to 35 Feet" - flag only. 3303 manual season approx; DNR 2027 is 05-27..09-06 (not overwritten). Unsourced: 3272 electric 30 A, fcfs some_sites; 3274 max_rig 40.
+- Pins: 3303 ~950 m (DNR GPS point), 3274 ~250 m (was on SH 13). Phones 453/3303 filled; websites 3303/3307 -> NHAL rustic page; 453 goingtocamp added.

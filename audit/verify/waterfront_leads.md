@@ -1531,3 +1531,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - DOWN 3311 Razorback lakefront -> lakeview (unbroken canopy to shore, sites 50-80 m back). DOWN 3562 Pioneer Park riverfront -> not waterfront (old pin in the flowage; loop 60-90 m back behind lawn/courts).
 - UP LEAD 13431 Rieck's Lake (unread): Esri at 44.3540,-91.9315 shows ~20 angled paved pads on the WI-35 causeway strip ~15-25 m from the lake over open grass with scattered trees -> lakefront if sites confirmed nightly.
 - Kept: 3331 Richardson lakeview (22/24/26 at 45-60 m under canopy), 3310 Plum Lake lakeview. Others not waterfront.
+
+## p3-516 (WI, 2026-11-17)
+- DOWN 13422 SARA Park lakefront -> lakeview (sites 1-10 30-35 m behind an unbroken shrub/tree band). DOWN 3307 Sandy Beach Lake lakefront -> lakeview (lake-side sites under continuous canopy).
+- 453 --AWH bayfront not changed; imagery suggests bayview (asks.md, with 452).
+- Kept: 3355 Sailor lakeview (FS: "none of the sites are near the water"), 3464 Sawmill lakeview (county "Water Front" 23-25 under canopy - contrary claim), 3303 not waterfront (shore road 20-40 m under canopy; brochure "lake views are a must-see" - lakeview lead). Others not waterfront.

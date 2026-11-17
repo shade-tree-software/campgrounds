@@ -590,6 +590,7 @@ DROPS = {
     13419: ('2026-11-17', "Menomonee Park Campground (WI, Waukesha County): posted vehicle/camper maximum 20 ft (under a 23-ft rig)", "p3-512: Waukesha County 2026 fee table 'Vehicle/Camper Maximum Lengths: Menomonee Park: 20 feet max'; 30 family sites + 7 group, no electric, $25, WebTrac booking."),
     13417: ('2026-11-17', "Naga-Waukee Park Campground (WI, Waukesha County): posted vehicle/camper maximum 20 ft (under a 23-ft rig)", "p3-513: Waukesha County 2026 fee table 'Vehicle/Camper Maximum Lengths: ... Naga-Waukee Park: 20 feet max' (same table as Menomonee 13419); 25 family + 5 group sites, $25."),
     14500: ('2026-11-17', "Pelican Lake Campground (WI, private): mostly seasonal - 91 of 100 sites seasonal, ~9% sold nightly (fails test 4, 1 site in 10)", "p3-514: own About page '100 Total Sites / 91 Seasonal Sites'; rates page 'CONTACT US FOR SEASONAL SITE RATES'; nightly $43 + 5.5% tax, cash/money order only; Google 4.8/47."),
+    3354: ('2026-11-17', "Smith Rapids Campground (WI, USFS): horse camp - every site a 23-ft rig fits (5-11) is a horse site, no separate horse area", "p3-516: FS page 'a base camp that is popular for Horse Riding and Camping'; 'Seven campsites are designed to accommodate horse trailers with extra-long parking spurs (campsites: 5-11), hitching rails' with tie stalls; sites 1-4 tent/truck-camper only (AWH horse rule 2026-11-12)."),
 }
 
 if __name__ == "__main__":
