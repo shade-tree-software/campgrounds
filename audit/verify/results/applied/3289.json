@@ -1,0 +1,46 @@
+{
+  "id": 3289,
+  "checked": "2026-11-17",
+  "sources": [
+    "https://dnr.wisconsin.gov/topic/parks/councilgrounds/recreation/camping ('family and group campsites, open from May 1 to October 31. Shower and toilet facilities and the dump station are open seasonally from approximately mid-May to mid-October'; 'Camping reservations are required ... Campers must make a reservation before setting up on any site'; 'The family campground is heavily wooded and has 52 campsites, showers and flush toilets. There are 19 sites with electricity'; 'The campground also has a dump station'), read 2026-11-17",
+    "https://p.widencdn.net/ypmcf2/Council-Grounds_Map (DNR park and campground map: family campground loop with shower/flush-toilet building and sanitary dump station; group campground A-C separate), read 2026-11-17",
+    "https://dnr.wisconsin.gov/topic/parks/councilgrounds (park page: 715-536-8773), read 2026-11-17",
+    "OpenStreetMap API (only the Group Campground is mapped) and Esri World Imagery (leaf-off) at 450 and 350 m half-width",
+    "wisconsin.goingtocamp.com: not read (Azure 403 per earlier batches; not retried)"
+  ],
+  "groups": {
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-31", "note": "Showers, toilets and the dump station run from about mid-May to mid-October."},
+      "source": "https://dnr.wisconsin.gov/topic/parks/councilgrounds/recreation/camping ('family and group campsites, open from May 1 to October 31. Shower and toilet facilities and the dump station are open seasonally from approximately mid-May to mid-October'), read 2026-11-17",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 52, "note": "19 sites with electricity; a separate 3-site group campground."},
+      "source": "https://dnr.wisconsin.gov/topic/parks/councilgrounds/recreation/camping ('has 52 campsites ... There are 19 sites with electricity'), read 2026-11-17",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "https://dnr.wisconsin.gov/topic/parks/councilgrounds/recreation/camping ('52 campsites, showers and flush toilets'; 'The campground also has a dump station'), read 2026-11-17",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": "never"},
+      "source": "https://dnr.wisconsin.gov/topic/parks/councilgrounds/recreation/camping ('Camping reservations are required and can be made for the same day of your arrival or up to 11 months in advance ... Campers must make a reservation before setting up on any site'), read 2026-11-17",
+      "method": "manual"
+    }
+  },
+  "note": "Heavily wooded family campground in a park on the Wisconsin River near Merrill, with a beach and boat landing on Alexander Lake. --Claude",
+  "summary": "Council Grounds camping page, park page and DNR map read; GoingToCamp unread (refuses). 52 sites, 19 electric, showers/flush toilets and dump (mid-May to mid-Oct), reservations required. Season year-round (derived) -> May 1-Oct 31. Pin ~1 km off at the entrance station; re-pin proposed. Not waterfront confirmed.",
+  "flags": [
+    "SEASON: stored year_round true (derived from note prose) -> opens 05-01, closes 10-31 per the DNR camping page ('open from May 1 to October 31'). The old note's 'campground open year-round' is contradicted and dropped.",
+    "PIN: 45.1875,-89.7343 -> 45.1853,-89.7470 (imagery estimate). The stored point is the entrance station on Council Grounds Drive. The DNR map puts the family campground west of the group campground, between Hemlock Hollow and the river road; on leaf-off Esri imagery its loop road and the shower building (about 45.1849,-89.7461) are visible about 1 km WSW of the stored point. OSM maps only the Group Campground (45.1853-45.1866 N, -89.7406 to -89.7380 W).",
+    "HOOKUPS: stored electric 30 (note prose) has no source on any DNR page I could read; left as is. 19 electric sites confirmed.",
+    "WATERFRONT: not waterfront confirmed; the Wisconsin River is about 100-150 m southwest of the loop through wooded slope, and Alexander Lake's beach is day use well north.",
+    "UNCONFIRMED: stored $18-36 (GoingToCamp fee panel, 2026-10-10) and site lengths are on wisconsin.goingtocamp.com (refuses, not retried).",
+    "WEBSITE: https://dnr.wisconsin.gov/topic/parks/councilgrounds works (200); camping page https://dnr.wisconsin.gov/topic/parks/councilgrounds/recreation/camping (optional replacement).",
+    "PHONE: 715-536-8773 confirmed on the park page.",
+    "NOTE: rewrote it, dropping counts, amperage, facilities, the wrong 'open year-round', the group-campground line and 'Reservable online' (fields and the state:WI row show these).",
+    "Policy row state:WI: nothing contradicts it."
+  ]
+}

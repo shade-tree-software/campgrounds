@@ -2410,3 +2410,13 @@ me drop and report); each needs the research named before a verdict.
 - Manual seasons not overwritten: 3324 2027 04-29..10-12; 14020 Columbus Day close 10-12 (2026) / 10-11 (2027) vs stored 10-14; 3315 2027 05-27..09-06.
 - 3275 Buckhorn 2026 road-construction line kept dated (no current notice). Amperage unknown 3275, 3321; 3294 stored 30A unconfirmed (GoingToCamp 403).
 - Phones: 3526 -> 715-539-1034, 13436 -> 715-644-5758, 3339 715-528-4464 -> 715-479-2827, 3537 -> 920-834-6995. Websites: 3324 FS line, 3315 (old 404), 3321 camping page added, 3339, 3526 reservation site added. Pins: 3324 (~660 m), 3294 (~700 m), 3537 (~400 m), 3526 (~215 m).
+
+## p3-507 (WI, 2026-11-17)
+- No drops. 14495 Dells Camping Resort: test-5 question in asks.md ("Seasonal Sites For Sale"); fees.nightly_high 69 -> 77 (VIP/deluxe rows).
+- 3350 Day Lake: rec.gov "designated off-road vehicle campground", Dead Horse ATV trail direct from the area - read as a general lakeside campground with an OHV side (stays). 13 sites (Blueberry/Heron loops) currently closed. Phone -> Hayward 715-638-7243 (as 3353).
+- 3289 Council Grounds season year_round -> 05-01..10-31 (DNR "open from May 1 to October 31"). Stored 30A unsourced.
+- 3457 Coon Fork: ~56 electric over all four loops (old note: 39 in A and D); loop D self-contained only, D1-10 pull-through; year_round (off-season FCFS Sep 16-Apr 30 in A and D); Konect Parks reservations May 1-Sep 15; fcfs left unset (no value fits). Stored 50A unsourced. Phone 715-286-5536 -> 715-975-0000.
+- 13430 E.O. Schultz (Elroy): RV sites reservable via Firefly or phone, tents FCFS; no camping during Elroy Fair week (last full weekend of June); "Sewer" in the fee line unclear (unset). Phone -> 608-462-2410.
+- Site counts: 3314 100 -> 101, 3302 99 -> 100, 3305 34 -> 33. 3305 manual season 2027 = 05-27..09-06.
+- Websites: 3314/3302 -> NHAL modern camping page, 3305 -> rustic, 3318 -> Flambeau camping page. Pins: 3302 (~1.1 km), 3289 (~1.0 km), 3350 (~720 m), 3299 (~540 m), 3305 (~360 m), 3457 (~340 m).
+- LEAD: Harstad County Park (Eau Claire County), campground May 1-Sep 15 per eccountyparks.com - not in DB, unvetted.

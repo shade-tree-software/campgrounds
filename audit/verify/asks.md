@@ -652,3 +652,6 @@ Cheapest RV type (Deluxe Back In, full hookup) on Newbook: $49 on May/September 
 ## 3394 Reel Livin' Resort and Campground (WI, private) - price gate? (p3-499, 2026-11-16)
 Operator: "Full Hook-up Daily $50 - $55" (when each applies not stated). No Good Sam record, no member discount (a 2% Venmo discount only), no gateway within 40 km. Mostly seasonal: about 7 of 32 sites nightly (note says so). Google 4.9/216 shared with the bar; RV Life 4*/$$. Now lakeview (RVs behind the shore cabins). Kept meanwhile - keep or drop?
 **AWH 2026-11-16: drop** (dropped same day, criteria_drops.py).
+
+## 14495 Dells Camping Resort (WI, private) - "Seasonal Sites For Sale"? (p3-507, 2026-11-17)
+About 60 of 196 sites nightly (31%, 2026 map legend; note carries the mostly-seasonal caveat). Cheapest RV night $43.50 (W/E spring/fall), summer W/E $46.50, deluxe $63, holidays $77; Staylist booking; Google 4.6/172. Its seasonal page says "stay up to date on the seasonal sites available for sale at the park" under a "Seasonal Sites For Sale" heading (listing empty) - reads like campers' units changing hands on seasonal sites, but test 5 drops a park that sells or leases lots. No lot-sale or lease terms found. Kept meanwhile - keep or drop?
