@@ -588,6 +588,7 @@ DROPS = {
     3394: ('2026-11-16', "Reel Livin' Resort and Campground (WI, private): over the price gate (AWH ruling 2026-11-16)", "p3-499: operator 'Full Hook-up Daily $50 - $55'; no Good Sam record or posted member discount (2% Venmo only); no gateway within 40 km; ~7 of 32 sites nightly; Google 4.9/216 shared with the bar. AWH: drop."),
     3470: ('2026-11-17', "Lakeview Park, Cecil (WI, village): mostly seasonal and iffy - the village offers only seasonal lots and no current nightly rate", "p3-511: village page 'Camping lots available seasonally' and nothing else; last posted rate letter is 2019 (36 of 46 lots seasonal, ~10 daily at $32 / lakeside $38, ~22%); no nightly rate dated 2024+ anywhere; electric count only from Campendium; Google 4.4/66 shared with the dock and beach."),
     13419: ('2026-11-17', "Menomonee Park Campground (WI, Waukesha County): posted vehicle/camper maximum 20 ft (under a 23-ft rig)", "p3-512: Waukesha County 2026 fee table 'Vehicle/Camper Maximum Lengths: Menomonee Park: 20 feet max'; 30 family sites + 7 group, no electric, $25, WebTrac booking."),
+    13417: ('2026-11-17', "Naga-Waukee Park Campground (WI, Waukesha County): posted vehicle/camper maximum 20 ft (under a 23-ft rig)", "p3-513: Waukesha County 2026 fee table 'Vehicle/Camper Maximum Lengths: ... Naga-Waukee Park: 20 feet max' (same table as Menomonee 13419); 25 family + 5 group sites, $25."),
 }
 
 if __name__ == "__main__":

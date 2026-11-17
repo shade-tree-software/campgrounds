@@ -2469,3 +2469,12 @@ me drop and report); each needs the research named before a verdict.
 - 3273 Mill Bluff: derived fcfs some_sites contradicts the state:WI row (never) with no DNR source; derived dump true and max_rig 40 also unsourced - flagged, not changed.
 - 3271 Bluewater Bay: DNR page says both 63 and 57 sites; map + GTC capture 57. 3270 Sandstone Ridge year-round (winter: 58-65 only). 3269/3270 2026 construction caveat in curation_note is now past.
 - Phones: 13429 -> 608-523-4521; 3352 -> 715-638-7243; 3329 715-528-4464 -> 715-479-2827. inclusion_evidence replaced: 13429, 3560, 3329, 13435.
+
+## p3-513 (WI, 2026-11-17)
+- DROPPED 13417 Naga-Waukee (Waukesha County): fee table "Naga-Waukee Park: 20 feet max" (as Menomonee). 13418 Mukwonago passes at "26 feet max" (max_rig_ft 26); count 37 -> 30 family sites (+7 group).
+- 13437 Norwalk Village Park UNREAD (norwalkwi.gov Cloudflare): Google 4.7/7, 608-823-7760 (Google only); snippets 8 full-hookup RV sites on the Elroy-Sparta trail; 2026-10-10 capture $45 1 night / $80 2 / $25 each extra.
+- 3471 Myron (Myran) Park: ~43% nightly (26 D of 61), caveat in note; county + Campspot spell "Myran", operator map "Myron" - name kept; season 05-01..10-15; count 54 -> 61.
+- 3346 Namekagon: max rig 45 -> 55; rec.gov sells 25 (FS lists 20; rec.gov trusted); 9 never reservable. Phone -> Hayward 715-638-7243.
+- 3266 New Glarus Woods: "tent, pop-up and small (RV)" drive-ins; "fits a 23-ft rig" unsourced, no posted cap - kept. 14022 Old Veteran's Lake: 21-ft Campendium caveat kept (no DNR length). 3309 dump is at Crystal Lake (unset).
+- 452 --AWH bayfront question in asks.md; phone -> 920-868-3258; goingtocamp line added.
+- Pins: 3301 (~1.33 km, was in Trout Lake), 3261 (~1.14 km), 3309 (~1.09 km, was Crystal Lake's point). Websites 3309/3301 -> NHAL camping pages (old 404).

@@ -1518,3 +1518,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 ## p3-512 (WI, 2026-11-17)
 - UP 3560 Merlin Lambert lakeview -> lakefront (county engine 'Lakeside' on 1-3, 5-7, 10-13; photos: open mown grass under scattered pines to Potter Flowage; 12 ~20-30 m, 2 ~30-40 m). DOWN 3533 Mondovi riverfront -> not waterfront (old pin in the millpond; park ~600 m from the Buffalo River).
 - Kept: 3352 Moose Lake not waterfront (rec.gov 'Lakefront' 2 and 4 are ~60 m back under canopy - contrary claim); 3329 Morgan Lake lakeview (40-50 m under canopy, filtered views 16/18); 13429 McKellar not waterfront (13-18 m creek, loop road between). Others not waterfront.
+
+## p3-513 (WI, 2026-11-17)
+- DOWN 3301 North Trout Lake lakefront -> lakeview (shore row 1402-1414 under canopy to a narrow sand edge). 452 North Nicolet Bay --AWH bayfront not changed: imagery suggests bayview (asks.md).
+- Kept: 3309 lakeview, 3346 lakeview (017 46.24257,-91.08553 and 019 ~20-25 m under canopy - lakefront lead only if canopy reads open), 3471 riverview (river row 13-21 m behind a tree band; only D7 and 15-ft D13 nightly), 14022 not waterfront (11-16 30-60 m through woods; possible view unconfirmed). Others not waterfront.

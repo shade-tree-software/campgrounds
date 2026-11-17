@@ -658,3 +658,6 @@ About 60 of 196 sites nightly (31%, 2026 map legend; note carries the mostly-sea
 
 ## 14499 Keyes Lake Campground (WI, private, Florence) - ATV park? (p3-510, 2026-11-17)
 New owners since Oct 1, 2025. Home page: "Direct access to hundreds of miles of ATV/UTV and snowmobile trails"; About: "We are proudly ATV and UTV friendly, with direct trail access to hundreds of miles of trails"; the layout map draws "ATV Trail Access" leaving the grounds by site 7. It also sells the lake beach, ski hill and general camping. Water + 30/50A from $45 + tax (passes; summer peak unposted); 2-night weekend / 3-night holiday minimums only; booking by phone/email/form; Google 4.5/90. Seasonal $2,150 posted, 46-site map doesn't mark seasonal vs nightly (share unmeasured). Kept meanwhile as a general campground with an OHV side - keep or drop?
+
+## 452 North Nicolet Bay (WI, Peninsula SP) - --AWH bayfront vs imagery (p3-513, 2026-11-17)
+Not changed (--AWH value). The shore sites on the 632-644 road (~45.1705-45.1735, -87.2215 to -87.2200) are ~35-45 m from Green Bay with a conifer band and a sand beach between; imagery alone would support bayview. Keep bayfront or go to bayview?

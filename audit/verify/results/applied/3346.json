@@ -1,0 +1,53 @@
+{
+ "id": 3346,
+ "checked": "2026-11-17",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233760 ('a couple dozen single-family campsites for tent or RV camping ... Accessible vault toilets, drinking water'; maxConsecutiveStay 14; reservationCutOff 4 days prior to arrival; notices 'First-come, first-served sites may be available' and 'Off-road vehicles must be secured on a trailer when parked within the campground'; phone '(715) 634-4821 OR (715) 264-2511'), read 2026-11-17",
+  "https://www.recreation.gov/api/camps/campgrounds/233760/rates (STANDARD ELECTRIC $28, STANDARD NONELECTRIC $18, Pavilion $50), read 2026-11-17",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233760 (35 records: 001-011 STANDARD NONELECTRIC, 012-034 STANDARD ELECTRIC 15/30/50, group pavilion; Max Vehicle Length 25-55 ft; 9 sites not reservable (001, 004, 009, 011, 021, 023, 026, 027, 029); per-site coordinates 46.2425-46.2464, -91.0838 to -91.0873) + trip_data/ridb_campsites.json (fetched 2026-10-20, same catalog), read 2026-11-17",
+  "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/namekagon-lake-recreation-area ('Site Closed ... the campground is closed for the season'; 'This campground features 34 campsites'; 'There are 34 sites which can accommodate RVs between 35-45 feet'; size restrictions '25 Foot: 15, 21 / 35 Foot: 11, 12, 16, 18, 20, 23, 25, 31 / 40 Foot: 19, 22 / 45+ Foot: 1, 2, 3, ...'; 'Seasons of Use May 1- October 31'; 'Potable water is available from a hand pump. RV water hookups, tank fill stations, and dump station facilities are not available at this campground'; '(4) Vault Toilets'; 'Single Site: $18 per night / Singel Site with electric hook-up: $28 per night'; 'Camping fees are $9 with use of Interagency Senior or Access Pass'; Hayward Office 'Phone: 715-638-7243'; Latitude 46.24391 Longitude -91.08522), read 2026-11-17",
+  "Esri World Imagery with the recreation.gov site points plotted (440 m and 260 m crops)"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": false, "sewer": false},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233760 (sites 012-034 'Electricity Hookup' 15/30/50, all reservable but 021, 023, 026, 027, 029) + https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/namekagon-lake-recreation-area ('RV water hookups, tank fill stations, and dump station facilities are not available'), read 2026-11-17",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 34, "max_rig_ft": 55, "pull_through": true, "note": "Sites 1-11 are non-electric and 12-34 have 15/30/50-amp electric. Rig limits run 25-55 ft by site; 15 and 21 are 25-ft sites."},
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233760 (34 standard sites; Max Vehicle Length 55 on 002 and 006; 007 'Pull-through'; 015 and 021 25 ft), read 2026-11-17",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true, "dump": false, "flush_toilets": false, "showers": false},
+   "source": "https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/namekagon-lake-recreation-area ('(4) Vault Toilets'; 'Potable water is available from a hand pump ... dump station facilities are not available'), read 2026-11-17",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "fcfs": "some_sites", "max_stay_nights": 14},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233760 (maxConsecutiveStay 14; reservationCutOff 4 days; 'First-come, first-served sites may be available'; 9 non-reservable standard sites in the catalog) + FS page ('The campground will still have first come first served sites available'), read 2026-11-17",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 18, "nightly_high": 28, "currency": "USD", "checked": "2026"},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233760/rates (electric $28, non-electric $18) + FS page ('Single Site: $18 per night / Singel Site with electric hook-up: $28 per night'), read 2026-11-17",
+   "method": "manual"
+  }
+ },
+ "note": "Chequamegon-Nicolet NF (Great Divide district) campground beside 3,227-acre Namekagon Lake, about 20 minutes north-east of Hayward, with a sandy swim beach, boat landing, fishing pier and picnic shelter at the day-use area. The Namekagon Trail loop starts across the road; off-road vehicles must stay on their trailer in the campground. --Claude",
+ "summary": "rec.gov + FS read: 34 sites (1-11 non-electric, 12-34 15/30/50 electric), vault toilets, hand-pump water, no dump; $18/$28; May 1-Oct 31 (manual, matches); 25 reservable on rec.gov, 9 first-come (FS lists 20 reservable); 14-night max; rig limits to 55 ft. Lakeview kept: nearest sites (017, 019, 014) are ~20-50 m from the lake under continuous canopy. Pin matches the FS point. Phone: FS Hayward office 715-638-7243 vs stored 715-264-2511.",
+ "flags": [
+  "WATERFRONT: lakeview kept. Plotted rec.gov site points on Esri imagery: the south loop's 017 (46.24257,-91.08553) and 019 sit ~20-25 m from the shore and 014/016 ~45-55 m, all under continuous hardwood/hemlock canopy; 001-011 face a marshy bay through trees. No site over open ground at the water, so no upgrade; the beach and fishing pier are day use.",
+  "PHONE: stored 715-264-2511 (one of the two numbers recreation.gov lists) -> 715-638-7243 (the Hayward Office, the contact the Forest Service's own page gives for this campground).",
+  "WEBSITE: both stored links live - keep (https://www.recreation.gov/camping/campgrounds/233760 ; https://www.fs.usda.gov/r09/chequamegon-nicolet/recreation/namekagon-lake-recreation-area).",
+  "BOOKING: recreation.gov's catalog marks 25 of the 34 standard sites reservable; the FS page lists 20 (2, 3, 5, 6, 7, 8, 10, 12, 14, 15, 17, 20, 22, 24, 25, 28, 30, 31, 33, 34) - rec.gov additionally sells 013, 016, 018, 019 (trust rec.gov). Reservations close 4 days before arrival (rec.gov reservationCutOff); fcfs kept at some_sites since 9 sites are never reservable.",
+  "SITES: max_rig_ft 45 -> 55 (rec.gov Max Vehicle Length 55 on sites 002 and 006); stored note's '10 nonelectric + 24 electric' -> 11 + 23 (catalog). FS gives 45+ ft for most sites.",
+  "STATUS: FS page shows 'Site Closed ... closed for the season' (normal off-season, not a closure).",
+  "SEASON (manual): May 1 - Oct 31 confirmed on the FS page.",
+  "OHV: rec.gov says the campground is 'conveniently located near off-highway vehicle ... trails' and requires off-road vehicles to stay trailered in camp - a general lakeside campground, not an OHV staging camp.",
+  "PIN: stored 46.2439,-91.0852 matches the FS point (46.24391,-91.08522) and the site cluster (catalog centroid 46.2441,-91.0856). recreation.gov's facility point 46.3503,-90.9236 is ~17 km off and wrong.",
+  "NOTE: dropped the site count, rig-length remark and 'Reservable online (~20 sites) with FCFS remainder' (fields show them).",
+  "Policy rows federal / federal:usfs: nothing contradicts them; the Senior/Access half-price fee matches the inherited discount."
+ ]
+}
