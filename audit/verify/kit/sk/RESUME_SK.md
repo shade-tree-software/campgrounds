@@ -10,15 +10,16 @@ campgroundDetails.do pages answer curl with a cookie jar + -L (Queue-it safetyne
 saskparks.tourismsaskatchewan.com, saskregionalparks.ca, letscamp.ca API, parks.canada.ca answer;
 reservation.pc.gc.ca 403s.
 
-## RESUME HERE (p3-520 BUILT 2026-11-17, not launched - waiting on AWH's go)
+## RESUME HERE (p3-520 APPLIED 2026-11-18; next p3-521)
 
-Next batch: **p3-520** (built: 9150, 9166, 9169, 9296, 9223, 9174, 9176, 9151, 9177, 9178, 12817;
-the brief and agent prompt sit in that session's scratch - rebuild if the scratch is gone).
-ONE verifier at a time, 11 per batch.
+Next batch: **p3-521** (not built). 158 SK left after p3-520. ONE verifier at a time, 11 per batch.
+Add the previous batch's findings to lessons.txt before building (p3-520: SKPP detail pages slow to
+~30 s each - read the paging table first and fetch details only for key sites; stored phones mostly
+empty - the tourism parks.csv 'Phone Number Primary' has the park office).
 
 Build + launch (repo root; S = session scratch dir):
 
-    N=p3-520; python3 -I audit/verify/queue.py --batch $N --state SK --limit 11 && python3 -I audit/verify/kit/sk/mkpara_sk.py $S $N && python3 -I audit/verify/kit/mkbrief_mo.py $S $N $S/${N}_para.txt >/dev/null && mkdir -p $S/$N && cp -r audit/verify/kit/il/tools $S/$N/tools
+    N=p3-521; python3 -I audit/verify/queue.py --batch $N --state SK --limit 11 && python3 -I audit/verify/kit/sk/mkpara_sk.py $S $N && python3 -I audit/verify/kit/mkbrief_mo.py $S $N $S/${N}_para.txt >/dev/null && mkdir -p $S/$N && cp -r audit/verify/kit/il/tools $S/$N/tools
     IDS=$(python3 -I -c "import json;print(', '.join(str(x['entry']['id']) for x in json.load(open('audit/verify/batches/$N.json'))))")
     sed -e "s#SCRATCH#$S#g" -e "s/p3-NNN/$N/g" -e "s/: IDS\./: $IDS./" audit/verify/kit/sk/agent_prompt_template.txt > $S/${N}_agent.txt
     printf '\n' >> $S/${N}_agent.txt; cat audit/verify/kit/sk/lessons.txt >> $S/${N}_agent.txt
@@ -37,7 +38,7 @@ Apply a batch (as WI):
 5. Append to audit/verify/criteria_followups.md + waterfront_leads.md (asks.md for questions), copy $S/p3-NNN/SK_NOTES_p3-NNN.md here, extend "Batches applied" below.
 6. `git add campgrounds.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/sk`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
 
-Batches applied: (none yet)
+Batches applied: p3-520 (2026-11-18; 9296 dropped; 9166 re-pinned 5.8 km)
 
 Things to watch in SK (from the sweep handoff, project_sk_sweep_handoff):
 - Whole-park provincial entries (Crooked Lake, Douglas, Echo Valley, Good Spirit Lake...) may hold several campgrounds: split only campgrounds at separate places (~1 km+, own entrance) when a batch runs into one (feedback_split_multi_campground_parks).

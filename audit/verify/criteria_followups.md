@@ -2535,3 +2535,13 @@ me drop and report); each needs the research named before a verdict.
 ## WI split 3291 Interstate (2026-11-17)
 - Split: South Campground -> new 15708 (45 rustic sites 41-85, 2.02 km, own spur road, not waterfront, no fees: GoingToCamp refuses). 3291 = North Campground (37 sites, season now 05-01..10-31; South keeps the 11-14 RV end).
 - Open: North sites 30-36 could be riverview if GoingToCamp site photos show the river; North electric 50 is from old note prose. The old note's "by the swimming beach" for South was wrong (beach ~1.2 km away).
+
+## SK p3-520 (2026-11-18) - first Saskatchewan batch
+- Dropped 9296 D-n-R's Place (Bethune): no price anywhere, Facebook-only presence, marketed to potash/cattle workers; Google 4.4/11.
+- 9166 Candle Lake Sandy Bay re-pinned 5.8 km (old pin was a marina/trailer lot on the causeway) to 53.7999,-105.3340; inclusion + waterfront evidence rewritten (they described the old pin). Lakeview kept on S406-S409 (non-electric, ~70-80 m across grass, beach road and day-use lot); if a view from those four sites isn't enough it goes to not waterfront.
+- Phones filled: 9166, 9169, 9176, 9177, 9178, 9223, 12817 (1-855-695-3635; info line 306-695-3635); 9151 306-298-2257 -> 1-877-345-2257 (the number Parks Canada's pages give).
+- Inclusion evidence rewritten on 9166, 9174, 9176, 9177, 9178 (counts/loops were wrong).
+- Seasons: 9176 Echo Valley and 9177 Good Spirit written as wrap-arounds 05-14..03-14 (October by phone, Aspen winter camping Nov 1 - Mar 14); 9174 Douglas closes 10-31 (October electric by phone).
+- Open: 9151 stored electric 50 is unsourced (the "all 50 amp" line is Rock Creek's), left as stored. 9176 stored pull_through true unconfirmed (24 of 25 detail pages Back-In). 9223 Don Forsyth thin: amperage, season, max length, nightly share unpublished, no Google place, "campground and trailer park", stored fcfs always unconfirmed, pin unconfirmed. 12817 Indian Head: nightly share unread (RMS engine scripted; imagery suggests ~a third nightly - not written), stored 80 sites unsourced.
+- Not split: 9178 North Murray Point (0.9 km, mostly seasonal), 9176 Lakeview A/B (chain under 0.5 km), 9177 Sandy Ridge (660 m).
+- Lead (not vetted): unnamed trailer park + marina at Candle Lake causeway ~53.7561,-105.2852 (looks seasonal).

@@ -1553,3 +1553,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 
 ## 13425 Jack Lake audit (2026-11-17)
 - not waterfront -> lakeview. County tags 7-15 and 50-57 "Lakefront: Yes" (all nightly), but 7-15 pads sit 10-25 m from the water behind a 10-20 m evergreen/brush band (Esri 2017 leaf-off, NAIP 2022), water seen through trees in the county photos of 9, 12-14; 51-57 on a clearing ~27-34 m from the bay behind a continuous tree belt (placement from the schematic map). Detail in kit/wi/wf_13425.json.
+
+## Open, Saskatchewan p3-520 (2026-11-18)
+- 9169 Crooked Lake lakeview kept, close: loop A 42-51 and B 80-84 sit 12-20 m from the bank behind a shrub/tree band; site photos could make lakefront or confirm the view.
+- 9178 Murray Point not waterfront: M124-M136 ~60-70 m from the Emma Lake beach behind a 30-40 m conifer band; ground photos could support lakeview.
+- 9151 Frenchman Valley not waterfront: Parks Canada says "With a view of the Frenchman River" (river 300-400 m off, narrow channel); a creek/river view value would need a site-level look.
