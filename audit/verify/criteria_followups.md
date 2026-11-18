@@ -2531,3 +2531,7 @@ me drop and report); each needs the research named before a verdict.
 ## WI split 3341 Franklin Lake (2026-11-17)
 - NOT split: both loops on one road (FR 2181 runs through the South loop and dead-ends in the North loop), centroids 1.03 km apart, one rec.gov facility, one FS campground. Borderline; split-ready figures in kit/wi/splits/NOTES_3341.md if AWH wants it.
 - Pin moved 321 m from FR 2181 south of site 002 to the FS point inside the South loop (45.93139,-88.99306), elevation 542 m.
+
+## WI split 3291 Interstate (2026-11-17)
+- Split: South Campground -> new 15708 (45 rustic sites 41-85, 2.02 km, own spur road, not waterfront, no fees: GoingToCamp refuses). 3291 = North Campground (37 sites, season now 05-01..10-31; South keeps the 11-14 RV end).
+- Open: North sites 30-36 could be riverview if GoingToCamp site photos show the river; North electric 50 is from old note prose. The old note's "by the swimming beach" for South was wrong (beach ~1.2 km away).
