@@ -2527,3 +2527,7 @@ me drop and report); each needs the research named before a verdict.
 ## WI split 3585 Sidie Hollow (2026-11-17)
 - Partial split: Boat Landing -> new 15707 (1.29 km, own road; 25 sites, not waterfront). 3585 keeps Main + Upper Ridge (Upper Ridge 0.80 km, own road off Sidie Hollow Rd: under the ~1 km rule; ready values in kit/wi/splits/NOTES_3585.md if AWH wants it split: 43.5411,-90.9649, 366 m, 30 sites, not waterfront).
 - 3585 pin moved ~245 m from the day-use turnaround to the Main electric row; not waterfront -> creekside (sites 214-218 on open grass ~20-25 m from Coe Hollow Creek). Sewer on 3585 rests on site 225 alone.
+
+## WI split 3341 Franklin Lake (2026-11-17)
+- NOT split: both loops on one road (FR 2181 runs through the South loop and dead-ends in the North loop), centroids 1.03 km apart, one rec.gov facility, one FS campground. Borderline; split-ready figures in kit/wi/splits/NOTES_3341.md if AWH wants it.
+- Pin moved 321 m from FR 2181 south of site 002 to the FS point inside the South loop (45.93139,-88.99306), elevation 542 m.
