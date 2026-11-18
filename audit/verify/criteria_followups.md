@@ -2593,3 +2593,14 @@ me drop and report); each needs the research named before a verdict.
 - 9251 Manitou: operator advisory that Hwy 15 is in "extremely bad conditions for pulling a trailer" (approach route, not the campground road); drinking-water advisory notice after an Aug 2026 outage. 27 pull-throughs same-day by phone (fcfs some_sites).
 - 9197 Lower Fishing Lake water -> false; 9232 Gordon Howe sewer -> unknown (adults-only 19+ section on the map, not whole-park). 9158 pin ~240 m off (optional 53.71167,-105.94216).
 - Phones 9183, 9259 filled; websites: 9251 operator site first, Let's Camp on 9236 and 9251, tourism page on 9158.
+
+## SK p3-526 (2026-11-18)
+- DROPPED 9311 The Crossing at Grasslands (private, Val Marie): sells only three guest suites now (C$309-389, 3-night minimum); camping page 404 since ~2016; no pads on imagery.
+- 9277 Thomson Lake RP lakeview -> LAKEFRONT (upgrade on named nightly sites: A/C shore rows ~20 m from the reservoir's reed fringe over open sand/grass; Let's Camp photos of C1, C4, C11 show the lake across open ground) - note names the sites. Re-pinned 610 m to the shore loops (was the gate and Northern seasonal sites). Mostly seasonal (~73 of ~380 nightly), noted. B1S (20 ft), B1 (23), C17 (24-25) tight.
+- 9205 Saskatchewan Landing re-pinned 1.9 km (old pin sat in Landing View Private Campground, a separate business); lakeview kept on Riverside R28-R33/R36-R41 photos; count 170 -> 324, max rig 82. Separate equestrian campground on the south shore (9 sites) - no horse issue.
+- SPLIT PENDING: 9205 Saskatchewan Landing - Riverside + Nighthawk (50.6878,-107.9255, 60 sites, 2.0 km on its own road) and Bison Hollow (50.6638,-108.0175, 24 sites + 4-site group area, 5.1 km W), vs Bearpaw A/B + Sagebrush (50.6772,-107.9480, 240). All parkId 290135.
+- LEADS (not in DB, to vet after the queue): Woodlawn Boundary Dam campground (same operator as 9287, 8 km S / 2 km W of Estevan, woodlawnregionalpark.com/woodlawn-boundary/, Let's Camp woodlawn-boundary-dam, 306-637-3837). Landing View and Cactus Bloom Private Campgrounds inside Saskatchewan Landing PP (look seasonal).
+- 9312 Trail Campground (private, Swift Current): new owner 2026; Campspot refused, so price and nightly share unread; rates block is Lorem Ipsum; ~45 mobile homes ring the RV pads (separate trailer park?). Google 4.2/178. Kept; RE-CHECK price + long-stay. Website -> trailcampground.com.
+- 9307 Painted Rock: no posted rate (RV Life $$, avg 31); booking now call/text (old campreservations.ca engine redirects to Campspot, unread). Google 4.9/154. Count 25 -> 21.
+- 9310 Saskatoon 16 West C$37-55, Google 4.0/199 (at the line, price not borderline). 12819 Peanut Hills C$50-55 + GST, Google 4.1/208; season Apr 1 - Oct 31. 9287 Woodlawn ~25% nightly, noted.
+- Phones: 9272, 9205 filled; 9278 306-398-2273 -> 306-398-2363. Websites: 9272 Finnly booking, 9287 and 9277 moved pages.
