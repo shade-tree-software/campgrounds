@@ -2604,3 +2604,14 @@ me drop and report); each needs the research named before a verdict.
 - 9307 Painted Rock: no posted rate (RV Life $$, avg 31); booking now call/text (old campreservations.ca engine redirects to Campspot, unread). Google 4.9/154. Count 25 -> 21.
 - 9310 Saskatoon 16 West C$37-55, Google 4.0/199 (at the line, price not borderline). 12819 Peanut Hills C$50-55 + GST, Google 4.1/208; season Apr 1 - Oct 31. 9287 Woodlawn ~25% nightly, noted.
 - Phones: 9272, 9205 filled; 9278 306-398-2273 -> 306-398-2363. Websites: 9272 Finnly booking, 9287 and 9277 moved pages.
+
+## SK p3-527 (2026-11-18)
+- No drops. Waterfront: 9261 Nickle Lake lakefront -> lakeview (open-bank rows mostly seasonal; nightly River View row behind a shore tree line); 9279 Eastend riverview -> not waterfront (Frenchman River ~15 m wide, scrub between, photos show no water). 9248 Lorne Calvert riverfront kept, borderline (sites 30/32/34 and 71 on open grass to a 30-40 m river).
+- Pins moved: 9179 Greenwater 680 m, 9282 Wakaw 360 m (was the gate), 9255 Meeting Lake 410 m, 9266 Oungre 305 m (was the ball diamond), 9240 Shellbrook 270 m. Optional 9261 nudge to 49.5925,-103.7815 (not applied).
+- 9234 renamed Grenfell Regional Park -> Grenfell Recreational Park Campground (town page + Let's Camp; not on saskregionalparks.ca). Rates unread. Let's Camp marks sewer on every site.
+- Mostly seasonal, noted: 9255 Meeting Lake (36%), 9261 Nickle Lake (21%), 9282 Wakaw (46%, under-19s with a guardian). 9266 Oungre nightly share unmeasured (RezExpert terms gate not crossed; seasonal C$1760, loop looks packed) - RE-CHECK.
+- 9248 Lorne Calvert: cheapest RV night C$45 (C$39 electric-only is for tents/trailers under 18 ft); operator: "Please use alternate route if RV and truck is over 5 tons & more than 14 feet in height" - alternate route exists.
+- 9255 Meeting Lake's own site carries injected casino spam - Let's Camp listed first.
+- 9240 Shellbrook Google 3.8 from 5 reviews, rate table headed 2022; amperage unposted. 9211 Canora self-registration, C$25 (and a C$15 non-electric rate that contradicts its "eleven 30 amp").
+- LEAD (not in DB, vet after the queue): Cowan Lake Campground, Big River Regional Park's second campground (~53.828,-107.035, end of Main Street on Cowan Lake; 14 x 30 A + 2 x 50 A + non-serviced; 306-469-2232).
+- Phones: 9179, 9210, 9211 filled; 9234 306-697-3055 -> 306-697-2815. Websites: 9234 (dead regional-parks page) and 9282 replaced; booking links added on 9266 (RezExpert) and 9240 (PerfectMind).
