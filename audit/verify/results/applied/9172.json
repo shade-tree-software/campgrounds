@@ -1,0 +1,75 @@
+{
+ "id": 9172,
+ "sources": [
+  "https://parks.saskatchewan.ca/camping/cypress-hills-interprovincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290125",
+  "parks.saskatchewan.ca campsitePaging.do / campsiteDetails.do (parkId 290125, Terrace loop 290606)",
+  "https://saskparks.tourismsaskatchewan.com/cypress-hills (data: /media/databases/parks.csv, listings.csv)",
+  "https://saskparks.tourismsaskatchewan.com/media/media-library/pdfs/sask-parks-camping-season-guide.pdf",
+  "Esri World Imagery z16 with the agency's site coordinates plotted (viewed)"
+ ],
+ "groups": {
+  "sites": {
+   "values": {
+    "count": 87,
+    "max_rig_ft": 32,
+    "pull_through": true
+   },
+   "source": "parks.saskatchewan.ca parkId 290125 campsitePaging.do (all rows) + every listed campsiteDetails.do page for the Terrace loop (loop filter 290606 on the park page: 'Nightly Electric (87)'); 'Maximum Equipment Length (ft)' 32 (48 sites), 25 (30), 18 (9); 'Site Access' Back-In 46, Roadside 39, Pull-Thru 2), read 2026-11-18",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 30,
+    "water": false,
+    "sewer": false
+   },
+   "source": "parks.saskatchewan.ca parkId 290125 campsitePaging.do (all rows) + every listed campsiteDetails.do page for the Terrace loop (loop filter 290606 on the park page: 'Nightly Electric (87)'); every site 'Electricity Hookup (Amps) 15/30', table 'Full Hookup - no', no 'Water Hookup' attribute on any site), read 2026-11-18",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "potable_water": true,
+    "dump": true,
+    "camp_store": true
+   },
+   "source": "https://parks.saskatchewan.ca/camping/cypress-hills-interprovincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290125 ('Services and Amenities Within Park': Hot Showers, Modern Washroom, Drinking water, Dump Station, Groceries / Supplies), read 2026-11-18",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "opens": "05-14",
+    "closes": "09-30",
+    "note": "2026 dates. October camping is booked by phoning the park office (campgrounds not named); winter camping is in Meadows campground."
+   },
+   "source": "https://saskparks.tourismsaskatchewan.com/media/media-library/pdfs/sask-parks-camping-season-guide.pdf ('2026 camping season (May 14, 2026 until September 30, 2026)'); https://saskparks.tourismsaskatchewan.com/cypress-hills (data: /media/databases/parks.csv, listings.csv) listings.csv Cypress Hills Nightly Camping: Fall 'Contact the park for more information or to book a campsite in October', Winter 'Winter camping available in Meadows campground from Nov 1, 2026 - Mar 14, 2027', read 2026-11-18",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "reserveamerica",
+    "url": "https://parks.saskatchewan.ca/camping/cypress-hills-interprovincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290125",
+    "fcfs": "never"
+   },
+   "source": "parks.saskatchewan.ca parkId 290125 campsitePaging.do (all rows) + every listed campsiteDetails.do page for the Terrace loop (loop filter 290606 on the park page: 'Nightly Electric (87)') (every campsite 'Site Reserve Type: Site-Specific', 'Type of Use: Overnight'), read 2026-11-18",
+   "method": "manual"
+  }
+ },
+ "note": "Terrace campground on the wooded slope of the Cypress Hills Centre Block, just south of Rainbow campground and west of the townsite; 9 of its sites take units only to 18 ft. --Claude",
+ "summary": "Keep. SKPP Terrace loop: 87 site-specific electric sites (15/30 A, no water/sewer), max 18-32 ft (78 take 25 ft+); season May 14 - Sep 30 (2026). Not waterfront confirmed. Pin ~240 m west of the site centroid (minor move).",
+ "flags": [
+  "PIN (minor, ~240 m): stored 49.6547,-109.5175 sits ~80 m west of Terrace's westmost site, at the forest edge. Suggested 49.65513,-109.51425 (centroid of the 87 sites' GIS coordinates; sites span 49.6539-49.6561, -109.5164 to -109.5121). Under the 250 m reporting line.",
+  "WATERFRONT: 'not waterfront' kept. Every Terrace site 'Near Water - no' on the SKPP table; continuous forest on imagery, no water in frame.",
+  "HOOKUPS: water/sewer false added: Terrace has no water or sewer hookups (all 87 'Nightly Electric', 'Full Hookup - no'). Electric 30 confirmed (15/30).",
+  "INCLUSION_EVIDENCE: stored 'Terrace loop of 30-amp electric & unserviced RV sites' is wrong: all 87 sites are electric. Suggested replacement 'ReserveAmerica SKPP parkId 290125, Terrace loop (read 2026-11-18): 87 site-specific electric 15/30 A drive-in sites, max equipment 18-32 ft, 78 of them 25 ft+ -> real RV campground'.",
+  "PHONE: '' -> 1-306-662-5411 (SKPP page 'Information: (306)662-5411'; tourism parks.csv Park Office).",
+  "WEBSITE: stored lines both answer 200 and are this park (tourism page + SKPP parkId 290125 whole-park page); keep.",
+  "BOOKING: stored platform missing -> reserveamerica, with the SKPP url.",
+  "FEES: not rewritten (policy-row rates). Live off-season card: Electric $31.",
+  "NOTE: dropped the '30-amp electric and unserviced' line (wrong and a field repeat), the showers/pool/store/playground list and 'Reservable online'; 'above Loch Leven' not shown on imagery (no lake in frame), replaced with the location relative to Rainbow and the townsite."
+ ],
+ "checked": "2026-11-18"
+}

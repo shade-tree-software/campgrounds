@@ -1,0 +1,74 @@
+{
+ "id": 9171,
+ "sources": [
+  "https://parks.saskatchewan.ca/camping/cypress-hills-interprovincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290125",
+  "parks.saskatchewan.ca campsitePaging.do / campsiteDetails.do (parkId 290125, Rainbow loop 290605)",
+  "https://saskparks.tourismsaskatchewan.com/cypress-hills (data: /media/databases/parks.csv, listings.csv)",
+  "https://saskparks.tourismsaskatchewan.com/media/media-library/pdfs/sask-parks-camping-season-guide.pdf",
+  "Esri World Imagery z16 with the agency's site coordinates plotted (viewed)"
+ ],
+ "groups": {
+  "sites": {
+   "values": {
+    "count": 68,
+    "max_rig_ft": 50,
+    "pull_through": true
+   },
+   "source": "parks.saskatchewan.ca parkId 290125 campsitePaging.do (all rows) + every listed campsiteDetails.do page for the Rainbow loop (loop filter 290605 on the park page: 'Accessible - Nightly Electric (2)', 'Nightly Electric (56)', 'Nightly Full Service (10)'); 'Maximum Equipment Length (ft)' 18 (16 sites), 25 (16), 32 (7), 40 (10), 50 (17); 'Site Access' Back-In 45, Roadside 11, Pull-Thru 10), read 2026-11-18",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 30,
+    "water": true,
+    "sewer": true
+   },
+   "source": "parks.saskatchewan.ca parkId 290125 campsitePaging.do (all rows) + every listed campsiteDetails.do page for the Rainbow loop (loop filter 290605 on the park page: 'Accessible - Nightly Electric (2)', 'Nightly Electric (56)', 'Nightly Full Service (10)'); every site 'Electricity Hookup (Amps) 15/30'; the 10 Full Service sites 'Water Hookup Y', 'Sewer Hookup Y'), read 2026-11-18",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "potable_water": true,
+    "dump": true,
+    "camp_store": true
+   },
+   "source": "https://parks.saskatchewan.ca/camping/cypress-hills-interprovincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290125 ('Services and Amenities Within Park': Hot Showers, Modern Washroom, Drinking water, Dump Station, Groceries / Supplies), read 2026-11-18",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "opens": "05-14",
+    "closes": "09-30",
+    "note": "2026 dates. October camping is booked by phoning the park office (campgrounds not named); winter camping is in Meadows campground."
+   },
+   "source": "https://saskparks.tourismsaskatchewan.com/media/media-library/pdfs/sask-parks-camping-season-guide.pdf ('2026 camping season (May 14, 2026 until September 30, 2026)'); https://saskparks.tourismsaskatchewan.com/cypress-hills (data: /media/databases/parks.csv, listings.csv) listings.csv Cypress Hills Nightly Camping: Fall 'Contact the park for more information or to book a campsite in October', Winter 'Winter camping available in Meadows campground from Nov 1, 2026 - Mar 14, 2027', read 2026-11-18",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "reserveamerica",
+    "url": "https://parks.saskatchewan.ca/camping/cypress-hills-interprovincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290125",
+    "fcfs": "never"
+   },
+   "source": "parks.saskatchewan.ca parkId 290125 campsitePaging.do (all rows) + every listed campsiteDetails.do page for the Rainbow loop (loop filter 290605 on the park page: 'Accessible - Nightly Electric (2)', 'Nightly Electric (56)', 'Nightly Full Service (10)') (every campsite 'Site Reserve Type: Site-Specific', 'Type of Use: Overnight'), read 2026-11-18",
+   "method": "manual"
+  }
+ },
+ "note": "Rainbow campground in the pine forest of the Cypress Hills Centre Block, just north of Terrace campground and west of the townsite; 16 of its sites take units only to 18 ft. --Claude",
+ "summary": "Keep. SKPP Rainbow loop: 68 site-specific sites (56 electric + 2 accessible electric + 10 full service), 15/30 A, max 18-50 ft (50 of 66 detailed sites take 25 ft+); season May 14 - Sep 30 (2026). Not waterfront confirmed (every site 'Near Water - no'). Pin sits in Terrace: move ~300 m N to the Rainbow loops.",
+ "flags": [
+  "PIN (move, ~300 m): stored 49.6556,-109.5127 lies on the northeast edge of the Terrace loops (Esri z16 with the agency's site coordinates plotted), ~100 m south of Rainbow's southmost site. Target 49.65827,-109.51295 (centroid of the 66 Rainbow sites' GIS coordinates; sites span 49.6565-49.6598, -109.5149 to -109.5109).",
+  "WATERFRONT: 'not waterfront' kept. Every Rainbow site is flagged 'Near Water - no' on the SKPP table; imagery shows the loops in continuous pine forest with no water in the frame.",
+  "SITES/HOOKUPS: new: count 68, max_rig 50, electric 30 (15/30 on every site), water + sewer on the 10 full-service sites. Stored had no sites/hookups group. Note's 'electrical being upgraded' has no current source; dropped.",
+  "PHONE: '' -> 1-306-662-5411 (SKPP page 'Information: (306)662-5411'; tourism parks.csv 'Phone Number Primary' Park Office).",
+  "WEBSITE: stored lines both answer 200 and are this park (tourism page + SKPP campgroundDetails.do parkId 290125, a whole-park page covering all loops); keep.",
+  "INCLUSION_EVIDENCE: suggested replacement 'ReserveAmerica SKPP parkId 290125, Rainbow loop (read 2026-11-18): 68 site-specific drive-in sites (56 + 2 accessible electric 15/30 A, 10 full service), max equipment 18-50 ft, 50 of them 25 ft+ -> real RV campground'.",
+  "FEES: not rewritten (policy-row rates). Live off-season card for the park: Non-Electric $16, Electric $31, Full Service $45 (the $4 October-on reduction).",
+  "NOTE: dropped the booking line (policy row) and the unsourced 'electrical being upgraded'; 'west of Loch Leven' replaced by the location relative to Terrace and the townsite."
+ ],
+ "checked": "2026-11-18"
+}

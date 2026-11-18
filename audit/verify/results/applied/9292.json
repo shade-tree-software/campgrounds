@@ -1,0 +1,78 @@
+{
+ "id": 9292,
+ "sources": [
+  "https://bordenbridgecampground.ca/",
+  "https://bordenbridgecampground.ca/prices/",
+  "https://bordenbridgecampground.ca/services/",
+  "https://bordenbridgecampground.ca/seasonal-sites/",
+  "https://reserve.campgroundbooking.com/borden-bridge-campground",
+  "https://api.campgroundreservations.com/graphql (the Good Sam reservation engine behind https://reserve.campgroundbooking.com/borden-bridge-campground, campground gs_central_id 202322475)",
+  "https://www.tourismsaskatchewan.com/listings/3351/borden-bridge-campground",
+  "Esri World Imagery z16/z17 at the stored pin (viewed)"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "water": true
+   },
+   "source": "https://bordenbridgecampground.ca/prices/ ('We have installed power and water to 31 sites and have a handful of non-electric sites'), read 2026-11-18",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "potable_water": true,
+    "dump": true
+   },
+   "source": "https://bordenbridgecampground.ca/prices/ ('flush toilet washrooms, coin operated showers' ... 'A septic dump is available on site') and https://bordenbridgecampground.ca/services/ ('Drinking water', 'Septic dump'), read 2026-11-18",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "opens": "05-15",
+    "closes": "09-07",
+    "note": "2027 dates from the booking engine (nights May 15 to September 7)."
+   },
+   "source": "https://api.campgroundreservations.com/graphql (the Good Sam reservation engine behind https://reserve.campgroundbooking.com/borden-bridge-campground, campground gs_central_id 202322475): reservationSetting.campground_working_dates 2027-05-15 to 2027-09-08; https://bordenbridgecampground.ca/ ('Closed for the Season ... See you in Spring 2027!'), read 2026-11-18",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://reserve.campgroundbooking.com/borden-bridge-campground",
+    "window_opens_days": 146
+   },
+   "source": "https://api.campgroundreservations.com/graphql (the Good Sam reservation engine behind https://reserve.campgroundbooking.com/borden-bridge-campground, campground gs_central_id 202322475) (instant_booking true; a June 2027 search answered 'This campground's max advance is 146' days), and https://bordenbridgecampground.ca/ ('BOOK NOW!' -> https://reserve.campgroundbooking.com/borden-bridge-campground), read 2026-11-18",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 35,
+    "currency": "CAD",
+    "surcharges": null,
+    "note": "2026 rates: electric sites with water $35 a night ($220.50 a week, $840 a month); a handful of non-electric sites 'for tents and smaller self contained campers' $25. Gate entry $10 a day; showers $2."
+   },
+   "source": "https://bordenbridgecampground.ca/prices/ ('2026 Camping Rates' ... 'Non-electric sites Nightly: $25.00' ... 'Electric sites Nightly: $35.00' ... 'Gate entry Daily Entry: $10.00'), read 2026-11-18",
+   "method": "manual"
+  }
+ },
+ "note": "Leased provincial campground in the Borden Bridge Recreation Site, on the bank of the North Saskatchewan River just off Hwy 16 about 11 km southeast of Borden; the river is reached by several paths through the riverbank woods. The campground also has an equestrian non-electric area and sells seasonal sites. --Claude",
+ "summary": "Keep. Operator site + its Good Sam booking engine: 31 power-and-water sites + a handful of non-electric (tents and smaller campers), 2026 electric $35 (base moved from the $25 non-electric), gate entry $10/day; 2027 season May 15 - Sep 7 from the engine; booking window 146 days. Not on Sask Parks' booking system: there is no campgroundDetails.do page for it. Not waterfront confirmed (riverbank woods). Pin fine.",
+ "flags": [
+  "WEBSITE / BOOKING LINK: there is no parks.saskatchewan.ca campgroundDetails.do page for this campground: it is not in the tourism Sask Parks data (parks.csv/listings.csv have no Borden entry) and the operator books on its own Good Sam engine (https://reserve.campgroundbooking.com/borden-bridge-campground -> reserve.campgroundreservations.com/search_sites?gs_campground_id=202322475). Stored website lines both answer 200 and describe this campground; keep them. booking.platform written 'operator' with that url.",
+  "FEES: base moved $25 -> $35. The $25 non-electric sites are described as 'a handful of non-electric sites for tents and smaller self contained campers', so a 23-ft motorhome's fit is not established; the electric sites with water ($35) are the sure RV night. The surcharges.electric $10 is cleared (the $35 is now the base). Gate entry 'Daily Entry: $10.00' (per party/vehicle not stated) kept in fees.note rather than fees.entrance for that reason.",
+  "HOOKUPS: amperage is not stated on any operator page or reachable in the engine (the engine refused to list sites before its 146-day window: 'max advance is 146, days after Tue Apr 13 2027 ... isn't available'). Electric stays unset.",
+  "SITES: no total count posted ('31 sites' with power and water plus 'a handful' non-electric); count left unset.",
+  "WATERFRONT: 'not waterfront' kept although the operator says 'Located on the banks of the North Saskatchewan River' and Tourism Saskatchewan 'the beautiful riverfront setting' (contrary claims -> re-audited). On Esri z17 the westmost loop's units (~52.3757,-107.1466) sit ~30-45 m from the river behind a continuous wooded riverbank; the operator itself says river access is by 'several locations'. No site has open ground to the water.",
+  "PIN: stored 52.37575,-107.1438 is inside the campground (between the loops, ~150 m east of the west loop). No move.",
+  "HORSES: services list an 'Equestrian non-electric area' (separate area per its wording; not mixed into the electric loops as far as the pages say).",
+  "LONG-STAY: 'SEASONAL SITES AVAILABLE NOW!' leads the home page; seasonal $2200 electric. Nightly rates are posted and the engine sells nights (instant booking), so ordinary nights are sold; seasonal share not posted.",
+  "PHONE: stored 306-690-2267 matches the operator ('1-306-690-CAMP (2267)') and the engine (+13066902267).",
+  "NOTE: dropped the hookup/showers/dump/season/reservable repeats; kept the setting and added the equestrian area and seasonal sales."
+ ],
+ "checked": "2026-11-18"
+}

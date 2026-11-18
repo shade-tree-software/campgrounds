@@ -2554,3 +2554,12 @@ me drop and report); each needs the research named before a verdict.
 - Thin, kept with caveats: 9280 Unity & District (14 non-electric $10 sites, only the tourism listing describes it, no season, no booking channel); 9305 Northern Meadows (nightly share unmeasurable behind reCAPTCHA; Google 4.7/147 is the golf club's; operator invites nightly guests); 9309 River Valley ($50 GST incl., nightly share unstated, Google 4.6/137).
 - 9192 Murray Doell water/sewer -> false (no full-service site). 9204 water/sewer true (20 full-service sites). Seasons: 9204 wrap-around (Underwood A winter camping).
 - 9155 Rock Creek optional 215 m pin nudge to 49.0710,-106.5258 (not applied).
+
+## SK p3-522 (2026-11-18)
+- No drops. 9161 Blackstrap lakefront -> lakeview (the old evidence read Hazelnut Grove as the main loops). Pins moved: 9161 1.2 km, 9171 Rainbow 300 m (was on Terrace), 9222 280 m, 9249 250 m. 9172 Terrace optional 240 m nudge to 49.65513,-109.51425 (not applied).
+- SPLIT PENDING: 9161 Blackstrap Hazelnut Grove (19 nightly electric 15/30 sites 100-118, centroid 51.78715,-106.42338, ~4.6 km NE on its own lakeshore spur; most sites take units only to 25 ft; runs the park's winter camping Nov 1 - Mar 14). Main = Kevin Misfeldt + Sunset Ridge (~51.7457,-106.4619 / 51.7466,-106.4567, 125 sites). If split, the main entry's season closes 10-31 (October by phone). Same parkId 290310.
+- 9292 Borden Bridge (provincial lease, own operator): books on its own Good Sam engine, $35 electric/water night, $10/day gate fee; policy_ref none already set. Has a separate "Equestrian non-electric area" (own wording); home page leads with seasonal sites but nights are sold.
+- 9294 Campland C$51-55 (Good Sam C$45.90), Google 4.1/263 - passes; 9295 Comfort Plus C$44-52, Google 4.4/203.
+- 9260 Moosomin RP: booking priority for 28-day and 7-day stays in early March, then 1-night from March 15 - booking priority, not discouragement; ~52% of serviced sites nightly on Let's Camp; 381-410 look seasonal.
+- Phones: 9161, 9171, 9172 filled; 9221 306-567-2908 -> 306-567-2040 (town page + Google). Websites added: 9161 tourism page, 9221 town page, 9260 Let's Camp.
+- Unsourced, left as stored: 9221 season, 9249 count/amps/season, 9295 dump station.
