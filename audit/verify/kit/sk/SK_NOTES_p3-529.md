@@ -1,0 +1,12 @@
+# p3-529 SK working notes (2026-11-18)
+- 9271 Redvers DONE: LC 54 sites, pin move ~380 m -> 49.5749,-101.7035; LC search API = POST /api/camps/<id>/sites/available/search (season not loaded -> no rates). tools/lc.py lcsum.py lcq.py tp.py svg2png.py
+- 9281 Valley DONE: 37 LC nightly / 79 (A loop 28 seasonal FS); C$35 2025; electric 50->30, water/sewer false; pin ok
+- 9284 Whitesand DONE: lakeview->not waterfront; ~17/58 nightly; C$26.25-31.50; 50A full; season 05-15..09-15
+- 9289 York Lake DONE: 30/57 nightly; sites 38->58; C$33+GST 2024; pin ok; not wf
+- 9219 Craik DONE: pond -> not waterfront (it's the swimming pool); sewer->false; season LWs; C$35
+- 9220 Creelman DONE: thin; phone 306-433-2011->639-455-7119
+- 9246 Glenavon DONE: thin; pin small move to 50.19690,-103.14190
+- 9233 Gravelbourg DONE: confirmed; no washrooms; lead Shamrock RP
+- 9299 Gull Lake DONE: count 48->36 (LC), no rate/season source
+- 9302 Joe Tutt DONE: pin move ~1.6 km to 52.4684,-107.4015; potable false
+- 9237 Kemoca DONE: 16/52 nightly serviced; elec 50->30; phone ''->306-424-7275; Google 4.7(42)

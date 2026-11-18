@@ -2625,3 +2625,12 @@ me drop and report); each needs the research named before a verdict.
 - Low Google on local entries (rule not applied): 9297 David Laird 3.6/89, 9226 Eston 3.5/15, 9215 Chaplin 3.8/65.
 - LEAD (vet after the queue): Ruby Lake Recreation Site, Hudson Bay Regional Park's second site 15 km N of town east of Hwy 9 (2 x 30 A, 2 x 15 A, 5 unserviced; beach, boat launch; 306-865-4144; map townofhudsonbay.com/wp-content/uploads/2026/07/Hudson-Bay-Ruby-Lake-Site.pdf).
 - Phones: 9215 filled; 9250 -> 306-753-2175; 9256 -> 306-752-7906. Websites: 9215 village page first (chaplin.ca is parked); 9256 PerfectMind booking link.
+
+## SK p3-529 (2026-11-18)
+- No drops. Waterfront downgrades: 9284 Whitesand lakeview -> not waterfront (both loops in aspen 70-120 m from the reservoir; photos show no water); 9219 Craik pond -> not waterfront (the "pond" is the park's swimming pool; reservoir across Hwy 11).
+- Pins moved: 9271 Redvers 380 m (was an industrial yard), 9302 Joe Tutt 1.6 km (was the arena; clearing NW of town off the arterial road, Esri z17). Optional 145 m nudge for 9246 Glenavon to 50.19690,-103.14190 (not applied).
+- Thin but kept (local, no private-park rule): 9220 Creelman (no village website; counts from RV Life/Campendium), 9246 Glenavon Lions (Tourism Sask + RV Life only; Facebook unread), 9302 Joe Tutt (primitive donation clearing: no water, toilets, tables or marked sites per a 2025-07 review; a 2020 review said closed, the 2025 review and town page say open).
+- Mostly seasonal, noted: 9284 Whitesand (16 of 54 serviced nightly + tent/overflow), 9237 Kemoca (16 of 52 serviced nightly; with overflow/tent ~65%; 19+ to book), 9281 Valley (37 of 79 nightly; A loop seasonal). 9289 York Lake ~53% nightly.
+- 9233 Gravelbourg: no public washrooms (rules PDF); every camper needs a permit from the Town Office in weekday hours. 9299 Gull Lake: town campground page is 404, no rate/season source; stored 09-30 close unverified. 9271 Redvers rates unread off-season.
+- LEAD (vet after the queue): Shamrock Regional Park (RM of Shamrock, ~20 min NE of Gravelbourg; shamrockregionalpark.ca, 306-648-3594).
+- Phones: 9220 -> 639-455-7119; 9237 filled 306-424-7275. 9284: whitesandregionalpark.com is NXDOMAIN; saskregionalparks.ca page added.
