@@ -1,0 +1,28 @@
+You are deciding ONE possible campground split for the EKKO campground database in /home/andrew/Dev/campgrounds: entry {ID} (NAME, Wisconsin). Phase-7 verification flagged it as one entry covering campgrounds at separate places. Hint from the verifier: HINT
+
+Read first: docs/campground-curation.md (inclusion criteria, the waterfront gate, the split rule "One entry per campground, not per park", note rules), docs/campground-schema.md (structured groups + provenance), and audit/verify/leads/instructions.md (helper tools, imagery method). Read entry {ID} in campgrounds.json in full, including waterfront_evidence and inclusion_evidence.
+
+The split rule (AWH 2026-10-22, 2026-10-26):
+- Split only campgrounds at SEPARATE PLACES: each with its own entrance or road, roughly 1 km+ apart (measure centroid to centroid; never claim the distance without measuring). Adjacent named loops of one campground area stay one entry.
+- Exception: two separately named recreation.gov facilities with their own booking rules split even a few hundred metres apart. One rec.gov facility with two loops is not that exception.
+- If a part fails the rule (too close, or it shares the main road), it stays inside whichever entry it adjoins; say so.
+- The original id stays on one campground (the main/largest one, or the one the existing pin already marks); the others become new entries. An --AWH note is never copied onto a campground it may not describe; keep --AWH text verbatim on the entry it describes.
+- Each campground that results needs the full pipeline: its own pin on its sites (imagery), elevation (Open-Meteo), the waterfront gate on imagery (defaults down; lakefront needs named nightly sites within ~50 m over open ground; under continuous canopy is a view; a river/channel under ~30 m wide is creekside), inclusion_evidence, and the structured groups you can source (sites, hookups, facilities, season, fees, booking) with provenance {source: url + quote + read date, checked, method: manual}. Absent means unknown: omit, never fill a placeholder. Notes impersonal ("a 23-ft rig"), signed --Claude, never repeating a field value or the policy row.
+
+Wisconsin specifics:
+- These sites refuse automated fetches; never retry them by any route (browser, archive, cache): marathoncounty.gov, ruskcountywi.com, manitowoccountywi.gov, cityofwashburnwi.gov, villageofgrantsburg.gov, lacrossecounty.org, clearlake-wi.gov, townofrussellwi.gov, wisconsin.goingtocamp.com (Azure 403), ResNexus (Incapsula), Clark/Brown/La Crosse County WebTrac, burnettcountysentinel.com (429). Any other site that refuses you joins this list.
+- The headless browser (PYTHONPATH=/home/andrew/.cache/ekko-pw, at most one, under `flock /tmp/ekko-headless-browser.lock`, DRV_SOCK=./drv.sock from your scratch dir) is only for JavaScript pages that serve you normally (Campspot maps, Firefly); never past a refusal.
+- WI DNR: dnr.wisconsin.gov pages answer; the state:WI policy row in campground_policies.json holds booking/entrance rules - don't repeat them. recreation.gov and RIDB answer (RIDB_API_KEY in the environment if set).
+
+Output (write ONLY these files, under audit/verify/kit/wi/splits/):
+- If you split: parent_{ID}.json = the fields that REPLACE on the kept entry (name, location, elevation_meters, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, and each structured group with provenance; omit a field to leave it unchanged), plus "_reasons": a short string. And new_SLUG.json = a JSON list of full new entries (kind "campground", name, location, elevation_meters, state "WI", ownership, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, structured groups, provenance). Do not assign ids.
+- If you do not split (or only partly): still write NOTES_{ID}.md saying why, with the measured distances.
+- Always write NOTES_{ID}.md: sources, measurements, imagery frames read (and that they rendered), and the decision.
+
+Hard limits:
+- No git commands of any kind, read-only included. Never edit campgrounds.json or any repo file other than the files above.
+- No routing around refusals: a site that refuses you is never reached another way (no Wayback/archive, no cache, no proxy, no headless browser for it).
+- No phone calls. Never pay, book, log in or create accounts. Never put a personal name, email, home location or trip details into a request; User-Agent 'Mozilla/5.0'.
+- Scratch work under SCRATCH/split-{ID}/. Disk space is low: delete imagery/PDFs once used; leave only a short notes file there. Quit any browser you started.
+
+Finish with a short report: the decision, measured distances, each resulting campground (name, pin, sites, waterfront call with site numbers), and anything AWH should see.

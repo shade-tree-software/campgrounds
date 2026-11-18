@@ -2523,3 +2523,7 @@ me drop and report); each needs the research named before a verdict.
 - DROPPED 3595 Wild Rock County Park (Clark County): picket lines beside sites 3/4/9/11/12/18/22 and a manure bunker by 14 in the one loop, no separate horse area (AWH 11-12 rule); also marketed as an ATV/horse trail base ("ATV Camping Welcome on All Sites").
 - 14498 Wilson Lake (private): $50 weekday water/electric passes exactly, $55 Fri-Sat; Google 4.5/70; nightly share unmeasured (Firefly reCAPTCHA; imagery shows many shed/deck units on the western grid) - no count = test 4 pass; Firefly booking link written.
 - 3277 Wildcat Mountain 30 -> 25 drive-in sites (cart-in 101-120 tent only); horse camp separate. Wyalusing map 54+54 vs DNR 109, 14 / 24 electric; stored 30 A at 3259/3260 unsourced. 3292 Willow River fee high $50 looks odd. 13439 Wonewoc phone -> 608-464-3114 (village office). 3284 re-pinned ~340 m (was the dump lot).
+
+## WI split 3585 Sidie Hollow (2026-11-17)
+- Partial split: Boat Landing -> new 15707 (1.29 km, own road; 25 sites, not waterfront). 3585 keeps Main + Upper Ridge (Upper Ridge 0.80 km, own road off Sidie Hollow Rd: under the ~1 km rule; ready values in kit/wi/splits/NOTES_3585.md if AWH wants it split: 43.5411,-90.9649, 366 m, 30 sites, not waterfront).
+- 3585 pin moved ~245 m from the day-use turnaround to the Main electric row; not waterfront -> creekside (sites 214-218 on open grass ~20-25 m from Coe Hollow Creek). Sewer on 3585 rests on site 225 alone.
