@@ -2615,3 +2615,13 @@ me drop and report); each needs the research named before a verdict.
 - 9240 Shellbrook Google 3.8 from 5 reviews, rate table headed 2022; amperage unposted. 9211 Canora self-registration, C$25 (and a C$15 non-electric rate that contradicts its "eleven 30 amp").
 - LEAD (not in DB, vet after the queue): Cowan Lake Campground, Big River Regional Park's second campground (~53.828,-107.035, end of Main Street on Cowan Lake; 14 x 30 A + 2 x 50 A + non-serviced; 306-469-2232).
 - Phones: 9179, 9210, 9211 filled; 9234 306-697-3055 -> 306-697-2815. Websites: 9234 (dead regional-parks page) and 9282 replaced; booking links added on 9266 (RezExpert) and 9240 (PerfectMind).
+
+## SK p3-528 (2026-11-18)
+- No drops. ASK: 9228 Fillmore (no operator presence, last report 2023, "very tight" past ~20 ft) - held in kept_results, asks.md.
+- 9187 Greig Lake not waterfront -> lakeview (Loop A west row G1-G13 10-25 m from the lake under canopy; Sask Parks photos of G1, G7, G12 show the water through trees); re-pinned 490 m from the entrance/office.
+- 9256 renamed Melfort and District Regional Park -> Melfort South Campground (City of Melfort operates it; no Melfort regional park exists); 41 -> 30 sites, water/sewer false (5 hydrants); PerfectMind booking needs staff approval. Google 3.6/27.
+- 9257 Melville RP count 42 -> 111, electric 15 -> 30, sewer added; phone kept 306-705-7400 (the park's own in-season line from May 15; 306-730-5822 is the campground office). Optional 150 m nudge to 50.9419,-102.7886 (not applied); park/Google/Let's Camp points are the office ~700 m SW.
+- 9224 Dunnet RP 71 -> 164 sites, ~54% nightly. 9253 Maryfield Lions now reservable via the village form. 9226 Eston: note's "late June to end of August" was the pool's season; Campspot shows closed until 2029-05-01 (re-check spring). 9250 Macklin: Bunnock-week 4-night minimum (event only).
+- Low Google on local entries (rule not applied): 9297 David Laird 3.6/89, 9226 Eston 3.5/15, 9215 Chaplin 3.8/65.
+- LEAD (vet after the queue): Ruby Lake Recreation Site, Hudson Bay Regional Park's second site 15 km N of town east of Hwy 9 (2 x 30 A, 2 x 15 A, 5 unserviced; beach, boat launch; 306-865-4144; map townofhudsonbay.com/wp-content/uploads/2026/07/Hudson-Bay-Ruby-Lake-Site.pdf).
+- Phones: 9215 filled; 9250 -> 306-753-2175; 9256 -> 306-752-7906. Websites: 9215 village page first (chaplin.ca is parked); 9256 PerfectMind booking link.
