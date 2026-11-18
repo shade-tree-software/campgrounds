@@ -686,3 +686,4 @@ Kept as stored `local`. Run by Wheatland Regional Centre, a registered charity (
 
 ## 9228 Fillmore Community Campground (SK, village) - presence and fit (p3-528, 2026-11-18)
 Held, nothing changed (result in kept_results/9228.json). No Village of Fillmore or Tourism Saskatchewan page mentions the campground; only directories (RV Life, AllStays) carry it. Newest dated report is Campendium 2023-05-28: "FREE for the first night and $10 Canadian per night after", "There Is Electric and 1 water Spigot", "Very tight maneuvering needed if you have a trailer or anything bigger than about 20 feet". Google 3.0 from 2 reviews. Village office 306-722-3330. Nothing from 2024 or later shows it still operates. Options: drop (no presence, tight for a 23-ft rig), or keep with a call-the-village caveat as Pioneer Park (WI) was.
+RESOLVED 2026-11-18: AWH - drop. Dropped via criteria_drops.py.
