@@ -2563,3 +2563,13 @@ me drop and report); each needs the research named before a verdict.
 - 9260 Moosomin RP: booking priority for 28-day and 7-day stays in early March, then 1-night from March 15 - booking priority, not discouragement; ~52% of serviced sites nightly on Let's Camp; 381-410 look seasonal.
 - Phones: 9161, 9171, 9172 filled; 9221 306-567-2908 -> 306-567-2040 (town page + Google). Websites added: 9161 tourism page, 9221 town page, 9260 Let's Camp.
 - Unsourced, left as stored: 9221 season, 9249 count/amps/season, 9295 dump station.
+
+## SK p3-523 (2026-11-18)
+- No drops. 9268 Palliser RP lakefront -> lakeview (shore rows seasonal and behind a tree strip; nightly 329-330 behind the shoreline belt - "not waterfront" if photos show no lake). Kept mostly seasonal (~81 of ~300 nightly). 9313 Val Marie re-pinned 570 m (from a residential street to Google's place pin west of the village; imagery predates the spray park - worth a second look).
+- SPLIT PENDING: 9268 Palliser - Rusty's Coulee Marina (south, ~50.8650,-106.9400, ~146 sites, 14 nightly, own Marina Road) vs the north campground (~50.8888,-106.9535, ~230 sites, 67 nightly); one Let's Camp camp. South has few nightly sites - a split may not earn a second entry.
+- LEADS (not in DB, to vet after the queue): Rolling Greens Fairways RV park (AB, 1.6 km W of Lloydminster on Hwy 16 then 0.8 km N on Range Road 13, 780-808-1667); Sandy Beach Regional Park (SK, 19.3 km N of Lloydminster on Hwy 17, 306-825-2092). Both from the Lloydminster city campgrounds page.
+- ASK: 9308 Prairie View ownership (charity operator; asks.md).
+- 9154 Red Deer season -> 05-15..10-15; 2026 electrical upgrade forced spring/fall closures (note); stored electric 50 unconfirmed, left. Policy row: 2026 Red Deer reservations opened April 24, later than the federal:parks-canada row's launch dates.
+- 9274 Silver Lake: 33 large seasonal sites (2008); nightly share unmeasurable (no site list); Google 4.3/110 shared with the golf course. 9314 Willowbend C$38 (15 A) / $48 / $58, Google 4.4/154; seasonal packages uncounted; stored year_round unconfirmed. 9209 Bengough ~68% nightly; electric 30 -> 50.
+- Phones: 9265, 9200, 9209 filled; 9283 -> 780-871-8194 (Weaver Park office); 9285 306-735-4415 (Recreation Office) -> 306-735-2210 (Town Office, booking line). 9308 asks callers for "ext. 2". Websites: 9313, 9285 replaced (old pages moved); Let's Camp second lines on 9283, 9268, 9265.
+- No local:SK row, so fees.entrance per entry (Palliser $15, Bengough $10/vehicle/day; Silver Lake $10 in fees.note only).
