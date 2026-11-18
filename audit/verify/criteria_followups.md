@@ -2634,3 +2634,12 @@ me drop and report); each needs the research named before a verdict.
 - 9233 Gravelbourg: no public washrooms (rules PDF); every camper needs a permit from the Town Office in weekday hours. 9299 Gull Lake: town campground page is 404, no rate/season source; stored 09-30 close unverified. 9271 Redvers rates unread off-season.
 - LEAD (vet after the queue): Shamrock Regional Park (RM of Shamrock, ~20 min NE of Gravelbourg; shamrockregionalpark.ca, 306-648-3594).
 - Phones: 9220 -> 639-455-7119; 9237 filled 306-424-7275. 9284: whitesandregionalpark.com is NXDOMAIN; saskregionalparks.ca page added.
+
+## SK p3-530 (2026-11-18)
+- No drops. ASK: 9276 Sylvan Valley RP (no presence; non-accredited) - held in kept_results, asks.md.
+- Waterfront: 9193 Sandy Beach (Meadow Lake) lakefront -> lakeview (S34-S44 30-45 m behind spruce and beach; reviewer could keep S39 only); 9306 Oro Lake lakefront -> lakeview (shore road + reeds; nightly sites unknown); 9275 Suffern Lake not waterfront -> lakeview (nightly hill sites 30-39, Let's Camp "lake view from your site", site 39 photo).
+- 9275 re-pinned 790 m (was a road junction); count 33 -> 56, booking phone -> Let's Camp. Optional nudges not applied: 9238 -> 51.4601,-109.1443 (225 m), 9157 -> 54.6835,-102.0744 (210 m).
+- Soft, kept: 9306 Oro Lake (mostly seasonal + iffy? no own page, "Seasonal campsites are also available", long-parked trailers; daily rate posted, FCFS); 9288 Wynyard (Google 3.3/11, in-season nightly share unmeasured - Campspot 403); 9239 Kinetic Park (swiftcurrent.ca 403; exhibition grounds - ordinary nights outside events not shown; phone maybe 306-778-1621).
+- 9254 McNab ~44% nightly (note says so). 9238 Kindersley takes no reservations; 18+ to rent. 9157 Sawmill Bay: Sask Parks-run but self-registration, not on parks.saskatchewan.ca - its own booking group must keep overriding the provincial row. 9300 could be renamed "Hanley's Old Park" (Google + town rate sign) - not done.
+- LEAD (unvetted, probably cabins): lodge/cabin complex on Sawmill Bay west of Hwy 167 (~54.6834,-102.0790).
+- Phones: 9306 -> 306-475-2801; 9157 -> 306-426-2622 (Narrow Hills office). Websites: 9315, 9300 campground pages.
