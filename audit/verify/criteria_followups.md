@@ -2573,3 +2573,13 @@ me drop and report); each needs the research named before a verdict.
 - 9274 Silver Lake: 33 large seasonal sites (2008); nightly share unmeasurable (no site list); Google 4.3/110 shared with the golf course. 9314 Willowbend C$38 (15 A) / $48 / $58, Google 4.4/154; seasonal packages uncounted; stored year_round unconfirmed. 9209 Bengough ~68% nightly; electric 30 -> 50.
 - Phones: 9265, 9200, 9209 filled; 9283 -> 780-871-8194 (Weaver Park office); 9285 306-735-4415 (Recreation Office) -> 306-735-2210 (Town Office, booking line). 9308 asks callers for "ext. 2". Websites: 9313, 9285 replaced (old pages moved); Let's Camp second lines on 9283, 9268, 9265.
 - No local:SK row, so fees.entrance per entry (Palliser $15, Bengough $10/vehicle/day; Silver Lake $10 in fees.note only).
+
+## SK p3-524 (2026-11-18)
+- DROPPED 9293 Buffalo Lookout (private, E of Regina): Google 3.8/207 - under 4.0 with 25+ reviews (AWH 2026-11-02 standing rule). Otherwise passed (C$45-55, 60 of 68 RV sites nightly, year-round).
+- 9175 Duck Mountain not waterfront -> lakeview (Spruce S68-S83 10-30 m from Madge Lake under canopy, lake visible in Sask Parks photos); re-pinned 2.7 km from the entrance area to Pickerel Point; count 142 -> 376 (269 nightly), max rig 32 -> 50, 50 A, water/sewer true.
+- 9217 Churchbridge re-pinned 800 m (was a residential block north of Hwy 16).
+- SPLIT PENDING: 9164 Buffalo Pound - Maple Vale / Shady Lane / Trails End (~50.6105,-105.4455, 181 sites) 2.4 km NW of Elmview / Lakeside / Valley (~50.5945,-105.4150, 67 sites); Lower Chalet (~50.5807,-105.3888, 27 non-electric) not worth an entry. All parkId 290170. Minor: 9175 Fern (51.6403,-101.6272, 2 electric + 17 non-electric, the winter loop) 2.2 km SW; Selwood (11 sites <= 18 ft) would not stand alone.
+- 9230 Fort Qu'Appelle: possible LAKEFRONT - town map highlights 36, 38, 39, 41, 42 (Echo Lake side, ~50.7776,-103.7983) 20-25 m from the water over a sand path and grass; nightly status unread (engine closed off-season). Phone 306-332-4614 (on no current page) -> 306-331-6095 (Tourism SK listing's; not confirmed as the office; town office 306-332-5266). Reservation fee C$15/booking. Google 4.0/151; seasonal share unmeasured.
+- 9298 Eagle Valley (private): operator site 406 - values from Tourism SK; Google 4.1/144, C$30-55; nightly share unmeasured (a south loop of ~35 looks seasonal).
+- 9218 Yorkton: count 60 / rig 60 / 8 pull-through rest on a dead page; no rate posted. 9229 Foam Lake and 9291 Kenaston water -> false. 9213 Carlyle booking -> Let's Camp.
+- Phones filled 9164, 9170, 9175; 9218 -> 306-621-2878 (site hosts). Websites: 9218, 9230, 9229 replaced (dead/redirecting); 9291 village page first.
