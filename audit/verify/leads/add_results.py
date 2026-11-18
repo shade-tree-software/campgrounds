@@ -3,7 +3,8 @@
 Each result already carries its waterfront audit and structured fields, so the entry is written whole:
 rating from the result's `rvlife` ("4.5*/$$$"), fees and every structured group (hookups, sites,
 facilities, season, booking) with its provenance. Ids continue from max(id) over BOTH location files. A result whose name or pin (300 m) is already in the database is
-refused unless the result names that id in `separate_from` (checked by hand). `curation_note` is carried.
+refused unless the result names that id in `separate_from` (checked by hand: names repeat across
+states and forests, e.g. Rusk County's Perch Lake vs the USFS Perch Lake 95 km north). `curation_note` is carried.
 Skips go to verdicts.jsonl. Dry run by default; --apply writes.
 """
 import glob, json, math, os, re, sys
@@ -44,7 +45,9 @@ fam = json.load(open(FAM, encoding='utf-8')) if os.path.exists(FAM) else []
 if not fam:
     sys.exit('no trip_data/family.json: ids would collide; run where it exists')
 next_id = max(e['id'] for e in cg + fam) + 1
-names = {norm(e['name']) for e in cg}
+names = {}
+for e in cg:
+    names.setdefault(norm(e['name']), []).append(e['id'])
 pins = [(pt(e['location']), e['id']) for e in cg if e.get('location')]
 done = {v['name'] for v in map(json.loads, open(os.path.join(HERE, 'verdicts.jsonl')))}
 
@@ -58,7 +61,8 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
         continue
     loc = pt(r['location'])
     clash = [i for q, i in pins if km(loc, q) < 0.3 and i not in r.get('separate_from', [])]
-    if norm(r['name']) in names or clash:
+    clash += [i for i in names.get(norm(r['name']), []) if i not in r.get('separate_from', [])]
+    if clash:
         sys.exit(f"{r['name']}: already in the database ({clash})")
     m = re.fullmatch(r'([\d.]+)\*/(\$*)', r.get('rvlife', '') or '')
     e = {'id': next_id, 'kind': 'campground', 'name': r['name'], 'location': r['location'],
@@ -84,7 +88,7 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
     if prov:
         e['provenance'] = prov
     adds.append(e)
-    names.add(norm(r['name']))
+    names.setdefault(norm(r['name']), []).append(next_id)
     pins.append((loc, next_id))
     next_id += 1
 
