@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "WI COMPLETE 2026-11-17 (queue p3-485..519, leads, splits, Jack Lake); AWH paused before SK; next SK (build kit/sk/ first, batch p3-520), then WY, SD; WI leftovers (unread, optional asks) in audit/verify/kit/wi/RESUME_WI.md; ONE verifier at a time"
+description: "WI COMPLETE 2026-11-17; SK kit BUILT 2026-11-17 (audit/verify/kit/sk/RESUME_SK.md), p3-520 built, NOT launched - waits on AWH go; then WY, SD; WI leftovers in kit/wi/RESUME_WI.md; ONE verifier at a time"
 metadata:
   node_type: memory
   type: project
@@ -124,3 +124,5 @@ AWH 2026-11-13 after the pause: 15428 kept (Chicago exception), 1687 year-round 
 **Paused 2026-11-16 after p3-504** (WI p3-485..504 applied; pushed + deployed). Resume from the "RESUME HERE" section at the end of audit/verify/kit/wi/RESUME_WI.md: exact build/launch/apply commands, the verifier Lessons paragraph in kit/wi/lessons.txt, the day's rulings (price gate = cheapest real RV night in any season), unread list, leads, split candidate. Next batch p3-505.
 
 **Resume (2026-11-17):** Wisconsin fully done (queue, 9 leads via audit/verify/leads/, 3 split checks via audit/verify/kit/wi/splits/ + split_prompt_template.txt, Jack Lake audit). AWH paused before SK. To restart: read the "RESUME HERE" section of audit/verify/kit/wi/RESUME_WI.md, build kit/sk/ from kit/wi/ (Canada: provincial ownership, CAD, C$69 gate; see [[reference-canada-sweep-adaptation]]), first batch p3-520, one verifier at a time.
+
+**SK READY (2026-11-17):** kit in audit/verify/kit/sk/ (sk_head.txt, mkpara_sk.py, agent_prompt_template.txt, lessons.txt, RESUME_SK.md - commands and apply steps). p3-520 batch file built (9150 .. 12817); launch only on AWH go.
