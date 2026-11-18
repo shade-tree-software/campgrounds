@@ -2583,3 +2583,13 @@ me drop and report); each needs the research named before a verdict.
 - 9298 Eagle Valley (private): operator site 406 - values from Tourism SK; Google 4.1/144, C$30-55; nightly share unmeasured (a south loop of ~35 looks seasonal).
 - 9218 Yorkton: count 60 / rig 60 / 8 pull-through rest on a dead page; no rate posted. 9229 Foam Lake and 9291 Kenaston water -> false. 9213 Carlyle booking -> Let's Camp.
 - Phones filled 9164, 9170, 9175; 9218 -> 306-621-2878 (site hosts). Websites: 9218, 9230, 9229 replaced (dead/redirecting); 9291 village page first.
+
+## SK p3-525 (2026-11-18)
+- DROPPED 12818 King's Acres (private, east Regina): Google 3.7/309 - under 4.0 with 25+ reviews (AWH 2026-11-02). Otherwise passed (C$43 on 15 A lots, peak C$71).
+- Waterfront downgrades: 9158 Anderson Point lakefront -> not waterfront (45-70 m behind forest); 9183 Nut Point lakefront -> lakeview (25-50 m under forest, no photo read - not waterfront if a sightline can't be shown); 9247 Little Loon lakefront -> not waterfront (lakeside rows are lease sites).
+- SPLIT PENDING: 9186 Makwa Lake - Mewasin (~54.0021,-109.2170, 36 non-electric sites, 25 nightly, 25-40 ft, ~3 km S on its own road); Jumbo Beach (~54.0336,-109.1908, 16 nightly non-electric, ~1 km NE, own access) marginal. Stabler Point ~54.029,-109.205. All parkId 290500.
+- 9236 Jean Louis Legare RP: Google 3.9/39 shared with the golf course; ~52% nightly; non-potable water. Regional park, so the private rating rule is not applied.
+- 9301 Kilton Hill C$47 + GST, Google 4.7/135; weekly/monthly posted, nightly share unmeasurable; stored season unsourced.
+- 9251 Manitou: operator advisory that Hwy 15 is in "extremely bad conditions for pulling a trailer" (approach route, not the campground road); drinking-water advisory notice after an Aug 2026 outage. 27 pull-throughs same-day by phone (fcfs some_sites).
+- 9197 Lower Fishing Lake water -> false; 9232 Gordon Howe sewer -> unknown (adults-only 19+ section on the map, not whole-park). 9158 pin ~240 m off (optional 53.71167,-105.94216).
+- Phones 9183, 9259 filled; websites: 9251 operator site first, Let's Camp on 9236 and 9251, tourism page on 9158.
