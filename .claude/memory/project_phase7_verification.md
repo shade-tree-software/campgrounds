@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "WI COMPLETE 2026-11-17; SK kit BUILT 2026-11-17 (audit/verify/kit/sk/RESUME_SK.md), p3-520 built, NOT launched - waits on AWH go; then WY, SD; WI leftovers in kit/wi/RESUME_WI.md; ONE verifier at a time"
+description: "WI COMPLETE 2026-11-17; SK UNDER WAY (audit/verify/kit/sk/RESUME_SK.md): p3-520 applied 2026-11-18, next p3-521; then WY, SD; WI leftovers in kit/wi/RESUME_WI.md; ONE verifier at a time"
 metadata:
   node_type: memory
   type: project
