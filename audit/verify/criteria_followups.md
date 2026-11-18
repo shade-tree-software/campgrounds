@@ -2545,3 +2545,12 @@ me drop and report); each needs the research named before a verdict.
 - Open: 9151 stored electric 50 is unsourced (the "all 50 amp" line is Rock Creek's), left as stored. 9176 stored pull_through true unconfirmed (24 of 25 detail pages Back-In). 9223 Don Forsyth thin: amperage, season, max length, nightly share unpublished, no Google place, "campground and trailer park", stored fcfs always unconfirmed, pin unconfirmed. 12817 Indian Head: nightly share unread (RMS engine scripted; imagery suggests ~a third nightly - not written), stored 80 sites unsourced.
 - Not split: 9178 North Murray Point (0.9 km, mostly seasonal), 9176 Lakeview A/B (chain under 0.5 km), 9177 Sandy Ridge (660 m).
 - Lead (not vetted): unnamed trailer park + marina at Candle Lake causeway ~53.7561,-105.2852 (looks seasonal).
+
+## SK p3-521 (2026-11-18)
+- No drops. 9159 The Battlefords lakeview -> not waterfront. Pins moved: 9159 590 m (was on the Jackfish Lodge golf RV loops), 9204 380 m, 9262 325 m, 9192 320 m.
+- SPLIT PENDING (do with the other SK splits after the queue): 9159 The Battlefords South campground (sites 301-421, 121 nightly 15/30 A, centroid ~53.1158,-108.3782, ~1.7 km SE, own road and gate, Robinson Bay; loop 290859 on parkId 290515). Core = Centre + North + Spruce Meadow (213 sites, ~53.1290,-108.3920). Also on the park map: "Hilltop Campground" 603-617, not on the reservation system, status unknown.
+- Phones filled 9204, 9159, 9305. Websites: 9305 booking link given its property id + packages page; 9262 Let's Camp; 9269 saskregionalparks.ca; 9280 Tourism Saskatchewan listing (the town page never mentions camping).
+- 9269 Pasquia kept mostly seasonal (41 of 106 nightly). 9243 Last Mountain ~55% nightly. 9262 Nipawin ~51% nightly.
+- Thin, kept with caveats: 9280 Unity & District (14 non-electric $10 sites, only the tourism listing describes it, no season, no booking channel); 9305 Northern Meadows (nightly share unmeasurable behind reCAPTCHA; Google 4.7/147 is the golf club's; operator invites nightly guests); 9309 River Valley ($50 GST incl., nightly share unstated, Google 4.6/137).
+- 9192 Murray Doell water/sewer -> false (no full-service site). 9204 water/sewer true (20 full-service sites). Seasons: 9204 wrap-around (Underwood A winter camping).
+- 9155 Rock Creek optional 215 m pin nudge to 49.0710,-106.5258 (not applied).

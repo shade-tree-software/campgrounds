@@ -1558,3 +1558,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 9169 Crooked Lake lakeview kept, close: loop A 42-51 and B 80-84 sit 12-20 m from the bank behind a shrub/tree band; site photos could make lakefront or confirm the view.
 - 9178 Murray Point not waterfront: M124-M136 ~60-70 m from the Emma Lake beach behind a 30-40 m conifer band; ground photos could support lakeview.
 - 9151 Frenchman Valley not waterfront: Parks Canada says "With a view of the Frenchman River" (river 300-400 m off, narrow channel); a creek/river view value would need a site-level look.
+- p3-521: 9192 Murray Doell not waterfront kept - M64, M66-M68 ~25-35 m from Lac Des Iles behind a 15-25 m shrub/tree band; photos could support lakeview. 9204 Rowan's Ravine lakeview kept (Underwood A 311-312 ~45-55 m across grass, a shrubby bank and the Dog Beach day-use strip). 9243 Last Mountain RP lakeview kept (sites 52, 78 ~50-60 m behind the loop road and a tree band).
