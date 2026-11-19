@@ -2700,3 +2700,7 @@ me drop and report); each needs the research named before a verdict.
 ## SK split 9159 The Battlefords (2026-11-19)
 - SPLIT: South Campground (sites 301-421, 121 nightly 15/30 A, 111 take 23 ft) -> new 15709, 1.88 km from the core (centroids), own road by the entry gate; lakeview (332-335 see the lake over shrubs/thin aspen, 45-55 m with the Lakeside Trail between). Entry permit + reservation fee added to match the other SK provincial entries. 9159 = Core Area (Centre + North + Spruce Meadow, 213 sites, 161 nightly), not waterfront.
 - Hilltop Campground 603-617 (~53.1282,-108.3764): park map only, no SKPP rows or listing; left out of both. South showers/flush toilets unknown. SKPP's park GPS point sits on the golf course.
+
+## SK split 9161 Blackstrap (2026-11-19)
+- SPLIT: Hazelnut Grove (19 electric 15/30 A sites 100-118, ~5.0-5.3 km from the main loops on its own lakeshore spur by the Hwy 211 entrance; winter camping Nov 1 - Mar 14, season 05-14..03-14) -> new 15710, lakeview (lake row 10-25 m behind continuous willow/shrub; the park's own algae notice says "lakefront sites" - close call for AWH). Online booking limits 17 of 19 sites to units up to 25 ft; 102/106 tent or van only. Park map shows a site 119 not on the booking site.
+- 9161 = Kevin Misfeldt + Sunset Ridge (125 sites, 0.44 km apart, one road), re-pinned onto site 200, season closes 10-31 (October loop unconfirmed), lakeview (254-257 42-51 m over grass then a shrub band).

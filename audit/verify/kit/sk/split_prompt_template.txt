@@ -10,6 +10,7 @@ The split rule (AWH 2026-10-22, 2026-10-26):
 - Each campground that results needs the full pipeline: its own pin on its sites (imagery), elevation (Open-Meteo), the waterfront gate on imagery (defaults down; lakefront needs named nightly sites within ~50 m over open ground; under continuous canopy is a view; a river/channel under ~30 m wide is creekside), inclusion_evidence, and the structured groups you can source (sites, hookups, facilities, season, fees, booking) with provenance {source: url + quote + read date, checked, method: manual}. Absent means unknown: omit, never fill a placeholder. Notes impersonal ("a 23-ft rig"), signed --Claude, never repeating a field value or the policy row.
 
 Saskatchewan specifics:
+- The SK provincial entries store fees.reservation_fee 12 and fees.entrance {resident 11, nonresident 11, per vehicle_day} (recreation sites: no entrance): carry them on a new provincial entry.
 - Read audit/verify/kit/sk/sk_head.txt (the province rules: ownership, CAD with the schema's currency marker, the provincial:SK policy row in campground_policies.json which already holds the Sask Parks booking system, 2026 rate classes, $12 reservation fee and $11 vehicle entry permit - never write those per entry) and audit/verify/kit/sk/lessons.txt, and the SK_NOTES files in audit/verify/kit/sk/ for this park.
 - parks.saskatchewan.ca campgroundDetails.do pages answer curl with a cookie jar and -L (drop any queueittoken); each loop's site list (paging table) carries type, amps, max length and 'Near Water' per site, and the server can take ~30 s a page - read the tables first and fetch detail pages only for key sites. The SKPP GIS site points plus Esri imagery place loops. saskparks.tourismsaskatchewan.com park pages and Tourism Saskatchewan's parks data (park office 'Phone Number Primary') answer. Let's Camp: GET https://letscamp.ca/api/camps/<slug>?locale=en with header "X-Tenant-Type: camp"; sites at /api/camps/<campId>/sites?locale=en. saskregionalparks.ca answers plain curl.
 - Sources that refuse (never retry by any route): reservation.pc.gc.ca, sasklakes.ca, www.campspot.com (campreservations.ca redirects there), eaglevalleypark.ca, Nominatim, overpass-api.de and every Overpass mirror, swiftcurrent.ca. Any other site that refuses you joins this list.
@@ -23,6 +24,7 @@ Output (write ONLY these files, under audit/verify/kit/sk/splits/):
 - Always write NOTES_{ID}.md: sources, measurements, imagery frames read (and that they rendered), and the decision.
 
 Hard limits:
+- Do not run apply_split.py, even as a dry run: the reviewer runs it. Check your JSON with `python3 -I -c "import json; json.load(open(...))"` instead.
 - No git commands of any kind, read-only included. Never edit campgrounds.json or any repo file other than the files above.
 - No routing around refusals: a site that refuses you is never reached another way (no Wayback/archive, no cache, no proxy, no headless browser for it).
 - No phone calls. Never pay, book, log in or create accounts. Never put a personal name, email, home location or trip details into a request; User-Agent 'Mozilla/5.0'.
