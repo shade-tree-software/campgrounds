@@ -2716,3 +2716,7 @@ me drop and report); each needs the research named before a verdict.
 ## SK split 9175 Duck Mountain (2026-11-19)
 - SPLIT: Fern (F1-F19, 2 electric, 11 nightly take 23 ft, max 32; winter camping, season 05-14..03-14) -> new entry, 2.01 km from Pickerel Point on its own road off Hwy 57; lakeview (F2/F8/F10 behind a continuous spruce band, lake through trees in site photos). 9175 = Pickerel Point (Birch/Poplar/Spruce, 346 sites, 239 nightly), season now 05-14..10-31, lakeview on Spruce S68-S83; fees re-cut to $35 base (+14 full hookup); camp_store dropped (store is by Fern/village).
 - Selwood (11 sites, all <= 18 ft, own 3.3 km road, 2.45 km N) in NEITHER entry - fails the 23-ft fit; described in the parent note.
+
+## SK split 9186 Makwa Lake (2026-11-19)
+- SPLIT into three: 9186 = Stabler Point (227 sites incl. the Full Service pod, 165 nightly), not waterfront kept (continuous canopy; S202/S51/S72 43-54 m, photos forest only; 80 of 227 sites sampled); new Mewasin (36 non-electric, 25 nightly, 3.17 km, own road), lakeview (M13-M25 22-42 m under canopy); new Jumbo Beach (16 nightly non-electric, 1.12 km centroids but own entrance off the Loon Lake / Hwy 26 road, 5.8 km by road), LAKEFRONT on J1/J2/J6 (open ground 20-40 m, note names them; J3 open but 18 ft only). Jumbo Beach is the judgement call (just over 1 km; own entrance; different water value) - fold back on AWH's word.
+- Dump only at Stabler Point. Fees note ("$4 less from Oct 1") dropped - Makwa has no fall/winter camping.
