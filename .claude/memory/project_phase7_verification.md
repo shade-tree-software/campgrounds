@@ -8,7 +8,7 @@ metadata:
   modified: 2026-11-10T01:40:14.130Z
 ---
 
-**SK status (2026-11-19):** queue DONE, p3-520..535 applied + committed (pushed through p3-530 only). Seven drops (9296, 9293, 12818, 9311, 9245 Lemsford Ferry closed 2019; 9228 Fillmore + 9276 Sylvan Valley by AWH: no presence). Held asks: 14985 Canora Beach (long-stay/lot sales), 9308 Prairie View (ownership). Splits DONE 2026-11-19 (6 split into +15709..15717, 9268 not split; see kit/sk/RESUME_SK.md). Leads DONE 2026-11-19 (9 adds, 5 skips). Next: WY (build kit/wy/ from kit/wi/), then SD. Open asks: 14985 Canora Beach, 9308 Prairie View, 15719 Rolling Green workforce mix.
+**SK status (2026-11-19):** queue DONE, p3-520..535 applied + committed (pushed through p3-530 only). Seven drops (9296, 9293, 12818, 9311, 9245 Lemsford Ferry closed 2019; 9228 Fillmore + 9276 Sylvan Valley by AWH: no presence). Held asks: 14985 Canora Beach (long-stay/lot sales), 9308 Prairie View (ownership). Splits DONE 2026-11-19 (6 split into +15709..15717, 9268 not split; see kit/sk/RESUME_SK.md). Leads DONE 2026-11-19 (9 adds, 5 skips). Next: WY (build kit/wy/ from kit/wi/), then SD. Asks: 14985 Canora kept for now + 15719 Rolling Green kept (AWH 2026-11-19); 9308 Prairie View ownership deferred.
 
 AWH 2026-10-20: start phase 7 of [[project-campground-schema]] now. Use signals = stays AND
 contributor popup opens (logged since 67b777e6 to trip_data/campground_views.jsonl; live only once
