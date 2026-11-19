@@ -2653,3 +2653,14 @@ me drop and report); each needs the research named before a verdict.
 - 9165 Minowukaw: six nightly sites under 23 ft (M217, M303, M305, M307, M309, M324); max 50 ft (stored 32 wrong). 9167: five 18-ft sites. 9163 Bronson: June 2026 water advisory on sasklakes.ca unread (refuses). Unsourced counts not written: 9208 (105), 9212 (20). ATV trails at 9162, 9216 (general campgrounds - fine).
 - LEADS (vet after the queue): Peck Lake campground (Bronson Forest, Sask Parks park 290510, 41 electric sites); Little Shell Rec Site (Resort Village of Chitek Lake, letscamp.ca/camps/little-shell-rec-site, 9 non-electric sites).
 - Phones: 9207, 9163, 9165, 9167 filled; 9214 -> 306-861-6549. Canora Beach phone 306-563-6363 / website goodspiritlake.com/campground pending with the ask. Websites: 9208 attons-lake-2, 9163 tourism page, 9167 tourism + Danielson SKPP.
+
+## SK p3-532 (2026-11-19)
+- No drops. Waterfront: 9173 Danielson lakeview -> not waterfront; 9182 Nemeiben, 9184 Wadin Bay, 9185 Lac la Plonge lakefront -> lakeview; 9181 Missinipe not waterfront -> lakeview (nightly M14/M15, photos through trees); 9242 Lac Pelletier lakeview kept on nightly Glade T12/T15/T16 (every shore row seasonal); 9168 riverview kept (open lawn 15-40 m from the Beaver River, but no site numbers to earn riverfront).
+- Pins: 9173 3.8 km (was the dam across Coteau Bay), 9181 1.0 km, 9185 960 m (was the cottage subdivision), 9182 330 m. Optional 9227 180 m not applied.
+- Renamed: 9168 -> Beaver-Cowan River Campground (no "Cowan River Provincial Park" exists; Tourism SK listing 904); 9185 -> Lac la Plonge Recreation Site. Removed stored C$11 entry fees on both (recreation sites charge none).
+- 9180 Devil Lake: stored MANUAL booking says self-registration/FCFS, but Sask Parks now sells D1-D4 site-specific at $20 - not overwritten; AWH to confirm switching booking to reservable.
+- 9184 Wadin Bay closed through 2026 (wildfire recovery); stored "2027" reopening had no source - re-check spring 2027 (W27-W29 may be open ground after the burn).
+- Mostly seasonal, noted: 9241 Kipabiskau 22% (Google 4.7/48), 9242 Lac Pelletier 24% nightly with a 2-night minimum ("Many campsites are seasonally rentals so book your daily campsite and early"), Google unverified. 9242 entry fee C$15 (park table) vs C$10 (2026 guide). 9242's North and South clusters ~1.6 km apart share one office/booking/pass - not split.
+- 9241: two "Lake Front" 30 A daily sites are sold but unlocated - if the park names them, few-sites lakefront with a caveat is possible (waterfront_leads).
+- LEAD (unvetted): Anglers Trail Resort on Lac la Plonge (may be the resort at 9185's old pin).
+- Phones: Lac La Ronge four 306-425-4220; 9173 306-857-5510; 9168 306-837-2410; 9185 -> 306-240-5241; 9242 306-627-3595.
