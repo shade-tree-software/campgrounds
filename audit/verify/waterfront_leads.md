@@ -1568,3 +1568,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - p3-532: 9241 Kipabiskau - two "Lake Front" 30 A daily sites on the fee table, unlocated; 9184 Wadin Bay W27-W29 (~55.2670,-105.1838) 20-35 m from the bay, possibly open after the fire - re-check on reopening; 9168 Beaver-Cowan River open lawn 15-40 m from the river, no site numbers.
 
 - 15721 Big River Regional Park, Cowan Lake Campground (SK lead 6, 2026-11-19): lakeview; open lawn pads, C/D row ~20-25 m from the water but the loop road runs between on the operator map and a 6-8 m bank strip may be reeds; only z17 imagery. Lakefront candidate for C/D on a site photo.
+
+- 15724 Bronson Forest Recreation Site - Peck Lake Campground (SK lead 9, 2026-11-19): lakeview; P13-P15 ~20-30 m from Peck Lake over open sand/grass with scattered pines, photos show the lake, but the strip is the campground beach/playground/picnic area (used strip) and every SKPP row says "Near Water - no". AWH may count P13-P15 as a few clear lakefront sites.
