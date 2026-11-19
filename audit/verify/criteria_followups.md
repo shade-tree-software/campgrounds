@@ -2696,3 +2696,7 @@ me drop and report); each needs the research named before a verdict.
 - 9156 website -> .../avantpays-frontcountry/sandy. Optional: 9286 add townofwilkie.com/community/recreation.html.
 - Agent ran one read-only `git status` against the hard rule (reported by it).
 - SK QUEUE EMPTY after p3-535 (14985 Canora Beach held for AWH).
+
+## SK split 9159 The Battlefords (2026-11-19)
+- SPLIT: South Campground (sites 301-421, 121 nightly 15/30 A, 111 take 23 ft) -> new 15709, 1.88 km from the core (centroids), own road by the entry gate; lakeview (332-335 see the lake over shrubs/thin aspen, 45-55 m with the Lakeside Trail between). Entry permit + reservation fee added to match the other SK provincial entries. 9159 = Core Area (Centre + North + Spruce Meadow, 213 sites, 161 nightly), not waterfront.
+- Hilltop Campground 603-617 (~53.1282,-108.3764): park map only, no SKPP rows or listing; left out of both. South showers/flush toilets unknown. SKPP's park GPS point sits on the golf course.
