@@ -2643,3 +2643,13 @@ me drop and report); each needs the research named before a verdict.
 - 9254 McNab ~44% nightly (note says so). 9238 Kindersley takes no reservations; 18+ to rent. 9157 Sawmill Bay: Sask Parks-run but self-registration, not on parks.saskatchewan.ca - its own booking group must keep overriding the provincial row. 9300 could be renamed "Hanley's Old Park" (Google + town rate sign) - not done.
 - LEAD (unvetted, probably cabins): lodge/cabin complex on Sawmill Bay west of Hwy 167 (~54.6834,-102.0790).
 - Phones: 9306 -> 306-475-2801; 9157 -> 306-426-2622 (Narrow Hills office). Websites: 9315, 9300 campground pages.
+
+## SK p3-531 (2026-11-19)
+- No drops. ASK: 14985 Canora Beach Resort (mostly seasonal + titled RV lots for sale) - held in kept_results, asks.md.
+- Waterfront: 9214 Ceylon lakeview -> not waterfront (nightly row by a crop field, 120 m+ behind a shelterbelt); 9167 Coldwell riverview -> not waterfront (river 700-800 m off below Gardiner Dam; not Lake Diefenbaker); 9162 Brightsand not waterfront -> lakefront on nightly non-electric sites 21-23 and 32 by the boat launch (note names them); 9216 Chitek lakefront kept but evidence moved to nightly Pelican Beach sites 56-58 (main shore row 1-9 is seasonal); 9165 Minowukaw lakeview kept (M301/M302).
+- Pins: 9160 Beatty Lake ~9 km (was on the wrong lake) + renamed Beatty Lake Recreation Site; 9208 430 m; 9212 640 m; 9167 600 m. Optional 9163 190 m not applied.
+- Removed stored C$11 entry fees on recreation sites 9160, 9163, 9167 (provincial:SK row: "the recreation sites charge none"). 9167's C$20 comes from the generic rate table, not a Coldwell price (self-registration "-NR" loop) - consider policy_ref none. 9160 is not on the Sask Parks booking system; its own booking group (not reservable, FCFS) overrides the row.
+- Mostly seasonal, noted: 9207 Antelope Lake (~33%), 9214 Ceylon (~41-47%), 9216 Chitek (~33%, seasonals by draw; two-night minimum). 9208 Atton's ~63%, 9162 ~58%.
+- 9165 Minowukaw: six nightly sites under 23 ft (M217, M303, M305, M307, M309, M324); max 50 ft (stored 32 wrong). 9167: five 18-ft sites. 9163 Bronson: June 2026 water advisory on sasklakes.ca unread (refuses). Unsourced counts not written: 9208 (105), 9212 (20). ATV trails at 9162, 9216 (general campgrounds - fine).
+- LEADS (vet after the queue): Peck Lake campground (Bronson Forest, Sask Parks park 290510, 41 electric sites); Little Shell Rec Site (Resort Village of Chitek Lake, letscamp.ca/camps/little-shell-rec-site, 9 non-electric sites).
+- Phones: 9207, 9163, 9165, 9167 filled; 9214 -> 306-861-6549. Canora Beach phone 306-563-6363 / website goodspiritlake.com/campground pending with the ask. Websites: 9208 attons-lake-2, 9163 tourism page, 9167 tourism + Danielson SKPP.

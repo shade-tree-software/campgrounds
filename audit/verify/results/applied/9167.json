@@ -1,0 +1,59 @@
+{
+ "id": 9167,
+ "checked": "2026-11-19",
+ "sources": [
+  "https://parks.saskatchewan.ca/camping/danielson-provincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290320 (site list, loop 'Coldwell - NR': all 18 rows; campsite detail pages for sites 1, 2, 9 and 18 incl. GIS points)",
+  "https://www.tourismsaskatchewan.com/listings/304/coldwell-recreation-site",
+  "audit/state_park_fees/sk_rate_card_2026-10-12.jsonl (Coldwell - NR sites carry no Price Rate, like every '-NR' loop in Sask Parks)",
+  "Esri World Imagery z14-z16 at 51.3080,-106.9420 (viewed)"
+ ],
+ "groups": {
+  "sites": {
+   "values": {
+    "count": 18,
+    "max_rig_ft": 32
+   },
+   "source": "https://parks.saskatchewan.ca/camping/danielson-provincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290320 site list, loop 'Coldwell - NR': 18 Nightly Non-Electric sites, max equipment length 32 ft (site 2), 25 ft (12 sites), 18 ft (sites 6, 7, 8, 14, 15), read 2026-11-19",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0
+   },
+   "source": "https://parks.saskatchewan.ca/camping/danielson-provincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290320 site list ('Electric Hookup - no' on all 18 Coldwell rows), read 2026-11-19",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "potable_water": false
+   },
+   "source": "https://www.tourismsaskatchewan.com/listings/304/coldwell-recreation-site ('Non-potable water only.'), read 2026-11-19",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": false,
+    "fcfs": "always",
+    "platform": "none",
+    "note": "Self-registration on site."
+   },
+   "source": "https://www.tourismsaskatchewan.com/listings/304/coldwell-recreation-site ('It features 18 first-come, first-serve campsites for small camping units and tenting by self-registration only.') + https://parks.saskatchewan.ca/camping/danielson-provincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290320 (the loop is 'Coldwell - NR' and its sites carry no price, as in every non-reservable '-NR' loop), read 2026-11-19",
+   "method": "manual"
+  }
+ },
+ "note": "A small campground in a wooded coulee of the South Saskatchewan River valley below Gardiner Dam, just outside Danielson Provincial Park; the river is about 750 m away across the floodplain. Five of the 18 sites take only 18-ft units. --Claude",
+ "summary": "Keep. Sask Parks recreation site listed under Danielson PP as loop 'Coldwell - NR': 18 non-electric self-registration sites (13 at 25 ft, one at 32 ft, five at 18 ft), non-potable water. Waterfront DOWNGRADE riverview -> not waterfront (sites shaded in a treed coulee, river ~750 m across the floodplain, every row 'Near Water - no'). PIN MOVE ~600 m to the site loop. Note corrected (not on Lake Diefenbaker; 18 sites, not 10). Phone '' -> 306-857-5510; website '' -> Tourism SK listing 304.",
+ "flags": [
+  "WATERFRONT: riverview -> not waterfront (stored value not --AWH). Sites 1-18 run along a treed strip at the foot of the valley wall (GIS: site 1 51.30860,-106.94263; site 2 51.30837,-106.94257; site 9 51.30902,-106.94402; site 18 51.30931,-106.94548); the South Saskatchewan River's nearest channel is ~700-800 m NE across open floodplain (Esri z14-z16). Every Coldwell row 'Near Water - no'; site details say 'Shaded'; Tourism SK: 'a totally secluded area in a lush forested setting'. The stored evidence point (51.309,-106.934) is on the floodplain, not at the water. This is the river below Gardiner Dam, not Lake Diefenbaker. Replacement waterfront_evidence: 'Sask Parks GIS points for sites 1/2/9/18 (~51.3089,-106.9440) + Esri z14-z16 (2026-11-19): sites in a shaded treed strip at the foot of the valley wall; the South Saskatchewan River (below Gardiner Dam) is ~700-800 m NE across the floodplain; every site Near Water - no -> not waterfront'.",
+  "PIN MOVE ~600 m: 51.3062,-106.9365 (the access-road bend at the valley entrance) -> 51.3089,-106.9440 (middle of the site row, between sites 1/2 and 18).",
+  "PHONE: '' -> 306-857-5510 (Tourism SK listing 304: 'contacting Danielson Provincial Park at 306-857-5510'; parks.csv Danielson).",
+  "WEBSITE: '' -> https://www.tourismsaskatchewan.com/listings/304/coldwell-recreation-site\nhttps://parks.saskatchewan.ca/camping/danielson-provincial-park/r/campgroundDetails.do?contractCode=SKPP&parkId=290320 (the Sask Parks page lists the Coldwell - NR sites but does not sell them).",
+  "BOOKING: stays non-reservable/first-come. The Sask Parks site list carries the 18 sites with 'Site Reserve Type: Site-Specific', but the loop is '-NR' and has no price (2026-10-12 rate card), matching Tourism SK's 'self-registration only'.",
+  "POLICY/ENTRANCE: the stored fees.entrance (C$11 vehicle_day) contradicts the provincial:SK row's 'the recreation sites charge none'; Tourism SK places Coldwell 'just outside Danielson Provincial Park'. Reviewer: drop fees.entrance (apply.py can't remove a key) or confirm a permit is needed. The C$20 non-electric rate came from the 2026-27 table's type, not a Coldwell-specific price (Coldwell sites show no price online). Consider policy_ref none if Coldwell's self-registration fee differs.",
+  "FIT: Tourism SK says 'for small camping units'; the agency's own per-site data gives 13 of 18 sites at 25-32 ft, so a 23-ft rig fits those.",
+  "NAME: Tourism SK calls it 'Coldwell Recreation Site' ('Coldwell Park Recreation Site, 6.4 km NW of Gardiner Dam'); stored 'Coldwell Provincial Recreation Site' is fine.",
+  "SEASON: not posted for Coldwell (Tourism SK: 'Phone the park directly from May Long Weekend to Labour Day for details'); left unknown.",
+  "INCLUSION_EVIDENCE replacement: 'parks.saskatchewan.ca Danielson PP (parkId 290320) loop Coldwell - NR: 18 non-electric self-registration sites, 13 at 25-32 ft max equipment; Tourism SK listing 304 (18 first-come sites, non-potable water), read 2026-11-19 -> keep'. The stored text cites 6 sites and electric sites (Allstays), both wrong.",
+  "NOTE: stored note said 'Lake Diefenbaker arm', 'the booking site lists 10', 'boat launch' - none supported; replaced. A boat launch was not confirmed on any source read."
+ ]
+}
