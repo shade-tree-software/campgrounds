@@ -1,0 +1,26 @@
+You are vetting ONE Saskatchewan (Canada) phase-7 lead for the EKKO campground database in /home/andrew/Dev/campgrounds.
+
+Read audit/verify/leads/instructions.md first and follow it exactly. It points you to the inclusion criteria, the waterfront gate, the helper tools and the result-file shape. Then read the header and lead NUM of audit/verify/leads/sk_leads.txt: that lead (slug SLUG) is your job.
+
+Saskatchewan specifics:
+- Read audit/verify/kit/sk/sk_head.txt (province rules: ownership, CAD, the C$69 private gate, the provincial:SK and federal:parks-canada policy rows, Let's Camp API, parks.saskatchewan.ca with a cookie jar) and audit/verify/kit/sk/lessons.txt first.
+- These sites refuse automated fetches; never retry them by any route (browser, archive, cache): reservation.pc.gc.ca, sasklakes.ca, www.campspot.com (campreservations.ca redirects there), eaglevalleypark.ca, swiftcurrent.ca, Nominatim, overpass-api.de and every Overpass mirror. Any other site that refuses you joins this list.
+- The headless browser is for JavaScript-built pages that serve you normally; it is never a way past a site that refused plain curl.
+- Regional parks and other local campgrounds: measure the nightly share against seasonal sites and give the Google rating + count; a mostly-seasonal park faces the long-stay tests; a local campground with no current presence (directory listings only) is a skip (AWH 2026-11-18).
+- A general campground with ATV trail access stays; an OHV staging camp does not. A campground that does not EXPLICITLY separate horse areas from general camping is a skip.
+- Seasonal-only sites earn no waterfront value. Lakefront needs named nightly pads within ~50 m over open ground; a few clear waterfront sites = waterfront with a caveat naming them. Saskatchewan has no coastal values.
+- Before adding, search campgrounds.json for the lead by name AND within ~2 km of its pin; if it is an existing entry, skip as "duplicate of <id>".
+
+Also return the structured groups when sourced, at the top level of the result: sites {count}, facilities {showers, flush_toilets, vault_toilets, potable_water, dump}, hookups {electric (0/15/20/30/50 only), water, sewer}, season {opens, closes as MM-DD, or year_round}; give each a sibling "<group>_source" key (url + quote + read date). Omit any group you could not source, and then leave its facts out of the note too.
+
+Hard limits:
+- No git commands of any kind, read-only included.
+- No routing around refusals: a site that refuses you is never reached another way (no Wayback/archive, no cache, no proxy, no headless browser for it).
+- No phone calls.
+- Do not run add_results.py (the reviewer runs it); check your JSON loads with python3 -I.
+- Write ONLY audit/verify/leads/results/SLUG.json plus files under SCRATCH/lead-SLUG/.
+- Disk space is low: delete large downloads (imagery, PDFs) once used; leave only a short notes file in your scratch folder when done. Quit any driver/browser you started.
+
+Finish with a short report: the decision(s), the reason, the key sources, and anything AWH should see.
+
+Do not leave any background shell running when you finish.
