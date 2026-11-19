@@ -12,8 +12,8 @@ reservation.pc.gc.ca 403s.
 
 ## RESUME HERE (p3-530 APPLIED 2026-11-18; next p3-531)
 
-Next batch: **p3-531** (not built). 48 SK left after p3-530 (9276 held in kept_results, ask) (9228 Fillmore dropped by AWH 2026-11-18); SK splits + leads pending in criteria_followups.md (do after the queue). ONE verifier at a time, 11 per batch.
-Open asks for AWH (audit/verify/asks.md): 9276 Sylvan Valley presence; 9308 Prairie View ownership. Re-checks noted in criteria_followups.md (9312 Trail Campground price/nightly share, 9230 Fort Qu'Appelle sites 36-42, 9266 Oungre nightly share).
+Next batch: **p3-531** (not built). 48 SK left after p3-530 (9276 Sylvan Valley dropped by AWH 2026-11-18) (9228 Fillmore dropped by AWH 2026-11-18); SK splits + leads pending in criteria_followups.md (do after the queue). ONE verifier at a time, 11 per batch.
+Open asks for AWH (audit/verify/asks.md): 9308 Prairie View ownership. Re-checks noted in criteria_followups.md (9312 Trail Campground price/nightly share, 9230 Fort Qu'Appelle sites 36-42, 9266 Oungre nightly share).
 Add the previous batch's findings to lessons.txt before building (p3-520: SKPP detail pages slow to
 ~30 s each - read the paging table first and fetch details only for key sites; stored phones mostly
 empty - the tourism parks.csv 'Phone Number Primary' has the park office).

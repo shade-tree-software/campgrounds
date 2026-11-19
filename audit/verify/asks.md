@@ -690,3 +690,4 @@ RESOLVED 2026-11-18: AWH - drop. Dropped via criteria_drops.py.
 
 ## 9276 Sylvan Valley Regional Park (SK) - presence (p3-530, 2026-11-18)
 Held, nothing changed (result in kept_results/9276.json). Stored saskregionalparks.ca/park/sylvan-valley/ is 404; the SRPA 2026 guide lists it only under "Non Accredited Regional Parks" ("...some are operational and have employees on site while other parks may not."). No Google place, no Tourism Saskatchewan listing, no operator or RM page; only undated directories (one says no potable water). Stored counts, amps, showers and season are all unsourced. Phone 306-642-5850 unconfirmed. Trailers visible on imagery ~250 m N of the pin (49.4142,-105.8795). Like Fillmore (dropped): drop, or keep with a call-before-going caveat?
+RESOLVED 2026-11-18: AWH - drop. Dropped via criteria_drops.py.
