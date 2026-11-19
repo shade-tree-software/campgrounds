@@ -2664,3 +2664,14 @@ me drop and report); each needs the research named before a verdict.
 - 9241: two "Lake Front" 30 A daily sites are sold but unlocated - if the park names them, few-sites lakefront with a caveat is possible (waterfront_leads).
 - LEAD (unvetted): Anglers Trail Resort on Lac la Plonge (may be the resort at 9185's old pin).
 - Phones: Lac La Ronge four 306-425-4220; 9173 306-857-5510; 9168 306-837-2410; 9185 -> 306-240-5241; 9242 306-627-3595.
+
+## SK p3-533 (2026-11-19)
+- DROPPED 9245 Lemsford Ferry Regional Park: closed at the end of 2019 (RM ended the leases; news 2019-11-07, Wikipedia; regional-parks page 404; Tourism SK listing empty). Standing rule (closed regional park); reported.
+- Waterfront: 9252 Martins Lake lakefront -> not waterfront (shore row seasonal, nightly 63/65 behind shrubs; if sites 1-18 prove to be the shore row, lakeview); 9258 Memorial Lake not waterfront -> lakeview (nightly Loop E, photos through pines); 9190 Mistohay lakefront -> lakeview; 9191 Waterhen lakefront -> not waterfront (600 m); 9195 Baldy not waterfront -> lakeview (B1/B2/B5/B6 10-25 m under open pine - AWH could judge lakefront); 9196 Ispuchaw not waterfront -> lakefront (nightly Is1-Is5 20-30 m over open burned ground; note names them); 9303 Michel Point lakeview -> not waterfront.
+- Pins: 9258 590 m (was the sports ground), 9191 640 m, 9303 170 m (was in the lake), 9195 210 m (was in a bog). Optional 9244 220 m not applied.
+- 9196 Ispuchaw: Is1-Is6 accept only "Camping Unit 26 to 32ft" online - a 23-ft rig may need to book as 26-32 ft or by phone (not a drop).
+- Mostly seasonal, noted: 9252 Martins Lake (~47%, Google 4.1/127). 9244 LeRoy ~55%, 9258 Memorial ~76%. 19+ renter rules at 9244, 9258. 9303 Michel Point nightly share unmeasurable (home page leads with seasonals), Google 5.0/7, C$35.
+- Regional-park entry fees for 9244/9252/9258 written per vehicle per day though the pages say only "per day".
+- 9189 Matheson: only MT4 reservable, 42 first come. 9152 Namekus 20 sites (14 back-ins up to 24 ft + 6 walk-in tent).
+- LEAD (unvetted): Dore Lake Fish'n Camp RV Park, dorelakervpark.ca, 54.62859,-107.39338, 306-832-2042, Google 4.8 (14).
+- Websites: 9189/9190 SKPP link added; 9152 -> .../avantpays-frontcountry/namekus.
