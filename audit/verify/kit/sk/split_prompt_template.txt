@@ -1,0 +1,31 @@
+You are deciding ONE possible campground split for the EKKO campground database in /home/andrew/Dev/campgrounds: entry {ID} (NAME, Saskatchewan, Canada). Phase-7 verification flagged it as one entry covering campgrounds at separate places. Hint from the verifier: HINT
+
+Read first: docs/campground-curation.md (inclusion criteria, the waterfront gate, the split rule "One entry per campground, not per park", note rules), docs/campground-schema.md (structured groups + provenance), and audit/verify/leads/instructions.md (helper tools, imagery method). Read entry {ID} in campgrounds.json in full, including waterfront_evidence and inclusion_evidence.
+
+The split rule (AWH 2026-10-22, 2026-10-26):
+- Split only campgrounds at SEPARATE PLACES: each with its own entrance or road, roughly 1 km+ apart (measure centroid to centroid; never claim the distance without measuring). Adjacent named loops of one campground area stay one entry.
+- Exception: two separately named recreation.gov facilities with their own booking rules split even a few hundred metres apart. One rec.gov facility with two loops is not that exception.
+- If a part fails the rule (too close, or it shares the main road), it stays inside whichever entry it adjoins; say so.
+- The original id stays on one campground (the main/largest one, or the one the existing pin already marks); the others become new entries. An --AWH note is never copied onto a campground it may not describe; keep --AWH text verbatim on the entry it describes.
+- Each campground that results needs the full pipeline: its own pin on its sites (imagery), elevation (Open-Meteo), the waterfront gate on imagery (defaults down; lakefront needs named nightly sites within ~50 m over open ground; under continuous canopy is a view; a river/channel under ~30 m wide is creekside), inclusion_evidence, and the structured groups you can source (sites, hookups, facilities, season, fees, booking) with provenance {source: url + quote + read date, checked, method: manual}. Absent means unknown: omit, never fill a placeholder. Notes impersonal ("a 23-ft rig"), signed --Claude, never repeating a field value or the policy row.
+
+Saskatchewan specifics:
+- Read audit/verify/kit/sk/sk_head.txt (the province rules: ownership, CAD with the schema's currency marker, the provincial:SK policy row in campground_policies.json which already holds the Sask Parks booking system, 2026 rate classes, $12 reservation fee and $11 vehicle entry permit - never write those per entry) and audit/verify/kit/sk/lessons.txt, and the SK_NOTES files in audit/verify/kit/sk/ for this park.
+- parks.saskatchewan.ca campgroundDetails.do pages answer curl with a cookie jar and -L (drop any queueittoken); each loop's site list (paging table) carries type, amps, max length and 'Near Water' per site, and the server can take ~30 s a page - read the tables first and fetch detail pages only for key sites. The SKPP GIS site points plus Esri imagery place loops. saskparks.tourismsaskatchewan.com park pages and Tourism Saskatchewan's parks data (park office 'Phone Number Primary') answer. Let's Camp: GET https://letscamp.ca/api/camps/<slug>?locale=en with header "X-Tenant-Type: camp"; sites at /api/camps/<campId>/sites?locale=en. saskregionalparks.ca answers plain curl.
+- Sources that refuse (never retry by any route): reservation.pc.gc.ca, sasklakes.ca, www.campspot.com (campreservations.ca redirects there), eaglevalleypark.ca, Nominatim, overpass-api.de and every Overpass mirror, swiftcurrent.ca. Any other site that refuses you joins this list.
+- The headless browser (PYTHONPATH=/home/andrew/.cache/ekko-pw, at most one, under `flock /tmp/ekko-headless-browser.lock`, DRV_SOCK=./drv.sock from your scratch dir) is only for JavaScript pages that serve you normally; never past a refusal.
+- Sask Parks winter camping and its services belong to the loop that runs it. A split loop's season, sites, hookups, facilities, and the waterfront call are its own; the kept entry's groups must be re-cut to exclude what moved (counts, season, max length, amperage).
+- Waterfront on the reservoirs (Blackstrap, Buffalo Pound, Diefenbaker at Saskatchewan Landing, Palliser): measure to the high-water edge and say what lies between. Saskatchewan has no coastal values.
+
+Output (write ONLY these files, under audit/verify/kit/sk/splits/):
+- If you split: parent_{ID}.json = the fields that REPLACE on the kept entry (name, location, elevation_meters, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, and each structured group with provenance; omit a field to leave it unchanged), plus "_reasons": a short string. And new_SLUG.json = a JSON list of full new entries (kind "campground", name, location, elevation_meters, state "SK", ownership, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, structured groups, provenance). Do not assign ids.
+- If you do not split (or only partly): still write NOTES_{ID}.md saying why, with the measured distances.
+- Always write NOTES_{ID}.md: sources, measurements, imagery frames read (and that they rendered), and the decision.
+
+Hard limits:
+- No git commands of any kind, read-only included. Never edit campgrounds.json or any repo file other than the files above.
+- No routing around refusals: a site that refuses you is never reached another way (no Wayback/archive, no cache, no proxy, no headless browser for it).
+- No phone calls. Never pay, book, log in or create accounts. Never put a personal name, email, home location or trip details into a request; User-Agent 'Mozilla/5.0'.
+- Scratch work under SCRATCH/split-{ID}/. Disk space is low: delete imagery/PDFs once used; leave only a short notes file there. Quit any browser you started.
+
+Finish with a short report: the decision, measured distances, each resulting campground (name, pin, sites, waterfront call with site numbers), and anything AWH should see.

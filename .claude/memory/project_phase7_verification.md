@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "WI COMPLETE 2026-11-17; SK UNDER WAY (audit/verify/kit/sk/RESUME_SK.md): p3-530 applied 2026-11-18, next p3-531 (48 SK left); then WY, SD; ONE verifier at a time"
+description: "WI COMPLETE 2026-11-17; SK QUEUE DONE 2026-11-19 (p3-520..535; kit/sk/RESUME_SK.md): splits via kit/sk/splits/ + leads under way; then WY, SD; ONE agent at a time"
 metadata:
   node_type: memory
   type: project
@@ -8,7 +8,7 @@ metadata:
   modified: 2026-11-10T01:40:14.130Z
 ---
 
-**SK status (2026-11-18, end of session):** p3-520..530 applied, committed, pushed, deployed. 48 SK left; next p3-531. Six SK drops (9296, 9293, 12818, 9311, 9228 Fillmore + 9276 Sylvan Valley by AWH: no presence). Open ask: 9308 Prairie View (ownership). After the queue: SK splits + leads in criteria_followups.md.
+**SK status (2026-11-19):** queue DONE, p3-520..535 applied + committed (pushed through p3-530 only). Seven drops (9296, 9293, 12818, 9311, 9245 Lemsford Ferry closed 2019; 9228 Fillmore + 9276 Sylvan Valley by AWH: no presence). Held asks: 14985 Canora Beach (long-stay/lot sales), 9308 Prairie View (ownership). Now: SK splits one agent at a time (kit/sk/split_prompt_template.txt -> kit/sk/splits/, apply_split.py): 9159, 9161, 9268, 9164, 9175, 9186, 9205; then the SK leads in criteria_followups.md; then WY.
 
 AWH 2026-10-20: start phase 7 of [[project-campground-schema]] now. Use signals = stays AND
 contributor popup opens (logged since 67b777e6 to trip_data/campground_views.jsonl; live only once
