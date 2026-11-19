@@ -53,3 +53,5 @@ Two dead-by-construction classes worth knowing: **Google `business.site`** domai
 See also [[feedback_note_rate_sourcing]], [[feedback_campground_vetting_discipline]], [[feedback_urls_in_website_not_notes]], [[reference_good_sam_ratings]], [[reference_rvlife_price]].
 
 **Fairgrounds (AWH 2026-10-31):** a county fairground stays as long as it has a published rate and a phone, even with no stated hookups or booking method (Ross County 1231 kept at $30).
+
+**Local/public parks too (AWH 2026-11-18):** dropped SK 9228 Fillmore (village; directories only, last report 2023) and 9276 Sylvan Valley (non-accredited regional park; regional-parks page 404, no Google/tourism/operator page). A local campground that only directories carry, with nothing current saying it operates, is a drop - not a "call first" keep.
