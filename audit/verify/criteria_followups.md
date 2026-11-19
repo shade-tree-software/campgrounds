@@ -2708,3 +2708,7 @@ me drop and report); each needs the research named before a verdict.
 ## SK split 9268 Palliser (2026-11-19)
 - NOT split: Rusty's Coulee Marina is a separate place (2.8 km centroids, own Marina Road, shared park gate) but only 14 of its 143 sites (9.8%) are sold nightly on Let's Camp - under test 4's 1 in 10, so it stays inside 9268 (the note already describes it). Marginal: one more nightly marina site would pass; re-check if Let's Camp adds any. Notes in kit/sk/splits/NOTES_9268.md.
 - 9268 lakeview -> not waterfront: photos of nightly 329/330 show no lake (the p3-523 condition); shore rows seasonal. Default-down, reported.
+
+## SK split 9164 Buffalo Pound (2026-11-19)
+- SPLIT into three (all 276 SKPP site pages read): 9164 = Maple Vale + Shady Lane + Trails End (181 sites, 137 nightly), re-pinned 2.88 km from the boat-launch lot to S18, lakeview -> LAKEFRONT on nightly S40 (~23 m), S42 (~39 m), T13 (~22 m) over open grass to the high-water edge (note names them; park photos of the S30-S42 posts still read "Site Occupied By Seasonal Camper" though SKPP lists them nightly - T13 alone would hold it); new 15711 Elmview + Lakeside + Valley (65 sites, 2.78 km, dump, full service, winter camping in Elmview but every Elmview site books only to 18 ft - a 23-ft rig can't winter-camp here), lakeview; new 15712 Lower Chalet (27 non-electric grass sites, no pads, by the water treatment plant, 2.38 km from EVL), not waterfront, season close 09-30 inferred.
+- Laundry (park-wide, unplaced) now absent on all three. Count 273 = 181 + 65 + 27.
