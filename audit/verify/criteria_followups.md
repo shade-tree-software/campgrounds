@@ -2720,3 +2720,8 @@ me drop and report); each needs the research named before a verdict.
 ## SK split 9186 Makwa Lake (2026-11-19)
 - SPLIT into three: 9186 = Stabler Point (227 sites incl. the Full Service pod, 165 nightly), not waterfront kept (continuous canopy; S202/S51/S72 43-54 m, photos forest only; 80 of 227 sites sampled); new Mewasin (36 non-electric, 25 nightly, 3.17 km, own road), lakeview (M13-M25 22-42 m under canopy); new Jumbo Beach (16 nightly non-electric, 1.12 km centroids but own entrance off the Loon Lake / Hwy 26 road, 5.8 km by road), LAKEFRONT on J1/J2/J6 (open ground 20-40 m, note names them; J3 open but 18 ft only). Jumbo Beach is the judgement call (just over 1 km; own entrance; different water value) - fold back on AWH's word.
 - Dump only at Stabler Point. Fees note ("$4 less from Oct 1") dropped - Makwa has no fall/winter camping.
+
+## SK split 9205 Saskatchewan Landing (2026-11-19)
+- SPLIT into three: 9205 = Bearpaw A/B + Sagebrush (240 sites), lakeview now resting on Sagebrush S32-S34 photos (lake through trees, 110-150 m); new Riverside + Nighthawk (60 sites, 1.96 km, own Hwy 261 junction), lakeview (R28 ~15 m, R29 ~19 m, R31-R41 25-45 m inside a tree belt; R28 photo shows open grass under tall trees to a tall-grass fringe - possible lakefront with a caveat naming R28/R29 if AWH accepts undated photos; every booking row says "Near Water - no"); new Bison Hollow (24 sites 32-50 ft, 15/30 A, dump, 5.07 km W, own road), lakeview (BH21-BH24 30-50 m past a perimeter track and shrubs). Equestrian sites stay out.
+- Leads (already logged): Cactus Blume private campground between Nighthawk and Riverside; "glamping resorts" on Hwy 261.
+- ALL SK SPLITS DONE (9159, 9161, 9164, 9175, 9186, 9205 split; 9268 not split). Next: SK leads.
