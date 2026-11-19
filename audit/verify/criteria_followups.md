@@ -2686,3 +2686,13 @@ me drop and report); each needs the research named before a verdict.
 - 9202 Norvil Olson: free recreation site, no reservations - booking written manual against the provincial:SK row; consider policy_ref none.
 - Rig fit flags: Zeden Z6/Z12, Parr Hill PH14, Townsend TSL23/24/28 (18 ft); Outlook 81-84 cap RVs at 18 ft.
 - Region-park entry fees 9264/9267/9270 written per vehicle per day (Redberry's page says only "Daily Pass").
+
+## SK p3-535 (2026-11-19) - last SK batch
+- No drops. 9273 Rockin Beach lakeview -> not waterfront (nightly row 17-37 55-70 m behind a shelterbelt). Possible lakeview, not applied: 9156 Sandy Lake sites 1-7 (30-40 m across road + sand strip, under canopy); 9206 Tyrrell Lake (one listing photo shows the lake through pines).
+- Pins: 9286 Wilkie 320 m (was the entrance); 9156 Sandy Lake 415 m (was the boat-launch lot). 9206 Tyrrell optional 140 m to 54.88031,-102.145 not applied (stored loop may be cabin lots).
+- 9206: fees.entrance C$11 + permit sentence removed (recreation site); no campgroundDetails.do page exists. Google 2.7 (3).
+- 9273 Rockin Beach: motocross track adjoins, July long-weekend mud-bog races (flag only); site 18 unlevel for rigs over ~26 ft.
+- 9286 Wilkie: SRPA 2026 guide prints phones 306-210-9280 / 843-2690 (typos?) and "whole-campground reservations only"; town + SRPA page take site bookings. Nightly share unmeasured, Google 4.9 (8).
+- 9156 website -> .../avantpays-frontcountry/sandy. Optional: 9286 add townofwilkie.com/community/recreation.html.
+- Agent ran one read-only `git status` against the hard rule (reported by it).
+- SK QUEUE EMPTY after p3-535 (14985 Canora Beach held for AWH).
