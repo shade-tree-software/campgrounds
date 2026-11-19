@@ -2704,3 +2704,7 @@ me drop and report); each needs the research named before a verdict.
 ## SK split 9161 Blackstrap (2026-11-19)
 - SPLIT: Hazelnut Grove (19 electric 15/30 A sites 100-118, ~5.0-5.3 km from the main loops on its own lakeshore spur by the Hwy 211 entrance; winter camping Nov 1 - Mar 14, season 05-14..03-14) -> new 15710, lakeview (lake row 10-25 m behind continuous willow/shrub; the park's own algae notice says "lakefront sites" - close call for AWH). Online booking limits 17 of 19 sites to units up to 25 ft; 102/106 tent or van only. Park map shows a site 119 not on the booking site.
 - 9161 = Kevin Misfeldt + Sunset Ridge (125 sites, 0.44 km apart, one road), re-pinned onto site 200, season closes 10-31 (October loop unconfirmed), lakeview (254-257 42-51 m over grass then a shrub band).
+
+## SK split 9268 Palliser (2026-11-19)
+- NOT split: Rusty's Coulee Marina is a separate place (2.8 km centroids, own Marina Road, shared park gate) but only 14 of its 143 sites (9.8%) are sold nightly on Let's Camp - under test 4's 1 in 10, so it stays inside 9268 (the note already describes it). Marginal: one more nightly marina site would pass; re-check if Let's Camp adds any. Notes in kit/sk/splits/NOTES_9268.md.
+- 9268 lakeview -> not waterfront: photos of nightly 329/330 show no lake (the p3-523 condition); shore rows seasonal. Default-down, reported.
