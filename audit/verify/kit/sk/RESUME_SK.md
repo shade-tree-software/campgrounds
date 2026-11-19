@@ -10,10 +10,10 @@ campgroundDetails.do pages answer curl with a cookie jar + -L (Queue-it safetyne
 saskparks.tourismsaskatchewan.com, saskregionalparks.ca, letscamp.ca API, parks.canada.ca answer;
 reservation.pc.gc.ca 403s.
 
-## RESUME HERE (SK QUEUE + SPLITS DONE 2026-11-19; SK LEADS in progress)
+## RESUME HERE (SK COMPLETE 2026-11-19: queue, splits, leads; next WY - build kit/wy/)
 
 SK queue EMPTY after p3-535; SPLITS DONE 2026-11-19 (kit/sk/splits/): 9159 -> +15709 Battlefords South; 9161 -> +15710 Blackstrap Hazelnut Grove; 9164 Buffalo Pound -> +15711 Elmview/Lakeside/Valley, +15712 Lower Chalet (NW group = parent, lakefront); 9175 -> Pickerel Point + 15713 Fern; 9186 -> Stabler Point + 15714 Mewasin + 15715 Jumbo Beach (lakefront J1/J2/J6; 1.12 km - fold back on AWH's word); 9205 -> Bearpaw/Sagebrush + 15716 Riverside/Nighthawk + 15717 Bison Hollow; 9268 Palliser NOT split (marina 14/143 nightly). Next id 15718.
-LEADS: audit/verify/leads/sk_leads.txt (14 leads) + sk_lead_prompt_template.txt; build each prompt with `$S/mklead.sh NUM SLUG` (sed of the template: NUM, SLUG, SCRATCH), one agent at a time, then `python3 -I audit/verify/leads/add_results.py` (dry run, then --apply). Then WY.
+LEADS DONE 2026-11-19 (audit/verify/leads/sk_leads.txt, sk_lead_prompt_template.txt): added 15718 Sandy Beach RP, 15719 Rolling Green Fairways (AB; workforce ask), 15720 Woodlawn - Boundary Dam, 15721 Big River - Cowan Lake, 15722 Hudson Bay - Ruby Lake, 15723 Shamrock RP, 15724 Bronson Forest - Peck Lake, 15725 Little Shell, 15726 Dore Lake Fish'n Camp; skipped Landing View, Cactus Blume, Anglers Trail, Sawmill Bay lodge, Enchanted Harbour. Next id 15727. Next: WY (build kit/wy/ from kit/wi/ like SK).
 Open asks for AWH (audit/verify/asks.md): 14985 Canora Beach Resort long-stay; 9308 Prairie View ownership. Re-checks noted in criteria_followups.md (9312 Trail Campground price/nightly share, 9230 Fort Qu'Appelle sites 36-42, 9266 Oungre nightly share).
 Add the previous batch's findings to lessons.txt before building (p3-520: SKPP detail pages slow to
 ~30 s each - read the paging table first and fetch details only for key sites; stored phones mostly
