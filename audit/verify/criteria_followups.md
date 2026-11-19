@@ -2675,3 +2675,14 @@ me drop and report); each needs the research named before a verdict.
 - 9189 Matheson: only MT4 reservable, 42 first come. 9152 Namekus 20 sites (14 back-ins up to 24 ft + 6 walk-in tent).
 - LEAD (unvetted): Dore Lake Fish'n Camp RV Park, dorelakervpark.ca, 54.62859,-107.39338, 306-832-2042, Google 4.8 (14).
 - Websites: 9189/9190 SKPP link added; 9152 -> .../avantpays-frontcountry/namekus.
+
+## SK p3-534 (2026-11-19)
+- No drops. Waterfront: 9267 Outlook not waterfront -> riverview (nightly 66-70 "Riverview" row, river through a 50-60 m tree band); 9270 Redberry lakefront -> lakeview (shore row 82-88 behind a 10-15 m tree band + reeds, water ~45-50 m); 9202 Norvil Olson lakeview -> not waterfront (spruce 80-90 m). 9198 Zeden lakefront kept (Z2-Z5 open grass 15-30 m). 9304 Nesslin lakeview kept but close.
+- Pins: 9199 Parr Hill 270 m (was a cabin cluster), 9201 Townsend 145 m (was the outfitter's camp).
+- Phones: 9201 -> 306-865-4403; 9202 -> 306-425-4220 (Lac La Ronge PP office); 9203 -> 306-634-8102 (Google shows 639-534-2315, unexplained). 9263 renamed Nokomis Campground (town page).
+- Mostly seasonal, noted: 9270 Redberry (~44% nightly, Google 4.3/132 shared with golf; SRPA non-accredited but staffed + booking). 9267 Outlook ~89% nightly.
+- 9203 Roche Percee: run by volunteers (SE Tours & Trails); listing $20, a 2026-06 Campendium report says $30 (in fees.note). Tourism SK ticks sewage disposal, a 2022 camper said zero services - dump left absent.
+- 9304 Nesslin: powered sites fully booked for 2026; count 98 + season unsourced. 9263 Nokomis count + dump unsourced.
+- 9202 Norvil Olson: free recreation site, no reservations - booking written manual against the provincial:SK row; consider policy_ref none.
+- Rig fit flags: Zeden Z6/Z12, Parr Hill PH14, Townsend TSL23/24/28 (18 ft); Outlook 81-84 cap RVs at 18 ft.
+- Region-park entry fees 9264/9267/9270 written per vehicle per day (Redberry's page says only "Daily Pass").
