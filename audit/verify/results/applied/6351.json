@@ -1,0 +1,37 @@
+{
+  "id": 6351,
+  "checked": "2026-11-20",
+  "sources": [
+    "reserve.wyoming.gov (US eDirect, wyordr.usedirect.com/wyomingrdr/rdr) search/place PlaceId 12 'Keyhole State Park', read 2026-11-20: campgrounds Arch Rock, Beach Area, Cottonwood, Coulter Bay, Homestead, Pat's Point (FacilityId 373), Pronghorn, Rocky Point, Tatanka (+ cabins/camp shacks); electric site types only at Coulter Bay and Tatanka",
+    "rdr search/grid FacilityId 373 'Pat's Point' (2027-06-15, read 2026-11-20): 34 units, all AllowWebBooking true - 24 'Campsite Non-Electric' (PP02-PP19, PP22, PP27, PP33-PP36), 8 tent sites (PP23-26, PP29-32), group site PP28, shelter SHE2; per-unit map points give a campsite centroid of 44.36882,-104.78353; grids for 2026-11-25 and 2027-03-10 are wholly out of season (no online booking), 2027-06-15 in season",
+    "rdr search/details for every Pat's Point unit (2027-06-15, read 2026-11-20): every campsite 'Unit & Parking Size(ft)' 60, 'Campsite Dimensions' 60x16, gravel (PP13/PP27 paved ADA), Rate 10.00, Fee 6.00, unit MaxStay 7; pull-through PP08, PP09, PP15-PP18, PP22, PP27, the rest back-in; no electric or water amenity on any campsite; 'Waterfront Setting': 'Lake' on PP02-PP07, PP15, PP19, PP22, PP27, PP33-PP36",
+    "wyoparks.wyo.gov/index.php/places-to-go/keyhole - not fetched live (F5 bot challenge per brief); repo capture audit/state_park_fees/wy_pages_2026-10-12.json (read 2026-10-12): 'Camping reservation season is May 15th - September 15th. All campsites are first come, first served outside of this time period.'; 'Our site is open year-round.'; end-of-season list closes Cottonwood/Homestead (Sep 30) and Arch Rock/Pronghorn/Beach Area (Oct 15), not Pat's Point; 'Water is turned off for all campgrounds' Oct 15; 'Phone Number 307-756-3596'; the Pat's Point Campground PDF map stayed unread",
+    "Esri World Imagery 2026-11-20 (330 m and 110 m half-width crops with the booking-engine unit points): sites strung along a grassy peninsula; PP19 at the tip ~15-20 m from the water over grass and low brush; PP22 on the SW side ~20-25 m over open grass to the shore strip; PP02-PP07 and PP15/PP18 sit ~16-37 m back behind a continuous shrub/tree band on the north shore; PP33-PP36 ~29-32 m back behind Russian-olive scrub on the south shore; the tent sites PP29-PP32 are nearest the open south shore"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": null, "sewer": false},
+      "source": "reserve.wyoming.gov: every Pat's Point site is UnitType 'Campsite Non-Electric' and no unit lists a water or sewer hookup (read 2026-11-20); the derived water:true came from note prose and no page states it",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24, "max_rig_ft": 60, "pull_through": true},
+      "source": "reserve.wyoming.gov FacilityId 373 grid + unit details: 24 campsites (8 tent sites, 1 group site and a shelter excluded), each 'Unit & Parking Size(ft)' 60, 8 pull-through, read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "season": {"opens": "05-15", "closes": "09-15"}},
+      "source": "reserve.wyoming.gov: all 24 campsites web-bookable in season, none out of season (grids 2026-11-25, 2027-03-10, 2027-06-15, read 2026-11-20); wyoparks Keyhole page as captured 2026-10-12: 'Camping reservation season is May 15th - September 15th. All campsites are first come, first served outside of this time period.'",
+      "method": "manual"
+    }
+  },
+  "note": "Pat's Point is a campground of gravel sites on a grassy peninsula in Keyhole Reservoir, ~6 mi N of I-90 exit 165. Site PP19 at the tip and PP22 on the southwest side sit on open grass about 15-25 m from the water; the other lake-side sites look through a band of shrubs and trees. The park's electric sites are at Tatanka and Coulter Bay. --Claude",
+  "summary": "reserve.wyoming.gov read: Pat's Point = 24 non-electric campsites (60 ft pads, 8 pull-through) + 8 tent, 1 group, shelter; $10 base confirmed; reservable May 15-Sep 15, FCFS otherwise, open year-round. Count written (24); derived water:true cleared (no hookups); electric 0. Lakefront stands on two sites (PP19, PP22). Pin 128 m from the campsite centroid (fine). Note rewritten (old 'Reservable May 1-Sep 30' was wrong).",
+  "flags": [
+    "WATERFRONT (stored lakefront, kept with a caveat): only PP19 (44.37034,-104.78619, peninsula tip, ~15-20 m to water over grass/low brush) and PP22 (44.36956,-104.78576, ~20-25 m over open grass to the SW shore strip) are on-water; both are nightly reservable campsites. The other 'Lake'-tagged sites (PP02-PP07, PP15, PP27, PP33-PP36) sit 16-37 m back behind a continuous shrub/tree band = view. Keyhole draws down; the imagery shows the shore at the vegetation line (near full). If the reviewer reads PP19's brush fringe as a screen, the value falls to lakeview.",
+    "PHONE: empty -> 307-756-3596 (Keyhole State Park, wyoparks page 'Phone Number 307-756-3596', capture 2026-10-12).",
+    "MAX STAY: every Pat's Point unit's booking details show 'MaxStay': 7 while the facility restriction says MaximumStay 14 and the state:WY row says 14 in 30 - the online engine may cap a single booking at 7 nights; not written.",
+    "SITE LENGTH: all 24 campsites carry an identical 60 ft / 60x16 value - possibly a placeholder, but every pad clearly takes a 23-ft rig on imagery.",
+    "UNREAD: wyoparks.wyo.gov live page and the Pat's Point Campground PDF (F5 bot challenge; not retried). Used the 2026-10-12 repo capture."
+  ]
+}

@@ -706,3 +706,6 @@ Kept for now. Google 3.9 (111) - but the listing is shared with the restaurant; 
 
 ## 6358 White Mountain Road Dispersed Camping (Rock Springs WY) - inclusion (p3-547, 2026-11-20) - OPEN
 Kept for now. BLM's surface-management layer puts the pin (41.54900,-109.42110) on PRIVATE land in the Union Pacific checkerboard (nearest BLM ground ~280 m S at 41.5465 or ~1.4 km E). BLM has no camping page for this road (website now the Pilot Butte Wild Horse Scenic Tour page, "most of which is on a gravel road"); the only camping evidence is an unclaimed RV Life listing (4*, 20 reviews). Unsourced "near the petroglyphs" (they are ~50 km off) and "passable to 2WD" removed from the note. Keep, re-pin to BLM ground, or drop?
+
+## 6449 Cottonwood Lake (Bridger-Teton NF, Smoot WY) - horse loop (p3-548, 2026-11-20) - OPEN
+Kept for now. FS: "On the west loop, 6 sites have hitching rails for horses", plus three corrals; the east loop is the general/ATV loop, the two loops separate branches of a Y. The FS page does not say whether the west loop also has non-horse sites. If the west loop is purely the horse loop, keep (separated); if general sites are mixed in with the hitching-rail sites, the horse rule says drop. Keep?

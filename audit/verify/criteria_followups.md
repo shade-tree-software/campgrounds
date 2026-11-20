@@ -2859,3 +2859,13 @@ me drop and report); each needs the research named before a verdict.
 - 6531 Western Hills (Rawlins): price unmeasured (Firefly behind reCAPTCHA); RV Life $$$ avg $42; probably passes.
 - 6537 Wind River View: $48 tax included, 57% nightly - passes; Coast to Coast/RPI member park selling public nights.
 - 6352 Glendo Two Moon: 77 sites (12 electric 50 A) - re-pinned 390 m. 6372 Slate Creek re-pinned 440 m (was the river-access toilet).
+
+## WY p3-548 (2026-11-20)
+- DROPPED 6516 CAM-PLEX Windmill (Gillette): event/exhibitor-only (RV LIFE "General public camping outside event times is not available"; ParkAdvisor "NO PUBLIC CAMPING ... exhibitors ONLY"; no rate or season posted) - fairgrounds test fails. A phone call (307-682-0552) could reopen it.
+- 6449 Cottonwood Lake horse-loop ask logged; ATV trail from the east loop (caveat in note); max 30 ft rests on an old FS list.
+- 6351 Keyhole Pat's Point: lakefront kept on PP19 + PP22 only (open grass 15-25 m); unit MaxStay 7 vs the state:WY row's 14 in 30 - not written.
+- 6521 Wheatland Lewis Park: town says no electric or water hookups - electric 50 -> 0; Campendium-only counts cleared.
+- 6522 Laramie County Fairgrounds: $35/$40, 80 pull-throughs, passes the fairgrounds test; website moved to /events/rv-rentals/.
+- 6523 Park County Events Center (Powell): first-come, not reservable; closed the last two weeks of July; "long-term camping" advertised - mild caveat. Re-pinned 310 m.
+- 6509 Lost Cabin / 6448 Circle Park: Rustic Freedom concession, rec.gov $18.50 vs FS $20 - rec.gov written.
+- 6452 Curtis Canyon: no potable water since 2024, half-price notice; "under 30 ft"/"steep gravel road" note claims unsourced, removed.

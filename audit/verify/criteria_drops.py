@@ -603,6 +603,7 @@ DROPS = {
     6543: ('2026-11-20', "Lazy Acres Campground (Riverside WY): permanently closed", "p3-541: Google Maps 'Permanently closed' (4.6, 114); RV Life status 'Permanently Closed'; Campendium 'no longer maintained' (last rate 2024-08-31); lazyacreswyo.com 301s to an unrelated domain; not in the Good Sam directory"),
     6538: ('2026-11-20', "Powder River Campground (Kaycee WY): price gate - every RV night US$60", "p3-542: operator rates page 'Daily $60' back-in and pull-thru; RoverPass quotes $60 Jan + Jun 2027; no gateway within 40 km, not a Good Sam Park, no operator member discount"),
     6528: ('2026-11-20', "RV Park at JACZ (Etna WY): mostly seasonal and iffy, likely over the price gate", "p3-542: operator 'call for availability' / 'Need a seasonal stay? We do that, too'; no posted rate (RV Life $$$, undated OutReserve snippet $60/night, page now 404); no reviews on Google or The Dyrt; no site count; gravel lot beside a restaurant; no gateway within 40 km"),
+    6516: ('2026-11-20', "CAM-PLEX Windmill RV Park (Gillette WY): event/exhibitor-only - no ordinary nights shown", "p3-548: RV LIFE summary 'General public camping outside event times is not available'; ParkAdvisor 2018 'NO PUBLIC CAMPING 1100+ sites for exhibitors ONLY', 2020 'We were vendors at a Cam-Plex event so we were able to camp here'; cam-plex.com posts no rate or season, only an event booking-inquiry form (fairgrounds test fails)"),
 }
 
 if __name__ == "__main__":
