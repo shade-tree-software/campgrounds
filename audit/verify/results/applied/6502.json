@@ -1,0 +1,56 @@
+{
+  "id": 6502,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/sibley-lake-campground (FS: 'Site Partially Closed - Open to self-supported camping as long as weather permits (no trash collection, water, or cleaning). Electric Loop gated.'; 'the only Bighorn National Forest campground that offers a loop with electrical hookups'; Seasons of Use 'Memorial Day - Labor Day, weather dependent'; '14 day stay limit'; 'Single Site: $23 per night Single Site Electric: $28 per night'; '14 sites have electrical service.'; 'Limit 8 people per site.'; vault toilets; potable water; office (307) 674-2600; 44.75928458,-107.4395795), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/233876 + /rates (concessionaire Rustic Freedom / Gallatin Canyon Campgrounds; 'For facility specific information, please call (307) 431-7446'; second vehicle 'extra $11.00 fee'; maxConsecutiveStay 14; reservationCutOff 2; Peak Season 2027-06-11..2027-09-20 and 2026-06-05..2026-09-21: STANDARD NONELECTRIC $20.50, STANDARD ELECTRIC $25.50), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233876 (24 sites 001-025, no 011: 14 STANDARD ELECTRIC 012-025 (30 A; 013 50/30, 025 50), 9 STANDARD NONELECTRIC, 004 TENT ONLY; first-come 004, 006, 017, 021, 025; all back-in; vehicle limits 28-85 ft), read 2026-11-20",
+    "Esri World_Imagery at 44.7590,-107.4405 (250 m) with the catalog's site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20.5, "nightly_high": 25.5, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 11, "per": "night", "max_vehicles": 2}},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233876/rates (Peak 2026-2028: NONELECTRIC $20.50, ELECTRIC $25.50) + facility notice ('Two non-towed vehicles allowed per site ... the second vehicle will be charged an extra $11.00 fee'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "recreation.gov campsite catalog 233876 (012-025 electric, 30 A; 013 '50/30', 025 '50'); FS page '14 sites have electrical service', read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24, "max_rig_ft": 85, "pull_through": false, "note": "14 electric sites (012-025) in the west loop; 9 non-electric RV sites and one tent site in the east loop. All back-in; vehicle limits 28 ft at 005, 40-85 ft at the rest."},
+      "source": "recreation.gov campsite catalog 233876 (24 sites 001-025, no 011; Driveway Entry Back-in; Max Vehicle Length per site) + FS page ('14 sites have electrical service'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "vault_toilets": true},
+      "source": "FS page (vault toilets; 'Potable water is available at this site.') + rec.gov ('Accessible vault toilets, drinking water and trash collection are provided'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233876", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14, "note": "Sites 006, 017, 021 and 025 (and tent site 004) are first-come; the rest are reservable."},
+      "source": "recreation.gov campsite catalog 233876 (004, 006, 017, 021, 025 not reservable) + rules (reservationCutOff 2, maxConsecutiveStay 14) + FS page ('14 day stay limit'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "06-11", "closes": "09-20", "note": "Recreation.gov sells nights Jun 11 - Sep 20 in 2027 (Jun 5 - Sep 21 in 2026); the FS gives Memorial Day - Labor Day, weather dependent. Outside the season the FS leaves it open to self-supported camping while weather permits (no water or trash; electric loop gated)."},
+      "source": "recreation.gov rates 233876 (Peak 2027-06-11..2027-09-20; 2026-06-05..2026-09-21) + FS page ('Memorial Day - Labor Day, weather dependent'; 'Open to self-supported camping as long as weather permits ... Electric Loop gated'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground in lodgepole pine just south of Sibley Lake, 0.4 mi off US-14 (Bighorn Scenic Byway) near Burgess Junction; run by a concessionaire. The electric loop is the only one on the forest. --Claude",
+  "summary": "FS and rec.gov current. 24 sites (catalog; stored 25), 14 electric (30 A, two 50 A) in the west loop, 4 RV sites + 1 tent site first-come, $20.50/$25.50 on rec.gov ($23/$28 on FS), 14-day limit, Jun 11 - Sep 20 2027. Not waterfront stands. PIN MOVE ~340 m. Phone empty -> 307-431-7446.",
+  "flags": [
+    "PIN MOVE ~340 m: stored 44.75900,-107.44420 sits in unbroken forest west of the loops; the catalog's 24 site points average 44.75906,-107.43994 (FS point 44.75928,-107.43958). Target 44.7591,-107.4399.",
+    "FEES: FS page says '$23 per night' / '$28 per night' electric; recreation.gov sells $20.50 / $25.50 (2026-2028 tables) - wrote rec.gov's figures (stored values already matched rec.gov). Extra vehicle $11 (rec.gov).",
+    "SITES: stored count 25 -> 24 (catalog 001-025 with no 011; FS gives no count). max_rig 55 -> 85 (site 022; 012-025 are 55-85 ft, 005 is 28 ft). Stored max 55 had no source.",
+    "PHONE: empty -> 307-431-7446 (concessionaire, rec.gov 'For facility specific information'); FS Bighorn office (307) 674-2600 is the alternative.",
+    "STATUS: FS 'Site Partially Closed ... Electric Loop gated' is the post-season self-supported mode, not a temporary closure; no status written.",
+    "DUMP: rec.gov's amenity list says 'Dump Station' but the old note said the dump is 'a few miles away' and the FS page lists none - not written.",
+    "Websites current: FS r02 page 200, rec.gov 233876 live - no change.",
+    "WATERFRONT 'not waterfront' confirmed: every site is under continuous lodgepole canopy; the nearest (002-005 in the east loop) are ~90-100 m from Sibley Lake through forest.",
+    "DISCOUNTS: concession campground (Rustic Freedom); no pass-discount statement on rec.gov or the FS page - left to the policy row.",
+    "Note rewritten: dropped site count, electric count, spurs, water/toilets, dump and 'Reservable via recreation.gov' (fields show them)."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": 6505,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/shoshone/recreation/threemile-campground (FS: 'Site Closed - Closed for the season'; 'There are three pull-through sites'; 'Bear boxes available'; 'This site is first come, first served.'; 'hard-sided camping units only ... Tents and pop-up campers are not allowed'; 'Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY'; 'Single Site: $20 per night Double Site: $40 per night'; 'Please be prepared to pay with CASH or CHECK. *Sites may be reservable and reservation fees apply.*'; Contact Phone (307) 527-6921; vault toilets; potable water; 44.49611,-109.94815; last updated September 23, 2026), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/233293 + /rates ('family campsites for hard-sided camp trailers and RVs. Some sites overlook the river'; 'hand-pumped drinking water (two spigots'; 'Utility hookups are not available in the campground'; 'An additional fee will be collected at the campground for extra vehicles'; maxConsecutiveStay 16; reservationCutOff 2; Peak Season 2027-05-16..2027-09-20 and 2026-05-15..2026-09-19: RV NONELECTRIC $20, double $40; phone 307-527-6921), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233293 (21 RV NONELECTRIC sites 001-021; reservable 001, 002, 003, 004, 017, 018, 019, 020; first-come 005-016, 021; pull-through 002-005; vehicle limits 35-75 ft), read 2026-11-20",
+    "Esri World_Imagery at 44.4965,-109.9508 (200 m) and 44.4964,-109.9518 (125 m) with the catalog's site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "note": "Double sites $40. Fees on site by cash or check."},
+      "source": "recreation.gov rates 233293 (Peak 2026-2028: RV NONELECTRIC $20, double $40) = FS page ('Single Site: $20 per night Double Site: $40 per night'; 'pay with CASH or CHECK'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 233293 notice ('Utility hookups are not available in the campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 21, "max_rig_ft": 75, "pull_through": true},
+      "source": "recreation.gov campsite catalog 233293 (21 sites 001-021; Pull-Through 002-005; Max Vehicle Length 35-75) + FS page ('There are three pull-through sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page (vault toilets; 'Potable water is available at this site.') + rec.gov ('Vault toilets, hand-pumped drinking water'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233293", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 16, "note": "Sites 001-004 and 017-020 are reservable; the rest are first-come."},
+      "source": "recreation.gov campsite catalog 233293 (8 reservable sites) + rules (reservationCutOff 2, maxConsecutiveStay 16), read 2026-11-20; the FS page says 'This site is first come, first served' but also 'Sites may be reservable'",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-16", "closes": "09-20"},
+      "source": "recreation.gov rates 233293 (Peak Season 2027-05-16..2027-09-20; 2026 was 05-15..09-19); FS 'Closed for the season', read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "FS page ('Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Shoshone NF (Wapiti RD) campground in lodgepole pine on the North Fork of the Shoshone River, ~3 mi from Yellowstone's east entrance and ~50 mi W of Cody. Hard-sided RVs and campers only (no tents or pop-ups: grizzly area); bear boxes at the sites. --Claude",
+  "summary": "FS and rec.gov current. 21 sites (8 reservable on rec.gov, 13 first-come), $20 (double $40), 16-day limit, May 16 - Sep 20 2027, hard-sided only, Senior/Access 50%. Stored booking 'not reservable / always' -> reservable / some_sites per rec.gov. Riverview stands (stream ~20 m wide; creekside lead at site 012 only). Phone empty -> (307) 527-6921.",
+  "flags": [
+    "WATERFRONT (checked hard): 'riverview' stands. The North Fork at the campground is ~18-22 m of open water at summer flow (gravel bars either side), so any on-water value would be creekside, not riverfront. Nearest sites: 012 (44.49619,-109.95173, first-come) ~15-20 m from the water across a gravel bank with a few conifers between - a borderline creekside LEAD for one site only; 010 (44.49664,-109.95279) ~15 m from the west bend but behind dense conifers; 016 (44.49605,-109.94969) ~35 m behind a tree band. rec.gov: 'Some sites overlook the river'. No upgrade proposed; riverview is the view value for a stream (there is no creek-view value).",
+    "POLICY/BOOKING CONTRADICTION: the FS page says 'This site is first come, first served.' (and 'Sites may be reservable'); rec.gov's catalog sells 001-004 and 017-020 with a 2-day cutoff. Written reservable/some_sites per rec.gov (stored reservable false / fcfs always was from the sweep note).",
+    "PHONE: empty -> (307) 527-6921 (Clarks Fork, Greybull and Wapiti Ranger Districts; FS page and rec.gov).",
+    "Websites current: FS r02 page 200, rec.gov 233293 live - no change.",
+    "Pin 44.49625,-109.94900 sits in the east area ~175 m from the site centroid (44.49650,-109.95119) - no move.",
+    "Hard-sided only (FS/rec.gov) - no effect on a motorhome.",
+    "Note rewritten: dropped site count, spur lengths, toilets and water (fields show them); kept the hard-sided rule."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": 6561,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r04/bridger-teton/recreation/station-creek-campground (FS: 'Site Closed'; 'Gate is closed'; 'located along the designated Wild and Scenic Snake River'; 'only the group sites are reservable'; 'The campsites at Station creek are first come, first serve. Only Station Creek Group Campsite is reservable.'; 'Campground closes September 15 annually.'; 'if the gate is closed, the campground can still be used for for walk-in with no fee when all amenities are turned off'; 'Single Site: $20 per night Additional Vehicle Fee: $7 per vehicle'; '$20/Night for single unit, 16 sites $10 fee for extra 2nd vehicle, no more than 2 vehicles/ site'; Contact Phone 307-739-5500; Jackson Ranger District Office 307-739-5400; vault toilets; 'Potable water is not available at this site.'; 43.205052,-110.834564; last updated September 21, 2026), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/232382 + /rates + campsite search (the listing is the GROUP campground: 'two group campsites that can accommodate up to 40 people each'; 'The Snake River can be accessed across the road and down an embankment'; 'The campground is on the north side of the road'; 2 GROUP STANDARD NONELECTRIC sites, $100; Peak 2027-05-21..09-11), read 2026-11-20",
+    "https://www.recreation.gov/api/search?q=station creek (only 232382 for Station Creek; no listing for the 16 single sites), read 2026-11-20",
+    "Google Maps place 'Station Creek Campground' (4.5, 41 reviews; point 43.2043542,-110.8340905, south of US-26/89 in the trees above the Snake), read 2026-11-20 via gm.py",
+    "Esri World_Imagery at 43.20500,-110.83382 (250 m), 43.20580,-110.83650 (160 m) and 43.20420,-110.83330 (110 m), read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "note": "The 16 single sites are first-come; only the separate Station Creek Group campsites are reservable (recreation.gov)."},
+      "source": "FS page ('The campsites at Station creek are first come, first serve. Only Station Creek Group Campsite is reservable.'); recreation.gov 232382 is the group campground only, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 7, "per": "night", "max_vehicles": 2}, "note": "The FS page prices the second vehicle two ways: '$7 per vehicle' in its fee table and '$10 fee for extra 2nd vehicle' in the prose below it; the table's $7 is recorded."},
+      "source": "FS page ('Single Site: $20 per night Additional Vehicle Fee: $7 per vehicle'; '$20/Night for single unit, 16 sites $10 fee for extra 2nd vehicle, no more than 2 vehicles/ site'; last updated 2026-09-21), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 16},
+      "source": "FS page ('$20/Night for single unit, 16 sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "FS page (Restrooms: 'Vault toilet(s)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"closes": "09-15", "note": "The FS gives no opening date ('Water is turned on annually after testing'). After closing, walk-in use is allowed with no fee while the gate is closed and amenities are off."},
+      "source": "FS page ('Campground closes September 15 annually.'; 'if the gate is closed, the campground can still be used for for walk-in with no fee when all amenities are turned off'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bridger-Teton NF campground in lodgepole pine on the bench between US-26/89 and the Wild & Scenic Snake River in Snake River Canyon, ~27 mi SW of Jackson; a very busy first-come campground, popular with rafters and anglers. --Claude",
+  "summary": "FS page current: 16 first-come single sites, $20, extra vehicle $7 (table) / $10 (prose), closes Sep 15, vault toilets. Stored booking reservable/some_sites -> not reservable/always: the rec.gov listing 232382 is only the 2-site group campground. Not waterfront stands.",
+  "flags": [
+    "BOOKING: stored reservable true / fcfs some_sites -> reservable false / fcfs always. The FS page: 'The campsites at Station creek are first come, first serve. Only Station Creek Group Campsite is reservable.' recreation.gov 232382 is the group campground (2 group sites, $100, 'on the north side of the road'), not the single sites.",
+    "WEBSITE: the second line https://www.recreation.gov/camping/campgrounds/232382 is the GROUP campground's listing, not this entry's - drop it (old: FS page + rec.gov 232382 -> new: https://www.fs.usda.gov/r04/bridger-teton/recreation/station-creek-campground only).",
+    "WATER CONFLICT: the FS page says 'Potable water is not available at this site' yet also 'Campground will have water turned off ... Water is turned on annually after testing'; rec.gov's group listing says drinking water is provided. potable_water left unset.",
+    "SEASON: FS 'Campground closes September 15 annually'; no opening date published (rec.gov's group season 2027-05-21..09-11 is the group site's) - wrote closes 09-15 only, with a note.",
+    "PHONE: stored 307-739-5400 is the Jackson Ranger District office on the FS page - keep (the page's 'Contact Phone' is 307-739-5500, the forest supervisor's office).",
+    "STATUS: FS 'Site Closed / Gate is closed' is the post-season gate, not a temporary closure; no status written.",
+    "WATERFRONT 'not waterfront' confirmed: the single sites sit under continuous lodgepole canopy on the bench south of the highway (Google point 43.20435,-110.83409); the Snake's north bank is ~70-120 m away through forest. No site points published to measure.",
+    "Pin 43.20500,-110.83382 sits on the highway shoulder ~75 m from Google's campground point and ~100 m from the FS point - no move (under 250 m).",
+    "Google Maps: Station Creek Campground 4.5 stars, 41 reviews (federal, no gate).",
+    "Note rewritten: dropped the FCFS/group reservability sentence (booking shows it)."
+  ]
+}

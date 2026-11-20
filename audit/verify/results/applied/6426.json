@@ -1,0 +1,60 @@
+{
+  "id": 6426,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/towerfallcg.htm (page body loads from https://www.nps.gov/yell/structured_data_yell.json, campgroundID 2395: rvTrailerInfo 'All sites at 30' (9.1 m) or less. Sites may not be level. Loop has hairpin curve.'; reservationDescription 'All sites are reservable on Recreation.gov.'; totalSites 31, sitesFirstCome 0; Nightly Fee $20.00 'Interagency Access and Senior Pass holders receive a 50% discount.'; amenities 'Potable Water - Seasonal', 'Vault Toilets - seasonal', 'Showers - None', 'Food Storage Lockers - Seasonal'; 'Generators are not permitted at ... Tower Fall'; 'Camping is limited to 14 days from July 1 through Labor Day, and 30 days for the rest of the year'; closed Sep 27 - May 27; phone 307-344-7381), read 2026-11-20",
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table: 'Tower Fall 5/28 - 9/26 $20 31', RV + Vehicle max length 30 ft, footnote 4 'Hairpin curve'; last updated November 3, 2026), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/259308 + /rates ('31 campsites'; 'For facility specific information, please call (307) 344-2289'; 'Tower Fall Campground prohibits generators'; reservationCutOff 2; maxConsecutiveStay 30; Peak Season 2027-05-28..2027-09-27 $20), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:259308 (30 reservable STANDARD NONELECTRIC sites numbered 3-32; driveways 13-40 ft; RV permitted on 3, 5, 10-13, 17, 18, 20, 25, 27, 28, 32; trailers also on 22, 24, 30, 31; tent only 6-9, 14, 16, 19, 21, 23), read 2026-11-20",
+    "Esri World_Imagery at 44.8890,-110.3900 (250 m) with the catalog's site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD"},
+      "source": "NPS campgrounds table 2027 ('$20') = recreation.gov rates 259308 (Peak 2027 $20), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS structured data 2395 (electricHookups 0; no hookups in the campgrounds table) + rec.gov catalog (all STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "max_rig_ft": 30, "note": "Tight: most RV driveways are 22-25 ft (sites 3 and 5 are 33 and 40 ft); NPS posts 30 ft for RV plus vehicle, a hairpin curve in the loop, and sites that may not be level."},
+      "source": "recreation.gov catalog 259308 (30 sites 3-32; driveway lengths) + NPS ('All sites at 30' (9.1 m) or less. Sites may not be level. Loop has hairpin curve.'; RV + Vehicle max length 30), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "showers": false},
+      "source": "NPS structured data 2395 ('Vault Toilets - seasonal', 'Potable Water - Seasonal', 'Showers - None'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/259308", "fcfs": "never", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14, "note": "14-night limit July 1 through Labor Day, 30 nights otherwise."},
+      "source": "NPS ('All sites are reservable on Recreation.gov', sitesFirstCome 0; 'Camping is limited to 14 days from July 1 through Labor Day, and 30 days for the rest of the year') + recreation.gov 259308 (all 30 catalog sites reservable; reservationCutOff 2), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-28", "closes": "09-26"},
+      "source": "NPS campgrounds table ('Tower Fall 5/28 - 9/26', 2027 dates) = recreation.gov Peak Season 2027-05-28..09-27 (last night 09-26), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "NPS structured data 2395 Nightly Fee ('Interagency Access and Senior Pass holders receive a 50% discount.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Yellowstone NP, park-run campground on the north side of the Dunraven Pass road, 3.5 mi S of Tower-Roosevelt Junction and near the Tower General Store and Tower Fall. Sites in the trees on a hillside loop. No generators. --Claude",
+  "summary": "NPS and rec.gov current (towerfallcg.htm reads through the park's structured data). All 30 catalog sites reservable (NPS says 31), $20, Senior/Access 50%, 2027 May 28 - Sep 26, 30-ft RV+vehicle limit with a hairpin curve; most RV driveways 22-25 ft, so a 23-ft rig fits a handful (tight). No generators. Not waterfront confirmed. Phone empty -> (307) 344-2289.",
+  "flags": [
+    "LENGTH: NPS 'All sites at 30' (9.1 m) or less. Sites may not be level. Loop has hairpin curve.' A 23-ft rig passes; RV-permitted driveways are 3 (33 ft), 5 (40), 10 (25), 11 (24), 13 (25), 17 (23), 20 (23), 25, 27, 28, 32 (25 each), 12 (16) and 18 (22) - fits about 11 sites. Not a drop.",
+    "SITE COUNT: NPS and rec.gov's description say 31; the rec.gov catalog lists 30 (sites 3-32). Written 30 per the catalog.",
+    "PHONE: empty -> (307) 344-2289 (rec.gov 'facility specific information' and late-arrival line). NPS lists the park's general line 307-344-7381.",
+    "GENERATORS prohibited (NPS and rec.gov) - kept in the note.",
+    "Websites current: nps.gov towerfallcg.htm 200, rec.gov 259308 live - no change.",
+    "PIN: stored 44.89061,-110.38985 is on the Tower General Store building, ~197 m N of the site centroid 44.88893,-110.39061 - under the 250 m threshold so no move proposed, but the reviewer may want it on the loop (44.8889,-110.3906).",
+    "WATERFRONT 'not waterfront' confirmed: forested hillside loop; Tower Creek runs in its gorge ~150 m+ W of the nearest site through dense conifers.",
+    "Note rewritten: dropped site count, length limit, toilets, hookups and 'Reservable online' (fields show them)."
+  ]
+}

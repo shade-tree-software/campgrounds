@@ -2810,3 +2810,11 @@ me drop and report); each needs the research named before a verdict.
 - 6499 Reuter re-pinned ~430 m (stored pin on private buildings).
 - FS vs rec.gov fees: 6437 ($20 vs $18), 6497 ($23 vs $20.50) - rec.gov written.
 - Tooling: audit/private_gap_browser/roverpass_api.py fails - RoverPass pages no longer carry data-token (verifier used a scratch copy with the token optional). Fix the repo copy before the next RoverPass-heavy round.
+
+## WY p3-543 (2026-11-20)
+- No drops. 6561 Station Creek: only the group site is reservable (FS) - booking to first-come, rec.gov group link removed. 6505 Threemile: rec.gov sells 001-004 + 017-020 (FS says FCFS) - written reservable/some_sites.
+- 6427 Trail Creek: FS "Closed for the rest of the season due to highway construction" (WY-22, 2026) - check the 2027 opening. policy_ref was unset (fell to the null federal:WY row) -> federal:usfs. Its manual booking group lacks the rec.gov url, a -96 h cutoff and a note; 6510 Vedauwoo's lacks the rec.gov url and the 14-night limit (values in the result flags) - add by hand.
+- 6426 Tower Fall: "All sites at 30' or less ... Loop has hairpin curve"; most RV driveways 22-25 ft, about 11 fit a 23-ft rig - kept. Pin moved ~200 m off the general store.
+- 6507 Toppings Lake designated sites: "No trailers over 30ft", "tight switchbacks" - kept (no 4WD wording).
+- 6502 Sibley Lake re-pinned ~340 m.
+- LEADS (Jackson RD designated sites in the same FS table as 6507, none in DB, not vetted): Spread Creek (FR 30290, "Some sites can accommodate larger groups and RVs"), Shadow Mountain, Curtis Canyon, Pacific Creek, Buffalo Valley.

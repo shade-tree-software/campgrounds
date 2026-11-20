@@ -1,0 +1,12 @@
+# p3-543 notes (WY)
+- 6520 done: free FCFS 2-night, phone 307-358-3462, not waterfront stands
+- 6502 done: pin move 340m -> 44.7591,-107.4399; count 24; fees rec.gov
+- 6438 done: 41 sites
+- 6561 done: booking->fcfs always; rec.gov is group listing
+- 6505 done: riverview stands (river ~20 m); booking some_sites; creekside lead 012
+- 6506 done
+- 6424 done: not waterfront stands, creekside lead 018 (~34 m); count 26
+- 6507 done: FS table only; no 4WD wording; leads Spread Creek etc
+- 6426 done: NPS structured_data_yell.json gives towerfallcg content
+- 6427 done: creekside stands (007, 010); FS page at /trail-creek; closed rest of 2026
+- 6510 done: season/booking manual left alone

@@ -1582,3 +1582,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6495 North Fork (Medicine Bow, WY, p3-541): FS "10 of those sites along the banks of the North Fork of the Little Laramie River", none named; river under spruce on imagery. Creekside at most if an official map names them (west-edge 11, 16, 27, 29-31, 39-41, 51, 53).
 - 6500 Rex Hale (WY, p3-542): riverview candidate - sites 016 (44.45507,-109.73335) and 017 ~41-43 m from the North Fork Shoshone (40-50 m wide) with scattered shrubs between; 018-024 behind a riparian belt. Left not waterfront.
 - WY p3-542 applied: 6437 North Tongue riverview -> creekside, 6364 Pete's Draw riverview -> riverfront, 6497 Prune Creek riverfront -> creekside.
+- 6505 Threemile (WY, p3-543): riverview kept; creekside candidate at site 012 only (44.49619,-109.95173, ~15-20 m across a gravel bank with a few conifers; North Fork 18-22 m wide here).
+- 6424 Tie Flume (WY, p3-543): creekside candidate at site 018 only (~34 m across meadow with a fence and scattered conifers).
