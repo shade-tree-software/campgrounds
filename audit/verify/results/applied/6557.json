@@ -1,0 +1,49 @@
+{
+  "id": 6557,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.woodslanding.com/ (operator: 'rustic cabins, private guest houses, and convenient RV sites'; 'numerous (15+) RV sites'; 'RV sites include electricity and water, with access to a separate sewer dump. Guests are also welcome to use the bathhouse. Please note the length restrictions prior to making a reservation. (Hookups for power are 30 amps.)'; 'Located in the cottonwoods along the banks of Laramie River'; Country Store 'open during the spring, summer, & fall seasons'; phone 307-745-9638; booking via ResNexus), read 2026-11-20",
+    "https://www.woodslanding.com/accommodations.html (unit classes 'RV sites over 30 feet' / 'RV sites under 30 feet'; 'RV CAMPGROUND <30'' and 30'' units: 'The Woods Landing Resort RV area has ten hook-ups, each with electricity and water. There is a separate sewer dump. Most sites have a picnic table and fire ring. RV guests also have full use of the bathhouse.'; rustic cabins 'use the bathhouse for showers, toilets'; rates are filled by script from resnexus.com, not read), read 2026-11-20",
+    "https://www.woodslanding.com/Policies.html ('Additional guests above the minimum for each type of unit are $15/night/guest.'; 'Check-in is available after 3 p.m.'; 'Check-out Policy - 11 a.m.'), read 2026-11-20",
+    "Google Maps panel 'Woods Landing Resort', 9 WY-10, Jelm: 4.6 stars, 312 reviews, phone +1 307-745-9638, website woodslanding.com, read 2026-11-20",
+    "audit/price_research/gateways.py 41.1108,-106.0122: none within 40 km (Rocky Mountain NP 91 km), run 2026-11-20",
+    "Esri World_Imagery at 41.1108,-106.0122 (200 m) and 41.1092,-106.0128 (120 m), read 2026-11-20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 30, "water": true, "sewer": false},
+      "source": "woodslanding.com ('RV sites include electricity and water, with access to a separate sewer dump ... (Hookups for power are 30 amps.)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "showers": true, "camp_store": true},
+      "source": "woodslanding.com home + accommodations ('separate sewer dump'; 'use the bathhouse for showers, toilets'; 'RV guests also have full use of the bathhouse'; 'Country Store, open during the spring, summer, & fall seasons'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://resnexus.com/resnexus/reservations/book/E2C6F011-DF9D-445C-A3B0-03A9CB6AFA8D", "note": "RV sites are sold in two length classes, under and over 30 ft. Check-in after 3 pm (arrivals 3-6 pm, call otherwise), check-out 11 am."},
+      "source": "woodslanding.com (BOOK NOW / Check Availability -> ResNexus engine; accommodation types 'RV sites over 30 feet' / 'RV sites under 30 feet') + Policies.html (check-in/out), read 2026-11-20; the engine itself was not opened",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"currency": "USD", "extra_person": {"amount": 15, "per": "night"}},
+      "source": "woodslanding.com/Policies.html ('Additional guests above the minimum for each type of unit are $15/night/guest.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Historic roadside resort at Jelm on WY-10, about 25 mi SW of Laramie beside the Big Laramie River, near the Medicine Bow NF and the Medicine Bow Rail Trail. The RV row is on the resort's back road behind the riverside cottonwoods; most sites have a picnic table and fire ring. Also cabins, a dancehall and a bar and restaurant with seasonal hours. --Claude",
+  "summary": "Operator site live (ResNexus booking; rates load from resnexus.com, not read). RV sites 30 A electric + water, separate dump, bathhouse with showers, store; booked in under/over-30-ft classes. No posted rate; Google 4.6 (312, shared with the bar/restaurant), RV Life 4.5/$$. Not waterfront stands (operator 'along the banks of Laramie River' is a lead). Phone empty -> 307-745-9638. Pin ~230 m N of the RV row.",
+  "flags": [
+    "PRICE GATE (private): no nightly rate readable - the accommodations page fills prices by script from resnexus.com/RNAPI, and ResNexus refuses bots (Incapsula), so not opened; no earlier capture in audit/price_research (the 2026-10-16 WY read captured no lines). No gateway within 40 km (gateways.py: Rocky Mountain NP 91 km). Price indicator: RV Life $$ tier (stored). An ordinary resort, not long-stay in character, so 'no posted nightly rate' is not a drop.",
+    "PRESENCE: working operator site with phone 307-745-9638 and a ResNexus booking engine; Google Maps 4.6 stars from 312 reviews (the panel covers the whole resort including the historic bar/restaurant and dancehall, so not the campground's alone). Passes.",
+    "LONG-STAY: nothing marketed weekly/monthly/seasonal; RV sites sold by the night on the engine - not a long-stay park.",
+    "RIG LENGTH: sites are sold as 'RV sites under 30 feet' and 'over 30 feet' ('Please note the length restrictions prior to making a reservation') - a 23-ft rig books the under-30 class. No max_rig_ft written (the over-30 cap is not posted).",
+    "SITE COUNT: accommodations page 'ten hook-ups'; home page 'numerous (15+) RV sites'. Stored count 10 (derived) left alone; the operator's pages disagree.",
+    "WATERFRONT 'not waterfront' stands, with an operator-claim lead: 'Located in the cottonwoods along the banks of Laramie River' / 'right beside the Laramie River'. On imagery the RV row (~41.1087,-106.0123, five or six rigs parked in a line) is ~30 m from the river through a continuous cottonwood band, and the Big Laramie here is ~11-16 m wide (creek-size). No upgrade (trees between); matches the stored evidence.",
+    "PIN: stored 41.1108,-106.0122 is on the grass by the WY-10 bridge, ~230 m N of the RV row (41.1087,-106.0123); Google's pin is the lodge (41.11039,-106.01260). Under the 250 m threshold - the reviewer may move it to 41.1087,-106.0123.",
+    "PHONE: empty -> 307-745-9638 (operator site and Google).",
+    "WEBSITE current: https://www.woodslanding.com/ (200, operator's own).",
+    "EXTRA PERSON: the policies page's '$15/night/guest above the minimum for each type of unit' is written without an 'included' count (the RV minimum is not stated).",
+    "Note rewritten: dropped the hookup, dump and site-count text (fields show them)."
+  ]
+}

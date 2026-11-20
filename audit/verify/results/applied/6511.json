@@ -1,0 +1,78 @@
+{
+  "id": 6511,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/shoshone/recreation/wapiti-campground (FS: 'Closed for the 2026 season'; '41 campsites on the North Fork of the Shoshone River'; 'Stay limit is 16 days.'; 'Maximum spur length is 50 feet.'; 'This site is first come, first served.'; 'Single Site (Non-Electric): $20 per night / Single Site (Electric): $30 per night'; '$40/night for double units with no electricity / $60/night for double units with electricity'; 'Please be prepared to pay with CASH or CHECK.'; 'Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY.'; vault toilets; 'Potable water is available at this site.'; phone (307) 527-6921; 44.46608,-109.62279; updated 2026-11-02), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/234606 + /rates (description: 'Sites 1 through 21 are standard RV Electric and have both 15 amp and 30 amp electrical hookups, and sites 22 through 40 are Standard Nonelectric'; 'Vault toilets, drinking water and trash collection'; 'among cottonwood and juniper trees, along the North Fork of the Shoshone River'; notice 'An additional fee will be collected at the campground for extra vehicles'; 'Horses and other livestock are not allowed to stay in the campground'; maxConsecutiveStay 16; reservationCutOff 'Not Reservable'; rates 2026-2028 RV ELECTRIC $30 / STANDARD NONELECTRIC $20), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234606 (40 sites 01-40: 21 RV ELECTRIC 01-21, 19 STANDARD NONELECTRIC 22-40; Electricity Hookup '15'; no water/sewer hookups; per-site lengths 35-145 ft) and /api/camps/availability/campground/234606/month 2027-06 (every site 'Not Reservable'), read 2026-11-20",
+    "Esri World_Imagery at 44.4664,-109.6245 (200 m) and 44.4670,-109.6250 (130 m) with the catalog's site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 30,
+        "currency": "USD",
+        "note": "$20 non-electric, $30 electric for a single site; double sites $40 non-electric, $60 electric. Cash or check. An extra-vehicle fee is collected at the campground (amount not posted)."
+      },
+      "source": "FS page ('Single Site (Non-Electric): $20 per night'; 'Single Site (Electric): $30 per night'; double units $40/$60; 'Please be prepared to pay with CASH or CHECK.') = recreation.gov rates 234606 (2026-2028 $20/$30) + rec.gov notice ('An additional fee will be collected at the campground for extra vehicles'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 30,
+        "water": false,
+        "sewer": false
+      },
+      "source": "recreation.gov 234606 description ('Sites 1 through 21 are standard RV Electric and have both 15 amp and 30 amp electrical hookups') + catalog (no water or sewer hookup on any site), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 40,
+        "max_rig_ft": 50
+      },
+      "source": "recreation.gov 234606 (description: sites 1-21 electric, 22-40 nonelectric; catalog 40 sites) + FS page ('Maximum spur length is 50 feet.'), read 2026-11-20; FS says 41 campsites",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": true
+      },
+      "source": "FS page ('Vault toilet(s)'; 'Potable water is available at this site.') + rec.gov ('Vault toilets, drinking water and trash collection are provided'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always",
+        "max_stay_nights": 16
+      },
+      "source": "FS page ('This site is first come, first served.'; 'Stay limit is 16 days.') + recreation.gov 234606 (reservationCutOff 'Not Reservable'; June 2027 calendar all 'Not Reservable'; maxConsecutiveStay 16), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true,
+        "note": "50% off single campsites only, for the site the pass holder occupies."
+      },
+      "source": "FS page ('Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Shoshone NF, Wapiti RD, on the north side of the Buffalo Bill Scenic Byway (US-14/16/20) about 28 mi W of Cody, beside the North Fork of the Shoshone River and the historic Wapiti Ranger Station. Sites among cottonwood and juniper; bear boxes. No horses. --Claude",
+  "summary": "FS and rec.gov current. First-come only (rec.gov listing is Not Reservable), $20 non-electric / $30 electric (doubles $40/$60), cash or check, 16-day limit, Senior/Access 50% on single sites. 40 sites (21 electric 15/30 A), 50-ft spurs (stored 35 -> 50). Riverfront goes down to riverview (lead): the loops sit ~50 m behind a continuous cottonwood band. Phone empty -> (307) 527-6921.",
+  "flags": [
+    "WATERFRONT (checked hard; lead to DOWNGRADE riverfront -> riverview): the North Fork of the Shoshone is a river here (~35-45 m of open channel), but every site sits behind a continuous cottonwood band. Nearest sites on imagery: 19 (44.46673,-109.62395) ~50 m from the south bank, 17 (44.46681,-109.62338) ~48 m, 23 (44.46646,-109.62498) and 25 (44.46646,-109.62540) ~55 m, 28 (44.46655,-109.62663) ~35-40 m - all through the continuous riparian tree band, with the loop road between for 17/19. No site has open ground to the water. Stored evidence ('scattered cottonwoods (not a continuous screen)') is contradicted by the 130-m frame. Not --AWH. Rec.gov's own wording is 'along the North Fork'; the catalog has no Proximity-to-Water tags. Default down: riverview (filtered view through the trees).",
+    "STATUS: FS 'Closed for the 2026 season' (page updated 2026-11-02) is the end-of-season notice (Elk Fork's page reads 'Closed for the season'); no forest alert closes the campground. No status written.",
+    "SEASON: neither page states open/close dates; rec.gov's 2027 rate season is 05-09..09-27 but the campground is not reservable, so no season written.",
+    "SITE COUNT: FS '41 campsites'; rec.gov description and catalog 40 (1-21 electric, 22-40 non-electric). Written 40.",
+    "ELECTRIC: rec.gov says '15 amp and 30 amp'; catalog attribute says 15. Written 30 per the description.",
+    "PHONE: empty -> (307) 527-6921 (FS contact, Clarks Fork, Greybull and Wapiti Ranger Districts; rec.gov facility phone, 'not for reservations').",
+    "Websites current: FS r02 page 200; rec.gov 234606 live but not reservable (kept, it carries the site catalog).",
+    "Pin 44.46558,-109.62421 sits at the entrance fork ~70-80 m S of the site centroid (~44.4662,-109.6245) - no move.",
+    "LEAD (weak): Elk Fork Campground (FS Shoshone, 44.46252,-109.62893, ~1 km W) is not in the DB. FS: 'Horse corrals and trailer parking are available. Maximum spur 22 feet.' The 22-ft spur passes under the 2026-10-20 ruling, but the horse rule may apply - for the reviewer; not vetted.",
+    "Note rewritten: dropped site count, amperage, RV length and 'Online reservations currently suspended' (fields show them)."
+  ]
+}

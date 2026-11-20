@@ -1,0 +1,63 @@
+{
+  "id": 6385,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm ('Beginning with the 2027 summer camping season, all campground reservations will be handled through Recreation.gov'; 'All campsites must be reserved in advance'; 2027 table: 'Canyon | 5/28 - 9/18 | $45 + taxes | 272', accessible / pay showers-laundry / flush toilets / dump station / generators / biker-hiker columns marked, no hookups, RV + vehicle max length 40 ft; last updated November 3, 2026), read 2026-11-20",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Canyon record: url canyoncg.htm; 'reservable through Recreation.gov and operated by Yellowstone National Park Lodges'; 273 sites, 273 reservable / 0 first-come; fee $39 'Interagency Access and Senior Pass holders receive a 50% discount'; flush toilets, hot showers, laundry, dump station, potable water seasonal, camp store No; closed 2026-09-19 to 2027-05-27; 14/30-day limits; six people per site; phone 307-344-7311; 44.73538,-110.48791), read 2026-11-20",
+    "https://www.yellowstonenationalparklodges.com/lodgings/camping/canyon-campground/ ('Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026'; 'the campgrounds themselves will remain under our management'; 'May 28, 2027 - September 19, 2027'; 'maximum length for RV's of 40 feet'; 'a dump station, a recycling area, and a camper services building with public showers and laundry facilities'; 'Rates for this campground include 2 showers per night'; 'There are no electricity, water, or sewer hookups'; 'RVs up to 40' long may be accommodated in pull-through and back-in sites. The sites may not be level'; 'Campsites for hikers and cyclists are also available (non-reservable, walk-in only)'; 'Access Pass and Senior Pass holders receive a 50% discount on site rates. Use Promo Code PASS'), read 2026-11-20",
+    "https://www.recreation.gov/api/search (q='canyon campground yellowstone' and Yellowstone recarea 2988 campgrounds): no Canyon facility listed yet, read 2026-11-20",
+    "Esri World_Imagery at 44.7365,-110.4890 and 44.7375,-110.4840 (450 m), read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "checked": "2027", "extra_person": {"max_people": 6}, "note": "2027 rate, plus taxes; includes 2 showers per night. The NPS data API still lists $39."},
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table 'Canyon ... $45 + taxes') + Yellowstone NP Lodges ('Rates for this campground include 2 showers per night'; six people per site), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "Yellowstone NP Lodges page ('There are no electricity, water, or sewer hookups at any of the campsites') + NPS data API (electricalHookups 0), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 272, "max_rig_ft": 40, "pull_through": true, "note": "Sites taking a 40-ft combined length are limited; sites may not be level."},
+      "source": "NPS 2027 table (272 sites; RV + vehicle max 40 ft) + Yellowstone NP Lodges ('RVs up to 40' long may be accommodated in pull-through and back-in sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": true, "laundry": true, "dump": true, "note": "Showers and laundry in the camper services building; the dump station may close early and late season in freezing weather. Stores and dining in Canyon Village, a short walk."},
+      "source": "Yellowstone NP Lodges page (flush toilets, dump station, camper services building with public showers and laundry) + NPS data API (potableWater 'Yes - seasonal'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-28", "closes": "09-18", "note": "2027 dates from the NPS table; Yellowstone National Park Lodges gives May 28 - September 19, 2027."},
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 '5/28 - 9/18') + NPS data API (closed 2026-09-19 to 2027-05-27) + Yellowstone NP Lodges ('May 28, 2027 - September 19, 2027'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "max_stay_nights": 14, "note": "From the 2027 season reservations move from Yellowstone National Park Lodges to Recreation.gov (opening December 8, 2026); the campground stays Xanterra-run. 14-night limit July 1 through Labor Day, 30 nights otherwise, counted across all park campgrounds."},
+      "source": "Yellowstone NP Lodges page ('Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026') + NPS campgrounds page + NPS data API (273 reservable, 0 first-come; 14/30-day limits), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "50% off the site rate; promo code PASS when booking."},
+      "source": "Yellowstone NP Lodges page ('Access Pass and Senior Pass holders receive a 50% discount on site rates. Use Promo Code PASS when booking a reservation.') + NPS data API fee line, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Concession-run (Yellowstone National Park Lodges) campground in lodgepole forest at Canyon Village, near the Grand Canyon of the Yellowstone; the village's stores, dining and visitor center are a short walk. --Claude",
+  "summary": "NPS + Lodges current. Booking moves to Recreation.gov for 2027 (opens Dec 8, 2026; facility not yet on rec.gov - no URL). $45 + taxes 2027 incl. 2 showers/night (API $39). 272 sites, RVs to 40 ft, no hookups, flush toilets, showers, laundry, dump. 2027 season 05-28..09-18 (Lodges to 09-19). Senior/Access 50% applies. Not waterfront stands. PIN ~400 m W of the loops on the entrance road -> 44.7366,-110.4855. Phone empty -> 307-344-7311.",
+  "flags": [
+    "BOOKING PLATFORM CHANGE: operator -> recreation.gov from the 2027 season (Lodges: 'Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026'; NPS: 'all campground reservations will be handled through Recreation.gov'). Not yet in rec.gov search, so no booking.url - add it once it appears.",
+    "PIN: stored 44.7360,-110.4905 is on North Rim Drive west of the campground entrance, ~215 m W of the registration building (NPS point 44.73538,-110.48791) and outside the loops; the loops run ~700 m NE through the forest from there. Move to 44.7366,-110.4855 (the western loops), ~400 m.",
+    "SEASON: NPS 2027 5/28-9/18 vs Lodges May 28 - September 19, 2027; NPS written.",
+    "FEES: NPS 2027 table $45 + taxes vs NPS data API $39; $45 kept.",
+    "SITE COUNT: 272 kept (NPS 2027 table; API 273; Lodges 'over 270 individual sites').",
+    "FACILITIES: showers and laundry now true (camper services building at the campground; 2 showers included per night).",
+    "Senior/Access: 50% discount confirmed (federal:nps row agrees).",
+    "WATERFRONT 'not waterfront' stands: lodgepole forest, no water near the loops.",
+    "PHONE: empty -> 307-344-7311 (NPS data API contact; Yellowstone National Park Lodges).",
+    "Websites current: nps.gov/yell/planyourvisit/canyoncg.htm 200; Lodges canyon-campground page 200.",
+    "Note rewritten: dropped site count, rig length, toilets, showers/laundry, hookups, booking channel and season (fields show them)."
+  ]
+}

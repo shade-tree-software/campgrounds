@@ -1584,3 +1584,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - WY p3-542 applied: 6437 North Tongue riverview -> creekside, 6364 Pete's Draw riverview -> riverfront, 6497 Prune Creek riverfront -> creekside.
 - 6505 Threemile (WY, p3-543): riverview kept; creekside candidate at site 012 only (44.49619,-109.95173, ~15-20 m across a gravel bank with a few conifers; North Fork 18-22 m wide here).
 - 6424 Tie Flume (WY, p3-543): creekside candidate at site 018 only (~34 m across meadow with a fence and scattered conifers).
+- 6384 Bridge Bay (WY, p3-544): NPS "spectacular views of the lake", Lodges "Some sites have a distant view"; loops ~175 m from shore - lakeview candidate if named sites show it.
+- 6381 Bald Mountain (WY, p3-544): rec.gov "Small creeks wind through the campground" - 1-2 m stream in willows ~30 m E of sites 006/007; left not waterfront.
+- 6557 Woods Landing (WY, p3-544): operator "along the banks of Laramie River" - RV row ~30 m from the 11-16 m river through continuous cottonwoods; left not waterfront.

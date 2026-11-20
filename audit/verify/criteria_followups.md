@@ -2818,3 +2818,15 @@ me drop and report); each needs the research named before a verdict.
 - 6507 Toppings Lake designated sites: "No trailers over 30ft", "tight switchbacks" - kept (no 4WD wording).
 - 6502 Sibley Lake re-pinned ~340 m.
 - LEADS (Jackson RD designated sites in the same FS table as 6507, none in DB, not vetted): Spread Creek (FR 30290, "Some sites can accommodate larger groups and RVs"), Shadow Mountain, Curtis Canyon, Pacific Creek, Buffalo Valley.
+
+## WY p3-544 (2026-11-20)
+- No drops. 6511 Wapiti riverfront -> riverview (cottonwood band, no open ground).
+- 6384 Bridge Bay + 6385 Canyon: booking moves to Recreation.gov for 2027 (opens 2026-12-08), not listed yet - add the urls (with 6390 Fishing Bridge + 6399 Madison) once live.
+- 6381 Bald Mountain: rec.gov "US 14A ... 10% grade; not recommended for RVs and motorhomes ... Dayton via Burgess Junction ... the recommended route for RVs" - kept, the note names the route. Horse staging area + OHV trails beside a general campground.
+- 6391 Buckboard Crossing: 38 of 58 sites capped at 25 ft (max 45) - a 23-ft rig fits.
+- 6430 Wolf Creek: potable water false (FS "Potable water is not available").
+- 6563 Bear Lodge Resort: stored year_round is the lodge's; nothing says the RV park stays open through the snow - consider clearing.
+- 6557 Woods Landing: no rate read (ResNexus refuses; RV Life $$, Google 4.6/312); operator pages say 10 vs 15+ sites.
+- Six re-pins: Boulder Park 630 m, Allred Flat 480 m, Canyon 400 m, Wolf Creek 270 m, Albany County Fairgrounds 225 m (was on the exhibit hall), Woods Landing 230 m.
+- LEAD: Elk Fork Campground (Shoshone NF, 44.46252,-109.62893, ~1 km W of Wapiti) - FS "Horse corrals and trailer parking ... Maximum spur 22 feet": likely out (horse camp / 22-ft spur), vet with the WY leads.
+- Verifier ran one read-only `git status` against the brief's no-git rule (reported by itself; nothing changed).

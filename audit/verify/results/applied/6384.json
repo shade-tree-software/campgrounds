@@ -1,0 +1,63 @@
+{
+  "id": 6384,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm ('Beginning with the 2027 summer camping season, all campground reservations will be handled through Recreation.gov'; 'All campsites must be reserved in advance'; 2027 table: 'Bridge Bay | 5/7 - 9/12 | $38 + taxes | 431', accessible / flush toilets / dump station / generators / biker-hiker columns marked, no showers, no hookups, RV + vehicle max length 60 ft; last updated November 3, 2026), read 2026-11-20",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Bridge Bay record: url bridgebaycg.htm; 'reservable through Recreation.gov and operated by Yellowstone National Park Lodges'; 432 sites incl. 4 group, 432 reservable / 0 first-come; fee $33 'Interagency Access and Senior Pass holders receive a 50% discount'; flush toilets, potable water, dump station, camp store seasonal, showers None, laundry No; closed 2026-10-17 to 2027-05-06; 'Camping is limited to 14 days from July 1 through Labor Day, and 30 days for the rest of the year'; 'Campsite occupancy is limited to six people per site'; phone 307-344-7311), read 2026-11-20",
+    "https://www.yellowstonenationalparklodges.com/lodgings/camping/bridge-bay-campground/ ('Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026'; 'the campgrounds themselves will remain under our management'; 'May 21, 2027 - September 13, 2027'; 'some limited views of the lake'; 'Some sites have a distant view of Yellowstone Lake'; 'maximum length for RV's of 40 feet'; 'RVs up to 40' long may be accommodated in pull-through and back-in sites. The sites may not be level'; 'There are no electricity, water, or sewer hookups'; 'Pay showers are not available ... The nearest laundry and shower facilities are located at Fishing Bridge RV Park'; dump station 'may not be available early and late season'; 'Access Pass and Senior Pass holders receive a 50% discount on site rates'; 'Campsites for hikers and cyclists are also available (non-reservable, walk-in only)'; 14/30-night limits), read 2026-11-20",
+    "https://www.recreation.gov/api/search?fq=parent_asset_id%3A2988&fq=entity_type%3Acampground and q='bridge bay yellowstone': only Indian Creek, Lewis Lake, Mammoth, Slough Creek, Tower Fall listed - no Bridge Bay facility yet, read 2026-11-20",
+    "Esri World_Imagery at 44.5345,-110.4370 (600 m), read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 38, "nightly_high": 38, "currency": "USD", "checked": "2027", "extra_person": {"max_people": 6}, "note": "2027 rate, plus taxes. The NPS data API still lists $33."},
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table 'Bridge Bay ... $38 + taxes') + NPS data API ('Campsite occupancy is limited to six people per site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "Yellowstone NP Lodges page ('There are no electricity, water, or sewer hookups at any of the campsites') + NPS data API (electricalHookups 0), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 431, "max_rig_ft": 40, "pull_through": true, "note": "Sites taking a 40-ft combined length are limited; the NPS table gives 60 ft as the RV + vehicle maximum. Sites may not be level."},
+      "source": "NPS 2027 table (431 sites; RV + vehicle max 60 ft) + Yellowstone NP Lodges page ('RVs up to 40' long may be accommodated in pull-through and back-in sites'; 'Campground sites that will accommodate a maximum combined length of 40-feet are limited'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "camp_store": true, "note": "Showers and laundry are at Fishing Bridge RV Park; the dump station may close early and late season in freezing weather. Groceries at the Bridge Bay Marina and Lake Village."},
+      "source": "Yellowstone NP Lodges page (flush toilets, dump station, no showers on the premises, nearest laundry/showers at Fishing Bridge) + NPS data API (potableWater, campStore 'Yes - seasonal', showers None, laundry No), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-07", "closes": "09-12", "note": "2027 dates from the NPS table; Yellowstone National Park Lodges gives May 21 - September 13, 2027."},
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 '5/7 - 9/12') + NPS data API (closed 2026-10-17 to 2027-05-06) + Yellowstone NP Lodges ('May 21, 2027 - September 13, 2027'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "max_stay_nights": 14, "note": "From the 2027 season reservations move from Yellowstone National Park Lodges to Recreation.gov (opening December 8, 2026); the campground stays Xanterra-run. 14-night limit July 1 through Labor Day, 30 nights otherwise, counted across all park campgrounds. Several loops are closed to reservations early in the season for bear activity."},
+      "source": "Yellowstone NP Lodges page ('Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026') + NPS campgrounds page ('All campsites must be reserved in advance') + NPS data API (432 reservable, 0 first-come; 14/30-day limits), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "50% off the site rate; promo code PASS when booking."},
+      "source": "Yellowstone NP Lodges page ('Access Pass and Senior Pass holders receive a 50% discount on site rates. Use Promo Code PASS when booking a reservation.') + NPS data API fee line, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Concession-run (Yellowstone National Park Lodges) campground on the west shore of Yellowstone Lake, just above Bridge Bay Marina and about 2 mi S of Lake Village: open meadow sites in the lower loops, wooded sites in the upper loops. --Claude",
+  "summary": "NPS + Lodges current. Booking moves to Recreation.gov for 2027 (opens Dec 8, 2026; facility not yet listed on rec.gov - no URL). $38 + taxes 2027 (API $33). 431 sites, RVs to 40 ft (NPS table 60 ft combined), no hookups, flush toilets, dump, no showers/laundry. 2027 season NPS 05-07..09-12 (Lodges 05-21..09-13). Senior/Access 50% applies. Not waterfront kept; lakeview lead. Pin fine. Phone empty -> 307-344-7311.",
+  "flags": [
+    "BOOKING PLATFORM CHANGE: operator -> recreation.gov from the 2027 season (Lodges: 'Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026'; NPS: 'all campground reservations will be handled through Recreation.gov'). The rec.gov facility is not in rec.gov search yet (Yellowstone recarea lists only the five NPS-run campgrounds), so no booking.url - add it once it appears.",
+    "WATERFRONT 'not waterfront' kept; contrary operator claims as a re-audit lead: NPS 'Campers at Bridge Bay will enjoy spectacular views of the lake'; Lodges 'some limited views of the lake' / 'Some sites have a distant view of Yellowstone Lake'. On imagery the nearest loops sit ~175 m from the Yellowstone Lake shore (east loops, Grand Loop Road and a tree band between) and ~225 m from the marina bay (lower loops, marina parking between); the lower meadow loops are open with scattered trees, so a lakeview from some sites is plausible. Not on-water.",
+    "max_rig_ft 40 kept (Lodges 'RVs up to 40' long'); the NPS 2027 table gives 60 ft as the RV + vehicle maximum - not used for the rig length.",
+    "SEASON CONFLICT: NPS 2027 5/7-9/12 (and the API's 2027-05-07 reopening) vs Lodges May 21 - September 13, 2027; NPS written.",
+    "FEES: NPS 2027 table $38 + taxes vs NPS data API $33; $38 kept.",
+    "SITE COUNT: 432 -> 431 (NPS 2027 table; API 432 incl. 4 group sites; Lodges 'over 400 regular sites and 4 group sites').",
+    "Senior/Access: 50% discount confirmed (federal:nps row agrees).",
+    "PHONE: empty -> 307-344-7311 (NPS data API contact; Yellowstone National Park Lodges).",
+    "Websites current: nps.gov/yell/planyourvisit/bridgebaycg.htm 200; Lodges bridge-bay-campground page 200 (keep it - it carries the rules and the rec.gov move).",
+    "Pin 44.5365,-110.4368 sits among the campground loops; the NPS point 44.53444,-110.43692 is at the entrance road ~230 m S. No move.",
+    "Note rewritten: dropped site count, rig length, toilets, dump, hookups, booking channel and season (fields show them)."
+  ]
+}
