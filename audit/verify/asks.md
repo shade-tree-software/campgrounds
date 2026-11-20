@@ -700,3 +700,6 @@ Added: C$37 partial / C$42-48 full hook-up nightly on the operator's own page, G
 
 ## 6541 Parkway RV Campground (Cody WY) - mobile-home park with an RV middle (p3-542, 2026-11-20) - OPEN
 Kept for now (renamed from "Parkway Trailer & RV Park" per the Cody chamber listing; dead bookyoursite link replaced by https://www.codyyellowstone.org/stay/parkway-rv-campground-trailer-village/). Campendium tags "Full-time residents present" / "Mobile homes present"; 2023 review "Full time single wides around the perimeter, RVs in the middle"; MHVillage lists it as a mobile home park. No operator site or posted rate (camper reports $40-55, 2025; RV Life $$); Google 4.3 (140); nightly share unmeasured. Note already says "Mostly long-term". Keep with the caveat, or drop as mostly residential + iffy?
+
+## 6560 Kettle Restaurant & Base Camp RV Park (Kemmerer WY) - reviews + boom-town long-stay (p3-545, 2026-11-20) - OPEN
+Kept for now. Google 3.9 (111) - but the listing is shared with the restaurant; RV Life (RV-only) 3.5 on 5 reviews. Operator: "full hook up RV sites available daily, weekly, or monthly", April-November; no posted rate anywhere (RV Life $$, avg $40, last $45). Kemmerer is a construction-boom town (TerraPower plant); nightly share unmeasured. Under-4 reviews + possible workforce lean: drop, or keep with a caveat?

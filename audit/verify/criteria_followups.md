@@ -2830,3 +2830,12 @@ me drop and report); each needs the research named before a verdict.
 - Six re-pins: Boulder Park 630 m, Allred Flat 480 m, Canyon 400 m, Wolf Creek 270 m, Albany County Fairgrounds 225 m (was on the exhibit hall), Woods Landing 230 m.
 - LEAD: Elk Fork Campground (Shoshone NF, 44.46252,-109.62893, ~1 km W of Wapiti) - FS "Horse corrals and trailer parking ... Maximum spur 22 feet": likely out (horse camp / 22-ft spur), vet with the WY leads.
 - Verifier ran one read-only `git status` against the brief's no-git rule (reported by itself; nothing changed).
+
+## WY p3-545 (2026-11-20)
+- No drops; 6560 Kettle ask logged (Google 3.9 shared with the restaurant, boom-town long-stay lean).
+- 6518 Central Wyoming Fairgrounds: stored website + inclusion_evidence were Alcova's (13578, which already holds them) - replaced with the fair's own page/evidence. 148 sites, $33.60 full hookup, separate from event nights - passes the fairgrounds test.
+- 6367 Gray Reef: ownership federal -> local (run by Natrona County, like the other 12 Natrona county-park entries); BLM closed neighbouring Pete's Draw (6364) for the CR 412 Gray Reef Road repair from 2026-08-31 - Gray Reef shares that road; status unknown, recheck.
+- 6565 Frontier RV renamed Easy Spot RV (same address; easyspotrv.com, ResNexus, $30 daily/$150 weekly/$525 monthly); old domain dead. No Google reviews; nightly share unmeasured.
+- 6519 Green Oasis RV Park: $45.76 + 12% tax ($51.25 with tax) - under the gate before tax; laundry is across the street (laundry false).
+- 6353 Guernsey Sandy Beach: lakeview (SB15-SB25), re-pinned 360 m from the east tent cluster; every RV site lists 50 ft (may be a placeholder).
+- 6396 Indian Creek: rec.gov 259304 now listed - url written. Grant Village (6393) to rec.gov for 2027, not listed yet.

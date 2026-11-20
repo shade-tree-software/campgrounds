@@ -1,0 +1,61 @@
+{
+  "id": 6396,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table: 'Indian Creek | TBD - TBD | $20 | 70', RV + vehicle max 35 ft, vault toilets; 'All campsites are reservable through Recreation.gov'; last updated November 3, 2026), read 2026-11-20",
+    "https://www.nps.gov/yell/structured_data_yell.json + https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Indian Creek: page indiancreekcg.htm; 'All sites are reservable on Recreation.gov'; 70 reservable, 0 first-come; $20, 'Interagency Access and Senior Pass holders receive a 50% discount'; '10 sites at 35 feet (10.7 m), 35 sites at 30 feet (9.1 m). Sites may not be level.'; vault toilets, potable water seasonal, no showers, no dump station; 'Generators are not permitted at Indian Creek'; 'Paved Roads - All vehicles OK'; schedule exception 'Closed - 2027 TBD'; 'This is a reservable campground run by the National Park Service'), read 2026-11-20",
+    "https://www.recreation.gov/camping/campgrounds/259304 via /api/camps/campgrounds/259304 (Indian Creek Campground (WY); 70 campsites; 'Generators are prohibited'; max 6 people; 14 nights July 1 - Labor Day, 30 otherwise; amenities vault toilets, water spigot, host; 2026 peak season 2026-06-12 to 2026-09-13 at $20 STANDARD NONELECTRIC; phone 307-344-2107, info line (307) 344-2289) + campsite catalog (68 STANDARD NONELECTRIC sites in loops A/B; RV lengths posted to 49 ft on a few) + August 2026 availability (68 sites, all nights reserved - operated in 2026), read 2026-11-20",
+    "Esri World_Imagery at 44.8865,-110.7368 (450 m) with the 68 rec.gov site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "extra_person": {"max_people": 6}},
+      "source": "NPS 2027 campground table ('Indian Creek ... $20') + rec.gov 259304 rates (2026 $20) + rec.gov notice ('Maximum occupancy is six people per site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov 259304 catalog (all 68 sites STANDARD NONELECTRIC) + NPS data API (electricalHookups 0), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 70, "max_rig_ft": 35, "note": "10 sites take 35 ft and 35 sites take 30 ft; sites may not be level."},
+      "source": "NPS data ('totalSites 70'; '10 sites at 35 feet (10.7 m), 35 sites at 30 feet (9.1 m). Sites may not be level.'); NPS 2027 table max 35 ft, read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "showers": false, "dump": false, "note": "Generators are not allowed."},
+      "source": "NPS data API (Vault Toilets - seasonal; Potable Water - seasonal; Showers None; dumpStation No) + rec.gov notice ('Generators are prohibited'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-12", "closes": "09-14", "note": "2026 dates; 2027 dates not yet set (NPS: TBD)."},
+      "source": "rec.gov 259304 2026 rate season (2026-06-12 to 2026-09-13 nights) + NPS 2026 table as stored ('6/12 - 9/14', read 2026-10-16); NPS 2027 table 'TBD - TBD', read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/259304", "fcfs": "never", "max_stay_nights": 14, "note": "14-night limit July 1 through Labor Day, 30 nights otherwise, counted across all park campgrounds."},
+      "source": "NPS data ('All sites are reservable on Recreation.gov', 70 reservable / 0 first-come; reservationUrl recreation.gov/camping/campgrounds/259304) + rec.gov notice ('Camping is limited to 14 days from July 1 through Labor Day and to 30 days the rest of the year parkwide'), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "NPS data API fee ('Interagency Access and Senior Pass holders receive a 50% discount.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "NPS-run campground in open lodgepole about 8 miles south of Mammoth Hot Springs, on a spur off the Mammoth-Norris road near Indian Creek, with views of Electric Peak; quieter and more primitive than the park's big campgrounds. --Claude",
+  "summary": "NPS + rec.gov 259304 current. $20, 70 sites (rec.gov catalog 68), no hookups, RVs to 35 ft (10 sites) / 30 ft (35), vault toilets + water, no showers/dump, generators prohibited. All reservable on rec.gov, no FCFS. Season 2026 06-12..09-14; 2027 TBD. Senior/Access 50%. Not waterfront stands. Pin fine. Website -> own NPS page; phone kept.",
+  "flags": [
+    "WEBSITE: generic https://www.nps.gov/yell/planyourvisit/campgrounds.htm -> https://www.nps.gov/yell/planyourvisit/indiancreekcg.htm (own page, 200).",
+    "BOOKING URL added: https://www.recreation.gov/camping/campgrounds/259304.",
+    "SEASON: 2027 dates TBD (NPS 2027 table and data API 'Closed - 2027 TBD'); 2026 dates written. The campground operated in 2026 (rec.gov August 2026 fully reserved).",
+    "FACILITIES: generators prohibited (NPS + rec.gov) - noted, since a dry camp without a generator matters to a 23-ft motorhome.",
+    "SITES: NPS 70 vs rec.gov catalog 68; 70 kept (NPS).",
+    "PHONE (307) 344-7381 kept (NPS data for Indian Creek); rec.gov gives 307-344-2107 and an info line (307) 344-2289.",
+    "Senior/Access 50% confirmed (federal:nps row agrees).",
+    "WATERFRONT 'not waterfront' stands: the nearest sites (#7-#9, ~44.8870,-110.7370) are about 110-130 m from Indian Creek / the Gardner River across trees and meadow, and the stream is under 30 m wide (creekside at best).",
+    "PIN: stored 44.88690,-110.73650 is ~40 m from the NPS point and ~120 m from the rec.gov site centroid (44.8860,-110.7372); no move.",
+    "Note rewritten: dropped site count, rig length, toilets, hookups and reservability (fields show them)."
+  ]
+}

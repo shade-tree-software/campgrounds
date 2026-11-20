@@ -1,0 +1,40 @@
+{
+  "id": 6353,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://wyoparks.wyo.gov/index.php/places-to-go/guernsey via the repo capture audit/state_park_fees/wy_pages_2026-10-12.json (the live site answers with an F5 bot challenge - not retried): 'Guernsey State Park provides 19 campgrounds and 250 campsites. All campgrounds include comfort stations, picnic tables, and fire grills. We also have a trailer dump station located at the south entrance'; site status 'Water Systems close on September 30, 2026'; 'Reservations Open May 15 - September 15'; 'Phone Number 307-836-2334 Location Guernsey State Park 2187 Lake Side Drive'; 14 days in a 30-day period; captured 2026-10-12",
+    "https://reserve.wyoming.gov/web/#!park/11 via the US eDirect API (wyordr.usedirect.com/wyomingrdr/rdr/: search/place PlaceId 11, search/grid FacilityId 363 'Sandy Beach' for 2027-07-15, search/details per unit): 52 web-bookable units - 15 'Campsite Electric' (SB02-SB05, SB31-SB41: 'Electricity (Amp) 20, 30, 50', 'Water Hookup 1', 'Unit&parkingsize 50', 'Campsite Dimensions 50x18', gravel back-ins, two paved), 20 'Campsite Non-Electric' (SB06-SB25: parking 50 ft except SB24 40 ft, 'Waterfront Setting: Lake'), 16 'Tent Site Non-Electric' (SB26-SB30, SB-A..SB-K) and 1 group site (SB42); every site priced at the $10 base; per-unit coordinates from MapInfo; facility point 42.30777,-104.8049; maximum stay 14, read 2026-11-20",
+    "Esri World_Imagery at 42.3070,-104.8035 (400 m), 42.3080,-104.8055 (250 m, with the booking site's unit coordinates plotted) and 42.3080,-104.8070 (120 m), read 2026-11-20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "reserve.wyoming.gov Sandy Beach unit details (15 electric sites: 'Electricity (Amp) 20, 30, 50', 'Water Hookup 1'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 52, "max_rig_ft": 50, "note": "15 electric and 20 non-electric RV sites, 16 tent sites and a group site. Every RV site lists a 50-ft pad (one 40 ft), which may be a placeholder."},
+      "source": "reserve.wyoming.gov FacilityId 363 grid + unit details ('Unit&parkingsize 50', 'Campsite Dimensions 50x18'; SB24 40), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "note": "Comfort station in each campground; the park's dump station is at the south entrance. Park water systems shut off after September."},
+      "source": "wyoparks Guernsey page capture 2026-10-12 ('All campgrounds include comfort stations'; 'trailer dump station located at the south entrance'; 'Water Systems close on September 30, 2026')",
+      "method": "manual"
+    }
+  },
+  "note": "Campground on the north shore of Guernsey Reservoir in Guernsey State Park, with a swim beach and boat ramp. An open row of electric sites sits behind a lakeshore row of non-electric sites shaded by cottonwood clumps at the water's edge; tent sites cluster at the east end. A busy rail line runs below the campground. --Claude",
+  "summary": "Booking site current: Sandy Beach = 52 units (15 electric 20/30/50 A + water, 20 non-electric, 16 tent, 1 group); all bookable. Stored 53 -> 52, amps 50 added, max 50 ft (likely placeholder). Dump (park). Season year_round manual kept. WATERFRONT LEAD: not waterfront -> lakeview for SB15-SB25 (20-35 m from the water behind cottonwood clumps). PIN MOVE ~360 m. Phone empty -> 307-836-2334.",
+  "flags": [
+    "WATERFRONT LEAD (upgrade, not written): stored 'not waterfront' (evidence measured at 42.3080,-104.8038 - the east end, where a continuous cottonwood band screens the water) -> 'lakeview'. The lakeshore row of non-electric sites SB15-SB25 (11 sites, sold nightly; e.g. SB15 42.30846,-104.80554, SB19 42.30836,-104.80660, SB25 42.30822,-104.80810) sits ~20-35 m from the full-pool shoreline, but a cottonwood clump stands directly in front of each site with sand gaps between clumps, so a view value, not lakefront. SB06-SB14 (east shore) are behind a continuous tree band (view at most); electric sites SB31-SB41 are ~60 m back behind the beach road and the shore row (view). The booking site tags SB06-SB25 'Waterfront Setting: Lake' (generous). Guernsey draws down hard in late summer (the July silt run); measured at full pool.",
+    "PIN MOVE: stored 42.30601,-104.80197 sits at the east tent cluster / entrance road by the rail line, ~360 m from the RV rows; suggested 42.3081,-104.8058 (between the electric row SB31-SB41 and the lakeshore row). The booking site's facility point is 42.30777,-104.8049.",
+    "PHONE: empty -> 307-836-2334 (park contact block on the wyoparks page capture).",
+    "SITES: stored count 53 -> 52 (booking site). Electric amps 20/30/50 (stored had no electric value). max_rig_ft 50 written from the booking site, but every RV site lists 50 ft, so it may be a placeholder; all 35 RV sites take 23 ft+ on that data.",
+    "SEASON: stored manual year_round (winter electric at Sandy Beach) kept. The 2026-10-12 capture: reservations May 15 - September 15, water systems off from September 30. 2027 dates not yet posted.",
+    "Sewer, showers and flush-vs-vault toilets: no source (left absent).",
+    "Policy: the state:WY row covers booking, fees and the 14-in-30 limit - not written.",
+    "UNREAD: the live wyoparks.wyo.gov page (F5 challenge, not retried); notices after 2026-10-12 are unseen.",
+    "Websites kept (wyoparks page refuses bots but is not dead; reserve.wyoming.gov #!park/11 live).",
+    "Note rewritten: dropped site counts, electric/water, dump, booking season and the park-wide counts (fields/policy show them); added the layout and the rail line."
+  ]
+}

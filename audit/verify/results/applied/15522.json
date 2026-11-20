@@ -1,0 +1,48 @@
+{
+  "id": 15522,
+  "checked": "2026-11-20",
+  "sources": [
+    "audit/koa_backlog_2026-10-19/dumps/cody_05.txt (koa.com/campgrounds/cody/reserve/ booking form, read 2026-10-19: 1 night Tue May 18, 2027, 2 adults, RV, Motorhome 23 ft: 'Pull Thru, 50/30/20 Amps, Full Hookups' $66.00 avg/night; 'Pull Thru, 30/20 Amps, Full Hookups' $61.00; 'Pull Thru, 50/30/20 Amps, Sewer/Electric, Patio KOA Paw Pen Deluxe Patio Site' $87.00; 'Pull Thru, 50/30/20 Amps, Full Hookups, Patio' $72.00; 'Back In, 30/20 Amps, Water/Electric' $50.00 avg/night - Only 1 site left!; 'Back In, 20 Amps, Electric Only' refused: 'Your equipment is over the 20 ft maximum length for this site'; W/E sites: 'a convenient dump station is available'). koa.com itself answers 403 to this session's tools - not retried.",
+    "Google Maps panel 'Cody / Yellowstone East KOA Holiday', 5561 Greybull Hwy: 4.4 stars, 956 reviews, +1 307-587-2369, 44.51270,-109.00832, read 2026-11-20",
+    "audit/price_research/gateways.py 44.51264,-109.00897: none within 40 km (Yellowstone NP 79 km), run 2026-11-20",
+    "Esri World_Imagery at 44.51264,-109.00897 (300 m), read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 50, "nightly_high": 87, "currency": "USD", "checked": "2027", "note": "One night Tuesday May 18, 2027 for a 23-ft motorhome: $50 water/electric back-in, $61-72 full-hookup pull-throughs, $87 Paw Pen patio site; 'Select My Site' +$25. Summer peak not read."},
+      "source": "koa.com/campgrounds/cody/reserve/ booking form capture audit/koa_backlog_2026-10-19/dumps/cody_05.txt (2027-05-18, 1 night, 2 adults, 23-ft motorhome), read 2026-10-19",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "koa.com booking form capture cody_05.txt ('Pull Thru, 50/30/20 Amps, Full Hookups'), read 2026-10-19",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true, "note": "The 20-amp electric-only sites take rigs to 20 ft only."},
+      "source": "koa.com booking form capture cody_05.txt (pull-thru site types; electric-only: 'over the 20 ft maximum length for this site'), read 2026-10-19",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true},
+      "source": "koa.com booking form capture cody_05.txt (W/E sites: 'a convenient dump station is available'), read 2026-10-19",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/cody/reserve/"},
+      "source": "koa.com booking form capture cody_05.txt, read 2026-10-19",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Holiday on US-14/16/20 (Greybull Highway) on the east side of Cody. --Claude",
+  "summary": "Price from the 2026-10-19 KOA form capture (koa.com 403s; not retried): cheapest RV night $50.00 W/E back-in (May 18 2027) = AT the gate, passes; full-hookup pull-throughs $61-72, high $87. Google 4.4 (956). No gateway (Yellowstone 79 km). 50 A, full hookups, pull-throughs, dump confirmed. Pin fine; not waterfront stands.",
+  "flags": [
+    "PRICE GATE: passes at the line - cheapest real RV night $50.00 before tax ('Back In, 30/20 Amps, Water/Electric', Tue May 18, 2027, 23-ft motorhome, 'Only 1 site left!'); next up $61 full-hookup pull-through; dearest $87. Summer-peak price not read (koa.com refuses; only the 2026-10-19 capture exists). No Good Sam; no gateway within 40 km (Yellowstone NP 79 km). KOA Rewards' member discount is not posted on a page read here. Google 4.4 from 956 reviews; RV Life 4*, $$$ (stored). Read as a pass, not borderline on reviews.",
+    "LONG-STAY: nothing in the capture suggests seasonal or monthly residents; a transient KOA.",
+    "SITE LENGTH: the 20-amp electric-only sites cap at 20 ft (refused the 23-ft motorhome); every other type was offered.",
+    "PIN: stored 44.51264,-109.00897 is inside the campground (west loops by the office); fine.",
+    "WATERFRONT 'not waterfront' stands: an irrigation canal runs along the north edge; no lake or river.",
+    "PHONE 307-587-2369 confirmed (capture + Google). Website koa.com/campgrounds/cody/ kept (403 to bots, not dead).",
+    "Note trimmed: dropped the hookup/pull-through line and the street address (fields and Google show them)."
+  ]
+}
