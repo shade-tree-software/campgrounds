@@ -1,0 +1,12 @@
+# WY notes p3-538
+- 6407 done: $18 rec.gov vs FS $20; 7 sites 002/008 FCFS; phone empty -> 307-431-7446; not waterfront kept
+- 6410 done: FCFS (no rec.gov), potable water false->true, phone empty->307-455-2466; Brooks Lake Rd banner stale (reopened Aug 2026); lakeview lead
+- 6496 done: pin 6.3 km off -> 41.1665,-105.3375; name -> Vedauwoo Designated Dispersed Campsites; phone empty->307-745-2300; 97 sites free FCFS
+- 6416 done: 11 FCFS, $13+$6, phone empty->307-543-3900; access note re-worded to FS 'water levels' warning; pin ok
+- 6421 done: riverfront -> creekside rec (sites 4-7 ~20 m, channel 22-27 m); pin 490 m -> 44.9483,-110.3090; 25-ft NPS recommendation; phone empty->307-344-2289
+- 6363 done: lakefront kept (N peninsula loop 25-45 m from high water); count cleared; closes 12-01->11-30; phone empty->307-367-4353
+- 6503 done: pin 295 m -> 44.2781,-106.9467; 13 sites (8 RV 40-65ft + 5 walk-to); $20 rec.gov vs FS $22; phone empty->307-431-7446
+- 6504 done: 13 sites, $17, season rec.gov 05-21..09-05 vs FS mid-June; min_stay weekend 2/holiday 3; max_rig 40->60; 2 equestrian sites flag; phone empty->541-351-1182
+- 6425 done: pin 1.65 km -> 44.2819,-106.9430; $20 rec.gov vs FS $22; 6 FCFS sites; phone empty->307-431-7446
+- 6357 done: riverview kept (~90-130 m, open sage); $10 from 2023 BLM release; no season; phone empty->307-367-5300
+- 6559 done: creekside -> not waterfront recommended (S loop ~30-40 m behind riparian trees); season 04-01..10-15; no pets; phone empty->307-358-3532

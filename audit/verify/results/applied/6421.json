@@ -1,0 +1,53 @@
+{
+  "id": 6421,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/259310 and /rates (read 2026-11-20)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A259310 (per-site catalog: 16 sites with coordinates, lengths, equipment; read 2026-11-20)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (NPS record for Slough Creek Campground, the data behind https://www.nps.gov/yell/planyourvisit/sloughcreekcg.htm; read 2026-11-20)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=yell (no Slough Creek alert; read 2026-11-20)",
+    "Esri World_Imagery around 44.9485,-110.3082 with every catalog site plotted, plus a zoom-19 tile at site 6 (read 2026-11-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/259310", "fcfs": "never", "max_stay_nights": 14, "note": "All 16 sites are reservable. The 14-night limit applies July through Labor Day; 30 nights the rest of the season."},
+      "source": "NPS campground record ('All sites are reservable on Recreation.gov.'; numberOfSitesFirstComeFirstServe 0) + recreation.gov facility 259310 (rules maxStay 14 nights Jul 4 - Sep 1 2026, maxConsecutiveStay 30; notice 'Camping is limited to 14 days from July 1 through Labor Day and to 30 days the rest of the year parkwide'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2027"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259310/rates (Peak Season 2026 and 2027: StandardNonelectric $20) + NPS record (Nightly Fee 20.00), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 16, "max_rig_ft": 25, "note": "The park recommends no vehicle over 25 ft (very tight turnaround). Per-site limits: 18-20 ft at sites 6, 10, 14, 15; 24-25 ft at 9 and 16; 30 ft or more at the rest."},
+      "source": "recreation.gov facility 259310 notice ('This campground has a very tight turnaround - vehicles longer than 25 ft (7.6 m) are not recommended') + campsite catalog (Max Vehicle Length per site 18-60 ft) + NPS record ('best suited for tents and small RVs'; totalSites 16), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS record (electricalHookups 0) + recreation.gov catalog (all 16 STANDARD NONELECTRIC, Water Hookup 'No'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "showers": false, "note": "Seasonal hand-pump drinking water; shared food storage boxes."},
+      "source": "NPS record (toilets 'Vault Toilets - seasonal', potableWater 'Yes - seasonal', dumpStation 'No', showers 'None', foodStorageLockers 'Yes - seasonal') + recreation.gov amenities ('Drinking Water (hand pump)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "06-15", "closes": "10-11", "note": "2027 dates (2026 ran Jun 15 - Oct 11, closed from Oct 12)."},
+      "source": "NPS record (operating-hours exception 'Closed' 2026-10-12 to 2027-06-14) + recreation.gov rates 259310 (Peak Season 2027-06-15 to 2027-10-11), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Yellowstone NP campground beside Slough Creek on the Northern Range, at the end of a 2-mile dirt road off the Northeast Entrance Road, 5.5 mi E of Tower-Roosevelt Junction; Slough Creek Trail starts nearby. The NPS calls it best suited for tents and small RVs. Generator-free. --Claude",
+  "summary": "NPS record + recreation.gov 259310: 16 reservable non-electric sites (no FCFS), $20 2026/2027, park recommends no vehicle over 25 ft (12 sites list 24 ft+), seasonal vault toilets + hand-pump water, Jun 15-Oct 11. Slough Creek is ~22-27 m wide at the sites -> recommend riverfront -> creekside (sites 4-7 ~20 m over open ground). Pin ~490 m off -> move.",
+  "flags": [
+    "WATERFRONT (recommend riverfront -> creekside): on a zoom-19 Esri tile the wet channel of Slough Creek beside the east loop measures ~22-27 m across (gravel bars excluded), under the ~30 m river line. Sites 4 (44.94902,-110.30747), 5 (44.94911,-110.30762), 6 (44.94914,-110.30779) and 7 (44.94916,-110.30796) sit ~20-25 m from the south bank over open bare ground and grass with a few small trees; all are sold by the night on recreation.gov (site 6 is limited to 20 ft; 4, 5 = 30 ft, 7 = 60 ft). The west loop (8-16) is ~80 m+ back behind a conifer band. recreation.gov tags 1-7, 9-11 'Riverfront'.",
+    "PIN MOVE (~490 m): stored 44.9443,-110.3117 is south of the campground on the access road area; the catalog centroid is 44.94830,-110.30904 (east loop around 44.9490,-110.3070, west loop around 44.9477,-110.3107). Suggested pin 44.9483,-110.3090.",
+    "RIG FIT (not a drop): recreation.gov notice 'very tight turnaround - vehicles longer than 25 ft (7.6 m) are not recommended'; NPS 'best suited for tents and small RVs'. A 23-ft rig is within the 25-ft line; 12 of 16 sites list 24 ft or more. NPS rvInfo says '14 sites at 30 feet'. max_rig_ft written as the 25-ft recommendation.",
+    "Phone: empty -> 307-344-2289 (recreation.gov: 'For facility specific information, please call (307) 344-2289'); the park's general line in the NPS record is 307-344-7381.",
+    "Stored note's 'some sites to ~30 ft combined' replaced with the sourced per-site limits; 'Reservable online', toilets and hookups dropped (fields). Stored inclusion_evidence ('RVs to ~25-30 ft') is consistent.",
+    "NPS alert (2026-10-29): most park roads closed for winter; the North-Northeast entrance road, which serves this campground, is the only road open year-round. Campground itself closed for the season since Oct 12."
+  ]
+}

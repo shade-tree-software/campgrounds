@@ -2752,10 +2752,20 @@ me drop and report); each needs the research named before a verdict.
 
 ## WY p3-537 (2026-11-20)
 - wyoparks.wyo.gov returned an F5 bot challenge 2026-11-20 (not retried); 6370 Hawk Springs and 6361 Medicine Lodge read from audit/state_park_fees/wy_pages_2026-10-12.json - later notices unread.
-- 6566 Lone Pine, Lusk: kept (C$-free US$36 FHU, Google 4.8/31, markets overnight stays); booking agreement says the site is "to be used and occupied by Lessee as a residence" (boilerplate lease form); nightly share unmeasured. Self-contained rigs only.
+- 6566 Lone Pine, Lusk: kept (US$36 full hookup, Google 4.8/31, markets overnight stays); booking agreement says the site is "to be used and occupied by Lessee as a residence" (boilerplate lease form); nightly share unmeasured. Self-contained rigs only.
 - 6556 Lovell Camper Park: free/donation, 3-night max; town page "CLOSED FOR THE SEASON" (seasonal); camper report 2026-07-10 confirms operating; stored count 7 unsourced (directories 10-30).
 - 6361 Medicine Lodge: re-pinned ~320 m to Middle Campground; creekside kept (pads ~12-25 m over grass/open creek beach at 44.29357,-107.54016) but site numbers not placed - re-check with the reservation map.
 - 6480 Island Park: UPGRADED riverview -> creekside on named nightly sites 06-08 (note names them).
 - 6488 Libby Creek Willow: "trailers under 22 feet" passes; sites 3, 7, 11-13 take no RVs.
 - Stored values corrected as unsourced/wrong: 6483 potable water (false), 6492 9 non-electric sites (was 10 with 2 electric), 6488 season, 6469 max rig, 6370 max rig, 6474 "some sites w/ electric" (removed from evidence).
 - LEADS: Libby Creek Aspen and Libby Creek Spruce campgrounds (MBR NF, Libby Creek Recreation Area) - not in DB; vet in the WY leads pass.
+
+## WY p3-538 (2026-11-20)
+- 6421 Slough Creek: NPS "vehicles longer than 25 ft are not recommended" (tight turnaround) - a 23-ft rig passes; max_rig 25. Riverfront -> creekside (22-27 m channel), note names sites 4-7.
+- 6496 renamed Vedauwoo Designated Dispersed Campsites (FS May 2026: 97 free sites), re-pinned 6.3 km. 6425 Tie Hack re-pinned 1.65 km (was the dam road), 6421 490 m, 6503 295 m.
+- 6416 Sheffield: access road fords a creek; FS warns only of changing water levels, no rig restriction - kept, note says so.
+- 6410 Pinnacles: FS "Brooks Lake Road Temporarily Closed" banner stale (alert 404; road reopened per Cowboy State Daily 2026-08-11). Possible lakeview lead (west pads ~50 m from Brooks Lake through scattered conifers, no site list).
+- 6504 Teton Canyon: max_rig 60 from the rec.gov catalog vs FS "RVs up to 40 feet"; weekend 2-night / holiday 3-night minimums (not standing). Two FS equestrian sites, not a horse camp.
+- 6559 Ayres Natural Bridge (Converse County): free, 8 sites and the 8 pm-8 am gate camper-reported only; stored 30-ft/3-night/paved unsourced. No pets. Creekside -> not waterfront.
+- 6357 Warren Bridge: only fee source a 2023 BLM release ($10); no season written.
+- Fee conflicts FS vs rec.gov (rec.gov written): 6407, 6503, 6425.

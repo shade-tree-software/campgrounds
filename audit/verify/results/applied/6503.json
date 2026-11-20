@@ -1,0 +1,53 @@
+{
+  "id": 6503,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/south-fork-campground (status 'Site Closed', gated after season; read 2026-11-20)",
+    "https://www.recreation.gov/api/camps/campgrounds/231833 and /rates (read 2026-11-20)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231833 (per-site catalog: 13 sites with coordinates, lengths, equipment; read 2026-11-20)",
+    "Esri World_Imagery around 44.2780,-106.9480 with every catalog site and the stored pin plotted (read 2026-11-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231833", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14, "note": "RV sites 005 and 008 and walk-to tent site 012 are first-come; the rest are reservable."},
+      "source": "recreation.gov campsite catalog for 231833 (005, 008, 012 not reservable) + facility rules (reservationCutOff 2, maxConsecutiveStay 14) + FS page ('14 day stay limit'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2027",
+                 "extra_vehicle": {"included": 1, "amount": 10, "per": "night", "max_vehicles": 2}},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231833/rates (Peak Season 2026, 2027, 2028: STANDARD NONELECTRIC and WALK TO $20) + facility notice ('the second vehicle will be charged an extra $10.00 fee at the campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 65, "note": "8 drive-in RV sites (002-009, back-in, 40-65 ft) and 5 walk-to tent sites (010-014)."},
+      "source": "recreation.gov campsite catalog for 231833 (002-009 STANDARD NONELECTRIC, Max Vehicle Length 40-65; 010-014 WALK TO, tents only), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog for 231833 (no electric/water/sewer attributes; all STANDARD NONELECTRIC or WALK TO), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water from a hand pump."},
+      "source": "recreation.gov facility 231833 ('Vault toilets, drinking water and trash collection are provided'; amenity 'Drinking Water (hand pump)') + FS page ('Vault toilet(s)'; 'Potable water is available at this site.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-27", "closes": "09-19", "note": "Recreation.gov season for 2027 (May 22 - Sep 20 in 2026); the FS gives Memorial Day - Labor Day, weather dependent, and gates the campground after closing."},
+      "source": "recreation.gov rates 231833 (Peak Season 2027-05-27 to 2027-09-19; 2026-05-22 to 2026-09-20) + FS page ('Memorial Day - Labor Day, weather dependent'; 'gated after season closures'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground in a dense lodgepole pine grove along the South Fork of Clear Creek, 0.25 mi E on FS Road 337 off US-16 (Cloud Peak Skyway), 15 mi W of Buffalo. Run by a concessionaire. --Claude",
+  "summary": "FS page + recreation.gov 231833: 8 RV back-in sites 40-65 ft (005/008 FCFS) + 5 walk-to tent sites, $20 2026-2028 ($10 second vehicle; FS says $22), hand-pump water, vault toilets, 14-day limit, May 27-Sep 19 2027. Pin at the US-16 junction ~295 m W of the RV sites -> move. Not waterfront kept (creek under canopy).",
+  "flags": [
+    "PIN MOVE (~295 m): stored 44.27832,-106.95040 is at the US-16 / FS Road 337 junction; the RV sites (002-009) centre on 44.2781,-106.9467. Suggested pin 44.2781,-106.9467.",
+    "Fee conflict: FS page 'Single Site: $22 per night' vs recreation.gov $20 for 2026-2028 - recreation.gov written.",
+    "Site count/length: stored count 8 and max_rig_ft 40 -> 13 sites (8 RV + 5 walk-to tent) and 65 ft (catalog per-site 40-65 ft).",
+    "Waterfront 'not waterfront' kept: recreation.gov tags 002, 003, 005, 008 'Riverfront' and lists 'Waterfront Sites'/'Creek Access', but the South Fork of Clear Creek is a small creek running under continuous lodgepole canopy south of the site line; no pad shows open ground to the water on Esri imagery. Default-down leaves it.",
+    "Phone: empty -> 307-431-7446 (recreation.gov: 'For facility specific information, please call (307) 431-7446' - concessionaire Rustic Freedom); managing office Powder River Ranger District (307) 696-1403 (FS page).",
+    "Note rewritten: dropped count, hookups, toilets/water, length and booking (fields); added the concessionaire."
+  ]
+}

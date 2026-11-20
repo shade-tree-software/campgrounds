@@ -1574,3 +1574,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6455 Dead Swede (WY, p3-536): riverview kept; creekside arguable on site 015 (44.69030,-107.44444) ~10-20 m from a 7-11 m creek with scattered trees; 013/014/016 behind conifers. rec.gov tags 013-016 "Riverfront". One clear site.
 - 6474 Hoback (WY, p3-537): downgraded to riverview; one spur (~43.28051,-110.59576, site 3/4) ~19 m over open gravel bank - riverfront-with-caveat candidate if more sites qualify.
 - 6361 Medicine Lodge (WY, p3-537): creekside kept pending site numbers (pads ~44.29357,-107.54016).
+- 6410 Pinnacles (WY, p3-538): lakeview candidate - west pads ~50 m from Brooks Lake through scattered conifers; no site list.

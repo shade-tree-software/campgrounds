@@ -1,0 +1,56 @@
+{
+  "id": 6504,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r04/caribou-targhee/recreation/teton-canyon-campground (status 'Site Closed' for the season; read 2026-11-20)",
+    "https://www.recreation.gov/api/camps/campgrounds/231928 and /rates (read 2026-11-20)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231928 (per-site catalog: 13 sites with lengths and coordinates; read 2026-11-20)",
+    "Esri World_Imagery around 43.757,-110.9195 with the catalog sites plotted (read 2026-11-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231928", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+                 "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+                 "note": "Sites 005 and 016 (20-ft pull-throughs) are first-come; the rest are reservable."},
+      "source": "recreation.gov facility 231928 rules (reservationCutOff 4, minWeekendStay 2, minHolidayWeekendStay 3; notice 'This campground has first come, first served sites') + campsite catalog (005, 016 not reservable), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 17, "nightly_high": 17, "currency": "USD", "checked": "2027",
+                 "extra_vehicle": {"included": 1, "amount": 8, "per": "night"}},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231928/rates (Peak Season 2026, 2027, 2028: STANDARD NONELECTRIC $17) + notice 'A $8 fee extra vehicles will be collected at the campground per day'; FS page defers fees to recreation.gov, read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 60, "note": "Gravel spurs; site lengths 20-60 ft (the FS page says RVs up to 40 ft)."},
+      "source": "recreation.gov campsite catalog for 231928 (13 STANDARD NONELECTRIC sites for RV/tent/trailer, Max Vehicle Length 20-60) + FS page ('13 single-family sites and two equestrian sites'; 'accommodating RVs up to 40 feet'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov facility 231928 ('there is no electricity'; all sites STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Vault toilet(s)'; 'Potable water is available at this site.') + recreation.gov ('Vault toilets, drinking water and trash collection are provided'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-21", "closes": "09-05", "note": "Recreation.gov season for 2027 (May 22 - Sep 6 in 2026); the FS page gives mid-June to early September."},
+      "source": "recreation.gov rates 231928 (Peak Season 2027-05-21 to 2027-09-05; 2026-05-22 to 2026-09-06) + FS page ('Season: Mid-June-Early September; After Season: Closed'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Caribou-Targhee NF campground in Teton Canyon beside Teton Creek, in Wyoming but reached only from Driggs, ID (about 11 mi: Ski Hill Rd, Alta Rd, then gravel Teton Canyon Rd). Trailheads to Alaska Basin and Table Mountain (Jedediah Smith Wilderness) start at the campground. Run by a concessionaire; no host. --Claude",
+  "summary": "FS r04 page + recreation.gov 231928: 13 gravel sites 20-60 ft (005/016 FCFS 20-ft pull-throughs) plus 2 equestrian sites, $17 2026-2028, $8 extra vehicle, water, vault toilets, 2-night weekend / 3-night holiday minimum, 4-day booking cutoff. Pin 79 m from the site centroid - OK. Not waterfront kept (creek under forest).",
+  "flags": [
+    "Season conflict: recreation.gov season May 21 - Sep 5 2027 (May 22 - Sep 6 2026) vs FS page 'Mid-June-Early September' - recreation.gov written; the 2026 calendar for past months could not be read (the API refuses past dates).",
+    "Rig length: stored max_rig_ft 40 (FS page 'RVs up to 40 feet') -> 60 from the catalog's longest site (002, 018: 60 ft). Reviewer may prefer the FS 40.",
+    "Horse sites: the FS page lists 'two equestrian sites' beside the 13 single sites; they are not in the recreation.gov catalog and their location is not given. A horse transfer facility (trailhead) is nearby. Flag only - two horse sites in a general campground, not a horse camp.",
+    "Minimum stay: 2 nights on weekends, 3 on holiday weekends (recreation.gov rules) - not a standing minimum.",
+    "Waterfront 'not waterfront' kept: Teton Creek is not visible under the forest canopy south/east of the loops on Esri imagery; no site is tagged waterfront in the catalog.",
+    "Phone: empty -> 541-351-1182 (FS page contact 'Audi Campground Services'; recreation.gov 'please call (541) 351-1182'); district office Teton Basin RD (208) 354-2312.",
+    "Websites current (FS r04 page + recreation.gov 231928)."
+  ]
+}
