@@ -1,0 +1,59 @@
+{
+  "id": 6417,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.signalmountainlodge.com/lodging/signal-mountain-campground/ (concessionaire, read 2026-11-20): 'Operating Season: May 7, 2027 - October 10, 2027'; 'This 80-site campground'; 'Pull-in/Back-in Sites for RVs or Trailers up to 30 ft.'; '24 Sites with 30 and 50-amp hookups'; '3 Loops (1st loop mainly electrical hookup sites, last loop is generator free)'; 'Dump Station'; '4 Conveniently Located Comfort Stations (potable water, flush toilets, camper sinks and hot water)'; token showers and laundromat, general store; 'Standard Site $59.00/night** (before tax)'; 'Electric Site $83.00/night** (before tax)'; '**Senior and Access Pass Holders receive a discount.'; 'First-come, first-served campsites are not available in Grand Teton National park ... Reservations are available on a rolling six-month basis'; 'The maximum stay at Signal Mountain Campground is 14 nights'; 'Maximum of one vehicle per site ... Maximum of six guests per site. The maximum length for a trailer or RV is 30 feet.'",
+    "https://www.recreation.gov/api/camps/campgrounds/247663 + rates + notices (read 2026-11-20): phone 307-543-2831; Peak Season 2027-05-07..2027-10-09 StandardNonelectric $59, RegularElectric $83, FullHookup $103 (same 2026 and 2028); notices: 14-night max, 30 cumulative; 'Day of reservations are allowed ... but not on a first-come, first-served basis'; 'Discounts must be applied at time of securing reservation'; generators not permitted in loop 3 (sites 65-86); 'Maximum of six occupants per site'; 'Roadways are narrow at this campground and backing into certain sites can be difficult'; 'Premium Fee / Water Hookup Fee: This Utility Fee is imposed on all lodging and camping products' (no amount); hasTaxes",
+    "recreation.gov campsite catalog 247663 (read 2026-11-20): 78 sites; 24 with 50 A electric; water/sewer 'No' at every site; 12 tent-only; RV max lengths 30 ft on 53 sites, under 23 ft on 63 (22), 29 (20) and 26 (camper van/pickup camper only, 20)",
+    "https://www.nps.gov/grte/structured_data_grte.json (NPS, read 2026-11-20): rvMaxLength 30, electricHookups 25, Winter Closure October 11 - May 8, amenities incl. dump station, coin showers, laundry, camp store; NPS fee figures $55 / $79",
+    "Esri World_Imagery at 43.8410,-110.6145 (230 m) with all catalog site points, read 2026-11-20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "recreation.gov catalog 247663 (24 sites with 50 A; water/sewer hookups 'No' at every site) + concessionaire ('24 Sites with 30 and 50-amp hookups'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 80, "max_rig_ft": 30},
+      "source": "signalmountainlodge.com ('This 80-site campground'; 'The maximum length for a trailer or RV is 30 feet'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": true, "laundry": true, "camp_store": true},
+      "source": "signalmountainlodge.com ('Dump Station'; comfort stations with 'potable water, flush toilets'; 'token operated showers and laundromat'; 'general store'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-07", "closes": "10-10", "note": "2027 dates; NPS lists the winter closure as October 11 - May 8."},
+      "source": "signalmountainlodge.com ('Operating Season: May 7, 2027 - October 10, 2027') + recreation.gov 2027 peak season 05-07..10-09, read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/247663", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14, "note": "Reservation only, same-day bookings on Recreation.gov included; no first-come at the gate. 30 nights a year across all park campgrounds; at most two sites per customer per night."},
+      "source": "signalmountainlodge.com ('First-come, first-served campsites are not available ...'; 'rolling six-month basis'; 14 nights) + recreation.gov notices, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 59, "nightly_high": 83, "currency": "USD", "checked": "2027", "extra_vehicle": {"included": 1, "max_vehicles": 1}, "extra_person": {"max_people": 6}, "note": "Plus tax and a utility fee rec.gov names without an amount. The NPS data page still lists $55 / $79."},
+      "source": "signalmountainlodge.com ('Standard Site $59.00/night** (before tax)'; 'Electric Site $83.00/night**'; one vehicle, six guests) + recreation.gov rates 247663 (2026-2028 $59 / $83), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "signalmountainlodge.com ('**Senior and Access Pass Holders receive a discount.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Grand Teton NP concessionaire campground (Signal Mountain Lodge) on the SE shore of Jackson Lake beside the lodge's store and marina; the third loop is generator-free. Some tent sites sit just above the lake; RV loops are in forest back from the shore. Parking pads vary in size and some are hard to back into. --Claude",
+  "summary": "Concessionaire page + rec.gov current: $59 standard / $83 electric (2027, plus tax), 24 x 50 A sites, no water/sewer at sites, 30 ft max, reservation only (no FCFS), 14 nights, Senior/Access discount honoured, season May 7-Oct 10 2027. Stored high $103 is a rec.gov rate category with no site -> $83. Pin is on the lodge buildings ~190 m east of the sites. Not waterfront stands.",
+  "flags": [
+    "FEES: stored nightly_high $103 = rec.gov's 'PeakFullHookup' category; the catalog has no full-hookup site and the concessionaire posts only $59 / $83 -> high set to $83. NPS structured data still shows $55 / $79 (outdated).",
+    "PIN (~190 m, under the 250 m line): stored 43.84060,-110.61230 sits on the Signal Mountain Lodge buildings/parking east of the campground; the catalog sites centre on ~43.8410,-110.6145 (rec.gov facility point 43.84077,-110.61520).",
+    "FIT: 30-ft max for trailer/RV; a 23-ft rig fits ~55 sites. Under 23 ft: 63 (22), 29 (20), 26 (20, camper van/pickup only). Rec.gov notice: 'Roadways are narrow at this campground and backing into certain sites can be difficult.'",
+    "PHONE: empty -> 307-543-2831 (rec.gov facility phone; Signal Mountain Lodge).",
+    "Not waterfront stands: the nearest RV pads (loop 2-3 sites 48, 49, 65, 66, 68) are ~60-70 m from Jackson Lake's high-water line through dense lodgepole forest; NPS: 'Some tent sites are just above Jackson Lake' (tent-only 15-17, 38-39).",
+    "Site count: concessionaire 80, catalog 78; electric 24 (concessionaire, catalog) vs NPS data 25.",
+    "Note trimmed: count, max length, booking platform and stay limit are fields; the RV Life $$$ remark dropped (rating holds it)."
+  ]
+}

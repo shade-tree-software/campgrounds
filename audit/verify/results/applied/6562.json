@@ -1,0 +1,40 @@
+{
+  "id": 6562,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.mountainbluebirdrvpark.com/ (operator, read 2026-11-20): 'Ever since we opened our doors in 2020'; 'a ten minute walk to the scenic Green River'; 'We have full electrical capabilities providing 20/30/50 Amp hook-ups. Each site has it's own meter.'; 'Individual water hook-ups are available for each space.'; 'Sewer is provided for each site'; 'Book you reservation now!' -> https://www.campspot.com/book/mountainbluebirdrvpark; Phone (307) 350-2024; 420 Horsetooth Ln, La Barge; no rate or site count posted. /about is an empty folder.",
+    "https://www.campspot.com/book/mountainbluebirdrvpark (403 to plain HTTP 2026-11-20, not retried); earlier capture audit/price_research/campspot_tier_2026-10-13.jsonl (read 2026-10-13): one site type '20/30/50 Amp Full Hookup RV Site', 2 sites, max_len 45, Back-In and Pull-Through, rv_types incl. Motorhome; $35 Tue / $40 Sat (Oct 2026, Jan 2027) + $4 Booking Fee; 182-day booking limit",
+    "Google Maps panel 'Mountain Bluebird RV Park LLC' (read 2026-11-20): 4.4 / 7 reviews, +1 307-350-2024, 42.26015,-110.20533; reviews read: 'Appeared some workers from Texas were living there' (3 years ago); 'No services but the electric and Wifi worked great. Would not return. Gravel pads uneven and cost was 65' (a year ago); others positive (sunsets, hosts)",
+    "RV Life Algolia park index (read 2026-11-20): 3.5 stars, 2 reviews, price_level 2, avg_rate $26, 20 sites",
+    "audit/price_research/gateways.py 42.26015,-110.20555: none within 40 km (Grand Teton 143 km)",
+    "Esri World_Imagery at 42.2602,-110.2056 (240 m), read 2026-11-20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "mountainbluebirdrvpark.com ('20/30/50 Amp hook-ups. Each site has it's own meter'; 'Individual water hook-ups ... for each space'; 'Sewer is provided for each site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": null, "max_rig_ft": 45, "pull_through": true},
+      "source": "Campspot capture audit/price_research/campspot_tier_2026-10-13.jsonl (the park's only online type: max_len 45, 'Pull-Through' and 'Back-In'), read 2026-10-13; the 20-site count came only from RV Life via the sweep note and the operator states no count",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/mountainbluebirdrvpark", "window_opens_days": 182},
+      "source": "mountainbluebirdrvpark.com ('Book you reservation now!' -> campspot.com/book/mountainbluebirdrvpark) + Campspot capture 2026-10-13 ('Cannot book more than 182 days in advance')",
+      "method": "manual"
+    }
+  },
+  "summary": "Operator site current (opened 2020; 20/30/50 A, water, sewer at each site; Campspot booking; phone matches). Campspot refuses now; Oct-2026 capture: $35 Tue / $40 Sat + $4 booking fee, but only 2 sites sold online. No gateway within 40 km. Google 4.4/7, RV Life 3.5/2. Stored 20-site count is RV Life only -> cleared. Long-stay character unclear: flagged for the reviewer.",
+  "flags": [
+    "PRICE GATE: passes on the 2026-10-13 Campspot capture - $35 Tuesday / $40 Saturday, 20/30/50 A full-hookup site, Oct 2026 and Jan 2027, plus a $4 booking fee once per stay. Campspot answered 403 today, so not re-read. No gateway within 40 km. One Google reviewer (a year ago) wrote 'cost was 65' - unclear whether that was a single night.",
+    "GOOGLE: 4.4 / 7 reviews (under 25 - presence rests on the working operator website + phone + Campspot engine). RV Life 3.5 stars from 2 reviews, $$ (avg $26).",
+    "LONG-STAY / WORKFORCE (borderline, for the reviewer): Campspot offers only 2 sites (one type) against RV Life's 20; a Google reviewer 3 years ago wrote 'Appeared some workers from Texas were living there'; another a year ago: 'Weird place. No services but the electric and Wifi worked great. Would not return.' The operator markets the park to travellers ('Gateway to & from Jackson', a nightly booking engine, no weekly/monthly rate posted) and imagery shows a small gravel loop with two units. Tests: (1) not seasonal-only as far as published; (2) nightly rate posted on its engine - pass; (3) no lots sold; (4) nightly share unmeasured - 2 online sites of an unconfirmed 20 would be 10%, right at the 1-in-10 line; (5) no ownership sales. I read it as an ordinary small nightly park with some long-stay workers, not clearly mostly seasonal - not a drop on what I could read.",
+    "SITE COUNT: stored 20 (derived, sourced only to RV Life via the sweep note; the operator's pages state no count) -> cleared. Campspot sells 2 sites online.",
+    "PIN: stored 42.26015,-110.20555 sits in the park's gravel loop (Google 42.26015,-110.20533, ~20 m). Fine.",
+    "Not waterfront stands: the Green River is a 'ten minute walk' away; the park is on open sagebrush flats.",
+    "Phone (307) 350-2024 and website confirmed. The stored Campspot marketplace link (campspot.com/park/...) could be swapped for the operator's booking link https://www.campspot.com/book/mountainbluebirdrvpark.",
+    "Note left as is (says nothing the fields show); its 'with tent sites' is unconfirmed - the operator and Campspot show RV sites only."
+  ]
+}

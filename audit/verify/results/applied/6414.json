@@ -1,0 +1,48 @@
+{
+  "id": 6414,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/ryan-park-campground (read 2026-11-20, page updated 2026-10-22): 'This campground remains open as weather and road conditions permit access. Visitors should be aware that no fees are charged and no amenities, facilities, or services are provided throughout the winter months.'; '49 campsites (13 RV pull-through sites) and 1 group campsite'; 'Toilets, potable water, and trash services are accessible during the summer season'; Seasons of Use 'June - September'; 'Max trailer length: 30 ft'; 'Single Site: $20 per night, Additional Vehicle Fee: $5 per vehicle per day'; 'This site was approved for a fee change'",
+    "https://www.recreation.gov/api/camps/campgrounds/231848 + rates + notices (read 2026-11-20): Peak Season 2027-06-01..2027-09-07 RV/standard $20; First-come, First-served Season 2026-09-10..2026-10-31 $20; fee description '$20 per night per site ... Host on site ... Reservations can be made up to 6 months in advance'; notice 'There are no hookup services. Maximum length of stay is 14 days ... Campsites are limited to 8 people and 2 vehicles per site'; amenities Drinking Water, Vault Toilets; Brush Creek/Hayden RD phone (307) 326-5258",
+    "recreation.gov campsite catalog 231848 (read 2026-11-20): 32 single sites (Upper Loop 001-016, Center Loop 017-034) + group; 7 not reservable (003, 008, 015, 016, 019, 023, 034); max lengths 25-45 ft (99 placeholders on 8 sites); site 013 25 ft",
+    "Esri World_Imagery at 41.3255,-106.4915 (180 m) with catalog site points, read 2026-11-20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov notice 'There are no hookup services', read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 32, "max_rig_ft": 45, "pull_through": true},
+      "source": "recreation.gov campsite catalog 231848 (32 single sites, longest real length 45 ft), read 2026-11-20; FS page says 49 sites / 13 pull-through and 'Max trailer length: 30 ft'",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "recreation.gov amenities (Drinking Water, Vault Toilets) + FS page ('Potable water is available'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231848", "window_opens_days": 180, "fcfs": "some_sites", "max_stay_nights": 14, "note": "Reservable in the 2027 peak season (Jun 1-Sep 7); seven sites are first-come, and the whole campground is first-come after Labor Day."},
+      "source": "recreation.gov rates (Peak Season reservable; 'First-come, First-served Season' Sep 10-Oct 31), catalog (7 non-reservable sites), notice ('Maximum length of stay is 14 days'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "extra_vehicle": {"amount": 5, "per": "night", "max_vehicles": 2}, "extra_person": {"max_people": 8}, "checked": "2026-11-20"},
+      "source": "recreation.gov rate table (2027 peak RV/standard $20) + FS page ('Additional Vehicle Fee: $5 per vehicle per day') + rec.gov notice ('8 people and 2 vehicles per site'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF (Brush Creek/Hayden RD) campground on the Snowy Range Scenic Byway beside Barrett Creek; stays open in winter as access allows, with no fees or services. --Claude",
+  "summary": "FS page and rec.gov current: $20, no hookups, vault toilets + water, 14-night limit, 8 people/2 vehicles. Reservable Jun 1-Sep 7 2027 with 7 FCFS sites, first-come Sep 10-Oct 31. Catalog shows 32 single sites (FS says 49) and lengths to 45 ft (FS says 30-ft trailer max). Pin fine; Barrett Creek behind a willow band, not waterfront stands.",
+  "flags": [
+    "SITE COUNT: stored 49 (FS overview) vs rec.gov catalog 32 single sites + group (rec.gov 'Facilities' text says '42 campsites and one group campsite'). Wrote the catalog's 32.",
+    "MAX RIG: FS page 'Max trailer length: 30 ft'; rec.gov catalog lists sites to 45 ft. Wrote rec.gov's 45 (trust rec.gov). Either way a 23-ft rig fits most sites (only 013 at 25 ft is tight).",
+    "SEASON (manual 06-01..09-30, not touched): FS 'June - September'; rec.gov peak season 2027-06-01..09-07, then a first-come season Sep 10-Oct 31 at $20. FS current conditions: 'remains open as weather and road conditions permit access ... no fees are charged and no amenities, facilities, or services are provided throughout the winter months.' Reviewer may want closes 10-31 per rec.gov.",
+    "FEE CHANGE: FS page says 'This site was approved for a fee change'; rec.gov still $20 for 2027-28 peak seasons.",
+    "PHONE: empty -> (307) 326-5258 (Brush Creek/Hayden Ranger District, on rec.gov).",
+    "Not waterfront stands: Barrett Creek runs in a willow band 60-100 m SE of the nearest sites (028, 022) - creekside channel, canopy between.",
+    "PIN fine: stored 41.32569,-106.49179 between the two loops (rec.gov 41.32556,-106.4925, FS 41.3257,-106.4925)."
+  ]
+}

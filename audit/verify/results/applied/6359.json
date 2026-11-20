@@ -1,0 +1,46 @@
+{
+  "id": 6359,
+  "checked": "2026-11-20",
+  "sources": [
+    "reserve.wyoming.gov PlaceId 15 via wyordr.usedirect.com rdr search/place, search/grid and search/details (read 2026-11-20): Popo Agie (FacilityId 384) 20 bookable units = 12 'Campsite Non-Electric' (01, 03, 04, 05, 09, 10, 11, 13, 17, 18, 19, 24) + 8 tent sites; Sawmill (385) 4 'Campsite Non-Electric' (26-29) + tent site TE25 + shelter; Popo Agie Yurts (398). 'Unit&parkingsize' 45 (01), 36 (03, 09, 10), 40 (04), 30 (05, 11, 17, 18, 19), 18 (13), 35x16 dims (24); Sawmill 20 (26), 24 (27), 40 (28, 29: 'Pull Through RV Site ... Will not accommodate RV slide-outs'); site 17 'not recommended for RV's over 30ft'; every unit Vault Toilet, no electric; 'Waterfront Setting' River at 13, 27, 28, 29 and tent TE16, TE20-23, 'Short Walk' at 03, 04, 05, 26, TE25; Restrictions MaximumStay 14; unit pages 'Facility Fee $ 12-21/night' / 'Fees Range From 12/21' with 'Fees shown represent Resident/Non-resident prices before tax'; Rate $10.00",
+    "audit/state_park_fees/wy_pages_2026-10-12.json, wyoparks.wyo.gov/index.php/places-to-go/sinks-canyon (capture 2026-10-12; live site answers an F5 bot challenge, not retried): 'Water will be turned off in the Popo Agie Campground on on Oct 15th, 2026'; 'Campsites are reservation only May 1st-Sept 30th. Sites 12 and 15 in the Popo Agie Campground are first come first-served year round.'; 'Campsites and the Sawmill Shelter are first-come first served, Oct 1st - April 30th. Campsite and shelter access is weather dependent.'; 'Phone Number 307-332-6333 Headquarters 307-332-3077 Visitor Center (June-August)'",
+    "Esri World_Imagery at 42.7415,-108.8225 (140 m), 42.7410,-108.8240 (100 m) and 42.7572,-108.7993 (110 m) with every booking-site unit point, read 2026-11-20",
+    "https://www.sinkscanyonstatepark.org/visitor/camping/camping.html -> 403 Cloudflare 2026-11-20 (not retried)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "reserve.wyoming.gov PlaceId 15 (every Popo Agie and Sawmill unit is 'Campsite Non-Electric' or a tent site, no hookup attributes), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 29, "max_rig_ft": 45, "pull_through": true},
+      "source": "reserve.wyoming.gov PlaceId 15 (Popo Agie sites numbered 01-24, 20 bookable online plus FCFS 12 and 15; Sawmill 25-29; 'Unit&parkingsize' up to 45 at site 01; Sawmill 28/29 'Pull Through RV Site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "reserve.wyoming.gov unit pages ('Restroom Type: Vault Toilet') + wyoparks capture 2026-10-12 ('Water will be turned off in the Popo Agie Campground on Oct 15th'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://reserve.wyoming.gov/web/#!park/15", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Reservations May 1 - Sep 30; Popo Agie sites 12 and 15 are first-come year round, and every site is first-come Oct 1 - Apr 30."},
+      "source": "wyoparks capture 2026-10-12 ('Campsites are reservation only May 1st-Sept 30th. Sites 12 and 15 ... first come first-served year round'; 'first-come first served, Oct 1st - April 30th') + reserve.wyoming.gov PlaceId 15 (MaximumStay 14), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Sinks Canyon SP SW of Lander along the Middle Fork Popo Agie River. Two state campgrounds: Popo Agie (24 sites, 12 bookable RV pads, the rest tent sites) and Sawmill, 2.6 km down-canyon (4 RV sites; its two 40-ft parallel pull-throughs won't take slide-outs). Water is shut off mid-October. A separate USFS Sinks Canyon campground lies farther up-canyon. --Claude",
+  "summary": "Booking site (US eDirect) read unit by unit: Popo Agie 12 RV pads (18-45 ft, 01 is 45) + 8 tent, Sawmill 4 RV (20-40 ft) + 1 tent, all non-electric, vault toilets, 14-night max; reservations May-Sep with sites 12/15 FCFS all year and everything FCFS Oct-Apr (season year_round manual left). Waterfront: river channel ~15-23 m wide (creek-size) and pads sit behind a riparian shrub/tree fringe -> riverfront re-audit lead. Pin is fine (Popo Agie). Sawmill is a split candidate.",
+  "flags": [
+    "WATERFRONT RE-AUDIT LEAD (stored riverfront, not --AWH): the Middle Fork Popo Agie here is a ~15-23 m whitewater channel on imagery, under the ~30 m line -> creekside at most. Closest RV pads: Popo Agie 03 (42.74098,-108.82519), 04 (42.74089,-108.82502), 05 (42.74107,-108.82461), booking site 'Short Walk', ~5-15 m from the water through a willow/shrub fringe; 11 (42.74132,-108.82231) and 13 (42.74129,-108.82196, tagged 'River' but an 18-ft pad) ~20-25 m through willows and trees. Sawmill 28 (42.75703,-108.79960) and 29 (42.75697,-108.79981), tagged 'River', ~15-20 m from the water under tree canopy. Reviewer: creekside if the fringe is judged open enough at 03-05, else creekview.",
+    "SPLIT CANDIDATE: Sawmill campground (sites 26-29 + TE25) sits 2.6 km down-canyon at ~42.7571,-108.7994 with its own entrance off WY-131, separate from Popo Agie (pin). Four RV sites: 26 (20 ft gravel), 27 (24 ft), 28 and 29 (40-ft parallel pull-throughs, 'Will not accommodate RV slide-outs').",
+    "FEES (manual, not overwritten): the booking site's unit pages now say 'Facility Fee $ 12-21/night' (Sawmill 'Fees Range From 12/21') with 'Fees shown represent Resident/Non-resident prices before tax', while the stored fees are the 2026 schedule's $10 / $18 base (+ day use, which is free here per the 2026-11-07 entrance fix). $12 / $21 may be a newer schedule or base + day use; the wyoparks fee page is behind the F5 challenge, so unconfirmed.",
+    "PHONE: empty -> 307-332-6333 (park headquarters, wyoparks capture); visitor center 307-332-3077 June-August.",
+    "FIT: 12 Popo Agie RV pads: 01 45 ft, 04 40, 03/09/10 36, 24 35, 05/11/17/18/19 30, 13 18 (too short for 23 ft); site 17 'not recommended for RV's over 30ft'. Sawmill 26 is 20 ft (too short), 27 24 ft. A 23-ft rig fits 11 Popo Agie + 3 Sawmill sites.",
+    "Site count: no count stored; 29 written (Popo Agie 01-24, of which 06 and 08 are not on the booking site and 12 and 15 are FCFS; Sawmill 25-29). The note's '12 fit RVs/trailers 18-45 ft' matches the booking site; Sawmill '5 sites, max ~40 ft' = 4 RV + 1 tent.",
+    "Season (manual year_round, 2026-10-20) agrees with the capture: winter camping first-come, 'access is weather dependent'; potable water off Oct 15 (2026). Stored season note says only sites 12 and 15 stay open in winter, but the capture says 'All campsites and the Sawmill Shelter are now first-come, first-served through April 30th, 2027' -> the season note is out of date (manual, not overwritten).",
+    "Pin fine: 42.74150,-108.82260 is in the Popo Agie loop, 44 m from the booking site's facility point.",
+    "Links: wyoparks sinks-canyon page and reserve.wyoming.gov/web/#!park/15 are current; sinkscanyonstatepark.org answered 403 Cloudflare (bot block, not dead) - keep.",
+    "Note trimmed: hookups, toilets, water and booking are fields."
+  ]
+}

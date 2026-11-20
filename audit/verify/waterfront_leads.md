@@ -1587,3 +1587,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6384 Bridge Bay (WY, p3-544): NPS "spectacular views of the lake", Lodges "Some sites have a distant view"; loops ~175 m from shore - lakeview candidate if named sites show it.
 - 6381 Bald Mountain (WY, p3-544): rec.gov "Small creeks wind through the campground" - 1-2 m stream in willows ~30 m E of sites 006/007; left not waterfront.
 - 6557 Woods Landing (WY, p3-544): operator "along the banks of Laramie River" - RV row ~30 m from the 11-16 m river through continuous cottonwoods; left not waterfront.
+- 6392 Lizard Creek (WY, p3-546): sites 32 (44.00172,-110.69137) and 34-37 are 15-45 m from Jackson Lake with the loop road between - lakeview candidate if site photos show the lake.
+- 6487 Leigh Creek (WY, p3-546): rec.gov tags sites "Riverfront", creek under continuous canopy - not waterfront kept.

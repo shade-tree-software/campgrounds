@@ -1,0 +1,66 @@
+{
+  "id": 6533,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.phillipsrvpark.com/rates (operator, read 2026-11-20): '10% discount on nightly rates for Good Sam or Military'; '2026 Rates April 15th-October 15th: Full Hook-Up Pull Thru With 50 AMP $54.00 plus tax/fees; ... With 30 AMP $51.00 plus tax/fees; Tent Sites - For 1 Tent $28.00'; 'All prices based on 2 person occupancy. Extra person charge: 11 or younger - free, 12+ $2.00 per night. Extra vehicle charge: $5 per night. Maximum of 2'; Monthly $750 + fees, Weekly $285",
+    "https://www.phillipsrvpark.com/amenities-services (read 2026-11-20): '58 RV Sites, 51 full hook-up pull throughs ... 7 full hook-up back ins; Big Rig friendly - at most sites, approximately 30' wide x 70' long'; 'WIFI at all sites'; '20/30/50 AMP'; 'Restroom and shower facilities'; 'Laundry'; 'Basic RV supplies'",
+    "https://www.phillipsrvpark.com/reservations-contacts and /policies (read 2026-11-20): 'Book Now' -> roverpass.com/c/phillips-rv-park-evanston-wy/booking; 'call us during our operating season at 307-789-3805'; '24 hr. restrooms, showers and laundromat are provided for registered paying guests only at the nightly rate'",
+    "RoverPass booking API for phillips-rv-park-evanston-wy (read 2026-11-20): isBookable true, CRS, advancedMonths 24, closeSeasonDates none; Apr/May/Jun 2027 Tue: 'Pull-Thru Full Hookup 30 Amps' $47 (sites 29-35, max 18-33 ft), 'Pull-Thru Full Hookup 50/30 Amp' $50 (26 sites, 28-85 ft); Sat $51 / $54; 'Monthly RV Sites' min 28 nights; 33 RV sites on sale; Nov 24/28 2026, Apr 13, Oct 19, Nov 9 2027: only 'Off Season Pull Through Electric/Sewer Only' $30 (7 sites, 20/30/50 A, max 80 ft); Dec 8 2026, Jan 26 and Mar 16 2027: no rate on sale",
+    "Google Maps panel 'Phillips RV Park' (read 2026-11-20): 4.1 / 476 reviews, +1 307-789-3805, 41.27076,-110.94776",
+    "RV Life Algolia park index (read 2026-11-20): 4 stars / 282 reviews, price_level 3, avg_rate $41, 56 sites",
+    "audit/price_research/gateways.py 41.2723,-110.9479: none within 40 km (Salt Lake City 97 km)",
+    "Esri World_Imagery at 41.2716,-110.9478 and 41.2700,-110.9472 (200 m), read 2026-11-20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "phillipsrvpark.com/amenities-services ('51 full hook-up pull throughs ... 7 full hook-up back ins'; '20/30/50 AMP'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 58, "max_rig_ft": 85, "pull_through": true},
+      "source": "phillipsrvpark.com/amenities-services ('58 RV Sites, 51 full hook-up pull throughs'); RoverPass site list 2026-11-20 (50/30 A pull-throughs up to 85 ft)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true, "camp_store": true, "wifi": true},
+      "source": "phillipsrvpark.com/amenities-services ('Restroom and shower facilities', 'Laundry', 'Basic RV supplies', 'WIFI at all sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "roverpass", "url": "https://www.roverpass.com/c/phillips-rv-park-evanston-wy/booking", "window_opens_days": 730},
+      "source": "phillipsrvpark.com 'Book Now' -> RoverPass; RoverPass campground record advancedMonths 24, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 54,
+        "currency": "USD",
+        "extra_person": {"included": 2, "amount": 2, "per": "night", "child": 0, "child_max_age": 11},
+        "extra_vehicle": {"amount": 5, "per": "night", "max_vehicles": 2},
+        "checked": "2026-11-20",
+        "note": "Apr 15-Oct 15: 30 A full-hookup pull-throughs $47 weekdays / $51 weekends, 50 A $50 / $54; off-season electric/sewer-only pull-throughs $30. Plus tax."
+      },
+      "source": "phillipsrvpark.com/rates (2026 $51/$54, extra person/vehicle) + RoverPass booking API quotes for Apr-Jun and Oct-Nov 2027 dates, read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"good_sam": true, "military": true},
+      "source": "phillipsrvpark.com/rates ('10% discount on nightly rates for Good Sam or Military'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Family-run Evanston RV park (since 1936) off I-80 on Bear River Dr, with a grass tent area. --Claude",
+  "summary": "Operator site current: 58 RV sites (51 pull-through), 20/30/50 A full hookups, showers, laundry, wifi, RoverPass booking. RoverPass quotes $47 weekday 30 A (fits 23 ft at sites 29-33) / $50-54 50 A in season; off-season electric/sewer-only $30. Price gate passes. Pin sits north of Bear River Dr in a vacant lot -> ~270 m move to the park loop. Not waterfront stands.",
+  "flags": [
+    "PIN MOVE ~270 m: stored 41.27230,-110.94790 sits NORTH of Bear River Drive in a vacant lot by a shed; the park (office at 41.27076,-110.94776, treed RV loop) is south of the road. Target the loop centre 41.2699,-110.9474.",
+    "PRICE GATE passes: cheapest real RV night $30 (off-season 'Electric/Sewer Only' pull-through, Oct-Nov and mid-April 2027 on RoverPass); in season $47 Tuesday for a 30 A full-hookup pull-through (sites 29-33 take 25-33 ft), $50 for 50 A; operator's posted 2026 rack rates $51/$54 less 10% Good Sam/military = $45.90/$48.60. No gateway within 40 km.",
+    "SEASON not written: operator rates are for 'April 15th-October 15th' and say 'call us during our operating season'; RoverPass sells off-season electric/sewer-only sites on Oct 19, Nov 9, Nov 24/28 and Apr 13 but nothing on Dec 8, Jan 26 or Mar 16 (no closure dates set). Likely closed roughly Dec-Mar, unconfirmed.",
+    "LONG-STAY: monthly ($750) and weekly rates posted; RoverPass 'Monthly RV Sites' rate needs 28 nights. Nightly: 33 RV sites on sale on RoverPass on every in-season date of 58 = ~57% nightly -> no caveat needed. Google 4.1 / 476.",
+    "RATING: RV Life now price_level 3 ($$$, avg $41); stored rating.price_tier 2 (2026-06). Stars still 4 (282 reviews).",
+    "PHONE: empty -> 307-789-3805 (operator site, RoverPass, Google). Website https://www.phillipsrvpark.com/ confirmed.",
+    "Note trimmed: the site count, pull-through count, rig length, amperage and showers/laundry are all in fields now; the stored '56 ... 49 pull-through' was out of date (operator: 58 / 51).",
+    "Not waterfront stands: the Bear River runs ~150 m south of the loop behind a tree line, a path and an open lot."
+  ]
+}

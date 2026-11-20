@@ -2839,3 +2839,14 @@ me drop and report); each needs the research named before a verdict.
 - 6519 Green Oasis RV Park: $45.76 + 12% tax ($51.25 with tax) - under the gate before tax; laundry is across the street (laundry false).
 - 6353 Guernsey Sandy Beach: lakeview (SB15-SB25), re-pinned 360 m from the east tent cluster; every RV site lists 50 ft (may be a placeholder).
 - 6396 Indian Creek: rec.gov 259304 now listed - url written. Grant Village (6393) to rec.gov for 2027, not listed yet.
+
+## WY p3-546 (2026-11-20)
+- No drops. 6547 Larson Park (Guernsey) NOT verified: townofguernseywy.us has no DNS, the civiclive site 403s; Google 4.4 (52), phone 307-836-2255, RV Life 4*/$$ (avg $25, 15 sites). Pin sits at the golf clubhouse - RV area unconfirmed. Re-queue at the end of WY.
+- SPLIT (after the WY queue): 6359 Sinks Canyon -> Sawmill campground 2.6 km down-canyon (~42.7571,-108.7994), own entrance off WY-131, 4 RV sites (28/29 under canopy 15-20 m from the river, "Will not accommodate RV slide-outs").
+- 6359 Sinks Canyon: booking site unit pages now say "Facility Fee $ 12-21/night" vs stored manual $10/$18; stored manual season note says only sites 12/15 stay open in winter, the 2026-10-12 capture says all sites first-come through 2027-04-30 - update both by hand.
+- 6392 Lizard Creek: only sites 21, 22, 36, 57 take a 23-ft rig (25-ft max) - kept, tight. Re-pinned 470 m.
+- 6417 Signal Mountain: stored high $103 was rec.gov's full-hookup category (no site has one) -> $83; narrow roads warning. Re-pinned ~190 m off the lodge.
+- 6562 Mountain Bluebird (La Barge): Campspot sells 2 sites vs RV Life's 20; reviewers mention workers living there - kept, long-stay lean noted.
+- 6414 Ryan Park: count 49 -> 32; FS "Max trailer length: 30 ft" vs rec.gov 45.
+- 6533 Phillips RV Park re-pinned 270 m; RV Life now $$$.
+- 6550 Shell Campground: shellcampground.com 406 (not retried); Newbook engine $34-43.

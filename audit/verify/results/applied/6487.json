@@ -1,0 +1,57 @@
+{
+  "id": 6487,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/leigh-creek-campground (alert 'Site Partially Closed: Open to self-supported camping as long as weather permits (no trash collection, water, or cleaning)'; Seasons of Use 'Memorial Day - Labor Day, weather dependent'; '14 day stay limit'; 'Single Site: $20 per night'; 'Limit 8 people per site'; vault toilets; potable water; Powder River RD (307) 696-1403; last updated September 21, 2026), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/250046 and /rates (concessionaire Rustic Freedom; 'For facility specific information, please call (307) 431-7446'; 'Vault toilets, drinking water from a hand pump, and trash collection'; 'The nearest dump station is 22 miles away'; 'sits on the banks of Tensleep Creek surrounded by a forest of lodgepole pine'; notices 'Sites 7 and 8 are tent only and will not accommodate campers or RVs', second vehicle $9.00; maxConsecutiveStay 14, reservationCutOff 2; Peak Season 2026-05-22..09-20, 2027-05-27..09-19, 2028: STANDARD NONELECTRIC $18), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A250046 (10 sites: 5 STANDARD NONELECTRIC RV/Trailer/Tent 02, 03, 04, 10, 11 at 30/30/26/36/36 ft; 5 TENT ONLY 01, 05, 06, 07, 08; 04 and 05 not reservable), read 2026-11-20",
+    "Esri World_Imagery around 44.0803,-107.3150 (300 m frame) with the catalog sites and stored pin plotted, read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/250046", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14, "note": "RV site 04 and tent site 05 are first-come; the rest are reservable."},
+      "source": "recreation.gov campsite catalog for 250046 (04 and 05 not reservable) + facility rules (reservationCutOff 2, maxConsecutiveStay 14) + FS page ('14 day stay limit'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 18, "currency": "USD", "checked": "2027",
+                 "extra_vehicle": {"included": 1, "amount": 9, "per": "night", "max_vehicles": 2},
+                 "extra_person": {"max_people": 8},
+                 "note": "The FS page says $20 a night; recreation.gov sells sites at $18 for 2026-2028."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/250046/rates (Peak Season 2026, 2027, 2028: STANDARD NONELECTRIC $18) + notice ('the second vehicle will be charged an extra $9.00 fee at the campground') + FS page ('Limit 8 people per site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 10, "max_rig_ft": 36, "note": "Only 5 sites take an RV or trailer (02, 03, 04 at 26-30 ft; 10 and 11 at 36 ft); 01, 05, 06, 07 and 08 are tent-only."},
+      "source": "recreation.gov campsite catalog for 250046 (10 sites; Max Vehicle Length 26-36 on the 5 STANDARD sites, 0 on the 5 TENT ONLY sites), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog for 250046 (all NONELECTRIC, no hookup attributes), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "note": "Hand-pump water. Nearest dump station about 22 miles away at Powder River Pass."},
+      "source": "FS page ('Vault toilet(s)'; 'Potable water is available at this site.') + recreation.gov ('drinking water from a hand pump'; 'The nearest dump station is 22 miles away at Powder River Pass'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-27", "closes": "09-19", "note": "Recreation.gov season for 2027 (May 22 - Sep 20 in 2026); the FS gives Memorial Day - Labor Day, weather dependent, and allows self-supported camping after closing while weather permits (no water, trash or cleaning)."},
+      "source": "recreation.gov rates 250046 (Peak Season 2027-05-27..2027-09-19) + FS page ('Memorial Day - Labor Day, weather dependent'; 'open to self-supported camping as long as weather permits after season closures'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground among pines at the bottom of Leigh Canyon beside Tensleep Creek, about 1 mi up FSR 18 (WY-435) from US-16, ~7.5 mi E of Ten Sleep. Run by a concessionaire. --Claude",
+  "summary": "FS page + recreation.gov 250046: 10 sites, only 5 take RVs (26-36 ft; 5 tent-only, not just 7-8), $18 on rec.gov 2026-2028 (FS says $20), $9 second vehicle, hand-pump water, vault toilets, no dump, 14-day limit, 2 sites FCFS, season May 27-Sep 19 2027. Count 11 -> 10, max rig 36. Pin in the loop. Not waterfront kept.",
+  "flags": [
+    "SITE COUNT: stored 11 (derived) -> 10 (rec.gov catalog has no site 09). Only 5 sites (02, 03, 04, 10, 11) take an RV/trailer, 26-36 ft; the stored note said only 7-8 were tent-only, but the catalog types 01, 05, 06, 07 and 08 TENT ONLY. A 23-ft rig fits all 5 RV sites.",
+    "FEE CONFLICT: FS page 'Single Site: $20 per night' vs recreation.gov $18 for 2026, 2027 and 2028 - recreation.gov written ($18 stored already).",
+    "WATERFRONT 'not waterfront' kept (lead only): rec.gov tags 04-08, 10 and 11 'Riverfront'. Tensleep Creek here is a narrow creek (well under 30 m) in a shaded channel ~20-40 m south of the loop, with continuous tree canopy between the sites and the water on imagery - at most a creek view, not creekside, and not visible enough on imagery to earn even the view.",
+    "PIN: stored 44.08049,-107.31465 sits in the loop's central turnaround among the catalog sites (FS point 44.08088,-107.31360 is ~90 m E). Fine.",
+    "PHONE: empty -> 307-431-7446 (recreation.gov: 'For facility specific information, please call (307) 431-7446' - concessionaire Rustic Freedom); managing office Powder River Ranger District (307) 696-1403.",
+    "STATUS: FS alert 'Site Partially Closed' is the ordinary end-of-season state (self-supported camping, no services) - no status written.",
+    "Websites current (FS r02 page 200; rec.gov 250046).",
+    "Note rewritten: dropped site count, booking, toilets/water/hookups, dump distance (fields) and the unsourced '54-ft limit' line."
+  ]
+}
