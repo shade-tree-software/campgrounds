@@ -1,0 +1,55 @@
+{
+  "id": 6492,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/middle-fork-campground (last updated September 21, 2026)",
+    "https://www.recreation.gov/api/camps/campgrounds/231832 and /rates (read 2026-11-20)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231832 (per-site catalog: 9 sites with coordinates, lengths, equipment; read 2026-11-20)",
+    "Esri World_Imagery around 44.3016,-106.9500 with site points (read 2026-11-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231832", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14, "note": "Sites 002 and 004 are first-come; the rest are reservable."},
+      "source": "recreation.gov campsite catalog for 231832 (002 and 004 'Not Reservable', others reservable) + facility rules (reservationCutOff 2) + FS page ('14 day stay limit'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2027",
+                 "extra_vehicle": {"included": 1, "amount": 10, "per": "night", "max_vehicles": 2},
+                 "note": "Double site 001 is $40."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231832/rates (Peak Season 2026, 2027, 2028: STANDARD NONELECTRIC $20, double $40) + facility notice ('the second vehicle will be charged an extra $10.00 fee at the campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 9, "max_rig_ft": 80, "pull_through": true, "note": "RV and trailer sites 002-009 take 40-80 ft (002 is an 80-ft pull-through); double site 001 takes vehicles up to 25 ft but no RVs or trailers."},
+      "source": "recreation.gov campsite catalog for 231832 (Max Vehicle Length and permitted equipment per site; 002 Driveway Entry 'Pull-through'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog for 231832 (all 9 sites STANDARD NONELECTRIC; rate table lists only non-electric and double), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "note": "Nearest dump station about 18 mi away at Powder River Pass."},
+      "source": "recreation.gov facility 231832 ('Vault toilets, drinking water and trash collection are provided'; 'A dump station is available 18 miles away at Powder River Pass') + FS page ('Vault toilet(s)'; 'Potable water is available at this site.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-27", "closes": "09-19", "note": "Recreation.gov season for 2027 (May 22 - Sep 20 in 2026); the FS gives Memorial Day - Labor Day, weather dependent, and allows self-supported camping after closing while weather permits."},
+      "source": "recreation.gov rates 231832 (Peak Season 2027-05-27 to 2027-09-19; 2026-05-22 to 2026-09-20) + FS page ('Seasons of Use: Memorial Day - Labor Day, weather dependent'; 'open to self-supported camping as long as weather permits after season closures (no trash collection, water, or cleaning)'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground beside Middle Clear Creek in pine and aspen forest, 13 mi W of Buffalo off US-16 (Cloud Peak Skyway); Tie Hack Reservoir is nearby. Run by a concessionaire. --Claude",
+  "summary": "FS page + recreation.gov 231832: 9 non-electric sites (stored note's '10 sites ... 2 with electric' is wrong), 002/004 first-come, $20 2026-2028 ($40 double site 001, $10 second vehicle), RV limits 40-80 ft (001 no RVs), vault toilets, water, 14-day limit, season May 27-Sep 19 2027. Not waterfront kept (creek under canopy, imagery shadowed).",
+  "flags": [
+    "Waterfront 'not waterfront' kept: recreation.gov tags all nine sites 'Riverfront', but Middle Clear Creek is a small mountain creek (creek-scale at most) and on Esri imagery it runs under continuous conifer canopy south of the site line (sites 003-008 at 44.30124-44.30196,-106.94825 to -106.95214); no pad shows open ground to the water. A canopy-blind look can't earn creekside under default-down.",
+    "Electric conflict: stored note and inclusion_evidence say '2 electric'; the recreation.gov catalog and rates show all 9 sites non-electric (hookups.electric 0 already stored). Suggested inclusion_evidence: 'USFS Bighorn NF page + recreation.gov #231832: 9 non-electric sites, RV limits 40-80 ft, reservable -> real RV campground'.",
+    "Site count: stored 10 -> 9 (catalog 001-009; 001 is the double site).",
+    "Fee conflict: FS page 'Single Site: $22 per night / Double site (site #1): $44' vs recreation.gov $20/$40 for 2026-2028 - recreation.gov written.",
+    "Phone: empty -> 307-431-7446 (recreation.gov: 'For facility specific information, please call (307) 431-7446' - the concessionaire); managing office Powder River Ranger District (307) 696-1403 (FS page).",
+    "Pin 44.30164,-106.95172 is ~120 m W of the site centroid (44.30155,-106.95022) - no move. Stored links current.",
+    "Note rewritten: dropped site count, spur lengths, electric (wrong), water/toilets/dump and booking (fields)."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": 6480,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/island-park-campground (last updated September 8, 2026; status 'Site Closed / Gated' for the season)",
+    "https://www.recreation.gov/api/camps/campgrounds/250042 and /rates (read 2026-11-20)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A250042 (per-site catalog: 9 sites with coordinates and lengths, read 2026-11-20)",
+    "Esri World_Imagery around 44.2053,-107.2363 (export with site points, zoom-19 tile; read 2026-11-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/250042", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14, "note": "Site 02 is first-come; the other 8 are reservable."},
+      "source": "recreation.gov facility 250042 ('This campground has one first-come, first-serve site'; rules reservationCutOff 2, maxConsecutiveStay 14) + campsite catalog (site 02 'Not Reservable', 03-10 reservable), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 18.5, "nightly_high": 18.5, "currency": "USD", "checked": "2027",
+                 "extra_vehicle": {"included": 1, "amount": 9, "per": "night", "max_vehicles": 2}},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/250042/rates (Peak Season 2026, 2027 and 2028: STANDARD NONELECTRIC $18.50) + facility notice ('the second vehicle will be charged an extra $9.00 fee at the campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 9, "max_rig_ft": 75, "pull_through": true, "note": "Rig limits by site: 30 ft (08), 36 ft (04, 09), 52-60 ft (03, 05-07), 70 ft (02), 75 ft pull-through (10)."},
+      "source": "recreation.gov campsite catalog for 250042 (Max Vehicle Length per site; site 10 Driveway Entry 'Pull-Through'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog for 250042 (all 9 sites STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "note": "Drinking water from a hand pump; nearest dump station about 17 mi away on Powder River Pass."},
+      "source": "recreation.gov facility 250042 ('Vault toilets, drinking water from a hand pump and trash collection are provided. The nearest dump station is 17 miles away on Powder River Pass.') + FS page ('Vault toilet(s)'; 'Potable water is available at this site.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "06-11", "closes": "09-06", "note": "Recreation.gov sells nights Jun 11 - Sep 5 in 2027 (Jun 12 - Sep 6 in 2026); the FS gives Memorial Day - Labor Day, weather dependent, and gates the road after closing."},
+      "source": "recreation.gov rates 250042 (Peak Season 2027-06-11 to 2027-09-05; 2026-06-12 to 2026-09-06) + FS page ('Seasons of Use: Memorial Day - Labor Day, weather dependent'; 'gated after season closures'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground in lodgepole and spruce on West Tensleep Creek, 3 mi up FS Road 27 from US-16 (about 21 mi NE of Ten Sleep), near the West Tensleep Lake trailhead into the Cloud Peak Wilderness. Run by a concessionaire. --Claude",
+  "summary": "FS page + recreation.gov 250042: 9 non-electric sites (one first-come, site 02), $18.50 2026-2028 ($9 second vehicle), hand-pump water, vault toilets, 14-day limit, rig limits 30-75 ft per site (site 10 pull-through), sold Jun 11-Sep 5 2027; FS says Memorial Day-Labor Day and the site is gated for winter now. West Tensleep Creek is ~10-15 m wide (creek); sites 07 and 06 sit ~20-30 m from it over open meadow -> recommend riverview -> creekside.",
+  "flags": [
+    "WATERFRONT (recommend riverview -> creekside): West Tensleep Creek is ~10-15 m wide at the campground, so river values don't apply - the stored 'riverview' should be creekside or not waterfront on the creek scale. On zoom-19 imagery site 07 (44.205322,-107.235777; RV parked on it) is ~20-30 m from the creek's north bank across open grass meadow with a few scattered conifers; site 06 (44.205196,-107.236303) ~25 m, partly through a few trees; site 08 (44.205724,-107.235389) ~16-20 m from the bend through grass and shrubs at the edge of a tree clump. recreation.gov tags 06 and 07 'Riverfront'. All three are reservable by the night. The stored evidence ('forest-edge treeline screens pads') does not match the zoom-19 view at 06/07: the treeline is behind the pads, not between them and the creek.",
+    "Phone: empty -> 307-431-7446 (recreation.gov: 'For facility specific information, please call (307) 431-7446' - the concessionaire); the managing office is the Powder River Ranger District, (307) 696-1403 (FS page).",
+    "Fee conflict: FS page 'Single Site: $20 per night' vs recreation.gov $18.50 for 2026-2028 - recreation.gov written.",
+    "Season: FS 'Memorial Day - Labor Day, weather dependent' vs recreation.gov sale season from mid-June; written as the recreation.gov dates with the FS line in the note. FS page status today: 'Site Closed / Gated' (winter).",
+    "FS page lists 'OHV Trail Riding' among nearby recreation; a general forest campground, not an OHV camp.",
+    "Pin 44.20490,-107.23640 is ~52 m from the site centroid (44.20537,-107.23633) - no move. Stored website links are current.",
+    "Note rewritten: dropped site count, FCFS count and water (fields); added the concessionaire and the road."
+  ]
+}

@@ -1,0 +1,12 @@
+# WY notes p3-537
+- 6469 done: creekside -> riverview recommended; max_rig 45->30 (21 of 52 sites 24ft+)
+- 6471 done: lakeview kept; season opens 06-01 FS; 7-day cutoff
+- 6370 done: wyoparks live page F5-challenged (used 2026-10-12 capture); lakefront -> lakeview recommended
+- 6474 done: riverfront -> riverview recommended (1 clear site); phone 307-276-3375 -> 307-739-5500
+- 6480 done: riverview -> creekside (06/07 ~20-30 m open meadow, creek 10-15 m); phone empty -> 307-431-7446; fee 18.50
+- 6483 done: riverfront -> riverview; potable water now false; phone empty -> 307-739-5500
+- 6488 done: kept not waterfront; season 05-21..10-03; phone empty -> 307-745-2300; lead: Libby Creek Aspen/Spruce not in DB
+- 6566 done: $36/night passes; Google 4.8 (31); self-contained only; lease wording flagged
+- 6556 done: free/donation confirmed Jul 2026; website/phone empty -> town page / 307-548-6551; count unsourced
+- 6361 done: 3 loops 28 sites 9 E; pin move to 44.29513,-107.5403; creekside kept tentative; phone empty -> 307-469-2234
+- 6492 done: 9 non-electric sites (not 10/2E); not waterfront kept; phone empty -> 307-431-7446

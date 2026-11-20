@@ -1,0 +1,41 @@
+{
+  "id": 6370,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://wyoparks.wyo.gov/index.php/places-to-go/hawk-springs - live page answered an F5 bot-challenge script twice on 2026-11-20 (not retried by any other route); text cited from the repo's own capture of that page, audit/state_park_fees/wy_pages_2026-10-12.json (read 2026-10-12)",
+    "audit/state_park_fees/wy_places_2026-10-12.json (reserve.wyoming.gov place list: no Hawk Springs facility)",
+    "Esri World_Imagery around 41.7115,-104.1955 (export and zoom-18/19 tiles along the shore road; read 2026-11-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14},
+      "source": "wyoparks.wyo.gov Hawk Springs page as captured 2026-10-12 ('24 primitive campsites, which are walk-up only'; 'Camping is permitted for 14 days in a 30 day period') + reserve.wyoming.gov place list (no Hawk Springs listing)",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24},
+      "source": "wyoparks.wyo.gov Hawk Springs page as captured 2026-10-12 ('The site consists of 24 primitive campsites')",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "wyoparks.wyo.gov Hawk Springs page as captured 2026-10-12 ('24 primitive campsites ... picnic tables and fire rings')",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "note": "Potable water hydrants run May 1 - September 30; restrooms, playground, boat ramp and dock."},
+      "source": "wyoparks.wyo.gov Hawk Springs page as captured 2026-10-12 ('There are seasonally operated potable water hydrants'; 'Site potable water hydrants are useable from May 1 - September 30'; 'boat launching ramp, boat dock, restrooms and playground')",
+      "method": "manual"
+    }
+  },
+  "note": "Wyoming State Parks recreation area on the west shore of Hawk Springs Reservoir, 13 mi N of Meriden off US-85 on Road 22 (about 10 mi N of La Grange). Sites strung along the shore road among cottonwoods, with tables and fire rings. Wyoming Game and Fish regulates boating and fishing. --Claude",
+  "summary": "wyoparks page (live page refused with an F5 bot challenge; cited from the repo's 2026-10-12 capture): 24 primitive walk-up sites, 14 days in 30, seasonal water hydrants May 1-Sep 30, restrooms/playground/ramp/dock, phone 307-836-2334; not on reserve.wyoming.gov. Stored max_rig_ft 25 has no source found. Waterfront: sites along the shore road sit ~20-45 m from the full-pool water behind a continuous cottonwood band -> recommend lakefront -> lakeview.",
+  "flags": [
+    "WATERFRONT (recommend lakefront -> lakeview): on Esri imagery (reservoir near full, water to the tree line) the campground is a gravel shore road running SSE from the boat-ramp area (~41.7128,-104.1955) to a small loop at ~41.7088,-104.1932, with sites on its verge and in the grassy median. A continuous band of cottonwoods ~20-30 m deep lines the whole shore between the road and the water: from the road verge at ~41.7116,-104.1941 to the water is ~29 m through that band, and the south loop (41.7090,-104.1934) is ~45 m from the water through trees. The curation rule names 'a cottonwood or tree band' between as a view; no site reaches the high-water edge over open ground. Individual site numbers could not be placed (no site map read).",
+    "LIVE PAGE REFUSED: wyoparks.wyo.gov answered an F5 'TSPD' bot-challenge page to two plain requests on 2026-11-20; not retried by browser, archive or cache. Every value above comes from the repo's 2026-10-12 capture of the same page; the 2026 season, any 2026-27 changes and the page's current notices stayed unread.",
+    "Stored max_rig_ft 25 (from old note prose, 'max equipment length ~25 ft') has no source in the captured page or the booking site; left as stored. Dropped from the note (it repeats sites.max_rig_ft).",
+    "Phone 307-836-2334 confirmed (page 'Phone Number 307-836-2334'). July 2026 notice: Road 22 single-lane for culvert work for about two weeks, park open - finished, no status.",
+    "Pin 41.71230,-104.19650 sits at the entrance by the boat-ramp lot; the shore-road campsites centre at about 41.7110,-104.1940 (~240 m SE). Just under the 250 m line; move optional.",
+    "Note rewritten: dropped the site count, amenity list and max length (fields), added the shore-road setting; '13 miles north of Meriden, US-85, Road 22' from the park page."
+  ]
+}

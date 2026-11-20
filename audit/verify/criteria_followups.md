@@ -2749,3 +2749,13 @@ me drop and report); each needs the research named before a verdict.
 - 6455 Dead Swede: FS says $23, rec.gov charges $20.50 (written). 6465 Forest Park: potable_water corrected to false (FS).
 - OHV side (general campgrounds, stay): 6455 Dead Swede, 6465 Forest Park.
 - LEAD: City Slickers RV Park, Torrington (private, full hookups) - not in DB; vet in the WY leads pass.
+
+## WY p3-537 (2026-11-20)
+- wyoparks.wyo.gov returned an F5 bot challenge 2026-11-20 (not retried); 6370 Hawk Springs and 6361 Medicine Lodge read from audit/state_park_fees/wy_pages_2026-10-12.json - later notices unread.
+- 6566 Lone Pine, Lusk: kept (C$-free US$36 FHU, Google 4.8/31, markets overnight stays); booking agreement says the site is "to be used and occupied by Lessee as a residence" (boilerplate lease form); nightly share unmeasured. Self-contained rigs only.
+- 6556 Lovell Camper Park: free/donation, 3-night max; town page "CLOSED FOR THE SEASON" (seasonal); camper report 2026-07-10 confirms operating; stored count 7 unsourced (directories 10-30).
+- 6361 Medicine Lodge: re-pinned ~320 m to Middle Campground; creekside kept (pads ~12-25 m over grass/open creek beach at 44.29357,-107.54016) but site numbers not placed - re-check with the reservation map.
+- 6480 Island Park: UPGRADED riverview -> creekside on named nightly sites 06-08 (note names them).
+- 6488 Libby Creek Willow: "trailers under 22 feet" passes; sites 3, 7, 11-13 take no RVs.
+- Stored values corrected as unsourced/wrong: 6483 potable water (false), 6492 9 non-electric sites (was 10 with 2 electric), 6488 season, 6469 max rig, 6370 max rig, 6474 "some sites w/ electric" (removed from evidence).
+- LEADS: Libby Creek Aspen and Libby Creek Spruce campgrounds (MBR NF, Libby Creek Recreation Area) - not in DB; vet in the WY leads pass.

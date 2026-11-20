@@ -1,0 +1,39 @@
+{
+  "id": 6361,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://wyoparks.wyo.gov/index.php/places-to-go/medicine-lodge - live page answers an F5 bot challenge (2026-11-20, not retried by any other route); cited from the repo's capture audit/state_park_fees/wy_pages_2026-10-12.json (read 2026-10-12)",
+    "reserve.wyoming.gov US eDirect API https://wyordr.usedirect.com/wyomingrdr/rdr/ search/place PlaceId 13 and search/grid for facilities 378/379/380 (unit lists, in-season flags for 2027 dates; read 2026-11-20)",
+    "Esri World_Imagery around 44.2950,-107.5403 (export with the booking site's facility points; zoom-19 tiles of the three campgrounds; read 2026-11-20)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 28, "note": "Three campgrounds on the park road: Lower (sites 01-09, 4 electric, one tent-only site), Middle (10-21, 4 electric) and Upper (22-28, 1 electric) - 9 electric sites in all (02-04, 07, 16-19, 22). Site 06 has been closed for reseeding since 2026."},
+      "source": "reserve.wyoming.gov grid API for facilities 378 Lower Campground (Campsite Electric x4, Non-Electric x4, Tent Site Non-Electric x1), 379 Middle Campground (Electric x4, Non-Electric x8), 380 Upper Campground (Electric x1, Non-Electric x6), read 2026-11-20 + wyoparks page as captured 2026-10-12 ('Campsite #6 is closed for camping and parking for an undetermined amount of time. We are reseeding the grass')",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Water is off October through April except one hydrant by the Site Cabin across from the Red Barn. Park hours 6 a.m. - 10 p.m."},
+      "source": "wyoparks Medicine Lodge page as captured 2026-10-12 ('open year round with well maintained access to the park no matter the conditions. Seasonal Water Closures occur from October through April, and re-opens in May. During the off-season, water will only be available at one hydrant that is located next to the Site Cabin, across from the Red Barn.')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://reserve.wyoming.gov/web/#!park/13", "note": "The booking site sells nights only in the summer season (in season mid-May, out of season mid-April and mid-October 2027); the rest of the year the campground is first-come."},
+      "source": "reserve.wyoming.gov search/place PlaceId 13 InSeason flags: False for 2027-01-15, 2027-04-20 and 2027-10-15, True for 2027-05-15 (Lower, Middle and Upper), read 2026-11-20 + wyoparks page as captured 2026-10-12 ('open year round')",
+      "method": "manual"
+    }
+  },
+  "note": "Wyoming State Parks archaeological site NE of Hyattville in the Medicine Lodge Creek canyon, with petroglyph cliffs and an interpretive cabin. Its three small campgrounds are strung about 800 m along the park road among cottonwoods; a creek beach is used for fishing and wading. --Claude",
+  "summary": "reserve.wyoming.gov (PlaceId 13): three campgrounds, Lower 01-09, Middle 10-21, Upper 22-28 = 28 sites (27 RV/tent + 1 tent-only), 9 electric (amperage not given); booking-site in-season roughly May-September 2027. Captured wyoparks page (live page now bot-challenged): open year round, water Oct-Apr only at one hydrant, site 06 closed for reseeding, phone 307-469-2234. Waterfront creekside kept (tentative). Pin is at Lower; the site-weighted centre is ~355 m N.",
+  "flags": [
+    "WATERFRONT (keep creekside, tentatively): Medicine Lodge Creek is a small stream (~3-5 m). On zoom-19 imagery the pads around 44.29357,-107.54016 sit ~12-25 m from the channel across grass and a bare patch at the bank (44.29355,-107.54043, matching the page's 'creek beach'), with scattered cottonwoods rather than a continuous screen. The booking site gives no site coordinates and no site map was read, so the site numbers at the creek could not be named (the closed site 06 borders the creek beach per the page wording). Lower's loop (~44.2925) is 50-80 m from the creek through trees; Upper (~44.2996) sits in cottonwood canopy.",
+    "PIN MOVE (>250 m): stored 44.29227,-107.53964 is at the Lower Campground entrance. Booking-site facility points: Lower 44.29255,-107.5402 (9 sites), Middle 44.29513,-107.5403 (12), Upper 44.29964,-107.5402 (7); site-weighted centre 44.29543,-107.5403, ~355 m N of the pin. Suggested target: Middle Campground 44.29513,-107.54030 (~320 m from stored).",
+    "Near-split, not a split: Upper Campground is ~800 m N of Lower, past the visitor centre, on the same park road - under the ~1 km line. Same booking place (reserve.wyoming.gov park 13).",
+    "Phone: empty -> 307-469-2234 (page: 'For more information, please call the park at 307-469-2234').",
+    "LIVE PAGE REFUSED: wyoparks.wyo.gov answered an F5 bot challenge on 2026-11-20; not retried. Values from it come from the 2026-10-12 capture; any notice since stayed unread. The stored wyoparks link is kept (a bot wall is not a dead link).",
+    "Electric amperage not published (booking site says only 'Campsite Electric'); hookups left as stored (absent). Stored 'no dump station' and dump false have no source in the captured page - left as stored.",
+    "Policy row: state:WY's day-use fee does not apply here (stored entrance 0, from the fee chart) - unchanged. The off-season walk-up isn't in the row; written in booking.note.",
+    "Inclusion evidence: '~28 drive-in sites ... few electric' -> suggest 'reserve.wyoming.gov PlaceId 13: Lower 01-09, Middle 10-21, Upper 22-28 (28 sites, 9 electric) -> real RV campground'.",
+    "Note rewritten: dropped the site count, electric, water, booking terms and the 877 number (fields/policy row) and 'no dump station' (field); added the three-campground layout and creek beach."
+  ]
+}
