@@ -1609,3 +1609,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6405 Nash Fork (WY, p3-555): sites 01/02 25-35 m from a tiny willow-lined stream.
 - 13585 Sage (WY, p3-556): south row a few metres from the top of the drawdown band (high-water edge) - lakeview at least; lakefront at full pool is AWH's call (cf. 13583/13584).
 - 6501 Shell Creek, 6415 Sacajawea (WY, p3-556): creekside leads, creek under canopy.
+- 13579 Westside (WY, p3-557): unnumbered shore row on open sand/gravel ~10-15 m from the water (RV ~42.5267,-106.7759) - lakefront upgrade lead; FCFS nightly; county site map on the 403 domain.
+- 6513 Willow Lake (WY, p3-557): east-side pad ~42.9912,-109.8996 ~8-10 m from the high-water edge over open sand - lakefront upgrade lead; unnumbered FCFS.
+- 6423 The Narrows (WY, p3-557): site 18 (reservable) ~40 m over open sage to the high-water beach band; 15 ~50 m - lakefront lead.
+- 13586 Weiss (WY, p3-557): south-row shelters on the high-water line, water ~150 m off at imagery pool - lakeview kept under the drawdown rule (cf. 13585 Sage).

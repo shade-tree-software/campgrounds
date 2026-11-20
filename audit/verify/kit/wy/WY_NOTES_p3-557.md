@@ -1,0 +1,13 @@
+# p3-557 notes
+- 13306 Sweetwater Bridge: done (all confirmed manual; not waterfront holds)
+- 6378 Tailrace: done; pin -> 42.0244,-110.0610 (east bank); riverfront holds
+- 6423 Narrows: done; access wording flag; site 18 lakefront lead
+- 6508 Trails End: done; max_rig 35->60 (FS map pads)
+- 6428 Turpin Meadow: done; HORSE-RULE drop candidate; riverview weak
+- 13586 Weiss: done; Rec1 FCFS $15 10d dump; lakeview holds (full-pool lead); phone 9200->9325. Tool: tools/rec1.py TAB [GROUP]
+- 6429 West Tensleep: done; PIN MOVE ~470 m (trailhead lot) -> 44.2585,-107.2158; lakeview holds (canopy)
+- 6529 Western Skies: done; phone booking; 25-40; G 4.9/10; long-stay + price pass; horse flag only
+- 13579 Westside: done; Rec1 FCFS $15 10d; lakeview -> lakefront upgrade lead (shore row ~10 m); phone ->9325
+- 6512 Whiskey Grove: done; riverfront -> riverview downgrade (canopy); max_rig 60 (layout PDF)
+- 6513 Willow Lake: done; lakefront upgrade lead (east pad); pin ~235 m (boat launch loop); fees rec.gov $10
+- apply.py dry run: 11 results ready, 11 note rewrites, no '!!'.

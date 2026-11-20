@@ -2933,3 +2933,13 @@ me drop and report); each needs the research named before a verdict.
 - 6418 Silver Lake: manual season (Jul-Sep) vs rec.gov FCFS season to Oct 31 - left. 6420 Six Mile: FS gate mid-Sep vs winter no-fee note vs rec.gov May-Oct - left.
 - 13264 Sugarloaf: FS 22-ft trailer max + tight roads (passes); policy_ref federal:usfs + FS link. 6501 Shell Creek: rec.gov $18.50 vs FS $20. 6498 Ranger Creek: "separate group area" was a Shell Canyon group site 22 km off - removed.
 - 13585 Sage (Pathfinder) re-pinned ~230 m from the entrance road to the loop.
+
+## WY p3-557 (2026-11-20)
+- DROPPED 6428 Turpin Meadow (Bridger-Teton): stock sites with corrals mixed through the single loop (2, 6, 9, 10, 11, 16, 17; 8 hitch rail), large corral area between loop and river, rec.gov types all 10 reservable sites EQUESTRIAN - horse rule (as Scab Creek). Reopen on AWH's word.
+- 6423 The Narrows: rec.gov "Turnarounds in the campground are narrow, oversized vehicles and trailers are not recommended" - kept (catalog 25-30 ft on every site, a 23-ft rig is not oversized); caveat in note.
+- 6429 West Tensleep: rec.gov "Larger RVs and trailers cannot be accommodated; Boulder Park ... recommended" - kept (catalog 30-45 ft); re-pinned 470 m off the trailhead lot.
+- 6508 Trails End: corrals across the road, rec.gov no livestock in the campground - not a horse case; max rig 60 (FS map). 6512 Whiskey Grove max rig 60 (FS layout).
+- 6378 Tailrace: re-pinned 350 m from the west bank to the east-bank camp area; fee/season unstated.
+- 6529 Western Skies RV & Equine: $25 dry / $40 FHU, booking by phone, Google 4.9 (10); horse stalls an add-on.
+- Fee conflicts (rec.gov written): 6429 $18.50 vs FS $20; 6513 $10 vs FS "$12"/"No Fee". 6512 FS water self-contradiction (potable written true).
+- Agent tool: kit tools/rec1.py reads the Natrona Rec1 catalog (not copied into the kit yet).
