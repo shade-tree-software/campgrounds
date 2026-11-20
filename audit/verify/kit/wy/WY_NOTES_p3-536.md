@@ -1,0 +1,12 @@
+# WY notes p3-536
+- 6434 done: lakeview kept, phone 307-739-5400, season close 09-22, count 21
+- 6362 done
+- 6389 done riverview kept
+- 6443 done: recommend lakefront->lakeview; 22ft trailer limit (passes)
+- 6371 done: culvert fixed, reopened 2026-07-03
+- 6568 done: weak presence (RV Life 2025 review only); unsourced season/booking flagged
+- 6455 done: riverview kept (site 015 creekside-arguable); fee conflict FS 23 vs rec.gov 20.50
+- 6459 done: waterfront evidence wrong (river at loops), re-audit lead
+- 6463 done: 30A reported, season mid-June to Oct 20
+- 6465 done: potable water false; opens May 1
+- 6466 done: website dead->new; amps unpublished

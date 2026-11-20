@@ -2739,3 +2739,13 @@ me drop and report); each needs the research named before a verdict.
 - SK LEADS DONE 2026-11-19: +9 adds (15718-15726), 5 skips. SK phase 7 COMPLETE apart from AWH asks.
 - AWH 2026-11-19: Jumbo Beach 15715 stays its own entry. Lakefront candidates NOT upgraded (Riverside R28/R29 15716, Peck Lake P13-P15 15724, Cowan Lake C/D 15721, Little Shell 1/3 15725) - stored view values stand. Other SK asks deferred (14985, 9308, 15719, Dore Lake minimum, Shamrock call, Little Shell/Chitek ownership).
 - AWH 2026-11-19: 15719 Rolling Green KEEP (wedding guests, Christmas bookings - not a workforce park); 15726 Dore Lake 2-night minimum applies to RVs (stored as is); 14985 Canora Beach KEEP FOR NOW (held p3-531 result applied: phone 306-563-6363, website /campground, mostly-seasonal note). Still deferred: 9308 Prairie View ownership, Shamrock call, Little Shell/Chitek ownership.
+
+## WY p3-536 (2026-11-20)
+- 6568 Cottonwood at Torrington Golf Course: kept on the Montana public-presence precedent (city golf course with a phone + one RV LIFE review, June 2025: 4 nights, 30/50 A, $25); city pages never mention RV sites, Google 4.9 (23) is the golf course's. Cleared the note-derived season (04-01..11-01) and booking.reservable. A call to the pro shop (307-532-3868) would settle sites/season.
+- 6443 Brooklyn Lake: FS "Camping trailer has a maximum length of 22 feet" - passes (22 ft is within the ~23, AWH 2026-10-20); rec.gov driveways 28-71 ft.
+- 6459 Eagle Creek: FS "Closed for the 2026 season" (Oct 15) is the seasonal close; Campflare says closed all of 2025 - re-check in spring 2027.
+- 6371 Cottonwood (Green Mountain, BLM): reopened 2026-07-03 after the culvert project.
+- 6463 Falls: 30 A electric on ~20 Loop A sites is camper-reported (method reported); FS gives no amperage. 6466 Fox Creek: all 33 sites electric, amperage unpublished.
+- 6455 Dead Swede: FS says $23, rec.gov charges $20.50 (written). 6465 Forest Park: potable_water corrected to false (FS).
+- OHV side (general campgrounds, stay): 6455 Dead Swede, 6465 Forest Park.
+- LEAD: City Slickers RV Park, Torrington (private, full hookups) - not in DB; vet in the WY leads pass.
