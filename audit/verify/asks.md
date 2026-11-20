@@ -703,3 +703,6 @@ Kept for now (renamed from "Parkway Trailer & RV Park" per the Cody chamber list
 
 ## 6560 Kettle Restaurant & Base Camp RV Park (Kemmerer WY) - reviews + boom-town long-stay (p3-545, 2026-11-20) - OPEN
 Kept for now. Google 3.9 (111) - but the listing is shared with the restaurant; RV Life (RV-only) 3.5 on 5 reviews. Operator: "full hook up RV sites available daily, weekly, or monthly", April-November; no posted rate anywhere (RV Life $$, avg $40, last $45). Kemmerer is a construction-boom town (TerraPower plant); nightly share unmeasured. Under-4 reviews + possible workforce lean: drop, or keep with a caveat?
+
+## 6358 White Mountain Road Dispersed Camping (Rock Springs WY) - inclusion (p3-547, 2026-11-20) - OPEN
+Kept for now. BLM's surface-management layer puts the pin (41.54900,-109.42110) on PRIVATE land in the Union Pacific checkerboard (nearest BLM ground ~280 m S at 41.5465 or ~1.4 km E). BLM has no camping page for this road (website now the Pilot Butte Wild Horse Scenic Tour page, "most of which is on a gravel road"); the only camping evidence is an unclaimed RV Life listing (4*, 20 reviews). Unsourced "near the petroglyphs" (they are ~50 km off) and "passable to 2WD" removed from the note. Keep, re-pin to BLM ground, or drop?

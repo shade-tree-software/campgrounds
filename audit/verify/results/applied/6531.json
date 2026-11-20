@@ -1,0 +1,48 @@
+{
+  "id": 6531,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.westernhillscampground.com/ (operator, read 2026-11-20): 'That's a Wrap on 2026! Our campground season has come to an end ... Now accepting reservations for the 2027 camping season! Year-round extended-stay RV sites are still available. For extended-stay inquiries, please call or text 307-710-2592.'; '2500 Wagon Circle Rd. Rawlins ... (307) 324-2592'; 'Book' -> app.fireflyreservations.com",
+    "https://www.westernhillscampground.com/rates (read 2026-11-20): 'Full Hook Up - Our long pull-through full-hookup sites are designed to accommodate even the biggest rigs ... water, sewer, and 20/30/50-amp electric service'; 'Electric Only ... pull-through sites accommodate RVs and tow vehicles up to 45 feet total combined length ... do not have water or sewer hookups ... does not include use of the campground's water fill or dump service'; 'Dry Camping / No Hookup ... up to 45 feet total combined length'; 'Generators are not permitted.'; tent area, cabins 'May through September'; no prices on the page",
+    "https://irp.cdn-website.com/0b09404e/files/uploaded/western_hills_campground_site_map_06162025.pdf (operator site map, read 2026-11-20): RV sites 1-85 (rows 1-3 sites 1-56 full hookup 30/50 A or 30 A; 57-66 electric 30/50 A; 67-79 full hookup 30/50 A; 80-85 no hookup); bathrooms, showers, laundry, dump station, mini golf, tent area, cabins",
+    "https://www.westernhillscampground.com/trailer-park-tenants (read 2026-11-20): 'Western Hills Mobile Home Park offers quiet, long-term living ... Our spacious sites are ideal for mobile homes and extended stay RV residents ... Monthly sites available.'",
+    "https://www.westernhillscampground.com/guidelines (read 2026-11-20): check-in 2-7 PM; 'Guests staying on a weekly and monthly basis understand NO REFUNDS'; 'No generators in the RV park.'",
+    "https://app.fireflyreservations.com/reserve/property/WesternHillsCampground (operator's Firefly engine, page read 2026-11-20; the availability search sits behind reCAPTCHA and was not run): 'Extended stay guests, please call for rates and reservations.'; unit types Lodging / RV Site / Tent Site; amenity filters incl. Bathrooms/showers, Dump Station, Giftshop, Cold drinks and snacks, Laundry, Mini golf",
+    "Google Maps panel 'Western Hills Campground & RV Park' (read 2026-11-20 under the browser lock): 4.4 / 829 reviews, +1 307-324-2592, westernhillscampground.com, 41.78489,-107.26719",
+    "RV Life Algolia park index (read 2026-11-20): 4 stars / 588 reviews, price_level 3, avg_rate $42, 130 sites",
+    "trip_data/goodsam_parks.json (Good Sam directory cache): gs false, military true",
+    "audit/price_research/gateways.py 41.78501,-107.26632: none within 40 km",
+    "audit/price_research/private_2026-10-16/pages_WY.jsonl + browser_WY.jsonl: home and rates pages captured with no rate lines"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.westernhillscampground.com/rates ('water, sewer, and 20/30/50-amp electric service') + site map legend 'FULL HOOKUP/ CABLE 30/50 AMP', read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 85, "pull_through": true},
+      "source": "operator site map 2025-06-16 (RV sites numbered 1-85) + rates page ('long pull-through full-hookup sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "dump": true, "camp_store": true},
+      "source": "operator site map (bathrooms, showers, laundry, dump station) + Firefly amenity list (Giftshop, Cold drinks and snacks), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://app.fireflyreservations.com/reserve/property/WesternHillsCampground"},
+      "source": "https://www.westernhillscampground.com/ ('Now accepting reservations for the 2027 camping season') -> Firefly engine, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Seasonal I-80 campground in Rawlins beside the owner's separate mobile home park; extended-stay RV sites are offered year round by phone. Long gravel pull-throughs; the electric-only and dry sites (45 ft combined) exclude the water fill and dump. Generators not allowed. Mini golf, tent area, cabins. --Claude",
+  "summary": "Operator pages + site map read: 85 RV sites (most full-hookup pull-throughs, 20/30/50 A), showers, laundry, dump, gift shop, mini golf; seasonal, now booking 2027 on Firefly (search behind reCAPTCHA - not run, rates unread). Separate mobile home park and year-round extended-stay sites by phone. Google 4.4/829; RV Life 4*/588, now $$$ (avg $42). Price gate unmeasured.",
+  "flags": [
+    "PRICE GATE unmeasured: no rate on the operator's pages; the Firefly availability search is behind reCAPTCHA (not run). RV Life now price_level 3 ($$$) with avg_rate $42 (stored rating tier 2). No gateway within 40 km; not a Good Sam Park (gs false). The rates page calls the electric-only and dry sites 'discounted', so the cheapest RV night is likely below the full-hookup price. Google 4.4 / 829, RV Life 4 / 588. Reviewer: probably passes, unconfirmed.",
+    "LONG-STAY: the campground reads as transient - a seasonal (closes for winter) 85-site park selling nightly reservations online, with weekly/monthly mentioned only in the refund policy; long-term living is in the owner's separate 'Western Hills Mobile Home Park' ('Monthly sites available', own phone 307-710-2592), and 'Year-round extended-stay RV sites are still available' off season by phone. Nightly share not measured (engine behind reCAPTCHA). No drop indicator.",
+    "SEASON: stored opens 04-01 / closes 10-31 (derived) not stated on the operator's pages ('Our campground season has come to an end'; cabins 'May through September'); left.",
+    "max_rig_ft 80 (derived) not on the operator's pages (full-hookup sites take 'even the biggest rigs'; electric-only and dry sites 45 ft combined); left. discounts.military true from the Good Sam directory kept.",
+    "Phones: office (307) 324-2592 confirmed; Firefly and extended-stay line 307-710-2592. Website confirmed. Pin 41.78501,-107.26632 is ~70 m from Google's point, in the park. Not waterfront stands."
+  ]
+}

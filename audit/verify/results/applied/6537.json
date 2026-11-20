@@ -1,0 +1,64 @@
+{
+  "id": 6537,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://windriverviewcampground.com/ (operator, read 2026-11-20): '42 FULL HOOKUP RV SITES', '20 PRIMITIVE CAMPSITES'; 'full hookup RV sites, tent sites, and a unique renovated sheep wagon camp available for rent'; 'Primitive Campsites ... dry camping sites available with water, 30 amp electricity, and showers and bathrooms nearby'; fire pit, laundry, playground; 8889 Highway 191, Boulder; (307) 537-5453; Book Now -> parkwith.us/camps/wind-river-view-campground",
+    "https://windriverviewcampground.com/rates/ (read 2026-11-20): 'Reservations for the 2026 season are now open'; 'Our season runs from May 1 through September 30'; 'Primitive Campsites starting at $31/night'; 'full hookup rv sites starting at $48/night ... 30/50 amp electric, water, and sewer. Pull through sites and Big Rig access'; weekly from $245, monthly from $650; '* Rates are subject to change; electric is included; taxes are included.'; Coast to Coast / RPI / AOR membership sales",
+    "https://windriverviewcampground.com/long-term-rv-park/ + /support-faq/ (read 2026-11-20): long-term full-hookup sites offered ('Do you have long term sites? Yes!')",
+    "https://windriverviewcampground.com/amenities/ (read 2026-11-20): full hookups 30/50 A, laundry, showers, free WiFi, propane refills, pet area, playground",
+    "https://parkwith.us/camps/wind-river-view-campground (operator's Park With Us engine, booker JSON read 2026-11-20): season_start 05-01, season_end 09-30; RV style 51 sites, all max_length 50 ft; 29 bookable online (17 pull-through 50 A full hookup, 8 back-in 30 A full hookup, 4 back-in 30 A water+electric), 22 not bookable online (A-1..A-14 and 8 others); tent style max 6 nights, 'allow_rv_on_tent_site': false, note 'A reduced tenting rate of $32 per night'; service_rate 0.08 not absorbed; discounts: Military (RV style), RPI / AOR flat $10 / $9 (weekly/monthly only), Coast to Coast 100%",
+    "Google Maps panel (read 2026-11-20 under the browser lock): 'Wind River View Campground' 4.1 / 145 reviews, +1 307-537-5453, 42.75984,-109.73560",
+    "RV Life Algolia index (2026-11-20): 4 stars / 58 reviews, price_level 1, avg_rate $19; affiliations AOR, RPI, Coast to Coast",
+    "trip_data/goodsam_parks.json: type MEMBERSHIP_PARK, gs false, military false",
+    "audit/price_research/gateways.py 42.76010,-109.73470: none within 40 km",
+    "Esri World Imagery 2026-11-20 (300 m half-width around 42.7598,-109.7352): sites on open ground between US-191 and a willow river bottom; nearest sites ~110-140 m from the channel through willows"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://windriverviewcampground.com/rates/ + Park With Us site list (17 pull-throughs 50 A full hookup), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 51, "max_rig_ft": 50, "pull_through": true},
+      "source": "Park With Us engine RV site list (51 RV sites, max_length 50, 17 pull-through), read 2026-11-20; tent/primitive sites (20) not counted",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "wifi": true},
+      "source": "https://windriverviewcampground.com/amenities/, read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "09-30"},
+      "source": "https://windriverviewcampground.com/rates/ ('Our season runs from May 1 through September 30') + Park With Us season 05-01..09-30, read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://parkwith.us/camps/wind-river-view-campground"},
+      "source": "operator Book Now -> Park With Us, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 48, "currency": "USD", "tax": {"included": true}, "checked": "2026-11-20", "note": "Full-hookup sites from $48 a night, tax and electric included; Park With Us adds an 8% online service fee."},
+      "source": "https://windriverviewcampground.com/rates/ ('full hookup rv sites starting at $48/night'; 'taxes are included'), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true},
+      "source": "Park With Us engine: 'Military' discount on the RV camping style, read 2026-11-20 (amount not shown)",
+      "method": "manual"
+    }
+  },
+  "note": "Seasonal campground on US-191 between Boulder and Pinedale; tent sites with water and 30-amp power, a rental sheep wagon, propane refills. Some RV sites are held for long stays. Coast to Coast, RPI and AOR member park. --Claude",
+  "summary": "Operator + Park With Us read: 51 RV sites (all to 50 ft; 17 pull-through 50 A FHU), 20 primitive tent sites, season May 1-Sep 30, FHU from $48 tax included (passes the $50 gate), showers/laundry/WiFi. 29 of 51 RV sites sell online by the night; with tent sites ~49 of 71 nightly. Google 4.1/145, RV Life 4*/58. Not waterfront stands.",
+  "flags": [
+    "PRICE: cheapest real RV night = full hookup from $48 (tax included, so lower before tax) every season the park opens; summer peak not posted beyond 'starting at'. Park With Us adds an 8% online service fee (guest-paid), ~$51.84 online; phoning avoids it. No gateway within 40 km; not a Good Sam Park (Good Sam lists it as MEMBERSHIP_PARK). Passes the gate on the posted rate.",
+    "LONG-STAY: long-term sites marketed (weekly $245, monthly $650); 22 of 51 RV sites (the whole A row and 8 others) are not bookable online - likely the long-term pads. Nightly share ~29 of 51 RV sites (57%), ~49 of 71 counting the 20 tent sites (69%). Passes; no seasonal caveat needed.",
+    "MEMBERSHIP: Coast to Coast / RPI / AOR member park that sells memberships, but nights are sold to the public online; no membership required.",
+    "RV Life tier stale: price_level 1 (avg $19) vs posted $48; stored rating.price_tier 1 left (rvlife source).",
+    "Military discount on the engine (amount not shown) -> discounts.military true; good_sam false (derived) left.",
+    "Waterfront: a river/willow bottom lies ~110-140 m south of the south loop through willows; not waterfront stands (no upgrade case).",
+    "Phone 307-537-5453 and website confirmed. Pin 42.76010,-109.73470 is ~75 m from the engine's point (42.759721,-109.735504) and inside the park; fine."
+  ]
+}

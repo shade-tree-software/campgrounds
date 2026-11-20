@@ -2850,3 +2850,12 @@ me drop and report); each needs the research named before a verdict.
 - 6414 Ryan Park: count 49 -> 32; FS "Max trailer length: 30 ft" vs rec.gov 45.
 - 6533 Phillips RV Park re-pinned 270 m; RV Life now $$$.
 - 6550 Shell Campground: shellcampground.com 406 (not retried); Newbook engine $34-43.
+
+## WY p3-547 (2026-11-20)
+- No drops; 6358 White Mountain Road dispersed ask logged (pin on private checkerboard land, only an unclaimed RV Life listing).
+- 6514 Yellow Pine: rec.gov lists all 19 sites "Not Reservable" - written first-come, overriding the federal:usfs row's window/fee; FS page still says reserve on rec.gov. Trailer max 32 ft. Horse corrals outside the campground.
+- 6535 Sweetwater Events Complex: $45 + 13% tax, 202 sites, sold year-round online (Park With Us) - passes the fairgrounds test; undated "ALL CAMPGROUNDS ARE CLOSED FOR AN EVENT" banner not written. Pin may be ~280 m off (engine point 41.637783,-109.248701; imagery hazy).
+- 6549 Wyoming State Fairgrounds: non-fair camping $30 daily; Google 3.9 (51) - state-owned, kept.
+- 6531 Western Hills (Rawlins): price unmeasured (Firefly behind reCAPTCHA); RV Life $$$ avg $42; probably passes.
+- 6537 Wind River View: $48 tax included, 57% nightly - passes; Coast to Coast/RPI member park selling public nights.
+- 6352 Glendo Two Moon: 77 sites (12 electric 50 A) - re-pinned 390 m. 6372 Slate Creek re-pinned 440 m (was the river-access toilet).

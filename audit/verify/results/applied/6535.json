@@ -1,0 +1,54 @@
+{
+  "id": 6535,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.sweetwaterevents.com/p/facility/campgrounds (operator, read 2026-11-20): 'ALL CAMPGROUNDS ARE CLOSED FOR AN EVENT'; 'SEC offers year round RV Parking'; 'over 1,200 RV spaces, nearly all with 50 amp service and full hook-ups ... Pilot Butte Campground (year-round) Boar's Tusk Campground (events only) White Mountain Campground (events only)'; 'The campgrounds also feature restroom/shower facilities. Daily rate is $45 plus tax and can be reserved online below.'; 'Call 307-352-6789 for our limited long-term availability.'; 'Boar's Tusk & White Mountain Campgrounds are only available for large event rentals. Overnight and small events will utilize the Pilot Butte Campground.'; '* NO unauthorized ... dumping of RV'S'; 'BOOK AN RV SITE RESERVATION HERE' -> parkwith.us",
+    "https://parkwith.us/camps/sweetwater-events-complex?camping_style=pilot-butte (the operator's Park With Us engine, embedded page data read 2026-11-20): 'Due to the freezing weather, water is currently turned off at all sites. Electricity and sewer is available in sites P148 and higher.'; 'The Pilot Butte Campground is open year-round, unless noted on the calendar.'; Pilot Butte 202 sites, all 'back-in', 50 A (166) or 30 A (36), water + sewer every site, max_length 40 (30 at 8 sites), 51 bookable online; notes 'All full hook-up sites are back-in sites ... can accommodate rigs up to 40 feet when disconnected from the tow vehicle'; Dry Camping 10 sites (North Indoor Arena lot); White Mountain 462 and Boar's Tusk 556 sites; minimum_bookable_nights 1, bookable 90 days ahead; tax '6% Sales + 7% Lodging Tax'; Escapees discount 15% off; phone 307-352-6789",
+    "https://cdn.saffire.com/files.ashx?t=fg&rid=SweetwaterEvents&f=PilotButte_Map(9).pdf (operator site map, read 2026-11-20): sites 1-211 east of Yellowstone Road, restrooms & showers mid-campground",
+    "Esri World_Imagery at 41.6385,-109.2500 (600 m) and z17 tiles at the pin, read 2026-11-20 (campground obscured by haze)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "tax": {"included": false, "percent": 13, "name": "6% sales + 7% lodging tax"}, "checked": "2026-11-20", "note": "$45 a day plus tax at every hookup site. Escapees members 15% off (booking engine)."},
+      "source": "https://www.sweetwaterevents.com/p/facility/campgrounds ('Daily rate is $45 plus tax') + Park With Us engine (tax_rate_label '6% Sales + 7% Lodging Tax'; Escapees percent_off 0.15), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://parkwith.us/camps/sweetwater-events-complex?camping_style=pilot-butte", "fcfs": null, "window_opens_days": 90},
+      "source": "https://www.sweetwaterevents.com/p/facility/campgrounds ('can be reserved online below') + Park With Us engine (bookable_for_n_days_end_date 90, minimum 1 night), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "Park With Us engine site records (Pilot Butte: 50 A or 30 A, water and sewer at every site), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 202, "max_rig_ft": 40, "pull_through": false},
+      "source": "Park With Us engine (Pilot Butte, the year-round campground: 202 back-in sites, max_length 40; 'All full hook-up sites are back-in sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true},
+      "source": "https://www.sweetwaterevents.com/p/facility/campgrounds ('restroom/shower facilities'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Pilot Butte only; water at the sites is shut off in freezing weather (electric and sewer stay on at sites P148 and up)."},
+      "source": "sweetwaterevents.com ('Pilot Butte Campground (year-round)') + Park With Us engine ('open year-round, unless noted on the calendar'; 'Due to the freezing weather, water is currently turned off at all sites'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Sweetwater County's events complex in Rock Springs. Ordinary nights use Pilot Butte, a gravel lot of back-in rows; the Boar's Tusk and White Mountain campgrounds open only for large events, and big events can fill the complex. --Claude",
+  "summary": "Operator page + Park With Us engine read: Pilot Butte year-round, 202 back-in full-hookup sites (50/30 A, 40 ft), $45/day + 13% tax, booked online 90 days out; the other two campgrounds are event-only. Stored reservable false/FCFS always (derived) corrected. A 'closed for an event' banner shows on the facility page. Pin plausible but imagery hazy.",
+  "flags": [
+    "BANNER: the operator's campground page reads 'ALL CAMPGROUNDS ARE CLOSED FOR AN EVENT' with no dates (the linked RV Campground page sits under 'Airstream 2027 International Rally'); the engine still says Pilot Butte is 'open year-round, unless noted on the calendar'. Not written as a status: event closures are dated blocks on the engine calendar.",
+    "FAIRGROUNDS TEST passes: ordinary nights are sold online at Pilot Butte all year ('SEC offers year round RV Parking'; 'Overnight and small events will utilize the Pilot Butte Campground'); Boar's Tusk and White Mountain are 'only available for large event rentals'.",
+    "BOOKING: stored reservable false / fcfs always (derived from note prose) -> reservable true on the operator's Park With Us engine; fcfs cleared (the pages say nothing about walk-ups; the engine offers self check-in on a reserved site).",
+    "SITE COUNT: 202 written for Pilot Butte (the only year-round campground; 51 bookable online, the rest held for events/long-term); the whole complex is 1,220 hookup sites + 10 dry-camping spaces. Note keeps the event-campground context.",
+    "Long-term: 'Call 307-352-6789 for our limited long-term availability' - local, no long-stay test; nightly sales are the main use.",
+    "No dump station: the page bars 'dumping of RV'S'. Not written as false (the rule is about unauthorized dumping).",
+    "PIN: stored 41.63935,-109.25137 sits at the west edge of the grounds beside the diagonal road, consistent with Pilot Butte's site 1 by Yellowstone Road on the operator's map, but the Esri imagery is hazy here and the rows cannot be seen; engine camp point 41.637783,-109.248701 (~280 m SE). Left.",
+    "Website/phone confirmed: https://www.sweetwaterevents.com/p/facility/campgrounds is the more specific page (current link /location/rv-campground is an event-location stub) - suggest replacing; phone 307-352-6789."
+  ]
+}

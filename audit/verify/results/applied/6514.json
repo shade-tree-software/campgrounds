@@ -1,0 +1,53 @@
+{
+  "id": 6514,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10156027 (read 2026-11-20): 'Yellow Pine Campground (WY)'; phone 307-745-2300; '19 sites in a single loop'; 'picnic tables, campfire rings, pedestal grills, vault toilets, and trash collection. There are no water hookups, electric hookups, or black water hookups.'; notices 'There is no potable water at this site.', 'Maximum length of stay is 14 days.'; amenities incl. 'Self Pay Station'",
+    "recreation.gov campsite catalog for 10156027 (api/search/campsites, read 2026-11-20): 19 STANDARD NONELECTRIC sites, every one campsite_status 'Not Reservable', reservable false; rate seasons 'First-come, First-served Season' (season_type 'Walk In') 2024-05-06..10-14, 2025-05-14..09-28, 2026-05-12..10-10, $20/night; driveways 42-99 ft (9 pull-through, 10 back-in); RV/Trailer/Fifth Wheel permitted, no MaxLength posted",
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/yellow-pine-campground (Medicine Bow-Routt NF, last updated October 13, 2026, read 2026-11-20): 'Site Closed'; 'It has corrals available outside the campground.'; 'Reservations can be made at recreation.gov.'; 'Open seasonally, weather dependent 6/1'to 10/1'; 'Camping trailer has a maximum trailer length of 32 feet.'; 'Single Site: $20 per night'; 'Vault Toilet (2)'; 'Potable water is not available at this site.'; Recreation Opportunities list 'Horse Riding and Camping'",
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/mbrtb-recreation-site-fee-changes-information (read 2026-11-20): fee changes approved 2024, implemented 2025"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "platform": null, "window_opens_days": null, "max_stay_nights": 14},
+      "source": "recreation.gov campsite catalog: all 19 sites 'Not Reservable', rate season 'First-come, First-served Season' 2026-05-12..10-10; notice 'Maximum length of stay is 14 days.' (read 2026-11-20). The FS page's 'Reservations can be made at recreation.gov' is outranked by rec.gov's own status.",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 19, "max_rig_ft": 32, "pull_through": true},
+      "source": "rec.gov catalog (19 sites, 9 pull-through) + FS page 'Camping trailer has a maximum trailer length of 32 feet.', read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov: 'There are no water hookups, electric hookups, or black water hookups.', read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "FS page 'Vault Toilet (2)', 'Potable water is not available at this site.'; rec.gov notice the same, read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-12", "closes": "10-10", "note": "The Forest Service page says 'Open seasonally, weather dependent 6/1 to 10/1'; the 2026 recreation.gov fee season ran May 12 to Oct 10 (2025: May 14 to Sep 28)."},
+      "source": "recreation.gov 2026 'First-come, First-served Season' 2026-05-12..2026-10-10 (read 2026-11-20); FS page 6/1-10/1",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "reservation_fee": null, "checked": "2026-11-20"},
+      "source": "recreation.gov rate table 2026 ($20 WalkInStandardNonelectric) + FS page 'Single Site: $20 per night', read 2026-11-20; no reservations, so no reservation fee",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF campground on the Pole Mountain unit off Happy Jack Road east of Laramie: one loop of 19 sites under conifers and aspen, with pedestal grills and fire rings, beside the Tie City mountain bike and ski trails. Horse corrals sit outside the campground. Pay at the self-pay station. --Claude",
+  "summary": "rec.gov + FS read: 19 sites, all NOT reservable (FCFS season 2026-05-12..10-10, $20); booking flipped from reservable to FCFS. FS posts a 32-ft trailer limit (passes; replaces derived 40); driveways 42-99 ft, 9 pull-throughs; vault toilets, no water, no hookups. Corrals outside the campground (separated). Status 'Site Closed' = off-season.",
+  "flags": [
+    "BOOKING CORRECTION: derived 'reservable true' (and the inherited recreation.gov platform/180-day window) is wrong - every one of the 19 sites is 'Not Reservable' on recreation.gov and the only rate season is 'First-come, First-served Season'. The FS page still says 'Reservations can be made at recreation.gov' (rec.gov outranks it). Written reservable false, fcfs always, platform/window cleared, reservation_fee cleared.",
+    "RIG LENGTH: FS 'Camping trailer has a maximum trailer length of 32 feet.' -> max_rig_ft 32 (was 40 derived); a 23-ft rig passes. rec.gov driveways 42-99 ft, no MaxLength posted.",
+    "HORSE: FS says 'It has corrals available outside the campground' and lists 'Horse Riding and Camping'. The corrals are explicitly outside the campground, so not a horse camp under the 2026-11-12 rule; reviewer may confirm.",
+    "SEASON: FS '6/1 to 10/1' vs rec.gov 2026 fee season 05-12..10-10; wrote rec.gov dates with both in the season note. FS banner 'Site Closed' (2026-11-20) is the winter closure, not written as status.",
+    "PHONE empty -> 307-745-2300 (recreation.gov facility phone; Medicine Bow-Routt supervisor's office, which also answers for the Laramie Ranger District). Websites confirmed (FS r02 page + rec.gov 10156027).",
+    "PIN 41.25388,-105.40995 is at the loop entrance near site 01 (~25 m); the loop centre (~41.2548,-105.4108) is ~120 m away; fine. Not waterfront stands (South Fork Lodgepole Creek is across FR 719).",
+    "Policy row federal:usfs supplies the reservation fee/window that no longer applies; the entry now overrides them."
+  ]
+}

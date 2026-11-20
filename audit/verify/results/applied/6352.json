@@ -1,0 +1,39 @@
+{
+  "id": 6352,
+  "checked": "2026-11-20",
+  "sources": [
+    "reserve.wyoming.gov (US eDirect, wyordr.usedirect.com/wyomingrdr/rdr) search/place PlaceId 10 'Glendo State Park', read 2026-11-20: 16 campgrounds + Two Moon Yurts; FacilityId 347 'Two Moon' at 42.47205,-104.95472 with Campsite Electric / Campsite Non-Electric / Group Site / Shelter / Tent Site types",
+    "rdr search/grid FacilityId 347 (for 2027-06-15, read 2026-11-20): 85 units, all AllowWebBooking true - 65 Campsite Non-Electric, 12 Campsite Electric (#25-29, #45-48, #51-53), 6 group sites, 1 tent site (T32), 1 shelter (TMDS); per-unit map coordinates span 42.4694-42.4752 N, -104.9619 to -104.9513 W, centroid 42.47195,-104.95658",
+    "rdr search/details for units #02, #19, #25, #29, #45, #53, #54, #60, #72, #77, T32 (2027-06-15, read 2026-11-20): electric sites 'Electricity (Amp)': '50', pull-through, gravel, 90x14 to 140x18; non-electric pads 40x14 (#02) to 100x20 (#19), most 50-80 ft; 'Waterfront Setting': 'Wooded'; Rate 10.00",
+    "wyoparks.wyo.gov/index.php/places-to-go/glendo - not fetched live (F5 bot challenge per brief); repo capture audit/state_park_fees/wy_pages_2026-10-12.json (read 2026-10-12): 'over 500 campsites spread across 19 campgrounds'; 'NEW Reservation Season Dates: May 15 - Sept. 15 (Elkhorn Campground is May 15 - July 15)'; 'The park is open year-round for day use and camping.'; 'Phone Number 307-735-4433'; HCB toxin advisory 9/15/2026 for the Marina and Custer Cove Campground; 'Stage 1 Fire Restriction'",
+    "Esri World Imagery 2026-11-20 (650 m half-width, booking-engine unit points overlaid): loops run ~1 km NE-SW in continuous pine on the bluff south of the reservoir near the dam; the nearest sites (#68, #72-77, G71) are ~110-125 m from the vegetated shoreline through forest; the stored pin is at the SW entrance road south of site G20"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "reserve.wyoming.gov unit details for electric sites #25, #29, #45, #53 ('Electricity (Amp)': '50'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 77, "pull_through": true},
+      "source": "reserve.wyoming.gov FacilityId 347 grid: 65 non-electric + 12 electric campsites (group, tent and shelter units excluded), pull-through types on unit details, read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "season": {"opens": "05-15", "closes": "09-15"}},
+      "source": "reserve.wyoming.gov (all 85 Two Moon units web-bookable) + wyoparks Glendo page as captured 2026-10-12 ('NEW Reservation Season Dates: May 15 - Sept. 15'); first come, first served outside it ('All Campgrounds are first come first serve now!!')",
+      "method": "manual"
+    }
+  },
+  "note": "Two Moon is Glendo State Park's largest campground: a string of loops in pine on the bluff above the reservoir's south shore near the dam. The lake lies through the trees, not at the sites. Yurts and a group shelter alongside; the park has 19 campgrounds in all. --Claude",
+  "summary": "reserve.wyoming.gov read: Two Moon = 77 campsites (12 electric, 50 A pull-throughs; non-electric pads mostly 40-100 ft) + 6 group, 1 tent, shelter, yurts; reservable May 15-Sep 15, FCFS otherwise. Count corrected 89->77; booking season written; note cleaned. Pin sits at the SW entrance: move ~390 m to the loop centroid. Not waterfront stands (sites ~110+ m from shore under forest).",
+  "flags": [
+    "PIN MOVE: stored 42.46928,-104.95964 is on the SW entrance road below site G20, ~120 m from the nearest site and ~390 m from the centre of a ~1 km string of loops. Target: 42.4720,-104.9566 (centroid of the 85 booking-engine unit points; the engine's own facility point is 42.47205,-104.95472, ~150 m further NE).",
+    "SITES: count 89 (derived) -> 77 campsites (65 non-electric + 12 electric). The old note's '14 electric' is 12 on the booking site. Pads: #02 40x14 smallest read; most 50-140 ft, so a 23-ft rig fits essentially all.",
+    "WATERFRONT: not waterfront stands. Closest sites (#68, #72-77, G71) are ~110-125 m from the vegetated high-water edge through continuous pine on a bluff; engine tags them 'Waterfront Setting: Wooded'.",
+    "BOOKING: reservations May 15 - Sept 15 (wyoparks capture, 2026-10-12), all FCFS outside it; written as booking.season. Old note's 'Reservable May 15-Sep 15' removed (now a field). state:WY row supplies platform/window/fees.",
+    "PHONE empty -> 307-735-4433 (Glendo State Park, per the wyoparks capture). Websites kept: https://wyoparks.wyo.gov/index.php/places-to-go/glendo (not fetched live, F5 challenge; valid in the 2026-10-12 capture) and https://reserve.wyoming.gov/web/#!park/10 (PlaceId 10 confirmed).",
+    "Season year_round (manual, wyoparks 'open year-round for day use and camping') kept. Water/sewer at sites, showers and dump not established for Two Moon specifically; not written. HCB toxin advisory (Sept 2026) named the Marina and Custer Cove, not Two Moon.",
+    "OTHER Glendo campgrounds (Bennett Hill, Reno Cove, Sandy Beach Dune/Willow also have electric sites) are separate places 2-7 km away; any not already in campgrounds.json would be leads, not checked here."
+  ]
+}
