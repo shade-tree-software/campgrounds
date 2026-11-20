@@ -2943,3 +2943,8 @@ me drop and report); each needs the research named before a verdict.
 - 6529 Western Skies RV & Equine: $25 dry / $40 FHU, booking by phone, Google 4.9 (10); horse stalls an add-on.
 - Fee conflicts (rec.gov written): 6429 $18.50 vs FS $20; 6513 $10 vs FS "$12"/"No Fee". 6512 FS water self-contradiction (potable written true).
 - Agent tool: kit tools/rec1.py reads the Natrona Rec1 catalog (not copied into the kit yet).
+
+## WY p3-558 (2026-11-20)
+- 6431 Wood River: stored "pond" was a shadowed forested slope - corrected to creekside (Wood River ~10-15 m wide, south-side sites 20-35 m over open grass/gravel; no FS site map so no numbers). 4WD wording is for the Kirwin road beyond the campground, not the way in - kept.
+- 6432 Worthen Meadow: max spur 24 ft (FS + rec.gov) - fits a 23-ft rig; re-pinned 175 m off the entrance junction. Peninsula loop ~400 m east (OSM campsite 42.69869,-108.92536) unconfirmed as part of the 28 sites.
+- WY queue EMPTY after p3-558.
