@@ -1,0 +1,48 @@
+{
+  "id": 13705,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/shoshone/recreation/big-game-campground (read 2026-11-20; 'Last updated September 23, 2026'): 'Site Closed', 'Closed for the season'; 'This campground hosts 14 sites next to the North Fork of the Shoshone River ... Stay limit is 16 days. Maximum spur length is 32 feet . Food storage is required in this campground ... Bear boxes available.'; 'Reservations This site is first come, first served.'; 'Single Site: $15/night. Please be prepared to pay with CASH or CHECK. *Sites may be reservable and reservation fees apply.*'; 'Contact Phone: 307-527-6921' (Wapiti Ranger District); point 44.46186,-109.60505; 'Vault toilet(s)', 'Potable water is not available at this site.'",
+    "https://www.recreation.gov/api/camps/campgrounds/234594 + /rates (read 2026-11-20): 'single-family campsites, each equipped with a table and campfire ring. Vault toilets and trash collection are provided ... There is no water available at the campground.'; 'among cottonwood and juniper trees, along the North Fork Shoshone River'; 'on the north side of the highway and next to the river'; notices 'GRIZZLY BEARS FREQUENT THE AREA', 'An additional fee will be collected at the campground for extra vehicles'; rules maxConsecutiveStay 16; Peak Season 2026-05-22..2026-09-07 and 2027-05-23..2027-09-01: STANDARD NONELECTRIC $15; phone '307-527-6921 - THIS NUMBER IS NOT FOR RESERVATIONS'",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234594 (catalog, read 2026-11-20): 14 entries - sites 002-014 plus 'Host'; reservable 006, 007, 009 (Open), the other ten 'Not Reservable'; Max Vehicle Length 25 (005), 29 (007), 30 (002, 006), 32 (008), 36 (004, 014), 39 (013), 40 (010), 45 (012), 48 (003, 009), 120 (011, the only Pull-Through); Host site 42; no hookup attributes",
+    "Esri World Imagery 2026-11-20 with the catalog site points (160 m half-width): the loops sit under continuous cottonwood canopy between US-14/16/20 and the North Fork's gravel bars; the northernmost sites (009, 011, 014) are ~45-75 m from the bar edge through trees, the active channel further - not waterfront stands; pin among sites 010/012, ~70 m from the FS point - no move"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 48, "pull_through": true, "note": "Back-in spurs 25-48 ft plus one long pull-through (011); the forest posts a 32-ft maximum spur. A 14th site is the host's. Bear boxes."},
+      "source": "rec.gov catalog for 234594 (sites 002-014 + Host; Max Vehicle Length 25-48 back-in, 011 Pull-Through 120) + FS page ('14 sites', 'Maximum spur length is 32 feet', 'Bear boxes available'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "Trash collection. Food storage required."},
+      "source": "rec.gov ('Vault toilets and trash collection are provided ... There is no water available at the campground.') + FS page ('Food storage is required'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-23", "closes": "09-01", "note": "2027 dates from the recreation.gov fee season (2026 ran May 22 - Sep 7)."},
+      "source": "rec.gov rates (Peak Season 2027-05-23..2027-09-01; 2026-05-22..2026-09-07) + FS page ('Closed for the season'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/234594", "fcfs": "some_sites", "max_stay_nights": 16, "note": "Three sites (006, 007, 009) are reservable; the rest are first come, first served."},
+      "source": "rec.gov catalog (006, 007, 009 reservable; 10 not reservable) + rules maxConsecutiveStay 16, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2026-11-20", "note": "Cash or check on site; an extra-vehicle fee is collected at the campground."},
+      "source": "rec.gov rates (STANDARD NONELECTRIC $15, 2026 and 2027) + FS page ('Single Site: $15/night. Please be prepared to pay with CASH or CHECK.') + rec.gov notice ('An additional fee will be collected at the campground for extra vehicles'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Shoshone NF campground on the Buffalo Bill Scenic Byway 29 miles west of Cody and 23 miles east of Yellowstone's East Entrance, among cottonwoods and junipers between the highway and the North Fork of the Shoshone River. Fly-fishing for rainbow and Yellowstone cutthroat; grizzly country. --Claude",
+  "summary": "FS page + rec.gov campground/rates/catalog read: 13 public sites + host, 3 reservable (rec.gov) though the FS page says FCFS, spurs 25-48 ft (FS max 32) plus a 120-ft pull-through, vault toilets, no water, $15 cash/check, 16-night limit, season late May - early Sept. Sites (14 -> 13, max 120 -> 48), facilities, season, booking, fees written; note cleaned. Not waterfront stands.",
+  "flags": [
+    "POLICY_REF unset on this entry - should be federal:usfs (Shoshone NF); apply.py does not set it.",
+    "BOOKING DISAGREEMENT: FS page 'This site is first come, first served' vs recreation.gov catalog with 006, 007, 009 reservable ('Open') - rec.gov value written (reservable, some_sites) per the rule. FS fee text itself says 'Sites may be reservable'.",
+    "MAX RIG: stored 120 came from site 011 (the only pull-through, 'Max Vehicle Length 120' - likely a placeholder). Written 48 (longest back-in, 003/009); FS posts 'Maximum spur length is 32 feet'. A 23-ft rig fits either way. Reviewer may prefer 32.",
+    "SITE COUNT 14 -> 13: the catalog's 14 include a 'Host' site; public sites are 002-014 (no 001).",
+    "WEBSITE: add the FS page https://www.fs.usda.gov/r02/shoshone/recreation/big-game-campground (stored website has only the rec.gov link).",
+    "PHONE 307-527-6921 (Wapiti Ranger District) confirmed.",
+    "Pin 44.462126,-109.60568 among sites 010/012; FS point 44.46186,-109.60505 is ~60 m away - no move."
+  ]
+}

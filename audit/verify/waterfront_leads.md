@@ -1589,3 +1589,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6557 Woods Landing (WY, p3-544): operator "along the banks of Laramie River" - RV row ~30 m from the 11-16 m river through continuous cottonwoods; left not waterfront.
 - 6392 Lizard Creek (WY, p3-546): sites 32 (44.00172,-110.69137) and 34-37 are 15-45 m from Jackson Lake with the loop road between - lakeview candidate if site photos show the lake.
 - 6487 Leigh Creek (WY, p3-546): rec.gov tags sites "Riverfront", creek under continuous canopy - not waterfront kept.
+- 6422 South Brush Creek (WY, p3-549): FS "along the shore of South Brush Creek"; creek 22-27 m from nightly sites 015-018 (018 at 41.34411,-106.50057) through a willow fringe - creekside candidate if photos show an open bank.
+- 13578 Alcova Full Hook-Up (WY, p3-549): county photos may show the reservoir - lakeview candidate.

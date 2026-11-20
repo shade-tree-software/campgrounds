@@ -604,6 +604,8 @@ DROPS = {
     6538: ('2026-11-20', "Powder River Campground (Kaycee WY): price gate - every RV night US$60", "p3-542: operator rates page 'Daily $60' back-in and pull-thru; RoverPass quotes $60 Jan + Jun 2027; no gateway within 40 km, not a Good Sam Park, no operator member discount"),
     6528: ('2026-11-20', "RV Park at JACZ (Etna WY): mostly seasonal and iffy, likely over the price gate", "p3-542: operator 'call for availability' / 'Need a seasonal stay? We do that, too'; no posted rate (RV Life $$$, undated OutReserve snippet $60/night, page now 404); no reviews on Google or The Dyrt; no site count; gravel lot beside a restaurant; no gateway within 40 km"),
     6516: ('2026-11-20', "CAM-PLEX Windmill RV Park (Gillette WY): event/exhibitor-only - no ordinary nights shown", "p3-548: RV LIFE summary 'General public camping outside event times is not available'; ParkAdvisor 2018 'NO PUBLIC CAMPING 1100+ sites for exhibitors ONLY', 2020 'We were vendors at a Cam-Plex event so we were able to camp here'; cam-plex.com posts no rate or season, only an event booking-inquiry form (fairgrounds test fails)"),
+    6419: ('2026-11-20', "Sinks Canyon Campground (Shoshone NF, Lander WY): spurs capped at 20 ft - under the ~23-ft minimum", "p3-549: FS page 'Maximum spur length is 20 feet' (14 sites, FCFS)"),
+    6379: ('2026-11-20', "Angles Campground (Bridger-Teton NF, Moran WY): not an official campground - 2 free sites at a wilderness pack trailhead with hitch rails and corrals, not separated from the stock facilities", "p3-549: FS page 'though it is not an official campground there are 2 no-fee campsites'; 'Adjacent to the trailhead there are 2 hitch rails and temporary-use corrals'"),
 }
 
 if __name__ == "__main__":

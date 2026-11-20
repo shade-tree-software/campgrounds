@@ -1,0 +1,52 @@
+{
+  "id": 6422,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/south-brush-creek-campground (Medicine Bow NF, read 2026-11-20): 'located on the west side of the Snowy Range along the shore of South Brush Creek ... composed of two sections located in a dense stand of Lodgepole pines, fir and Aspen'; 'The campground has 20 sites, with 6 pull-through sites for trailers under 25 feet.'; 'toilets, trash service, and a camp host on site, and water is available late May through mid September'; 'Open season is June - September.'; 'Open seasonally, weather dependent.'; 'Single Site: $20 per night / Additional Vehicle Fee: $5 per vehicle per day'; 'Vault Toilet (2)'; 'Potable water is available at this site.'; 'Make Reservations Here'; FS point 41.3444,-106.4959 (~600 m east of the sites)",
+    "https://www.recreation.gov/api/camps/campgrounds/10156047 (read 2026-11-20): phone (307) 326-5258; notice 'There are no hookup services. Maximum length of stay is 14 days. ... Campsites are limited to 8 people and 2 vehicles per site. Only 1 RV/trailer per RV campsite.'; rules maxStay 14 per rolling 30 days, maxConsecutiveStay 16, minConsecutiveStay 1 soft, reservationCutOff 7",
+    "https://www.recreation.gov/api/camps/campgrounds/10156047/rates (read 2026-11-20): Peak Season 2026-06-01 to 2026-09-07 PeakStandardNonelectric $20; Peak 2027-06-01 to 2027-09-07 $20; First-come, First-served Season 2026-09-10 to 2026-10-31 WalkInStandardNonelectric $20",
+    "recreation.gov campsite catalog (api/search/campsites asset 10156047, read 2026-11-20): 20 sites, all nonelectric, no water hookup; 9 reservable (011, 012, 014-020; 020 typed TENT ONLY), 11 first-come (001-010, 013); pull-throughs 002, 006, 011, 016, 018; every site permits RV/Trailer, no lengths posted",
+    "Esri World Imagery 2026-11-20 (280 m and 110 m half-width, catalog site points plotted): two sections along FR 200 north of the creek; site centroid ~41.3443,-106.5028; stored pin 41.3444,-106.50367 is ~75 m west of it inside the west section - no move. South Brush Creek (two narrow channels, a few metres each) runs ~22-27 m south of sites 015-018 across grass and a willow/shrub fringe"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 20, "pull_through": true, "note": "Six pull-throughs; the FS page describes them as for trailers under 25 feet."},
+      "source": "https://www.fs.usda.gov/r02/mbrtb/recreation/south-brush-creek-campground ('The campground has 20 sites, with 6 pull-through sites for trailers under 25 feet.') + recreation.gov catalog (20 sites, pull-through entries), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156047 ('There are no hookup services.') + catalog (all 20 nonelectric, Water Hookup No), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Water late May through mid September; camp host on site."},
+      "source": "https://www.fs.usda.gov/r02/mbrtb/recreation/south-brush-creek-campground ('Vault Toilet (2)'; 'water is available late May through mid September'; 'a camp host on site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-01", "closes": "09-30", "note": "FS: 'Open season is June - September', weather dependent; recreation.gov also sells first-come nights Sep 10 - Oct 31 2026."},
+      "source": "https://www.fs.usda.gov/r02/mbrtb/recreation/south-brush-creek-campground ('Open season is June - September.') + recreation.gov rates (First-come, First-served Season 2026-09-10 to 2026-10-31), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10156047", "fcfs": "some_sites", "max_stay_nights": 14, "season": {"opens": "06-01", "closes": "09-07"}, "note": "9 of the 20 sites are reservable (011, 012, 014-020); the rest are first-come. After the peak season all sites are first-come."},
+      "source": "recreation.gov catalog asset 10156047 (9 reservable, 11 not) + /rates (Peak Season 2026-06-01 to 09-07; First-come season 09-10 to 10-31) + campground notice ('Maximum length of stay is 14 days.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026-11-20", "extra_vehicle": {"included": 1, "amount": 5, "per": "night", "max_vehicles": 2}},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10156047/rates (PeakStandardNonelectric $20 2026 and 2027) + https://www.fs.usda.gov/r02/mbrtb/recreation/south-brush-creek-campground ('Single Site: $20 per night / Additional Vehicle Fee: $5 per vehicle per day'; rec.gov notice '2 vehicles per site'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF campground about 20 mi southeast of Saratoga off WY-130 via FR 100 and FR 200, in two sections among lodgepole pine, fir and aspen beside South Brush Creek. --Claude",
+  "summary": "FS page + rec.gov read: 20 sites (9 reservable, 11 first-come), no hookups, vault toilets, water late May-mid Sept, $20 + $5 extra vehicle, June-Sept season (rec.gov FCFS to Oct 31). Sites, hookups, facilities, season, booking, fees written; note cleaned. Phone empty -> (307) 326-5258. Creekside re-audit lead (operator 'along the shore').",
+  "flags": [
+    "WATERFRONT LEAD (operator claim vs stored not waterfront): FS page 'along the shore of South Brush Creek'. Imagery: the creek (two narrow channels) runs ~22-27 m south of sites 015, 016, 017 and 018 (018 at 41.34411,-106.50057) across grass and a willow/shrub fringe; 015-018 are reservable nightly sites. Not proposed as an upgrade - the willow fringe reads as a view barrier on Esri; reviewer may look at site photos.",
+    "MAX RIG: stored max_rig_ft 25 rests on '6 pull-through sites for trailers under 25 feet' (a pull-through description, not a campground cap); rec.gov posts no lengths. Left as stored.",
+    "SEASON: FS says June - September; rec.gov also sells first-come nights Sep 10 - Oct 31 2026 - both in season.note.",
+    "PHONE: empty -> (307) 326-5258 (recreation.gov facility phone, Brush Creek/Hayden RD office at Saratoga). Website lines current.",
+    "Pin 41.3444,-106.50367 is ~75 m from the site centroid 41.3443,-106.5028, inside the west section - no move. The FS page's point (41.3444,-106.4959) is ~600 m east of the campground."
+  ]
+}

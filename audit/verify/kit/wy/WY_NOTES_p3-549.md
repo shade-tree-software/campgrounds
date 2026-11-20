@@ -1,0 +1,12 @@
+# WY p3-549 notes
+- 6419 done: max spur 20 ft DROP CAND; riverfront->riverview lead; phone 307-332-5460
+- 6422 done: 20 sites 9 res; season Jun-Sep; phone 307-326-5258; creekside lead 015-018 (not proposed)
+- 6470 done: booking -> FCFS (rec.gov group only); lakeview stands; road wx 4WD caveat
+- 6360 done: NRH 29+grp, 12 elec 50A; lakefront north row only (engine says None) lead; phone 307-320-3013; leads South Red Hills, Sunshine Beach
+- 13578 done: Rec1 JSON read; 22 FHU 50A, yr-round winter elec-only 23.39/43.75; phone 9200->9325 suggested; lakeview lead
+- 6433 done: 16+3grp, 10 resv/6 fcfs, 05-21..09-05 (2027 recgov), phone 541-351-1182, note E->W of Alpine
+- 6379 done: horse trailhead 'not an official campground' DROP CANDIDATE; phone 307-543-3900; review claims removed
+- 6435 done: FCFS stands (S&P only), 25ft spur, 0/5, 05-15..12-15, phone 307-283-1361, FS 8 vs recgov 0 flag
+- 13300 done: riverfront->riverview lead (no named sites, riparian band); FCFS; 06-01..11-15; review claims removed
+- 6373 done: all confirmed; FCFS added; not waterfront
+- 13705 done: 13+host, 3 resv (recgov) vs FS FCFS, max 120->48, policy_ref unset, add FS website

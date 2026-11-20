@@ -1,0 +1,49 @@
+{
+  "id": 6470,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r04/bridger-teton/recreation/green-river-lake-campground (Bridger-Teton NF, read 2026-11-20): 'Site Open'; current conditions 'The water is still turned off for the winter season - no services.'; 'located near the shores of beautiful Lower Green River Lake, at an elevation of 8,000 feet'; 'Most campsites afford scenic views of the peak and the lake below. Lodgepole pines dot the campground, offering very limited shade.'; 'The access road to the campground is not paved'; 'There are no reservations for this campground. All sites are first come, first serve.'; 'Seasons of Use / July 1st'; 'Single Site: $12 per night / Group Site: $35 - $70 per night'; 'Contact Name: Pinedale Ranger District / Contact Phone: 307-3674326'; 'Vault toilet(s)'; 'Potable water available July 1 - September 15'; FS point 43.315574,-109.863173",
+    "https://www.recreation.gov/api/camps/campgrounds/233874 (read 2026-11-20): the listing is the three group sites ('Sites A and B can accommodate up to 35 people each, and site C can accommodate up to 50 people ... Parking for the group sites are not designed for large RVs or trailers. 36 additional single sites are available within the campground, they are first come/first served. No reservations.'); notices 'There are no electric, water or sewer site hookups at this campground', 'No extra vehicles are allowed', 'Drinkin water available July 1st-Sept 15th (Depending on weather)'; directions 'While the dirt road to the campground is suitable for 2 wheel drive vehicles, weather can make this road impassable to all but 4 wheel drive vehicles, call the district office to inquire on road conditions.'; phone 1-307-367-4326. No Dollar Lake Fire notice in the API response today",
+    "https://www.recreation.gov/api/camps/campgrounds/233874/rates (read 2026-11-20): 2026 and 2027 seasons price single units $12, groups $35/$70",
+    "https://www.fs.usda.gov/r04/bridger-teton/alerts (read 2026-11-20): no Green River Lakes / Dollar Lake Fire alert listed (the dollar-lake-fire-area-road-and-trail-closure alert URL now 404s)",
+    "Esri World Imagery 2026-11-20 (600 m half-width at the pin): the camping loops lie in open lodgepole on the slope 150-300 m northwest of Lower Green River Lake's north shore, above the outlet; the pin is at the junction by the trailhead parking loop, ~175 m north of the loops' centre - no move"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 39, "note": "36 single sites, first-come; plus 3 group sites (A, B, C) reservable on recreation.gov, whose parking is not designed for large RVs or trailers."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233874 ('three large-group campsites ... 36 additional single sites are available within the campground, they are first come/first served'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233874 ('There are no electric, water or sewer site hookups at this campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water July 1 - September 15, weather permitting."},
+      "source": "https://www.fs.usda.gov/r04/bridger-teton/recreation/green-river-lake-campground ('Vault toilet(s)'; 'Potable water available July 1 - September 15') + recreation.gov notice ('Drinkin water available July 1st-Sept 15th (Depending on weather)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "note": "Single sites are first-come only; only the three group sites book on recreation.gov."},
+      "source": "https://www.fs.usda.gov/r04/bridger-teton/recreation/green-river-lake-campground ('There are no reservations for this campground. All sites are first come, first serve.') + recreation.gov 233874 (group sites only; '36 additional single sites ... first come/first served. No reservations.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 12, "nightly_high": 12, "currency": "USD", "checked": "2026-11-20", "note": "Group sites $35-$70 a night. No extra vehicles allowed."},
+      "source": "https://www.fs.usda.gov/r04/bridger-teton/recreation/green-river-lake-campground ('Single Site: $12 per night / Group Site: $35 - $70 per night') + recreation.gov rates 2026/2027, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bridger-Teton NF campground above Lower Green River Lake at 8,000 ft, under Square Top Mountain at the north end of the Wind River Range, about 50 mi north of Pinedale; the last 18 mi are dirt (WY-352, then FR 370600 and Green River Lakes Road FR 370650). The road is passable in 2WD when dry, but weather can make it impassable to all but 4WD - call the Pinedale Ranger District for conditions. Water was reported off in 2026 after Dollar Lake Fire (2025) damage; check before going. Trailhead, horse corral and carry-down boat launch nearby. --Claude",
+  "summary": "FS + rec.gov read: 36 FCFS single sites + 3 group sites (rec.gov lists only the groups), $12, no hookups, vault toilets, water Jul 1 - Sep 15. Booking CORRECTED reservable true/some_sites -> false/always (group-only listing doesn't count). Sites, hookups, facilities, booking, fees written; note cleaned. Lakeview stands (agency: 'Most campsites afford scenic views of ... the lake below'). Phone confirmed.",
+  "flags": [
+    "BOOKING CORRECTED: stored reservable true, fcfs some_sites -> reservable false, fcfs always. FS: 'There are no reservations for this campground. All sites are first come, first serve.' recreation.gov 233874 lists only the three group sites.",
+    "ACCESS (not a drop as worded): rec.gov 'While the dirt road to the campground is suitable for 2 wheel drive vehicles, weather can make this road impassable to all but 4 wheel drive vehicles, call the district office to inquire on road conditions.' A weather-conditional 4WD statement, not a standing 4WD recommendation - kept in the note; reviewer may judge.",
+    "WATERFRONT: lakeview stands. Agency: 'Most campsites afford scenic views of the peak and the lake below.' Imagery: loops 150-300 m from the north shore through scattered lodgepole, no site near the water (lakefront not supported).",
+    "STATUS/WATER: a web search surfaced a 2025 FS closure order for the campground after the Dollar Lake Fire 'for the remainder of 2025 and into 2026' and a 2026 rec.gov water notice; neither is on the FS page, the FS alerts list or the rec.gov API today (FS page 'Site Open'; alert URL 404). No status written; the note's dated water caveat kept. Green River Lakes Road reconstruction was mentioned in search snippets only - unread.",
+    "SEASON: FS 'Seasons of Use: July 1st' with no end; water Jul 1 - Sep 15; rec.gov non-peak rates run to Sep 30 2027. Season not written.",
+    "PHONE 307-367-4326 confirmed (FS, rec.gov). Website lines current.",
+    "Pin 43.3143,-109.8605 is ~175 m north of the camping loops' centre (at the trailhead-parking junction) - under 250 m, no move."
+  ]
+}

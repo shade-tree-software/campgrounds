@@ -1,0 +1,48 @@
+{
+  "id": 6360,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://wyoparks.wyo.gov/index.php/places-to-go/seminoe as captured 2026-10-12 in audit/state_park_fees/wy_pages_2026-10-12.json (the live site answers with an F5 bot challenge; not retried): 'Park is open 24/7 - 365 days a year'; 'Campsite reservations required from May 15th through September 15th'; 'Fee kiosks at each entrance for day use and winter camping'; 'Park Headquarters 307-320-3013'; Aug. 25, 2026 news: 'intermittent water system interruptions through the remainder of the camping season ... The park's dump station will remain open'; site status 'Open Boat Ramps North Red Hills', 'HCB Advisories Effective 9/10/2026', 'Stage 1 Fire Restrictions'",
+    "reserve.wyoming.gov (US eDirect API wyordr.usedirect.com/wyomingrdr/rdr/, read 2026-11-20): PlaceId 14 Seminoe holds North Red Hills (FacilityId 381, point 42.13642,-106.892), South Red Hills (382, 42.13171,-106.8993) and Sunshine Beach (383, 42.12497,-106.8944). North Red Hills grid: 30 units - 'Campsite Electric' NR02-NR05 and NR08-NR15 (12), 'Campsite Non-Electric' NR01, NR06, NR07, NR16, NR17, NR19-NR30 (17), 'Group Site' NR18; all AllowWebBooking true; restrictions MinimumStay 1, MaximumStay 14",
+    "reserve.wyoming.gov unit details for all 30 North Red Hills units (search/details, 2027-03-01, read 2026-11-20): rate $10.00 each; electric units ' Electricity (Amp) ': '50' (group site NR18 too); 'Unit&parkingsize': '40' on every unit; access Pull Through on 12 units, Back-In 8, Open Gravel Area 7; 'Shade': 'None'; 'Waterfront Setting': 'None' on every unit; no water or sewer hookup listed",
+    "Esri World Imagery 2026-11-20 (450 m and 160 m half-width): North Red Hills is a grid of gravel pads on a peninsula on the reservoir's northwest side; the pads north of the north loop road (around 42.13724,-106.89047) sit on open grass/bare ground ~35-50 m from the wave-cut high-water bench, with the water itself further out at the imaged (drawn-down) level; the stored pin is in the middle of the grid - no move"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 29, "max_rig_ft": 40, "pull_through": true, "note": "Plus one group site (NR18, 50-amp). Every unit lists the same 40-ft parking size."},
+      "source": "reserve.wyoming.gov FacilityId 381 grid + unit details (29 campsites + Group Site NR18; 'Unit&parkingsize' 40 on every unit; 12 pull-throughs), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "reserve.wyoming.gov FacilityId 381 unit details (NR02-NR05, NR08-NR15, NR18: ' Electricity (Amp) ': '50'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true},
+      "source": "wyoparks.wyo.gov Seminoe page as captured 2026-10-12 (Aug. 25, 2026 release: 'The park's dump station will remain open'), audit/state_park_fees/wy_pages_2026-10-12.json",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Winter camping is paid at the entrance fee kiosks."},
+      "source": "wyoparks.wyo.gov Seminoe page as captured 2026-10-12 ('Park is open 24/7 - 365 days a year'; 'Fee kiosks at each entrance for day use and winter camping'), audit/state_park_fees/wy_pages_2026-10-12.json",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://reserve.wyoming.gov/web/#!park/14", "max_stay_nights": 14, "season": {"opens": "05-15", "closes": "09-15"}},
+      "source": "wyoparks.wyo.gov Seminoe page as captured 2026-10-12 ('Campsite reservations required from May 15th through September 15th') + reserve.wyoming.gov FacilityId 381 (all 30 units web-bookable; MaximumStay 14), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "North Red Hills is the campground on a peninsula on the northwest side of Seminoe Reservoir, about 34 mi north of Sinclair via County Road 351, among red rock bluffs with no shade. The pads on the north side of the loop sit on open ground a short walk above the high-water line. Boat ramp at the campground. South Red Hills and Sunshine Beach are the park's other campgrounds. --Claude",
+  "summary": "reserve.wyoming.gov + Oct-2026 wyoparks capture read: North Red Hills 29 campsites + 1 group site, 12 electric (+group) at 50 A, all reservable, parking 40 ft on every unit, reservations May 15 - Sep 15, open all year with winter camping, dump open. Sites (30 -> 29 + group), hookups (50 A), facilities, season, booking written; note cleaned. Lakefront stands on the north-row pads (numbers unreadable). Phone empty -> 307-320-3013.",
+  "flags": [
+    "WATERFRONT (stored lakefront, check-hard): supportable on the north row only. Pads north of the north loop road (around 42.13724,-106.89047) are ~35-50 m from the reservoir's wave-cut high-water bench over open grass/bare ground (Esri); the rest of the grid is 80-200 m back. Site numbers could not be tied to pads (the engine has no unit coordinates and no park map loaded; wyoparks refuses). CONTRARY ENGINE CLAIM: reserve.wyoming.gov lists 'Waterfront Setting: None' on all 30 units - re-audit lead; if the reviewer wants numbered sites before keeping it, this goes down to lakeview.",
+    "SITE COUNT: stored 30 -> 29 campsites + group site NR18; electric 12 campsites + the group site (the stored note's '13 with electric' counted the group site).",
+    "MAX RIG: 'Unit&parkingsize' 40 on every unit - possibly a placeholder; 40 written as the engine states it.",
+    "PHONE: empty -> 307-320-3013 (Park Headquarters, wyoparks capture). Website lines current (wyoparks page + reserve.wyoming.gov park/14).",
+    "NOTICES (2026, dated): Aug 25 2026 water-system upgrades with intermittent water through the end of the 2026 season; HCB (harmful cyanobacteria) advisory effective 9/10/2026; Stage 1 fire restrictions. Not written as status. The live wyoparks page (and any later notice) stayed unread - F5 bot challenge.",
+    "LEADS (not in campgrounds.json): Seminoe State Park's other two reservable campgrounds - South Red Hills (reserve.wyoming.gov FacilityId 382, engine point 42.13171,-106.8993, ~700 m SW of North Red Hills: 20 non-electric campsites + group SR41) and Sunshine Beach (FacilityId 383, 42.12497,-106.8944, ~1.3 km S: 23 non-electric campsites + 8 group sites). Both at https://reserve.wyoming.gov/web/#!park/14.",
+    "Pin 42.13642,-106.89200 is the engine's facility point, in the middle of the pad grid - no move."
+  ]
+}

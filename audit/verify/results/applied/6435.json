@@ -1,0 +1,52 @@
+{
+  "id": 6435,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/blackhills/recreation/bearlodge-campground (read 2026-11-20): 'Site Open'; 'This small, eight-site campground closes annually on Dec. 15. Roads and parking areas are not plowed in winter'; 'Reservations are not available for Bearlodge Campground. Sites are first-come, first-served.'; 'Peak Season: $18 / night (Approximately Mid-May through Mid-September) Shoulder Season: $15 / night (Approximately Mid-September through Mid-May)'; 'Contact Phone: (307) 283-1361'",
+    "https://www.recreation.gov/api/camps/campgrounds/10381860 + /rates (read 2026-11-20; scan-and-pay listing, 'S&P Only'): 'sites available to accommodate tents, trailers, and small RVs ... a vault toilet and trash receptacles ... Electrical hook-ups and water are not available'; notice: 'During the off season (from 10/01 until 12/15) the USFS operates this campground ... Daily Fee is $15.00 per First Come First Served campsite of which there are 8 available ... Parking Spur Length is 25 ft. Drinking water is NOT available ... roads are not maintained during the off-season ... (12/15/2026 is when the campground closes this year) ... open season from May 15th to September 30th'; notice 'Potable water is available at this site. Water is turned off from about Oct. 1 through May 15.'; notice 'an additional vehicle fee of $5.00 per night on the second vehicle in each single family campsite'; rates 'First-come, First-served Season' 2026-05-16..2026-09-30 and 2027-05-15..2027-09-30: WalkInStandardNonelectric $20; contact '(661) 702-1420' (concessionaire ExplorUS)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10381860 (catalog, read 2026-11-20): 8 sites, all 'Not Reservable'; Max Vehicle Length 30 (1, 4, 8), 40 (2, 3), 45 (7), 50 (5, 6); site 6 Pull-through, the rest back-in; permitted equipment Tent/Trailer on 1-5, 7, 8 and RV/Tent/Trailer on 6; Water Hookup 'No'",
+    "Esri World Imagery 2026-11-20 with the catalog site points (200 m half-width): one small loop under continuous ponderosa canopy south of WY-24; no water anywhere near - not waterfront stands; pin among sites 1/2/8 - no move"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 8, "max_rig_ft": 25, "pull_through": true, "note": "One pull-through (site 6)."},
+      "source": "rec.gov off-season notice ('8 available', 'Parking Spur Length is 25 ft.') + catalog (site 6 Pull-through), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov ('Electrical hook-ups and water are not available'; catalog Water Hookup 'No'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Water and trash service mid-May to September 30 only."},
+      "source": "rec.gov notices ('Potable water is available at this site. Water is turned off from about Oct. 1 through May 15.'; off-season 'Drinking water is NOT available', 'Garbage and Trash \"Pack It In Pack It Out\"') + description ('a vault toilet and trash receptacles'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "12-15", "note": "From October 1 the forest runs it as an off-season campground with no water and unmaintained roads, open until weather prevents access or December 15."},
+      "source": "FS page ('closes annually on Dec. 15') + rec.gov notice ('open season from May 15th to September 30th'; 'During the off season (from 10/01 until 12/15) the USFS operates this campground'; 'Sites are open until weather prohibits access'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "note": "Pay on site; the recreation.gov listing is for scan-and-pay only."},
+      "source": "FS page ('Reservations are not available for Bearlodge Campground. Sites are first-come, first-served.') + rec.gov (all 8 sites 'Not Reservable', rules 'S&P Only'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 20, "currency": "USD", "checked": "2026-11-20", "note": "$20 May 15 - Sep 30; $15 in the October - December off-season.", "extra_vehicle": {"included": 1, "amount": 5, "per": "night"}},
+      "source": "rec.gov rates (First-come, First-served Season 2027-05-15..2027-09-30: $20) + off-season notice ('Daily Fee is $15.00') + extra-vehicle notice ($5.00 per night on the second vehicle), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Black Hills NF campground in ponderosa pine beside WY-24, about 7 mi west of Aladdin and 25 mi from Devils Tower. Small sites for tents, trailers and small RVs. Roads are not plowed. --Claude",
+  "summary": "FS page + rec.gov (scan-and-pay listing, notices, rates, catalog) read: 8 FCFS sites, 25-ft spurs per the forest (catalog says 30-50), one pull-through, no hookups, vault toilet, water May 15-Oct 1, open May 15-Dec 15 with a USFS-run no-water off-season from Oct 1. $20 season / $15 off-season (rec.gov), $5 extra vehicle. Sites, hookups, facilities, season, booking, fees written; note cleaned. Not waterfront stands.",
+  "flags": [
+    "FEE DISAGREEMENT: FS page says 'Peak Season: $18 / night'; recreation.gov rates (2026 and 2027) say $20 - rec.gov value written per the rule. Off-season $15 agrees.",
+    "MAX RIG: forest notice on rec.gov 'Parking Spur Length is 25 ft.' (written, = stored) vs catalog Max Vehicle Length 30-50 per site; catalog permits the RV (motorhome) equipment type only on site 6 (pull-through, no length) - the other seven list Tent/Trailer. A 23-ft rig is inside 25 ft either way.",
+    "BOOKING: stored FCFS stands - the rec.gov listing (10381860) is scan-and-pay only (no reservable site); rec.gov link in website is fine as a pay/info link.",
+    "PHONE: empty -> (307) 283-1361 (Bearlodge Ranger District, FS page and rec.gov facility phone). Concessionaire line (661) 702-1420.",
+    "OHV: rec.gov mentions 70 miles of motorized trails 'throughout the Bearlodge' (district-wide) - general campground, not an OHV base; no flag.",
+    "Pin 44.65450,-104.32680 among sites 1/2/8 - no move."
+  ]
+}

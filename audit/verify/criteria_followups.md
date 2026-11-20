@@ -2869,3 +2869,13 @@ me drop and report); each needs the research named before a verdict.
 - 6523 Park County Events Center (Powell): first-come, not reservable; closed the last two weeks of July; "long-term camping" advertised - mild caveat. Re-pinned 310 m.
 - 6509 Lost Cabin / 6448 Circle Park: Rustic Freedom concession, rec.gov $18.50 vs FS $20 - rec.gov written.
 - 6452 Curtis Canyon: no potable water since 2024, half-price notice; "under 30 ft"/"steep gravel road" note claims unsourced, removed.
+
+## WY p3-549 (2026-11-20)
+- DROPPED 6419 Sinks Canyon Campground (FS): "Maximum spur length is 20 feet".
+- DROPPED 6379 Angles (Bridger-Teton): "not an official campground" - 2 free sites at a pack trailhead beside hitch rails and corrals.
+- 6470 Green River Lakes: booking corrected to first-come (rec.gov has only the 3 group sites; FS "no reservations"); FS says the road can be "impassable to all but 4 wheel drive vehicles" in weather - weather wording only, kept. 2025 Dollar Lake Fire closure / 2026 water notice seen in search snippets only - recheck.
+- 6360 Seminoe North Red Hills: 40 ft on every unit (placeholder?); 2026 water-system work + HCB advisory from the 2026-10-12 capture.
+- 13705 Big Game: 13 public sites (3 reservable 006/007/009 vs FS page "first come"); max rig 120 -> 48 (FS "Maximum spur length is 32 feet"); policy_ref set federal:usfs; FS link added.
+- 6435 Bearlodge: rec.gov $20/$15 off-season vs FS $18 - rec.gov written.
+- 13578 Alcova Full Hook-Up: read through the county Rec1 catalog; phone -> Parks office 307-235-9325.
+- LEADS: Seminoe SP South Red Hills (FacilityId 382, ~42.13171,-106.8993, 20 non-electric + group) and Sunshine Beach (FacilityId 383, ~42.12497,-106.8944, 23 non-electric + 8 group), both reserve.wyoming.gov park 14 - not in the DB.

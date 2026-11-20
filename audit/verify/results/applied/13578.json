@@ -1,0 +1,51 @@
+{
+  "id": 13578,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://secure.rec1.com/WY/natrona-county-wy/catalog (Natrona County Parks Rec1 catalog, read 2026-11-20 via its public getTabs/getItems/getLocationFacilities JSON): tab 'Alcova Reservoir': 'Alcova Reservoir offers both first come first served campgrounds as well as reservation only campgrounds'; 'for reservation only campgrounds, reservations are available 90 days in advance'; 'Restroom facilities are provided at each Alcova Reservoir Campground'; group 'Full Hook-Ups': 'Winter season - electricity only! Discounted rate! Reservation Only. Reservations available 90 days in advance. Located off of Lakeshore Drive and across from the Lakeshore Marina. There are 20 sites with a picnic table, 50 amp hook up's, water and sewer connections. 2 additional sites are located in the Alcova Trailer Park. This campground offers a dump station, water station, and a group day use shelter ... $43.75 a night plus taxes and fees.'; 22 facilities 'FH Site 01'-'FH Site 22' (06, 19, 20 ADA; 21 and 22 marked '(154)' and '(125)'), each with 'Nightly Rate - Power Only' $23.39 for 2025-10-15..2026-04-15 and 'Nightly Rate - Full Hook-Ups' $43.75 for 2026-04-16..2026-10-14; catalog page: 'Call Parks Department office at 307-235-9325 Monday through Friday'",
+    "https://www.natronacounty-wy.gov/882/Full-Hook-Up-Reservable-RV-Campground - domain answers 403 to plain HTTP (known refusing site, not fetched or retried this pass); the repo capture audit/price_research/local_browser_2026-10-16/browser.jsonl has 'Reservations Required $43.75 per day plus applicable taxes and fees'",
+    "https://data.rec1.com/customer_images/2148/2d104703b63ac1ee8c69734b9dc17959.jpg (the county's photo collage on the Rec1 group: gravel pads, picnic shelters, 'FULL RV HOOKUPS $35 A DAY' entrance sign (older rate), reservoir visible in the distance)",
+    "Esri World Imagery 2026-11-20 (300 m half-width around the pin): the pin sits on the gravel pad row at the south edge of the Alcova trailer park, west of Lakeshore Drive; the marina, its parking and the road lie between the sites and the water (~170 m+ east) - no move"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 22, "note": "20 sites in the campground plus 2 in the neighbouring Alcova Trailer Park."},
+      "source": "Rec1 'Full Hook-Ups' group ('There are 20 sites ... 2 additional sites are located in the Alcova Trailer Park'; facilities FH Site 01-22), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "Rec1 'Full Hook-Ups' group ('20 sites with a picnic table, 50 amp hook up's, water and sewer connections'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "potable_water": true, "note": "Group day-use shelter. The Lakeshore Marina across the road has a restaurant, bar and convenience store."},
+      "source": "Rec1 'Full Hook-Ups' group ('This campground offers a dump station, water station, and a group day use shelter. The Marina offers a full service restaurant, bar, and convenience store.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Mid-October to mid-April the sites are electric only (water and sewer off) at a lower rate."},
+      "source": "Rec1 'Full Hook-Ups' group ('Winter season - electricity only! Discounted rate!'; site rates run continuously 2025-10-15..2026-04-15 power only and 2026-04-16..2026-10-14 full hook-ups), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://secure.rec1.com/WY/natrona-county-wy/catalog", "window_opens_days": 90, "fcfs": "never"},
+      "source": "Rec1 catalog ('Reservation Only. Reservations available 90 days in advance.'; all 22 sites bookable online), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 23.39, "nightly_high": 43.75, "currency": "USD", "checked": "2026-11-20", "note": "Full hookups $43.75 mid-April to mid-October; electric only $23.39 the rest of the year. Taxes and fees extra."},
+      "source": "Rec1 site rates (FH Site 01-22: 'Nightly Rate - Power Only' $23.39, 2025-10-15..2026-04-15; 'Nightly Rate - Full Hook-Ups' $43.75, 2026-04-16..2026-10-14; group text '$43.75 a night plus taxes and fees'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Natrona County's full-hookup campground at Alcova Reservoir, 30 mi southwest of Casper, off Lakeshore Drive across from the Lakeshore Marina; boat docks and Little Beach are within walking distance. --Claude",
+  "summary": "Rec1 (county booking catalog) read: 20 + 2 sites, 50 A full hookups, dump + water station, reservation only 90 days out, open all year with electric-only winter rate $23.39 (Oct 15-Apr 15) vs $43.75 summer. Sites, hookups, facilities, season, booking, fees written; note cleaned. Not waterfront stands (lakeview lead). County page 403 unread.",
+  "flags": [
+    "WATERFRONT stored 'not waterfront': stands on imagery - Lakeshore Drive, the marina buildings and parking lie between the pads and the water, ~170 m+. LEAD (not proposed): the county's own photo collage shows the reservoir visible in the distance from the grounds - a possible 'lakeview' if the reviewer wants it.",
+    "PHONE: stored 307-235-9200 (county main line?) -> 307-235-9325 suggested (Rec1 catalog: 'Call Parks Department office at 307-235-9325'); same number written as phone on 6553 Okie Beach.",
+    "WEBSITE: county page natronacounty-wy.gov/882 answers 403 to bots (refuses, not dead - keep). Rec1 catalog written as booking.url.",
+    "OWNERSHIP local (Natrona County Parks, at a Reclamation reservoir) correct; price gate does not apply (not private). Rec1 rates not yet loaded past 2026-10-14 - the 2026-27 winter rate is assumed to repeat (season note says 'mid-October to mid-April' without year).",
+    "Pin 42.52913,-106.77972 on the pad row - no move."
+  ]
+}
