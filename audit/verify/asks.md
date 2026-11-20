@@ -709,3 +709,9 @@ Kept for now. BLM's surface-management layer puts the pin (41.54900,-109.42110) 
 
 ## 6449 Cottonwood Lake (Bridger-Teton NF, Smoot WY) - horse loop (p3-548, 2026-11-20) - OPEN
 Kept for now. FS: "On the west loop, 6 sites have hitching rails for horses", plus three corrals; the east loop is the general/ATV loop, the two loops separate branches of a Y. The FS page does not say whether the west loop also has non-horse sites. If the west loop is purely the horse loop, keep (separated); if general sites are mixed in with the hitching-rail sites, the horse rule says drop. Keep?
+
+## 6445 Brown Mountain (Shoshone NF, Meeteetse WY) - one usable site (p3-550, 2026-11-20) - OPEN
+Kept with a caveat in the note. FS: "Maximum spur length is 16 feet, with the exception of one spur of 40 feet" - 7 sites, one a 23-ft rig fits. Keep (as Lizard Creek's few-sites case) or drop as effectively under the minimum?
+
+## 6439 Bobbie Thomson (Medicine Bow NF) - inclusion weak (p3-550, 2026-11-20) - FYI
+Kept under the small-free-NF rule with a "check with the Laramie Ranger District" caveat: the FS no longer lists it anywhere (no page, EDW record or rec.gov); Campflare says not opened for 2026; the loop is still on imagery. A call to (307) 745-2300 would settle it if you want one.

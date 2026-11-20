@@ -1,0 +1,68 @@
+{
+  "id": 6530,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://secure.rec1.com/WY/natrona-county-wy/catalog (Natrona County Parks Rec1 catalog, read 2026-11-20 via its public getTabs/getItems/getLocationFacilities JSON): tab 'Casper Mountain': 'Restroom facilities are provided at each Casper Mountain Campground.' 'Water is not available at any of the Casper Mountain Campgrounds.'; group 'Beartrap' (29 items): 'Closed for winter. Reopens 5/28/2027. Reservation only. Available 90 days in advance. Beartrap is a jewel of a park on Casper Mountain. It is located off Casper Mountain Road. The campsites surround a large mountain meadow. Beartrap offers 29 campsites. Each site offers a picnic table and a fire ring. $13.39 a night plus taxes and fees.'; facilities 'BT Site 01'-'BT Site 29', each 'Nightly Rate' $13.39 (2026); site-post photos read 'BT n / 10 DAY CAMPING LIMIT / RESERVATIONS REQUIRED' (no site lengths published); Terms & Conditions: 10-day maximum in any one campground, permits 3:00 pm to 11:00 am, 'Reserved camping sites can only be purchased online or at the Parks Department', 'Call Parks Department office at 307-235-9325'",
+    "audit/price_research/local_browser_2026-10-16/browser.jsonl (repo capture of https://www.natronacounty-wy.gov/229/Beartrap-Campground, 2026-10-16): 'Beartrap offers 29 campsites and three restrooms ... Water or utilities are not available at this campground. Reservation Required $13.39 a day plus taxes and fees. Reservation must be cancelled one day before your reservation to receive credit to your account' - the county page itself was not re-fetched (403 domain)",
+    "https://goo.gl/maps/sXCNUPQA65AoECY3A (the county's 'Directions to Beartrap' link, resolved 2026-11-20): Google place 'Beartrap Meadow Park' at 42.73205,-106.31535",
+    "Esri World Imagery 2026-11-20 (300 and 700 m half-width): a long open meadow west of Casper Mountain Road with camp loops in the pines along its edges; pin 42.73344,-106.31395 sits at the meadow's east edge by the road, ~130 m from the county's Google point - no move"
+  ],
+  "groups": {
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": false,
+        "note": "Three restrooms; no water or utilities at any Casper Mountain campground."
+      },
+      "source": "Rec1 Casper Mountain tab ('Restroom facilities are provided at each Casper Mountain Campground.' 'Water is not available at any of the Casper Mountain Campgrounds.') + county page capture 2026-10-16 ('three restrooms', 'Water or utilities are not available'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://secure.rec1.com/WY/natrona-county-wy/catalog",
+        "window_opens_days": 90,
+        "fcfs": "never",
+        "max_stay_nights": 10,
+        "note": "Reservation only, online (Rec1) or at the Parks Department office; cancel at least a day ahead for account credit. Permits run 3 pm to 11 am; after 10 days a camping unit must move to a different campground."
+      },
+      "source": "Rec1 group 'Beartrap' ('Reservation only. Available 90 days in advance') + Terms & Conditions (10-day limit, 3 pm-11 am, purchase online or at the Parks Department) + county page capture 2026-10-16 (cancellation), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 13.39,
+        "nightly_high": 13.39,
+        "currency": "USD",
+        "checked": "2026-11-20",
+        "tax": {
+          "included": false
+        },
+        "note": "Taxes and fees extra."
+      },
+      "source": "Rec1 group 'Beartrap' ('$13.39 a night plus taxes and fees'; all 29 sites 'Nightly Rate' $13.39 for 2026), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-28",
+        "note": "Reopens May 28, 2027; the county does not publish a closing date."
+      },
+      "source": "Rec1 group 'Beartrap' ('Closed for winter. Reopens 5/28/2027.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Natrona County campground on Casper Mountain, off Casper Mountain Road; the sites ring a large mountain meadow, each with a picnic table and fire ring. --Claude",
+  "summary": "Rec1 catalog read (county page 403; its 2026-10-16 capture in the repo agrees): 29 reservation-only sites, $13.39 + taxes, 90-day window, 10-day limit, three restrooms, no water. Booking/fees/facilities/season written; closed for winter, reopens 2027-05-28 (season, not status). Not waterfront holds. Note cleaned (dropped field repeats, the unsourced site 14-20 and hairpin lines). Phone empty -> 307-235-9325.",
+  "flags": [
+    "RIG FIT UNVERIFIED: no county or Rec1 page gives site lengths or an RV/trailer statement; the 29 Rec1 site photos are sign-post close-ups. The removed note line 'several sites (e.g. 14-20, incl. 17) fit larger RVs' had no source I could read. RV Life lists the park (price tier 1). Keep; not a drop candidate.",
+    "ACCESS: removed the note's 'steep with a tight hairpin' (no agency wording; paved county road). Not a drop candidate.",
+    "PHONE: empty -> 307-235-9325 (Natrona County Parks Department, Rec1 Terms & Conditions).",
+    "WEBSITE: natronacounty-wy.gov/229 refuses bots (403; not dead - keep); Rec1 catalog line already present.",
+    "WATERFRONT 'not waterfront' holds (mountain meadow, no water).",
+    "LEADS (not vetted, not in campgrounds.json - none within 6 km): the same Rec1 tab sells five more Natrona County Casper Mountain campgrounds, all reservation-only, $13.39, reopening 5/28/2027, no water: Deer Haven (11 sites, 'across from Beartrap'), Elkhorn Springs (6), Skunk Hollow (10, Strube Loop), Tower Hill (8), Archery Range (4). Rig fit unknown for all; they may have been left out on purpose by the WY sweep.",
+    "Pin 42.73344,-106.31395 at the meadow's east edge (~130 m from the county's Google point 42.73205,-106.31535) - no move."
+  ]
+}

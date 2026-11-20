@@ -1,0 +1,47 @@
+{
+  "id": 6440,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r04/bridger-teton/recreation/boulder-lake-campground (last updated May 4, 2026; read 2026-11-20): 'Site Open'; 'sits on the east end of Boulder Lake, near Boulder Creek. There are 15 sites available, each are equipped with a picnic table, fire ring and a lantern holder ... There is no drinking water available onsite'; 'There are no reservations for this campground. All sites are first come, first serve. There is a 2 car maximum.'; 'Seasons of Use June 1st'; 'Check in: 2:00 p.m.; Check-out: 12:00 p.m.'; 'Single Site: $12 per night'; 'Contact Phone: 307-367-4326'; 'Vault toilet(s)'; 'Potable water is not available at this site.'; directions: Boulder Lake Road / CR-125 then FS-370780, 'access to Boulder Lake Campground is at the end of the road'",
+    "https://www.fs.usda.gov/media/105431 -> Boulder_CG_Layout_D7.pdf (Pinedale RD campground layout, read 2026-11-20): one loop of sites 1-15 north of Boulder Creek, entrance road crossing the creek at the loop's south end; site length table: 1 124, 2 126, 3 97, 4 49, 5 39, 6 75, 7 84, 8 12, 9 82, 10 44, 11 49, 12 42, 13 43, 14 35, 15 27 ft; trailhead beside the fee station; site 15 is the spur nearest the creek",
+    "https://www.recreation.gov/camping/campgrounds/10289160 (API, read 2026-11-20): scan-and-pay first-come listing, 15 sites 01-15 all STANDARD NONELECTRIC, no site attributes; rate 'First-come, First-served Season' 2026-05-01 to 2026-10-31 $12; notices 'First come, First Serve Sites', '14 DAY STAY LIMIT', 'No drinking water available', 'Garbage Service is NOT available, please \"Pack it in, Pack it out\"', 'No livestock in campground, use the corrals located up the road in the Stock Parking area'; amenities include 'Creek Access'; phone (307) 367-4326",
+    "Esri World Imagery 2026-11-20 (1200 m, 400 m and 150 m half-width): the loop sits under conifer canopy on the north bank of Boulder Creek (channel ~10-15 m wide), ~200 m east of the lake's high-water edge at the head of its drawdown delta, with forest between; the south end of the loop (site 15's spur and the entrance turnaround, ~42.8566,-109.6178) is ~20-35 m from the creek bank across a gravel bar, partly through a thin tree band; pin 42.85780,-109.61720 is mid-loop"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 15, "max_rig_ft": 126, "note": "One loop. Spur lengths per the Forest Service layout map: 124 ft (site 1), 126 (2), 97 (3), 75-84 (6, 7, 9), 42-49 (4, 10, 11, 12, 13), 35-39 (5, 14), 27 (15) and 12 ft (8, too short for a 23-ft rig). Two vehicles per site."},
+      "source": "FS layout map https://www.fs.usda.gov/media/105431 (site length table) + FS page ('15 sites', 'There is a 2 car maximum'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "No garbage service; pack out trash."},
+      "source": "FS page ('Vault toilet(s)', 'Potable water is not available at this site') + recreation.gov notices ('No drinking water available', 'Garbage Service is NOT available'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14, "note": "Pay on site with recreation.gov Scan & Pay or at the fee station. Check-in 2 pm, check-out noon."},
+      "source": "FS page ('There are no reservations for this campground. All sites are first come, first serve.'; check-in/out) + recreation.gov 10289160 (scan-and-pay listing; '14 DAY STAY LIMIT'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 12, "nightly_high": 12, "currency": "USD", "checked": "2026-11-20"},
+      "source": "FS page ('Single Site: $12 per night') + recreation.gov rate table (2026-05-01..10-31 $12), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-01", "note": "The Forest Service gives June 1 as the opening; recreation.gov sells first-come nights May 1 - October 31."},
+      "source": "FS page ('Seasons of Use June 1st') + recreation.gov rate season 2026-05-01..2026-10-31, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bridger-Teton NF campground at the east end of Boulder Lake, at the end of Boulder Lake Road SE of Pinedale, beside Boulder Creek where it enters the lake. --Claude",
+  "summary": "FS page + layout PDF + rec.gov read. Fees $0 (wrong, note-derived) -> $12; potable water false; site lengths 12-126 ft by site (stored 45-ft max was Campendium's, replaced); FCFS scan-and-pay, 14-day limit; opens June 1. Not waterfront holds (creekside lead at site 15). Pin, phone and both links good. Note cleaned (dropped site count and food-storage boilerplate).",
+  "flags": [
+    "FEES: stored $0/$0 (derived from note prose) was wrong -> $12/$12 (FS page and rec.gov agree).",
+    "WATERFRONT stored 'not waterfront' (check-hard): HOLDS by default. Lake: the loop is ~200 m east of the lake's high-water edge with forest between - no lake value. Creek: CREEKSIDE LEAD (not proposed) - site 15 (27-ft spur, sold nightly, FCFS) at the loop's south-west end (~42.8566,-109.6180) is ~20-35 m from Boulder Creek (~10-15 m wide) across a gravel bar, partly through a thin band of trees; sites 13/14 are ~50-55 m back under canopy. rec.gov lists 'Creek Access'. One partly-screened site; reviewer's call.",
+    "STOCK: rec.gov 'No livestock in campground, use the corrals located up the road in the Stock Parking area'; a trailhead sits beside the fee station. Stock is explicitly separated from the campground (corrals up the road) - flag only, not a horse-camp drop.",
+    "SITES: stored max_rig_ft 45 (note-derived, Campendium) replaced by the FS layout map's spur table (max 126 ft); site 8 (12 ft) does not take a 23-ft rig. Stored inclusion_evidence cites 'RVs to 45 ft' from Campendium; suggested replacement: 'Bridger-Teton NF Boulder Lake page (Site Open, 15 FCFS sites, $12) + FS layout map (spurs 27-126 ft except site 8) + recreation.gov #10289160 scan-and-pay listing -> real drive-in RV campground.'",
+    "SEASON: FS 'Seasons of Use June 1st' (no close date given); rec.gov first-come rate season May 1 - Oct 31 (its odd December 'Non-Peak' $12 rows ignored). 2027 dates not out beyond the same rec.gov pattern.",
+    "Links: both stored links current (FS r04 page live, rec.gov 10289160 live). Phone 307-367-4326 confirmed. Pin 42.85780,-109.61720 mid-loop (FS point 42.856726,-109.617295 is ~120 m south at the creek crossing) - no move. Hookups electric 0 confirmed (all 15 rec.gov sites NONELECTRIC)."
+  ]
+}

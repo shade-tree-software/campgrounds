@@ -2879,3 +2879,13 @@ me drop and report); each needs the research named before a verdict.
 - 6435 Bearlodge: rec.gov $20/$15 off-season vs FS $18 - rec.gov written.
 - 13578 Alcova Full Hook-Up: read through the county Rec1 catalog; phone -> Parks office 307-235-9325.
 - LEADS: Seminoe SP South Red Hills (FacilityId 382, ~42.13171,-106.8993, 20 non-electric + group) and Sunshine Beach (FacilityId 383, ~42.12497,-106.8944, 23 non-electric + 8 group), both reserve.wyoming.gov park 14 - not in the DB.
+
+## WY p3-550 (2026-11-20)
+- No drops. Asks: 6445 Brown Mountain (one 40-ft spur, rest 16 ft); 6439 Bobbie Thomson FYI (FS lists it nowhere).
+- 6440 Boulder Lake: fees $0 -> $12; max rig 45 (Campendium) -> FS layout 126; site 8 12-ft spur.
+- 6441 Bow River: sites 6-13 reservable on rec.gov 10243280 (Jul 1-Sep 7), 1-5 first-come; sites 6-8 short.
+- 6446 Campbell Creek: horses banned though rec.gov tags site 3 "Horse"; site 3 22 ft.
+- 6447 Cave Falls: concession (Audi Campground Services) phone 208-270-0094; district (208) 652-7442.
+- 6530 Beartrap: no published site lengths - rig fit unverified; "steep hairpin" claim removed (no agency source).
+- 13582 Black Beach re-pinned 320 m (was the access-road fork).
+- LEADS: Natrona County Casper Mountain campgrounds on Rec1 not in the DB - Deer Haven (11), Elkhorn Springs (6), Skunk Hollow (10), Tower Hill (8), Archery Range (4); reservation-only $13.39, no water, rig fit unknown. Wolf Point (Pathfinder) not a lead: Rec1 recommends 4WD.

@@ -1,0 +1,49 @@
+{
+  "id": 6441,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/bow-river-campground (last updated October 22, 2026; read 2026-11-20): 'Site Open'; Current Conditions 'This campground remains open as weather and road conditions permit access. Visitors should be aware that no fees are charged and no amenities, facilities, or services are provided throughout the winter months.'; '13 campsites ... located next to Bow River in a heavily wooded forest of Lodgepole and Spruce pines ... This is a pack-in pack-out campground. No trash service'; 'Single Site: $14 per night / Additional Vehicle Fee: $5 per vehicle per day'; 'Vault Toilet (2)'; 'Potable water is available at this site.'; directions: Snowy Range Highway then FR 100 ~20 miles ('This is a slow drive'), or from Elk Mountain via Carbon County Road 101",
+    "https://www.fs.usda.gov/media/237108 (MBR fee-change Impacted Sites PDF, implemented 2025): 'Bow River Campground ... $10 Per Single Site -> $14 Per Single Site'",
+    "https://www.recreation.gov/camping/campgrounds/10243280 (API, read 2026-11-20): 'Bow River Campground (WY)', phone 307-326-5258; sites 006-013 reservable, 001-005 first-come; all STANDARD NONELECTRIC, Driveway Length 34 (001), 24 (002, 004, 005, 012), 22 (006), 20 (007, 008), 26 (009, 010), 30 (011), 28 (013), 003 unlisted; rates 'Peak Season' 2026-07-01..09-07 and 2027-07-01..09-07 $14, 'First-come, First-served Season' 2026-09-10..10-31 $14; notice 'Maximum length of stay is 14 days ... Campsites are limited to 8 people and 2 vehicles per site. Only 1 RV/trailer per RV campsite'; amenities include Host, Water Spigot, Creek Access; availability August 2026 shows Reserved nights on sites 006-013 and September 2026 Reserved on the reservable sites",
+    "Esri World Imagery 2026-11-20 (300 m half-width): a small loop in open lodgepole forest west of the river; the Medicine Bow River channel runs under continuous canopy ~70-100 m east of the loop's east side; pin 41.51400,-106.37100 at the north end of the loop (FS point 41.51318,-106.37116 ~90 m south, rec.gov point between)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 34, "pull_through": false, "note": "Back-in driveways 20-34 ft: 34 ft at site 1, 30 at 11, 28 at 13, 26 at 9 and 10, 24 at 2, 4, 5 and 12, 22 at 6, 20 at 7 and 8 (site 3 unlisted). Eight people, two vehicles and one RV or trailer per site."},
+      "source": "recreation.gov 10243280 campsite catalog (Driveway Length per site) + notice ('Campsites are limited to 8 people and 2 vehicles per site. Only 1 RV/trailer per RV campsite'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "No trash service; pack out trash. Camp host in season."},
+      "source": "FS page ('Vault Toilet (2)', 'Potable water is available at this site', 'No trash service in the area') + recreation.gov amenities (Host, Water Spigot), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10243280", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Sites 6-13 are reservable July 1 - September 7; sites 1-5 are first-come, and every site is first-come from September 10 to October 31. Check-in 2 pm, check-out noon."},
+      "source": "recreation.gov 10243280 (per-site reservable flags; Peak Season / First-come Season rate periods; notices on check-in/out and 'Maximum length of stay is 14 days'; Reserved nights in Aug/Sep 2026), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 14, "nightly_high": 14, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 5, "per": "night", "max_vehicles": 2}, "checked": "2026-11-20"},
+      "source": "FS page ('Single Site: $14 per night / Additional Vehicle Fee: $5 per vehicle per day') + MBR fee-change PDF ($14) + recreation.gov rates ($14) + notice ('2 vehicles per site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Fees, water and services run in summer and fall: reservations July 1 - September 7, first-come through October 31. Outside that the Forest Service leaves the campground open without fees or services as weather and the 20-mile forest road allow."},
+      "source": "FS page Current Conditions ('This campground remains open as weather and road conditions permit access ... no fees are charged and no amenities, facilities, or services are provided throughout the winter months') + recreation.gov rate seasons 2026 and 2027 (Peak 07-01..09-07), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF campground beside the upper Medicine Bow River in the Snowy Range, in lodgepole and spruce forest with well-separated sites. Reached by Forest Road 100, a slow 20-mile drive from the Snowy Range Highway, or from Elk Mountain on Carbon County Road 101. --Claude",
+  "summary": "FS page, fee PDF and rec.gov read. Booking was wrong: stored FCFS-only, but rec.gov sells sites 6-13 (Reserved nights Aug/Sep 2026) and keeps 1-5 first-come -> reservable, rec.gov, some_sites, 14-night limit. $14 confirmed, $5 extra vehicle added; driveways 20-34 ft by site; season written (summer fee season, open unserviced otherwise). Not waterfront holds. Phone empty -> 307-326-5258; add rec.gov link. Note cleaned.",
+  "flags": [
+    "BOOKING: stored reservable false / fcfs always (note-derived) was wrong -> reservable via recreation.gov 10243280, sites 6-13 July 1 - Sep 7 (2026 and 2027 rate seasons), sites 1-5 always first-come, all first-come Sep 10 - Oct 31. Booking window not shown in the API (left unset).",
+    "SITES: driveways 20-34 ft; sites 7 and 8 (20 ft) and 6 (22 ft) are short for a 23-ft rig; 1, 2, 4, 5 and 9-13 take it.",
+    "WATERFRONT stored 'not waterfront' (check-hard): HOLDS. The river runs under continuous forest canopy ~70-100 m east of the loop; rec.gov's 'Creek Access' tag is generous. No site within ~50 m over open ground.",
+    "SEASON: FS Current Conditions (updated Oct 22, 2026) says the campground stays open unserviced in winter as weather and road allow, so written year_round true with the fee season in the note (precedent 6301). FR 100 is a 20-mile forest road; winter access is likely snow-limited - reviewer may prefer opens 07-01 / closes 10-31. 2027 reservable dates published: July 1 - Sep 7.",
+    "PHONE: empty -> 307-326-5258 (recreation.gov facility phone; Brush Creek/Hayden RD in Saratoga).",
+    "WEBSITE: FS r02 page current; add https://www.recreation.gov/camping/campgrounds/10243280 as a second line.",
+    "OHV: the FS page notes OHV riding on the Campbell Lake Loop ~9 miles south - not a staging campground, no flag beyond mention.",
+    "Pin 41.51400,-106.37100 on the loop's north end - no move. Hookups none confirmed (all sites NONELECTRIC, Water Hookup No)."
+  ]
+}

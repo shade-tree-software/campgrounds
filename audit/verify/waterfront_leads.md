@@ -1591,3 +1591,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6487 Leigh Creek (WY, p3-546): rec.gov tags sites "Riverfront", creek under continuous canopy - not waterfront kept.
 - 6422 South Brush Creek (WY, p3-549): FS "along the shore of South Brush Creek"; creek 22-27 m from nightly sites 015-018 (018 at 41.34411,-106.50057) through a willow fringe - creekside candidate if photos show an open bank.
 - 13578 Alcova Full Hook-Up (WY, p3-549): county photos may show the reservoir - lakeview candidate.
+- 13583 Bishops Point (WY, p3-550): outer row of ~9 unnumbered FCFS sites (42.4962,-106.9064 to 42.4975,-106.9036) ~15-25 m from Pathfinder's high-water edge over bare ground - lakefront candidate if sites can be named.
+- 6440 Boulder Lake (WY, p3-550): site 15 (~42.8566,-109.6180) ~20-35 m from Boulder Creek, partly through trees.
+- 6447 Cave Falls (WY, p3-550): open bank strip at the north end (~44.1297,-111.0147), no site numbers.
