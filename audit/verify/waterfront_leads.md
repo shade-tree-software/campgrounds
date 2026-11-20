@@ -1594,3 +1594,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13583 Bishops Point (WY, p3-550): outer row of ~9 unnumbered FCFS sites (42.4962,-106.9064 to 42.4975,-106.9036) ~15-25 m from Pathfinder's high-water edge over bare ground - lakefront candidate if sites can be named.
 - 6440 Boulder Lake (WY, p3-550): site 15 (~42.8566,-109.6180) ~20-35 m from Boulder Creek, partly through trees.
 - 6447 Cave Falls (WY, p3-550): open bank strip at the north end (~44.1297,-111.0147), no site numbers.
+- 6451 Crystal Creek (WY, p3-551): loop NE of the entrance (prob. sites 1-3) 13-20 m from a 12-15 m channel over grass/shrubs (~43.6112,-110.4307) - creekside candidate; bank eroding, sites unnumbered.
+- 13581 Cottonwood Beach (WY, p3-551): two shelters on the south-cove beach flat 15-20 m from water (42.5222,-106.7481; 42.5219,-106.7472) - lakefront candidate, unnumbered FCFS.
+- 13584 Diabase (WY, p3-551): pad row 10-15 m from the full-pool bank (42.4687,-106.8708 to 42.4693,-106.8700) but imaged waterline 250-300 m off; county: "at the waters' edge one year and 1,500 feet away" - stays lakeview unless AWH wants full-pool.
+- 6453 Curtis Gulch (WY, p3-551): rec.gov "tucked into a bend of the LaBonte Creek", creek under canopy.
