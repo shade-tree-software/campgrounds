@@ -1,0 +1,57 @@
+{
+  "id": 6478,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/shoshone/recreation/hunter-peak-campground (last updated October 15, 2026; read 2026-11-20): 'Site Closed | Closed for the season'; 'The Hunter Peak Campground has 10 campsites and sits on the banks of the Clarks Fork of the Yellowstone River'; 'Stay limit is 16 days.'; 'Maximum spur length is 32 feet .'; 'Food storage is required in this campground ... Bear boxes available.'; 'This site is first come, first served.'; 'Typically from late May through mid October'; 'Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY .'; 'Single Site: $20/night. Please be prepared to pay with CASH or CHECK. *Sites may be reservable and reservation fees apply.*'; 'Contact Name: Clarks Fork Ranger District | Contact Phone: 307-527-6921'; Latitude 44.88435, Longitude -109.65485; 'Vault toilet(s)'; 'Potable water is available at this site.'",
+    "https://www.recreation.gov/api/camps/campgrounds/234595 (+ /rates, read 2026-11-20): 'Vault toilets, hand-pumped water, and trash collection are provided. A host is on-site. ... Sites 5, 6, 7, and 8 are available for reservation.'; 'The campground sits on the banks of the Clarks Fork of the Yellowstone River, at an elevation of 6,500 feet. A mixed conifer forest covers the campground.'; notice 'An additional fee is collected at the campground entrance for extra vehicles'; rules maxConsecutiveStay 16, reservationCutOff 2; Peak Season $20 (STANDARD NONELECTRIC) 2026-05-22..09-12, 2027 and 2028 05-23..09-06; facility phone '307-527-6921 - THIS NUMBER IS NOT FOR RESERVATIONS'",
+    "recreation.gov campsite catalog 234595 (2026-11-20): 8 sites listed (002-009), 4 reservable (005-008) + 4 not; all STANDARD NONELECTRIC permitting RV/Trailer/Tent; Max Vehicle Length 23 (003), 31, 32, 34, 35, 35, 50, 56; per-site coordinates used for the waterfront check",
+    "Esri World Imagery 2026-11-20 with the rec.gov site points (110 m half-width) and z19 tiles at 44.8848,-109.6556 and 44.8846,-109.6553 (z20 not available here): the Clarks Fork is ~35-40 m wide along the campground's west side; sites 004 (44.88493,-109.65547, first-come) and 005 (44.88469,-109.65532, reservable) are ~20-25 m from the water's edge over grass broken by scattered conifers, with a light-grey rocky strip (possibly riprap or a bank path) along the bank; 006 and 008 sit behind a band of conifers; 002, 003, 007, 009 are farther back under canopy"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 10, "max_rig_ft": 32},
+      "source": "FS page ('10 campsites'; 'Maximum spur length is 32 feet'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Vault toilet(s)'; 'Potable water is available at this site.') + recreation.gov 234595 ('Vault toilets, hand-pumped water'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "recreation.gov campsite catalog 234595 (every site STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-25", "closes": "10-15", "note": "Approximate: typically late May through mid-October."},
+      "source": "FS page ('Typically from late May through mid October'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 16, "season": {"opens": "05-23", "closes": "09-06"}, "note": "Sites 5-8 reservable; the rest first-come."},
+      "source": "recreation.gov 234595 ('Sites 5, 6, 7, and 8 are available for reservation'; maxConsecutiveStay 16; reservation Peak Season 2027/2028 05-23..09-06; catalog 4 reservable of 8) + FS page ('Stay limit is 16 days'; '*Sites may be reservable and reservation fees apply.*'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026-11-20"},
+      "source": "FS page ('Single Site: $20/night') + recreation.gov rates (Peak Season 2026-2028 $20), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "FS page ('Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Shoshone NF (Clarks Fork RD) campground on the banks of the Clarks Fork of the Yellowstone River, on the Chief Joseph Scenic Highway (WY-296) about 4 miles south of the Beartooth Highway and 24 miles from Yellowstone's Northeast Entrance. Mixed conifer forest; grizzly country, so food storage is required and bear boxes are provided. Water from a hand pump; on-site fees in cash or check. --Claude",
+  "summary": "FS (updated 2026-10-15) + rec.gov 234595 read: 10 sites, 32-ft max spur, vault toilets, hand-pump water, $20, 16-night limit, late May-mid Oct, Senior/Access 50%. Booking changed from FCFS-only to rec.gov with sites 5-8 reservable (FS says FCFS - rec.gov written, flagged). Season added. Riverview kept; riverfront lead for sites 004/005. Phone empty -> 307-527-6921. Note cleaned.",
+  "flags": [
+    "BOOKING CONFLICT: the FS page says 'This site is first come, first served' (while also noting '*Sites may be reservable and reservation fees apply.*'); recreation.gov says 'Sites 5, 6, 7, and 8 are available for reservation', the catalog marks 005-008 reservable, and it carries reservation seasons through 2028. Recreation.gov written (reservable, fcfs some_sites); the stored derived FCFS-only value replaced.",
+    "WATERFRONT 'riverview' KEPT, RIVERFRONT LEAD: sites 004 (44.88493,-109.65547, first-come) and 005 (44.88469,-109.65532, reservable by the night) are ~20-25 m from the Clarks Fork (~35-40 m wide) over grass with scattered conifers; a light-grey rocky strip along the bank may be riprap or a path. Rec.gov's 'A mixed conifer forest covers the campground' and z19 (no z20 here) cannot show whether either pad has open ground to the water, so no upgrade; a human look at site photos could decide. 006/008 are behind a conifer band; the rest are farther back.",
+    "SITES: FS and the old note say 10 sites; the rec.gov catalog lists only 8 (002-009; per-site max vehicle length 23-56 ft, site 003 at 23 ft). FS count kept.",
+    "PHONE: empty -> 307-527-6921 (Clarks Fork Ranger District; on both the FS page and rec.gov). WEBSITES (FS r02 page + rec.gov 234595) both live and correct.",
+    "FEES: rec.gov notes an extra-vehicle fee collected at the entrance, amount not stated; not written.",
+    "PIN: stored 44.88540,-109.65560 (beside site 002, north end) is ~120 m from the FS point; inside the campground, fine."
+  ]
+}

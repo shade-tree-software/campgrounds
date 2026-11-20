@@ -2901,3 +2901,10 @@ me drop and report); each needs the research named before a verdict.
 - 13977 Glendo Reno Cove: stored fcfs after_cutoff fits poorly (FCFS outside the May 15-Sep 15 reservation season) - apply.py can't clear it; fix by hand if wanted. 13969 Custer Cove: 9/15/2026 HCB advisory named it (dated, not in note); lakefront kept narrowly on CC20/CC19/CC13/CC12 (drawdown apron).
 - 6461 East Table re-pinned ~245 m to the sites; FS link fixed. 13263 Friend Park: policy_ref federal:usfs + FS link.
 - LEADS: Glendo SP facilities on reserve.wyoming.gov park 10 not in the DB: Broken Arrow 333 (42.54172,-104.96328), Cottonwood 335 (42.52898,-104.94163), Elkhorn 337 (42.55921,-105.03089), Indian Point 338 (42.53522,-104.95278), Mule Hill 339 (42.48445,-105.00512), Red Hills 340 (42.50308,-104.96624), Sagebrush 342 (42.47131,-104.98673), Shelter Point 345 (42.47253,-104.97725), Soldier Rock 346 (42.49185,-104.97069), Whiskey Gulch 349 (42.47857,-105.00114).
+
+## WY p3-553 (2026-11-20)
+- DROPPED 6395 Haskin Creek (Medicine Bow NF): closed - off the FS list, RIDB 0, "Closed in 2005" snippet, imagery shows only a pullout.
+- 13976 Glendo Sandy Beach: 77 sites (not "over 170"); engine "4-wheel drives only or lighter vehicles are highly recommended since most surface is sand" for Dune 1423-1455 + tent sites - electric/Willow sites gravel/paved, kept with caveat (sand rule: developed campground). fcfs after_cutoff fits poorly (as 13977).
+- 13587 Glenrock South Recreation Complex: glenrock.org 406; website still Campendium, no phone - replace with a town page when one can be read; pin on the access road (loops ~42.8365,-105.8733, pads not visible) - not moved. Kept on Google 4.4 (82).
+- 13700 Headwaters at Flagg Ranch: rec.gov $131 vs NPS $117 - rec.gov written. 6478 Hunter Peak: FS says FCFS, rec.gov reserves sites 5-8 - rec.gov written. 13303 Grave Springs: federal:blm row's reservable:true doesn't apply (FCFS written); re-pinned 270 m.
+- 6472 Hams Fork + 6475 Hobble Creek: potable water true -> false (FS "not available").

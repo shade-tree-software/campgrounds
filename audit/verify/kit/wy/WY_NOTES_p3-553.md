@@ -1,0 +1,12 @@
+# p3-553 notes
+- 13976 Glendo Sandy Beach: done. FacIds 343/344, 77 sites, 26 elec 50A, water hookups 9; NW holds; sand 4WD rec on Dune 1423-1455+tent; phone 307-735-4433.
+- 13587 Glenrock South Rec: done. glenrock.org 406. Google 4.4/82, Sep-2026 review confirms camping. pin unclear.
+- 13303 Grave Springs: done. pin move 43.4639,-107.2289 (~270m). FCFS. No fee.
+- 6472 Hams Fork: done. potable false. FCFS. phone 307-828-5100.
+- 6395 Haskins Creek: DROP CANDIDATE closed (not on FS list, no RIDB, campflare Closed, 'Closed in 2005', imagery no loop).
+- 13700 Headwaters: done. fee 131. count 131. fcfs never.
+- 6475 Hobble Creek: done. potable false. creekside lead (unnumbered pad 25m).
+- 6476 Hog Park: done. WATERFRONT DOWNGRADE lakefront->lakeview. phone (307) 326-5258. max_rig cleared.
+- 6477 Horse Creek: done. riverview holds; creekside lead unnumbered spur. 16-night.
+- 6478 Hunter Peak: done. rec.gov sites 5-8 reservable (FS says FCFS; flagged). riverview kept, riverfront lead 004/005. phone 307-527-6921. season added.
+- 6479 Island Lake: done. season corrected late Jun-early/mid Sep; fee 25 (stale 20 line flagged); lakeview holds; phone 307-527-6921.

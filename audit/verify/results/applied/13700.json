@@ -1,0 +1,58 @@
+{
+  "id": 13700,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/258832 (read 2026-11-20): 'All RV sites are pull-through with gravel parking space for one RV and one tow vehicle with a maximum total length of 45 feet. Our RV sites offer full-hookups including sewer, water, and 20-, 30-, and 50-amp electric outlets. Propane is available for purchase at the campground office.'; 'flush toilets, shower facilities, and coin-operated laundry facilities'; 'Availability will go live on Recreation.gov on a 6-month rolling basis'; 'While none of Headwater's campsites are on the river, all are within walking distance. The campground offers 34 tent sites, 97 full-hookup and pull-through RV sites, and 40 Camper Cabins, and is open from June to October.'; notice: 'The maximum stay permitted at the Flagg Ranch Campground is 14 nights'; rule hasTaxes 1; phone 307-543-2861",
+    "https://www.recreation.gov/api/camps/campgrounds/258832/rates (read 2026-11-20): Peak Season 2026-06-07..2026-10-03 'PeakFullHook-UpRVSite': 131, tent 63, cabin 105; Peak Season 2027-05-14..2027-10-03 same $131",
+    "recreation.gov campsite catalog 258832 (2026-11-20): 163 sites - 93 'RV ELECTRIC' (92 '20/30/50', 1 '50'; water Yes on all 93, sewer Y on 86), 32 tent-only, 38 cabins; all reservable; RV site centroid 44.10453,-110.66870; site notice 'All RV Sites at Headwaters Campground at Flagg Ranch are full hook ups with: Water, Sewer, and Electric (50amp, 30amp, and 20amp)'",
+    "https://www.nps.gov/grte/planyourvisit/headwaterscg.htm + its data file https://www.nps.gov/grte/structured_data_grte.json (campgroundID 2373, read 2026-11-20): rvMaxLength 45; 'All campsites in the Headwaters Campground can be reserved'; sitesReservable 171, sitesFirstCome 0; amenities 'Dump Station - Seasonal', 'Laundry - Seasonal', 'Camp Store - Seasonal', 'Potable Water - Seasonal', 'Flush Toilets - seasonal', 'Showers - Hot - Seasonal'; fee 'Pull-Through Site - Full Hook Up (45ft RV or smaller)' $117.00 '*Rates do not reflect Senior and Access passholder discounts, taxes, or incremental charges.'",
+    "https://www.gtlc.com/camping/headwaters-campground-at-flagg-ranch (concessioner, read 2026-11-20): 'reservations for these campgrounds cannot be made through the Grand Teton Lodge Company website or call center'; 'WiFi and limited cellular service (Verizon and AT&T) are available'; 'RV sites allow for one RV (tow included) only and do not permit tents'; 'Quiet hours are 10pm - 7am. Generators cannot be used during these hours.'; 'a nightly pet fee applies'; 'Current rates and additional information are available on Recreation.gov'"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "recreation.gov 258832 ('full-hookups including sewer, water, and 20-, 30-, and 50-amp electric outlets'; site notice on every RV site), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 131, "max_rig_ft": 45, "pull_through": true, "note": "97 full-hookup pull-through RV sites and 34 tent sites; 40 camper cabins besides."},
+      "source": "recreation.gov 258832 + NPS headwaterscg.htm ('34 tent sites, 97 full-hookup and pull-through RV sites, and 40 Camper Cabins'; 'maximum total length of 45 feet'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": true, "camp_store": true, "wifi": true},
+      "source": "recreation.gov 258832, NPS structured data (Dump Station, Laundry, Camp Store, Showers - Hot) and gtlc.com ('WiFi ... available'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-14", "closes": "10-03", "note": "Recent seasons have opened between mid-May and early June."},
+      "source": "recreation.gov 258832 rate table (2027 season 05-14..10-03; 2026 ran 06-07..10-03), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14},
+      "source": "recreation.gov 258832 ('6-month rolling basis'; 'maximum stay ... 14 nights') + NPS ('All campsites ... can be reserved', sitesFirstCome 0; 'All park campgrounds are by advanced reservations only'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 131, "nightly_high": 131, "currency": "USD", "tax": {"included": false}, "checked": "2026-11-20"},
+      "source": "recreation.gov 258832 rates (2026 and 2027 Peak 'FullHook-UpRVSite' $131; facility rule hasTaxes), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "NPS structured data fee text ('*Rates do not reflect Senior and Access passholder discounts'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Concession-run NPS campground at Flagg Ranch on the John D. Rockefeller Jr. Memorial Parkway, two miles south of Yellowstone's south entrance and five miles north of Grand Teton. RV sites in lodgepole pine; none of the sites are on the Snake River, though it is within walking distance. One RV (tow vehicle included) per RV site, no tents on RV sites; no generators 10 pm-7 am. Propane sold at the office; restaurant and store at the lodge. Limited cell service. Bears, moose and mule deer about. --Claude",
+  "summary": "rec.gov + NPS + concessioner read. Fee $125 -> $131 (rec.gov 2026/2027 peak FHU RV; NPS page still shows $117, flagged). 97 FHU pull-through RV (20/30/50A) + 34 tent + 40 cabins -> count 165 -> 131 with sites note; 45 ft max confirmed; showers/flush/water/dump/laundry/store/wifi added; reservation-only (fcfs never), 6-month window, 14-night max; season 05-14..10-03; Senior/Access discount confirmed. Not waterfront holds; pin good (33 m from RV-site centroid). Note cleaned.",
+  "flags": [
+    "FEES: NPS page fee table says $117 for the full-hookup pull-through site; recreation.gov's 2026 and 2027 peak rate is $131 (and the site price_range $131). Wrote rec.gov's $131 per the FS/rec.gov rule. Stored $125 matched neither. Off-peak $99 appears only in the 2025 rate table, so no seasonal rate written. Concessioner charges a nightly pet fee (amount not posted).",
+    "SITE LENGTHS: the rec.gov catalog's per-site 'Max Vehicle Length' varies (24 ft on 18 RV sites, 35 ft on 23, 45 ft on 2, unset on 50); every RV site fits a 23-ft rig. 45 ft is the campground maximum.",
+    "SEASON: NPS structured data still shows a 'Winter Closure' Sept 30 - May 9 schedule; rec.gov rate seasons run to Oct 3 (2026: opened June 7; 2027: May 14). Wrote 05-14..10-03 with a note.",
+    "SENIOR/ACCESS: the NPS fee text says the rates 'do not reflect Senior and Access passholder discounts', i.e. the concession honours them; confirmed true.",
+    "WATERFRONT 'not waterfront' holds: rec.gov says 'none of Headwater's campsites are on the river'.",
+    "PHONE 307-543-2861 confirmed (rec.gov + NPS). WEBSITE rec.gov 258832 live; the NPS page https://www.nps.gov/grte/planyourvisit/headwaterscg.htm is the park's own campground page and could be added."
+  ]
+}

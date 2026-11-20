@@ -1,0 +1,53 @@
+{
+  "id": 13976,
+  "checked": "2026-11-20",
+  "sources": [
+    "reserve.wyoming.gov US eDirect API (https://wyordr.usedirect.com/wyomingrdr/rdr/, read 2026-11-20): search/place PlaceId 10 'Glendo State Park' lists FacilityId 343 'Sandy Beach Dune' (42.52108889,-104.93830556) and FacilityId 344 'Sandy Beach Willow' (42.52420556,-104.93917778); Restrictions MaximumStay 14",
+    "reserve.wyoming.gov FacilityId 343 grid + search/details for all 64 units (read 2026-11-20, all AllowWebBooking true): 23 'Campsite Electric' (1400-1419, 1457, 1458, 1463; 'Electricity (Amp)': '50'; 'Water Hookup': '1' on 1413, 1415-1419, 1457, 1458, 1463; pads 50-165 ft, gravel or paved), 17 'Campsite Non-Electric' (1421-1425, 1428-1433, 1438, 1439, 1452-1456; pads 30-60 ft), 15 'Tent Site Non-Electric', 8 'Group Site' (1420, 1459-1461, 1464-1467) and shelter SBDS ('Restroom Type': 'Vault Toilets', 'Water Available': 'Yes'); description on 1423-1455 and the tent sites: '4-wheel drives only or lighter vehicles are highly recommended since most surface is sand.'; every unit tagged 'Waterfront Setting: Reservoir' (type-level); Rate 10.00",
+    "reserve.wyoming.gov FacilityId 344 grid + details for all 23 units (read 2026-11-20, all web-bookable): 3 'Campsite Electric' (1509, 1510, 1517; 50 A; 'Water Hookup': '1' on 1517), 19 'Campsite Non-Electric' (1500-1508, 1511-1516, 1518-1521; pads 30-150 ft, mostly gravel), shelter SWDS ('Restroom Type': 'Vault Toilets', 'Water Available': 'YES')",
+    "audit/state_park_fees/wy_pages_2026-10-12.json capture of https://wyoparks.wyo.gov/index.php/places-to-go/glendo (live page not fetched: F5 bot challenge): campground list includes 'Sandy Beach Dune' and 'Sandy Beach Willow'; 'NEW Reservation Season Dates: May 15 - Sept. 15'; 'All Campgrounds are first come first serve now!!'; 'Phone Number 307-735-4433'",
+    "Esri World Imagery 2026-11-20 (500 m and 250 m half-widths with all 87 unit points overlaid): Dune electric loop on open ground east of a belt of dunes and (largely dead) trees; Willow sites strung along the inland edge of that tree belt; the reservoir (and a lagoon behind a sand spit) lies ~150-250 m west across sand and trees from the nearest RV pads; the sand tent sites sit in the dune trees ~120 m+ from the water. Dune centroid 42.51991,-104.93844, Willow centroid 42.52515,-104.94008; stored pin 42.51975,-104.9395 is ~90 m from the Dune centroid"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "reserve.wyoming.gov unit details: 26 electric sites ('Electricity (Amp)': '50'), 'Water Hookup': '1' on Dune 1413, 1415-1419, 1457, 1458, 1463 and Willow 1517; all web-bookable public sites, read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 77,
+        "pull_through": true,
+        "note": "Dune: 23 electric and 17 non-electric RV sites plus 15 tent sites; Willow: 3 electric and 19 non-electric. Eight group sites and two shelters besides."
+      },
+      "source": "reserve.wyoming.gov FacilityIds 343 and 344 grid + unit details (77 individual campsites; pull-throughs 1402, 1405, 1408, 1412, 1414, 1457, 1458, 1517, 1519, 1521; group sites 1420, 1459-1461, 1464-1467 and shelters excluded), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "reserve.wyoming.gov shelter units SBDS and SWDS ('Restroom Type': 'Vault Toilets'; 'Water Available': 'Yes'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "max_stay_nights": 14,
+        "season": {"opens": "05-15", "closes": "09-15"}
+      },
+      "source": "reserve.wyoming.gov (all Sandy Beach units web-bookable; facility Restrictions MaximumStay 14) + wyoparks Glendo page as captured 2026-10-12 ('NEW Reservation Season Dates: May 15 - Sept. 15'; 'All Campgrounds are first come first serve now!!')",
+      "method": "manual"
+    }
+  },
+  "note": "Wyoming State Parks, the Sandy Beach Dune and Sandy Beach Willow campgrounds on the east shore of Glendo Reservoir, inland of a belt of dunes and trees behind the beach, with shelter-ringed group circles. The park recommends four-wheel drive or lighter vehicles at the sand sites toward the beach (Dune 1423-1455 and the tent sites); the electric sites and most Willow sites have gravel or paved pads. --Claude",
+  "summary": "reserve.wyoming.gov FacilityIds 343 (Sandy Beach Dune) and 344 (Sandy Beach Willow) read: 77 campsites (26 electric 50 A, 9 with water hookups, 36 non-electric RV, 15 tent) + 8 group sites, all web-bookable, 14-night max; reservation season May 15 - Sept 15. Hookups, sites, facilities, booking written. Not waterfront holds. Pin good. Phone empty -> 307-735-4433. Note rewritten ('over 170 sites' wrong).",
+  "flags": [
+    "WATERFRONT stored 'not waterfront': HOLDS. The nearest RV pads (Willow 1500-1518 along the inland edge of the tree belt, Dune 1421-1456) are ~150-250 m from the imaged water across dunes and a belt of mostly dead trees; the sand tent sites are ~120 m+ in the dune trees. The engine's 'Waterfront Setting: Reservoir' is on every unit (type-level tag, not evidence).",
+    "SAND: reserve.wyoming.gov describes Dune 1423-1455 (non-electric) and all the tent sites: '4-wheel drives only or lighter vehicles are highly recommended since most surface is sand.' Under the sand rule this is a developed campground that also offers sand sites, so it stays; the caveat is in the proposed note. The 26 electric sites and the Willow sites do not carry the warning (gravel/paved pads).",
+    "SITE COUNT: stored note said 'over 170 sites in all' - wrong; the engine lists 77 individual campsites across both Sandy Beach campgrounds (plus 8 group sites). Written 77.",
+    "HOOKUPS: water written true from 'Water Hookup: 1' on nine electric sites (Dune 1413, 1415-1419, 1457, 1458, 1463; Willow 1517).",
+    "BOOKING: stored fcfs 'after_cutoff' is a poor fit (first-come outside the May 15 - Sept 15 reservation season, not walk-up after a cutoff); booking.season now carries it. Reviewer may want fcfs removed (apply.py merges, cannot delete it), as flagged on 13977.",
+    "NAME: agency names are 'Sandy Beach Dune' and 'Sandy Beach Willow' (two facilities, adjacent, one access road) - not a split (Dune and Willow centroids ~600 m apart on the same campground road). Optional rename: 'Glendo State Park (Sandy Beach Dune and Willow Campgrounds)'.",
+    "PHONE: empty -> 307-735-4433 (Glendo State Park, wyoparks capture). Season year_round (manual) kept. WEBSITES kept (wyoparks page is behind an F5 challenge, valid in the capture; reserve.wyoming.gov park 10 confirmed).",
+    "FEES: engine Rate 10.00 on every unit matches the stored base; the stored statewide fee block left as is."
+  ]
+}

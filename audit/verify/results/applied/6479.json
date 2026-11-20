@@ -1,0 +1,51 @@
+{
+  "id": 6479,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/shoshone/recreation/island-lake-campground (last updated September 23, 2026; read 2026-11-20): 'Site Closed | Closed for the season'; 'This beautiful high mountain lake campground has 21 newly remodeled sites.'; 'Stay limit is 16 days.'; 'Maximum spur length is 32 feet.'; 'Food storage is required in this campground ... Bear boxes available.'; 'No garbage collection, pack it in, pack it out'; 'This site is first come, first served.'; 'Typically from late June through early/mid September'; 'Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY.'; 'Single Site: $25 per night | Overnight Use: | Single Site: $20/night. | Please be prepared to pay with CASH or CHECK.'; 'Contact Name: Clarks Fork Ranger District | Contact Phone: 307-527-6921'; Latitude 44.94074, Longitude -109.53995; 'Vault toilet(s)'; 'Potable water is available at this site.'",
+    "https://www.fs.usda.gov/r02/shoshone/recreation/beartooth-lake-campground (last updated the same day, September 23, 2026; read 2026-11-20): 'Single Site: $25 per night | Overnight Use: | Single Site: $25/night.' - the neighbouring Beartooth Plateau campground's two fee lines agree at $25",
+    "recreation.gov: /api/camps/campgrounds/240400 returns 404 and the campsite catalog has 0 sites (240400 is an information-only listing); name search finds no other Wyoming Island Lake facility -> first-come only, matching the FS page",
+    "Esri World Imagery 2026-11-20 (600 m and 200 m half-widths) and a z18 tile at 44.9431,-109.5393: the campground loops sit in conifers and open meadow south of Island Lake's south shore; the only thing at the shore is the boat-ramp road and its parking lot (boulder-lined); the nearest campsite spurs are ~115-150 m from the water across open meadow, the rest farther back in the trees"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 21, "max_rig_ft": 32},
+      "source": "FS page ('21 newly remodeled sites'; 'Maximum spur length is 32 feet.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Vault toilet(s)'; 'Potable water is available at this site.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-25", "closes": "09-10", "note": "Approximate: typically late June through early or mid-September."},
+      "source": "FS page ('Typically from late June through early/mid September'), read 2026-11-20 - replaces the derived late May-mid October",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 16},
+      "source": "FS page ('This site is first come, first served.'; 'Stay limit is 16 days.') + recreation.gov 240400 information-only (no campground record, 0 catalog sites), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2026-11-20"},
+      "source": "FS page fee table ('Single Site: $25 per night'), read 2026-11-20; the page's second line still says '$20/night' (see flags)",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "FS page ('Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Shoshone NF campground beside Island Lake, a high mountain lake on the Beartooth All-American Highway (US-212), with a boat ramp on the lake. Bear country: food storage required, bear boxes provided. No garbage collection (pack it in, pack it out); fees in cash or check. --Claude",
+  "summary": "FS page (updated 2026-09-23) read: 21 sites, 32-ft max spur, FCFS only (rec.gov info-only), 16-night limit, vault toilets, potable water, pack-in/pack-out, Senior/Access 50%. Season corrected to late June-early/mid Sept (was derived late May-mid Oct). Fee $25 written (page also carries a stale $20 line, flagged). Lakeview holds. Phone empty -> 307-527-6921. Note cleaned.",
+  "flags": [
+    "FEES: the FS page carries two fee lines, 'Single Site: $25 per night' (fee table) and 'Single Site: $20/night.' (text). $25 written: Beartooth Lake, the neighbouring Shoshone campground updated the same day, shows $25 on both lines, so the $20 looks stale. A human may confirm with the Clarks Fork RD.",
+    "WATERFRONT 'lakeview' HOLDS: the shore of Island Lake south of the campground holds only the boat-ramp road and parking; the nearest campsite spurs are ~115-150 m from the water across open meadow (lake in view), the rest are in the trees farther back. Nothing qualifies for lakefront.",
+    "SEASON: derived 05-20..10-15 ('late May-mid Oct' in the old note) replaced by the FS statement 'Typically from late June through early/mid September'.",
+    "PHONE: empty -> 307-527-6921 (Clarks Fork Ranger District, FS page). WEBSITES: FS r02 page live and correct; the rec.gov link is the information-only POI 240400 (not bookable) - fine as an info link.",
+    "PIN: stored 44.94100,-109.53990 is ~30 m from the FS point; fine."
+  ]
+}

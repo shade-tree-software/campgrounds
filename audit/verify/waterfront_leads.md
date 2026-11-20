@@ -1600,3 +1600,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6453 Curtis Gulch (WY, p3-551): rec.gov "tucked into a bend of the LaBonte Creek", creek under canopy.
 - 13977 Glendo Reno Cove (WY, p3-552): RC19 (42.49750,-104.96624) and RC20 (42.49753,-104.96594) ~35-45 m from water behind a band of pines - lakeview candidate if photos show the lake; not upgraded.
 - 13580 Fremont Canyon (WY, p3-552): two trailers on the open shore flat ~10-15 m from water (42.5172,-106.7731; 42.5163,-106.7728) - lakefront candidate, unnumbered FCFS (as 13581).
+- 6478 Hunter Peak (WY, p3-553): sites 004 (44.88493,-109.65547, FCFS) + 005 (reservable) ~20-25 m from the Clarks Fork over grass/scattered conifers; grey bank strip may be riprap - riverfront candidate.
+- 6477 Horse Creek (WY, p3-553): unnumbered spur ~11 m from the creek bed over sage (43.66638,-109.63490) - creekside candidate (may be creek access).
+- 6475 Hobble Creek (WY, p3-553): unnumbered pad ~25 m from the creek over grass (42.39806,-110.78294) - creekside candidate.
+- 13587 Glenrock South (WY, p3-553): Deer Creek along the wooded loops, pads not visible.
