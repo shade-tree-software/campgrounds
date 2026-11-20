@@ -2952,3 +2952,6 @@ me drop and report); each needs the research named before a verdict.
 ## WY leads (2026-11-20; audit/verify/leads/wy_leads.txt)
 - 1 City Slickers RV Park (Torrington): SKIP - Google 3.8 (42); own site Cloudflare 403; reviews describe long-term residents.
 - 2 Buffalo Bill SP Lake Shore: ADDED 15727 (36 sites, 22 electric, reserve.wyoming.gov facility 309; lakeview - pads 55-75 m above full pool over sagebrush, site 06 ~30-35 m on a cutbank; sites 12/14 near 50 m if the full-pool datum is ~1 m higher). "North Shore Bay" is its old name, not a missing campground.
+- 3 BJ's Hwy 20 (Lusk): SKIP - contact-only overflow lot ~0.7 km from 6534, no count/rate/listing of its own. Side finding: Hipcamp prices 6534's RV sites $40-47 (no dates) - 6534 fees left unset (Hipcamp listing, not the operator).
+- 4 Spread Creek: HELD (asks.md) - FS recreation text says some sites take RVs, FS road layer rates FR 30290 + spurs high-clearance (497 Mower Tract precedent).
+- 5 Shadow Mountain: ADDED 15728 (free FCFS designated sites; summit loop FR 30340 is ML3 passenger car, only short spurs ML2; base sites pinned; camper reports of 4x4 after rain = weather caveat; season from MVUM road dates removed - not a campground statement).
