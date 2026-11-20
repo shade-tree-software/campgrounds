@@ -1598,3 +1598,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13581 Cottonwood Beach (WY, p3-551): two shelters on the south-cove beach flat 15-20 m from water (42.5222,-106.7481; 42.5219,-106.7472) - lakefront candidate, unnumbered FCFS.
 - 13584 Diabase (WY, p3-551): pad row 10-15 m from the full-pool bank (42.4687,-106.8708 to 42.4693,-106.8700) but imaged waterline 250-300 m off; county: "at the waters' edge one year and 1,500 feet away" - stays lakeview unless AWH wants full-pool.
 - 6453 Curtis Gulch (WY, p3-551): rec.gov "tucked into a bend of the LaBonte Creek", creek under canopy.
+- 13977 Glendo Reno Cove (WY, p3-552): RC19 (42.49750,-104.96624) and RC20 (42.49753,-104.96594) ~35-45 m from water behind a band of pines - lakeview candidate if photos show the lake; not upgraded.
+- 13580 Fremont Canyon (WY, p3-552): two trailers on the open shore flat ~10-15 m from water (42.5172,-106.7731; 42.5163,-106.7728) - lakefront candidate, unnumbered FCFS (as 13581).

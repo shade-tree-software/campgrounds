@@ -1,0 +1,14 @@
+# p3-552 notes
+- 6461 East Table done: riverfront->riverview rec; pin ~245m (river access loop) -> 43.21175,-110.80755; recarea->r04 link; 20 sites 12 resv; season unset
+- 6374 Encampment River done: riverview holds; FCFS; season Jun-mid Nov; max_rig 25 cleared; phone 307-328-4200
+- 6462 Esterbrook done: 12 sites 9 resv, max 51, $20, season 05-20..11-01, OHV flag (not staging), route note; phone 307-358-4690
+- 6464 Fiddlers Lake done: lakeview holds narrowly; FCFS 16d 40ft $20 cash; phone 307-332-5460; season left (unsourced)
+- 6375 Five Springs done: REPIN ~1.2km to upper loop 44.8059,-107.9848; 19 sites (lower tent only); 25ft road; FCFS; no fee; phone 307-578-5900
+- 13580 Fremont Canyon done: Rec1 FCFS $15, 10d; lakeview holds + upgrade lead (trailers 10-15 m); pin left; phone ->9325
+- 6468 French Creek done: now rec.gov reservable some_sites (005-011), $14 +$5 veh, season 06-01..10-31, phone 307-326-5258; FS vs recgov road/trash conflicts
+- 13263 Friend Park done: 8 RV/3 tent; 6 res + 2 FCFS; $20; season 05-20..11-01; OHV flag; no policy_ref; website add FS page; phone suggest Douglas RD
+- 13968 Bennett Hill done: 35 sites (2x50A), +8 group, all web; res season 05-15..09-15; NW holds; phone 735-4433; note east->west shore
+- 13969 Custer Cove done: 20 non-elec, all web, 7 PT; lakefront holds narrowly (CC20 ~50 m open sand); HCB advisory; phone 735-4433
+- 13977 Reno Cove done: 20 sites (10x50A), all web; rec NW->lakeview (RC19/RC20); fcfs after_cutoff flagged; phone 735-4433
+- LEADS Glendo (reserve.wyoming.gov PlaceId 10, not in DB by name): Broken Arrow 333 (42.54172,-104.96328), Cottonwood 335 (42.52898,-104.94163), Elkhorn 337 (42.55921,-105.03089), Indian Point 338 (42.53522,-104.95278), Mule Hill 339 (42.48445,-105.00512), Red Hills 340 (42.50308,-104.96624), Sagebrush 342 (42.47131,-104.98673), Shelter Point 345 (42.47253,-104.97725), Soldier Rock 346 (42.49185,-104.97069), Whiskey Gulch 349 (42.47857,-105.00114). Sandy Beach Dune/Willow = 13976.
+- apply.py dry run: 11 results ready, 11 note rewrites, no '!!'.

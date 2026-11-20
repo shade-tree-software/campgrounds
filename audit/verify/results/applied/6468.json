@@ -1,0 +1,49 @@
+{
+  "id": 6468,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10243294 (read 2026-11-20): 'French Creek Campground is located on Forest Road 206. Facilities include 11 campsites (small trailers only up to 32 feet), water, picnic tables, toilets, fire grates and Trash Service is NOT Provided . Note: No water or trash services beyond mid September.) Fishing access is available nearby in both North and South French Creeks.'; notice: 'There are no hookup services. Maximum length of stay is 14 days ... Campsites are limited to 8 people and 2 vehicles per site. Only 1 RV/trailer per RV campsite.'; amenities incl. 'Drinking Water (hand pump)', 'Vault Toilets', 'Creek Access'; facility phone 307-326-5258",
+    "https://www.recreation.gov/api/camps/campgrounds/10243294/rates (read 2026-11-20): Peak Season 2027-06-01 to 2027-09-07 $14 (standard nonelectric); First-come, First-served Season 2026-09-10 to 2026-10-31 $14 (walk-in)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10243294 (catalog, read 2026-11-20): 11 STANDARD NONELECTRIC drive-in sites, all back-in gravel; reservable 005-011 (driveways 25, 32, 18, 24, 19, 32, 20 ft), not reservable 001-004 (24, 40, 28, 24 ft); no equipment caps posted; site coordinates centroid 41.22667,-106.48028",
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/french-creek-campground (read 2026-11-20, updated October 22, 2026): 'This campground remains open as weather and road conditions permit access. Visitors should be aware that no fees are charged and no amenities, facilities, or services are provided throughout the winter months.'; 'French Creek Campground is located on Forest Road 500. Facilities include 11 campsites (small trailers only up to 32 feet), water, picnic tables, toilets, fire grates and trash service available. Note: No trash services beyond mid September.'; Seasons of Use 'June - September'; 'Single Site: $14 per night / Additional Vehicle Fee: $5 per vehicle per day'; 'Vault Toilet (1)'; 'Potable water is available at this site.'; Recreation: 'OHV Road Riding'; lat/long 41.22669, -106.48061",
+    "Esri World Imagery 2026-11-20 (160 m half-width, catalog site points overlaid): one gravel loop on a slope of aspen and standing dead/burned conifer; the creek's willow-aspen band lies NW of the loop, ~70 m from the nearest site (002) through trees; stored pin 41.2268,-106.4802 is in the loop, 16 m from the site centroid"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 11, "max_rig_ft": 32, "pull_through": false, "note": "All back-in gravel spurs, 18-40 ft."},
+      "source": "rec.gov facility description ('11 campsites (small trailers only up to 32 feet)') + campsite catalog (11 back-in sites, driveways 18-40 ft), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "vault_toilets": true},
+      "source": "rec.gov amenities ('Drinking Water (hand pump)', 'Vault Toilets') + FS page ('Vault Toilet (1)', 'Potable water is available at this site.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10243294", "fcfs": "some_sites", "max_stay_nights": 14, "season": {"opens": "06-01", "closes": "09-07"}, "note": "Sites 005-011 reservable June 1 - Sept 7; 001-004 first-come, and the whole campground first-come Sept 10 - Oct 31."},
+      "source": "rec.gov campsite catalog (005-011 reservable, 001-004 not) + rates (Peak Season 2027-06-01 to 09-07; First-come, First-served Season 09-10 to 10-31) + notice ('Maximum length of stay is 14 days'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 14, "nightly_high": 14, "currency": "USD", "checked": "2026-11-20", "extra_vehicle": {"included": 1, "amount": 5, "per": "night", "max_vehicles": 2}},
+      "source": "rec.gov rates ($14 Peak and First-come seasons; notice '2 vehicles per site') + FS page ('Single Site: $14 per night', 'Additional Vehicle Fee: $5 per vehicle per day'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-01", "closes": "10-31", "note": "Stays open without fees or services in winter as weather and the road allow; water is off from mid-September."},
+      "source": "rec.gov rates (2027 Peak Season from 06-01; First-come, First-served Season to 10-31) + FS page ('remains open as weather and road conditions permit access ... no fees are charged and no amenities, facilities, or services are provided throughout the winter months'; Seasons of Use 'June - September') + rec.gov ('No water or trash services beyond mid September'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF campground among aspen and burned conifer near North and South French Creeks, west of the Snowy Range, reached from Riverside by WY-230 and County Road 660. In the 2020 Mullen Fire burn area. The Lower Tie Hack trailhead is a quarter mile east. --Claude",
+  "summary": "rec.gov facility/rates/catalog + FS page read: now partly reservable on rec.gov (005-011, Jun 1 - Sep 7; 001-004 FCFS; all FCFS Sep 10 - Oct 31), $14, +$5 vehicle, 11 back-in sites 18-40 ft (8 fit a 23-ft rig), 32-ft trailer limit, hand-pump water, vault toilet, 14-day limit. Booking corrected FCFS -> reservable some_sites; season 06-01..10-31 written. Not waterfront holds. Pin fine. Phone empty -> 307-326-5258.",
+  "flags": [
+    "BOOKING CORRECTED: stored reservable false / fcfs always (note-derived) -> reservable on recreation.gov, fcfs some_sites (catalog: 005-011 reservable, 001-004 not; rec.gov rates carry a 2027 Peak reservation season June 1 - Sept 7).",
+    "CONFLICTS (FS page vs rec.gov): road FR 500 (FS) vs FR 206 (rec.gov) - note avoids naming it; trash 'available' (FS) vs 'NOT Provided' (rec.gov) - not written; FS season 'June - September' vs rec.gov first-come fee season to Oct 31 - rec.gov written per rule.",
+    "FIT: FS/rec.gov 'small trailers only up to 32 feet' passes a 23-ft rig; spurs 18-40 ft, so 007 (18), 009 (19) and 011 (20) are short - 8 of 11 fit.",
+    "OHV: FS lists 'OHV Road Riding' among the area's recreation - a general campground, not a staging area. No action.",
+    "WATERFRONT stored 'not waterfront': HOLDS. The creek's willow-aspen band is ~70 m NW of the nearest site (002) through trees, and French Creek is a small stream.",
+    "PHONE: empty -> 307-326-5258 (rec.gov facility phone).",
+    "NOTE: '11 sites, potable water, vault toilets ... up to ~32 ft' and 'no trash service' dropped (fields show them / sources conflict); 'verify current conditions' dropped. Mullen Fire mention kept from the prior note (imagery shows standing dead conifer; not re-sourced)."
+  ]
+}

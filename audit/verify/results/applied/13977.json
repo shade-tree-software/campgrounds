@@ -1,0 +1,50 @@
+{
+  "id": 13977,
+  "checked": "2026-11-20",
+  "sources": [
+    "reserve.wyoming.gov US eDirect API (https://wyordr.usedirect.com/wyomingrdr/rdr/, read 2026-11-20): search/place PlaceId 10 'Glendo State Park' lists 16 campground facilities plus Two Moon Yurts; FacilityId 341 'Reno Cove' (facility point 42.49654444,-104.97191667), Restrictions MaximumStay 14",
+    "reserve.wyoming.gov FacilityId 341 search/grid + search/details per unit (read 2026-11-20): 21 units, all AllowWebBooking true: RC02-RC11 'Campsite Electric' ('Electricity (Amp)': '50'; RC02 paved/ADA, RC08 pull-through), RC12-RC21 'Campsite Non-Electric' (RC12 and RC18 pull-through), pads 40-190 ft, plus group site G01; every unit tagged 'Waterfront Setting: Reservoir' (type-level); unit coordinates from MapInfo",
+    "audit/state_park_fees/wy_pages_2026-10-12.json capture of https://wyoparks.wyo.gov/index.php/places-to-go/glendo (live page not fetched: F5 bot challenge): 'NEW Reservation Season Dates: May 15 - Sept. 15'; 'All Campgrounds are first come first serve now!!'; 'The park is open year-round for day use and camping.'; park phone 307-735-4433",
+    "Esri World Imagery 2026-11-20 (300 m half-width z17-equivalent, 250 m, and z18/z19 tiles with unit points overlaid): RC02-RC11 on a herringbone loop on open upland by the entrance road, ~250 m+ from the water behind pine; RC12-RC21 in a second area ~300 m east toward the shore - RC19 (42.49750,-104.96624) and RC20 (42.49753,-104.96594) ~35-45 m from the imaged water but behind a band of pines and a dead-tree fringe; RC13 (42.49789,-104.96849) on the point ~90 m from the water; stored pin 42.49765,-104.9737 is 113 m NW of the electric loop's centre"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50
+      },
+      "source": "reserve.wyoming.gov unit details RC02-RC11 ('Electricity (Amp)': '50'; all web-bookable public sites), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 20,
+        "pull_through": true,
+        "note": "Ten electric sites on the loop by the entrance road; ten without hookups in a second area toward the shore."
+      },
+      "source": "reserve.wyoming.gov FacilityId 341 grid + unit details (20 campsites RC02-RC21: RC02-RC11 electric, RC12-RC21 non-electric; pull-throughs RC08, RC12, RC18; group site G01 excluded), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "05-15",
+          "closes": "09-15"
+        }
+      },
+      "source": "reserve.wyoming.gov (all Reno Cove units web-bookable; facility Restrictions MaximumStay 14) + wyoparks Glendo page as captured 2026-10-12 ('NEW Reservation Season Dates: May 15 - Sept. 15'; 'All Campgrounds are first come first serve now!!')",
+      "method": "manual"
+    }
+  },
+  "note": "Wyoming State Parks, Reno Cove on the west side of Glendo Reservoir between Custer Cove and Bennett Hill. --Claude",
+  "summary": "reserve.wyoming.gov FacilityId 341 read: 20 campsites (RC02-RC11 electric 50A on the entrance loop, RC12-RC21 non-electric toward the shore) + group G01, all web-bookable, 14-night max; reservation season May 15 - Sept 15. Hookups/sites/booking written. Waterfront: recommend not waterfront -> lakeview (RC19, RC20). Pin left (113 m). Phone empty -> 307-735-4433. Note trimmed.",
+  "flags": [
+    "WATERFRONT stored 'not waterfront' (not --AWH): RECOMMEND lakeview. The stored evidence measured only the electric loop (~250 m behind pine, correct for RC02-RC11); the second area's RC19 (42.49750,-104.96624) and RC20 (42.49753,-104.96594) sit ~35-45 m from the water behind a band of pines and a dead-tree fringe - a view, not lakefront; RC13 (42.49789,-104.96849) on the point ~90 m. All sold by the night (web-bookable). No site within ~50 m over open ground, so no waterfront value.",
+    "BOOKING: stored fcfs 'after_cutoff' is a poor fit - Glendo is first-come outside the May 15 - Sept 15 reservation season (wyoparks capture), not walk-up after a booking cutoff; booking.season now carries it. Reviewer may want fcfs removed (apply.py merges, cannot delete it); Two Moon 6352 has no fcfs.",
+    "ELECTRIC: 10 electric sites (RC02-RC11), all public and web-bookable, 50 A.",
+    "NOTE: 'a herringbone pull-through loop by the entrance road plus a second area toward the shore' moved to sites.note (only RC08 on the loop is a pull-through); 'Reservable May 15 - Sept 15, first-come otherwise' dropped (booking.season shows it).",
+    "PIN: 42.49765,-104.9737 is 113 m NW of the electric loop centre (42.4970,-104.97265) and 324 m from the all-sites centroid (42.49712,-104.96982); left (under 250 m from the main loop).",
+    "PHONE: empty -> 307-735-4433 (Glendo State Park). Season year_round kept. WEBSITES kept."
+  ]
+}

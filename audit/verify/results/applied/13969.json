@@ -1,0 +1,49 @@
+{
+  "id": 13969,
+  "checked": "2026-11-20",
+  "sources": [
+    "reserve.wyoming.gov US eDirect API (https://wyordr.usedirect.com/wyomingrdr/rdr/, read 2026-11-20): search/place PlaceId 10 'Glendo State Park' lists 16 campground facilities plus Two Moon Yurts; FacilityId 336 'Custer Cove' (facility point 42.48611111,-104.98156389 = stored pin), Restrictions MaximumStay 14",
+    "reserve.wyoming.gov FacilityId 336 search/grid + search/details per unit (read 2026-11-20): 20 units CC01-CC20, all 'Campsite Non-Electric', all AllowWebBooking true, pads 35-160 ft, pull-through on CC01, CC02, CC06, CC09, CC16, CC18, CC19; every unit tagged 'Waterfront Setting: Reservoir' (type-level); unit coordinates from MapInfo, campsite centroid 42.48576,-104.98164 (38 m from the pin)",
+    "audit/state_park_fees/wy_pages_2026-10-12.json capture of https://wyoparks.wyo.gov/index.php/places-to-go/glendo (live page not fetched: F5 bot challenge): 'NEW Reservation Season Dates: May 15 - Sept. 15'; 'All Campgrounds are first come first serve now!!'; 'The park is open year-round for day use and camping.'; 'HCB Toxen Advisories In Effect 9/15/2026 Toxin Advisory applies to the following locations: Marinia, Custer Cove Campground'; park phone 307-735-4433",
+    "Esri World Imagery 2026-11-20 (150 m half-width, 0.33 m/px, all 20 unit points overlaid): the loops sit among pines on a point; a wide bare-sand drawdown apron with drowned dead trees surrounds them on the W, S and SE; measured to the imaged water edge over open sand: CC20 (42.48636,-104.98286) ~50 m, CC19 ~50-90 m, CC13 (42.48570,-104.98200) ~75 m, CC12 ~75 m, CC03/CC04 ~80-90 m; the water in the image is below full pool (the drowned trees stand on the apron), so the high-water edge lies closer than the imaged water"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 0
+      },
+      "source": "reserve.wyoming.gov FacilityId 336: all 20 units 'Campsite Non-Electric' (no 'Electricity' amenity), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 20,
+        "pull_through": true
+      },
+      "source": "reserve.wyoming.gov FacilityId 336 grid + unit details (20 campsites CC01-CC20; pull-throughs CC01, CC02, CC06, CC09, CC16, CC18, CC19; pads 35-160 ft), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "05-15",
+          "closes": "09-15"
+        }
+      },
+      "source": "reserve.wyoming.gov (all 20 Custer Cove units web-bookable; facility Restrictions MaximumStay 14) + wyoparks Glendo page as captured 2026-10-12 ('NEW Reservation Season Dates: May 15 - Sept. 15'; 'All Campgrounds are first come first serve now!!')",
+      "method": "manual"
+    }
+  },
+  "note": "Wyoming State Parks, a small campground on a pine-dotted point of Glendo Reservoir's Custer Cove, near Colter Bay and ~2.5 km north of Two Moon. Gravel sites. No potable water until mid-May. When the reservoir is drawn down the shore recedes across open sand, 100 m or more from most sites. --Claude",
+  "summary": "reserve.wyoming.gov FacilityId 336 read: 20 non-electric sites CC01-CC20, all web-bookable, 7 pull-throughs, 14-night max; reservation season May 15 - Sept 15 (wyoparks capture). Hookups (electric 0), sites, booking written. Lakefront holds narrowly (CC20, CC19, CC13, CC12 at the edge of the open drawdown apron). Pin fine. Phone empty -> 307-735-4433. HCB toxin advisory named this campground (Sept 2026). Note cleaned.",
+  "flags": [
+    "WATERFRONT stored 'lakefront' (not --AWH): HOLDS, narrowly. Edge sites over open sand: CC20 (42.48636,-104.98286) ~50 m to the water in the image; CC19, CC13 (42.48570,-104.98200) and CC12 on the edge of the bare drawdown apron, ~75-90 m to the imaged water but closer to the high-water edge (drowned trees stand on the apron, so full pool reaches toward the sites). All 20 sites are sold by the night (web-bookable). The engine's 'Waterfront Setting: Reservoir' tag is type-level, not evidence. If the reviewer reads the apron as above high water, the call is lakeview; a caveat about drawdown added to the note either way.",
+    "ADVISORY: the wyoparks capture carries 'HCB Toxen Advisories In Effect 9/15/2026 Toxin Advisory applies to the following locations: Marinia, Custer Cove Campground' - a seasonal harmful-algae advisory; not written to the note (dated, likely lapsed by now).",
+    "BOOKING: reservations May 15 - Sept 15, first-come outside it; written as booking.season (Two Moon 6352 precedent). state:WY row supplies platform/window/fees.",
+    "NOTE: 'sites 6 and 9 are pull-throughs and the largest' dropped (wrong - seven pull-throughs; sites field shows it); 'Reservable online' dropped (booking shows it); 'No potable water until mid-May' kept (unrefuted, not re-read).",
+    "PHONE: empty -> 307-735-4433 (Glendo State Park).",
+    "Season year_round kept (wyoparks 'open year-round for day use and camping'). WEBSITES kept."
+  ]
+}
