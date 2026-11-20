@@ -2908,3 +2908,9 @@ me drop and report); each needs the research named before a verdict.
 - 13587 Glenrock South Recreation Complex: glenrock.org 406; website still Campendium, no phone - replace with a town page when one can be read; pin on the access road (loops ~42.8365,-105.8733, pads not visible) - not moved. Kept on Google 4.4 (82).
 - 13700 Headwaters at Flagg Ranch: rec.gov $131 vs NPS $117 - rec.gov written. 6478 Hunter Peak: FS says FCFS, rec.gov reserves sites 5-8 - rec.gov written. 13303 Grave Springs: federal:blm row's reservable:true doesn't apply (FCFS written); re-pinned 270 m.
 - 6472 Hams Fork + 6475 Hobble Creek: potable water true -> false (FS "not available").
+
+## WY p3-554 (2026-11-20)
+- No drops. 14605 JMA Campground: $35 night, Google 4.7 (82) - passes; nightly share unmeasured (RoverPass request-to-book); RoverPass "55-plus" lifestyle tag is a directory tag, not an age rule.
+- 6481 Jack Creek (MBR): booking corrected to rec.gov (sites 009-016 reservable); unsourced "~22 ft" removed (driveways 23-99 ft). 6485 Lake Owen: corrected to FCFS (rec.gov scan-and-pay only); 22-ft trailer limit (passes). 6484 Lake Creek max spur 22 ft (caveat). 13667 Lost Creek: "trailers under 22'" (passes); closes 10-31. 13304 Lodgepole: federal:blm row's reservable doesn't apply (FCFS written).
+- 6489 Lily Lake: fee $0 -> $10; under reconstruction to 7 sites (open) - downgraded to not waterfront, re-check 2027. 6398 Louis Lake: lakefront -> lakeview (unsure); sandy pull-offs at the waterline - if designated, a lakefront + no-sand look for AWH. Its FS contact block names the wrong district.
+- 6482 Jack Creek (Shoshone): 16 -> 5 sites; riverfront -> riverview; unknown cottonwood unit cluster ~44.1085,-109.3550 (horse area or private?).

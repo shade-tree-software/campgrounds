@@ -1,0 +1,12 @@
+# p3-554 notes
+- 14605 JMA: done. $35 RoverPass request-to-book; Google 4.7/82; long-stay unmeasured; pin ok.
+- 6481 Jack Creek MBR: done. reservable 9-16 some_sites; potable conflict cleared; phone 307-326-5258.
+- 6482 Jack Creek Shoshone: done. riverfront->riverview; count 16->5; spur 32.
+- 6484 Lake Creek: done. 22-ft spur (passes); season added; phone (307) 527-6921.
+- 6485 Lake Owen: done. FCFS only (scan&pay); lakeview holds (tags 70-110 m); 22-ft trailer; phone 745-2300.
+- 6489 Lily Lake: done. $0->$10; under construction 7 sites; year-round; lakeview weak kept.
+- 6490 Lincoln Park: done. 6 reservable; max_rig cleared; creekside lead 009.
+- 6491 Little Sunlight: done. 5 sites FCFS; horse at trailhead; Site Closed banner (winter).
+- 13304 Lodgepole BLM: done. rec.gov reservable False -> fcfs; 14 nights.
+- 13667 Lost Creek: done. season to 10-31; 7 reservable; 22ft trailers passes.
+- 6398 Louis Lake: done. lakefront kept w/ caveat (unnumbered); phone Washakie.

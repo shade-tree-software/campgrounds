@@ -1604,3 +1604,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6477 Horse Creek (WY, p3-553): unnumbered spur ~11 m from the creek bed over sage (43.66638,-109.63490) - creekside candidate (may be creek access).
 - 6475 Hobble Creek (WY, p3-553): unnumbered pad ~25 m from the creek over grass (42.39806,-110.78294) - creekside candidate.
 - 13587 Glenrock South (WY, p3-553): Deer Creek along the wooded loops, pads not visible.
+- 6490 Lincoln Park (WY, p3-554): site 009 ~20 m from North Brush Creek behind a riparian band.

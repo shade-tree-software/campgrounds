@@ -1,0 +1,65 @@
+{
+  "id": 6481,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/jack-creek-campground (last updated June 18, 2026; read 2026-11-20): 'A campground in the Sierra Madre Range that sees medium use in the summer and fall. Facilities include 16 campsites, 4 are pull-through sites, picnic tables, fire rings, vault toilets, trash services and water. The campground has a 16 day stay limit and has primitive roads in the area for OHV riding.'; 'Seasons of Use: mid-June - October'; 'Open seasonally, weather dependent.'; 'Single Site: $14 per night | Additional Vehicle Fee: $5 per vehicle per day'; directions 'Carbon County Road 500 ... County Road 405 ... Forest Road 452 for 5 miles'; 'Vault Toilet (1)'; 'Potable water is not available at this site.'; Latitude 41.28308, Longitude -107.12025",
+    "https://www.recreation.gov/api/camps/campgrounds/10243223 (+ /rates, read 2026-11-20): overview '16 campsites, 4 are pull-through sites, picnic tables, fire rings, vault toilets, and water. The campground has a 14 day stay limit. ... Trash Service is NOT Provided'; phone 307-326-5258 (Brush Creek/Hayden Ranger District); Peak Season 06-01..09-07 (2025, 2026, 2027, 2028) $14 PeakStandardNonelectric; 'First-come, First-served Season' 2026-09-10..10-31 $14",
+    "recreation.gov campsite catalog 10243223 + search record (2026-11-20): 16 STANDARD NONELECTRIC sites, 8 reservable (009-016) and 8 not (001-008); driveway lengths 23-99 ft (only 012 at 23 ft); search record reservable true, Site-Specific; June 2027 availability: 8 sites 'Not Reservable', 8 'NYR'",
+    "Esri World Imagery 2026-11-20 (200 m half-width, FS/rec.gov/site-001 points plotted): the loop runs south from the stored pin through conifers on the west side of the valley; Jack Creek meanders through a willow bottom ~80-150 m east of the sites; no site on the creek"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 16, "pull_through": true},
+      "source": "FS page ('16 campsites, 4 are pull-through sites') + recreation.gov catalog (16 sites), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": null},
+      "source": "FS page ('Vault Toilet (1)'; amenity block 'Potable water is not available at this site.' vs its own description and recreation.gov's overview listing 'water'), read 2026-11-20 - the two official statements conflict, so stored derived potable_water true is cleared to unknown",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog 10243223 (all 16 STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "season": {"opens": "06-01", "closes": "09-07"},
+        "max_stay_nights": 16,
+        "note": "Sites 9-16 reservable in the peak season; sites 1-8 always first-come, and every site first-come after the peak season. Recreation.gov's overview says a 14-day stay limit, the FS page 16 days."
+      },
+      "source": "recreation.gov 10243223 (catalog: 8 reservable 009-016, 8 not; search record reservable true; Peak Season 06-01..09-07 in 2026 and 2027, then 'First-come, First-served Season' to 10-31) + FS page ('16 day stay limit'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "06-15", "closes": "10-31", "note": "Approximate: mid-June through October, weather dependent."},
+      "source": "FS page ('Seasons of Use: mid-June - October'; 'Open seasonally, weather dependent.') + recreation.gov first-come season to 10-31, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 14,
+        "currency": "USD",
+        "extra_vehicle": {"included": 1, "amount": 5, "per": "night"},
+        "checked": "2026-11-20"
+      },
+      "source": "FS page ('Single Site: $14 per night | Additional Vehicle Fee: $5 per vehicle per day') + recreation.gov rates ($14, 2026-2028), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow-Routt NF campground in the Sierra Madre west of Saratoga, reached by county roads 500 and 405 then 5 miles of Forest Road 452. Sites in the conifers on the west side of the Jack Creek valley; the creek runs through a willow bottom below. Primitive roads nearby are open to OHV riding, and the Continental Divide Trail is close. --Claude",
+  "summary": "FS (updated 2026-06-18) + rec.gov 10243223 read: 16 sites (4 pull-through), driveways 23-99 ft, $14 + $5 extra vehicle; rec.gov sells sites 9-16 in the 06-01..09-07 peak season, the rest first-come (stored reservable false/always -> true/some_sites); season mid-June-Oct added; potable water conflicting (cleared). Unsourced '~22 ft limit' dropped from note. Phone empty -> 307-326-5258. Pin OK; not waterfront holds.",
+  "flags": [
+    "BOOKING CHANGED: stored reservable false / fcfs always (from note prose) -> reservable true, recreation.gov, fcfs some_sites: the catalog marks sites 009-016 reservable, the search record says reservable true (Site-Specific), and June 2027 shows those 8 as NYR (not yet released) with 001-008 'Not Reservable'. The FS page says nothing about reservations. Rec.gov rules also carry an odd reservationCutOff {value 7, units 'Not Reservable'} - not written.",
+    "POTABLE WATER CONFLICT: the FS amenity block (updated 2026-06-18) says 'Potable water is not available at this site.' while the FS and rec.gov descriptions list 'water'; stored derived true cleared to unknown. Trash: FS says 'trash services', rec.gov 'Trash Service is NOT Provided'. Stay limit: FS 16 days, rec.gov 14 (16 written as max_stay, both in booking.note).",
+    "FIT: the stored note and inclusion_evidence claim a 'posted ~22 ft limit' - neither the FS page nor rec.gov posts any limit; rec.gov driveways are 23-99 ft (13 of 16 are 34 ft+), and 4 sites are pull-through. Suggested inclusion_evidence: 'FS Medicine Bow-Routt Jack Creek page (updated 2026-06-18) + recreation.gov 10243223: 16 drive-in sites incl 4 pull-throughs, driveways 23-99 ft, $14 -> real RV campground that fits a 23-ft rig'.",
+    "PHONE: empty -> 307-326-5258 (Brush Creek/Hayden Ranger District, Saratoga; rec.gov facility phone). Websites (FS r02 page + rec.gov 10243223) live and correct.",
+    "OHV: FS says the campground 'has primitive roads in the area for OHV riding' - a general campground with OHV access nearby, not a staging camp (no flag beyond this).",
+    "WATERFRONT: not waterfront holds - Jack Creek is in a willow bottom ~80-150 m east of the sites. Pin 41.28353,-107.12051 is ~100 m north of the loop's centre (~41.2827,-107.1202) - under the 250 m line, no move."
+  ]
+}

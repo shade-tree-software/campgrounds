@@ -1,0 +1,63 @@
+{
+  "id": 6485,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/lake-owen-campground (last updated October 6, 2026; read 2026-11-20): 'Site Closed'; 'The campground is adjacent to Lake Owen. It is comprised of two loops under a dense stand of Lodgepole pines and a few Aspen. Both loops have sites overlooking the lake with scenic views of the Snowy Range. There are 35 campsites with tables, fire rings, trash pick-up and vault toilets. ... There is a 14 day stay limit.'; 'Open seasonally, weather dependent 6/07 to 9/30'; 'Camping trailer has a maximum trailer length of 22 feet.'; 'Single Site: $20 per night'; 'Vault Toilet (3)'; 'Potable water is not available at this site.'; directions via WY 11, Albany, NFSR 500/513/517/540; Latitude 41.14577, Longitude -106.10072",
+    "https://www.recreation.gov/api/camps/campgrounds/10250584 (+ /rates, read 2026-11-20): 'For facility specific information, please call (307) 745-2300.'; 'There are 35 campsites with tables, fire rings, pedestal grills, trash collection, and vault toilets. No water is availale in this campground ... No electrical hook-ups, water hook-ups, or black water hook-ups are available.'; overview 'Lake Owen is 55 acres and offers fishing and boating access'; notices 'Maximum length of stay is 14 days.', 'Campsites are limited to 8 people and 2 vehicles per site.'; amenities incl. Boat Ramp, Self Pay Station; rates: only 'First-come, First-served Season' rows (2026-06-03..10-05, $20, WalkInScanPay)",
+    "recreation.gov campsite catalog 10250584 (2026-11-20): 35 sites (33 standard incl. 2 without RV/pop-up equipment, 2 group) + a 'Standard Scan and Pay' record, every one reservable false; driveways 24-104 ft; 'Proximity to Water: Lakefront' tagged on 05, 06, 08, 10, 11; per-site coordinates used for the waterfront check",
+    "Esri World Imagery 2026-11-20 (160 m export frame with the catalog points; z18 tiles at 41.14551,-106.10251): the lake lies NW of both loops; tagged 'Lakefront' sites 05/06/08/10/11 are ~70-110 m from the shore across open grass with a dirt two-track and a conifer stand (in front of 10/11) between; the west loop's 29/30 are ~25-40 m from the marshy shore edge with a willow/shrub band and the boat-ramp road between; the rest are farther back"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 35},
+      "source": "FS page + recreation.gov 10250584 ('35 campsites'; catalog 35 incl. 2 group sites), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "FS page ('Vault Toilet (3)'; 'Potable water is not available at this site.') + recreation.gov ('No water is availale in this campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 10250584 ('No electrical hook-ups, water hook-ups, or black water hook-ups are available.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "platform": null,
+        "fcfs": "always",
+        "max_stay_nights": 14,
+        "note": "First-come only; pay at the site, including by recreation.gov Scan & Pay."
+      },
+      "source": "recreation.gov 10250584 (every catalog site reservable false; rate table only 'First-come, First-served Season' WalkInScanPay; 'Self Pay Station'; 'Maximum length of stay is 14 days.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "06-07", "closes": "09-30", "note": "Weather dependent."},
+      "source": "FS page ('Open seasonally, weather dependent 6/07 to 9/30'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "extra_person": {"max_people": 8},
+        "checked": "2026-11-20"
+      },
+      "source": "FS page ('Single Site: $20 per night') + recreation.gov rates ($20, 2026 first-come season) and notice ('Campsites are limited to 8 people and 2 vehicles per site.'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow-Routt NF campground beside 55-acre Lake Owen in the Snowy Range foothills, reached from Albany by Forest roads 500, 513, 517 and 540. Two loops among lodgepole pine and aspen on a grassy slope, many sites looking over the lake to the Snowy Range; boat ramp. The FS caps camping trailers at 22 ft, so a 23-ft rig is at the limit, though the driveways are mostly 30-50 ft. --Claude",
+  "summary": "FS (updated 2026-10-06) + rec.gov 10250584 read: 35 sites in two loops, all first-come (rec.gov Scan & Pay only; stored reservable true -> false/always), $20, 3 vault toilets, no water/hookups, 14-day limit, 8 people/2 vehicles a site, season 06-07..09-30 (added). FS 22-ft trailer limit (passes). Lakeview holds after measuring rec.gov's 'Lakefront' tags. Phone empty -> (307) 745-2300.",
+  "flags": [
+    "BOOKING CHANGED: stored reservable true / recreation.gov (note prose) -> reservable false, fcfs always: every one of the 35 catalog sites is reservable false and the rate table holds only 'First-come, First-served Season' WalkInScanPay rates; recreation.gov carries the facility for Scan & Pay only. The inherited federal window/reservation fee no longer apply.",
+    "WATERFRONT: lakeview holds. Rec.gov tags 05, 06, 08, 10, 11 'Lakefront', but on Esri imagery they sit ~70-110 m from the shore (e.g. 08 at 41.146687,-106.100331, 05 at 41.146805,-106.09987) across open grass with a two-track road (and, for 10/11, a conifer stand) between. Lakefront lead, not met: west-loop sites 29 (41.145679,-106.102127) and 30 (41.145458,-106.102744) are ~25-40 m from the marshy shore edge but behind a willow/shrub band and the boat-ramp road - a view under the rules. All sites are first-come, nightly.",
+    "FIT (criteria, report): FS 'Camping trailer has a maximum trailer length of 22 feet.' - passes under the AWH 2026-10-20 22-ft ruling; rec.gov driveways 24-104 ft. The stored note's 'parking aprons average 14 x 46 ft' came from forestcamping (aggregator) and is dropped.",
+    "PHONE: empty -> (307) 745-2300 (recreation.gov 'For facility specific information, please call'; the Medicine Bow-Routt supervisor's/Laramie RD office). Websites (FS r02 page + rec.gov 10250584) live and correct.",
+    "Rec.gov's overview says '29 campsites'; its facilities text, the FS page and the catalog say 35 (count 35 written). Pin 41.14575,-106.10078 is in the east loop's centre - no move."
+  ]
+}
