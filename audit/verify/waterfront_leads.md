@@ -1575,3 +1575,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6474 Hoback (WY, p3-537): downgraded to riverview; one spur (~43.28051,-110.59576, site 3/4) ~19 m over open gravel bank - riverfront-with-caveat candidate if more sites qualify.
 - 6361 Medicine Lodge (WY, p3-537): creekside kept pending site numbers (pads ~44.29357,-107.54016).
 - 6410 Pinnacles (WY, p3-538): lakeview candidate - west pads ~50 m from Brooks Lake through scattered conifers; no site list.
+- 6458 Doyle (WY, p3-539): creekside candidate - Doyle Creek (2-4 m) ~40-45 m from sites 01/02 with the access road and a fence between; left not waterfront.
+- 6349 Buffalo Bill North Fork (WY, p3-539): set riverview on sites 48-51 (60-80 m over open grass).

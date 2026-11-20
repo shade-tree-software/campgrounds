@@ -2769,3 +2769,13 @@ me drop and report); each needs the research named before a verdict.
 - 6559 Ayres Natural Bridge (Converse County): free, 8 sites and the 8 pm-8 am gate camper-reported only; stored 30-ft/3-night/paved unsourced. No pets. Creekside -> not waterfront.
 - 6357 Warren Bridge: only fee source a 2023 BLM release ($10); no season written.
 - Fee conflicts FS vs rec.gov (rec.gov written): 6407, 6503, 6425.
+
+## WY p3-539 (2026-11-20)
+- 6350 Curt Gowdy Aspen Grove: "next to a free public horse corral for those visitors who would like to camp with horses" - corrals at the west end of the shared trailhead lot ~50-80 m from sites 87/92, no separate horse loop. Kept: a corral beside a general campground is an amenity, not a horse camp (AWH 2026-11-17 amenity rule); sites are designated, bookable points around the lot (lot-adjacent rule). Stored park-wide values replaced (count 10, no electric/water, no dump).
+- 6534 BJ's Campground, Lusk: ResNexus (Incapsula, not opened) - no posted rate (aggregators $35-39), Google 4.8/256, RV Life $$ - passes on presence. Also has "RV-only full hookup sites at our Highway 20 location (4075 US Hwy 20)" - possible second site, no count/rate posted.
+- 6386/6387 Colter Bay: rec.gov says concession sites "are not eligible for America the Beautiful or Senior Pass discounts" - interagency_senior_access written false (federal:nps row default true). 6387 platform -> recreation.gov 258831. 6386 electric 50 rests on 12 accessible loop-J sites.
+- 6382 Cook Lake: Loop A + lake trail closed by a landslide, no reopening date (status open, partial).
+- 6450 Crazy Creek: water system "currently inoperable".
+- Inclusion_evidence replaced from verifier suggestions (wrong counts/sources): 6469, 6416, 6363, 6559 (earlier batches) + 6354, 6349, 6387, 6436, 6350.
+- LEAD: Buffalo Bill SP Lake Shore Campground (reserve.wyoming.gov park 7, facility 309, ~44.50085,-109.2325) - not in DB.
+- OHV side (stay): 6458 Doyle, 6382 Cook Lake.

@@ -1,0 +1,52 @@
+{
+  "id": 6386,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/grte/planyourvisit/colterbaycg.htm (page body loads from the NPS data API; read via https://developer.nps.gov/api/v1/campgrounds?parkCode=grte, read 2026-11-20)",
+    "https://www.recreation.gov/camping/campgrounds/258830 (facility record, rates table, and per-site catalog via /api/search/campsites, read 2026-11-20)",
+    "Esri World_Imagery at 43.9105,-110.6430 (1.4 km) with every catalog site and the stored pin plotted (read 2026-11-20)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 330, "max_rig_ft": 45, "note": "About 225 sites take an RV or trailer, roughly 178 of them 23 ft or longer; 48 are tent-only. Electric sites are the 12-13 accessible sites in loop J (180-185, 196-202). 10 group sites are not counted."},
+      "source": "recreation.gov 258830 catalog (341 units: 330 individual + 11 group-loop; permitted-equipment lengths), NPS data API (rvMaxLength 45; '324 individual campsites, 10 large group sites, and 13 electric-only ADA-accessible sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "laundry": true, "dump": true, "potable_water": true, "camp_store": true, "note": "Coin showers and laundry are at the Colter Bay Village launderette, for a fee; free dump and water fill station."},
+      "source": "NPS data API amenities (flush toilets, coin-operated showers, laundry, dump station, camp store, potable water; rvInfo 'complimentary dump station and a water fill station') + recreation.gov 258830 facility text, read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-21", "closes": "09-26"},
+      "source": "NPS data API operatingHours: 'Winter Closure' 2026-09-27 to 2027-05-21 (2027 closing date not yet posted; recreation.gov's 2027 peak rate season runs 05-21 to 09-30), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/258830", "fcfs": "never", "max_stay_nights": 14, "note": "Reservation only (hiker/biker sites aside); 30 nights a year across all Grand Teton campgrounds."},
+      "source": "NPS page banner 'All park campgrounds are by advanced reservations only' + data API (numberOfSitesFirstComeFirstServe 0; 'maximum stay ... 14 nights ... cumulative ... 30 nights'); recreation.gov maxConsecutiveStay 14, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 60, "nightly_high": 89, "note": "Concession-run: taxes extra."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/258830/rates - Peak Season 2027-05-21..2027-09-30: StandardNonelectric 60, StandardElectric 89, read 2026-11-20 (the NPS data API lists $59 / $80)",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": false},
+      "source": "recreation.gov 258830 overview: 'Please note this is a concession run campground and sites are not eligible for America the Beautiful or Senior Pass discounts.' read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Large concession-run campground (Grand Teton Lodge Company) in lodgepole pine at Colter Bay Village, a short walk from Jackson Lake but not on the shore; visitor center, stores, restaurants and the Colter Bay RV Park next door. Generators only in loops H, J, K, M and O, 6 am-10 pm. Bears frequent the area; food lockers at the sites. --Claude",
+  "summary": "NPS data API + rec.gov 258830: 330 individual sites (about 225 take an RV, ~178 at 23 ft+), max 45 ft; electric only on the 12-13 accessible loop-J sites; reservation-only, 14 nights; open 05-21 to 09-26 (2026 closure date); rec.gov $60-$89 (NPS $59/$80); concession - no Senior Pass discount. Not waterfront confirmed (NPS: 'not on the shores of Jackson Lake'). Pin ~320 m E of the loops -> move. Phone empty -> 307-543-3020.",
+  "flags": [
+    "PIN MOVE (~320 m): stored 43.90882,-110.64161 is on the main access road east of the loops; catalog centroid of 331 sites is 43.91097,-110.64427. Suggested pin 43.9110,-110.6443.",
+    "HOOKUPS (not changed): stored electric 50 (RIDB) comes only from the 12 'STANDARD ELECTRIC' sites in loop J (180-185, 196-202), all flagged accessible; the NPS calls them '13 electric-only ADA-accessible sites'. If accessible sites count as not open to the general public, electric should be unknown - reviewer's call.",
+    "POLICY ROW CONTRADICTION: federal:nps supplies discounts.interagency_senior_access true; recreation.gov says 'concession run campground and sites are not eligible for America the Beautiful or Senior Pass discounts'. Written false here.",
+    "FEES: recreation.gov 2027 peak table $60 non-electric / $89 electric vs the NPS data API $59 / $80; wrote the rec.gov figures (stored 61-89).",
+    "Phone: empty -> 307-543-3020 (recreation.gov: 'For questions call Colter Bay RV Park & Campground office: 307-543-3020'; staffed May 1-Oct 10). The NPS data API lists 307-543-2811, the Grand Teton Lodge Company reservations line.",
+    "Waterfront 'not waterfront' kept: NPS 'While not on the shores of Jackson Lake'; on imagery the westernmost loops sit ~150 m+ from the shore under continuous lodgepole canopy.",
+    "Website unchanged (nps.gov + rec.gov 258830 both current)."
+  ]
+}

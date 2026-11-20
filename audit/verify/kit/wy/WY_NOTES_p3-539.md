@@ -1,0 +1,12 @@
+# WY notes p3-539
+- 6534 done: no posted rate (ResNexus not opened), GS $39 aggregator; Google 4.8 (256); 19 FHU 50A; Hwy 20 second location
+- 6436 done: FCFS (no rec.gov), 21/32ft/$25/16-day, pin 630 m -> 44.9447,-109.5885, lakeview -> not waterfront rec, phone (307) 527-6921
+- 6354 done: Tamarask 24 sites (182-207), 20-70ft, $10, booking 05-15..09-15; lakefront kept (189,190,205-207); pin 790 m -> 43.3918,-108.1603; phone 307-876-2796
+- 6349 done: North Fork 86 units (30 elec 20/30/50, 50 non-elec, 6 tent), season 05-01..09-30, riverview lead (48-51 60-80 m), Lake Shore CG lead, phone 307-587-9227
+- 6386 done: Colter Bay CG 330 sites, 45 ft, 05-21..09-26, rec.gov 60-89, no senior discount (concession), pin 320 m -> 43.9110,-110.6443, phone 307-543-3020; electric only ADA loop J (flag)
+- 6387 done: Colter Bay RV Park on rec.gov 258831 (platform fix), 112 FHU, 125-130, 05-05..10-09, pin 285 m -> 43.9057,-110.6442, phone 307-543-3100
+- 6356 done: riverfront->creekside (Tongue ~23-26 m), pin 395 m -> 44.9055,-107.1628, season 04-01..10-31, 20 sites, phone 307-684-7629
+- 6382 done: Cook Lake B loop only (15 sites 19-33), lakeview->not waterfront, pin 360 m -> 44.5945,-104.4118, phone (307) 283-1361
+- 6450 done: Crazy Creek 16 sites 28 ft FCFS, water inoperable, not waterfront kept, phone (307) 527-6921
+- 6350 done: Aspen Grove 10 non-elec sites (81,83-90,92) 35-50ft; horse corral flag; dump false; booking 05-15..09-30; phone 307-632-7946
+- 6458 done: Doyle 18 sites (01/11/16 FCFS), 70 ft, rec.gov 18.5 vs FS 20, creek lead 01-02, OHV side, phone (307) 696-1403

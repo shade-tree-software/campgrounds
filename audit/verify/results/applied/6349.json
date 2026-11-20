@@ -1,0 +1,60 @@
+{
+  "id": 6349,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://wyoparks.wyo.gov/index.php/places-to-go/buffalo-bill - live site answers an F5 bot challenge (standing p3-537 rule, not retried); cited from the repo capture audit/state_park_fees/wy_pages_2026-10-12.json (read 2026-10-12)",
+    "reserve.wyoming.gov US eDirect API https://wyordr.usedirect.com/wyomingrdr/rdr/ search/place PlaceId 7 (in-season flags 2027-01-15 .. 2027-10-01), search/grid + search/details for facility 310 North Fork, all 86 units (2027-07-14; read 2026-11-20)",
+    "Esri World_Imagery at 44.4833,-109.3365 (900 m) and 44.4825,-109.3360 (260 m) with every North Fork unit point and the stored pin plotted (read 2026-11-20)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 86,
+        "max_rig_ft": null,
+        "note": "80 RV sites - 30 electric (48-58, 70-88) and 50 non-electric (33-47, 59-69, 89-112) - plus 6 tent sites (T-06 to T-11). Parking pads are listed at 60-140 ft."
+      },
+      "source": "reserve.wyoming.gov grid + details for facility 310 North Fork (unit types: 30 'Campsite Electric', 50 'Campsite Non-Electric', 6 tent T-06..T-11; 'Unit&parkingsize' 60-140 on every RV site), read 2026-11-20. The stored 62 sites / 33-ft max came from the sweep note and match nothing on the booking site.",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "reserve.wyoming.gov details for North Fork electric units ('Electricity (Amp)': '20, 30, 50' on all 30; 'Water Hookup' 1 on sites 48, 50, 79, 81, 83, 85, 87, 88), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-01",
+        "closes": "09-30",
+        "note": "Water and showers are weather dependent in May and September. The park's Lake Shore Campground stays open in winter."
+      },
+      "source": "Buffalo Bill page as captured 2026-10-12 ('May 1 - September 30: Park Campgrounds & Day Use Areas are Open - Water and shower facilities are weather dependent in May and September'; 'October - April: North Fork Campground Closed ... Rest of park open to camping and day use')",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://reserve.wyoming.gov/web/#!park/7",
+        "note": "All 86 North Fork sites are bookable online; the booking site's season starts May 1 (it still showed sites in season on October 1, 2027, past the park's stated September 30 close)."
+      },
+      "source": "reserve.wyoming.gov search/place PlaceId 7 North Fork InSeason: n 2027-04-30, Y 2027-05-01 .. 2027-10-01; grid AllowWebBooking true on all 86 units, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "North Fork Campground, about 14 mi W of Cody on US-14/16/20 above the North Fork of the Shoshone River where it enters Buffalo Bill Reservoir: a main loop on open lawn with scattered trees, an upper gravel loop on bare ground, and a lower loop in cottonwoods. Playground. The park's Lake Shore Campground is about 8 km E, nearer Cody. --Claude",
+  "summary": "reserve.wyoming.gov PlaceId 7 / facility 310: North Fork has 86 sites (30 electric 20/30/50 A, 8 of them with water; 50 non-electric; 6 tent), pads 60-140 ft, all web-bookable from May 1; captured park page: open May 1 - Sep 30, closed Oct-Apr. Stored 62 sites / 47 W+E / 33 ft unsourced -> replaced. Pin ~140 m from the centroid - no move. Waterfront lead: sites 48-51 ~60-80 m from the river over open grass (riverview candidate). Phone empty -> 307-587-9227.",
+  "flags": [
+    "WATERFRONT LEAD (stored 'not waterfront'; riverview candidate): the stored evidence says the loops sit '~250m+ from the North Fork channel behind a continuous cottonwood/willow strip'. On a 260-m Esri frame the main loop's south edge is much closer: sites 49 (unit point 44.48254,-109.33656), 48, 50 and 51 sit ~60-80 m from the North Fork Shoshone (a ~70 m+ braided channel) across an open dry-grass field, with only a thin, broken shrub line at the bank; 52 is ~90 m. All are electric sites sold by the night. Over 50 m, so not riverfront; the open ground supports riverview. The booking site tags 14 units 'Waterfront Setting: River' (48-51 and 79-88); 79-88 are on the west loop ~150 m+ back and look generous. The lower cottonwood loop (33-47) is ~90-100 m from the channel behind a riparian tree band (no value).",
+    "Site count/hookups: stored count 62, '47 with water+electric', 'max RV ~33 ft' (sweep note) -> booking site 86 units (80 RV + 6 tent), 30 electric of which 8 list a water hookup, RV pads 60-140 ft. max_rig_ft 33 cleared (contradicted; 140-ft pads look like pull-through lengths, not a rig limit, so none written). Suggested inclusion_evidence: 'reserve.wyoming.gov Buffalo Bill PlaceId 7, North Fork: 80 drive-in RV sites (30 electric 20/30/50 A) with 60-140 ft pads, open May-Sep -> real RV campground'.",
+    "Booking: stored fcfs 'some_sites' (from the note) - every unit is web-bookable in season; the captured page says nothing about first-come at North Fork. Left alone (the state row's first-come-outside-season note covers it).",
+    "Phone: empty -> 307-587-9227 (Buffalo Bill page, captured 2026-10-12: 'Phone Number 307-587-9227').",
+    "Pin 44.48278,-109.33733 is on the entrance road at the south edge of the main loop, ~140 m from the unit centroid 44.48377,-109.33623 - no move.",
+    "Note: the stored 'Lake Shore Campground 9 mi W' was wrong in direction - the booking site places Lake Shore (facility 309) at 44.50085,-109.2325, ~8 km EAST of North Fork. Fixed in the proposed note.",
+    "LEAD (not in campgrounds.json): Buffalo Bill State Park's Lake Shore Campground, reserve.wyoming.gov park 7 facility 309, facility point 44.50085,-109.2325 (electric, non-electric and tent site types; the captured page says the rest of the park stays open to camping October-April). No entry within the park's area other than this one. Not vetted.",
+    "LIVE PAGE REFUSED: wyoparks.wyo.gov (F5 bot challenge) - notices after 2026-10-12 unread. Captured status: HCB advisory monitoring and Stage 1 fire restrictions (2026); Eagle Point day-use area closed Sep 28 - Oct 1, 2026 (over)."
+  ]
+}

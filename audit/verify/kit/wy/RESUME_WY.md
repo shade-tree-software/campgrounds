@@ -13,7 +13,7 @@ yellowstonenationalparklodges.com all 200.
 
 ## RESUME HERE
 
-Next batch: p3-539. ONE verifier at a time, 11 per batch.
+Next batch: p3-540. ONE verifier at a time, 11 per batch.
 
 Build + launch (repo root; S = session scratch dir):
 
@@ -31,12 +31,12 @@ rules override anything else you read. Working directory: /home/andrew/Dev/campg
 Apply a batch (as WI/SK):
 1. Drops: insert `    id: ('YYYY-MM-DD', "reason", "evidence"),` lines into DROPS in audit/verify/criteria_drops.py, `python3 -I audit/verify/criteria_drops.py --apply`, then `mv audit/verify/results/<id>.json audit/verify/results/applied/` (if a result exists). Check trips for stays first (a stayed-at entry is never dropped without AWH).
 2. `python3 -I audit/verify/apply.py <kept ids> --apply`.
-3. Post script `$S/post_p3-NNN.py` starting `exec(open("audit/verify/kit/post_head.py").read())`: pin / ph / web / wf / save(); run `python3 -I $S/post_p3-NNN.py p3-NNN`. Check stored strings first (phones may be None or '').
+3. Post script (also replace inclusion_evidence where a flag gives "Suggested inclusion_evidence: '...'" - apply.py does not write evidence) `$S/post_p3-NNN.py` starting `exec(open("audit/verify/kit/post_head.py").read())`: pin / ph / web / wf / save(); run `python3 -I $S/post_p3-NNN.py p3-NNN`. Check stored strings first (phones may be None or '').
 4. `timeout 500 python3 -m unittest tests.test_campground_schema tests.test_closures tests.test_season_filter tests.test_link_labels`
 5. Append to audit/verify/criteria_followups.md + waterfront_leads.md (asks.md for questions), copy $S/p3-NNN/WY_NOTES_p3-NNN.md here, extend "Batches applied" below, add lessons to lessons.txt.
 6. `git add campgrounds.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/wy`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
 
-Batches applied: p3-536 (2026-11-20; no drops; Brooklyn Lake lakefront -> lakeview, Eagle Creek up to riverview; 6568 Torrington golf course kept on thin presence), p3-537 (2026-11-20; no drops; four water downgrades, Island Park up to creekside (06-08); Medicine Lodge re-pinned 320 m), p3-538 (2026-11-20; no drops; Slough Creek to creekside, Ayres to not waterfront; four pins incl. Vedauwoo 6.3 km + rename)
+Batches applied: p3-536 (2026-11-20; no drops; Brooklyn Lake lakefront -> lakeview, Eagle Creek up to riverview; 6568 Torrington golf course kept on thin presence), p3-537 (2026-11-20; no drops; four water downgrades, Island Park up to creekside (06-08); Medicine Lodge re-pinned 320 m), p3-538 (2026-11-20; no drops; Slough Creek to creekside, Ayres to not waterfront; four pins incl. Vedauwoo 6.3 km + rename), p3-539 (2026-11-20; no drops; Beartooth Lake + Cook Lake to not waterfront, Connor Battlefield to creekside, North Fork up to riverview; six pins)
 
 Things to watch in WY (from the sweep handoff, project_wy_sweep_handoff):
 - RV Life tagged BLM sites `dnr` and NPS/fairground sites `commercial`; the sweep reclassified them - check any that slipped.

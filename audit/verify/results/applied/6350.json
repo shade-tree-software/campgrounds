@@ -1,0 +1,65 @@
+{
+  "id": 6350,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://wyoparks.wyo.gov/index.php/places-to-go/curt-gowdy - live site answers an F5 bot challenge (standing p3-537 rule, not retried); cited from the repo capture audit/state_park_fees/wy_pages_2026-10-12.json (read 2026-10-12)",
+    "reserve.wyoming.gov US eDirect API https://wyordr.usedirect.com/wyomingrdr/rdr/ search/place PlaceId 8 (facility list; Aspen Grove in-season flags 2027-01-15 .. 2027-12-01), search/grid + search/details for facility 315 Aspen Grove, all 10 units (2027-07-14; read 2026-11-20)",
+    "Esri World_Imagery at 41.1800,-105.2490 (660 m) and 41.1802,-105.2513 (240 m) with every Aspen Grove unit point and the stored pin plotted (read 2026-11-20)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 10,
+        "max_rig_ft": 50,
+        "note": "Sites 81, 83-90 and 92, all non-electric; parking 35-50 ft, so every site takes a 23-ft rig. Nine sit around the gravel trailhead lot; 81 is by the entrance road about 300 m east."
+      },
+      "source": "reserve.wyoming.gov grid + details for facility 315 Aspen Grove (10 units, type 16 'Campsite Non-Electric', 'Unit&parkingsize' 35-50, 'Restroom Type: Pit Toilet'), read 2026-11-20. Stored count 159 and electric/water were park-wide figures.",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "reserve.wyoming.gov facility 315 Aspen Grove: every unit 'Campsite Non-Electric', no water/sewer hookup attribute; AG-81 detail 'Water spigot located in Camp Russel Campground', read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "dump": false,
+        "vault_toilets": true,
+        "note": "No dump station in the park (nearest about 24 mi away in Cheyenne or Laramie). Water from a spigot at the neighbouring Camp Russell campground."
+      },
+      "source": "Curt Gowdy page as captured 2026-10-12 ('SPECIAL NOTE: Curt Gowdy State Park does NOT have a trailer dump station. There are two local dump stations, each roughly 24 miles from the park') + reserve.wyoming.gov AG-81 detail ('Restroom Type: Pit Toilet'; water spigot in Camp Russel), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "usedirect",
+        "url": "https://reserve.wyoming.gov/web/#!park/8",
+        "season": {
+          "opens": "05-15",
+          "closes": "09-30"
+        },
+        "note": "All 10 Aspen Grove sites are bookable online in the reservation season."
+      },
+      "source": "reserve.wyoming.gov search/place PlaceId 8 Aspen Grove InSeason: n 2027-05-14, Y 2027-05-15 .. 2027-09-30, n 2027-10-01; grid AllowWebBooking true on all 10 units; captured park page 'All campsites are by reservation only', read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Aspen Grove is a small Curt Gowdy SP campground on open grassland at the Aspen Grove trailhead on the park's west side, beside a free public horse corral for visitors camping with horses. Little shade and exposed to wind. The park's other campgrounds (Tumbleweeds, Crystal, the Causeways, Camp Russell and more) are around Granite and Crystal reservoirs. --Claude",
+  "summary": "reserve.wyoming.gov PlaceId 8 / facility 315: Aspen Grove has 10 non-electric sites (81, 83-90, 92), 35-50 ft, $10, pit toilets, all web-bookable May 15 - Sep 30. Stored count 159, 50-A electric + water and dump were park-wide or wrong -> replaced (the park has no dump station). Sites ring a gravel trailhead lot beside a public horse corral (horse rule - reviewer). Not waterfront confirmed. Pin fine. Phone empty -> 307-632-7946.",
+  "flags": [
+    "HORSE RULE (reviewer, possible drop candidate): captured park page: 'Aspen Grove campground is next to a free public horse corral for those visitors who would like to camp with horses.' On imagery the fenced corrals sit at the west end of the same gravel lot, ~50-80 m from sites 87 and 92; there is no separate horse loop, so horse campers use the ordinary Aspen Grove sites. The corral itself is fenced apart, which may count as separation - reviewer's call.",
+    "LOT CAMPING: nine of the ten sites are numbered points along the edges of a large gravel turnaround/trailhead parking lot (Aspen Grove Trail Head) on open grass; designated, bookable sites with 35-50 ft parking, so kept as a campground per the lot-adjacent rule.",
+    "STORED DATA WRONG FOR THIS LOOP: sites.count 159 (whole park) -> 10; hookups electric 50 / water true (Tumbleweeds/Crystal) -> 0 / false; facilities.dump true -> false (park page: 'does NOT have a trailer dump station'). Suggested inclusion_evidence: 'reserve.wyoming.gov Curt Gowdy PlaceId 8, Aspen Grove: 10 drive-in non-electric sites, parking 35-50 ft, bookable May 15-Sep 30 -> real RV campground'.",
+    "SEASON (manual, not touched): stored year_round true from 'Park is open 365 days, 24hrs (with camping permit)' - a park statement; Aspen Grove's own winter status is not stated. Booking season written 05-15..09-30.",
+    "Booking fcfs stored 'some_sites' (note) vs the captured page 'All campsites are by reservation only' - left alone (the state row covers first-come outside the season).",
+    "Phone: empty -> 307-632-7946 (Curt Gowdy page, captured 2026-10-12).",
+    "Pin 41.18003,-105.24991 is at the east end of the trailhead lot ~110 m from the site centroid 41.18013,-105.2509 - no move.",
+    "Waterfront 'not waterfront' kept: the trailhead sites are ~600 m+ from Granite Reservoir; site 81 is ~170 m from it across the road and slope.",
+    "LIVE PAGE REFUSED: wyoparks.wyo.gov (F5 bot challenge) - notices after 2026-10-12 unread. Captured status: HCB advisory at Granite Springs Reservoir West Causeway (9/30/2026); camp store closed for the season; Curt Gowdy master-plan consultation."
+  ]
+}
