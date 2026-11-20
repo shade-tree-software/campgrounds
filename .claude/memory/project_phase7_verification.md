@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "WI COMPLETE 2026-11-17; SK COMPLETE 2026-11-19 (queue p3-520..535, splits +15709..15717, leads +15718..15726; kit/sk/RESUME_SK.md); WY QUEUE DONE 2026-11-20 (p3-536..558; leads/splits next per kit/wy/RESUME_WY.md), then SD; ONE agent at a time"
+description: "WI COMPLETE 2026-11-17; SK COMPLETE 2026-11-19 (queue p3-520..535, splits +15709..15717, leads +15718..15726; kit/sk/RESUME_SK.md); WY COMPLETE 2026-11-20 (queue p3-536..559, leads +15727..15745, split +15746; kit/wy/RESUME_WY.md); SD kit built (kit/sd/RESUME_SD.md), first batch p3-560 awaits AWH go-ahead; ONE agent at a time"
 metadata:
   node_type: memory
   type: project
@@ -8,7 +8,7 @@ metadata:
   modified: 2026-11-10T01:40:14.130Z
 ---
 
-**SK status (2026-11-19):** queue DONE, p3-520..535 applied + committed (pushed through p3-530 only). Seven drops (9296, 9293, 12818, 9311, 9245 Lemsford Ferry closed 2019; 9228 Fillmore + 9276 Sylvan Valley by AWH: no presence). Held asks: 14985 Canora Beach (long-stay/lot sales), 9308 Prairie View (ownership). Splits DONE 2026-11-19 (6 split into +15709..15717, 9268 not split; see kit/sk/RESUME_SK.md). Leads DONE 2026-11-19 (9 adds, 5 skips). WY STARTED 2026-11-20 (AWH go-ahead after push+deploy): kit/wy/ built, 244 queued, first batch p3-536; resume from kit/wy/RESUME_WY.md. WY QUEUE EMPTY 2026-11-20 after p3-558 (drops incl. 6516, 6419, 6379, 6395, 6377 Scab Creek + 6428 Turpin Meadow stock-in-loop); next the WY leads/splits list at the end of RESUME_WY.md, then SD. Asks: 14985 Canora kept for now + 15719 Rolling Green kept (AWH 2026-11-19); 9308 Prairie View ownership deferred.
+**SK status (2026-11-19):** queue DONE, p3-520..535 applied + committed (pushed through p3-530 only). Seven drops (9296, 9293, 12818, 9311, 9245 Lemsford Ferry closed 2019; 9228 Fillmore + 9276 Sylvan Valley by AWH: no presence). Held asks: 14985 Canora Beach (long-stay/lot sales), 9308 Prairie View (ownership). Splits DONE 2026-11-19 (6 split into +15709..15717, 9268 not split; see kit/sk/RESUME_SK.md). Leads DONE 2026-11-19 (9 adds, 5 skips). WY STARTED 2026-11-20 (AWH go-ahead after push+deploy): kit/wy/ built, 244 queued, first batch p3-536; resume from kit/wy/RESUME_WY.md. WY QUEUE EMPTY 2026-11-20 after p3-558 (drops incl. 6516, 6419, 6379, 6395, 6377 Scab Creek + 6428 Turpin Meadow stock-in-loop); WY LEADS DONE 2026-11-20 (25 leads: +15727..15745, 5 skips, Spread Creek held) and split 6359 -> +15746 Sawmill; p3-559 Larson re-read applied: WY COMPLETE. SD kit built 2026-11-20 (kit/sd/), not started - waits for AWH go-ahead as WY did. Lead/split adds have no verify_scan by design (don't re-batch). Asks: 14985 Canora kept for now + 15719 Rolling Green kept (AWH 2026-11-19); 9308 Prairie View ownership deferred.
 
 AWH 2026-10-20: start phase 7 of [[project-campground-schema]] now. Use signals = stays AND
 contributor popup opens (logged since 67b777e6 to trip_data/campground_views.jsonl; live only once
