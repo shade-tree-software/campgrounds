@@ -1,0 +1,73 @@
+{
+  "id": 6400,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/247571 (+ /rates): 'Mammoth Campground offers: 82 campsites', flush toilets year round, potable water spigots, no showers; notices '30 ft RV limit. From November through April.', 14 days July 1 - Labor Day / 30 days otherwise parkwide; Peak Season 2027-04-16..2027-10-15 $25 (PeakStandardNonelectric), First-come First-served Season 2027-01-01..04-15 and 2027-10-16..12-31 $25 (WalkIn); read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A247571 (81 sites, all STANDARD NONELECTRIC, no catalog lengths but one; site points used for the pin), read 2026-11-20",
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table: 'Mammoth | Open year-round* | $25 | 82', flush toilets and generator dots, no dump station dot, max RV length '30' with footnote 'Winter limit (mid-Oct through April). 45 ft limit May through mid-Oct.'; '*Reservations only 4/15 - 10/15; rest of year is first-come, first-served. Dates and number of available sites TBD after 10/15/2027.'; read 2026-11-20)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Mammoth record: url mammothhscg.htm, reservationUrl recreation.gov/camping/campgrounds/247571, 85 totalSites, dumpStation 'No', potableWater 'Yes - year round', flush toilets year round, 'part of the campground is closed mid-October through April', phone 307-344-7381; read 2026-11-20)",
+    "https://www.nps.gov/yell/planyourvisit/mammothhscg.htm (HTTP 200, 2026-11-20)",
+    "Esri World_Imagery around 44.9770,-110.6935 (450 m half-width) with the rec.gov site points, read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/247571",
+        "fcfs": null,
+        "max_stay_nights": 14,
+        "note": "Reservation-only April 15 - October 15; first-come, first-served the rest of the year. Park-wide limit: 14 nights July 1 - Labor Day, 30 nights otherwise."
+      },
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm ('Reservations only 4/15 - 10/15; rest of year is first-come, first-served') + rec.gov 247571 (rate seasons Peak 04-16..10-15 / First-come First-served otherwise; maxStay 14 nights Jul-Labor Day; 'Camping is limited to 14 days from July 1 through Labor Day and to 30 days the rest of the year parkwide'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2027"},
+      "source": "rec.gov 247571 /rates (2027 Peak Season and First-come First-served Season $25) + NPS 2027 table '$25', read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Part of the campground closes mid-October through April; the NPS says dates and the number of sites after October 15, 2027 are yet to be determined."
+      },
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm ('Open year-round*'; 'Dates and number of available sites TBD after 10/15/2027') + NPS data API ('typically open year-round, though part of the campground is closed mid-October through April'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 82,
+        "max_rig_ft": 45,
+        "note": "45 ft May to mid-October; 30 ft in winter (mid-October through April). Sites over 40 ft combined are limited."
+      },
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm ('82' sites; max RV length '30' footnote 'Winter limit (mid-Oct through April). 45 ft limit May through mid-Oct.') + rec.gov 247571 ('82 campsites'; '30 ft RV limit. From November through April.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov campsite catalog 247571 (all 81 sites STANDARD NONELECTRIC) + NPS data API (electricalHookups 0), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": false, "dump": false, "laundry": false, "camp_store": false},
+      "source": "NPS data API (Flush Toilets - year round, potableWater 'Yes - year round', showers None, dumpStation 'No', laundry No, campStore No) + NPS 2027 table (no dump station dot) + rec.gov 247571 ('Flush Toilets - year round', 'There are no showers at the campground'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "The only Yellowstone campground open all year, on a terraced sagebrush hillside with scattered juniper and Douglas fir, 5 mi south of the North Entrance at Gardiner and close to Mammoth Hot Springs; elk and bison often pass through. Generators 8 am - 8 pm. --Claude",
+  "summary": "NPS-run, rec.gov 247571: 82 non-electric sites, $25 (2027), RVs 45 ft May-mid-Oct / 30 ft in winter; reservation-only 4/15-10/15, first-come otherwise; year-round (partly closed in winter; post-10/15/2027 TBD). No dump station (stored true was derived - cleared to false). Pin ~545 m off in the employee housing -> move to the loops. Website -> mammothhscg.htm.",
+  "flags": [
+    "PIN MOVE ~545 m: stored 44.97250,-110.69050 sits in the park's residential/employee housing area east of the Mammoth-Tower road, not the campground. Target 44.97674,-110.69394 (centroid of the 81 rec.gov site points, which line the campground roads on the hillside west of the North Entrance Road on imagery). NPS/rec.gov facility point 44.97361,-110.69323 is the south end (entrance) of the campground.",
+    "FCFS: stored 'after_cutoff' (derived) does not describe this: the campground is reservation-only 4/15-10/15 and entirely first-come the rest of the year - none of the four fcfs values fits, so fcfs set null and the pattern stated in booking.note.",
+    "DUMP: stored true (derived from the sweep note) contradicted - NPS data API dumpStation 'No' and the NPS table shows no dump station dot. Written false.",
+    "MAX RIG: 45 ft May - mid-October, 30 ft winter (NPS table footnote); rec.gov notice says 30 ft November-April. The NPS API rvInfo also says 'Some will accommodate up to 75 feet total combined length'. Written 45.",
+    "SITE COUNT: NPS table and rec.gov description 82; NPS API 85; rec.gov catalog 81. Written 82 (unchanged).",
+    "WEBSITE: https://www.nps.gov/yell/planyourvisit/campgrounds.htm -> https://www.nps.gov/yell/planyourvisit/mammothhscg.htm (NPS API url, HTTP 200; mammothcg.htm is 404).",
+    "PHONE (307) 344-7381 kept (NPS data API Voice line for Mammoth); rec.gov gives facility information line (307) 344-2289.",
+    "Discount: NPS-run - the 50% Senior/Access Pass discount stated on the NPS fee line matches the federal:nps row.",
+    "Waterfront 'not waterfront' kept: hillside sagebrush campground, no water body near the loops on imagery. Stored waterfront_evidence has a boilerplate prefix ('in-town/upland/fairground site') - harmless.",
+    "Inclusion_evidence says 'dump station' - wrong; optional replacement: 'NPS + rec.gov 247571: 82 sites, RVs to 45 ft in summer / 30 ft in winter, reservable 4/15-10/15 and first-come otherwise, open year-round -> real RV campground'.",
+    "Note rewritten: dropped site count and booking/season facts (fields)."
+  ]
+}

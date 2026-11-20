@@ -2790,3 +2790,13 @@ me drop and report); each needs the research named before a verdict.
 - 6548 Horseshoe Bend: 10 sites reservable on the concessioner's Campspot portal (403 to us; no capture), rest first-come; electric amperage unknown.
 - 6473 Hatchet: nine sites take 24 ft (pull-throughs 2, 6 and 12-18), rest 18 ft - passes fit; potable water cleared (FS page contradicts itself).
 - 6467 Fremont Lake re-pinned ~950 m north from the FS south-entrance point to the campground's centroid.
+
+## WY p3-541 (2026-11-20)
+- DROPPED 6543 Lazy Acres (Riverside): permanently closed (Google, RV Life, Campendium; domain hijacked).
+- 6555 Little Ponderosa RV Camp: ownership private -> hipcamp (only presence is the Hipcamp listing; host ranch with 2 RV sites, $35, 96% of 139). Google says "Temporarily closed" while Hipcamp is live and bookable - status not written; recheck in spring.
+- 6397 Lewis Lake: strict 25-ft total vehicle limit; only sites 20, 21, 38, 44, 82 take a 24-25 ft RV - a 23-ft rig fits, kept.
+- 6399 Madison: booking moves to Recreation.gov for 2027 (opens 2026-12-08) - add the link once listed. This concession honours the Senior/Access discount (unlike Colter Bay/Gros Ventre/Fishing Bridge). Max rig 40 (operator) vs 60/30 (NPS) - wrote 40.
+- 6400 Mammoth: reservation-only Apr 15 - Oct 15, first-come otherwise - no fcfs value fits, left null with a booking note. Dump true -> false.
+- 6495 North Fork (Medicine Bow): stored close 09-19 was the end of the reservable season - cleared; FS 2026 timber operations on Sand Lake Road list it as affected (not a closure).
+- 6493 Moran Vista: access is 1/4 mile off the highway (stored "~2.5 mi gravel" wrong); unsourced $10 fee removed.
+- 6544 Mikesell-Potts: county page names it "Lake DeSmet Recreation Area" - kept the stored name.

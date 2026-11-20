@@ -1579,3 +1579,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6349 Buffalo Bill North Fork (WY, p3-539): set riverview on sites 48-51 (60-80 m over open grass).
 - 6548 Horseshoe Bend (WY, p3-540): NPS "the 68 campsites ... overlook the Bighorn Lake"; loops on an open bench ~300-400 m from the high-water edge, no per-site photo read - lakeview candidate, left not waterfront.
 - 6355 Dugway (WY, p3-540): riverview kept - spurs 35-45 m from the North Platte over open grass but the loop road runs between every spur and the bank.
+- 6495 North Fork (Medicine Bow, WY, p3-541): FS "10 of those sites along the banks of the North Fork of the Little Laramie River", none named; river under spruce on imagery. Creekside at most if an official map names them (west-edge 11, 16, 27, 29-31, 39-41, 51, 53).

@@ -600,8 +600,8 @@ DROPS = {
     9228: ('2026-11-18', "Fillmore Community Campground (SK, village): AWH drop - no operator presence and too tight for a 23-ft rig", "p3-528: no Village of Fillmore or Tourism Saskatchewan page mentions it, only directories; newest dated report Campendium 2023-05-28 'Very tight maneuvering needed if you have a trailer or anything bigger than about 20 feet'; nothing from 2024 or later shows it operating; Google 3.0 (2)"),
     9276: ('2026-11-18', "Sylvan Valley Regional Park (SK): AWH drop - no current presence (non-accredited regional park, nothing confirms it operates)", "p3-530: saskregionalparks.ca/park/sylvan-valley/ 404; SRPA 2026 guide lists it only under 'Non Accredited Regional Parks' ('...some are operational and have employees on site while other parks may not.'); no Google place, no Tourism Saskatchewan listing, no operator or RM page; only undated directories"),
     9245: ('2026-11-19', "Lemsford Ferry Regional Park (SK): permanently closed at the end of 2019", "p3-533: WestCentralOnline 2019-11-07 'the park will be shut down as of December 31, 2019' / 'the RM will not be renewing leases as of 2020'; Wikipedia 'closed at the end of 2019'; saskregionalparks.ca/park/lemsford-ferry 404, on neither the accredited list nor the 2026 non-accredited map; Tourism SK listing 1583 'No data found'; not on Let's Camp; no reopening notice"),
+    6543: ('2026-11-20', "Lazy Acres Campground (Riverside WY): permanently closed", "p3-541: Google Maps 'Permanently closed' (4.6, 114); RV Life status 'Permanently Closed'; Campendium 'no longer maintained' (last rate 2024-08-31); lazyacreswyo.com 301s to an unrelated domain; not in the Good Sam directory"),
 }
-
 if __name__ == "__main__":
     sys.path.insert(0, ROOT)
     import trips

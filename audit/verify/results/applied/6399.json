@@ -1,0 +1,95 @@
+{
+  "id": 6399,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table: 'Madison 5/7 - 10/16, $38 + taxes, 276' sites, RV + vehicle max length column 60; read 2026-11-20)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Madison Campground record: url madisoncg.htm, 276 total / 278 reservable / 0 first-come, 117 tent-only, rvInfo 'Total vehicle length can not exceed 30'', flush toilets, potable water and dump station seasonal, no showers/laundry, campStore No, closed 2026-10-17 to 2027-05-06, $33 fee line, phone 307-344-7311; read 2026-11-20)",
+    "https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ (operator page: 'May 7, 2027 - October 17, 2027'; 2027 reservations on Recreation.gov from December 8, 2026; '278 individual sites and 3 group sites'; 'RVs up to 40' long may be accommodated in pull-through and back-in sites'; no hookups; dump station; small mercantile store; Access/Senior Pass 50% off; 14/30-night park-wide stay limits; read 2026-11-20)",
+    "https://www.nps.gov/yell/planyourvisit/madisoncg.htm (HTTP 200, 2026-11-20)",
+    "https://www.recreation.gov/api/search?q=Madison%20Campground&fq=entity_type%3Acampground (no Yellowstone Madison facility listed yet; read 2026-11-20)",
+    "Esri World_Imagery around 44.6452,-110.8655 (350 m and 600 m half-width), read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "max_stay_nights": 14,
+        "note": "From the 2027 season reservations move from Yellowstone National Park Lodges to Recreation.gov (opening December 8, 2026); the campground stays Lodges-run. Park-wide limit: 14 nights July 1 - Labor Day, 30 nights otherwise, 44 a summer across all Yellowstone campgrounds. The combined length of RV and towed vehicle must be given when booking."
+      },
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ ('Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026'; 'the campgrounds themselves will remain under our management'; length-of-stay paragraph) + NPS data API (278 reservable, 0 first-come), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-07",
+        "closes": "10-16",
+        "note": "2027 dates: the NPS table gives 5/7-10/16; Yellowstone National Park Lodges gives May 7 - October 17, 2027."
+      },
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 '5/7 - 10/16') + https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ ('May 7, 2027 - October 17, 2027'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 38,
+        "nightly_high": 38,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "2027 rate, plus taxes. The NPS data API still lists $33 plus taxes and utility fees."
+      },
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table 'Madison ... $38 + taxes'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 278,
+        "max_rig_ft": 40,
+        "pull_through": true,
+        "note": "RV sites are pull-through or back-in with limited width for slide-outs and may not be level; sites over 40 ft combined are limited."
+      },
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ ('There are 278 individual sites and 3 group sites'; 'RVs up to 40' long may be accommodated in pull-through and back-in sites. The sites may not be level'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ ('There are no electricity, water, or sewer hookups at any of the campsites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": false,
+        "laundry": false,
+        "dump": true,
+        "potable_water": true,
+        "camp_store": true,
+        "note": "Nearest showers and laundry at Canyon; the dump station may close early and late season in freezing weather."
+      },
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ ('flush toilets', 'dump station', 'small mercantile store', 'Pay showers are not available on the premises', 'The nearest laundry and shower facilities are located at Canyon Campground', 'Water is accessible nearby the sites') + NPS data API (potableWater 'Yes - seasonal'), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/ ('Access Pass and Senior Pass holders receive a 50% discount on campground rates. Use Promo Code PASS'; valid at 'Bridge Bay, Canyon, Grant and Madison Campgrounds') + NPS data API fee line, read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Concession-run (Yellowstone National Park Lodges) campground in partly wooded loops on a bench above the meadows where the Gibbon and Firehole rivers join to form the Madison, 14 mi from West Yellowstone and 16 mi from Old Faithful. Generators 8 am - 8 pm at RV sites only. No cell service. --Claude",
+  "summary": "NPS + Yellowstone NP Lodges: 278 sites, no hookups, RVs to 40 ft (pull-through/back-in, may not be level); 2027 $38 + taxes; 2027 season 05-07..10-16 (Lodges: to 10-17); booking moves to Recreation.gov for 2027 (opens Dec 8, 2026; facility not yet listed); Senior/Access 50% honoured here. Not waterfront kept. Pin at the entrance road -> move ~370 m to the loops. Website -> madisoncg.htm; phone -> 307-344-7311.",
+  "flags": [
+    "BOOKING PLATFORM CHANGE: 2027 reservations on Recreation.gov (opening December 8, 2026), not the Lodges' own engine; written platform recreation.gov. No rec.gov Madison facility in search yet, so no booking.url - add the rec.gov campground link once it appears.",
+    "MAX RIG conflict: the operator says 'RVs up to 40' long'; the NPS 2027 table's RV + vehicle column says 60; the NPS data API rvInfo says 'Total vehicle length can not exceed 30''. Written 40 (operator); stored 60 (from the NPS table) replaced. A 23-ft rig fits under all three.",
+    "SITE COUNT: operator and NPS API reservable count 278 individual sites (+3 group); NPS table and API totalSites 276. Written 278; stored 276.",
+    "FEES: NPS 2027 table $38 + taxes kept; NPS data API $33 is the old figure.",
+    "DISCOUNT: unlike Colter Bay, Gros Ventre and Fishing Bridge, this concession DOES honour the Senior/Access Pass (50%, promo code PASS) - matches the federal:nps row; written true.",
+    "CAMP STORE: operator says 'a small mercantile store'; NPS API campStore 'No'. Written true (operator).",
+    "WEBSITE: https://www.nps.gov/yell/planyourvisit/campgrounds.htm -> https://www.nps.gov/yell/planyourvisit/madisoncg.htm (NPS campground page, HTTP 200). Optionally also https://www.yellowstonenationalparklodges.com/lodgings/camping/madison-campground/.",
+    "PHONE: (307) 344-7381 (NPS park line) -> (307) 344-7311 (Yellowstone National Park Lodges reservations; NPS data API contact for Madison).",
+    "PIN MOVE ~370 m: stored 44.64608,-110.86108 sits on the entrance road at the Grand Loop Road junction (registration area); the loops spread west and south-west. Target 44.64476,-110.86537 (centre of the loop network on imagery).",
+    "Waterfront 'not waterfront' kept: on imagery the southern loop road runs ~80 m+ above the Madison River oxbow across open meadow; no sites within ~50 m. Stored waterfront_evidence matches.",
+    "Inclusion_evidence: 'RVs to 60 ft' and '276 sites' are off; optional replacement: 'NPS + Yellowstone National Park Lodges Madison pages: 278 sites, RVs to 40 ft pull-through/back-in, dump station, reservable (Recreation.gov from 2027) -> real RV campground'.",
+    "Note rewritten: dropped site count, rig length, dump station, hookups and booking (fields)."
+  ]
+}

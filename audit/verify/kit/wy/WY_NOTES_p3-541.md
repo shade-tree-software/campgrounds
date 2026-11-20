@@ -1,0 +1,12 @@
+# WY_NOTES p3-541
+- 6486 done: 19 sites, $20 rec.gov (FS $22), lakeview kept ~120 m open meadow, phone empty->(307) 431-7446, pin ok
+- 6543 done: PERMANENTLY CLOSED (Google + RV Life), domain -> drivelinewv.com; no groups; riverfront would go creekside/creekview
+- 6397 done: rec.gov 259309, all reservable, $20, 25ft strict, 5 RV sites 24-25ft, season 06-15..10-10, website->lewislakecg.htm
+- 6555 done: hipcamp live $35, 2 sites 50A FHU 52ft, max 29 nights; Google temp closed 4.3(6); ownership->hipcamp suggested
+- 6536 done: KOA $45-53 capture 2026-10-19 (koa.com 403 not retried), Google 4.5(382), phone empty->(307) 786-2188
+- 6399 done: Madison $38 2027, 278 sites, 40ft (NPS 60/30 conflict), season 05-07..10-16, rec.gov from 2027, Senior honoured; pin ~370 m move; website/phone changed
+- 6400 done: Mammoth rec.gov 247571 $25 82 sites 45/30ft; dump false; fcfs null w/ note; pin 545 m move (was in employee housing); website->mammothhscg.htm
+- 6544 done: county FCFS $15/$20, lakefront kept (rigs on open gravel apron ~10-30 m at 44.4522,-106.7419..-106.7406); no water/dump; 14 in 20
+- 6493 done: FS RV area FCFS, no rec.gov; 1/4 mi off hwy (stored 2.5 mi wrong); $10 unsourced; pin ok
+- 6494 done: Newton Creek FCFS $20, 31 sites 32ft, 16-day, hard-sided only; phone empty->307-527-6921; not waterfront
+- 6495 done: North Fork rec.gov 231846 $20, 60 back-in 45ft, some_sites, 14d; season closes 09-19 cleared; FS '10 sites along banks' lead not proven; phone empty->(307) 745-2300

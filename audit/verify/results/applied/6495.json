@@ -1,0 +1,55 @@
+{
+  "id": 6495,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/231846 (+ /rates): 'A total of 60 campsites are divided into two sections. Some sites lie along the river banks.'; vault toilets; 'Handpump water may be available in this campground from July to September'; no hookups; 'This campground will have a mix of reservation sites and first-come, first-served sites for the 2026 season'; 'Maximum length of stay is 14 days'; facility phone 307-745-2300; rate seasons 2026: First-come First-served 05-26..06-18 $20, Peak 06-19..09-19 $20, First-come First-served 09-20..10-13 $20; read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231846 (60 sites, all STANDARD NONELECTRIC back-in, loops Center 01-18 / North 19-31 / South 32-60; 9 marked reservable (42-50), 51 not; RV max length 30-45 ft, driveways 33-57 ft; no Proximity to Water attribute), read 2026-11-20",
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/north-fork-campground (last updated October 14, 2026: '60 total sites, with 10 of those sites along the banks of the North Fork of the Little Laramie River. This is a large, RV-friendly campground.'; 'Reservations can be made at recreation.gov'; 'Single Site: $20 per night'; '5 Vault Toilets'; 'Potable water is available at this site.'; 'Site Closed'; read 2026-11-20)",
+    "https://www.fs.usda.gov/r02/mbrtb/alerts/snowy-range-2026-active-vegetation-operations ('Little Laramie Trail System, Sand Lake Road - Timber Operations'; Rec Sites Affected include North Fork Campground; alert March 1 - December 31, 2026), read 2026-11-20",
+    "Esri World_Imagery around 41.3590,-106.1712 (330 m), 41.3600,-106.1740 (800 m) and 41.3585,-106.1720 (160 m) with the rec.gov site points; Open-Meteo DEM samples; read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231846", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Reservations cannot be modified. Unreserved sites are paid by cash or check on site."},
+      "source": "rec.gov 231846 ('mix of reservation sites and first-come, first-served sites for the 2026 season'; 'Modifications on reservations are not allowed'; 'pay for your campsite(s) by cash or check once you are at the campground'; 'Maximum length of stay is 14 days') + catalog (9 of 60 reservable), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026"},
+      "source": "rec.gov 231846 /rates (2026 Peak and First-come seasons, RV and standard nonelectric $20) + FS page ('Single Site: $20 per night'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 60, "max_rig_ft": 45, "pull_through": false},
+      "source": "rec.gov 231846 ('A total of 60 campsites') + campsite catalog (all 60 back-in; RV max length up to 45 ft, smallest 30 ft at site 11), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov 231846 ('No electrical hook-ups, water hook-ups, or black water hook-ups are available'; catalog all STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Hand-pump water, usually July to September; bring water or call ahead."},
+      "source": "FS page ('5 Vault Toilets'; 'Potable water is available at this site.') + rec.gov 231846 ('Handpump water may be available in this campground from July to September ... we encourage you to bring your own water or call ahead'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"closes": null},
+      "source": "rec.gov 231846 /rates: a 2026 'First-come, First-served Season' runs 2026-09-20 to 2026-10-13 after the Peak (reservable) season ends 09-19 - the stored closes 09-19 (derived from the availability calendar's edge) is the end of reservations, not of camping; no agency season statement found, so cleared rather than replaced. Read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF (Snowy Range) campground at 9,200 ft in lodgepole pine and spruce, off Sand Lake Road (FR 101) 1.7 mi from WY 130 west of Centennial, beside the North Fork of the Little Laramie River; North Fork Trail #390 starts at the campground. Three loops; some sites along the river. --Claude",
+  "summary": "Medicine Bow NF, rec.gov 231846: 60 back-in sites (Center/North/South loops), RV up to 45 ft (min 30), $20 (2026), mix of reservable (9 in catalog) and FCFS, 14-day limit, vault toilets, hand-pump water Jul-Sep. Stored season closes 09-19 cleared (end of reservations; FCFS ran to 10-13 in 2026). FS says 10 sites are along the river - not shown on imagery (canopy), not waterfront kept as a lead. Pin ~160 m from the site centroid - no move. Phone empty -> (307) 745-2300.",
+  "flags": [
+    "WATERFRONT lead (not changed): FS says '10 of those sites along the banks of the North Fork of the Little Laramie River'; rec.gov 'Some sites lie along the river banks'. No site numbers are given and rec.gov has no Proximity to Water attribute; on Esri imagery the loops sit on an open meadow bench along FR 101 and the river is not visible (hidden under the spruce west/south of the loops; DEM gives no clear channel). At this elevation the North Fork is well under 30 m wide, so the most it could earn is creekside for named sites. Default down: 'not waterfront' kept; the west-edge sites (11, 16, 27, 29-31, 39-41, 51, 53) are where an official site map could prove creekside.",
+    "SEASON: stored closes '09-19' (derived from the rec.gov calendar edge) cleared - it marks the end of the reservable Peak season; the 2026 rate table has a first-come season to 10-13 and another from 05-26. The FS page shows 'Site Closed' (seasonal) with no dates.",
+    "ALERT: 2026 timber operations on Sand Lake Road / Little Laramie trail system list North Fork Campground as an affected site (alert to Dec 31, 2026) - not a closure.",
+    "PHONE: empty -> (307) 745-2300 (rec.gov facility phone and the FS alert contact - Forest Supervisor's Office).",
+    "WEBSITE kept: https://www.fs.usda.gov/r02/mbrtb/recreation/north-fork-campground (live) and https://www.recreation.gov/camping/campgrounds/231846.",
+    "Pin 41.36100,-106.17150 is in the Center loop near sites 03/04; the 60-site centroid is 41.35957,-106.17131 (~160 m south) - under 250 m, no move. FS point 41.36166,-106.17285.",
+    "MIN SITE: smallest catalog RV length is 30 ft (site 11) - every site fits a 23-ft rig.",
+    "Stored inclusion_evidence accurate. Note rewritten: dropped site count and booking (fields), corrected FR 101 distance to the FS's 1.7 mi, kept the river mention."
+  ]
+}

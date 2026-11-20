@@ -1,0 +1,67 @@
+{
+  "id": 6397,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (last updated 2026-11-03; 2027 table 'Lewis Lake | 6/15 – 10/10 | $20 | 84 | ... | 25'; 'All campsites are reservable through Recreation.gov'; 'Beginning with the 2027 summer camping season, all campground reservations will be handled through Recreation.gov'), read 2026-11-20",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Lewis Lake Campground record, the data behind https://www.nps.gov/yell/planyourvisit/lewislakecg.htm: 85 sites, 85 reservable / 0 first-come, 'Total length limit is 25 feet (7.6 m).', vault toilets and potable water seasonal, no dump/showers, closed 2026-10-11 to 2027-06-14, $20 with 50% for Interagency Access and Senior Pass, generators not permitted), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/259309 and /rates (Lewis Lake Campground, NPS-run; '84 Campsites'; 'The total vehicle length limit for Lewis Lake's campsites is 25 feet (7.6 m) and is strictly enforced'; 'Generators are prohibited'; water 'July 1st-October 1st'; 2027 Peak Season 06-15..10-10 StandardNonelectric $20; maxStay 14 Jul 1 - Sep 1, maxConsecutiveStay 30), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A259309 (81 catalogued sites with coordinates, per-site vehicle lengths and permitted equipment), read 2026-11-20",
+    "Esri World_Imagery around 44.2812,-110.6280 (400 m half-width) with every catalog site plotted, read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/259309",
+        "fcfs": "never",
+        "max_stay_nights": 14,
+        "note": "All sites are reservable: 80% open six months ahead and the other 20% two weeks ahead. The 14-night limit applies July through Labor Day; 30 nights the rest of the season."
+      },
+      "source": "NPS campground record ('All sites are reservable on Recreation.gov. Eighty percent of sites are reservable six months in advance, while the remaining 20% of sites are available two weeks in advance.'; numberOfSitesFirstComeFirstServe 0) + recreation.gov 259309 (maxStay 14 nights 2026-07-01..09-01, maxConsecutiveStay 30; 'Camping is limited to 14 days from July 1 through Labor Day and to 30 days the rest of the year parkwide'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2027"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259309/rates (Peak Season 2026 and 2027: StandardNonelectric $20) + NPS campgrounds table (2027 '$20'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 84,
+        "max_rig_ft": 25,
+        "pull_through": false,
+        "note": "Total vehicle length limit 25 ft, strictly enforced. Most sites are shorter: recreation.gov lets an RV on only 5 sites at 24-25 ft (20, 21, 38, 44, 82); the rest are 12-22 ft or car/tent sites."
+      },
+      "source": "recreation.gov 259309 notice ('The total vehicle length limit for Lewis Lake's campsites is 25 feet (7.6 m) and is strictly enforced') + campsite catalog (per-site Max Vehicle Length 12-25 ft; RV permitted on 27 sites, at 24-25 ft on sites 20, 21, 38, 44, 82) + facility text ('84 Campsites') + NPS table (84 sites, 25 ft), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS record (electricalHookups 0) + recreation.gov catalog (all sites STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "showers": false, "laundry": false, "camp_store": false, "note": "Drinking water only July 1 - October 1; food storage lockers; boat ramp."},
+      "source": "NPS record (toilets 'Vault Toilets - seasonal', potableWater 'Yes - seasonal', dumpStation 'No', showers 'None', laundry 'No', campStore 'No', foodStorageLockers 'Yes - seasonal') + recreation.gov 259309 ('Potable Water spigots (July 1st-October 1st)'; amenities 'Boat Ramp'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-15", "closes": "10-10", "note": "2027 dates (2026 ran Jun 15 - Oct 10, closed from Oct 11)."},
+      "source": "NPS campgrounds table (2027 Dates '6/15 – 10/10') + NPS record (operating-hours exception 'Closed for the season' 2026-10-11 to 2027-06-14) + recreation.gov rates 259309 (Peak Season 2027-06-15 to 2027-10-10), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Yellowstone NP campground in lodgepole pine a short walk from the southeast shore of Lewis Lake, on the road between the South Entrance and West Thumb; boat ramp by the registration area. Generators are not allowed. A 23-ft rig fits only a handful of the longest sites. --Claude",
+  "summary": "NPS-run, rec.gov 259309 (stored no link): 84 sites all reservable (80% at 6 months, 20% at 2 weeks), $20 2027, strict 25-ft total vehicle limit with only 5 RV sites at 24-25 ft, no generators, vault toilets, water Jul 1-Oct 1, season Jun 15-Oct 10 2027. Not waterfront kept (nearest sites ~70 m from the shore in forest). Pin ~190 m - no move.",
+  "flags": [
+    "RIG FIT (not a drop, reviewer may judge): campground-wide 'total vehicle length limit ... 25 feet (7.6 m) and is strictly enforced'. On recreation.gov's catalog only 5 sites accept an RV at 23 ft or more: 20 and 21 (25 ft), 38 and 44 (24 ft), 82 (25 ft); sites 34, 42 and 58 permit an RV with no stated RV length on 23-25 ft pads. Most others are 12-22 ft. A 23-ft rig fits, but booking needs one of those few sites.",
+    "WEBSITE: https://www.nps.gov/yell/planyourvisit/campgrounds.htm (park-wide) -> https://www.nps.gov/yell/planyourvisit/lewislakecg.htm (200) plus https://www.recreation.gov/camping/campgrounds/259309 (no rec.gov link was stored).",
+    "Phone (307) 344-7381 kept (NPS campground record's voice number). recreation.gov gives (307) 344-2289 for facility-specific questions and late-arrival notices.",
+    "Senior/Access pass: NPS 'Interagency Access and Senior Pass holders receive a 50% discount' - matches the federal:nps row (NPS-run, not a concession).",
+    "Waterfront 'not waterfront' kept: on Esri imagery the nearest sites (13-15, about 44.2795,-110.6316) are ~70 m from the Lewis Lake shore through continuous conifers; the rest are 150-400 m back.",
+    "Pin 44.2823,-110.6272 sits at the registration/boat-ramp area, ~190 m N of the site centroid (44.2806,-110.6272) - under 250 m, no move.",
+    "Site counts differ: NPS record 85, NPS table and recreation.gov text 84, catalog 81 - 84 written.",
+    "Note rewritten: dropped site count, length, toilets, hookups and booking (fields); added generator ban and the fit caveat."
+  ]
+}
