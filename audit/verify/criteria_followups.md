@@ -2779,3 +2779,14 @@ me drop and report); each needs the research named before a verdict.
 - Inclusion_evidence replaced from verifier suggestions (wrong counts/sources): 6469, 6416, 6363, 6559 (earlier batches) + 6354, 6349, 6387, 6436, 6350.
 - LEAD: Buffalo Bill SP Lake Shore Campground (reserve.wyoming.gov park 7, facility 309, ~44.50085,-109.2325) - not in DB.
 - OHV side (stay): 6458 Doyle, 6382 Cook Lake.
+
+## WY p3-540 (2026-11-20)
+- 6527 Kaycee Town Park: kept on camper reports only (Campendium $0 2026-08-15; 2024 report of an entry sign with a 5-day camping limit); the town site says only "There is also RV camping ... nearby". Free town camping, small-free-site rule. LeDoux Park (dawn-to-dusk) is a different park ~180 m east.
+- 6545 KC RV Park, Kaycee: sells "nightly, weekly and monthly" sites, nothing discourages nightly guests; nightly share unmeasured (15-18 sites, no engine). Old Google Sites link now a sign-in wall -> Kaycee Chamber listing. Only $ figure is an unclaimed RoverPass table ($42, 2024) - not written; passes on RV Life $$.
+- 15523 Greybull KOA: cheapest RV night $40 (pull-in 30/20A, motorhomes), back-ins $45, pull-throughs $50 (KOA engine capture 2026-10-19; koa.com 403 today).
+- 6366 Fontenelle Creek: corrected to first-come only (BLM: "visitors may not make reservations in advance"); 54 sites.
+- 6390 Fishing Bridge RV: booking moves to Recreation.gov for 2027 (opens 2026-12-08), not listed yet - add the rec.gov link once live. $94 (NPS table) vs $89 (NPS API).
+- 6390/6394 senior discount false (concession; rec.gov "not eligible for America the Beautiful or Senior Pass discounts"); 6548 senior discount applies to non-hookup sites only.
+- 6548 Horseshoe Bend: 10 sites reservable on the concessioner's Campspot portal (403 to us; no capture), rest first-come; electric amperage unknown.
+- 6473 Hatchet: nine sites take 24 ft (pull-throughs 2, 6 and 12-18), rest 18 ft - passes fit; potable water cleared (FS page contradicts itself).
+- 6467 Fremont Lake re-pinned ~950 m north from the FS south-entrance point to the campground's centroid.

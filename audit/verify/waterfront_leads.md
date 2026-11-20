@@ -1577,3 +1577,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6410 Pinnacles (WY, p3-538): lakeview candidate - west pads ~50 m from Brooks Lake through scattered conifers; no site list.
 - 6458 Doyle (WY, p3-539): creekside candidate - Doyle Creek (2-4 m) ~40-45 m from sites 01/02 with the access road and a fence between; left not waterfront.
 - 6349 Buffalo Bill North Fork (WY, p3-539): set riverview on sites 48-51 (60-80 m over open grass).
+- 6548 Horseshoe Bend (WY, p3-540): NPS "the 68 campsites ... overlook the Bighorn Lake"; loops on an open bench ~300-400 m from the high-water edge, no per-site photo read - lakeview candidate, left not waterfront.
+- 6355 Dugway (WY, p3-540): riverview kept - spurs 35-45 m from the North Platte over open grass but the loop road runs between every spur and the bank.

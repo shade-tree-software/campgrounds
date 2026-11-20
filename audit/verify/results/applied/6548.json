@@ -1,0 +1,59 @@
+{
+  "id": 6548,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/bica/planyourvisit/horseshoe-bend-campground.htm (68 campsites overlooking Bighorn Lake; 28 RV/boat sites with water + electric; 10 reservable at hiddentreasurecharters.com, the rest first-come; 'Improved sites $35 per night - no discounts apply / Unimproved sites $17 per night - with a NPS Senior Pass, discounted price is $9 per night'; run under a commercial use authorization by Hidden Treasure Charters (307) 899-1401; read 2026-11-20)",
+    "NPS data API developer.nps.gov/api/v1/campgrounds?parkCode=bica (Open All Year; electricity year-round, water at hookup sites Memorial Day-Labor Day; 3 pull-through sites; flush toilets, dump, drinking water seasonal; no showers; 'Paved Roads - All vehicles OK'; read 2026-11-20)",
+    "https://www.hiddentreasurecharters.com/campsite-reservations/ (reservation portal links to https://www.campspot.com/book/horseshoe-bend-campground; read 2026-11-20)",
+    "https://www.campspot.com/book/horseshoe-bend-campground (403 on 2026-11-20 - not retried by any route; no earlier capture under audit/price_research/)",
+    "https://www.recreation.gov/camping/poi/247535 (search API: info-only, reservable False), read 2026-11-20",
+    "Esri World_Imagery at 44.9634,-108.2635 (900 m half-width), read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 17, "nightly_high": 35, "currency": "USD", "checked": "2026", "note": "Water-and-electric sites $35 (no pass discounts); other sites $17 ($9 with a Senior Pass). Paid at iron rangers by cash or check, or by card at the marina for 4% more."},
+      "source": "NPS Horseshoe Bend page ('Improved sites $35 per night - no discounts apply'; 'Unimproved sites $17 per night - with a NPS Senior Pass, discounted price is $9 per night'; 'Credit card payment is available at Horseshoe Bend Marina for an additional 4%'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/horseshoe-bend-campground", "fcfs": "some_sites", "note": "Ten sites are reservable through the concessioner, Hidden Treasure Charters; the rest are first-come."},
+      "source": "NPS page ('All sites are available on a first-come, first-served basis except 10 sites that can be reserved. NEW! - 10 sites are reservable at: https://www.hiddentreasurecharters.com/') + hiddentreasurecharters.com reservation link to campspot.com/book/horseshoe-bend-campground, read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open all year; water at the hookup sites is guaranteed only Memorial Day to Labor Day, electricity stays on year-round; host on site in summer."},
+      "source": "NPS API ('Open All Year'; 'Water is only guaranteed at these sites Memorial Day to Labor Day, but may remain on, weather dependent. Electricity remains on year-round.'; operating hours 'Open year round. Campground host on site Memorial Day - Labor Day.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true},
+      "source": "NPS page ('There are 28 large RV/boat sites that have water and electrical hook ups'), read 2026-11-20 - amperage not stated, so electric left unset",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 68, "pull_through": true, "note": "28 large water-and-electric sites take a big rig plus a boat, eight with wind fences; the other 40 suit small RVs or tents."},
+      "source": "NPS page ('68 campsites'; '28 large RV/boat sites that have water and electrical hook ups. Eight of the improved sites have wind fences. The remaining sites ... are a perfect fit for small RVs or tents') + NPS API ('3 pull through sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": false, "dump": true, "potable_water": true, "wifi": false},
+      "source": "NPS API ('Modern Restrooms, RV dump station and drinking water are available'; toilets 'Flush Toilets - seasonal'; showers 'None'; internet 'No'), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "NPS page ('Unimproved sites $17 per night - with a NPS Senior Pass, discounted price is $9 per night'; but 'Improved sites $35 per night - no discounts apply'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn Canyon NRA campground on an open sagebrush-and-juniper bench above Bighorn Lake, 14 mi north of Lovell off WY-37, run by a concessioner. The marina, boat ramp, swim beach and picnic area are downhill, under a mile away. No cell service. The Senior Pass discount applies only to the sites without hookups. --Claude",
+  "summary": "NPS page + API: 68 sites (28 water+electric, 3 pull-through), open all year, $35 hookup / $17 other ($9 senior on non-hookup only), 10 sites reservable via Campspot (concessioner Hidden Treasure Charters), rest FCFS; flush toilets, dump, water. Campspot 403 (not retried) -> amperage and rig lengths unread. Not waterfront kept (loops 300-400 m above the lake across open ground - possible lakeview). Phone (307) 548-5406 -> (307) 899-1401.",
+  "flags": [
+    "WATERFRONT not waterfront kept, possible UPGRADE to lakeview for the reviewer: NPS says 'the 68 campsites of the Horseshoe Bend Campground overlook the Bighorn Lake'; on imagery the loops (about 44.9625,-108.2610) sit on an open treeless bench ~300-400 m from the high-water edge of the bay south of the marina, nothing but sagebrush between - a view is likely from the south loops, but no per-site photo was read, so defaulted down.",
+    "PHONE: (307) 548-5406 -> (307) 899-1401 (Hidden Treasure Charters, named on the NPS page as the operator to contact; the NPS API also lists 307-548-7230).",
+    "BOOKING: stored reservable/some_sites confirmed; platform campspot (the concessioner's portal), not recreation.gov (rec.gov poi 247535 is info-only). Keep the rec.gov poi link or drop it - it books nothing.",
+    "SENIOR DISCOUNT: the federal:nps row's true confirmed only for the non-hookup sites; hookup sites 'no discounts apply' (said in the note).",
+    "UNREAD: campspot.com (403, not retried) - amperage, site lengths and seasonal rate variation not read. NPS says the 28 improved sites take 'large RV/boat' rigs, so a 23-ft rig fits.",
+    "Note: dropped site counts, hookups, pull-throughs and booking wording (fields)."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": 15523,
+  "checked": "2026-11-20",
+  "sources": [
+    "audit/koa_backlog_2026-10-19/dumps/greybull_05.txt (KOA's own booking form koa.com/campgrounds/greybull/reserve/, step 2 for 1 night from 2027-05-18, RV, 2 adults, a 23-ft motorhome; captured 2026-10-19)",
+    "https://koa.com/campgrounds/greybull/ (403 Cloudflare challenge to plain HTTP on 2026-11-20 - not retried by any other route, per the batch rules)",
+    "Google Maps place 'Greybull KOA Holiday', 399 N 2nd St (4.7 stars, 361 reviews; phone 307-250-8098; website koa.com/campgrounds/greybull/), read 2026-11-20 via gm.py",
+    "audit/price_research/gateways.py 44.49302,-108.04954 (none within 40 km), run 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 40, "nightly_high": 55, "currency": "USD", "checked": "2027", "extra_person": {"max_people": 6}, "note": "Engine quote for one night in May 2027, before tax. The $40 type is the pull-in 30/20-amp site, sold for motorhomes, pickup campers and pop-ups but not towed trailers; back-in 30/20 and 50/30 sites $45, pull-throughs $50, deluxe patio sites $55; the hot-tub patio sites (up to 4 people) were not priced."},
+      "source": "KOA booking form koa.com/campgrounds/greybull/reserve/ step 2, 2027-05-18, 1 night, RV, 2 adults, 23-ft motorhome ('Pull In, 30/20 Amps, Full Hookups, Patio $40.00 avg/night ... Perfect for your small to mid-sized motorhome, pickup camper or pop-up, but not Pull behind trailers or 5th wheels'; dearest '$55.00 avg/night'; 'Up to 6 people.'), captured 2026-10-19 in audit/koa_backlog_2026-10-19/dumps/greybull_05.txt",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "KOA booking form step 2 (site types 'Back In, 50/30 Amps, Full Hookups', 'Pull Thru, 50/30 Amps, Full Hookups'), captured 2026-10-19",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true},
+      "source": "KOA booking form step 2 ('Pull Thru, 50/30 Amps, Full Hookups, Patio'), captured 2026-10-19",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/greybull/reserve/"},
+      "source": "KOA booking form koa.com/campgrounds/greybull/reserve/ (online reservation by site type), captured 2026-10-19",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"koa_value_kard": true},
+      "source": "KOA booking form step 2 (each site type: 'Save 10% at check out with KOA Rewards.'), captured 2026-10-19",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Holiday in town at 399 North 2nd Street, Greybull, a block west of the rail line along the Bighorn River; concrete pads with patios, grills and fire pits, pet play area. --Claude",
+  "summary": "Gate facts: cheapest RV night $40 (pull-in 30/20 FHU, motorhomes OK, not towed trailers), dearest $55 (KOA engine, 1 night May 2027, captured 2026-10-19; koa.com 403 today, not retried) -> passes the $50 gate without a gateway (none within 40 km). Google 4.7 (361), phone 307-250-8098, presence fine; not long-stay in character. Hookups 50A FHU, pull-throughs, KOA Rewards 10%. Pin and not-waterfront confirmed by the 2026-10-19 imagery read.",
+  "flags": [
+    "PRICE GATE (private): passes - cheapest real RV night $40 (pull-in 30/20-amp full hookup, 'Perfect for your small to mid-sized motorhome, pickup camper or pop-up, but not Pull behind trailers or 5th wheels'); next types $45 (back-in 30/20 and 50/30), $50 pull-through, $55 deluxe patio. Source is the KOA engine captured 2026-10-19 for 2027-05-18 (summer peak not separately quoted). No Good Sam Park (stored good_sam false), no gateway within 40 km. Google Maps 4.7 from 361 reviews; RV Life 4.5 ($$$).",
+    "UNREAD: koa.com answered a Cloudflare 403 on 2026-11-20; per the rules it was not retried through the browser or koa.py, so season, site count, max length and current 2027 rates were not re-read. The earlier capture is from KOA's own engine and dated 2026-10-19.",
+    "Long-stay tests: no monthly/seasonal marketing seen in the engine capture; an ordinary transient KOA with online nightly booking - passes.",
+    "Phone 307-250-8098 and website confirmed (Google listing and the KOA engine's 'call (307) 250-8098')."
+  ]
+}

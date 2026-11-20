@@ -1,0 +1,59 @@
+{
+  "id": 6394,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/grte/planyourvisit/gros-ventre-campground.htm (200; body is script-rendered, read via the NPS data API: developer.nps.gov/api/v1/campgrounds?parkCode=grte - 279 individual + 4 group + 39 electric sites, RVs/trailers to 45 ft, 14-night limit, closed 2026-10-10..2027-04-26, flush toilets, dump, potable water seasonal, no showers; read 2026-11-20)",
+    "https://www.recreation.gov/api/camps/campgrounds/247661 + /rates (concession, 'sites are not eligible for America the Beautiful or Senior Pass discounts'; 'Each RV campsite has a back-in parking space for one RV and one tow vehicle with a maximum total length of 45 feet'; 'none of Gros Ventre's campsites are on the river'; 2027 Peak Season 04-28..10-09 dry $59, electric $89; phone 307-543-2811; read 2026-11-20)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A247661 (317 units: 313 individual + 4 group; 35 STANDARD ELECTRIC, 30/50 amp; no water or sewer hookups; 118 back-in, 2 pull-through; read 2026-11-20)",
+    "Esri World_Imagery at 43.6160,-110.6665 (900 m half-width) with all 317 catalog sites plotted, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 59, "nightly_high": 89, "currency": "USD", "checked": "2027", "note": "Dry sites $59, electric sites $89 (2027 recreation.gov rates, same as 2026); concession-run, so tax is added."},
+      "source": "recreation.gov 247661 rates (Peak Season 2027-04-28..2027-10-09: PeakStandardDrySite 59, PeakStandardElectric 89), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "recreation.gov 247661 catalog (STANDARD ELECTRIC sites 'Electricity Hookup: 30/50'; 'Water Hookup: No' on every site) + description ('dry camping for RVs ... electric-only hook-ups'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 313, "max_rig_ft": 45, "pull_through": true, "note": "NPS gives 279 individual sites plus 39 electric sites; the recreation.gov catalog lists 313 individual sites (35 electric) plus 4 group sites. Nearly all are back-in; two are pull-through. The 45-ft limit is the RV and tow vehicle together."},
+      "source": "recreation.gov 247661 catalog (313 individual + 4 group; Driveway Entry: 118 Back-in, 2 Pull-through) + facility text ('maximum total length of 45 feet') + NPS API (rvMaxLength 45), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": false, "laundry": false, "dump": true, "potable_water": true, "camp_store": false, "wifi": false, "note": "Firewood and ice sold at the registration office."},
+      "source": "NPS API amenities ('Flush Toilets - seasonal', 'showers: None', 'laundry: No', 'dumpStation: Yes - seasonal', 'campStore: No', 'potableWater: Yes - seasonal', internet 'No') + rec.gov notice ('potable (drinking) water stations at each comfort station and two rv dump stations'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-28", "closes": "10-09", "note": "2027 dates from the recreation.gov season (2026 ran 04-27 to 10-09)."},
+      "source": "recreation.gov 247661 rates (Peak Season 2027-04-28..2027-10-09) + NPS API operating hours (closed 2026-10-10..2027-04-26), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/247661", "fcfs": "never", "max_stay_nights": 14, "note": "No more than 30 nights a year across all the park's campgrounds."},
+      "source": "NPS API ('Campsites are reservable on Recreation.gov ... up to six months in advance. The maximum stay permitted at Gros Ventre Campground is 14 nights, and the maximum cumulative stay between all Grand Teton National Park campgrounds is 30 nights'; numberOfSitesFirstComeFirstServe 0) + recreation.gov rules (maxConsecutiveStay 14), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": false},
+      "source": "recreation.gov 247661 overview ('Please note this is a concession run campground and sites are not eligible for America the Beautiful or Senior Pass discounts'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Grand Teton's largest campground, run by the park concessioner, on sage and cottonwood flats beside the Gros Ventre River near Kelly, SE corner of the park; the river is a short walk but no site is on it. Some sites look to the Teton Range and Blacktail Butte. Generators only in loops A, B, C and along the East Corridor. --Claude",
+  "summary": "NPS API + rec.gov 247661: 313 sites (+4 group), 35 electric 30/50A, no water/sewer hookups, flush toilets, dump, no showers; $59 dry / $89 electric (2027; stored high $78 wrong); 2027 season 04-28..10-09; reservable only, 14-night limit; concession -> senior discount false (policy contradiction). Not waterfront kept. Pin ~160 m from the site centroid, fine. Phone empty -> 307-543-2811; website general campgrounds page -> the Gros Ventre page.",
+  "flags": [
+    "POLICY CONTRADICTION (federal:nps): row supplies interagency_senior_access true; rec.gov says 'this is a concession run campground and sites are not eligible for America the Beautiful or Senior Pass discounts' -> wrote false.",
+    "WATERFRONT not waterfront kept: rec.gov 'While none of Gros Ventre's campsites are on the river, all are within walking distance'; on imagery the closest sites (east end of the campground, about 43.6205,-110.6560) sit ~70-100 m from the Gros Ventre channel through cottonwoods.",
+    "FEES: stored 59-78 -> 59-89 (electric $89 on rec.gov 2026 and 2027).",
+    "SEASON: stored approximate 05-01..10-15 -> 2027 04-28..10-09 (2026 was 04-27..10-09).",
+    "SITES: stored 300 (note prose) -> 313 individual per the catalog (NPS text says 279 + 39 electric); max 45 ft (RV + tow) confirmed; pull-through: only 2 sites - kept true.",
+    "PHONE: empty -> 307-543-2811 (recreation.gov facility phone; park visitor information is 307-739-3399).",
+    "WEBSITE: https://www.nps.gov/grte/planyourvisit/campgrounds.htm (park-wide list) -> https://www.nps.gov/grte/planyourvisit/gros-ventre-campground.htm; keep https://www.recreation.gov/camping/campgrounds/247661.",
+    "Note: dropped site count, pad length, electric, toilets/dump, booking and season (all fields)."
+  ]
+}

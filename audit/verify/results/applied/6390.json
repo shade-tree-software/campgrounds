@@ -1,0 +1,59 @@
+{
+  "id": 6390,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table: 'Fishing Bridge RV Park 5/14 - 10/16, $94 + taxes, 310', max RV length column 95; 'All campsites are reservable through Recreation.gov'; read 2026-11-20)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yell (Fishing Bridge RV Park record: closed 2026-10-17 to 2027-05-13, 310 sites all electric, 310 reservable / 0 first-come, amenities, phone 307-344-7311, $89 fee line; read 2026-11-20)",
+    "https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ (2027 dates, rec.gov move, site lengths, hookups, no stay limit, pass discount exclusion; read 2026-11-20)",
+    "https://www.recreation.gov/api/search?fq=parent_asset_id%3A2988&fq=entity_type%3Acampground (only Indian Creek, Lewis Lake, Mammoth, Slough Creek, Tower Fall listed yet - no Fishing Bridge facility; read 2026-11-20)",
+    "Esri World_Imagery at 44.5648,-110.3690 (600 m half-width), read 2026-11-20"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "note": "From the 2027 season reservations move from Yellowstone National Park Lodges to Recreation.gov (opening December 8, 2026); the park stays Xanterra-run. No length-of-stay limit here. The combined length of RV and towed vehicle must be given when booking."},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ ('Reservations for 2027 camping can be made on Recreation.gov starting December 8, 2026'; 'Reservations for ... Fishing Bridge RV Park will be handled through Recreation.gov'; 'There is no length of stay limit at Fishing Bridge RV Park') + NPS data API (numberOfSitesReservable 310, numberOfSitesFirstComeFirstServe 0), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-14", "closes": "10-16", "note": "2027 dates: the NPS table gives 5/14-10/16; Yellowstone National Park Lodges gives May 14 - October 17, 2027."},
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 Dates '5/14 - 10/16') + https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ ('May 14, 2027 - October 17, 2027'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 94, "nightly_high": 94, "currency": "USD", "checked": "2027", "note": "2027 rate, plus taxes. The NPS data API lists $89 plus taxes and utility fees."},
+      "source": "https://www.nps.gov/yell/planyourvisit/campgrounds.htm (2027 table 'Fishing Bridge RV Park ... $94 + taxes'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ ('Full hookups for electricity, water, and sewer (50 amp or 30 amp)') + NPS campgrounds page ('water, sewer, and electrical hookups (50 amp service)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 310, "max_rig_ft": 95, "pull_through": true, "note": "Upper Loop: 172 paved sites 40-95 ft, most pull-through; gravel sites in the lower loops. Hard-sided RVs only."},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ ('310 sites designated for hard-sided recreational vehicles only'; 'Upper Loop ... 172 renovated and paved sites ranging from 40-feet to 95-feet'; 'combined length ... of up to 95 feet'; 'Most sites include pull-through drives'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "laundry": true, "dump": true, "potable_water": true, "note": "Pay showers and coin laundry at the Camper Services building; the dump station may close early and late season in freezing weather."},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ (dump station, 'Coin laundry and pay showers', flush toilets) + NPS data API (potableWater 'Yes - seasonal'), read 2026-11-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": false},
+      "source": "https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/ (Access/Senior Pass 50% discount 'The offer is not valid for Fishing Bridge RV Park') + NPS data API fee line ('Interagency Access and Senior Pass holders do not receive discounts at this campground'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Concession-run (Yellowstone National Park Lodges) full-hookup RV park in lodgepole pine at Fishing Bridge, near where the Yellowstone River leaves Yellowstone Lake; general store and service station nearby. Hard-sided RVs only (no tents, tent trailers or tent-style slideouts) because grizzlies frequent the area; no open fires, charcoal or propane grills allowed. --Claude",
+  "summary": "NPS + Yellowstone NP Lodges: 310 hard-sided full-hookup sites (50/30A), up to 95 ft, mostly pull-through; 2027 $94 + taxes (NPS API $89); 2027 season 05-14..10-16 (Lodges: to 10-17); booking moves to Recreation.gov for 2027 (opens Dec 8, 2026; facility not yet listed); no stay limit; no Senior Pass discount. Not waterfront confirmed. Pin fine. Phone empty -> 307-344-7311; NPS fishingbridgerv.htm link 404 -> fishingbridgecg.htm.",
+  "flags": [
+    "BOOKING PLATFORM CHANGE: Yellowstone NP Lodges and the NPS now say 2027 reservations are on Recreation.gov (opening December 8, 2026), not the Lodges' own engine; written platform recreation.gov. The rec.gov facility is not in rec.gov search yet (Yellowstone's recarea lists only the five NPS-run campgrounds), so no booking.url - add the rec.gov campground link once it appears.",
+    "WEBSITE: https://www.nps.gov/yell/planyourvisit/fishingbridgerv.htm returns 404 -> https://www.nps.gov/yell/planyourvisit/fishingbridgecg.htm (the NPS API's url). Keep https://www.yellowstonenationalparklodges.com/lodgings/camping/fishing-bridge-rv-park/.",
+    "Phone: empty -> 307-344-7311 (NPS data API contact; Yellowstone National Park Lodges reservations/information line, also given on the Lodges page for RV questions).",
+    "POLICY ROW CONTRADICTION: federal:nps supplies interagency_senior_access true; both the Lodges and the NPS say Senior/Access Pass holders get no discount here. Written false.",
+    "FEES: NPS 2027 table $94 + taxes vs the NPS data API $89 (excluding taxes and utility fees); kept $94.",
+    "Waterfront 'not waterfront' kept: on imagery the loops sit in lodgepole forest north of the East Entrance road, ~350 m+ from the Yellowstone Lake shore with the highway and forest between, and ~250 m+ from the river flats. Pin 44.5648,-110.3690 sits at the junction between the lower loops and the paved Upper Loop, ~40 m from the NPS point - fine.",
+    "Note: dropped site count, hookups, booking channel, season and the RV Life tier explanation (fields/rating). Stored inclusion_evidence is accurate except 'reservable via Yellowstone NP Lodges' (now Recreation.gov from 2027) - optional replacement: 'NPS + Yellowstone National Park Lodges Fishing Bridge RV Park pages: 310 hard-sided full-hookup sites up to 95 ft, reservable (Recreation.gov from 2027) -> real public RV park'."
+  ]
+}

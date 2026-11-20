@@ -13,7 +13,7 @@ yellowstonenationalparklodges.com all 200.
 
 ## RESUME HERE
 
-Next batch: p3-540. ONE verifier at a time, 11 per batch.
+Next batch: p3-541. ONE verifier at a time, 11 per batch.
 
 Build + launch (repo root; S = session scratch dir):
 
@@ -36,7 +36,7 @@ Apply a batch (as WI/SK):
 5. Append to audit/verify/criteria_followups.md + waterfront_leads.md (asks.md for questions), copy $S/p3-NNN/WY_NOTES_p3-NNN.md here, extend "Batches applied" below, add lessons to lessons.txt.
 6. `git add campgrounds.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/wy`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
 
-Batches applied: p3-536 (2026-11-20; no drops; Brooklyn Lake lakefront -> lakeview, Eagle Creek up to riverview; 6568 Torrington golf course kept on thin presence), p3-537 (2026-11-20; no drops; four water downgrades, Island Park up to creekside (06-08); Medicine Lodge re-pinned 320 m), p3-538 (2026-11-20; no drops; Slough Creek to creekside, Ayres to not waterfront; four pins incl. Vedauwoo 6.3 km + rename), p3-539 (2026-11-20; no drops; Beartooth Lake + Cook Lake to not waterfront, Connor Battlefield to creekside, North Fork up to riverview; six pins)
+Batches applied: p3-536 (2026-11-20; no drops; Brooklyn Lake lakefront -> lakeview, Eagle Creek up to riverview; 6568 Torrington golf course kept on thin presence), p3-537 (2026-11-20; no drops; four water downgrades, Island Park up to creekside (06-08); Medicine Lodge re-pinned 320 m), p3-538 (2026-11-20; no drops; Slough Creek to creekside, Ayres to not waterfront; four pins incl. Vedauwoo 6.3 km + rename), p3-539 (2026-11-20; no drops; Beartooth Lake + Cook Lake to not waterfront, Connor Battlefield to creekside, North Fork up to riverview; six pins), p3-540 (2026-11-20; no drops; no water changes; Fremont Lake re-pinned 950 m; five links fixed)
 
 Things to watch in WY (from the sweep handoff, project_wy_sweep_handoff):
 - RV Life tagged BLM sites `dnr` and NPS/fairground sites `commercial`; the sweep reclassified them - check any that slipped.

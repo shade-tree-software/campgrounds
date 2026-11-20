@@ -1,0 +1,11 @@
+- 6355 done: free FCFS 5 sites, riverview kept (loop road between), pin ok, phone (307) 328-4200
+- 6390 done: rec.gov from 2027 (Dec 8), 310 FHU 50A to 95ft, $94, 05-14..10-16, no senior disc, phone 307-344-7311, NPS link 404 fix
+- 6366 done: FCFS (BLM: no reservations), 54 sites, $7, lakeview kept (BLM photo), seasonal water/flush/dump
+- 6524 done: town page names dry camping at City (South) Park; web/phone (307) 837-2711; Google 4.5 (23)
+- 6467 done: 50 sites (FS 54), $15/$30, 18 scan&pay FCFS, 13-night, lakeview kept (FS 'most do not have lake views'), optional pin to centroid 42.9473,-109.7919
+- 15523 done: KOA $40-55 (capture 2026-10-19; koa.com 403 not retried), Google 4.7 (361), passes gate
+- 6394 done: rec.gov $59/$89, 313 sites, 35 elec 30/50, senior false (concession), season 04-28..10-09 2027, phone empty->307-543-2811, website->gros-ventre page
+- 6473 done: 17 FCFS sites, nine at 24ft (2,6 PT), $15, closes 09-15, potable cleared (contradiction), phone empty->307-543-3900
+- 6548 done: $17/$35, 68 sites, 10 reservable campspot (403 unread), year-round, phone->(307) 899-1401, possible lakeview flagged
+- 6545 done: no field changes; website login-walled -> chamber page; Google 4.8(90); RoverPass unclaimed $42 (2024); pin optional ~115m to 43.7188,-106.6459
+- 6527 done: $0 reported 2026-08, 5-night, phone 2444(chamber)->2301 town hall, pull_through cleared, weak sourcing flag
