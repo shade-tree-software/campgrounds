@@ -1616,3 +1616,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6432 Worthen Meadow (WY, p3-558): north-end spur ending on open sand ~15 m from shore (~42.6993,-108.9296) - lakefront lead, unnumbered/unconfirmed as a campsite.
 - 15731 Seminoe South Red Hills (WY lead 8): SR42 pad ~3 m above full pool, full-pool line ~8 m down a short bank - single-site lakefront-with-caveat candidate.
 - 15732 Seminoe Sunshine Beach (WY lead 9): pads 0.4-2 m above full pool; full-pool line ~12-15 m from SB85-SB88 and ~10-20 m from SB72/SB73 over open ground - lakefront-with-caveat candidate, held at lakeview because the engine tags every unit 'Waterfront Setting: None' and the day-use swim beach couldn't be placed against the sites.
+- 15738 Glendo Cottonwood (WY lead 16): CW06 ~28 m, CW05 30-35 m from full pool (1413.5 m) through an open-understorey cottonwood stand - lakefront-with-caveat candidate if the stand counts as scattered trees.
