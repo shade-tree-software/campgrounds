@@ -1,0 +1,33 @@
+You are deciding ONE possible campground split for the EKKO campground database in /home/andrew/Dev/campgrounds: entry {ID} (NAME, Wyoming). Phase-7 verification flagged it as one entry covering campgrounds at separate places. Hint from the verifier: HINT
+
+Read first: docs/campground-curation.md (inclusion criteria, the waterfront gate, the split rule "One entry per campground, not per park", note rules), docs/campground-schema.md (structured groups + provenance), and audit/verify/leads/instructions.md (helper tools, imagery method). Read entry {ID} in campgrounds.json in full, including waterfront_evidence and inclusion_evidence.
+
+The split rule (AWH 2026-10-22, 2026-10-26):
+- Split only campgrounds at SEPARATE PLACES: each with its own entrance or road, roughly 1 km+ apart (measure centroid to centroid; never claim the distance without measuring). Adjacent named loops of one campground area stay one entry.
+- Exception: two separately named recreation.gov facilities with their own booking rules split even a few hundred metres apart. One rec.gov facility with two loops is not that exception.
+- If a part fails the rule (too close, or it shares the main road), it stays inside whichever entry it adjoins; say so.
+- The original id stays on one campground (the main/largest one, or the one the existing pin already marks); the others become new entries. An --AWH note is never copied onto a campground it may not describe; keep --AWH text verbatim on the entry it describes.
+- Each campground that results needs the full pipeline: its own pin on its sites (imagery), elevation (Open-Meteo), the waterfront gate on imagery (defaults down; lakefront needs named nightly sites within ~50 m over open ground; under continuous canopy is a view; a river/channel under ~30 m wide is creekside), inclusion_evidence, and the structured groups you can source (sites, hookups, facilities, season, fees, booking) with provenance {source: url + quote + read date, checked, method: manual}. Absent means unknown: omit, never fill a placeholder. Notes impersonal ("a 23-ft rig"), signed --Claude, never repeating a field value or the policy row.
+
+Wyoming specifics:
+- Read audit/verify/kit/wy/lessons.txt and the WY_NOTES files in audit/verify/kit/wy/ that mention this park (grep), and audit/verify/kit/wy/usedirect/ (grid.py / det.py read the reserve.wyoming.gov US eDirect per-unit catalog: python3 -I grid.py <FacilityId> <start> <end>; frame.py builds an Esri image + 3DEP DEM in one square EPSG:3857 frame). Copy helpers into your scratch folder.
+- Wyoming State Parks fees and the day-use permit follow the statewide schedule already stored on the entry (and on 15731-15745); a new entry carries the same fee shape. The live wyoparks.wyo.gov pages are F5-walled: use audit/state_park_fees/wy_pages_2026-10-12.json and search-result text, never a fetch past the wall.
+- Rig fit from the engine's per-unit parking size; a posted 22-ft limit passes; a site that "will not accommodate RV slide-outs" is a caveat, not a fail.
+- Sources that refuse (never retry by any route): wyoparks.wyo.gov, natronacounty-wy.gov, wideopenweston.com, travelwyoming.com, outdoorithm.com, allstays.com (serves decoy data), koa.com, www.campspot.com, Nominatim, overpass-api.de and every Overpass mirror. Any other site that refuses you joins this list.
+- The headless browser (PYTHONPATH=/home/andrew/.cache/ekko-pw, at most one, under `flock /tmp/ekko-headless-browser.lock`, DRV_SOCK=./drv.sock from your scratch dir) is only for JavaScript pages that serve you normally; never past a refusal.
+- A split campground's season, sites, hookups, facilities, booking and waterfront call are its own; the kept entry's groups must be re-cut to exclude what moved (counts, max length, booking note).
+- Waterfront: a river or channel under ~30 m wide is creekside; Wyoming has no coastal values.
+
+Output (write ONLY these files, under audit/verify/kit/wy/splits/):
+- If you split: parent_{ID}.json = the fields that REPLACE on the kept entry (name, location, elevation_meters, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, and each structured group with provenance; omit a field to leave it unchanged), plus "_reasons": a short string. And new_SLUG.json = a JSON list of full new entries (kind "campground", name, location, elevation_meters, state "WY", ownership, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, structured groups, provenance). Do not assign ids.
+- If you do not split (or only partly): still write NOTES_{ID}.md saying why, with the measured distances.
+- Always write NOTES_{ID}.md: sources, measurements, imagery frames read (and that they rendered), and the decision.
+
+Hard limits:
+- Do not run apply_split.py, even as a dry run: the reviewer runs it. Check your JSON with `python3 -I -c "import json; json.load(open(...))"` instead.
+- No git commands of any kind, read-only included. Never edit campgrounds.json or any repo file other than the files above.
+- No routing around refusals: a site that refuses you is never reached another way (no Wayback/archive, no cache, no proxy, no headless browser for it).
+- No phone calls. Never pay, book, log in or create accounts. Never put a personal name, email, home location or trip details into a request; User-Agent 'Mozilla/5.0'.
+- Scratch work under SCRATCH/split-{ID}/. Disk space is low: delete imagery/PDFs once used; leave only a short notes file there. Quit any browser you started.
+
+Finish with a short report: the decision, measured distances, each resulting campground (name, pin, sites, waterfront call with site numbers), and anything AWH should see.
