@@ -1614,3 +1614,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6423 The Narrows (WY, p3-557): site 18 (reservable) ~40 m over open sage to the high-water beach band; 15 ~50 m - lakefront lead.
 - 13586 Weiss (WY, p3-557): south-row shelters on the high-water line, water ~150 m off at imagery pool - lakeview kept under the drawdown rule (cf. 13585 Sage).
 - 6432 Worthen Meadow (WY, p3-558): north-end spur ending on open sand ~15 m from shore (~42.6993,-108.9296) - lakefront lead, unnumbered/unconfirmed as a campsite.
+- 15731 Seminoe South Red Hills (WY lead 8): SR42 pad ~3 m above full pool, full-pool line ~8 m down a short bank - single-site lakefront-with-caveat candidate.
