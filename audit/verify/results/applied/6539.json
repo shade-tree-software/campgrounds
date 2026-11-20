@@ -1,0 +1,70 @@
+{
+  "id": 6539,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://platteriverrv.com/rates (operator: 'Primative / Tent ... Out houses ... $35 per night *Call for longer stays'; 'Full Hook ups Electric , Sewer and Water ... $45 per night *Call for longer stays'), read 2026-11-20",
+    "https://platteriverrv.com/f-a-q (operator: 'We are open year round'; 'We are open year-round in the upper full-service campground'; 'All of our upper sites have full hook-ups'; 'Our sites range from 15ft. – 75ft.'; packages 'ship to 55 KC Drive and your lot number ... You cant get mail here'; '$15.00 lock site fee'), read 2026-11-20",
+    "https://img1.wsimg.com/blobby/go/f14229c5-703a-4249-a2fb-023ec8c1503e/POLICIES%20RV%20PArk-e395850.pdf (operator policies PDF linked from platteriverrv.com/policies: 'RV Site fee includes 6 people, 1 RV, and 1 vehicle'; 'Additional People per site are $5 per day with a maximum number of 8 people'; 'Additional Vehicles are $10 per day'; '2-day minimum stay for Major Holidays: Presidents' Day, Memorial Day, 4th of July, Labor Day, Veterans' Day, Thanksgiving, and New Year.'; 'A 14.5% Lodging & Sales Tax & Fees Will Be Added'; 'Deposits on Monthly reservations are nonrefundable'), read 2026-11-20",
+    "https://platteriverrv.com/ (home: 'Under New Ownership'; Book Now -> https://www.campspot.com/book/platteriverrv; 55 KC Drive, Glenrock; 307-262-9768), read 2026-11-20",
+    "audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot park 2121 'Platte River RV Park & Storage - Glenrock, WY', read 2026-10-13: online types 'Full Hook-up - Pull Thru' 2-3 sites $45 (20/30/50-amp, water, sewer, max 60 ft), 'Primative -Back In' 14, 'Primative -Pull Thru' 2, 'Primative-River View - Back In' 8 (no hookups, $30), 'Tent' 4; same rates Oct 2026, Jan 2027, Jun 2027) - campspot.com itself refuses (403), not retried",
+    "Google Maps place 'Platte River RV & Campground', 55 KC Drive, Glenrock (4.0 stars, 143 reviews; recent reviews: 'Lots of permanent guests if that bothers you', 'Most of the people here live here year round', 'The primitive area has some nice shady pull through spots'), read 2026-11-20 via gm.py/rev3.py",
+    "trip_data/goodsam_parks.json (Good Sam directory 2026-10-02: 'Platte River RV & Campground', gs false, military true)",
+    "audit/price_research/gateways.py 42.8680,-105.8790 -> none within 40 km",
+    "Esri World_Imagery at 42.8684,-105.8800 (220 m half-width), read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 45,
+        "currency": "USD",
+        "checked": "2026",
+        "reservation_fee": 2,
+        "tax": {"included": false, "percent": 14.5},
+        "extra_person": {"included": 6, "amount": 5, "per": "night", "max_people": 8},
+        "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+        "note": "Full-hookup pull-throughs $45 a night all year; primitive RV sites (no hookups) $30-35 - Campspot sold them at $30 in October 2026, January 2027 and June 2027; the rates page says $35. Plus Campspot's $2 processing fee once per stay and a 3.5% card fee; the 14.5% is the park's stated 'Lodging & Sales Tax & Fees'."
+      },
+      "source": "https://platteriverrv.com/rates ($35 primitive/tent, $45 full hookups) + policies PDF (extra people $5 past 6, extra vehicles $10, 14.5% tax & fees), read 2026-11-20; Campspot quotes in audit/price_research/campspot_tier_2026-10-13.jsonl (read 2026-10-13)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "campspot",
+        "url": "https://www.campspot.com/book/platteriverrv",
+        "min_stay": [{"nights": 2, "applies": "holiday"}],
+        "note": "Online booking offers only 2-3 full-hookup pull-throughs plus the primitive and tent sites; the rest of the upper full-hookup lot is long-stay - call for longer stays. A $15 fee locks a chosen site."
+      },
+      "source": "https://platteriverrv.com/ (Book Now -> https://www.campspot.com/book/platteriverrv) + policies PDF ('2-day minimum stay for Major Holidays') + f-a-q ('$15.00 lock site fee'); online site types from audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://platteriverrv.com/f-a-q ('We are open year-round in the upper full-service campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 75, "pull_through": true},
+      "source": "https://platteriverrv.com/f-a-q ('Our sites range from 15ft. – 75ft.'); Campspot 'Full Hook-up - Pull Thru' and 'Primative -Pull Thru' types, read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"laundry": true, "showers": true},
+      "source": "https://platteriverrv.com/rates ('Showers', 'Close to Laundry room') + home ('clean laundry room'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "RV park beside the North Platte at the west edge of Glenrock. Mostly long-term: residents fill much of the upper full-hookup lot, and the primitive sites toward the river take most overnight guests. Dog park, playground, propane and storage. --Claude",
+  "summary": "Operator site current (rates $35 primitive / $45 FHU, open year-round, Campspot booking). Long-stay heavy - reviews: 'Most of the people here live here year round'; online only 2-3 FHU + 24 primitive + 4 tent sites; nightly share ~half of ~57 sites, counting primitive and tent. Cheapest electric night $45 (all seasons) passes the price gate, but Google is only 4.0/143 - borderline for the reviewer. Not waterfront stands.",
+  "flags": [
+    "CRITERIA - LONG-STAY (reviewer): recent Google reviews: 'Lots of permanent guests if that bothers you' (4/5, ~2 months ago); 'Most of the people here live here year round' (5/5, ~4 months ago). The FAQ tells guests to ship to 'your lot number' and the policies PDF covers 'Monthly reservations'. Nightly share: Campspot sells online 2-3 full-hookup pull-throughs, 24 primitive RV sites (no hookups) and 4 tent sites = ~30; imagery shows ~25 more sites in the upper full-hookup lot (~42.8687,-105.8790), mostly long-term rigs. ~50-55% nightly counting primitive and tent, but only ~3 of ~28 hookup sites are sold by the night. Passes tests 2 and 4 (posted nightly rate; well over 1 in 10); no wording discourages nightly guests.",
+    "PRICE (private, no gateway within 40 km): cheapest electric RV night $45 (FHU pull-through, same Oct 2026 / Jan 2027 / Jun 2027) - passes; no summer premium. Plus 3.5% card fee + $2 processing; 14.5% tax & fees. Not a Good Sam Park (gs false). Google 4.0 (143 reviews) - not under 4.0, but mediocre with a narrow-ish price pass: borderline for the reviewer. RV Life 4.5/$$ stored.",
+    "WATERFRONT: stored 'not waterfront' stands for the hookup lot (~250 m from the river behind a treeline). Campspot lists 8 'Primative-River View - Back In' sites (no hookups, nightly) somewhere in the open field NW of the office toward the river (~42.8692,-105.8807); with no site map I could not place them - the riparian tree belt along the bank (~42.8694,-105.8820) sits between that field and the water, so at most a view value for those 8; no change proposed.",
+    "NAME: stored 'Platte River Campground' matches the site's title; the operator also uses 'Platte River RV Park' (heading) and 'Platte River RV Park & Storage' (Campspot); Google/Good Sam 'Platte River RV & Campground' - no change needed.",
+    "WEBSITE: https://platteriverrv.com/ current. Stored second link https://www.campspot.com/park/platte-river-rv-park-glenrock-wy is the Campspot marketplace page; the operator's own Book Now goes to https://www.campspot.com/book/platteriverrv - suggest that as the booking link (old -> new). Phone 307-262-9768 confirmed.",
+    "Pin 42.86767,-105.87886 is at the highway entrance; the upper RV lot centre is ~42.8687,-105.8790 (~115 m) - under 250 m, no move required.",
+    "HOOKUPS 50/W/S stored are the full-hookup sites only (Campspot: 20/30/50-amp); the 24 primitive RV sites have none - stored values kept.",
+    "Note rewritten: long-stay character stated; dropped glamping and tube/kayak rentals (not on the current site) and the primitive/tent listing (fees note covers it)."
+  ]
+}

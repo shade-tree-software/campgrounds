@@ -2800,3 +2800,13 @@ me drop and report); each needs the research named before a verdict.
 - 6495 North Fork (Medicine Bow): stored close 09-19 was the end of the reservable season - cleared; FS 2026 timber operations on Sand Lake Road list it as affected (not a closure).
 - 6493 Moran Vista: access is 1/4 mile off the highway (stored "~2.5 mi gravel" wrong); unsourced $10 fee removed.
 - 6544 Mikesell-Potts: county page names it "Lake DeSmet Recreation Area" - kept the stored name.
+
+## WY p3-542 (2026-11-20)
+- DROPPED 6538 Powder River Campground (Kaycee): US$60 every RV night, no exception. DROPPED 6528 RV Park at JACZ (Etna): "call for availability" + seasonal, no rate, no reviews.
+- 6541 Parkway (Cody): ask logged (mobile-home park with RVs in the middle).
+- 6539 Platte River Campground (Glenrock): kept - ~50-55% of all sites nightly (primitive/tent), only ~3 of 28 hookup sites; $45 FHU on Campspot, Google 4.0 (143); note already says mostly long-term.
+- 6364 Pete's Draw: temporarily closed since 2026-08-31 for County Road 412 (Gray Reef Road) repair, no completion date.
+- 6500 Rex Hale: FS page says first-come only, rec.gov sells 9 sites (rec.gov wins). Stored low $15 was the pass rate.
+- 6499 Reuter re-pinned ~430 m (stored pin on private buildings).
+- FS vs rec.gov fees: 6437 ($20 vs $18), 6497 ($23 vs $20.50) - rec.gov written.
+- Tooling: audit/private_gap_browser/roverpass_api.py fails - RoverPass pages no longer carry data-token (verifier used a scratch copy with the token optional). Fix the repo copy before the next RoverPass-heavy round.

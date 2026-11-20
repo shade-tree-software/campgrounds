@@ -1,0 +1,77 @@
+{
+  "id": 6497,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/prune-creek-campground (status 'Site Closed / Gated' for the season; 'gated after season closures ... at the confluence of Prune Creek and the South Tongue River along U.S. Highway 14'; Seasons of Use 'Memorial Day - Labor Day, weather dependent'; '14 day stay limit'; 'Single Site: $23 per night'; 'Two non-towed vehicles allowed per site'; vault toilets, potable water; office (307) 674-2600; last updated September 28, 2026), read 2026-11-20",
+    "https://www.recreation.gov/camping/campgrounds/232346 (facility API: concessionaire Rustic Freedom / Gallatin Canyon Campgrounds; 'For facility specific information, please call (307) 431-7446'; 'Accessible vault toilets, drinking water and trash collection'; second vehicle 'extra $10.00 fee'; maxConsecutiveStay 14; reservationCutOff 2) + /rates (Peak Season 2027-06-11 to 2027-09-20 and 2026-06-04 to 2026-09-21, STANDARD NONELECTRIC $20.50) + campsite catalog (20 STANDARD NONELECTRIC sites 001-012, 014-021, no 013; 011, 012, 020, 021 first-come; all back-in; vehicle limits 25-55 ft; 005-010 tagged 'Riverfront'), read 2026-11-20",
+    "Esri World_Imagery at 44.7695,-107.4700 and 44.7683,-107.4665 (130 m half-width) with the catalog's site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20.5,
+        "nightly_high": 20.5,
+        "currency": "USD",
+        "checked": "2027",
+        "extra_vehicle": {"included": 1, "amount": 10, "per": "night", "max_vehicles": 2}
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232346/rates (Peak Season 2026, 2027, 2028: STANDARD NONELECTRIC $20.50) + facility notice ('Two non-towed vehicles allowed per site. The first vehicle is included in the basic fee; the second vehicle will be charged an extra $10.00 fee at the campground'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232346",
+        "fcfs": "some_sites",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+        "max_stay_nights": 14,
+        "note": "Sites 011, 012, 020 and 021 are first-come; the rest are reservable."
+      },
+      "source": "recreation.gov campsite catalog for 232346 (011, 012, 020, 021 not reservable) + facility rules (reservationCutOff 2, maxConsecutiveStay 14) + FS page ('14 day stay limit'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 20,
+        "max_rig_ft": 55,
+        "pull_through": false,
+        "note": "All back-in. Vehicle limits 25 ft at 012, 30 ft at 005, 007 and 015, 35-55 ft at the rest."
+      },
+      "source": "recreation.gov campsite catalog for 232346 (20 STANDARD NONELECTRIC sites, Driveway Entry 'Back-In', Max Vehicle Length per site), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog for 232346 (every site NONELECTRIC; rates list only STANDARD NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "recreation.gov facility 232346 ('Accessible vault toilets, drinking water and trash collection are provided') + FS page (vault toilets, 'Potable water is available at this site'), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "opens": "06-11",
+        "closes": "09-20",
+        "note": "Recreation.gov sells nights Jun 11 - Sep 20 in 2027 (Jun 4 - Sep 21 in 2026); the FS gives Memorial Day - Labor Day, weather dependent, and gates the campground after closing."
+      },
+      "source": "recreation.gov rates 232346 (Peak Season 2027-06-11 to 2027-09-20; 2026-06-04 to 2026-09-21) + FS page ('Memorial Day - Labor Day, weather dependent'; 'gated after season closures'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground at the confluence of Prune Creek and the South Tongue River, on US-14 about 23 miles west of Dayton, run by a concessionaire. The west loop sits along both creeks; the east loop is in the pines. --Claude",
+  "summary": "FS page and rec.gov current. 20 sites (not 21: no 013), 4 first-come, $20.50 on rec.gov ($23 on FS), 14-day limit, Jun 11 - Sep 20 2027. Waterfront lead riverfront -> creekside: both streams are ~7-17 m wide; sites 005-010 sit ~10-30 m from them. Phone empty -> 307-431-7446.",
+  "flags": [
+    "WATERFRONT LEAD riverfront -> creekside: on Esri imagery Prune Creek (W side) is ~7-12 m wide and the South Tongue (S side, below the confluence) ~9-17 m - both under 30 m, so the value is creekside, not riverfront. Sites at the water, all sold by the night (reservable): 006 (44.76990,-107.47062, ~17 m), 007 (44.76957,-107.47064, ~11 m), 008 (44.76942,-107.47053, ~22 m), 009 (44.76935,-107.47039, ~33 m) along Prune Creek with scattered conifers between, not a continuous screen; 010 (44.76903,-107.46995, ~20 m over open meadow) on the South Tongue; 005 (44.77005,-107.47052, ~27 m, more trees). Rec.gov tags 005-010 'Riverfront'. The east loop (014-021) is in pines with no water. Stored value is not --AWH; results don't change waterfront.",
+    "FEES: FS page says 'Single Site: $23 per night'; recreation.gov sells $20.50 (2026-2028 tables) - wrote rec.gov's figure.",
+    "SITES: stored 21 -> 20 (catalog has 001-012 and 014-021; no 013). Stored max_rig 55 confirmed; site 012 is 25 ft.",
+    "PHONE: empty -> 307-431-7446 (concessionaire, rec.gov 'For facility specific information'); FS office (307) 674-2600 is the alternative.",
+    "STATUS: FS shows 'Site Closed / Gated' - the normal post-season gate (FS 'gated after season closures'), not a temporary closure; no status written.",
+    "Websites current: https://www.fs.usda.gov/r02/bighorn/recreation/prune-creek-campground and https://www.recreation.gov/camping/campgrounds/232346 - no change.",
+    "PIN 44.76977,-107.46916 sits between the two loops (west loop ~44.7696,-107.4702; east loop ~44.7682,-107.4663; ~100-250 m) - no move. Same campground road, one entrance: not a split.",
+    "DISCOUNTS: concession campground (Rustic Freedom); no pass-discount statement on rec.gov or the FS page - left to the policy row.",
+    "Note rewritten: dropped site count, spurs, water/toilets, hookups and reservability (fields show them)."
+  ]
+}

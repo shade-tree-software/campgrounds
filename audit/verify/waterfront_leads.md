@@ -1580,3 +1580,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6548 Horseshoe Bend (WY, p3-540): NPS "the 68 campsites ... overlook the Bighorn Lake"; loops on an open bench ~300-400 m from the high-water edge, no per-site photo read - lakeview candidate, left not waterfront.
 - 6355 Dugway (WY, p3-540): riverview kept - spurs 35-45 m from the North Platte over open grass but the loop road runs between every spur and the bank.
 - 6495 North Fork (Medicine Bow, WY, p3-541): FS "10 of those sites along the banks of the North Fork of the Little Laramie River", none named; river under spruce on imagery. Creekside at most if an official map names them (west-edge 11, 16, 27, 29-31, 39-41, 51, 53).
+- 6500 Rex Hale (WY, p3-542): riverview candidate - sites 016 (44.45507,-109.73335) and 017 ~41-43 m from the North Fork Shoshone (40-50 m wide) with scattered shrubs between; 018-024 behind a riparian belt. Left not waterfront.
+- WY p3-542 applied: 6437 North Tongue riverview -> creekside, 6364 Pete's Draw riverview -> riverfront, 6497 Prune Creek riverfront -> creekside.

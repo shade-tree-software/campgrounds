@@ -601,7 +601,10 @@ DROPS = {
     9276: ('2026-11-18', "Sylvan Valley Regional Park (SK): AWH drop - no current presence (non-accredited regional park, nothing confirms it operates)", "p3-530: saskregionalparks.ca/park/sylvan-valley/ 404; SRPA 2026 guide lists it only under 'Non Accredited Regional Parks' ('...some are operational and have employees on site while other parks may not.'); no Google place, no Tourism Saskatchewan listing, no operator or RM page; only undated directories"),
     9245: ('2026-11-19', "Lemsford Ferry Regional Park (SK): permanently closed at the end of 2019", "p3-533: WestCentralOnline 2019-11-07 'the park will be shut down as of December 31, 2019' / 'the RM will not be renewing leases as of 2020'; Wikipedia 'closed at the end of 2019'; saskregionalparks.ca/park/lemsford-ferry 404, on neither the accredited list nor the 2026 non-accredited map; Tourism SK listing 1583 'No data found'; not on Let's Camp; no reopening notice"),
     6543: ('2026-11-20', "Lazy Acres Campground (Riverside WY): permanently closed", "p3-541: Google Maps 'Permanently closed' (4.6, 114); RV Life status 'Permanently Closed'; Campendium 'no longer maintained' (last rate 2024-08-31); lazyacreswyo.com 301s to an unrelated domain; not in the Good Sam directory"),
+    6538: ('2026-11-20', "Powder River Campground (Kaycee WY): price gate - every RV night US$60", "p3-542: operator rates page 'Daily $60' back-in and pull-thru; RoverPass quotes $60 Jan + Jun 2027; no gateway within 40 km, not a Good Sam Park, no operator member discount"),
+    6528: ('2026-11-20', "RV Park at JACZ (Etna WY): mostly seasonal and iffy, likely over the price gate", "p3-542: operator 'call for availability' / 'Need a seasonal stay? We do that, too'; no posted rate (RV Life $$$, undated OutReserve snippet $60/night, page now 404); no reviews on Google or The Dyrt; no site count; gravel lot beside a restaurant; no gateway within 40 km"),
 }
+
 if __name__ == "__main__":
     sys.path.insert(0, ROOT)
     import trips

@@ -1,0 +1,67 @@
+{
+  "id": 6538,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.powderrivercamping.com/ (operator site, RoverPass-hosted: 'Stop for a night, a week, or longer'; 'We have Big Rig, satellite-friendly sites with full hook-ups. Three rustic cabins with bathrooms are also available. Pitch your tent alongside the Powder River and enjoy a hot shower while you do your laundry.'; amenities 20/30/50 Amps, Back-in RV Sites, Community Showers, Dump Station, Laundry Facilities, Sewer/Water Hookups, Toilet, WiFi; '+1(307) 738-2244'), read 2026-11-20",
+    "https://www.powderrivercamping.com/rates (operator rate table: RV Sites Full Hookup, 30 & 50 Amps, Back-In - Daily $60, Weekly $290, Monthly $500; Pull-Thru - Daily $60, Weekly $290; Tent Sites Electric Only Tent - Daily $35, Weekly $120; Primitive), read 2026-11-20",
+    "RoverPass booking API for https://www.roverpass.com/c/powder-river-campground-kaycee-wy/booking/ (claimed: isBookable true, systemType CRS, advance 24 months, no closed season; one night 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12: 'Full Hookup, 30 & 50 Amps, Back-In' $60 and 'Pull-Thru' $60, 'Electric Only Tent' $35, 'Primitive' tent $25; 13 RV sites sold by the night (back-in 1-4, 14, 16-18 - max 42 ft, site 14 22 ft, site 18 70 ft; pull-throughs 9-13, 70 ft), 11 more RV sites only on 10- and 28-night rates, 8 tent sites; cart for one night $60 + $6 tax + RoverPass $3 platform and $2.23 processing fees; cancellation '100% refund until 1 day prior to check-in'), read 2026-11-20 via a scratch copy of audit/private_gap_browser/roverpass_api.py (the page no longer carries data-token; the API answered without it)",
+    "Google Maps place 'Powder River Campground & Cabins', 101 Old Barnum Rd, Kaycee (4.6 stars, 110 reviews; phone (307) 738-2244; website button points to a Hipcamp listing), read 2026-11-20 via gm.py/rev3.py",
+    "trip_data/goodsam_parks.json (Good Sam directory 2026-10-02: 'Powder River Campground', gs false, military true)",
+    "audit/price_research/gateways.py 43.7074,-106.6398 -> none within 40 km"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 60,
+        "nightly_high": 60,
+        "currency": "USD",
+        "checked": "2027",
+        "tax": {"included": false},
+        "note": "Full-hookup RV sites $60 a night all year, $290 a week, $500 a month. Tent sites $25, $35 with electric."
+      },
+      "source": "https://www.powderrivercamping.com/rates + RoverPass booking API (one night in January and June 2027: RV full hookup back-in and pull-thru $60, tax added), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "roverpass",
+        "url": "https://www.roverpass.com/c/powder-river-campground-kaycee-wy/booking/"
+      },
+      "source": "https://www.powderrivercamping.com/ ('Book online today!') -> RoverPass booking (claimed listing, isBookable true), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "RoverPass booking API: no closed season, nights on sale in January and June 2027, read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 70, "pull_through": true},
+      "source": "RoverPass booking API (pull-throughs 9-13 at 70 ft; back-ins mostly 42 ft, site 18 70 ft, site 14 22 ft), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "RoverPass booking API (RV sites: 'power (20,30,50 amps) water, sewer'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "dump": true},
+      "source": "https://www.powderrivercamping.com/ (Community Showers, Laundry Facilities, Dump Station), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Small campground on the main street of Kaycee, off I-25, walkable to town. Tent sites along the Powder River and three cabins beside the RV sites. --Claude",
+  "summary": "Operator site (RoverPass-hosted, claimed booking) current. PRICE GATE DROP CANDIDATE: cheapest RV night $60 in every season tested (Jan and Jun 2027), no gateway within 40 km, not a Good Sam Park. Otherwise fine: Google 4.6/110, ~13 of 24 RV sites sold nightly plus 8 tent sites, year-round. Not waterfront stands (only tent sites riverside).",
+  "flags": [
+    "DROP CANDIDATE - PRICE GATE (private): every RV site type sells at $60 a night before tax ('Full Hookup, 30 & 50 Amps, Back-In' and 'Pull-Thru', Daily $60 on the operator's rates page; RoverPass quotes $60 for one night on 2027-01-26, 01-30, 06-08 and 06-12; October 2026 had stopped taking same-season bookings). No cheaper RV night in any season. gateways.py: none within 40 km. Good Sam directory gs false (military true - a group discount, not a member discount); no operator-posted member discount. The weekly rate ($290, ~$41/night) is not a nightly rate. Stored fees were empty, so the sweep never priced it (RV Life tier $$).",
+    "LONG-STAY: 13 RV sites sold by the night, 11 more only on 10-/28-night rates, plus 8 tent sites = ~21 of ~32 nightly (~65%); Google 4.6 (110 reviews); recent reviews are overnight travellers. Passes.",
+    "WATERFRONT: stored 'not waterfront' stands - the operator places only the tent sites 'alongside the Powder River'; RV sites are back from the river. (The site's amenity list tags 'Waterfront', which is the tent area.)",
+    "Site 14 is 22 ft (too short for a 23-ft rig); every other RV site is 42-70 ft.",
+    "Phone 307-738-2244 confirmed (site, RoverPass, Good Sam). Website https://www.powderrivercamping.com/ current; Google's website button points to a Hipcamp listing - not used.",
+    "Pin 43.70739,-106.63984 matches Google's point; Good Sam's 43.70805,-106.63944 is ~80 m off - no move.",
+    "Cabins: 3 rustic cabins beside ~24 RV sites - RV-first, not a cabin resort.",
+    "Note rewritten: dropped hookups/amps, back-in wording, dump/laundry (fields show them)."
+  ]
+}

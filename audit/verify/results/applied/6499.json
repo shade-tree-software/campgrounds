@@ -1,0 +1,54 @@
+{
+  "id": 6499,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/blackhills/recreation/reuter-campground (FS: 'Site Open'; 'Off Season (October through May): $15/night'; 'Visit Recreation.gov to make your campground reservation'; 'Vault (2)'; 'Potable water is available at this site.'; Bearlodge RD (307) 283-1361; 44.4265636,-104.4234662), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/231836 + /rates (Peak Season 2027-05-15..2027-09-30 STANDARD NONELECTRIC $24; walk-up season 2026-04-15..05-15 $24; notices: 'During the off season (from 10/01 until 12/15) the USFS operates this campground ... Daily Fee is $15.00 per First Come First Served campsite of which there are 24 sites available ... Parking Spur Length is 30 ft. Drinking water is NOT available'; 'additional vehicle fee of $6.00 per night on the second vehicle'; 'These campsites are non-electric sites'; 'A pet fee of $2 per pet per night'; 'Non-reservable sites may be available on a first come, first served basis'; max stay 14), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:231836 (12 sites: 001-006, 020-024 reservable + HOST; RV max 30-40 ft; 020 pull-through), read 2026-11-20",
+    "Esri World_Imagery at 44.4278,-104.4245 (250 m) and 44.4255,-104.4238 (160 m) with rec.gov site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 24, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}},
+      "source": "recreation.gov rates 231836 (Peak 2027 $24) + FS page ('Off Season (October through May): $15/night') + rec.gov notice ($6 second vehicle), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24, "max_rig_ft": 40, "pull_through": true},
+      "source": "recreation.gov notice ('24 sites available'), campsite catalog (11 reservable sites, RV max 30-40 ft, 020 Pull-Through), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov notice ('These campsites are non-electric sites'), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "vault_toilets": true},
+      "source": "FS page ('Vault (2)'; 'Potable water is available at this site.'); off season no water per rec.gov notice, read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231836", "fcfs": "some_sites", "max_stay_nights": 14},
+      "source": "recreation.gov 231836 (11 reservable sites of 24; 'Non-reservable sites may be available on a first come, first served basis'; maxConsecutiveStay 14), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "04-15", "closes": "12-15", "note": "Reservations and water 05-15 to 09-30 (2027); first-come self-pay without water outside that (rec.gov gives the FS off season as 10-01 to 12-15 and a walk-up period from 04-15)."},
+      "source": "recreation.gov 231836 rate seasons + notice ('During the off season (from 10/01 until 12/15) the USFS operates this campground'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Black Hills NF (Bearlodge RD), ~3 mi N of Sundance on FSR 838, on a ponderosa-pine hillside at the Reuter Trailhead. Front loop reservable, back loop first-come. --Claude",
+  "summary": "Concession-run FS campground, current on FS and rec.gov. 24 sites (11 reservable 001-006/020-024 + 13 FCFS back loop), $24 peak on rec.gov (stored $22), $15 off season without water. Not waterfront confirmed. PIN MOVE ~430 m: stored point is on private houses N of the campground.",
+  "flags": [
+    "PIN MOVE ~430 m: stored 44.42990,-104.42530 sits on a cluster of private buildings north of the county road; the campground loops are at ~44.4262,-104.4238 (rec.gov sites 001-024 at 44.4261-44.4270,-104.4233..-104.4244; FS point 44.42656,-104.42347). Target 44.4262,-104.4238.",
+    "FEES: rec.gov peak $24 (2026-2028); stored $22 is stale. The FS page posts only the off-season $15. Pet fee $2/pet/night (rec.gov notice).",
+    "SEASON: rec.gov's notice says the FS operates it 10/01-12/15 at $15 without water; the FS page says 'Off Season (October through May): $15/night' - whether it is open Dec 15-Apr 15 is unclear; written 04-15 to 12-15 from rec.gov.",
+    "SITES: stored max_rig 40 matches rec.gov (004, 020, 021); rec.gov's off-season notice says 'Parking Spur Length is 30 ft' - most sites 35+ ft on the catalog. Count 24 newly sourced (stored had none).",
+    "PHONE: empty -> 307-283-1361 (Bearlodge Ranger District, FS page). Concessionaire line on rec.gov: (661) 702-1420.",
+    "Websites current: FS r02 page 200, rec.gov 231836 live - no change.",
+    "Waterfront 'not waterfront' confirmed (ponderosa hillside, no water). Stored waterfront_evidence carries boilerplate ('in-town/upland/fairground site'); replacement: 'Esri imagery 2026-11-20: loops on a ponderosa-pine hillside S of FSR 838; no lake or stream near the sites -> not waterfront.'",
+    "Note: dropped 'Standard sites' and 'Reservable via recreation.gov' (fields show them)."
+  ]
+}

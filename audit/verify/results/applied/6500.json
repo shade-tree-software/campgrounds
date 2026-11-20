@@ -1,0 +1,55 @@
+{
+  "id": 6500,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/shoshone/recreation/rex-hale-campground (FS: 'Site Closed - Closed for the season'; 'hosts 30 open and spacious sites along the North Fork of the Shoshone River'; 'Stay limit is 16 days.'; 'Maximum spur length is 40 feet'; 'Bear boxes available'; 'This site is first come, first served.'; 'Single Site (Non-Electric): $20 per night Single Site (Electric): $30 per night'; 'Please be prepared to pay with CASH or CHECK'; Wapiti Ranger District 307-527-6921; 'Potable water is available'; 'Vault toilet(s)'), read 2026-11-20",
+    "https://www.recreation.gov/api/camps/campgrounds/233934 + /rates (Peak Season 2027-05-23..2027-09-13: STANDARD ELECTRIC $30, NONELECTRIC $20; max stay 16; reservation cutoff 2 days; 'An additional fee will be collected at the campground for extra vehicles'; 'Horses and other livestock are not permitted to stay in the campground'), read 2026-11-20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233934 + RIDB campsite catalog (29 sites 002-030; reservable 002, 003, 005, 006, 007, 009, 017, 021, 022, rest FCFS; electric 15/30/50 + water hookup on 002, 003, 005, 006, 007, 009, 011, 012; RV max 26-40 ft), read 2026-11-20",
+    "Esri World_Imagery at 44.4540,-109.7310 (260 m), 44.4548,-109.7328 and 44.4537,-109.7305 (115 m) with rec.gov site points, read 2026-11-20"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 30, "currency": "USD"},
+      "source": "recreation.gov rates 233934 (Peak 2027: ELECTRIC $30, NONELECTRIC $20) = FS page ($20 / $30), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "RIDB campsite catalog 233934 (8 sites with 'Electric Hookup 15/30/50' and 'Water Hookup Y': 002, 003, 005, 006, 007, 009, 011, 012), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "max_rig_ft": 40},
+      "source": "FS page ('30 open and spacious sites'; 'Maximum spur length is 40 feet'); rec.gov catalog lists 29 (002-030), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "vault_toilets": true},
+      "source": "FS page ('Potable water is available at this site.'; 'Vault toilet(s)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233934", "fcfs": "some_sites", "max_stay_nights": 16},
+      "source": "recreation.gov campsite catalog 233934 (9 Site-Specific reservable sites, 20 FCFS; reservationCutOff 2; maxConsecutiveStay 16), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-23", "closes": "09-13"},
+      "source": "recreation.gov rates 233934 (Peak Season 2027-05-23..2027-09-13; 2026 was 05-22..09-12); FS page 'Closed for the season', read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Shoshone NF, on the North Fork Highway (US-14/16/20) ~36 mi W of Cody on a sagebrush bench above the North Fork Shoshone River; grizzly country, bear boxes at the sites. Fees on site by cash or check. --Claude",
+  "summary": "FS campground current on FS and rec.gov. 30 sites (rec.gov catalog 29: 002-030), 8 with 15/30/50-amp electric + water, 9 reservable on rec.gov, rest FCFS; $20 non-electric / $30 electric (stored low $15 was the pass rate); season 05-23 to 09-13 (2027). Not waterfront stands; a riverview lead from the west loop for the reviewer.",
+  "flags": [
+    "FEES: stored nightly_low 15 is the pass-holder rate in rec.gov's rate table; the base rates are $20 non-electric / $30 electric (rec.gov = FS). Extra-vehicle fee exists, amount not posted.",
+    "WATERFRONT: 'not waterfront' stands at the waterfront level. The North Fork here is ~40-50 m wide (river). Nearest sites to its high-water bank: 016 (44.45507,-109.73335) ~41 m, 017 (44.45494,-109.73307) ~43 m, 018 (44.45475,-109.73261) ~48 m, 020 (44.45449,-109.73220) ~44 m, 024 (44.45387,-109.73086) ~54 m. Between 018-024 and the river is a continuous riparian conifer/willow belt; between 016/017 and the river the belt is scattered shrubs and junipers. LEAD for the reviewer: possible 'riverview' from 016/017 (FS: 'sites along the North Fork'); no upgrade written.",
+    "POLICY/BOOKING CONTRADICTION: the FS page says 'This site is first come, first served.', while rec.gov's catalog sells 9 sites (002, 003, 005, 006, 007, 009, 017, 021, 022) Site-Specific with a 2-day cutoff; written reservable/some_sites per rec.gov (2027 inventory not yet released).",
+    "PHONE: empty -> 307-527-6921 (Wapiti Ranger District, FS page and rec.gov).",
+    "Websites current: FS r02 page 200, rec.gov 233934 live - no change.",
+    "Hookups: stored electric 50 / water true confirmed by the catalog (8 sites). Count: FS says 30, rec.gov lists 29 (no 001) - kept 30.",
+    "Pin 44.45435,-109.73018 sits inside the east loop ~100 m from the site centroid (~44.4545,-109.7315) - no move.",
+    "Not a split. No leads (Newton Creek and Clearwater neighbours are separate entries' business; not checked here).",
+    "Note: dropped '~8 sites with electric/water' and 'Reservable via recreation.gov' (fields show them); added the cash/check and food-storage lines."
+  ]
+}
