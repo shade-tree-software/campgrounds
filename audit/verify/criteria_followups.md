@@ -2948,3 +2948,7 @@ me drop and report); each needs the research named before a verdict.
 - 6431 Wood River: stored "pond" was a shadowed forested slope - corrected to creekside (Wood River ~10-15 m wide, south-side sites 20-35 m over open grass/gravel; no FS site map so no numbers). 4WD wording is for the Kirwin road beyond the campground, not the way in - kept.
 - 6432 Worthen Meadow: max spur 24 ft (FS + rec.gov) - fits a 23-ft rig; re-pinned 175 m off the entrance junction. Peninsula loop ~400 m east (OSM campsite 42.69869,-108.92536) unconfirmed as part of the 28 sites.
 - WY queue EMPTY after p3-558.
+
+## WY leads (2026-11-20; audit/verify/leads/wy_leads.txt)
+- 1 City Slickers RV Park (Torrington): SKIP - Google 3.8 (42); own site Cloudflare 403; reviews describe long-term residents.
+- 2 Buffalo Bill SP Lake Shore: ADDED 15727 (36 sites, 22 electric, reserve.wyoming.gov facility 309; lakeview - pads 55-75 m above full pool over sagebrush, site 06 ~30-35 m on a cutbank; sites 12/14 near 50 m if the full-pool datum is ~1 m higher). "North Shore Bay" is its old name, not a missing campground.
