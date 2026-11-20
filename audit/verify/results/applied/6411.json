@@ -1,0 +1,51 @@
+{
+  "id": 6411,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/bighorn/recreation/porcupine-campground (read 2026-11-20): 'Site Partially Closed | Open to self-supported camping as long as weather permits (no trash collection, water, or cleaning).'; 'located about two miles north of U.S. Highway 14A, the Medicine Wheel Passage scenic byway, off Porcupine Road 13. The campground is near Jaws Trailhead.'; 'This site can be reserved by calling Toll Free 1-877-444-6777 ... or on-line'; 'Seasons of Use June - Labor Day, weather dependent'; '14 day stay limit'; 'Single Site: $20 per night | Limit 8 people per site. Two non-towed vehicles allowed per site ... the second vehicle will be charged an extra fee'; 'Vault toilet(s)'; 'Potable water is available at this site.'; 'Horse/Pack animals are not allowed at this site.'; office (307) 548-5304; FS point 44.83105897,-107.8589005",
+    "https://www.recreation.gov/api/camps/campgrounds/250021 (+ /rates, read 2026-11-20): contact '(307) 431-7446'; 'Accessible vault toilets, drinking water from a hand pump and trash collection are provided. The nearest dump station is 25 miles east at Burgess Junction.'; 'From Lovell, Wyoming, take U.S. Highway 14A (not U.S. Highway 14) 33 miles east, then 1.6 miles north on Forest Road 13. The highway has a 10% grade. From Dayton, Wyoming, take U.S. Highway 14/14A west 73 miles via Burgess Junction. This is the recommended route for RVs and motorhomes.'; notices '(This campground has first-come, first-serve sites.)', 'Site 1 is a campground host site and not available to campers.', 'Sites 8 and 9 are for tents only and will not accommodate campers or RVs.', 'the second vehicle will be charged an extra $10.00 fee at the campground'; rule maxConsecutiveStay 14; 2026 Peak Season 06-12..09-06 $18.50 (standard and tent)",
+    "recreation.gov campsite catalog 250021 (2026-11-20): sites 02-16; 13 STANDARD NONELECTRIC (RV/trailer/fifth wheel 45-100 ft; 14 a 120-ft pull-through for rigs to 100 ft; 10 and 13 max vehicle 30 ft), 08 and 09 TENT ONLY; 07, 13 and 16 not reservable",
+    "Esri World Imagery 2026-11-20 (600 m export frame with catalog points): forested loop between a sage meadow and FR 13; Porcupine Creek is a small stream 150 m+ east of the nearest sites, across the road"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 15, "max_rig_ft": 100, "pull_through": true, "note": "13 RV sites, 45-65 ft except site 14 (a 100-ft pull-through); sites 10 and 13 take vehicles to 30 ft. Sites 8 and 9 are tent-only."},
+      "source": "recreation.gov catalog 250021 (equipment lengths per site) + notice ('Sites 8 and 9 are for tents only and will not accommodate campers or RVs.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov catalog 250021 (all STANDARD/TENT ONLY NONELECTRIC; hand-pump water only), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false},
+      "source": "recreation.gov 250021 ('Accessible vault toilets, drinking water from a hand pump and trash collection are provided. The nearest dump station is 25 miles east at Burgess Junction.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/250021", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Sites 7, 13 and 16 first-come."},
+      "source": "recreation.gov 250021 (catalog 07/13/16 not reservable; '(This campground has first-come, first-serve sites.)'; maxConsecutiveStay 14), read 2026-11-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-12", "closes": "09-06", "note": "Open to self-supported camping after the season while weather allows (no water or trash service)."},
+      "source": "recreation.gov rates (2026 Peak Season 2026-06-12 to 2026-09-06) + FS page ('June - Labor Day, weather dependent'; 'Open to self-supported camping as long as weather permits'), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 18.5, "nightly_high": 18.5, "currency": "USD", "extra_person": {"max_people": 8}, "note": "Second vehicle $10.", "checked": "2026-11-20"},
+      "source": "recreation.gov rates (2026 $18.50) + notice ('the second vehicle will be charged an extra $10.00 fee'); FS page ('Limit 8 people per site'), read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Bighorn NF campground 1.6 miles north of US-14A (Medicine Wheel Passage) on FR 13, about 33 miles east of Lovell, near the Jaws Trailhead and the Medicine Wheel. US-14A climbs from Lovell on a 10% grade; the agency recommends the route via Dayton and Burgess Junction for RVs. Camp host on site. --Claude",
+  "summary": "FS + rec.gov 250021 read: 15 sites (13 RV 30-100 ft incl. a 100-ft pull-through, 2 tent-only), hand pump, vault toilets, no dump (Burgess Jct 25 mi), reservable with 3 FCFS sites, 14-day, $18.50 (FS says $20) + $10 second vehicle, season 06-12..09-06. Not waterfront kept. Phone empty -> (307) 431-7446.",
+  "flags": [
+    "ACCESS (report, not a drop): recreation.gov 'The highway has a 10% grade. From Dayton, Wyoming, take U.S. Highway 14/14A west 73 miles via Burgess Junction. This is the recommended route for RVs and motorhomes.' - a route recommendation for US-14A from Lovell, not a statement against RVs at the campground; put in the note.",
+    "FEE CONFLICT: FS page 'Single Site: $20 per night'; recreation.gov 2026 rate $18.50 - rec.gov written.",
+    "SITES: max_rig_ft 45 (derived) -> 100 (site 14, 120-ft pull-through, RV/trailer to 100 ft; other RV sites 45-65 ft, 10 and 13 max vehicle 30 ft). Site 1 is the host's and not in the catalog.",
+    "PHONE: empty -> (307) 431-7446 (recreation.gov facility contact, the concessionaire). The FS office is (307) 548-5304. Website lines confirmed.",
+    "WATERFRONT: not waterfront holds (Porcupine Creek 150 m+ east across FR 13). PIN 44.83169,-107.85759 is beside sites 06/07 - no move. Bald Mountain Campground (rec.gov 232347, 3 mi south) is already in the DB."
+  ]
+}

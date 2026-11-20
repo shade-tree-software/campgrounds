@@ -2914,3 +2914,14 @@ me drop and report); each needs the research named before a verdict.
 - 6481 Jack Creek (MBR): booking corrected to rec.gov (sites 009-016 reservable); unsourced "~22 ft" removed (driveways 23-99 ft). 6485 Lake Owen: corrected to FCFS (rec.gov scan-and-pay only); 22-ft trailer limit (passes). 6484 Lake Creek max spur 22 ft (caveat). 13667 Lost Creek: "trailers under 22'" (passes); closes 10-31. 13304 Lodgepole: federal:blm row's reservable doesn't apply (FCFS written).
 - 6489 Lily Lake: fee $0 -> $10; under reconstruction to 7 sites (open) - downgraded to not waterfront, re-check 2027. 6398 Louis Lake: lakefront -> lakeview (unsure); sandy pull-offs at the waterline - if designated, a lakefront + no-sand look for AWH. Its FS contact block names the wrong district.
 - 6482 Jack Creek (Shoshone): 16 -> 5 sites; riverfront -> riverview; unknown cottonwood unit cluster ~44.1085,-109.3550 (horse area or private?).
+
+## WY p3-555 (2026-11-20)
+- No drops. 13675 Pine (Libby Creek): FS "maximum trailer length of 16 feet" vs rec.gov "total length of 30' to 45'" (driveways 31-55 ft) - rec.gov written, kept; RVs only at sites 2/4/5/6.
+- 13588 Mallo Camp (Weston County): wideopenweston.com 403, mallocamp.com for sale; Google "MALLO CAMP and MOTEL" 4.5 (32), category Motel; imagery shows an RV oval of ~6-8 pull-ins. RV sites/hookups/rate unverified - a call would settle it.
+- 6402 Miller Lake: FS "no longer provides designated camp sites ... dispersed camping area"; no restrooms - kept as dispersed.
+- 6409 Pelton Creek + 13675 Pine: rec.gov "first-come, first-served for the 2026 season" - written; recheck for 2027.
+- 6405 Nash Fork: FS "trailers up to 22 feet" (passes); stored manual season (closes 10-10) vs rec.gov 06-05..09-28.
+- 6408 Pacific Creek: corrals/stock tank at the trailhead lot 150-200 m from the loop - general campground. Pin ~210 m from the loop (unconfirmed).
+- 6406 New Fork Lake: lakefront kept on sites 8 + 10 (35-45 m over open burned ground to the sand band; dam-raised lake). 6403 Moose Flat: riverfront kept (channel 28-34 m, units 8-12 m over grass); re-pinned 170 m.
+- 6411 Porcupine: max rig 45 -> 100 (site 14); rec.gov $18.50 vs FS $20.
+- Libby Creek Aspen + Spruce are decommissioned - leads closed.
