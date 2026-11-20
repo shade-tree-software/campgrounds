@@ -2925,3 +2925,11 @@ me drop and report); each needs the research named before a verdict.
 - 6406 New Fork Lake: lakefront kept on sites 8 + 10 (35-45 m over open burned ground to the sand band; dam-raised lake). 6403 Moose Flat: riverfront kept (channel 28-34 m, units 8-12 m over grass); re-pinned 170 m.
 - 6411 Porcupine: max rig 45 -> 100 (site 14); rec.gov $18.50 vs FS $20.
 - Libby Creek Aspen + Spruce are decommissioned - leads closed.
+
+## WY p3-556 (2026-11-20)
+- DROPPED 6377 Scab Creek (BLM): the only RV campground (7 sites) is shared with pack stock, corrals in the campground; the other loop is for small vehicles - horse rule. Reopen if AWH reads the small-vehicle loop as fitting a 23-ft rig.
+- 6413 Rob Roy: rec.gov FCFS for 2026 while the FS page still says reservable - recheck for 2027; lakeview kept (sites 28-30 etc. 75-100 m through pines, FS "Some sites overlook").
+- 6415 Sacajawea: FS "smaller trailers (not large ones)", no length - kept with caveat (unclear-fit rule).
+- 6418 Silver Lake: manual season (Jul-Sep) vs rec.gov FCFS season to Oct 31 - left. 6420 Six Mile: FS gate mid-Sep vs winter no-fee note vs rec.gov May-Oct - left.
+- 13264 Sugarloaf: FS 22-ft trailer max + tight roads (passes); policy_ref federal:usfs + FS link. 6501 Shell Creek: rec.gov $18.50 vs FS $20. 6498 Ranger Creek: "separate group area" was a Shell Canyon group site 22 km off - removed.
+- 13585 Sage (Pathfinder) re-pinned ~230 m from the entrance road to the loop.

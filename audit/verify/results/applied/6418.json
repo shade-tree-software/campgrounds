@@ -1,0 +1,45 @@
+{
+  "id": 6418,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/silver-lake-campground (read 2026-11-20): 'Site Open'; 'At just under 10,500 feet Silver Lake Campground is the highest elevation campground on the Brush Creek/Hayden Ranger District. It opens in late June or early July depending on snow depth. The campground is beside the Snowy Range Scenic Byway on Silver Lake.'; 'Facilities include 17 campsites with 3 RV pull-throughs (trailers under 32'). Sites offer picnic tables, fire grates. Water and trash receptacles are available during the summer season.'; 'Seasons of Use July - September'; 'Open July through September, weather permitting.'; 'Single Site: $20 per night'; 'Vault Toilet (2)'; 'Potable water is available at this site.'; point 41.31129,-106.36002",
+    "https://www.recreation.gov/camping/campgrounds/10155962 (API read 2026-11-20): facility phone (307) 326-5258; notices 'There are no hookup services.', 'Maximum length of stay is 14 days.', 'Campsites are limited to 8 people and 2 vehicles per site.', 'No RVs or camper trailers can park in parking spaces for walk-in tent campsites.'; 'Silver Lake can be acessed using the Silver Lake Trail that surrounds the lake. The lake is 17 acres'; 2026 rate seasons: Peak 2026-07-04..2026-09-07 $20 (reservable), 'First-come, First-served Season' 2026-09-10..2026-10-31 $20",
+    "recreation.gov campsite catalog 10155962 (2026-11-20): 17 sites - 001-009 drive-in (RV/Trailer/Fifth Wheel permitted; driveways 25-99 ft; 006 pull-through, 002 parallel), 002-008 reservable online, 001 and 009 not; 010-017 tent-only walk-in sites (17-ft parking); no electric, water hookups 'No'",
+    "Esri World Imagery 2026-11-20 (460 m frame with site points, 1.4 km frame): the loop sits in an open clearing north of a forest belt; Silver Lake is ~180 m+ southeast of the nearest sites (001, 003) through the trees, no line of sight on imagery; stored pin ~80 m east of the site centroid 41.31151,-106.36058, inside the loop"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10155962", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Seven drive-in sites (2-8) book online; the rest are first-come. All sites go first-come after Labor Day."},
+      "source": "recreation.gov facility 10155962 (catalog reservable flags; 2026 'First-come, First-served Season' 09-10..10-31; 'Maximum length of stay is 14 days.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 32, "pull_through": true, "note": "Nine drive-in sites (1-9); 10-17 are walk-in tent sites."},
+      "source": "FS page ('17 campsites with 3 RV pull-throughs (trailers under 32')') + recreation.gov campsite catalog 10155962, read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Vault Toilet (2)'; 'Potable water is available at this site.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov notice 'There are no hookup services.' + catalog (all NONELECTRIC), read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "extra_person": {"max_people": 8}, "checked": "2026-11-20"},
+      "source": "recreation.gov 2026 rates ($20 peak and FCFS seasons) + FS page ('Single Site: $20 per night'); 'Campsites are limited to 8 people and 2 vehicles per site.', read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF campground just under 10,500 ft beside the Snowy Range Scenic Byway (WY-130), 32 miles from Saratoga or 18 from Centennial; opens late June or early July depending on snow. Silver Lake (17 acres, brook trout) lies through the trees to the southeast, with a trail around it; two trailheads at the campground. Water and trash in summer only. --Claude",
+  "summary": "FS + rec.gov + catalog read: 17 sites (9 drive-in, 8 walk-in tent), trailers under 32 ft, 2 vault toilets, water, no hookups, $20, 8 people, 14 days. Booking: 7 drive-in sites reservable, rest + post-Labor Day FCFS (some_sites). Season manual left; rec.gov's FCFS season runs to Oct 31 (flag). Not waterfront holds (~180 m through trees). Phone empty -> (307) 326-5258. Pin fine.",
+  "flags": [
+    "SEASON CONFLICT (manual season not overwritten): stored 07-01..09-30 comes from the FS 'Open July through September, weather permitting.' recreation.gov's 2026 rate table has a reservable peak season 07-04..09-07 and a 'First-come, First-served Season' 2026-09-10..2026-10-31. Reviewer may want to extend closes to 10-31 per rec.gov.",
+    "WATERFRONT: 'not waterfront' holds - the nearest sites (001, 003) are ~180 m+ from Silver Lake's shore through a forest belt; no lake view on imagery.",
+    "PHONE: empty -> (307) 326-5258 (recreation.gov facility phone, Brush Creek/Hayden district).",
+    "SITES: FS says 3 RV pull-throughs; the catalog marks only 006 pull-through (002 parallel) - pull_through true either way."
+  ]
+}

@@ -607,6 +607,7 @@ DROPS = {
     6419: ('2026-11-20', "Sinks Canyon Campground (Shoshone NF, Lander WY): spurs capped at 20 ft - under the ~23-ft minimum", "p3-549: FS page 'Maximum spur length is 20 feet' (14 sites, FCFS)"),
     6379: ('2026-11-20', "Angles Campground (Bridger-Teton NF, Moran WY): not an official campground - 2 free sites at a wilderness pack trailhead with hitch rails and corrals, not separated from the stock facilities", "p3-549: FS page 'though it is not an official campground there are 2 no-fee campsites'; 'Adjacent to the trailhead there are 2 hitch rails and temporary-use corrals'"),
     6395: ('2026-11-20', "Haskin Creek Campground (Medicine Bow NF, WY-70): closed - no campground left", "p3-553: absent from the forest's complete camping list and FS site search; RIDB 0 facilities; Campflare 'Closed'; go-wyoming snippet 'Closed in 2005'; Esri imagery at the pin shows only a WY-70 pullout and dirt tracks (Campendium lists it as dispersed camping)"),
+    6377: ('2026-11-20', "Scab Creek Campground (BLM, Boulder WY): the only RV campground is shared with pack stock (corrals in the campground); the other loop is for small vehicles only", "p3-556: BLM 'provides 7 campsites for those wishing to camp with packs stock, trailers, large RV's or campers. There are corrals provided in the campground for pack stock'; second campground 'for small vehicles' (12 sites, no length posted) - horse rule (stock not separated from RV camping)"),
 }
 
 if __name__ == "__main__":

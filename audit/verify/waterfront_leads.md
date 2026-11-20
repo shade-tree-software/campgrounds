@@ -1607,3 +1607,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6490 Lincoln Park (WY, p3-554): site 009 ~20 m from North Brush Creek behind a riparian band.
 - 13675 Pine (WY, p3-555): rec.gov tags sites 4 + 6 "Riverfront", 15-25 m from the creek through a conifer/willow band - creekside candidate.
 - 6405 Nash Fork (WY, p3-555): sites 01/02 25-35 m from a tiny willow-lined stream.
+- 13585 Sage (WY, p3-556): south row a few metres from the top of the drawdown band (high-water edge) - lakeview at least; lakefront at full pool is AWH's call (cf. 13583/13584).
+- 6501 Shell Creek, 6415 Sacajawea (WY, p3-556): creekside leads, creek under canopy.

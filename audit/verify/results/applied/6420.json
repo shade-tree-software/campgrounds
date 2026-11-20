@@ -1,0 +1,45 @@
+{
+  "id": 6420,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.fs.usda.gov/r02/mbrtb/recreation/six-mile-campground (read 2026-11-20): Current Conditions 'This campground remains open as weather and road conditions permit access. Visitors should be aware that no fees are charged and no amenities, facilities, or services are provided throughout the winter months.'; 'Located in a saddle above the North Platte River, providing access to the North Platte River and Platte River Wilderness Area, Six Mile Gap Campground is 2 miles off of Highway 230. The campground offers 9 sites, 3 of which are pull through sites. Sites offer picnic tables and fire grates, and potable water and trash services are available during summer months.'; 'Open mid-June to mid-September (varies due to snow, weather permitting) (Mid-September the campground gate closes for the winter.)'; 'Single Site: $20 per night'; 'Additional Vehicle Fee: $5 per vehicle per day'; 'From Encampment take Highway 230 southeast for approximately 27 miles to Forest Road #492. Turn left onto 492 and travel two miles'; 'Vault Toilet (1)'; 'Potable water is available at this site.'; point 41.0479,-106.39902",
+    "https://www.recreation.gov/camping/campgrounds/10244162 (API read 2026-11-20): phone (307) 326-5258; 'NUMBER OF SITES: 6 and 3 pull-thru sites MAX TRAILER LENGTH: 30 AMENITIES: Picnic tables, bear canisters for food storage, vault toilets, potable water, fire grates, there is also NO Trash Service At ths location, please Pack-it-in-Pack-it-Out ELEVATION: 7,606'; 'A separate parking area is available for hikers and river floaters.'; notices 'There are no hookup services. Maximum length of stay is 14 days. ... Campsites are limited to 8 people and 2 vehicles per site.'; amenities 'Drinking Water (hand pump)'; 2026 rates Peak 2026-05-01..2026-09-07 $20, 'First-come, First-served Season' 2026-09-10..2026-10-31 $20",
+    "recreation.gov campsite catalog 10244162 (2026-11-20): 9 standard nonelectric sites; 004-008 reservable online, 001-003 and 009 not; 007-009 pull-through; no length or equipment data; water hookup 'No'",
+    "Esri World Imagery 2026-11-20 (1.2 km frame with site points): the loop sits on open sage in the saddle; the North Platte is ~400 m east in its canyon; stored pin inside the loop (~35 m from the site centroid 41.04425,-106.39968). The FS page's point 41.0479,-106.39902 is ~400 m north in open sage, not the campground."
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10244162", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Sites 4-8 book online; 1-3 and 9 are first-come. All sites go first-come after Labor Day."},
+      "source": "recreation.gov facility 10244162 (catalog reservable flags; 2026 'First-come, First-served Season' 09-10..10-31; 'Maximum length of stay is 14 days.'), read 2026-11-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 9, "max_rig_ft": 30, "pull_through": true, "note": "Sites 7-9 are pull-throughs."},
+      "source": "FS page ('9 sites, 3 of which are pull through sites') + recreation.gov ('MAX TRAILER LENGTH: 30'; catalog 007-009 pull-through), read 2026-11-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "FS page ('Vault Toilet (1)'; 'Potable water is available at this site.') + recreation.gov ('Drinking Water (hand pump)'), read 2026-11-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov notice 'There are no hookup services.' + catalog, read 2026-11-20",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "extra_person": {"max_people": 8}, "extra_vehicle": {"amount": 5, "per": "night"}, "checked": "2026-11-20"},
+      "source": "recreation.gov 2026 rates ($20) + FS page ('Single Site: $20 per night', 'Additional Vehicle Fee: $5 per vehicle per day'); rec.gov 'Campsites are limited to 8 people and 2 vehicles per site.', read 2026-11-20",
+      "method": "manual"
+    }
+  },
+  "note": "Medicine Bow NF campground (Six Mile Gap) in an open sagebrush saddle above the North Platte River, 2 miles up FR 492 off WY-230, about 27 miles southeast of Encampment. Access to the river and the Platte River Wilderness, with separate parking for hikers and floaters. No shade. Bear canisters for food storage. Pack out trash. --Claude",
+  "summary": "FS + rec.gov + catalog read: 9 sites (7-9 pull-through), max trailer 30 ft, vault toilet, hand-pump water, no hookups, $20 + $5 extra vehicle, 8 people, 14 days. Booking some_sites (1-3, 9 FCFS; all FCFS after Labor Day). Season left derived (FS mid-June to mid-Sept vs rec.gov sales May 1-Oct 31 and an FS winter-open notice - flag). Not waterfront holds (river ~400 m). Phone empty -> (307) 326-5258. Pin fine.",
+  "flags": [
+    "SEASON CONFLICT (stored derived 06-15..09-15 left): FS says 'Open mid-June to mid-September ... Mid-September the campground gate closes for the winter.' but its Current Conditions box says 'This campground remains open as weather and road conditions permit access ... no fees are charged and no amenities, facilities, or services are provided throughout the winter months.' recreation.gov sells 2026 peak 05-01..09-07 and a 'First-come, First-served Season' 09-10..10-31. Reviewer's call on the dates.",
+    "TRASH CONFLICT: FS 'trash services are available during summer months' vs rec.gov 'NO Trash Service At ths location, please Pack-it-in-Pack-it-Out' - note follows rec.gov (pack out).",
+    "PHONE: empty -> (307) 326-5258 (recreation.gov facility phone, Brush Creek/Hayden district).",
+    "WATERFRONT: 'not waterfront' holds - the North Platte is ~400 m east, down in its canyon. The note's 'no shade' matches imagery (open sage; the trees are south of the south row)."
+  ]
+}

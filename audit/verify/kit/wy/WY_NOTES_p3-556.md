@@ -1,0 +1,12 @@
+# p3-556 notes
+- 6376 Prior Flat: done (FCFS, BLM read, phone 307-328-4200)
+- 6498 Ranger Creek: done
+- 13305 Rim: done
+- 6413 Rob Roy: done; lakeview kept
+- 6415 Sacajawea: done; FIT flag small trailers
+- 13585 Sage: done; pin move suggested 42.4690,-106.8645
+- 6377 Scab Creek: done; horse-rule flag
+- 6501 Shell Creek: done
+- 6418 Silver Lake: done; season conflict flagged
+- 6420 Six Mile: done
+- 13264 Sugarloaf: done
