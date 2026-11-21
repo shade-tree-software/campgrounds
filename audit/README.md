@@ -169,3 +169,12 @@ pad is measured against the OSM water line before it earns anything.
 `sat_look.py --labels` draws flagged pads magenta, other RV pads cyan and
 non-RV sites grey, and `--at` with a facility id re-centres on one loop of a
 bundle facility.
+
+## Removed folders (2026-11-21)
+
+117 finished-pass folders (state private/registry sweeps, gap passes, re-screens, one-off fixups;
+1,694 files) were removed from the working tree in commit c086982c. Nothing was lost: read any of
+them with `git show c086982c^:audit/<folder>/<file>`, or list one with
+`git ls-tree -r --name-only c086982c^ audit/<folder>`. Kept: `verify/`, `koa_backlog_2026-10-19/`,
+`note_dupes/`, `note_prices/`, `note_scan/`, `private_gap_browser/`, `price_research/`,
+`state_park_fees/`, and every top-level file here.

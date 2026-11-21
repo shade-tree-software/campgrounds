@@ -10,3 +10,5 @@ AWH 2026-11-07 asked (run 1: eastern VA + NC, results_A/C/D; run 2: WV east of S
 Left unknown (county sites 403): 240 Chickahominy Riverfront (757-258-5020), 4326 Mayo Lake (336-597-7806).
 
 **How to apply:** the brief in audit/winter_2026/brief.txt is reusable for another region; recreation.gov calendar needs %3A-encoded start_date; walk-up loops look unavailable on booking calendars; "Not Available" all winter = closed only with an agency/rate season saying so. Related: [[project_campground_schema]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

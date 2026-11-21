@@ -59,3 +59,5 @@ drop. Removals are logged in audit/drops_2026-10-20/removals.json.
 10. **Little Indian Creek Conservation Area (13903, MO)** now posts a notice "Camping is allowed by
    permit only and requested 10 days in advance" (636-441-4554), while the same page's area
    regulations also say "Camping is prohibited." Keep with a permit caveat, or drop? No season written.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

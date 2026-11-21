@@ -178,3 +178,5 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 **ON DONE 2026-10-08: +36 (15090-15125). CANADA PRIVATE GAP COMPLETE: +187 across 10 provinces (PE 5, NL 8, NB 14, NS 10, MB 8, SK 3, AB 24, QC 44, BC 35, ON 36), 0 holds. Next append --min-id 15126.** Biggest leftover: ~157 well-rated parks skipped as no_rate (QC 71, ON 50, BC 36) - follow-up PLANNED in [[project-canada-no-rate-followup]].
 
 **No_rate follow-up (2026-10-08/09): QC DONE +39 (15126-15164); ON DONE +7 (15165-15171); BC DONE +11 (15172-15182), 0 holds. Next append --min-id 15183.** See [[project-canada-no-rate-followup]]. The tools built for it (one-browser driver, reservationpleinair / reservationcamping / RéservPro / RMS helpers, Wayback imagery, Bonjour Québec reader, satpx.py frame-pixel pins) work for US holds too: [[reference-hidden-rates-playbook]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

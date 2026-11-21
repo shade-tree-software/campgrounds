@@ -21,3 +21,5 @@ metadata:
 **Quebec traveller share was recorded only where a park's own pages state it**; a full measurement (engine counts, plans, off-season imagery as in [[project_canada_no_rate_followup]]) was not done for the 44 QC parks.
 
 **Possible next step:** the US private-gap entries admitted since the 2026-10-01 gate reversal used the same screen + probe; `audit/canada_recheck/scan.py` (plain urllib, resumable) and `bscan.py` (one-browser driver) can be pointed at them. Related: [[project_private_gap]], [[feedback_add_with_caveat_not_withhold]], [[feedback_minimum_stay]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

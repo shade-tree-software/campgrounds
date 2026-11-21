@@ -18,3 +18,5 @@ AWH approved 2026-10-10: after the residue price checks finish, look for eastern
 
 
 **DONE 2026-10-10:** added 15339 Stoney Pond SF (NY; only sites 10,12-15 are 30 ft, rest 20 ft), 15340 DuPuis non-equestrian (SFWMD), 15341 Town of KICCO (SFWMD; riverfront; caveat: current SFWMD page tags tent only, 2020 FAQ says RV). SWFWMD = tent+car only (trailers only at horse camps), SRWMD Goose Pasture not reservable. Survey + script: audit/east_reservable/. Next id 15342.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

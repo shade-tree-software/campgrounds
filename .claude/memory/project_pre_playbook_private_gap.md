@@ -120,3 +120,5 @@ orthoimagery beats Esri's summer tiles where canopy is the obstacle - PA's PEMA
 2021-23 layer resolved entries Esri could not, converting forced default-downs
 into real verdicts. A **USGS 3DEP elevation transect** settles bluff-versus-open-
 bank when imagery argues either way. Look for the equivalent state layer in WV/MD/DE.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

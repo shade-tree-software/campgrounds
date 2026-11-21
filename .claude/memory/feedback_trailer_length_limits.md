@@ -25,3 +25,5 @@ firsthand reports of longer rigs fitting count as the "additional information" t
 "Max Vehicle Length" attribute with no equipment length and long driveways is a placeholder
 (Umtanum). The rec.gov per-equipment MaxLength is the real per-site figure. Drop at 21 ft and under
 when nothing contradicts it.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

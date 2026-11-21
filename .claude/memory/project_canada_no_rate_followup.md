@@ -28,3 +28,5 @@ The Canada private gap ([[project-private-gap]]) skipped 158 well-rated private 
 
 **Why:** these were the largest pool of plausible adds left in Canada, and most of them do post rates the static crawl couldn't see.
 **How to apply:** what's left is nothing - the follow-up is complete. A new province batch: work rows with scan.py then the engine helper its ENGINE line names (camplife.py, campspot.py, nbq.py, rms.sh, rpro.py...); record with v.py; check adds against the DB (append_state also dedups); build like build_bc_results.py, commit.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

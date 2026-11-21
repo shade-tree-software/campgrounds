@@ -35,3 +35,5 @@ metadata:
 **Lesson: where the price-rejected parks really were.** The bulk were not in the verdicts.jsonl price skips. They were RV Life's `price_only` buckets: 4-star-and-up parks dropped at the list stage on a `$$$`+ tier alone, never researched. They sit in each `audit/<st>_private/list.json` and in `audit/pa_private/candidates.json`. Any future gateway change should scan those buckets too. Canada had nothing in range.
 
 **Privacy:** the tracked evidence says only "within 40 km of a family home (gateways.py)". It never gives distances, names or addresses.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

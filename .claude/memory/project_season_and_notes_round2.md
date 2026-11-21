@@ -17,3 +17,5 @@ Both passes finished 2026-11-08 and are committed to master. Nothing has been pu
 - **Notes round 2:** cut what the season, booking, fees and sites notes already say; those notes now show in the popup behind a "Show notes" link (chip rows fit one line on a desktop and two on a phone, with a clickable "+N more"; approximate seasons say "about" on the chip; AWH 2026-11-08). It covered 21 chunks; the questions it raised are in `audit/note_dupes/asks.md`; AWH answered them 2026-11-08 (main note vs group note: the newer read wins).
 
 Related: [[project-note-price-cleanup]], [[feedback-clean-up-notes]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

@@ -1467,3 +1467,5 @@ checkbox on the manage form's section line, and the popup and collapsed summary 
 - A new field added to one of these groups must have a none value (a BOOL, or an INT whose
   choices include 0), or the box would leave it unknown and the fold would never fire.
   `tests/test_schema_chips.py` (`GroupNoneTest`) checks that against the live schema.
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

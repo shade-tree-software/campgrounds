@@ -14,3 +14,5 @@ metadata:
 **Lessons:** the Encore template names everything (55+, login, monthly, sold), so its scan flags are noise: read each resort's own 'Age Qualified' line. Encore's Newbook shows rates logged out ('No Membership Needed to Book'). Three minimum-stay hits were cabins' (Lake Champlain, Lighthouse) or holidays' (Arbuckle). gm.py launches its own Chrome, so with the driver running use the driver for Google Maps; the reviews-sort control doesn't respond to scripted clicks, so read the freshest age among the first reviews. A RV Life avg_rate of 0 or 1 is not a real tier.
 
 Related: [[project_private_gap]], [[feedback_minimum_stay]], [[feedback_camper_report_rates]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

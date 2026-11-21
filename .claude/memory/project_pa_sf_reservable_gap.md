@@ -33,3 +33,5 @@ metadata:
 - Overpass 504s on bulk queries. The USGS NHD MapServer (layers 6/12/9) answers quickly.
 
 See [[project_price_research]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

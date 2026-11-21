@@ -19,3 +19,5 @@ On 2026-09-29 every satellite tile and map PDF read in a long session came back 
 - Keep a long imagery session under ~100 images per context (one frame per question; crop instead of re-fetching).
 
 Related: [[feedback_waterfront_evidence_in_json]].
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.

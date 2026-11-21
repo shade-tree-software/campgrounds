@@ -26,3 +26,5 @@ have a paid tier/season or were skipped on purpose). Chip reads "free" / "freeâ€
    `price_tier`: 1,553 (596 federal, 452 state, 341 local, 130 private). Needs web research
    per entry; do it as chunked, committed batches ([[feedback_chunked_bulk_passes]]) and
    sequential agents ([[feedback_sequential_sweep_agents]]).
+
+Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.
