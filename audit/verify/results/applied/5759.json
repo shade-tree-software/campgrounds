@@ -1,0 +1,44 @@
+{
+ "id": 5759,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/fort-sisseton-historic-state-park/ (read 2026-11-21): 'Campsites - electrical: $30 per night'; 'Campsites - non-electrical: $16 per night'; 'Camping Cabins: $60 per night'; 'Open: Open year-round. Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed... Vault toilets usually remain open.'; 'Park Size: 14 campsites and 3 camping cabins'; 'Make reservation online or call 1.800.710.2267.'; contact '605.910.4465'; amenities incl. 'Drinking Water', 'Electrical Campsite(s)', 'Flush Toilets', 'Showers', 'Tent-only Campsite(s)'",
+  "https://gfp.sd.gov/userdocs/fort_sisseton.pdf (campground map, read 2026-11-21): electric sites 1E-10E and cabins C1-C4 north of the fort, tent sites T11-T14 and V1/V2 to the south-west",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=17 ('Fort Sisseton State Park'; embedded per-unit list read 2026-11-21): campground loop = 10 'Back-In Campsite' 1E-10E at $30, 'Amp Service: 30, Max Length: 64' on every one; 4 'Tent Only' T11-T14 at $16; 3 cabins $60; V1/V2 back-ins $37 not bookable online. Separate loops of ~260 'Campsite Non-Electric' units (A/R series) are Historical Festival event camping blocked 'Closed Season' outside the festival weekend",
+  "Esri World Imagery / engine site points at 45.6597,-97.5321"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 30},
+   "source": "reservations.gooutdoorssouthdakota.com facID=17: 'Amp Service: 30' on all 10 electric back-in sites (1E-10E)",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 14},
+   "source": "https://gfp.sd.gov/parks/detail/fort-sisseton-historic-state-park/ 'Park Size: 14 campsites and 3 camping cabins' (engine: 10 electric back-ins + 4 tent-only)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true},
+   "source": "GFP park page: amenities 'Drinking Water', 'Flush Toilets', 'Showers'; 'Vault toilets usually remain open'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=17"},
+   "source": "GFP park page 'Make reservation online or call 1.800.710.2267'; engine facID=17 is 'Fort Sisseton State Park', sites 1E-10E and T11-T14 'ReservableOnline'",
+   "method": "manual"
+  }
+ },
+ "note": "GFP historic state park at a restored 1864 frontier fort near Lake City; the campground sits beside the fort buildings, with a restroom in the barn. The nearest dump station is in Lake City, about 10 miles away. --Claude",
+ "summary": "GFP page, campground map and engine facID=17 read: 14 campsites = 10 electric 30 A back-ins ($30 = $23 + $7) + 4 tent-only ($16), 3 cabins; showers, flush and vault toilets, drinking water; year-round with water off Oct-Apr (stored season confirmed). Stored $16 low is the tent-only rate (manual fees group, flagged). Phone '' -> 605.910.4465. Pin fine.",
+ "flags": [
+  "FEES (manual group, not overwritten): nightly_low 16 is the tent-only price (engine T11-T14 'Tent Only' $16); every RV site is a 30 A electric back-in at $30 (GFP 'Campsites - electrical: $30'). Proposed nightly_low 23, nightly_high 23 with the stored surcharges {electric: 7} (= $30), or 30/30 with surcharges {electric: 0}.",
+  "SITES: stored max_rig_ft 45 has no source found; the engine lists 'Max Length: 64' uniformly on all ten electric sites (possible placeholder) - left alone. Only 10 of the 14 sites take an RV.",
+  "EVENT CAMPING: the engine also holds ~260 non-electric 'A'/'R' units used only for the Fort Sisseton Historical Festival weekend (blocked 'Closed Season' otherwise) - not part of the campground; the entry's 14 sites are right.",
+  "PHONE: '' -> 605.910.4465 (park contact, GFP park page).",
+  "WEBSITE: both stored lines live and correct (facID=17 is this park).",
+  "PIN: stored 45.65975,-97.53195 sits within the electric row 1E-10E (centroid ~45.6597,-97.5321) - fine.",
+  "WATERFRONT: not waterfront stands - the sites are beside the fort, Kettle Lakes several hundred meters away (stored evidence matches).",
+  "FACILITIES: dump false kept from the note ('nearest 10 mi in Lake City'); GFP's amenity list names no dump station but does not say none."
+ ]
+}

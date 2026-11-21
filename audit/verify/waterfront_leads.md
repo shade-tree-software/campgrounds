@@ -1627,3 +1627,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5776 Cold Brook Lake (USACE SD, p3-561): rec.gov 'Sites 12 and 13 are right on the lake', catalog tags both Lakefront; imagery site 13 (43.460221,-103.491094) ~20 m from open water over low grass/marsh edge, site 12 ~30 m through shrubs - lakefront-with-caveat candidate (operator claim contrary to ours: re-audit).
 - 5721 Chief White Crane (SD, p3-561): south-loop sites 138-142 ~50-60 m from Lake Yankton over mowed grass, scattered cottonwoods, loop road between - lakeview candidate.
 - 5786 Ditch Creek (SD, p3-561): rec.gov tags all 13 sites Riverfront; narrow creek not visible near the pads - weak, not waterfront kept.
+- 5740 Hartford Beach SP (p3-562): UPGRADED not waterfront -> lakeview (West loop 18-30 m from Big Stone Lake under oak, engine photos show the lake). A few West-loop sites (22E, 16E) might be lakefront-with-caveat on a site-level look.
+- 5746 Lake Poinsett (p3-562): lakefront kept; front row 10-20 m over open grass to a narrow beach strip - possibly riprap at imagery resolution.

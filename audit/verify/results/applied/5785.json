@@ -1,0 +1,67 @@
+{
+ "id": 5785,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.fs.usda.gov/r02/blackhills/recreation/dutchman-campground (read 2026-11-21, page last updated 2026-10-07): 'Site Partially Closed'; 'Top loop is open, all other loops are closed.'; 'Nestled in a shady Ponderosa pine forest on the northeast edge of Deerfield Reservoir'; 'Campsites are widely spaced, and some offer sweeping views of the lake. Of the three campgrounds in the Deerfield Recreation Area, Dutchman is the most RV-friendly.'; 'Book your stay at Recreation.gov'; 'Vault toilet(s)'; 'Potable water is not available at this site.'; Mystic Ranger District (605) 343-1567",
+  "https://www.fs.usda.gov/media/63198 (Dutchman CG layout map, read 2026-11-21): sites 1-45, 'R = Reservable' on most, the rest first-come; water spigots and vault toilets in each loop",
+  "https://www.fs.usda.gov/r02/blackhills/recreation/season-campground-information (2026/2027 Off-Season Campground Information, updated Sept. 15, 2026): 'Dutchman Oct. 1 $0 9 Deerfield Lake 50 ft Top Loop is open. All other loops are closed.'; 'Drinking water is NOT available during the off season'",
+  "https://www.recreation.gov/api/camps/campgrounds/231839 (read 2026-11-21): 'picnic tables, campfire rings, vault toilets, and drinking water; however, electrical hook-ups are not available'; 'a few offer wide views of the lake'; notices: 'Drinking water is available but you CANNOT hook up for filling'; 'These campsites are non-electric sites'; 'Non-reservable sites may be available on a first come-first served basis'; 'A pet fee of $2 per pet per night'; 'Sites 9,10, 23 & 37 are double sites for up to 2 rigs and up to 16 people. The fee is double ($48)'; 'ExplorUS will be assessing an additional vehicle fee of $6.00 per night on the second vehicle in each single family campsite'; off-season 'October 1st to May 15th ... Daily Fee is $0 per First Come First Served campsite of which there are 9 available ... The information listed below is pertinent during the open season from May 15th to September 30th'",
+  "https://www.recreation.gov/api/camps/campgrounds/231839/rates (read 2026-11-21): Peak STANDARD NONELECTRIC $26, Double Site $52, for 2026-05-16 to 2026-09-30 and 2027-05-21 to 2027-09-25",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:231839 (per-site catalog read 2026-11-21): 33 numbered STANDARD NONELECTRIC sites (29 reservable, 4 first-come: 007, 023, 039, 043) plus a placeholder; RV/Trailer/Tent; Max Vehicle Length 32-61 ft (99 on 009, 023 = placeholders)",
+  "Esri World Imagery at 44.0205,-103.7820 with the catalog's per-site points overlaid (2026-11-21)"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 45, "max_rig_ft": 61},
+   "source": "FS layout map https://www.fs.usda.gov/media/63198 (sites 1-45); recreation.gov catalog Max Vehicle Length up to 61 ft (site 026), 99-ft values on 009/023 ignored as placeholders",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov 231839: 'electrical hook-ups are not available'; 'Drinking water is available but you CANNOT hook up for filling'",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true},
+   "source": "recreation.gov 231839: 'vault toilets, and drinking water'; FS layout map shows water spigots in each loop (the FS page's 'Potable water is not available' is read as the off-season state - see flags)",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites"},
+   "source": "FS layout map ('R = Reservable' on most sites); recreation.gov notice 'Non-reservable sites may be available on a first come-first served basis'; catalog 4 non-reservable sites",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 26,
+    "nightly_high": 26,
+    "currency": "USD",
+    "checked": "2026-11",
+    "extra_vehicle": {"included": 1, "amount": 6, "per": "night"},
+    "note": "Double sites 9, 10, 23 and 37 take two rigs at $52. Pets $2 each a night. Free and first come from October 1 at the nine top-loop sites left open."
+   },
+   "source": "recreation.gov 231839 rates (Peak $26 / Double $52, 2026 and 2027) and notices (pet $2, second vehicle $6/night, off-season $0)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "opens": "05-15",
+    "closes": "09-30",
+    "note": "The top loop (nine sites) stays open free from October 1 until snow closes the unplowed road; no drinking water then."
+   },
+   "source": "recreation.gov 231839 notice: 'open season from May 15th to September 30th'; 'October 1st to May 15th ... $0 ... 9 available ... roads are not maintained during the off-season'; FS off-season page: 'Top Loop is open. All other loops are closed.'",
+   "method": "manual"
+  }
+ },
+ "note": "Black Hills National Forest campground in ponderosa pine on the northeast side of Deerfield Reservoir, the most RV-friendly of the reservoir's three campgrounds (Whitetail and Custer Trail are the others). A few sites have lake views; the shore is a walk of a few hundred meters through the pines. --Claude",
+ "summary": "FS page, layout map, off-season table and rec.gov facility/rates/catalog read: 45 non-electric sites (layout), most reservable on rec.gov, the rest FCFS; spurs 32-61 ft; vault toilets + drinking water in season; $26 ($52 doubles) May 15-Sep 30, top loop free off-season. Confirmed lakeview on the agency's own 'sweeping views' wording (pads ~280 m from the shore). Pin fine.",
+ "flags": [
+  "WATERFRONT: lakeview kept. Both FS ('some offer sweeping views of the lake') and rec.gov ('a few offer wide views of the lake') state views from some sites. Nearest pads (37-39, ~44.0222,-103.7831) are ~280 m from the reservoir's east shore through continuous ponderosa pine on imagery 2026-11-21, so no on-water value; stored evidence matches.",
+  "FACILITIES: the FS page says 'Potable water is not available at this site' (page updated 2026-10-07, off-season) while rec.gov's notice says 'Drinking water is available but you CANNOT hook up for filling' and the layout map shows spigots; potable_water true kept on rec.gov; the FS line is read as the off-season state.",
+  "FEES: rec.gov notice says doubles are '$48' but its rate table says $52 for the double site type - wrote $52 from the rate table.",
+  "SITES: the rec.gov catalog lists only 33 numbered sites; the FS layout map numbers 45 (11 unlisted numbers 5, 6, 8, 19-22, 24, 30, 31, 40 are first-come). Stored note's '34 reservable, 11 FCFS' was not confirmable exactly (the map marks ~33 R).",
+  "STATUS: 'Site Partially Closed - Top loop is open' is the routine off-season, not a closure.",
+  "PIN: stored 44.02199,-103.78096 is within ~25 m of the catalog's site centroid (44.0218,-103.7810) - fine.",
+  "PHONE: stored (605) 343-1567 is the Mystic Ranger District on the FS page; rec.gov lists concessionaire ExplorUS (661) 702-1420 for facility questions. No change proposed."
+ ]
+}
