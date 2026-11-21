@@ -1,5 +1,7 @@
 # Phase 7 South Dakota - resume
 
+**State 2026-11-20 (session end):** WY complete and every ask answered (asks.md: none open). Pushed + deployed. Next id 15748. Start p3-560 only on AWH's go-ahead.
+
 Order (AWH 2026-11-16): IL, VT, WI, SK, WY, then SD (215 queued 2026-11-20: private 71, state 64, local 51, federal 29).
 
 Kit (built 2026-11-20 from kit/wy/): `sd_head.txt` (the state paragraph: ownership, state:SD row, GFP park pages
