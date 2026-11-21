@@ -739,3 +739,9 @@ Dropped under the off-road rule (as 5583 Trails Inn Quadna). Operator site: "Fea
 
 ## 3429 Leon Valley Campground (WI) - narrow price pass + Google 4.4 (u-05, 2026-11-20) - OPEN
 Applied as kept. Cheapest RV night $48 + 5.5% tax (just under the $50 gate), no Good Sam Park, no gateway within 40 km; Google 4.4/155; ~30% of sites nightly (note says mostly seasonal). A narrow pass with sub-4.5 reviews is the reviewer's call: keep or drop?
+
+## ND thin-evidence small parks (u-09, 2026-11-21) - OPEN (all applied as kept; drop or call?)
+- **5995 Buffalo Lodge Lake** (McHenry County): ND Tourism "county park with picnic shelters, picnic tables, camping area and fishing pier"; its only camping amenity tag is "Tenting"; not on the ND HHS licensed RV park list; imagery shows grass, no pads, no RVs; stored "water and electric" unsourced (cleared). Tent-only = drop, or keep as padless primitive camping with a caveat? Re-pinned 650 m to the shelters/ramp.
+- **6009 Hendrickson Park** (Sheyenne): ND Tourism listing now unpublished ("not authorized"); 2023 capture "Tent, 6 RV sites with electric"; not on the HHS list; no city/county page; grass loops around an arena with pens (RV Life reviewer: "Pull off road into grass and park"). Dead link removed. Drop for no presence, or a call to 701-996-3576?
+- **6015 Coldwater Lake Park** (Ashley): ~25 trailers packed in rows against 15 stated sites; no rate published anywhere; Facebook login-walled; operator unnamed (ownership local unconfirmed). Mostly-seasonal drop, or a call to (701) 830-0110?
+- **6021 Hague City Park**: no live official page; 2019 ND Tourism capture "4 full-service RV hook-ups ... one dumping station"; HHS 2025 licence "CITY OF HAGUE TRAILER PARK", 4 lots (expired 12/31/2025); pin on a Main Street intersection, no pads visible. Keep on the licence, or drop for no current presence?
