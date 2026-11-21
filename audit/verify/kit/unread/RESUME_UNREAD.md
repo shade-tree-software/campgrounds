@@ -14,4 +14,4 @@ entries left unread behind bot walls: <ids>) and its hard rules override anythin
 Working directory: /home/andrew/Dev/campgrounds."
 Apply as any phase-7 batch (kit/<st>/RESUME_<ST>.md steps), then save held results to kept_results/ and rm $S/u-NN*.
 
-Batches applied: u-01 MN (2026-11-20; all 9 read, no drops; 5518 rate still unread)
+Batches applied: u-01 MN (2026-11-20; all 9 read, no drops; 5518 rate still unread), u-02 IL (2026-11-20; 5 applied, 1763 held (ask), 1709 unread)

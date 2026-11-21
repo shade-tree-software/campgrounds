@@ -1,0 +1,33 @@
+{
+  "id": 1757,
+  "checked": "2026-11-20",
+  "sources": [
+    "https://www.mtcarmelrvpark.com/rates/ (headless Chrome, desktop UA, 200, read 2026-11-20; plain HTTP answers 406 Mod_Security): 'Lot G 1 $60 Nightly, $225 Weekly, $600 Monthly'; 'All Other Lots $50 Nightly, $200 Weekly, $500 Monthly'",
+    "https://www.mtcarmelrvpark.com/services/ (headless, read 2026-11-20): 'Open Year Round', 'WIFI (Free)', 'Basic Cable', 'Municiple Water', 'Electricity 20,30,50 Amp', 'Sewerage'",
+    "https://www.mtcarmelrvpark.com/about-us/ (headless, read 2026-11-20): 'We are a small 18 lot RV Park . Where we own operate and also live on the park property.'",
+    "https://www.mtcarmelrvpark.com/park-policys/ (headless, read 2026-11-20): 'For monthly tenants electricity is limited to 1000 KW. Additional electricity used we ask for $0.18 per KW reimbursement.'; 'RV'S must have there own restroom and bathing facility. We do not have restroom or showers available.'; 'Sorry primitive camping is not allowed.'",
+    "https://www.mtcarmelrvpark.com/contact-us/ (headless, read 2026-11-20): 'Phone Cell 6182632517'; '224 Golden Aces Way and 504 Hydraulic Avenue Mt Carmel, IL 62863'",
+    "https://parkwith.us/camps/mt-carmerriel-rv-park (the site's BOOK NOW link; headless, read 2026-11-20): one-night search works (Dec 15-16 2026 selectable as '1 Night'); its availability call returned every night 2026-11-15 through 2026-12-11 as unavailable and the rest of December open",
+    "Earlier verifier p3-473 (2026-11-15): Google Maps 4.1 (50 reviews), phone 618-263-2517, Google pin 38.40743,-87.75096 (~95 m from stored)",
+    "audit/price_research/gateways.py 38.40824,-87.75063: none within 40 km (nearest Louisville 175 km)"
+  ],
+  "groups": {
+    "fees": {"values": {"nightly_low": 50, "nightly_high": 60, "currency": "USD", "checked": "2026", "note": "$50 a night on every lot but G1, which is $60; weekly and monthly rates are also posted. Monthly tenants pay $0.18 a kWh past 1,000."}, "source": "https://www.mtcarmelrvpark.com/rates/ ('All Other Lots $50 Nightly, $200 Weekly, $500 Monthly'; 'Lot G 1 $60 Nightly') + /park-policys/, read 2026-11-20 (headless)", "method": "manual"},
+    "hookups": {"values": {"electric": 50, "water": true, "sewer": true}, "source": "https://www.mtcarmelrvpark.com/services/ ('Municiple Water', 'Electricity 20,30,50 Amp', 'Sewerage'), read 2026-11-20 (headless)", "method": "manual"},
+    "sites": {"values": {"count": 18}, "source": "https://www.mtcarmelrvpark.com/about-us/ ('We are a small 18 lot RV Park'), read 2026-11-20 (headless)", "method": "manual"},
+    "facilities": {"values": {"showers": false, "flush_toilets": false, "wifi": true, "laundry": null}, "source": "https://www.mtcarmelrvpark.com/park-policys/ ('We do not have restroom or showers available.') + /services/ ('WIFI (Free)'), read 2026-11-20 (headless); the note-derived laundry and showers are not on any operator page and showers is contradicted, so laundry is cleared", "method": "manual"},
+    "season": {"values": {"year_round": true}, "source": "https://www.mtcarmelrvpark.com/services/ ('Open Year Round'), read 2026-11-20 (headless)", "method": "manual"},
+    "booking": {"values": {"reservable": true, "platform": "operator", "url": "https://parkwith.us/camps/mt-carmerriel-rv-park"}, "source": "https://www.mtcarmelrvpark.com/ (BOOK NOW -> https://parkwith.us/camps/mt-carmerriel-rv-park, a Park With Us booking page that sells a single night), read 2026-11-20 (headless)", "method": "manual"}
+  },
+  "note": "Small owner-run RV park in Mount Carmel (224 Golden Aces Way), near the local airport and golf course and Beall Woods State Park. There are no restrooms or showers, so a rig must be self-contained; nightly guests share it with monthly tenants. Inland lot, no water frontage. --Claude",
+  "summary": "Operator site read via headless Chrome (plain HTTP 406). $50 nightly (G1 $60), weekly/monthly also posted; 18 lots; 20/30/50 A, water, sewer; year-round; books on Park With Us. Stored showers/laundry wrong: the park has NO restrooms or showers (self-contained only). Passes the $50 gate exactly; Google 4.1/50.",
+  "flags": [
+    "PRICE GATE: $50 nightly ('All Other Lots $50 Nightly', operator /rates/, undated page read 2026-11-20) - at the line, not over it. Not a Good Sam Park; no gateway within 40 km.",
+    "GOOGLE: 4.1 (50 reviews), phone 618-263-2517 (p3-473 read 2026-11-15; not re-read). RV Life 4*/$$ (stored).",
+    "LONG-STAY TESTS: (1) $50 passes; (2) nightly rate on own site + phone, and Park With Us sells one night - passes; (3) no minimum posted - passes; (4) no nightly/monthly split published - passes by default, BUT the booking engine shows every night from 2026-11-15 to 2026-12-11 unavailable (Dec 12-31 open), which on an 18-lot park with posted $500 monthly rates and a 'monthly tenants' electricity rule looks like a park full of monthly tenants now; (5) RV park, owners live on site, no homes for sale - passes. Reviewer's call whether it reads as mostly long-term; it is not plainly so on the pages.",
+    "FACILITIES CORRECTED: operator says 'RV'S must have there own restroom and bathing facility. We do not have restroom or showers available.' The stored showers true / laundry true (and the note's 'laundry/showers') were wrong - showers false, flush_toilets false, laundry cleared.",
+    "SITES: 18 lots per About Us (p3-473 noted a listing that said 8).",
+    "PHONE: 618-263-2517 confirmed (operator 'Phone Cell 6182632517'). WEBSITE: https://www.mtcarmelrvpark.com/ confirmed (operator WordPress site, live).",
+    "PIN: Google pin ~95 m from stored - no move."
+  ]
+}
