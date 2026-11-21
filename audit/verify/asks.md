@@ -758,3 +758,7 @@ Applied as kept. Operator site (headless 2026-11-21): $50/night (was $40 in 2025
 - **5979 Strasburg** (City of Strasburg): no web page of its own. Evidence: the ND HHS licensed RV park list (24 lots, City of Strasburg), Google "Strasburg Campground" 4.6 from 11 reviews, RVs on imagery. Lean KEEP.
 - **6010 Bisbee City Park** (City of Bisbee): only the ND HHS licence (5 lots, 302 Main St); the same city also runs 15679 Big Coulee Dam. Drop, keep, or call.
 - Neither entry has a phone stored. AWH asked 2026-11-21 (a Saturday) whether the offices were open: no, ND city offices keep weekday hours and the campgrounds are closed for the season. Options offered: keep Strasburg and decide Bisbee now, or look up both city office numbers for a weekday call (dialmcp only on AWH go-ahead).
+
+## English Pale Campground and Resort (Melrose WI, private lead, 2026-11-21) - OPEN (held, not added)
+- Passes every gate: 5 rustic RV sites (60-ft gravel pads), $35.30 for 2 + tax, Hipcamp-only booking (live, 54 of 55 positive) plus its own site with rules, rates and phone; Google 5.0/25. Not waterfront (wooded bluff ~250 m above the Black River). Closed early for 2026 (Sep 24), no 2027 date.
+- The question: guests must be 21+, and nudity is tolerated for sunbathing at the sites, beach and sundeck ("not a nudist campground"). Some weekends the whole property goes to one group. Add (with an adults-only, clothing-optional caveat) or skip? Result held at audit/verify/leads/held/english-pale.json.
