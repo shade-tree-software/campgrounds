@@ -1,0 +1,55 @@
+{
+ "id": 5711,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://gfp.sd.gov/csp-campgrounds/ (read 2026-11-21), Blue Bell section: 'accommodates large RV's and tents'; 'Open: Campground and Cabins: May 1 - November 1'; 'Campsites: $16/night per unit tent-only no electricity, $23/night per unit for site with electric hookup, $34/night per unit campsite with electric hookup / 31 campsites'; 'Camping Cabins: $60/night 23 cabins'; 'Sanitation & Water: Flush toilets and showers (two facilities), dump station, drinking water, vault toilets'",
+  "https://gfp.sd.gov/parks/detail/custer-state-park/ (read 2026-11-21): contact 605.394.2693; entrance 'Daily: 1-7 days $25 per vehicle'",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13 (Custer State Park facility; embedded per-unit list read 2026-11-21): Blue Bell loop = 23 RV sites (21 'Back-In Campsite' $34, 1 'Pull-Thru Campsite' BB4E $34 25 ft, BB1E $30 not online), 6 tent-only (4 non-electric $16, 2 electric $23, all 'Max Length: 10'), 23 cabins, host unit V1; every RV site 'Amp Service: 20/30/50'; online RV lengths 25 ft x5, 29, 30 x9, 35 x2, 40 x2, 50 x2 (22 of 23 RV sites take 23 ft+); closed-season block 2026-11-01 to 2027-05-01",
+  "Esri World Imagery at 43.7190,-103.4817 with the engine's per-site points overlaid"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "reservations.gooutdoorssouthdakota.com facID=13 per-site descriptions, every Blue Bell RV site 'Amp Service: 20/30/50'",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "max_rig_ft": 50,
+    "pull_through": true
+   },
+   "source": "reservations.gooutdoorssouthdakota.com facID=13 per-site 'Max Length' (BB sites up to 50 ft) and unit type 'Pull-Thru Campsite' (BB4E)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "showers": true,
+    "dump": true,
+    "potable_water": true,
+    "vault_toilets": true
+   },
+   "source": "https://gfp.sd.gov/csp-campgrounds/ Blue Bell: 'Flush toilets and showers (two facilities), dump station, drinking water, vault toilets'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13"
+   },
+   "source": "reservations.gooutdoorssouthdakota.com facID=13 is the Custer State Park facility listing Blue Bell among its campgrounds",
+   "method": "manual"
+  }
+ },
+ "note": "Custer State Park campground in ponderosa pine beside Blue Bell Lodge and its stables, on SD-87 in the park's southwest corner near French Creek, with 23 camper cabins alongside. --Claude",
+ "summary": "GFP Custer campgrounds page + Go Outdoors SD engine read: 31 campsites (23 RV, all electric 20/30/50 amp, 22 take 23 ft+, one pull-through; 6 tent-only), season May 1-Nov 1 confirmed, facilities written, booking url added. Stored fees low $16 is the tent-only rate (manual group - flagged). Pin fine (~140 m from site centroid); not waterfront kept.",
+ "flags": [
+  "FEES (manual group, not overwritten): nightly_low 16 is the tent-only rate (engine: tent-only sites 'Max Length: 10', 'No vehicles allowed off pavement'). Blue Bell has NO non-electric RV campsite: the GFP '$23/night per unit for site with electric hookup' line is the engine's 'Tent Only - Electric' type (BB15E, BB17E, 10 ft). The cheapest site a 23-ft rig can book is $34 (electric). Under the stored convention (base + $7 electric surcharge) the fees should read nightly_low 27, nightly_high 27, surcharges {electric: 7}; the fees note's 'campsite $23' should read 'tent-only with electric $23'.",
+  "PHONE: 605-255-4515 -> 605.394.2693 (Custer State Park contact on the GFP park page; 605-255-4515 is not on any GFP campground page).",
+  "WEBSITE: https://campsd.gooutdoorssouthdakota.com/ (dead) -> https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13 (keep https://gfp.sd.gov/csp-campgrounds/ as the first line).",
+  "PIN: stored 43.7178,-103.4820 is ~140 m S of the engine's site centroid 43.7190,-103.4817 (within tolerance; no move needed).",
+  "WATERFRONT: not waterfront kept - sites in continuous pine; French Creek ~200 m+ south (imagery 2026-11-21). Stored evidence still valid.",
+  "ACCESS: GFP gives the route as 'South on SD Hwy 87'; no tunnel or rig warning on the Blue Bell section (the only Custer tunnel warning on the page is Sylvan Lake's Needles Highway note)."
+ ]
+}

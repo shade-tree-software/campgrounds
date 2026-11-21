@@ -1,0 +1,11 @@
+# SD p3-561 notes (2026-11-21)
+- Go Outdoors SD engine: FacilityDetails.aspx?facID=N embeds `var sitesHashMap = {...}` (parse with json raw_decode, units_sd.py). Per-unit lat/lng, MaxEquipLength, UnitBasePrice, OnlineContent ("Amp Service: 20/30/50, Max Length: N"), LoopID, BlackoutDateRanges ("Closed Season").
+- facID 13 = ALL of Custer SP; LoopIDs 15 Blue Bell, 16 Center Lake, 17 French Creek Horse, 18 Game Lodge, 19 Grace Coolidge, 20 Legion, 21 Shady Rest, 24 Stockade N, 25 Stockade S, 26 Sylvan. V-units = hosts.
+- facID 11 = Chief White Crane, 12 = Cow Creek (8 = Blood Run, 9 = Burke Lake, 10 = Buryanek).
+- Custer phone is 605.394.2693; 605-255-4515 appears on no GFP page.
+- Custer fees convention: stored nightly_low 16 everywhere is the tent rate - flagged per entry.
+- Cow Creek 39-46 are group sites (campground map PDF). CWC map: all electric except tent 97/98.
+- rec.gov catalog "Proximity to Water" tags (Cold Brook 12/13 Lakefront; Ditch Creek all Riverfront) -> re-audit leads only.
+- castlewood.sdcity.gov: Cloudflare "Sorry, you have been blocked" in headless Chrome with UA Mozilla/5.0 too; no Wayback capture of that URL. Old castlewoodcity.com/community/recreation/ is 403 live; Wayback 20260511143404 says SIX electric sites, $25, call (605) 793-2220. 5864 held.
+- satpts.py: Esri export 500s at hw < ~100 m.
+- pw.py needs plain python3 (not -I) so PYTHONPATH is honoured.

@@ -1,0 +1,51 @@
+{
+ "id": 5741,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://gfp.sd.gov/csp-campgrounds/ (read 2026-11-21), Center Lake section: 'This campground can accommodate smaller RVs and tents and all sites are available by same-day reservations'; 'Open: Open House Weekend through September 30'; 'Camping Type: Same-day reservations'; 'Campsites: $16/night per unit tent-only with no electricity, $23/night per unit campsite with no electricity. 71 site - (no electricity)'; 'Sanitation and Water: Vault toilets, showers, and drinking water.' Same page, youth-area section: 'showers are available at the Game Lodge and Grace Coolidge Campgrounds'",
+  "https://gfp.sd.gov/parks/detail/custer-state-park/ (read 2026-11-21): contact 605.394.2693",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13 (embedded per-unit list read 2026-11-21): Center Lake loop = 40 'Back-In Campsite Nonelectric (Same Day)' + 11 'Pull-Off Campsite Nonelectric (Same Day)' at $23, 20 'Tent Only-Nonelectric (Same Day)' at $16, all 'Amp Service: None'; RV lengths 10 x1, 15 x2, 20 x26, 25 x9, 30 x5, 35 x4, 40 x3, 50 x1 - 22 RV sites take 23 ft+ (CL11, 13, 17, 19, 20, 26, 30, 31, 35-39, 48, 52, 54, 56, 58, 59, 63, 66, 68); closed-season blocks 2026-09-27/10-04 to 2027-05-14",
+  "Esri World Imagery at 43.8050,-103.4205 with the engine's per-site points overlaid"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 0
+   },
+   "source": "gfp.sd.gov/csp-campgrounds/ ('71 site - (no electricity)'); engine facID=13 every Center Lake unit 'Amp Service: None'",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "vault_toilets": true,
+    "potable_water": true
+   },
+   "source": "https://gfp.sd.gov/csp-campgrounds/ Center Lake: 'Vault toilets, showers, and drinking water.'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13",
+    "season": {
+     "opens": "05-14",
+     "closes": "10-03"
+    }
+   },
+   "source": "reservations.gooutdoorssouthdakota.com facID=13: Center Lake units blocked 'Closed Season' from 2026-09-27 (32 units) / 2026-10-04 (39 units) to 2027-05-14 - the engine's 2027 opening and 2026 closing",
+   "method": "manual"
+  }
+ },
+ "note": "Custer State Park campground on Playhouse Road off SD-87, in ponderosa pine above Center Lake (swim beach and boat dock). GFP describes it as for smaller RVs and tents: 26 of its 51 RV sites are listed at 20 ft, so a 23-ft rig needs one of the 22 sites listed at 25-50 ft. Dump station elsewhere in the park. --Claude",
+ "summary": "GFP page + engine read: 71 non-electric same-day-only sites (51 RV, 20 tent-only), $23 RV / $16 tent, 22 RV sites take 23 ft+ (max 50), vault toilets + drinking water; season to Sep 30 confirmed; engine reservation span 2027-05-14 / closes ~Oct 3 2026. Fees low $16 is tent-only and window 365 contradicts same-day (manual groups - flagged). Pin ~255 m off on the swim-beach lot; not waterfront kept.",
+ "flags": [
+  "PIN: stored 43.80390,-103.41950 sits on the swim-beach parking lot at the lake's north tip, ~255 m SE of the campsites. Move to 43.8058,-103.4213 (centroid of the engine's 71 site points: south loops CL1-45 and north loop CL46-71).",
+  "FEES (manual group, not overwritten): nightly_low 16 is the tent-only rate (engine tent sites 'Max Length: 15', 'No vehicles allowed off pavement'); the cheapest site a 23-ft rig can book is $23. Proposed nightly_low 23, nightly_high 23.",
+  "BOOKING (manual group, not overwritten): window_opens_days 365 contradicts the same-day system - GFP 'all sites are available by same-day reservations' and engine 'can only be reserved on the day of arrival' on every unit. Proposed window_opens_days 0 (the stored booking.note already explains the same-day rule).",
+  "RIG WORDING: GFP singles Center Lake out - 'can accommodate smaller RVs and tents'. The same agency's engine lists per-site lengths of 25-50 ft on 22 RV sites, which outranks the wording; stored max_rig_ft 50 matches (CL30). Note proposes a plain caveat. Stored inclusion_evidence '48 fit RVs roughly 20-50 ft' should read '22 RV sites listed at 25-50 ft (26 more at 20 ft)'.",
+  "FACILITIES: showers not written - the Center Lake section lists 'showers' but the same page's youth-area section says showers for that area are at Game Lodge and Grace Coolidge; the two GFP statements disagree.",
+  "SEASON: GFP 'Open House Weekend through September 30' (stored, confirmed); the engine keeps 39 units bookable to Oct 3 2026 - minor disagreement, season left as GFP states.",
+  "PHONE: '' -> 605.394.2693 (Custer State Park contact, GFP park page).",
+  "WEBSITE: add https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13 as a third line (current lines are both GFP pages and live).",
+  "WATERFRONT: not waterfront kept - nearest sites CL40-45 ~100 m from the lake's north tip through pine; the shore there is the swim beach/day use (imagery 2026-11-21). Stored evidence valid."
+ ]
+}

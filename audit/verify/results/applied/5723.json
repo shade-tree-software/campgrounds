@@ -1,0 +1,51 @@
+{
+ "id": 5723,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://gfp.sd.gov/csp-campgrounds/ (read 2026-11-21), Grace Coolidge section: 'an area along the north side of the highway is designated for tent camping only while the campground along the south side of the highway will accommodate all types of camping units'; 'Open: Open House Weekend - Oct. 10 (may change based on weather conditions)'; '$16/night per unit tent only with no electricity, $23/night per unit tent only with electric hookup, $34/night per unit campsite with electric hookup 20 sites, 6 tent-only sites located across the highway'; 'Water and Sanitation: Flush toilets and showers (vault toilets only in tent-camping area), drinking water'; 'Location: 1/2 mile west of the Custer State Park office on US Highway 16A'",
+  "https://gfp.sd.gov/parks/detail/custer-state-park/ (read 2026-11-21): contact 605.394.2693",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13 (embedded per-unit list read 2026-11-21): Grace Coolidge loop = GC2E-GC20E electric RV sites at $34 (13 back-in, 5 pull-off; 'Amp Service: 20/30/50'; GC15E non-reservable, 10 ft), tent-only GC1E/GC14E electric $23 and GC22-GC27 non-electric $16 (12 ft), host unit V4; RV lengths 20 x5 (GC5E, 6E, 7E, 9E, 12E), 25 x2, 28, 30 x2, 40 x5, 42, 55 (GC20E) - 12 RV sites take 23 ft+; closed-season blocks 2026-10-18 to 2027-05-07 (RV sites) and 2026-10-04 to 2027-05-14 (tent)",
+  "Esri World Imagery at 43.7767,-103.4012 with the engine's per-site points overlaid"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "reservations.gooutdoorssouthdakota.com facID=13 per-site descriptions, Grace Coolidge RV sites 'Amp Service: 20/30/50' (stored 30 came from note prose)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "showers": true,
+    "potable_water": true,
+    "vault_toilets": true
+   },
+   "source": "https://gfp.sd.gov/csp-campgrounds/ Grace Coolidge: 'Flush toilets and showers (vault toilets only in tent-camping area), drinking water'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13",
+    "season": {
+     "opens": "05-07",
+     "closes": "10-17"
+    }
+   },
+   "source": "reservations.gooutdoorssouthdakota.com facID=13: Grace Coolidge RV units blocked 'Closed Season' 2026-10-18 to 2027-05-07, tent units 2026-10-04 to 2027-05-14",
+   "method": "manual"
+  }
+ },
+ "note": "Custer State Park campground on US-16A half a mile west of the park office, beside Grace Coolidge Creek: the RV loop lies south of the highway and six tent-only sites sit across it on the north side, by the Coolidge walk-in fishing area. --Claude",
+ "summary": "GFP page + engine read: 20 sites south of US-16A (18 electric RV 20/30/50 amp + 2 electric tent pads) plus 6 tent-only across the highway; 12 RV sites take 23 ft+ (max 55); flush toilets, showers, water; closes Oct 10 confirmed; engine books RV sites May 7-Oct 17. Electric 30 -> 50. Stored fees low $16 and max_rig_ft 40 (engine 55) sit in manual groups - flagged. Pin fine; not waterfront kept.",
+ "flags": [
+  "FEES (manual group, not overwritten): nightly_low 16 is the tent-only rate; every RV site is electric at $34, so under the stored convention (base + $7 electric) the fees should read nightly_low 27, nightly_high 27.",
+  "SITES (manual group, not overwritten): max_rig_ft 40 -> 55 (engine GC20E 'Max Length: 55'; GC11E 42, five sites at 40). Count 20 matches GFP's '20 sites' (the 6 tent-only across the highway are extra).",
+  "SEASON: GFP closes Oct. 10 (stored, confirmed); the engine keeps RV sites bookable to Oct 17 2026 - minor disagreement, season left as GFP states.",
+  "WEBSITE: https://campsd.gooutdoorssouthdakota.com/ (dead) -> https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=13.",
+  "WATERFRONT: not waterfront kept - Grace Coolidge Creek is a small stream under tree cover; no RV site has an open bank (imagery 2026-11-21). The old note's 'wooded creekside sites' is dropped. Stored evidence valid.",
+  "PIN: stored 43.7768,-103.4022 is ~85 m from the RV-site centroid (within tolerance). Phone 605.394.2693 matches GFP.",
+  "SEASON (engine detail): booking.season is the RV loop's; the tent-only sites book May 14 to Oct 3 only."
+ ]
+}
