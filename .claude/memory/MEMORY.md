@@ -150,3 +150,4 @@
 - [Phone answers are a valid source](feedback_phone_call_source.md) — AWH 2026-11-11: operator phone answer counts (dated, in curation_note); dialmcp calls only on AWH go-ahead, first one (Karlstad) waits for AWH
 - [Small free NF sites on camper reports](feedback_small_free_nf_sites.md) — AWH 2026-11-12: free primitive NF campgrounds/dispersed stay with little evidence unless reports say closed/locked; caveat to call the forest
 - [What's worth a phone call](feedback_phone_call_threshold.md) — AWH 2026-11-12: amperage / where the water is never justify a call; electric at sites + water somewhere closes the entry
+- [Unread retry routes allowed](feedback_unread_retry_routes.md) — AWH 2026-11-20: the ~82 bot-walled UNREAD phase-7 entries may use headless/Wayback/strong secondary sources; scoped, new batches keep the no-retry rule; kit/unread/
