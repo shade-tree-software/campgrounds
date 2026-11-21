@@ -762,3 +762,6 @@ Applied as kept. Operator site (headless 2026-11-21): $50/night (was $40 in 2025
 ## English Pale Campground and Resort (Melrose WI, private lead, 2026-11-21) - OPEN (held, not added)
 - Passes every gate: 5 rustic RV sites (60-ft gravel pads), $35.30 for 2 + tax, Hipcamp-only booking (live, 54 of 55 positive) plus its own site with rules, rates and phone; Google 5.0/25. Not waterfront (wooded bluff ~250 m above the Black River). Closed early for 2026 (Sep 24), no 2027 date.
 - The question: guests must be 21+, and nudity is tolerated for sunbathing at the sites, beach and sundeck ("not a nudist campground"). Some weekends the whole property goes to one group. Add (with an adults-only, clothing-optional caveat) or skip? Result held at audit/verify/leads/held/english-pale.json.
+
+## 6021 Hague City Park (ND) - newer evidence after the drop (lead 33 check, 2026-11-21) - OPEN
+- Dropped this morning on AWH's word (thin evidence, no current presence). The Hague Camping lead agent found a Campendium camper review dated 2026-08-02 ("Nice little city park", 3-4 full hookups, warm showers, tents $15 / full hookups $30) and another dated 2025-10-28. A public campground carries no presence rule, but no official source has turned up. Re-add with a caveat (camper report, call the city), or leave it dropped?
