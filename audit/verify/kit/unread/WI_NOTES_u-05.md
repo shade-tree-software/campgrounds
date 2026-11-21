@@ -1,0 +1,10 @@
+## 3369 Featherstone: WRITTEN (live headless OK; $35 2026; booking form->operator; OHV flag; G 4.6/35)
+## 3398 Forest Pond: WRITTEN (live headless; season ->10-01; phone ->298-0601; platform phone; sewer added)
+## 3380 Eagle View: WRITTEN (live headless; 3 of 27 nightly = mostly seasonal note; G 4.7/35)
+## 3401 Broken Bow: WRITTEN (live headless rates 2026 = AWH ruling; holiday min added; wf lead camping beach 34-43)
+## 3374 Mohican: WRITTEN (count 86->57, pin move 360 m, Agilysys, G 4.1/10)
+## 3429 Leon Valley: WRITTEN (map via browser: ~46 of 150+ nightly; $48 narrow + G 4.4/155 = reviewer drop candidate; sewer cleared)
+## 3384 Eagles Landing: WRITTEN (Agilysys Danbury live: RVEO $30 x10, RVFH $40 x34, tent $20 x9; 2027 nights May 1-Sep 15; 2024 Wayback amenities; phone ->349-2267; website old domain dead; riverview lead sites 7-26)
+## 3440 Turtle Lake: WRITTEN (Agilysys live: 17 back-in $27; engine open year-round vs 'Seasonal' -> season left; non-potable water; casino-lot pass flagged; website -> stcroixcasino.com/turtle-lake)
+## 3449 Dells of the Eau Claire: WRITTEN (new county reservation site parks.marathoncounty.gov live + Wayback fee PDF/maps: $28/$23 2026, May 1-Sep 30, 27 sites, 50A, 60 ft, min 2 online; riverview -> not waterfront; pin OK ~120 m — my earlier 300 m W guess was wrong)
+Lead check: St. Croix Casino Hertel RV park already in DB as 3443 (website /st-croix-casino-hertel; current page /hertel).
