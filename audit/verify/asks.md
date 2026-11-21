@@ -733,3 +733,9 @@ Applied as kept (lakeview, $45/$145 wk/$475 mo, 30 full-service sites, reservati
 
 ## 5975 Fordville Dam Recreation Area (Grand Forks County ND) - annual/monthly RV rates, loops packed with trailers (u-08, 2026-11-20) - OPEN
 Applied as kept ($40 overnight). The county page (Wayback 2026-08-14; live page Akamai-walled) sells "Annual RV Camping $1500, Monthly $450, Weekly $150" beside "Overnight $40", plus "Storage $225"; Esri shows both RV loops (~48.1752,-97.7618) packed with ~45-50 travel trailers in tight rows. Nothing discourages nightly guests; no booking engine or site map, so the nightly share can't be measured; Google 4.8/20. Keep (no discouraging wording, public county park), or drop as mostly seasonal? A call to the county (701-270-8493) would measure it - only on your go-ahead.
+
+## 3369 Featherstone RV & ATV Park (Birchwood WI) - dropped as a ride-out ATV base (u-05, 2026-11-20) - OPEN (reversible)
+Dropped under the off-road rule (as 5583 Trails Inn Quadna). Operator site: "Featherstone RV & ATV Park ... ATV Friendly ... ATV Camping on The Tuscobia State Trail", "Campers usually ride out daily ... Most rides are 5-6 hours"; ATV wash on site; ~18 full-hookup sites, cash/check by phone. Say "keep" to restore it as a general campground with ATV trail access.
+
+## 3429 Leon Valley Campground (WI) - narrow price pass + Google 4.4 (u-05, 2026-11-20) - OPEN
+Applied as kept. Cheapest RV night $48 + 5.5% tax (just under the $50 gate), no Good Sam Park, no gateway within 40 km; Google 4.4/155; ~30% of sites nightly (note says mostly seasonal). A narrow pass with sub-4.5 reviews is the reviewer's call: keep or drop?
