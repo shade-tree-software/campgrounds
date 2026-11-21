@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "WI COMPLETE 2026-11-17; SK COMPLETE 2026-11-19 (queue p3-520..535, splits +15709..15717, leads +15718..15726; kit/sk/RESUME_SK.md); WY COMPLETE 2026-11-20 (queue p3-536..559, leads +15727..15745, split +15746; kit/wy/RESUME_WY.md); all WY asks answered + applied 2026-11-20 (+15747 Blackrock Meadows; next id 15748; no open asks); SD kit built (kit/sd/RESUME_SD.md), first batch p3-560 awaits AWH go-ahead; ONE agent at a time"
+description: "WI COMPLETE 2026-11-17; SK COMPLETE 2026-11-19 (queue p3-520..535, splits +15709..15717, leads +15718..15726; kit/sk/RESUME_SK.md); WY COMPLETE 2026-11-20 (queue p3-536..559, leads +15727..15745, split +15746; kit/wy/RESUME_WY.md); all WY asks answered + applied 2026-11-20 (+15747 Blackrock Meadows; next id 15748; no open asks); UNREAD RETRY PASS COMPLETE 2026-11-21 (u-01..u-12, kit/unread/RESUME_UNREAD.md; open asks in asks.md); SD kit built (kit/sd/RESUME_SD.md), first batch p3-560 awaits AWH go-ahead; ONE agent at a time"
 metadata:
   node_type: memory
   type: project
@@ -128,3 +128,5 @@ AWH 2026-11-13 after the pause: 15428 kept (Chicago exception), 1687 year-round 
 **Resume (2026-11-17):** Wisconsin fully done (queue, 9 leads via audit/verify/leads/, 3 split checks via audit/verify/kit/wi/splits/ + split_prompt_template.txt, Jack Lake audit). AWH paused before SK. To restart: read the "RESUME HERE" section of audit/verify/kit/wi/RESUME_WI.md, build kit/sk/ from kit/wi/ (Canada: provincial ownership, CAD, C$69 gate; see [[reference-canada-sweep-adaptation]]), first batch p3-520, one verifier at a time.
 
 **SK READY (2026-11-17):** kit in audit/verify/kit/sk/ (sk_head.txt, mkpara_sk.py, agent_prompt_template.txt, lessons.txt, RESUME_SK.md - commands and apply steps). p3-520 batch file built (9150 .. 12817); launch only on AWH go.
+
+**Unread retry pass (2026-11-20..21):** u-01..u-12 (MN, IL, WI, ND, VT, AB) under the scoped AWH permission ([[feedback-unread-retry-routes]]). Drops: 1763, 1798, 3369 (ATV base, reversible), 3524. Still unread: 5518 rate, 5979 Strasburg + 6010 Bisbee (phone-only). OPEN asks for AWH in audit/verify/asks.md: 13412 Citizens Lake, 3369 Featherstone, 3429 Leon Valley, 5975 Fordville, ND thin-evidence parks (5995/6009/6015/6021), ND no-presence (6032/6048, weaker 6039/6042), 4097 Hazen's Notch. Pending follow-ups (criteria_followups.md): split 3535 Big Eau Pleine South, lead English Pale (Melrose WI), ND HHS-list leads (Viking Mayville, Kirby's, Hagen, Sheyenne RV, Hague Camping), 3449 season check. Next id 15748. Unpushed since dba21b41.
