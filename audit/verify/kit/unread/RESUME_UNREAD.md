@@ -14,6 +14,6 @@ entries left unread behind bot walls: <ids>) and its hard rules override anythin
 Working directory: /home/andrew/Dev/campgrounds."
 Apply as any phase-7 batch (kit/<st>/RESUME_<ST>.md steps), then save held results to kept_results/ and rm $S/u-NN*.
 
-Batches applied: u-01 MN (2026-11-20; all 9 read, no drops; 5518 rate still unread), u-02 IL (2026-11-20; 5 applied, 1763 held (ask), 1709 unread), u-03 IL (2026-11-20; headless + Wayback refused by the permission system; 1784 + 13407 applied, 5 still unread), u-04 IL (2026-11-20; all 6 read: 1798 dropped, 13412 ask; IL DONE), u-05 WI (2026-11-20; 9 read, 3369 dropped ATV base)
+Batches applied: u-01 MN (2026-11-20; all 9 read, no drops; 5518 rate still unread), u-02 IL (2026-11-20; 5 applied, 1763 held (ask), 1709 unread), u-03 IL (2026-11-20; headless + Wayback refused by the permission system; 1784 + 13407 applied, 5 still unread), u-04 IL (2026-11-20; all 6 read: 1798 dropped, 13412 ask; IL DONE), u-05 WI (2026-11-20; 9 read, 3369 dropped ATV base), u-06 WI (2026-11-20; 9 read, 3524 dropped, 3494 re-scoped; 3535 split + English Pale lead pending)
 
 **(Resumed 2026-11-20: AWH added the allow rules to .claude/settings.local.json; u-04 = the IL leftovers.)** Was paused after u-03: the Claude Code permission system (not the sites) refused headless-browser runs and web.archive.org fetches in u-02/u-03 (u-01 had both working). Resume only once AWH has allowed them; then re-run the IL leftovers (1709 1790 1798 13408 13412 14612; 1763 held as an ask) and continue with WI u-04.
