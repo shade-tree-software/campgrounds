@@ -14,7 +14,7 @@ travelsouthdakota.com 403; campsd.gooutdoorssouthdakota.com does not resolve (20
 
 ## RESUME HERE
 
-STARTED 2026-11-21 on AWH's go-ahead: p3-560 applied; next batch p3-561 (build + launch as below). Since the 2026-11-21 sidecar split, every commit also stages campgrounds_audit.json (verify_scan + evidence live there).
+STARTED 2026-11-21 on AWH's go-ahead: p3-560 applied; p3-561 launched (10 queued + 5864 Castlewood re-added by hand: queue.py skips ids already in any batches/*.json). AWH 2026-11-21: all verifiers may fall back to headless browser then internet archive on bot walls (template rule 13 rewritten). AWH 2026-11-21: continue through the rest of SD until SD is complete (leads + splits included, as WY). Since the 2026-11-21 sidecar split, every commit also stages campgrounds_audit.json (verify_scan + evidence live there).
 
 Build + launch (repo root; S = session scratch dir):
 
