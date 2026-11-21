@@ -622,7 +622,8 @@ DROPS = {
 if __name__ == "__main__":
     sys.path.insert(0, ROOT)
     import trips
-    cg = json.load(open(CG, encoding="utf-8"))
+    import campground_store
+    cg = campground_store.load(CG)
     by = {e["id"]: e for e in cg}
     log = json.load(open(LOG, encoding="utf-8")) if os.path.exists(LOG) else []
     logged = {r["id"] for r in log}
@@ -640,9 +641,7 @@ if __name__ == "__main__":
     print(len(gone), "to drop")
     if "--apply" in sys.argv and gone:
         cg = [e for e in cg if e["id"] not in gone]
-        with open(CG, "w", encoding="utf-8") as f:
-            json.dump(cg, f, ensure_ascii=False, indent=2)
-            f.write("\n")
+        campground_store.save(cg, CG)     # the dropped entries' audit rows go too
         with open(LOG, "w", encoding="utf-8") as f:
             json.dump(log, f, ensure_ascii=False, indent=1)
             f.write("\n")

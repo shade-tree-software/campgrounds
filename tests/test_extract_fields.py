@@ -159,10 +159,13 @@ class TestWriteDeltas(unittest.TestCase):
     def tearDown(self):
         ef.CAMPGROUNDS_JSON = self._real
         os.unlink(self.tmp.name)
+        side = ef.campground_store.audit_path(self.tmp.name)
+        if os.path.exists(side):
+            os.unlink(side)
 
     def written(self):
-        with open(self.tmp.name, encoding="utf-8") as fh:
-            return {r["id"]: r for r in json.load(fh)}
+        # note_scan is written to the audit sidecar; load() merges it back.
+        return {r["id"]: r for r in ef.campground_store.load(self.tmp.name)}
 
     def test_values_and_provenance_are_both_written(self):
         ef.write_deltas({1: ({"sites": {"count": 23}}, "sig1")},

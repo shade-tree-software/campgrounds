@@ -1,6 +1,6 @@
 # mkpara_sd.py SCRATCH p3-NNN -> SCRATCH/p3-NNN_para.txt (sd_head.txt + one line per entry)
 import json,sys
-S,N=sys.argv[1],sys.argv[2]; by={x['id']:x for x in json.load(open('campgrounds.json'))}
+S,N=sys.argv[1],sys.argv[2]; sys.path.insert(0,'.'); import campground_store; by={x['id']:x for x in campground_store.load('campgrounds.json')}
 head=open('audit/verify/kit/sd/sd_head.txt',encoding='utf-8').read().rstrip('\n')
 ids=[x['entry']['id'] for x in json.load(open(f'audit/verify/batches/{N}.json'))]
 parts=[]

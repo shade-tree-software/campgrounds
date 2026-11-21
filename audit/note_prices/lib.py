@@ -13,6 +13,7 @@ import collections, hashlib, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, ROOT)
 import campground_schema as cs  # noqa: E402
+import campground_store  # noqa: E402
 
 CG = os.path.join(ROOT, "campgrounds.json")
 REG = os.path.join(ROOT, "campground_policies.json")
@@ -26,9 +27,9 @@ WORD = re.compile(r"[a-z0-9]+")
 def sig(note): return hashlib.sha256((note or "").encode("utf-8")).hexdigest()[:16]
 
 def load():
-    raw = open(CG, encoding="utf-8").read(); cg = json.loads(raw)
-    assert json.dumps(cg, ensure_ascii=False, indent=2) + "\n" == raw
-    return cg, json.load(open(REG, encoding="utf-8"))
+    raw = open(CG, encoding="utf-8").read()
+    assert campground_store.dumps(json.loads(raw)) == raw     # canonical, so a save diffs only edits
+    return campground_store.load(CG), json.load(open(REG, encoding="utf-8"))
 
 def fees(e, reg): return cs.resolve(e, reg).get("fees", {}).get("values", {})
 
@@ -44,10 +45,7 @@ def added_words(old, new):
     return sorted(w for w in extra if w not in JOIN)
 
 def dump(cg):
-    tmp = CG + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as fh:
-        fh.write(json.dumps(cg, ensure_ascii=False, indent=2) + "\n")
-    os.replace(tmp, CG)
+    campground_store.save(cg, CG)     # note_scan re-stamps go to the audit sidecar
 
 def land(cg, items, today, apply):
     """items: [{id, was, note, awh_dropped?}] -> writes notes, re-tags note-prose provenance,

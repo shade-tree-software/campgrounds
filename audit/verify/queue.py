@@ -24,12 +24,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, ROOT)
 import campground_schema as cs
+import campground_store
 
 VIEW_DAYS = 60
 
 
 def load():
-    rows = json.load(open(os.path.join(ROOT, "campgrounds.json"), encoding="utf-8"))
+    rows = campground_store.load()      # verify_scan lives in the audit sidecar
     reg = json.load(open(os.path.join(ROOT, "campground_policies.json"), encoding="utf-8"))
     trips = json.load(open(os.path.join(ROOT, "trip_data", "trips.json"), encoding="utf-8"))
     trips = trips if isinstance(trips, list) else trips.get("trips", [])

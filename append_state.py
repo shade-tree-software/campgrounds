@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Append research-agent results to campgrounds.json (textual append, preserves
-formatting; never full-rewrites). Replaces the old per-state append_<st>.py copies
+"""Append research-agent results to campgrounds.json (through campground_store, which
+writes the canonical indent=2 format, so only the new entries diff; their
+inclusion_evidence goes to the campgrounds_audit.json sidecar). Replaces the old per-state append_<st>.py copies
 (one parameterized script instead of 8 near-identical ones).
 
 Usage: python3 append_state.py --state AZ [--leads /tmp/az_leads.json] <results.json> [...]
@@ -30,6 +31,8 @@ from extract_rating import parse_rating
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'audit', 'note_dupes'))
 import rvlife as _rvlife  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import campground_store  # noqa: E402
 
 
 def _policies(_c=[]):
@@ -93,7 +96,7 @@ def main():
     if not rows:
         print('no add rows'); return
 
-    data = json.load(open(CG))
+    data = campground_store.load(CG)
     # Ids are unique across BOTH location files and never reused, so the high
     # water mark has to account for family.json (gitignored — see CLAUDE.md
     # "Family Locations"). It currently holds the highest id in the database, so
@@ -185,19 +188,9 @@ def main():
     if not entries:
         print('no new entries after dedup'); return
 
-    # textual append (never re-dump)
-    text = open(CG).read().rstrip()
-    assert text.endswith(']'), 'unexpected file end'
-    body = text[:-1].rstrip()
-    blocks = []
-    for e in entries:
-        block = json.dumps(e, indent=2, ensure_ascii=False)
-        block = '\n'.join('  ' + line for line in block.split('\n'))
-        blocks.append(block)
-    out = body + ',\n' + ',\n'.join(blocks) + '\n]\n'
-    open(CG, 'w').write(out)
+    campground_store.save(data + entries, CG)
 
-    check = json.load(open(CG))          # validate
+    check = campground_store.load(CG)    # validate
     json.dump(leads, open(LEADS, 'w'), indent=1)
     ids = [e['id'] for e in entries]
     print(f'appended {len(entries)} entries, ids {ids[0]}-{ids[-1]}')

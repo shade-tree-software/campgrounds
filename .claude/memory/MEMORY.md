@@ -43,7 +43,7 @@
 - [Below the dam is not on the lake](feedback_below_dam_not_lake.md) — AWH 2026-10-21: behind a dam berm / below pool = no lake value; imagery hides berms, compare DEM to pool
 - [Beware campground content farms](feedback_beware_campground_content_farms.md) — pinecliffresort.net fakes being a parent operator; check a domain's index before trusting it; no entry cites it…
 - [Unsure on waterfront: downgrade](feedback_waterfront_unsure_downgrade.md) — AWH 2026-11-02: after every source, go down without asking and report it; --AWH values still asked
-- [Waterfront evidence in JSON](feedback_waterfront_evidence_in_json.md) — audit proof lives in the campgrounds.json waterfront_evidence field (non-empty=audited, --AWH note also=audited)…
+- [Waterfront evidence in JSON](feedback_waterfront_evidence_in_json.md) — audit proof lives in the waterfront_evidence field (in campgrounds_audit.json since 11-21) (non-empty=audited, --AWH note also=audited)…
 - [URLs in website not notes](feedback_urls_in_website_not_notes.md) — reservation/official URLs go in the website field; keep website links out of note prose (negatives & source…
 - [Run sweep agents sequentially AND tiny](feedback_sequential_sweep_agents.md) — one agent at a time, ONE candidate per batch; parallel only by explicit per-stage user exception
 - [Roadside notes direction-neutral](feedback_roadside_direction_neutral.md) — don't word roadside-stop notes for one travel direction (route may be driven either way)
@@ -151,3 +151,4 @@
 - [Small free NF sites on camper reports](feedback_small_free_nf_sites.md) — AWH 2026-11-12: free primitive NF campgrounds/dispersed stay with little evidence unless reports say closed/locked; caveat to call the forest
 - [What's worth a phone call](feedback_phone_call_threshold.md) — AWH 2026-11-12: amperage / where the water is never justify a call; electric at sites + water somewhere closes the entry
 - [Unread retry routes allowed](feedback_unread_retry_routes.md) — AWH 2026-11-20: the ~82 bot-walled UNREAD phase-7 entries may use headless/Wayback/strong secondary sources; scoped, new batches keep the no-retry rule; kit/unread/
+- [Audit-field sidecar split](project_campground_store_split.md) — 2026-11-21: evidence/note_scan/verify_scan in tracked campgrounds_audit.json; ALWAYS load/save via campground_store

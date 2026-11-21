@@ -40,7 +40,8 @@ def norm(s):
     return re.sub(r'[^a-z0-9]', '', s.lower())
 
 
-cg = json.load(open(CG, encoding='utf-8'))
+sys.path.insert(0, ROOT); import campground_store
+cg = campground_store.load(CG)     # audit fields from the sidecar
 fam = json.load(open(FAM, encoding='utf-8')) if os.path.exists(FAM) else []
 if not fam:
     sys.exit('no trip_data/family.json: ids would collide; run where it exists')
@@ -98,8 +99,7 @@ for s in skips:
     print('skip', s['state'], s['name'], '|', s['kind_of_no'], '|', s['why'][:120])
 if '--apply' in sys.argv:
     cg.extend(adds)
-    with open(CG, 'w', encoding='utf-8') as f:
-        f.write(json.dumps(cg, ensure_ascii=False, indent=2) + '\n')
+    campground_store.save(cg, CG)
     with open(os.path.join(HERE, 'verdicts.jsonl'), 'a', encoding='utf-8') as f:
         for e in adds:
             f.write(json.dumps({'name': e['name'], 'state': e['state'], 'decision': 'add', 'id': e['id'],

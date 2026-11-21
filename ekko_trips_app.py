@@ -107,12 +107,12 @@ def _cache_static(resp):
 
 # Audit-trail fields on a campground entry: the proof strings behind its
 # waterfront and inclusion calls, plus `note_scan` — the extraction pass's
-# record of having read the note (extract_fields.py). Source of truth in
-# campgrounds.json, but no client reads any of them, so every browser-bound
-# payload strips them. Stripping is safe for the same reason it always was:
-# PUT merges from a field whitelist, so a save can't clobber a field the client
-# never received. `note_scan` alone is ~1.9 MB across the database.
-# `verify_scan` is phase 7's record of a check against the campground's pages.
+# record of having read the note (extract_fields.py) — and `verify_scan`, phase
+# 7's record of a check against the campground's pages. Since 2026-11-21 they
+# live in the tracked sidecar campgrounds_audit.json (campground_store.py), not
+# in campgrounds.json: no page or client reads them, so the app never loads the
+# sidecar and its own saves can't touch it. The strips below stay as a guard in
+# case an old script writes one back into the main file.
 _AUDIT_EVIDENCE_FIELDS = ("waterfront_evidence", "inclusion_evidence",
                           "note_scan", "verify_scan")
 
@@ -2442,13 +2442,10 @@ def _load_campgrounds():
     entries = _read_campgrounds_raw()
     visits_by_cg = _campground_visits_index()
 
-    # `waterfront_evidence` / `inclusion_evidence` are the audit trail — the
-    # proof strings behind each entry's waterfront and validity calls. They are
-    # the source of truth in campgrounds.json, but no template or client script
-    # reads them, and at ~12.9k entries they were 4.6 MB of the map page's
-    # 14.4 MB. Dropping them here keeps them out of every browser payload while
-    # leaving the file untouched (PUT merges from a field whitelist, so a UI
-    # save can't clobber what the client never received).
+    # The audit-trail fields now live in campgrounds_audit.json, which the app
+    # never reads (see _AUDIT_EVIDENCE_FIELDS); excluding them here is a guard
+    # against one written back into campgrounds.json, where they would ride
+    # into every map payload (they were 4.6 MB of a 14.4 MB page once).
     excluded = ({"index", "stays", "elevation_meters"} | set(_AUDIT_EVIDENCE_FIELDS)
                 | set(_ADMIN_ONLY_FIELDS))
     rows = []

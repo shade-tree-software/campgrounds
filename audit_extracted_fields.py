@@ -125,8 +125,9 @@ def main():
                     help="examples to print per finding (default 3)")
     args = ap.parse_args()
 
-    with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
-        rows = [r for r in json.load(fh) if r.get("note_scan")]
+    sys.path.insert(0, ROOT)
+    import campground_store          # note_scan lives in the audit sidecar
+    rows = [r for r in campground_store.load(CAMPGROUNDS_JSON) if r.get("note_scan")]
 
     findings, totals, shown = audit(rows, args.limit)
     print(f"{len(rows):,} scanned entries; "

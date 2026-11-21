@@ -16,6 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, ROOT)
 import campground_schema as cs
+import campground_store
 
 CG = os.path.join(ROOT, "campgrounds.json")
 RES = os.path.join(HERE, "results")
@@ -85,7 +86,7 @@ if __name__ == "__main__":
     os.makedirs(DONE, exist_ok=True)
     want = {int(a) for a in sys.argv[1:] if a.isdigit()}
     files = sorted(f for f in os.listdir(RES) if f.endswith(".json"))
-    rows = json.load(open(CG, encoding="utf-8"))
+    rows = campground_store.load(CG)     # verify_scan & co. live in the audit sidecar
     by = {e["id"]: e for e in rows}
     applied, notes = [], 0
     for f in files:
@@ -122,9 +123,7 @@ if __name__ == "__main__":
         applied.append(f)
     print(len(applied), "results ready,", notes, "note rewrites")
     if "--apply" in sys.argv and applied:
-        with open(CG, "w", encoding="utf-8") as fh:
-            json.dump(rows, fh, ensure_ascii=False, indent=2)
-            fh.write("\n")
+        campground_store.save(rows, CG)
         for f in applied:
             shutil.move(os.path.join(RES, f), os.path.join(DONE, f))
         print("written")

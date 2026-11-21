@@ -1,5 +1,5 @@
 import json,sys
-S,N=sys.argv[1],sys.argv[2]; by={x['id']:x for x in json.load(open('campgrounds.json'))}
+S,N=sys.argv[1],sys.argv[2]; sys.path.insert(0,'.'); import campground_store; by={x['id']:x for x in campground_store.load('campgrounds.json')}
 head=open('audit/verify/kit/wi/wi_head.txt',encoding='utf-8').read().rstrip('\n')
 ids=[x['entry']['id'] for x in json.load(open(f'audit/verify/batches/{N}.json'))]
 parts=[]

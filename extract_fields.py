@@ -54,6 +54,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import campground_schema as cs  # noqa: E402
+import campground_store  # noqa: E402
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CAMPGROUNDS_JSON = os.path.join(ROOT, "campgrounds.json")
@@ -270,8 +271,8 @@ def needs_scan(entry):
 
 
 def load_rows():
-    with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
-        return json.load(fh)
+    # `note_scan` lives in the audit sidecar (campground_store); load() merges it back.
+    return campground_store.load(CAMPGROUNDS_JSON)
 
 
 def candidates(rows, state=None, ids=None):
@@ -491,11 +492,7 @@ def write_deltas(deltas, model, today):
         cs.apply_update(entry, payload)
         written += 1
 
-    tmp = CAMPGROUNDS_JSON + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as fh:
-        json.dump(rows, fh, indent=2, ensure_ascii=False)
-        fh.write("\n")
-    os.replace(tmp, CAMPGROUNDS_JSON)
+    campground_store.save(rows, CAMPGROUNDS_JSON)
     return written
 
 

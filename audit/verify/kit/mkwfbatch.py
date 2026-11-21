@@ -21,7 +21,8 @@ for line in open(f'{R}/audit/verify/waterfront_leads.md', encoding='utf-8'):
         leads[cur] += ' ' + line.strip()
     else:
         cur = None
-db = {e['id']: e for e in json.load(open(f'{R}/campgrounds.json', encoding='utf-8'))}
+sys.path.insert(0, R); import campground_store
+db = {e['id']: e for e in campground_store.load(f'{R}/campgrounds.json')}
 done = set()
 for f in glob.glob(f'{W}/wf-*.json'):
     if f.endswith('_results.json'): continue

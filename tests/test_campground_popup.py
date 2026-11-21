@@ -121,9 +121,10 @@ class TestPopupPayload(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.client = _client()
-        with open(os.path.join(os.path.dirname(os.path.dirname(
-                os.path.abspath(__file__))), "campgrounds.json")) as fh:
-            cls.rows = json.load(fh)
+        # With the audit sidecar merged in: the evidence test below needs a row
+        # that HAS waterfront_evidence, to show it still never reaches the popup.
+        import campground_store
+        cls.rows = campground_store.load()
 
     def _popup(self, cg_id):
         resp = self.client.get(f"/api/campgrounds/{cg_id}/popup")

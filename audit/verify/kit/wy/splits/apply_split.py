@@ -10,7 +10,8 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', '..'))
 CG, FAM = os.path.join(ROOT, 'campgrounds.json'), os.path.join(ROOT, 'trip_data', 'family.json')
 TODAY = datetime.date.today().isoformat()
 pid, newf = int(sys.argv[1]), sys.argv[2]
-cg = json.load(open(CG, encoding='utf-8'))
+sys.path.insert(0, ROOT); import campground_store
+cg = campground_store.load(CG)     # verify_scan lives in the sidecar
 fam = json.load(open(FAM, encoding='utf-8')) if os.path.exists(FAM) else []
 if not fam:
     sys.exit('no trip_data/family.json: ids would collide')
@@ -36,5 +37,5 @@ print(pid, parent['name'], parent['location'], parent['waterfront'])
 for n in cg[-len(ids):]:
     print(n['id'], n['name'], n['location'], n['waterfront'])
 if '--apply' in sys.argv:
-    open(CG, 'w', encoding='utf-8').write(json.dumps(cg, ensure_ascii=False, indent=2) + '\n')
+    campground_store.save(cg, CG)
     print('applied')

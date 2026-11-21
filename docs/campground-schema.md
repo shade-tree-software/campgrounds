@@ -47,11 +47,15 @@ changed line is ~1 KB of JSON and the reviewer cannot see *which field moved*. T
 `+21 / -18` is more lines and far more information. For a human-audited dataset,
 pretty-printed JSON is the optimum, not a legacy compromise.
 
-**The one real pressure point is write amplification**, and it is not a format problem:
-every UI save re-dumps all 13.2 MB (~102 ms). Adding structured fields grows that. The
-release valve when it hurts is the **evidence sidecar** — `waterfront_evidence` and
-`inclusion_evidence` are 4.1 MB, 30% of the file, and no client ever reads them — not a
-new storage format.
+**The one real pressure point is size**, and it is not a format problem: every UI save
+re-dumps the whole file, and GitHub warns past 50 MB per file and refuses past 100 MB. The
+release valve was the **evidence sidecar**, and it was opened on 2026-11-21 when the file
+reached 55.7 MB: `waterfront_evidence`, `inclusion_evidence`, `note_scan` and `verify_scan`
+(about 13 MB, which no client ever reads) now live in the tracked `campgrounds_audit.json`,
+keyed by id, and the tools reach both files through `campground_store.py`
+(`docs/campground-curation.md`, Mechanics). The main file went to 40.7 MB. The next valve, if
+needed, is `provenance` (15.7 MB, mostly long `source` strings), which the PUT merge does
+read, so moving it would mean teaching the app the sidecar too.
 
 **Revisit this decision if**: entries pass ~50k, or the app ever needs genuinely concurrent
 multi-user writes. Neither is on the horizon.

@@ -1,6 +1,6 @@
 ---
 name: feedback_waterfront_evidence_in_json
-description: "Waterfront audit evidence lives in the campgrounds.json waterfront_evidence field, not (only) git commits"
+description: "Waterfront audit evidence lives in the per-entry waterfront_evidence field (since 2026-11-21 in the campgrounds_audit.json sidecar), not (only) git commits"
 metadata: 
   node_type: memory
   type: feedback
@@ -17,4 +17,6 @@ Per-entry waterfront audit evidence now lives in a `waterfront_evidence` field o
 - `audit/apply_waterfront_audit.py` writes the field from each result's `evidence` string (upsert: replace if present, else insert right after the `waterfront` line). Still echo evidence in the commit message for `git log` grepping, but the field is the source of truth.
 - One-time migration that moved all recoverable commit evidence into the field: `audit/migrate_evidence_to_json.py` (Pass1 rich per-entry parse, Pass2 GA /tmp results, Pass3 bucket-sweep synthesis for MI/IA/NE/WI-local, Pass4 blame-trace for residual on-water). Result: 2174 entries got the field; with 617 `--AWH` entries that's 2791/4548 audited; 0 on-water designations left unsupported.
 
-Relates to [[feedback_campground_vetting_discipline]].
+**Since 2026-11-21 the field lives in the tracked sidecar `campgrounds_audit.json`** (with `inclusion_evidence`, `note_scan`, `verify_scan`), because campgrounds.json passed GitHub's 50 MB warning. Read and write it through `campground_store.load()` / `save()`. A raw `json.load` of campgrounds.json shows NO evidence, so don't read "absent" there as "not audited". The old `audit/apply_waterfront_audit.py` text-upsert writes into the main file; route any rerun through the store.
+
+Relates to [[feedback_campground_vetting_discipline]], [[project_campground_store_split]].
