@@ -1,0 +1,12 @@
+# u-03 IL unread retry (2026-11-20)
+- Route 1 headless (pwc.py, desktop Chrome UA) REFUSED by the session permission classifier ("Unauthorized Access") on the first call (all 7 own pages) - not retried.
+- Route 2 Wayback: archive.org availability API answered (timeout, empty); web.archive.org CDX query REFUSED by the permission classifier - not retried.
+- Route 3: secondary sources via WebSearch/WebFetch only.
+- 13407 WRITTEN: repo capture 2026-10-16 city page -> electric 50, water, showers; note cleaned; pin ok; not wf
+- 1784 WRITTEN: Nixle 2022 city advisory -> booking reservable operator (FireFly), fcfs null; pin unconfirmed under canopy
+- 1790 NO RESULT: old city page 404 (WebFetch too), new cityofpittsfieldil.gov bot wall; no official secondary (pikeil.org NXDOMAIN). Search index of old page: 65 sites E(50/30/20)+W concrete pads, $20/$500 mo, primitive $5, FCFS, ranger collects. Imagery: loop centroid ~39.6316,-90.7493 (~210 m, no move); east row pads 40-55 m from lake through wooded slope -> not wf / lakeview lead at most.
+- 1798 NO RESULT: byway tourism page Cloudflare; no operator found; Enjoy IL 404; aggregators only. Imagery: pin at fairgrounds edge by rail line, campground not identifiable.
+- 13408 NO RESULT: operator 406, city 403; Macomb CVB + Enjoy IL listings say only 'areas for camping', phone 309-833-2052. Imagery: open-field RV loop ~40 rigs E, >200 m from lake.
+- 13412 NO RESULT: city 403; search index of city page = stored $45/145/475, tent 15, manager 309-221-5131 Apr1-Oct31, hot showers; 977wmoi 2026 council approval report agrees. Imagery: herringbone pads 50-80 m from lake across park road + open grass bank -> lakeview KEPT; US-67 ~30-40 m east.
+- 14612 NO RESULT: sandwichfair.com Cloudflare; index: non-fair by appointment, $25/$500, contact Sue 989-309-0202 (so phone is the fair's posted contact), season May1-Oct31; 2024 rental form PDF = event camping only. Imagery: pin on east camping rows with rigs, OK.
+- apply.py dry run 1784 13407: 2 ready, no '!!'.
