@@ -619,6 +619,7 @@ DROPS = {
     6032: ('2026-11-21', "Monango City Park (Monango ND): AWH drop - no current presence", "u-10: ND Tourism listing removed (404), last capture 2020 '4 sites'; no city site; not on the ND HHS licensed RV park list; only current description Campendium's (two 30 A outlets on the park building, RVs on grass); no pads on Esri imagery"),
     6048: ('2026-11-21', "Sarles City Park (Sarles ND): AWH drop - no current presence", "u-10: ND Tourism listing removed (404); last capture 2023-03-27 'Primitive camping, shelter with tables and water'; no city site; not on the ND HHS licensed list; imagery a treed lawn block, no pads, lanes or RVs"),
     5833: ('2026-11-21', "Ace's RV Park (Winner SD): no live presence (private)", "p3-560: acervpark.com answers a Wix ConnectYourDomain 404 (www, bare, http; last good Wayback 2026-05-17); Google open, 4.9 from 17 reviews (under 25) with phone (605) 835-8343; no posted rate, RV Life price3 ($$$, avg 41) - neither price nor presence indicator passes"),
+    5873: ('2026-11-21', "Brooks Memorial Park (Martin SD): AWH drop - no evidence of RV camping", "p3-560: no city or chamber page mentions camping (chamber lists picnic shelters); The Dyrt: walk-in tent camping ('Park in a lot, walk to your site'); 2022 camper: 'would not suggest pulling a large trailer down to'; stored detail from Campendium (unreadable)"),
 }
 
 if __name__ == "__main__":

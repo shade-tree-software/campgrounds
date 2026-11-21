@@ -37,4 +37,4 @@ Apply a batch (as WY):
 5. Append to audit/verify/criteria_followups.md + waterfront_leads.md (asks.md for questions), copy $S/p3-NNN/SD_NOTES_p3-NNN.md here, extend "Batches applied" below, add lessons to lessons.txt.
 6. `git add campgrounds.json campgrounds_audit.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/sd`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
 
-Batches applied: p3-560 (2026-11-21; 5833 dropped on presence, 5873 held as an ask, 5864 unread/Cloudflare, 8 applied).
+Batches applied: p3-560 (2026-11-21; 5833 dropped on presence, 5873 dropped on AWH's word, 5864 unread/Cloudflare, 8 applied).
