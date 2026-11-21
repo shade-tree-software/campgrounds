@@ -1,0 +1,61 @@
+{
+ "id": 5783,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.recreation.gov/camping/campgrounds/10244184 (facility record, notices, rate table and campsite catalog via the public api/camps endpoints, read 2026-11-21)",
+  "https://www.fs.usda.gov/r02/blackhills/recreation/boxelder-forks-campground (read 2026-11-21)",
+  "Esri World Imagery with the rec.gov per-site coordinates plotted"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov 10244184 notices ('These campsites are non-electric sites'; 'There is no water available at this campground'); catalog: all 13 sites STANDARD NONELECTRIC",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 13, "max_rig_ft": 60},
+   "source": "recreation.gov campsite catalog 10244184: North Loop 1-8, 10, 11 and South Loop 12-14 (no site 9), all STANDARD NONELECTRIC taking RVs/trailers, Max Vehicle Length 38-60 ft (most 45)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false},
+   "source": "recreation.gov 10244184 notice 'There is no water available at this campground', amenities 'Pit Toilets'; FS page 'Restrooms: Outhouse' (its water section says potable water - see flags)",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "platform": "none", "fcfs": "always"},
+   "source": "FS page ('Reservations: Campsites are first-come, first-served'); recreation.gov 10244184 lists only a 'First-come, First-served Season' and every catalog site is non-reservable",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 15,
+    "nightly_high": 26,
+    "currency": "USD",
+    "checked": "2026",
+    "extra_vehicle": {"included": 1, "amount": 6, "per": "night"},
+    "note": "$26 a night mid-May through Sep 30; $15 at the three sites outside the gate after that. A car towed behind the RV is not an extra vehicle."
+   },
+   "source": "recreation.gov rates (First-come, First-served Season 2026-05-16..2026-09-30 and 2027-05-15..2027-09-30: $26) and notices ('$15.00 per First Come First Served campsite of which there are 3 available'; '$6.00 per night on the second vehicle ... provided these vehicles are not joined to the first vehicle by a hitch and towed'); FS page shows $24 peak / $15 shoulder (older)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"opens": "05-15", "closes": "12-15", "note": "Most of the campground closes Sep 30; three sites outside the gate stay open, without water, until mid-December."},
+   "source": "FS page ('Sites outside the main campground gate will remain open until December 15'; 'the majority of Boxelder Forks Campground closes for the season on September 30 each year'); rec.gov notice ('During the off season (from 10/01 until 12/14th) the USFS operates this campground')",
+   "method": "manual"
+  }
+ },
+ "note": "Forest Service campground in ponderosa pine and white spruce along Boxelder Creek, 1.5 mi west of Nemo on Forest Road 140; trout fishing steps from the loops. The South Boxelder trailhead links to the Centennial Trail, and OHV trails run from the area. Generators 6 AM-10 PM. --Claude",
+ "summary": "rec.gov + FS read: 13 non-electric first-come sites (38-60 ft), no water per rec.gov, vault toilets; $26 mid-May-Sep 30 (rec.gov), three sites outside the gate to Dec 15 at $15. Stored booking (reservable on rec.gov) was wrong: first-come only. Not waterfront kept. OHV trails nearby (general campground, flag only).",
+ "flags": [
+  "BOOKING CHANGE: stored reservable/recreation.gov (derived from the note) -> first-come only. The FS page says 'Campsites are first-come, first-served' and rec.gov offers no reservable sites (its rate table is a 'First-come, First-served Season').",
+  "WATER CONFLICT: rec.gov notice 'There is no water available at this campground' vs the FS page's 'Potable water is available at this site. Water is turned off from early October through mid-May.' Written potable_water false on the rule 'trust rec.gov over the FS page'; reviewer may prefer to leave it absent.",
+  "FEE: rec.gov $26 (2026-2028 seasons) vs FS page $24 peak; stored $24 replaced with rec.gov's figure.",
+  "SEASON: FS page also says 'three sites are available year-round outside the main gate' with no winter plowing, but its current-conditions banner and rec.gov both say Dec 14/15; written as May 15-Dec 15.",
+  "OHV: rec.gov 'Dozens of miles of OHV trails originate in the area' / 'easy access to both motorized and non-motorized recreation' - a general creekside campground near OHV trails, not a staging camp. Flag only.",
+  "WATERFRONT: not waterfront kept. Boxelder Creek's forks run under conifer canopy beside the South Loop; sites 13 (44.19769,-103.53468) and 14 (44.19737,-103.53423) sit ~15-30 m from the eastern channel line but behind a tree line, with no open ground to the water visible. Stored evidence stands.",
+  "PHONE: (605) 343-1567 (Mystic RD, Rapid City) -> (605) 642-4622 (Northern Hills Ranger District, Spearfish), the office the FS page now lists for this campground.",
+  "SITES: stored note said 'North 1-11, South 12-14'; the catalog has North 1-8, 10, 11 and South 12-14 (13 sites; the FS page says 14).",
+  "PIN: stored 44.19750,-103.53550 is ~105 m S of the site centroid 44.1984,-103.5358; no move."
+ ]
+}

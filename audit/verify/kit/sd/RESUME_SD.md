@@ -14,7 +14,7 @@ travelsouthdakota.com 403; campsd.gooutdoorssouthdakota.com does not resolve (20
 
 ## RESUME HERE
 
-Not started: first batch p3-560 waits for AWH's go-ahead (WY began only after AWH pushed + deployed SK and said to start).
+STARTED 2026-11-21 on AWH's go-ahead: p3-560 applied; next batch p3-561 (build + launch as below). Since the 2026-11-21 sidecar split, every commit also stages campgrounds_audit.json (verify_scan + evidence live there).
 
 Build + launch (repo root; S = session scratch dir):
 
@@ -35,6 +35,6 @@ Apply a batch (as WY):
 3. Post script (also replace inclusion_evidence where a flag gives "Suggested inclusion_evidence: '...'" - apply.py does not write evidence) `$S/post_p3-NNN.py` starting `exec(open("audit/verify/kit/post_head.py").read())`: pin / ph / web / wf / save(); run `python3 -I $S/post_p3-NNN.py p3-NNN`. Check stored strings first (phones may be None or '').
 4. `timeout 500 python3 -m unittest tests.test_campground_schema tests.test_closures tests.test_season_filter tests.test_link_labels`
 5. Append to audit/verify/criteria_followups.md + waterfront_leads.md (asks.md for questions), copy $S/p3-NNN/SD_NOTES_p3-NNN.md here, extend "Batches applied" below, add lessons to lessons.txt.
-6. `git add campgrounds.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/sd`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
+6. `git add campgrounds.json campgrounds_audit.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/sd`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
 
-Batches applied: (none yet)
+Batches applied: p3-560 (2026-11-21; 5833 dropped on presence, 5873 held as an ask, 5864 unread/Cloudflare, 8 applied).

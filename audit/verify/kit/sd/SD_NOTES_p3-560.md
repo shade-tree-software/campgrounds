@@ -1,0 +1,13 @@
+# SD notes p3-560
+- 5833 Ace's: site dead (Wix 404), wayback May 2026; Google 4.9/17; RVL price3 avg41; presence flag
+- 5754 BFR dispersed: lakefront kept (Middle Pt pull-offs), pin -> 44.7286,-103.7176, website is Rocky Pt gateway; RMP designated sites unread
+- 13129 Bin2Quinn: $52.76 site / $58 LC 2027; Badlands 14 km gateway; G 4.5/47; season 5/15-10/15; lakeview lead
+- 5774 Bismarck Lake: 20 sites, $30 / $15 offseason 6 sites; pin 570 m; not wf kept (evidence wrong side)
+- 5783 Boxelder Forks: FCFS only (stored reservable wrong); $26 rec.gov; no water per rec.gov; Dec 15; phone -> 642-4622; OHV flag
+- 5801 Broken Arrow: $59/2, Wind Cave 19 km gateway; horse camp but horses in perimeter barns (flag); G 4.9/224; season 5/1-10/1
+- 5873 Brooks Memorial Park: no own page; camping unconfirmed (Dyrt walk-in tent); phone ask/drop candidate
+- 5866 Burke City Park: city site confirms 'camping hookups'; details unconfirmed; web/phone from city site
+- 5756 Burke Lake RA: $16, 15 fcfs, year-round; pin 480 m -> 43.1791,-99.2602; not wf kept; phone 605-337-2587
+- 5831 Camping 109: $35-40 RoverPass claimed, 40 sites 65 ft, GS 4.6(25), mostly nightly (37/40 bookable), not wf
+- 5864 Castlewood: castlewood.sdcity.gov + castlewoodcity.com both Cloudflare 403 (Attention Required) 2026-11-21; NO RESULT written (own pages refuse)
+- 13129 fix: protected season/hookups.note/booking.url moved to flags after dry run
