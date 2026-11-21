@@ -746,7 +746,7 @@ Applied as kept. Cheapest RV night $48 + 5.5% tax (just under the $50 gate), no 
 - **6015 Coldwater Lake Park** (Ashley): ~25 trailers packed in rows against 15 stated sites; no rate published anywhere; Facebook login-walled; operator unnamed (ownership local unconfirmed). Mostly-seasonal drop, or a call to (701) 830-0110?
 - **6021 Hague City Park**: no live official page; 2019 ND Tourism capture "4 full-service RV hook-ups ... one dumping station"; HHS 2025 licence "CITY OF HAGUE TRAILER PARK", 4 lots (expired 12/31/2025); pin on a Main Street intersection, no pads visible. Keep on the licence, or drop for no current presence?
 
-## ND no-presence city parks (u-10, 2026-11-21) - OPEN (applied as kept; drop?)
+## ND no-presence city parks (u-10, 2026-11-21) - OPEN (applied as kept; drop?) -> AWH 2026-11-21: DROP 6032 Monango + 6048 Sarles (dropped); KEEP 6039 Columbus + 6042 Dickey
 - **6032 Monango City Park**: ND Tourism listing removed (404), last capture 2020 ("4 sites"); no city site; not on the ND HHS licensed list; only current description is Campendium's (two 30 A outlets on the park building, RVs on grass); no pads on imagery. Unsourced 30 A / flush toilets / $0 fees cleared.
 - **6048 Sarles City Park**: ND Tourism listing removed (404); last capture 2023-03-27 "Primitive camping, shelter with tables and water"; no city site; not on the HHS list; imagery a treed lawn block, no pads, lanes or RVs. Dead link removed.
 - Weaker (lean keep): **6039 Columbus City Park** (2025 capture "Tent, 2 RV sites with electric"; listing unpublished since; stored website was Columbus, MONTANA - both links removed) and **6042 Dickey City Park** (2025 capture "12 RV sites, electric/sewer hook-ups, dump station"; listing unpublished; dead link removed).

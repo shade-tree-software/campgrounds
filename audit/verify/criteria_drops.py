@@ -617,6 +617,8 @@ DROPS = {
     6015: ('2026-11-21', "Coldwater Lake Park (Ashley ND): AWH drop - thin evidence, looks mostly seasonal, no rate anywhere", "u-09: ~25 trailers packed in rows against 15 stated sites on Esri imagery; no rate published; Facebook login-walled; operator unnamed"),
     6021: ('2026-11-21', "Hague City Park (Hague ND): AWH drop - thin evidence, no current presence", "u-09: no live official page; last ND Tourism capture 2019-07-20 '4 full-service RV hook-ups'; ND HHS licence 'CITY OF HAGUE TRAILER PARK' 4 lots expired 12/31/2025; no pads visible at the pin"),
     4097: ('2026-11-21', "Hazen's Notch Campground (Lowell VT): AWH drop - US$50 exactly with no gateway/Good Sam, leaning seasonal", "u-11: operator site $50/night (2026; $40 in 2025-07), weekly $300 / monthly $900 / seasonal $2,100, phone booking only; Google 4.5/17; 2026 review 'Most of the people there seem to be seasonal campers'; a summer-2026 weekend rented whole for a private party; ~12 trailers over-wintering on leaf-off imagery"),
+    6032: ('2026-11-21', "Monango City Park (Monango ND): AWH drop - no current presence", "u-10: ND Tourism listing removed (404), last capture 2020 '4 sites'; no city site; not on the ND HHS licensed RV park list; only current description Campendium's (two 30 A outlets on the park building, RVs on grass); no pads on Esri imagery"),
+    6048: ('2026-11-21', "Sarles City Park (Sarles ND): AWH drop - no current presence", "u-10: ND Tourism listing removed (404); last capture 2023-03-27 'Primitive camping, shelter with tables and water'; no city site; not on the ND HHS licensed list; imagery a treed lawn block, no pads, lanes or RVs"),
 }
 
 if __name__ == "__main__":
