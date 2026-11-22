@@ -1,0 +1,65 @@
+{
+ "id": 5799,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://threeflagsrvpark.com/index.html (operator, read 2026-11-22): 'We are a 40 and older campground and dog friendly.'; 'Easily accessible off I90 just 5 miles west of Rapid City. We do run along I90'; 'Our RV sites are LARGE and ALL PULL THROUGH! 30' wide x 90' long'; 'We also provide RV storage in the winter'; Book Now -> https://parkwith.us/camps/three-flags-rv-park",
+  "https://threeflagsrvpark.com/rates.html (operator, read 2026-11-22): 'RV Rates are For Two People: RV 30 amp Electric and Water - $47.00 per nigh t RV 50 amp Electric and Water - $53.00 per night RV 30 amp Electric/Water/Sewer - $52.00 per night RV 50 amp Electric/Water/Sewer - $58.00 per night'; 'Additional persons - $4.00 per person per night for RVers'; 'Tent Camping - $15.00 per person per night'; 'Shelter with 20amp Electric and Light - $40.00'; weekly $230.30-$284.20, monthly $760-$970; '10% Discount Good Sam, AARP, Senior, Military, Veterans, First Responders'; 'No discounts are accepted during the Sturgis Motorcycle Rally, August 6th thru 15th, 2027'; '3.5% WILL BE ADDED ON YOUR CREDIT CARD'; '50% Discount Passport America CASH ONLY AND 3 DAY MAXIMUM STAY ... No discounts given from June 15 to August 20th for Passport'; 'OUR CHECK IN TIME IS 1PM AND CHECK OUT IS 11AM'; '$20.00 CANCELLATION FEE'",
+  "https://threeflagsrvpark.com/amenities.html (operator, read 2026-11-22): 'Grass spaces with a Gravel Pad'; '20/30/50 amp Electric Service'; 'Full Service Sites include sewer, water and electricity'; 'Propane Filling Station'; 'High Speed Wireless Internet'; 'Coin Operated Laundry'; 'Hot Showers'; 'Dump Station'",
+  "https://threeflagsrvpark.com/sturgis-motorcycle-rally-rates.html (operator, read 2026-11-22): rally full hookups 'minimum stay of 9 days', $650-$900 per 9 days; E/W by the day $80/$90; 'Please no children.'; 'YOU MUST CALL TO MAKE YOUR RESERVATIONS'",
+  "https://parkwith.us/camps/three-flags-rv-park (Park With Us booking page, read 2026-11-22): 'Please note that only guests of at least 40 years of age are permitted in the park. Unless confirmed by management'; embedded config 'season_start_mm_dd':'04-01','season_end_mm_dd':'10-15', 'max_stay_nights':14, 'max_stay_nights_message':'For reservations longer than %% nights, please call us at 605-787-7898'; RV Site / Tent Site / Shelter bookable online",
+  "trip_data/goodsam_parks.json (2026-10-02): listed, gs false, military false",
+  "audit/price_research/gateways.py 44.1742,-103.3185 (2026-11-21): Mount Rushmore gateway 35 km",
+  "Google Maps panel (gm.py, read 2026-11-21): 'Three Flags RV Park' 4.5 stars over 192 reviews, 44.1738898,-103.3183785, phone 605-787-7898",
+  "Esri World_Imagery 44.1742,-103.3185 (hw 250 m), 2026-11-22: pin inside the pull-through rows between I-90/railroad and open grassland; ~40 RVs in three loops; no water"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 47, "nightly_high": 58, "currency": "USD", "checked": "2026", "note": "RV rates for two people: 30-amp electric and water $47, 50-amp electric and water $53, full hookups $52 (30 A) or $58 (50 A); weekly and monthly rates posted. 3.5% added on card payments. Sturgis Rally: full hookups only as 9-night blocks ($800-$900), booked by phone, no discounts.", "extra_person": {"included": 2, "amount": 4, "per": "night"}},
+   "source": "https://threeflagsrvpark.com/rates.html + /sturgis-motorcycle-rally-rates.html, read 2026-11-22",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://threeflagsrvpark.com/amenities.html ('20/30/50 amp Electric Service'; 'Full Service Sites include sewer, water and electricity')",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": 90, "pull_through": true},
+   "source": "https://threeflagsrvpark.com/index.html ('ALL PULL THROUGH! 30' wide x 90' long')",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"wifi": true, "dump": true, "laundry": true, "showers": true},
+   "source": "https://threeflagsrvpark.com/amenities.html ('High Speed Wireless Internet', 'Coin Operated Laundry', 'Hot Showers', 'Dump Station')",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-01", "closes": "10-15"},
+   "source": "https://parkwith.us/camps/three-flags-rv-park (booking config season_start_mm_dd 04-01, season_end_mm_dd 10-15)",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://parkwith.us/camps/three-flags-rv-park", "note": "Online through Park With Us for stays up to 14 nights; longer stays, monthly sites, rally sites and arrivals within 72 hours by phone. Check-in 1 p.m., check-out 11 a.m."},
+   "source": "https://threeflagsrvpark.com/rates.html ('Call us at (605)787-7898 to reserve your site or book online') + /contact-us.html ('Please call for Reservations If you plan to arrive within 72 hours') + Park With Us config (max_stay_nights 14)",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {"good_sam": true, "military": true, "passport_america": true},
+   "source": "https://threeflagsrvpark.com/rates.html ('10% Discount Good Sam, AARP, Senior, Military, Veterans, First Responders'; '50% Discount Passport America CASH ONLY AND 3 DAY MAXIMUM STAY')",
+   "method": "manual"
+  }
+ },
+ "note": "Adults-only RV park at Black Hawk, 5 mi west of Rapid City, on open grassland between I-90 and the railroad (road noise). Grass sites with gravel pads; tent sites and 20-amp shelters too. Only guests 40 and older unless management agrees. Propane, mail and package receiving, an RV repair shop on site, winter RV storage. Passport America 50% is cash-only, 3 nights max and not mid-June to Aug 20. --Claude",
+ "summary": "Operator site + Park With Us engine: 41-ish all pull-through 30x90 ft FHU/E-W sites, 20/30/50 A, $47-$58 for two (2027 rally dates on the page), Apr 1-Oct 15, online booking via Park With Us. Hard 40-and-older age rule confirmed. Groups refreshed; discounts good_sam false -> true (operator's 10%), military/PA added; booking url -> Park With Us. Price passes. Google 4.5/192. Not waterfront; pin fine.",
+ "flags": [
+  "AGE RESTRICTION (reviewer): hard 40-and-older rule - 'We are a 40 and older campground' (home page) and 'only guests of at least 40 years of age are permitted in the park. Unless confirmed by management' (booking page); rally page 'Please no children.' Not a 55+/60+ park, so not an automatic drop candidate under the 2026-11-11 rule, but an age-restricted park - reviewer's call.",
+  "PRICE GATE: passes - cheapest RV night $47 for two (30 A water/electric), $42.30 with the operator's 10% Good Sam discount; +3.5% on cards. Summer peak is the same table; Sturgis Rally full hookups only as 9-night blocks ($650-$900). Not a Good Sam Park in the directory (gs false) but the operator posts a 10% Good Sam/military/senior discount. Mount Rushmore gateway 35 km.",
+  "GOOGLE: 4.5 stars over 192 reviews.",
+  "LONG-STAY: weekly and monthly rates posted, but online booking sells single nights (up to 14) and imagery shows a transient-style park. Passes.",
+  "DISCOUNTS: good_sam false -> true (operator: '10% Discount Good Sam'), military true, passport_america true added. The Good Sam directory flag (isGsPark) is false - the false came from that pass; the operator's own posted discount is the stronger source.",
+  "BOOKING: url added https://parkwith.us/camps/three-flags-rv-park (Park With Us engine, platform operator); stored platform phone -> operator.",
+  "SITES: count 41 (from the old note) not restated on the operator site; left.",
+  "PHONE 605-787-7898 (also 605-786-3427 on the contact page) and WEBSITE confirmed.",
+  "WATERFRONT: not waterfront confirmed. PIN: stored 44.17420,-103.31850 inside the site rows - fine."
+ ]
+}

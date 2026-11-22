@@ -1,0 +1,54 @@
+{
+ "id": 5803,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.roverpass.com/c/red-barn-rv-park-tea-sd/ (read 2026-11-21): listing shows 'Claim my Campground' and price_daily_low 0 / no rates; the 2026-10-14 RoverPass API capture (audit/price_research/roverpass_ops_2026-10-14/liveprobe_2026-10-14/live_urls.json) has 'isBookable': false, 'isRequest': true - an unclaimed request-only listing, not a booking channel",
+  "http://web.archive.org/web/20251120002533/https://www.goodsam.com/campgrounds-rv-parks/south-dakota/sioux-falls/red-barn-rv-park-780003862 (Good Sam directory, Wayback 2025-11-20; goodsam.com refuses plain HTTP): 'From $55 / night'; '2.7 out of 5 stars from 9 reviews'; 'Conveniently located off I-29, this laid back campground has true charm, such as the laundry and washrooms located in the historic old farm house. ... Family owned & operated.'; 'Open all year'; 'Limited Facilities - Winter'; 'Road type: Gravel'; 'Total spaces: 73', 'Spaces available: 10', 'Seasonal Sites: 63', 'Max length: 60', 'Pull-thrus: 10', 'Pull-thru size: 25 x 60', 'Number of full hookups: 10', 'Amps: 30 Amp/50 Amp', 'Max Amps: 50'; amenities Dump station, Laundry, Restroom and Showers, Wifi; phone 605-368-2268",
+  "trip_data/goodsam_parks.json (Good Sam directory fetch 2026-10-02): 'Red Barn RV Park', Tea, gs true, military true",
+  "https://campgrounds.rvlife.com/regions/south-dakota/tea/red-barn-rv-park-2607 (read 2026-11-21): website '' (none), avg_rate 41, rating_avg 7.67 over 92 reviews, phone 6053682268",
+  "Google Maps panel (gm.py, read 2026-11-21): 'Red Barn RV Park' 4.1 stars over 177 reviews, 47003 272nd St, Tea, 43.445647,-96.8057277, phone +1 605-368-2268, NO website listed; newest reviews (gmrev.py, read 2026-11-21) include 'We just had a one night stay', 'we stayed here for two weeks in early June ... and two weeks in late July', 'My husband and his work crew stayed here while working in the area', 'Older RV park dirt and gravel roads, muddy during wet weather. Dated bathrooms and showers, but very clean'",
+  "http://redbarnrvpark.com/ (read 2026-11-21): redirects to redbarnmobilehomepark.com - Red Barn Mobile Home Park, Safford AZ, a different business",
+  "audit/price_research/gateways.py 43.4453,-96.8045 (2026-11-21): 'none within 40 km; nearest: Minneapolis 330 km'",
+  "Esri World_Imagery 43.4453,-96.8045 (hw 250 m), 2026-11-21: pin inside a wooded grove of gravel loops with RVs among the trees south of 272nd St; farmhouse/office and pool at the centre; a small stock pond lies ~200 m south-east outside the park; no other water"
+ ],
+ "groups": {
+  "booking": {
+   "values": {"reservable": null, "platform": "phone"},
+   "source": "RoverPass listing is unclaimed (isBookable false, 'Claim my Campground'); no operator website or engine exists (Google, RV Life list none); Good Sam and Google list phone 605-368-2268",
+   "method": "reported"
+  },
+  "sites": {
+   "values": {"count": 73, "max_rig_ft": 60, "pull_through": true},
+   "source": "Good Sam directory via Wayback 2025-11-20 ('Total spaces: 73', 'Max length: 60', 'Pull-thrus: 10')",
+   "method": "reported"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "Good Sam directory via Wayback 2025-11-20 ('Number of full hookups: 10', 'Amps: 30 Amp/50 Amp', 'Max Amps: 50')",
+   "method": "reported"
+  },
+  "facilities": {
+   "values": {"laundry": true, "showers": true, "dump": true, "wifi": true},
+   "source": "Good Sam directory via Wayback 2025-11-20 (Dump station, Laundry, Restroom and Showers, Wifi)",
+   "method": "reported"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Open all year with limited facilities in winter."},
+   "source": "Good Sam directory via Wayback 2025-11-20 ('Open all year'; 'Limited Facilities - Winter')",
+   "method": "reported"
+  }
+ },
+ "note": "Older family-run RV park in a shaded grove off I-29 at Tea, about 10 minutes from Sioux Falls. Gravel roads that turn muddy in wet weather; laundry and washrooms in the old farmhouse, and a pool. Mostly seasonal: about 10 of its 73 sites are sold by the night. No website or online booking; call ahead. --Claude",
+ "summary": "No operator website (redbarnrvpark.com is an Arizona park); RoverPass unclaimed. Good Sam (Wayback 2025-11) gives 73 spaces of which 63 seasonal / 10 available, 30/50 A, 10 full-hookup pull-thrus to 60 ft, open all year, 'From $55'. Google 4.1/177, RV Life avg $41. DROP CANDIDATE: mostly seasonal with no operator rate or presence beyond Google (long-stay test 2). Not waterfront; pin fine.",
+ "flags": [
+  "DROP CANDIDATE (long-stay / mostly seasonal + iffy): Good Sam directory (Wayback 2025-11-20) 'Total spaces: 73', 'Spaces available: 10', 'Seasonal Sites: 63' - about 1 site in 7 sold by the night (passes test 4 at 10%+, but mostly seasonal). Long-stay test 2: no operator-posted nightly rate anywhere - no website, no engine (RoverPass unclaimed, isBookable false); the only figures are aggregators (Good Sam 'From $55 / night', RV Life avg_rate $41, a June-2025 Roadtrippers report $29). Reviews mention work crews and two-week stays alongside one-night stays. Per the 2026-11-11 rule (mostly seasonal AND iffy: no rate, no website) this is a drop candidate; reviewer's call.",
+  "PRICE GATE (unconfirmed): Good Sam's 'From $55 / night' is over $50; it is a Good Sam Park (directory gs true, 2026-10-02), so 10% off = $49.50 - passes narrowly if that figure holds. No gateway within 40 km. Price not written (aggregator-only, conflicting).",
+  "GOOGLE: 4.1 stars over 177 reviews (mediocre, under ~4.5); Good Sam reviews 2.7/5 over 9; RV Life 7.67/10 over 92. Recent Google reviews include complaints about management ('felt more like power trips than professional customer service') and about a work crew being 'constantly criticized'.",
+  "WEBSITE: https://www.roverpass.com/c/red-barn-rv-park-tea-sd/ -> '' (unclaimed RoverPass listing is not a booking channel; the park has no website - Google and RV Life list none; redbarnrvpark.com belongs to Red Barn Mobile Home Park, Safford AZ). PHONE 605-368-2268 confirmed (Google, Good Sam).",
+  "BOOKING: platform roverpass -> phone; reservable true (from the old note 'Reservable via RoverPass') cleared to unknown.",
+  "SITES: stored count 76 (note prose) -> 73 (Good Sam 'Total spaces'); the old note's '67 pull-through' is contradicted by Good Sam 'Pull-thrus: 10'.",
+  "SEASON: Good Sam 'Open all year' (limited facilities in winter) written as reported; AllStays says Apr 1-Nov 1 (aggregator) - unconfirmed by any operator page.",
+  "Suggested inclusion_evidence: 'Good Sam directory (Wayback 2025-11-20): 73 spaces (63 seasonal, 10 transient), 30/50 A full-hookup pull-thrus to 60 ft; Google Maps 4.1/177 with phone 605-368-2268 and reviews of overnight stays; no website (RoverPass unclaimed). Esri imagery: gravel loops in a wooded grove at 47003 272nd St, Tea.'",
+  "WATERFRONT: not waterfront confirmed. PIN: stored 43.4453,-96.8045 is in the park (Google 43.4456,-96.8057, ~100 m) - fine."
+ ]
+}

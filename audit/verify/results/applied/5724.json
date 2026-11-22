@@ -1,0 +1,48 @@
+{
+ "id": 5724,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/union-grove-state-park/ (GFP park page, read 2026-11-22): 'Campers enjoy the quiet well-shaded campsites, and the horse camp is the perfect base for a weekend of riding.'; 'Campsites - electrical: $30 per night Campsites - non-electrical: $16 per night (tent only)'; 'Open: Year-round. Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed. Please contact the park directly for current status. Vault toilets usually remain open.'; 'Park Size: 25 campsites, including 4 horse campsites'; 'Directions: 11 miles south of Beresford off I-29, Exit 38'; amenities 'Drinking Water', 'Dump Station', 'Electrical Campsite(s)', 'Flush Toilets', 'Horse Campsite(s)', 'Showers', 'Tent-only Campsite(s)', 'Vault Toilets (open year-round)'; 'All types of hunting is allowed within the park from October 1 until April 30'; 605.987.2263; GPS 42.92024,-96.78532",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=70 (GFP engine, header 'Union Grove State Park', unit list parsed 2026-11-22): 01E, 02E, 07E-21E electric 'Amp Service: 20/30/50', $30, Max Length 30-85 ft, pull-throughs 01E/02E/07E/08E/11E/13E/15E/19E/21E (11E not reservable online); 22E-25E 'Equestrian Back-in Campsite' 20/30 A, 60 ft, at ~42.9233,-96.7707; tent-only 3, 4, 5 ($16, 10-20 ft); V1 back-in 20/30/50 $34 not reservable online; 'Closed Season' blackouts 2025-11-18 to 2026-03-19/03-31 on every campsite; RV site coordinates 42.9209-42.9220, -96.7790..-96.7806",
+  "Esri World_Imagery 42.9212,-96.7790 (hw 450 m) with stored pin and engine site points, 2026-11-22: the campground loop sits under woods; stored pin 42.9193,-96.7828 is on the park road/buildings ~330 m SW of the loop; nearest Brule Creek meander ~250 m north of site 21E through forest"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 25, "max_rig_ft": 85, "pull_through": true},
+   "source": "GFP park page ('25 campsites, including 4 horse campsites') + engine facID=70 (08E 'Max Length: 85', Pull-Thru Campsite units)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=70 ('Amp Service: 20/30/50' on 01E-21E)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"potable_water": true, "dump": true, "showers": true, "flush_toilets": true, "vault_toilets": true},
+   "source": "https://gfp.sd.gov/parks/detail/union-grove-state-park/ (amenities: Drinking Water, Dump Station, Flush Toilets, Showers, Vault Toilets (open year-round))",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"note": "Between Oct 1 and Apr 30 the showers, flush toilets and water may be shut off; vault toilets stay open."},
+   "source": "https://gfp.sd.gov/parks/detail/union-grove-state-park/ ('Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed ... Vault toilets usually remain open.')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=70"},
+   "source": "GFP park page ('Make reservation online or call 1.800.710.2267') + engine facID=70",
+   "method": "manual"
+  }
+ },
+ "note": "Small quiet state park on Brule Creek, 11 mi south of Beresford off I-29 Exit 38: well-shaded electric sites in a wooded loop, three tent-only sites, and a separate four-site horse camp about 700 m east. Horse/bike and hiking trails along the creek; hunting is allowed in the park Oct 1-Apr 30. --Claude",
+ "summary": "GFP page + engine facID=70: 25 sites - 17 bookable electric 20/30/50 A RV sites (30-85 ft, nine pull-throughs), V1, 4 equestrian, 3 tent-only; $30 electric, $16 tent-only; year-round with water off Oct-Apr. Sites/hookups/facilities/booking written; campsd link replaced. Fees base should be the $23 electric tier (non-electric is tent-only) - manual, flagged. Pin ~330 m off -> campground loop. Not waterfront.",
+ "flags": [
+  "WEBSITE: 'https://gfp.sd.gov/parks/detail/union-grove-state-park/\\nhttps://campsd.gooutdoorssouthdakota.com/' -> 'https://gfp.sd.gov/parks/detail/union-grove-state-park/\\nhttps://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=70' (facID=70 header reads 'Union Grove State Park').",
+  "FEES (manual group, not overwritten): the $16 non-electric sites are tent-only ('$16 per night (tent only)'; engine units 3/4/5 are 'Tent Only', 10-20 ft), so the cheapest night a 23-ft rig can book is electric $30. Suggest nightly_low 16 -> 23 (nightly_high 23, surcharges.electric 7 unchanged) to match the other GFP entries with tent-only non-electric sites (e.g. Big Sioux 5710).",
+  "PIN MOVE: stored 42.9193,-96.7828 is on the park road ~330 m SW of the campground. Suggested 42.9213,-96.7798 (centre of the 01E-21E loop per the engine's site coordinates). The four horse sites are a separate camp at ~42.9233,-96.7707.",
+  "HORSE SITES: 4 'Equestrian Back-in Campsite' units (22E-25E) in their own horse camp ~700 m east of the main loop; the 17 general RV sites are separate. General campground with horse sites - keep.",
+  "BOOKING SEASON: the engine blocks every campsite as 'Closed Season' 2025-11-18 to 2026-03-19/31; camping itself is year-round (GFP 'Open: Year-round').",
+  "SITE V1: back-in 20/30/50 A at $34, not reservable online - likely a host/volunteer pad; not counted.",
+  "PHONE 605.987.2263 confirmed.",
+  "WATERFRONT: not waterfront confirmed (Brule Creek ~250 m north of the loop through woods; stored evidence said ~500 m west - the meander north is closer but still far)."
+ ]
+}

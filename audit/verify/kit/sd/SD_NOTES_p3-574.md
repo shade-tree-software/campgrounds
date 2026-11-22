@@ -1,0 +1,12 @@
+# SD notes p3-574
+- 5803 Red Barn DONE: drop cand (63/73 seasonal per GS, no website/rate); website roverpass -> ''; booking -> phone
+- 5782 Rod & Gun DONE: fees 15-26 (rec.gov 26 vs FS 24), season 05-15..11-30, max 44
+- 13152 Rush No More DONE: fees 39-89 NewBook; GS park; curation_note replace; exit 37
+- 5813 Sexauer DONE: confirmed; 4 pull-throughs; water/sewer false; activityreg url
+- 13126 Sleepy Hollow DONE: confirmed; gate passes by Badlands gateway; Firefly url flag
+- 5830 SD State Fair DONE: year-round $25 confirmed; pin move 425 m; website -> year-round page
+- 5826 South Whitlock DONE: phone '' -> 605-765-9762; platform phone; 71 FHU $42
+- 5799 Three Flags DONE: 40+ hard age rule flag; Park With Us; GS discount true
+- 5724 Union Grove DONE: facID=70; pin move 330 m; fees base flag
+- 5737 West Bend DONE: lakefront kept (45E-59E odd, 10-15 m); pin 240 m ok
+- 5743 West Pollock DONE: lakeview kept; phone '' -> 605.223.5563
