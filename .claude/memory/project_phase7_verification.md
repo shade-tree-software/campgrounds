@@ -1,6 +1,6 @@
 ---
 name: project-phase7-verification
-description: "WI COMPLETE 2026-11-17; SK COMPLETE 2026-11-19 (queue p3-520..535, splits +15709..15717, leads +15718..15726; kit/sk/RESUME_SK.md); WY COMPLETE 2026-11-20 (queue p3-536..559, leads +15727..15745, split +15746; kit/wy/RESUME_WY.md); all WY asks answered + applied 2026-11-20 (+15747 Blackrock Meadows; next id 15748; no open asks); UNREAD RETRY PASS COMPLETE 2026-11-21 (u-01..u-12, kit/unread/RESUME_UNREAD.md; AWH answered most asks; still open: 5979/6010 + ND no-presence 6032/6048/6039/6042); SD STARTED 2026-11-21 on AWH go-ahead (p3-560 first; resume from audit/verify/kit/sd/RESUME_SD.md); ONE agent at a time"
+description: "WI COMPLETE 2026-11-17; SK COMPLETE 2026-11-19 (queue p3-520..535, splits +15709..15717, leads +15718..15726; kit/sk/RESUME_SK.md); WY COMPLETE 2026-11-20 (queue p3-536..559, leads +15727..15745, split +15746; kit/wy/RESUME_WY.md); all WY asks answered + applied 2026-11-20 (+15747 Blackrock Meadows; next id 15748; no open asks); UNREAD RETRY PASS COMPLETE 2026-11-21 (u-01..u-12, kit/unread/RESUME_UNREAD.md; AWH answered most asks; still open: 5979/6010 + ND no-presence 6032/6048/6039/6042); SD QUEUE DONE 2026-11-22 (p3-560..579); SD LEADS STAGE running (leads/sd_leads.txt, 21 leads, one agent each), then splits + 5835 re-read; resume from audit/verify/kit/sd/RESUME_SD.md; ONE agent at a time"
 metadata:
   node_type: memory
   type: project
