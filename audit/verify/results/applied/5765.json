@@ -1,0 +1,55 @@
+{
+ "id": 5765,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/sica-hollow-state-park/ (read 2026-11-22): 'Adventurers, whether on horseback, foot, or mountain bike, can explore the potential of the 10 miles of multiuse trails.'; 'Campsites - non-electrical: $16 per night'; 'Horse Camp: $18 per night'; 'Open: Year-round'; 'Park Size: 14 Campsites'; 'Make reservation online or call 1.800.710.2267.'; 44950 Park Road; 605.910.4521; amenities Campground(s), Drinking Water, Horse Campsite(s), Horse Trail(s), Self-serve Entrance Kiosk(s), Vault Toilets (open year-round)",
+  "https://gfp.sd.gov/userdocs/sica_cg.pdf (GFP campground map, read 2026-11-22): 'All campsites are non-electric'; 'Equestrian sites include a 10'x10' corral'; a corral symbol is drawn beside sites 1-8 and 11-14; T9/T10 tent-only; '*Generators are permitted to run at all hours for campsites 1-4'; water, vault toilet, parking, hitching posts; RoyLake@state.sd.us | 605.910.4521",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=60 (read 2026-11-22; facilityName = 'Sica Hollow State Park' - right park): 14 units, all reservable, all $16 - 12 'Back-In Campsite Nonelectric' (Max Length 70 or 100), T9/T10 'Tent Only, no corrals'; site 7 'No horse corrals'; site 8 'Campsite does not have a horse corral. A corral will be added in the spring of 2025.'; per-site coordinates",
+  "Esri World_Imagery 2026-11-22 with the engine's site points: hw 350 m at 45.7405,-97.2390"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {
+    "electric": 0
+   },
+   "source": "GFP campground map 'All campsites are non-electric'; engine facID=60 'Amp Service: None' on every site, read 2026-11-22",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 12
+   },
+   "source": "GFP 'Park Size: 14 Campsites' less the two tent-only sites T9/T10 (engine facID=60 + GFP campground map), read 2026-11-22",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "vault_toilets": true,
+    "potable_water": true
+   },
+   "source": "GFP park page amenities 'Drinking Water', 'Vault Toilets (open year-round)', read 2026-11-22",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "fcfs": null
+   },
+   "source": "GFP park page 'Make reservation online or call 1.800.710.2267.'; engine facID=60 all 14 sites reservable online, read 2026-11-22 (FCFS comes from the state:SD row)",
+   "method": "manual"
+  }
+ },
+ "note": "GFP state park in a wooded ravine 15 miles NW of Sisseton (near Veblen), known for fall color and 10 miles of multiuse horse, hike and bike trails. A two-part campground in a meadow: sites 1-4 by the entrance and 5-14 about 300 m further in. Most sites are equestrian sites with a corral. --Claude",
+ "summary": "GFP page + campground map + engine facID 60 (right park): 14 sites (12 back-in RV + 2 tent), all non-electric $16 (horse camp $18), reservable, year-round, vault toilets, drinking water. DROP CANDIDATE under the horse rule: the GFP map draws a corral at every RV site and says 'Equestrian sites include a 10'x10' corral' - the horse sites are the RV sites, no separate general loop. Sites 8 -> 12 RV; booking fcfs some_sites cleared (policy row). Phone empty -> 605.910.4521. Website campsd -> facID=60. PIN off by ~820 m. Not waterfront confirmed.",
+ "flags": [
+  "DROP CANDIDATE (horse rule): GFP's campground map legend 'Equestrian sites include a 10'x10' corral' with a corral symbol beside sites 1-8 and 11-14; the engine says of site 8 'Campsite does not have a horse corral. A corral will be added in the spring of 2025.' and of site 7 'No horse corrals' - i.e. the corral is the norm, every RV site is (or is becoming) a horse site, and there is no separate general loop. GFP sells 'Horse Camp: $18 per night' next to 'Campsites - non-electrical: $16' but the engine shows no separate horse units. Matches the Smith Rapids pattern (every RV-fit site a horse site). Reviewer decides; the stored inclusion_evidence's 'general campground that also offers horse sites' is not what the 2026 map shows.",
+  "PIN MOVE: stored 45.74100,-97.22800 is ~820 m east of the campground (in the forest past site 13). Centroid of the 14 site points 45.74041,-97.23854 (between the 1-4 group at ~45.7413,-97.2417 and the 5-14 group at ~45.7400,-97.2375). Suggest 45.7401,-97.2380 (by sites 5-8, the main group).",
+  "PHONE: empty -> 605.910.4521 (GFP park page and campground map; the map pairs it with RoyLake@state.sd.us, so the park is run from Roy Lake).",
+  "WEBSITE: second line 'https://campsd.gooutdoorssouthdakota.com/' (dead) -> 'https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=60'.",
+  "SITES max_rig_ft stored 40 (from an older PDF) vs engine Max Length 70 (sites 1, 11-14) and 100 (sites 2-8); not rewritten - 100 on a primitive meadow pad looks like a placeholder. The 40 ft is no longer on any GFP source read; reviewer may clear it.",
+  "BOOKING: stored fcfs 'some_sites' (derived from note prose) cleared - the state:SD row carries FCFS; all 14 sites are reservable.",
+  "WATERFRONT not waterfront CONFIRMED: both site groups sit in an open meadow ringed by forest; no water body near (the park's streams are down in the wooded draws).",
+  "Note rewritten: dropped 'max RV length 40 ft' and 'Reservable but often first-come'; the note now says most sites are equestrian sites with a corral.",
+  "FEES: stored $16 (manual) confirmed on GFP and the engine. GFP also lists \"Horse Camp: $18 per night\" (not written - the fees group is manual; reviewer may add it to the fees note)."
+ ]
+}

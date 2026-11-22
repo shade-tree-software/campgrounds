@@ -1644,3 +1644,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5850 Stokes-Thomas (p3-569): lakeview kept; south-loop west edge ~30-35 m over grass + trees to a riprapped shore.
 - 5821 The Bay RV Park (p3-570): outer west/north sites 50-80 m from Lake Oahe behind the loop road + shrub band - possible lakeview lead (stored not waterfront).
 - 14591 385 Grill & Campground (p3-576): creekside lead for sites R38-R45 (not upgraded).
+- 13537 River Park (Baltic) (p3-578): riverfront lead - north-edge spurs ~43.7657,-96.7386..-96.7375 are 5-20 m from the Big Sioux over open grass on leaf-off imagery; no site map to tie site numbers.

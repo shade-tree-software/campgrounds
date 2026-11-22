@@ -1,0 +1,11 @@
+- 5767 DONE: lakefront confirmed (16,18,12), pin 790 m -> 44.5705,-100.5038, facID 43
+- 13556 DONE: lake vs city park conflation; fees 15, ownership flag, lead City Park
+- 5788 DONE: sites 9, FCFS, free, year-round
+- 5761 DONE: confirmed; dump/water added
+- 13154 DONE: lakefront confirmed 25E/30E/31E/33E/36E, facID 49
+- 13537 DONE: roverpass booking, riverfront lead
+- 14582 DONE: drop candidate (seasonal-looking, no operator price), not waterfront
+- 13557 DONE: fees 20/30, phone empty->583-2320
+- 13155 DONE: lakefront only Sheps South; split candidate; facID 59
+- 5765 DONE: horse-rule drop candidate; pin off 820 m; phone empty->605.910.4521
+- 13538 DONE: roverpass booking, phone empty->594-6721
