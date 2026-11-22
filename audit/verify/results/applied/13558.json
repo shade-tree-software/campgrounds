@@ -1,0 +1,28 @@
+{
+ "id": 13558,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://trippsd.com/campground (City of Tripp, read 2026-11-22): 'we do have a four or five spot campground for parking an RV. The cost of camping is $20.00, which you deposit in a box. The campground is located on the north end of Tripp Main Street, near the swimming pool.'; 'Park: https://portal.setyoursites.com/explore/campground/city-of-tripp'; 'Fairgrounds: https://portal.setyoursites.com/explore/campground/city-of-tripp-fairgrounds'; Tripp City Hall (605) 935-6332",
+  "Set Your Sites API (api.setyoursites.com/api/campgrounds/city-of-tripp + /availability for 2026-12-10 and 2027-06-15 + /calendar 365 days, read 2026-11-22): 'City of Tripp Campground', announcement 'Water is turned off for the season once it freezes.'; 4 sites (Site 1-4), price 25, siteLength 40, water true, sewer false, has30Amp/has50Amp true, minNights 1, maxNights 14, walkupEnabled true, reservationEnabled false; calendar 4 sites available every day 2026-11-22..2027-11-21, 0 reservable",
+  "Google Maps (headless, 2026-11-22): the search lands on Tripp City Hall (5.0 from 1), 105 S Main St, +1 605-935-6332 - no separate campground listing",
+  "Esri World_Imagery 2026-11-22: hw 200 m at the pin"
+ ],
+ "groups": {
+  "fees": {"values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "note": "Set Your Sites lists $25 a night; the city's page still says $20 in the drop box."}, "source": "Set Your Sites city-of-tripp availability (price 25 on all 4 sites), read 2026-11-22", "method": "manual"},
+  "hookups": {"values": {"electric": 50, "water": true, "sewer": false}, "source": "Set Your Sites city-of-tripp: has30Amp/has50Amp, water true, sewer false on all 4 sites, read 2026-11-22", "method": "manual"},
+  "sites": {"values": {"count": 4}, "source": "Set Your Sites city-of-tripp: Site 1-4 (city page 'a four or five spot campground'), read 2026-11-22", "method": "manual"},
+  "booking": {"values": {"reservable": false, "fcfs": "always", "platform": "operator", "url": "https://portal.setyoursites.com/explore/campground/city-of-tripp", "max_stay_nights": 14, "note": "Walk-up only: pay through Set Your Sites or in the drop box."}, "source": "Set Your Sites city-of-tripp: walkupEnabled true, reservationEnabled false, maxNights 14; trippsd.com/campground drop box, read 2026-11-22", "method": "manual"},
+  "season": {"values": {"year_round": true, "note": "Water is turned off for the season once it freezes."}, "source": "Set Your Sites city-of-tripp: walk-up open every day of the 365-day calendar from 2026-11-22, announcement 'Water is turned off for the season once it freezes.', read 2026-11-22", "method": "manual"}
+ },
+ "note": "City of Tripp campground at the north end of Main Street beside the swimming pool. --Claude",
+ "summary": "City page + Set Your Sites (city-of-tripp): 4 walk-up sites, $25 on the engine (city page still $20), 30/50 A + water, no sewer, max 14 nights, open all year (water off once it freezes). Fees 20 -> 25, hookups added, sites 5 -> 4, booking walk-up/SYS, season year-round. Phone/website confirmed. Lead: the city's separate Fairgrounds Campground (4 FHU sites, $20-25, walk-up). Not waterfront kept. Note rewritten.",
+ "flags": [
+  "FEES changed $20 -> $25: Set Your Sites prices all 4 sites at $25; trippsd.com/campground still says 'The cost of camping is $20.00, which you deposit in a box.'",
+  "SEASON: year_round written from the Set Your Sites calendar (walk-up open every day for the next 365 days) with the announcement 'Water is turned off for the season once it freezes.' The city page states no season.",
+  "LEAD: City of Tripp Fairgrounds Campground - a separate Set Your Sites campground (https://portal.setyoursites.com/explore/campground/city-of-tripp-fairgrounds, linked from trippsd.com/campground): Sites A-D, full hookups (water, sewer, 30/50 A), $25 (Site D $20), siteLength 60, walk-up only, max 14 nights. Not in campgrounds.json. Walk-up nightly sales on a public engine suggest ordinary nights outside events; location not pinned (probably the fairgrounds by the ballfields east of Main St).",
+  "PIN fine: 43.23375,-97.96585 is on Main St ~60 m from the pool; individual RV pads not identifiable on Esri.",
+  "WATERFRONT not waterfront KEPT (town lots, no water).",
+  "PHONE 605-935-6332 (City Hall) and WEBSITE https://trippsd.com/campground confirmed; the SYS link now sits in booking.url.",
+  "Note rewritten: dropped '4-5 RV spots' and 'Hookups aren't published - call City Hall' (fields now hold count and hookups)."
+ ]
+}
