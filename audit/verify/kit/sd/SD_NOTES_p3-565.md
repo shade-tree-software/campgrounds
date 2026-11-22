@@ -1,0 +1,13 @@
+# p3-565 working notes
+- 5811 Whispering Pines: written. W/E $48 passes; phone-only booking, 2-night min; Google 4.7/193.
+- 5817 Bob's Resort: written. $45 nightly, weekly/monthly/seasonal + mobile home park; 79 sites; phone booking; long-stay test 4 unmeasured (ResNexus).
+- 5768 Nomad View = FS Pinnacles Camping Area: written. 70 sites FCFS yr-round; pin move 650 m -> 43.8950,-102.2302; phone/web/name flags.
+- 13137 Chris': written. $53 W/E, GS 10% -> 47.70 passes, no gateway; Google 4.6/627.
+- 5849 Dell Rapids: written. riverfront -> riverview rec (loop road + trail); website 404 -> /campground/index.php; ReservationFriend.
+- 5851 Codington: written. lakeview confirmed; season May1-Oct1; campspot platform.
+- 5802 County Line: written. $10-48, phone booking, Google 4.6/152, seasonal spots flagged; GS logo vs derived false.
+- 15492 Custer KOA: written. Wayback KOA page + Oct capture; May1-Oct4; gateway pass; Google 4.6/447.
+- 5722 Stockade South: written. 50A; fees 16/27 -> 34 flag; website campsd -> facID 13.
+- 5727 Sylvan: written. 50A; fees flag; platform phone -> operator flag; phone 800 -> 605.394.2693; Needles Eye 8'0"x9'9".
+- 5797 Dakota Campground: written. $25 electric-only base; GS+military stated; 54 sites; Google 4.6/441.
+- DONE 2026-11-21: all 11 results written; apply.py dry run 11 ready, 0 '!!'. No browser left running.

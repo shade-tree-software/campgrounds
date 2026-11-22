@@ -1632,3 +1632,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5716 Lewis and Clark (p3-563): lakeview kept; Yankton rows 332-344 20-25 m from Lewis and Clark Lake but a paved shore trail + riprap between every row and the water.
 - 5742 Roy Lake (p3-563): lakeview kept; shore rows 15-30 m behind a continuous tree belt (East 56E-70E, West 20E-30E).
 - 5710 Big Sioux (p3-564): sites 29E/31E 25-35 m from the river through continuous trees - possible riverview lead.
+- 5851 Codington County Memorial (p3-565): lakeview kept; pull-throughs 101-112 20-30 m from Lake Kampeska with their lake-side lane + tree fringe between; 36-43 ~25 m under canopy.

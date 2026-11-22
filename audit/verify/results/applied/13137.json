@@ -1,0 +1,68 @@
+{
+ "id": 13137,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://chriscampground.com/rates-reservations/ (read 2026-11-21): '2026 Camping Rates Basic Tent $33.00; Tent w/Electric $38.00; Primitive No H/U Trailer/Vans $38.00; RV w/Electric & Water $53.00; RV w/Electric,Water & Sewer $58.00 - $63.00; Premium Complete H/U $65.00'; 'Rates are based on 2 adults and 2 children under the age of 17. Rates do not include Sales Tax. Cable T.V. and 50 amp service available at some sites. Free Wireless Internet. Check In Time any time between 11 AM and 9 PM. Check Out Time 11 AM'; 'Good Sam Discounts of 10% available with membership'; 'Reservations by Phone 1.605.642.2239 1800.350.2239'; 'Click here to reserve online' -> https://chriscampground.com/reservation-form/ (a request form behind Cloudflare Turnstile, not a booking engine)",
+  "https://chriscampground.com/sturgis-rally/ (read 2026-11-21): Rally 2026 (Aug 7-15) RV $145-190 incl. 2 people, 'Small Trailer Sites w/Electric and Water # 63-82 & #26 $165', 'Small Trailer Sites ... #A-J2 $145'; 'Reservations by Phone Only'",
+  "https://chriscampground.com/ and /amenities-2/ and /maps/ (read 2026-11-21): 'full service campground, with deluxe pull thru full hook-ups to shaded basic tent sites and primitive camping cabins'; 'three heated pools, two on-site laundromats, recreation room'; amenities 'Campground Store', 'Bath Houses'; 'Showers are metered and operate on quarters'; 'Take I-90 Exit #14 then 1/2 mile West and 5/8 mile South'; 701 Christensen Drive, 800-350-2239 / 605-642-2239",
+  "Google Maps place \"Chris' Campground\" via headless Chrome (gm.py, 2026-11-21): 4.6 stars over 627 reviews; +1 605-642-2239; 701 Christensen Dr, Spearfish; pin 44.47054,-103.82758",
+  "Esri World_Imagery at 44.47069,-103.82663 (hw 300 m, 2026-11-21): office at the entrance, campground loops, pools and RV rows under trees north of the pin; a row of long-term-looking units along the west lane; no water",
+  "audit/price_research/gateways.py 44.47069,-103.82663 -> none within 40 km (Mount Rushmore 72 km)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 53,
+    "nightly_high": 65,
+    "currency": "USD",
+    "checked": "2026",
+    "note": "2026: water and electric $53, full hookup $58-63, premium full hookup $65; a no-hookup trailer/van site $38. Rates cover 2 adults and 2 children under 17. Sturgis Rally (Aug 7-15, 2026) $145-190 for 2 people, booked by phone only.",
+    "extra_person": {
+     "included": 2,
+     "included_children": 2
+    }
+   },
+   "source": "https://chriscampground.com/rates-reservations/ and /sturgis-rally/ (read 2026-11-21)",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {
+    "good_sam": true
+   },
+   "source": "https://chriscampground.com/rates-reservations/ ('Good Sam Discounts of 10% available with membership')",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50
+   },
+   "source": "https://chriscampground.com/rates-reservations/ ('Cable T.V. and 50 amp service available at some sites')",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "camp_store": true
+   },
+   "source": "https://chriscampground.com/amenities-2/ ('Campground Store')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "note": "Reserve by phone or by the website's request form (not an instant-booking engine); Sturgis Rally reservations by phone only. Check-in 11 a.m.-9 p.m., check-out 11 a.m."
+   },
+   "source": "https://chriscampground.com/rates-reservations/ and /sturgis-rally/",
+   "method": "manual"
+  }
+ },
+ "summary": "Operator 2026 rates read: W/E $53, full hookup $58-63, premium $65 (2 adults + 2 children); Good Sam 10% stated; 50 A at some sites. Cheapest RV night $53 - over $50, no gateway within 40 km, passes only at the Good Sam 10% ($47.70). Google 4.6/627. Hookups electric 50 added; Good Sam confirmed; booking note added (request form, phone). Note cleaned (site count/laundry dropped; 'north edge' -> east, per the operator's directions).",
+ "flags": [
+  "PRICE GATE: cheapest RV night a 23-ft motorhome can book is $53 (RV w/Electric & Water, 2026 flat table; summer peak the same table, $65 premium full hookup; Rally $145-190). Over US$50, no gateway within 40 km (Mount Rushmore 72 km), but a Good Sam Park: operator states 'Good Sam Discounts of 10% available with membership' -> $47.70, passes. (A $38 'Primitive No H/U Trailer/Vans' site exists but has no hookups, so it is not the RV night.) Google 4.6/627 - strong.",
+  "GOOGLE: \"Chris' Campground\" 4.6 stars over 627 reviews (gm.py 2026-11-21).",
+  "LONG-STAY: none posted - no weekly/monthly/seasonal rates on the operator site; imagery shows a row of long-term-looking units along the west lane, but the rate table is all nightly. Passes.",
+  "HOOKUPS (manual group): added electric 50 from the rates page ('50 amp service available at some sites'); the stored hookups.note ('the operator names no amperage, so electric is left unset') is now wrong and should be cleared by the reviewer (apply.py would refuse to overwrite the manual note).",
+  "FIT: 'Small Trailer Sites' (#63-82, #26, #A-J2) are named on the Rally page only; the standard $53 W/E sites carry no size caveat. No max length published.",
+  "PHONE: stored 605-642-2239 is the local line; toll-free 800-350-2239 also posted. Website confirmed. PIN: stored 44.47069,-103.82663 is at the office/entrance, ~130 m south of the RV rows - fine.",
+  "BOOKING (manual url, not overwritten): stored booking.url https://chriscampground.com/ - the 'reserve online' button goes to https://chriscampground.com/reservation-form/, a request form (Cloudflare Turnstile), not an instant-booking engine; suggest that url."
+ ],
+ "note": "Family-run for 40-plus years on the east edge of Spearfish off I-90 exit 14, handy to Spearfish Canyon. Pull-thru full hookups through shaded tent sites to primitive camping cabins under grass and shade trees; three heated pools, rec room, playground, basketball court and a small animal farm. Showers are coin-metered. --Claude"
+}
