@@ -1642,3 +1642,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5719 Oahe Downstream (p3-568): not waterfront kept; Campground 3 201E-205E 20-40 m from the channel behind a tree row + riprap - riverview lead.
 - 5779 Roubaix Lake (p3-569): lakeview kept on a weak basis - FCFS meadow sites 50-53 ~130 m across open meadow from a ~3 ha lake; no RV site within 50 m. Down to not waterfront if a site photo shows no line of sight.
 - 5850 Stokes-Thomas (p3-569): lakeview kept; south-loop west edge ~30-35 m over grass + trees to a riprapped shore.
+- 5821 The Bay RV Park (p3-570): outer west/north sites 50-80 m from Lake Oahe behind the loop road + shrub band - possible lakeview lead (stored not waterfront).
