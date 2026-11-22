@@ -1,0 +1,14 @@
+# p3-564 working notes
+- units_sd.py (tools/) parses Go Outdoors SD sitesHashMap (active units, per-loop summary, -v per unit, pts file).
+- 5736 Walker's Point: written (lakeview kept; phone; GFP slug walker%27s-point; facID 71)
+- 5738 West Whitlock: written (lakefront -> lakeview rec; 69E full hookup $38; facID 75)
+- 5714 Angostura: written (lakefront -> lakeview rec; split candidate 4 campgrounds facID 3; fee low = tent rate)
+- 5745 Bear Butte: written. 15 non-electric FCFS back-ins, lakeview kept (~100-125 m across marsh), horse camp west of SD-79, max_rig_ft 49 unsourced.
+- 5710 Big Sioux: written. facID=6, 43 electric 20/30/50 $30, 60-72 ft; phone '' -> 605.773.8106; fees low 16 = tent rate (flag); not waterfront kept (29E/31E 25-35 m through trees).
+- 5859 Washington Park De Smet: written. City page $20 elec/$10; no amperage published.
+- 5863 Armour Lions Park: written. 10 pads, donation, no electric mentioned by city; pond ~60-70 m.
+- 5840 T-Bone's: written. DROP CANDIDATE monthly only ($675/month + tax, 13 spots); phone 605-842-0254 -> 605-840-9571; Google 4.8/19.
+- 13149 Black Hills Vista: written. 'from $45' passes; season June 1 vs May 15 conflict; pin ~500 m off -> 44.4050,-103.5338; Google 4.7/100.
+- 13142 Black Hills RV Park: written. $49.50-69.50 table; Google 4.4/149; gateway Rushmore 21 km.
+- 13136 Big Pine: written. low 45 -> 53; gateway Rushmore 21 km; Google 4.8/449.
+- apply.py dry run: 11 ready, no '!!'.
