@@ -1,0 +1,34 @@
+You are deciding ONE possible campground split for the EKKO campground database in /home/andrew/Dev/campgrounds: entry {ID} (NAME, South Dakota). Phase-7 verification flagged it as one entry covering campgrounds at separate places. Hint from the verifier: HINT
+
+Read first: docs/campground-curation.md (inclusion criteria, the waterfront gate, the split rule "One entry per campground, not per park", note rules), docs/campground-schema.md (structured groups + provenance), and audit/verify/leads/instructions.md (helper tools, imagery method). Read entry {ID} in full, including waterfront_evidence and inclusion_evidence, via `python3 -I -c "import sys,json; sys.path.insert(0,'.'); import campground_store as cs; print(json.dumps(next(e for e in cs.load() if e['id']=={ID}), indent=1))"` (the audit fields live in the campgrounds_audit.json sidecar; campgrounds.json alone lacks them).
+
+The split rule (AWH 2026-10-22, 2026-10-26):
+- Split only campgrounds at SEPARATE PLACES: each with its own entrance or road, roughly 1 km+ apart (measure centroid to centroid; never claim the distance without measuring). Adjacent named loops of one campground area stay one entry.
+- Exception: two separately named recreation.gov facilities with their own booking rules split even a few hundred metres apart. One rec.gov facility with two loops is not that exception.
+- If a part fails the rule (too close, or it shares the main road), it stays inside whichever entry it adjoins; say so.
+- The original id stays on one campground (the main/largest one, or the one the existing pin already marks); the others become new entries. An --AWH note is never copied onto a campground it may not describe; keep --AWH text verbatim on the entry it describes.
+- Each campground that results needs the full pipeline: its own pin on its sites (imagery), elevation (Open-Meteo), the waterfront gate on imagery (defaults down; lakefront needs named nightly sites within ~50 m over open ground; under continuous canopy is a view; a river/channel under ~30 m wide is creekside), inclusion_evidence, and the structured groups you can source (sites, hookups, facilities, season, fees, booking) with provenance {source: url + quote + read date, checked, method: manual}. Absent means unknown: omit, never fill a placeholder. Notes impersonal ("a 23-ft rig"), signed --Claude, never repeating a field value or the policy row.
+
+South Dakota specifics:
+- Read audit/verify/kit/sd/lessons.txt and the SD_NOTES files in audit/verify/kit/sd/ that mention this park (grep for the id and the park name). kit/sd/gfp_facids.txt maps Go Outdoors SD engine facID -> park.
+- State parks: gfp.sd.gov park pages are the authority; the Go Outdoors SD engine (reservations.gooutdoorssouthdakota.com, ASP.NET: FacilityDetails.aspx?facID=N, per-unit pages with Max Length, type, electric and site notes) is the per-site catalog. A campground's own sites, max length and amperage come from ITS units only. Some engine units list 75 ft as an apparent default - never write it.
+- GFP fees are stored as a base + $7 electric surcharge (the statewide schedule); a new entry for a split-off campground carries the same fee shape as the kept entry unless its own units price differently (quote them). The fee base is the cheapest site a 23-ft rig can book, never a tent-only or short site.
+- Rig fit from the engine's per-unit Max Length; a posted 22-ft limit passes; under ~20 ft fails.
+- BOT WALLS (AWH 2026-11-21): when a site refuses plain automated requests (403, Cloudflare/Incapsula/Akamai challenge, TLS mismatch), you MAY fall back, in order, to (1) the headless browser (PYTHONPATH=/home/andrew/.cache/ekko-pw, at most one, always under `flock /tmp/ekko-headless-browser.lock`, DRV_SOCK=./drv.sock from your scratch dir, full desktop Chrome UA, human pace); then (2) a web.archive.org capture cited with its timestamp (older than 2025-01-01 is stale for rates/season/status). Never solve a captcha, never use a proxy/VPN/reader service, never log in. Refusing / unusable: travelsouthdakota.com (403), koa.com, allstays.com (decoy data - never cite), Nominatim, overpass-api.de and every Overpass mirror. Use Esri imagery and agency/engine pages for pins.
+- A split campground's season, sites, hookups, facilities, booking and waterfront call are its own; the kept entry's groups must be re-cut to exclude what moved (counts, max length, amperage, booking note, the name if it named the whole park), and the kept entry's website should be the page that best describes it.
+- Waterfront: reservoirs (Oahe, Sharpe, Francis Case, Angostura) measure to the high-water edge; a tailrace campground sits below the dam (name the river, not the reservoir); a river or channel under ~30 m wide is creekside; South Dakota has no coastal values.
+- Never drop or rename away a campground that trips reference without saying so: check `python3 -I -c "import sys; sys.path.insert(0,'.'); import trips; print(trips.campground_references({ID}))"` and report what it returns; the id must stay on the campground those trips stayed at.
+
+Output (write ONLY these files, under audit/verify/kit/sd/splits/):
+- If you split: parent_{ID}.json = the fields that REPLACE on the kept entry (name, location, elevation_meters, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, and each structured group with provenance; omit a field to leave it unchanged), plus "_reasons": a short string. And new_SLUG.json = a JSON list of full new entries (kind "campground", name, location, elevation_meters, state "SD", ownership, waterfront, waterfront_evidence, inclusion_evidence, website, phone, note, structured groups, provenance). Do not assign ids.
+- If you do not split (or only partly): still write NOTES_{ID}.md saying why, with the measured distances.
+- Always write NOTES_{ID}.md: sources, measurements, imagery frames read (and that they rendered), and the decision.
+
+Hard limits:
+- Do not run apply_split.py, even as a dry run: the reviewer runs it. Check your JSON with `python3 -I -c "import json; json.load(open(...))"` instead.
+- No git commands of any kind, read-only included. Never edit campgrounds.json or any repo file other than the files above.
+- No routing around refusals beyond the two BOT WALL fallbacks above (no cache, proxy, reader service or login).
+- No phone calls. Never pay, book, log in or create accounts. Never put a personal name, email, home location or trip details into a request; User-Agent 'Mozilla/5.0'.
+- Scratch work under SCRATCH/split-{ID}/. Disk space is low: delete imagery/PDFs once used; leave only a short notes file there. Quit any browser you started.
+
+Finish with a short report: the decision, measured distances, each resulting campground (name, pin, sites, waterfront call with site numbers), and anything AWH should see.
