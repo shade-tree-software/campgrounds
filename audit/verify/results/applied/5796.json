@@ -1,0 +1,56 @@
+{
+ "id": 5796,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/10288228 (read 2026-11-21): 'Featuring 96 sites, this seasonal campground is open from late March through mid-October'; 'This location is staffed. Please call (605) 910-9246'; notice 'Check-in begins at 1:00 p.m. Check-out is 11:00 a.m. RV sites allow for one RV (tow included) per site ... campfires are not permitted'; rules reservationWindow 8 Months, maxConsecutiveStay 14, hasTaxes 1; amenities 'Coin Showers', 'Dump Station', 'Electric Hookups', 'Flush Toilets (Seasonal)', 'Drinking Water'",
+  "https://www.recreation.gov/api/camps/campgrounds/10288228/rates (read 2026-11-21): Peak Season 2026-03-27 to 2026-10-19 Non-Electric $43, Electric $52 (Group $55); First-come, First-served Season 2026-10-23 to 2026-12-31 and 2027-01-01 to 2027-03-17 Non-Electric $37, Electric $47; Peak Season 2027-03-19 to 2027-10-21 $43/$52",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:10288228 (read 2026-11-21): 83 bookable sites in Agate (36), Butte (43) and Group (4) loops; 23 RV ELECTRIC sites '30/50' amp, no water/sewer hookups; 8 TENT ONLY; 50 sites permit an RV with Max Vehicle Length 23 ft or more (30-65 ft); longest 65 ft; site centroid 43.7435,-101.9496",
+  "https://developer.nps.gov/api/v1/campgrounds?parkCode=badl (NPS data API, read 2026-11-21): Cedar Pass Campground '96 level sites with scenic views of the badlands formations ... flush toilets and coin operated showers in the summertime'; 'A limited section of the campground is open during the winter months'; operatingHours exception 'Closed for the Season' 2026-10-15 to 2027-04-01; 'Septic dump available nearby for $1'; 'A 14-night limit applies during the summer'; dumpStation 'Yes - year round'; potableWater 'Yes - year round'; reservationUrl recreation.gov 10288228; phone 605-433-5460",
+  "https://staybadlands.com/stay/ (curl 403; read in headless Chrome with a full desktop UA, 2026-11-21): 'CEDAR PASS CAMPGROUND ... Whether you're pitching a tent under the stars or relaxing in your RV'; campground reservations link to recreation.gov 10288228; 'This service is operated by Explor Badlands LLC, a Concessioner under Contract with the U.S. Government and administered by the National Park Service'"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 37, "nightly_high": 52, "currency": "USD", "checked": "2026-11",
+              "seasonal": [{"name": "peak", "opens": "03-27", "closes": "10-19", "nightly_low": 43, "nightly_high": 52}],
+              "tax": {"included": false},
+              "note": "Peak season (reservable, late March to late October; 2027: March 19 to October 21): non-electric $43, 30/50-amp electric $52. Winter, first-come: $37 and $47. Plus tax. Dump station $1. Badlands National Park entrance fee is extra."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10288228/rates (Peak 2026-03-27 to 10-19 Non-Electric $43 / Electric $52; FCFS 2026-10-23 to 2027-03-17 $37 / $47; Peak 2027-03-19 to 10-21 $43 / $52) + rules hasTaxes; NPS API ('Septic dump available nearby for $1'), read 2026-11-21",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": false, "sewer": false},
+   "source": "recreation.gov catalog for 10288228 (23 RV ELECTRIC sites, Electricity Hookup '30/50'); NPS API ('Electric only service. No water or sewer.'), read 2026-11-21",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 96, "max_rig_ft": 65},
+   "source": "recreation.gov 10288228 overview ('Featuring 96 sites') and NPS API (totalSites 96); catalog longest Max Vehicle Length 65 ft, read 2026-11-21",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+   "source": "NPS API campground record ('flush toilets and coin operated showers in the summertime'; dumpStation 'Yes - year round'; potableWater 'Yes - year round'); rec.gov amenities, read 2026-11-21",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "opens": null, "closes": null, "note": "Full service and reservations from late March to late October; a limited section stays open first-come through the winter (showers and flush toilets are summer-only)."},
+   "source": "recreation.gov rates (Peak Season 2026-03-27 to 10-19; First-come, First-served Season 2026-10-23 to 2027-03-17, priced) + NPS API ('A limited section of the campground is open during the winter months'), read 2026-11-21",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10288228", "window_opens_days": 240, "max_stay_nights": 14, "season": {"opens": "03-27", "closes": "10-19"}, "note": "Reservations open 8 months ahead for the peak season (2027: March 19 to October 21); the winter section is first-come."},
+   "source": "recreation.gov 10288228 rules (reservationWindow 8 Months; maxConsecutiveStay 14) + rates (Peak Season reservable, FCFS winter season); NPS API ('A 14-night limit applies during the summer'), read 2026-11-21",
+   "method": "manual"
+  }
+ },
+ "note": "Badlands National Park campground beside the Ben Reifel Visitor Center and Cedar Pass Lodge, run by the park concessioner. Level sites on open prairie with views of the Badlands formations, each with a covered picnic table. Campfires are not allowed; portable propane grills are. --Claude",
+ "summary": "rec.gov rates/rules/catalog + NPS API + concessioner page read. 96 sites (83 bookable on rec.gov; 23 with 30/50 A, no water/sewer); peak $43/$52 (Mar 27-Oct 19 2026), winter FCFS $37/$47 in a limited section, so season now year-round. Fees, hookups, sites, facilities, season, booking written; note cleaned.",
+ "flags": [
+  "SEASON: stored derived 03-20..10-15 replaced by year_round with a note - rec.gov sells a priced 'First-come, First-served Season' 2026-10-23 to 2027-03-17 and the NPS record says 'A limited section of the campground is open during the winter months'. The NPS record's operatingHours also carries a 'Closed for the Season' exception 2026-10-15 to 2027-04-01, which contradicts its own winter sentence and rec.gov; reviewer may prefer opens/closes.",
+  "OPERATOR: concessioner is now Explor Badlands LLC (staybadlands.com); the NPS API record still says Aramark. Ownership federal stays.",
+  "DISCOUNTS (unverified): the federal:nps row's interagency_senior_access is inherited; this is a concession campground (p3-539 lesson: NPS concessions may refuse America the Beautiful/Senior Pass discounts). rec.gov and the concessioner page read show no pass-discount statement either way; cedarpasslodge.com returned 403 to curl and was not opened in the browser.",
+  "FIT: 50 of the 83 rec.gov sites permit an RV of 23 ft+ (30-65 ft); 24 sites are capped at 20 ft and 8 are tent-only.",
+  "PHONE: (605) 910-9246 is rec.gov's 'local staff' line - keep; NPS/rec.gov facility phone 605-433-5460 is the lodge/group line. WEBSITE: both links live (staybadlands.com answers 403 to curl but loads in a browser) - keep.",
+  "PIN: 43.74350,-101.94980 sits on the rec.gov site centroid - fine. WATERFRONT: not waterfront - prairie, no water."
+ ]
+}

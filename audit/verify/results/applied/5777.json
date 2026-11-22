@@ -1,0 +1,50 @@
+{
+ "id": 5777,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/231838 (read 2026-11-21): notices 'There is NO WATER available at this campground. Please bring all water needed for the duration of your stay.'; 'These campsites are non-electric sites.'; 'Non-reservable sites may be available on a first come-first served basis'; 'an additional vehicle fee of $6.00 per night on the second vehicle'; 'A pet fee of $2 per pet per night'; off-season notice: 'During the off season (from 10/01 until 5/15) the USFS operates this campground ... Daily Fee is $15.00 per First Come First Served campsite of which there are 5 available. Self-Pay ... The stay limit is 14 days in a 28 day period. Parking Spur Length is 25 ft. Drinking water is NOT available. Each site has a picnic table and a fire ring. Vault toilets are also available ... roads are not maintained during the off-season. Sites are open until weather prohibits access'; 'The information listed below is pertinent during the open season from May 15th to September 30th.'; facilities text 'picnic tables, campfire rings, and vault toilets; however, electrical hook-ups are not available'; contact '(661) 702-1420'; rules maxConsecutiveStay 14",
+  "https://www.recreation.gov/api/camps/campgrounds/231838/rates (read 2026-11-21): 'Peak Season 2026-05-16..2026-09-30' STANDARD NONELECTRIC $26; 2027 05-15..09-30 $26",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:231838 (catalog, read 2026-11-21): 20 STANDARD NONELECTRIC sites, 18 reservable + 2 not (009, 017); site 026 'Pull-through', the rest back-in; only two sites post an RV/trailer length (009: 52 ft, 033: 60 ft), the rest 0 (unposted); 'Water Hookup' No; site centroid 43.73342,-103.71367",
+  "https://www.fs.usda.gov/r02/blackhills/recreation/comanche-park-campground (read 2026-11-21, last updated February 2, 2026): 'Site Open'; 'Located in an open Ponderosa pine forest 6.5 miles west of Custer ... closest campground to Jewel Cave National Monument'; 'Reserve Your Campsite at Recreation.gov'; 'Hell Canyon Ranger District - SD ... Phone: (605) 673-9200'; 'Latitude: 43.73459 Longitude: -103.7145318'; 'Potable water is not available at this site.'; 'Restrooms are not available at this site.'",
+  "Esri World_Imagery 43.73490,-103.71350 hw 250 m (2026-11-21): pin in open ponderosa just inside the entrance road off US-16; the site loops run south of it"
+ ],
+ "groups": {
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false},
+   "source": "recreation.gov 231838 ('There is NO WATER available at this campground'; 'picnic tables, campfire rings, and vault toilets'), read 2026-11-21",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 20, "max_rig_ft": 60, "pull_through": true},
+   "source": "recreation.gov campsite catalog for 231838 (20 sites; site 033 RV/Trailer 60 ft, site 009 52 ft, others unposted; site 026 Pull-through), read 2026-11-21",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-15", "closes": "09-30", "note": "From October 1 to May 15 five first-come sites stay open, self-pay with no water and unplowed roads, until weather closes access."},
+   "source": "recreation.gov 231838 notice ('open season from May 15th to September 30th'; 'During the off season (from 10/01 until 5/15) the USFS operates ... 5 available ... Sites are open until weather prohibits access'); 2026 Peak Season 05-16..09-30, read 2026-11-21",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231838", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Two sites are not reservable; in the off-season all sites are first-come."},
+   "source": "recreation.gov 231838 ('Non-reservable sites may be available on a first come-first served basis'; catalog 009/017 non-reservable; maxConsecutiveStay 14; off-season FCFS notice), read 2026-11-21",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 15, "nightly_high": 26, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}, "checked": "2026", "note": "$26 in the May 15 to September 30 season; $15 self-pay at the five off-season sites. Pets $2 each a night."},
+   "source": "recreation.gov 231838 rates (2026 Peak Season $26) and notices ('Daily Fee is $15.00 per First Come First Served campsite'; '$6.00 per night on the second vehicle'; 'A pet fee of $2 per pet per night'), read 2026-11-21",
+   "method": "manual"
+  }
+ },
+ "note": "Black Hills National Forest campground in open ponderosa pine on the south side of US-16, 6.5 mi west of Custer; the closest campground to Jewel Cave. No water: bring it in. --Claude",
+ "summary": "rec.gov + FS read. Fixes: potable_water true -> false (rec.gov and FS both say no water), season closes 09-07 -> 09-30 (rec.gov season May 15-Sep 30) with off-season FCFS note, max_rig_ft 63 (note prose) -> 60 (catalog), count 20 + pull_through; fees now $15 off-season / $26 with $6 extra vehicle; booking fcfs some_sites, 14-night limit. Phone empty -> (605) 673-9200.",
+ "flags": [
+  "PHONE: empty -> (605) 673-9200 (Hell Canyon Ranger District, from the FS page). The concessioner's line on rec.gov is (661) 702-1420.",
+  "FACILITIES: the FS page says 'Restrooms are not available at this site', which contradicts rec.gov's 'vault toilets' (and the off-season notice 'Vault toilets are also available'). The FS line looks like an unfilled template field; vault_toilets kept true.",
+  "SIZE: the off-season notice says 'Parking Spur Length is 25 ft' - that covers the 5 off-season FCFS sites and still fits a 23-ft rig. Only 2 of 20 catalog sites post an RV length (52 and 60 ft); the old '28-63 ft' range is on no current page.",
+  "NOTICE: 'Please note: Construction is pending, which may cause limited access.' (off-season section) - status left open; the FS page shows 'Site Open'.",
+  "PIN: stored 43.73490,-103.71350 is ~170 m north of the catalog site centroid 43.73342,-103.71367 (inside 250 m, not moved). The rec.gov facility point 43.73639,-103.70222 is ~1 km east and wrong; the FS point 43.73459,-103.71453 is fine.",
+  "OHV: rec.gov's generic forest text mentions riding OHVs on the forest; nothing marks this as an OHV campground.",
+  "WATERFRONT: not waterfront - confirmed (no water in sight on imagery).",
+  "WEBSITES keep (both live). STATUS open."
+ ]
+}

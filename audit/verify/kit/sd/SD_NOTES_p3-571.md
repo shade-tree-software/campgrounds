@@ -1,0 +1,12 @@
+# p3-571 working notes
+- 5784 DONE (fees 24, note rewritten, high-clearance not on agency pages)
+- 5796 DONE (year-round, fees 37-52)
+- 5855 DONE (seasonal, $50, 2-night min, event-campground flag)
+- 5844 DONE (drop candidate: seasonal lease park, dead domain)
+- 5854 DONE (phone 605-534-3121)
+- 5777 DONE (water true->false, season closes 09-30, phone)
+- 5812 DONE (keep, $30-45)
+- 5806 DONE (keep, website -> rv-park page)
+- 13150 DONE (gate passes $41/$43; reported conflicts flagged)
+- 5871 DONE (waterfront lakefront->lakeview recommended, phone)
+- 5810 DONE (pin move 530 m; phone booking)

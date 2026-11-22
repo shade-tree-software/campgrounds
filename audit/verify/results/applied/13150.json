@@ -1,0 +1,60 @@
+{
+ "id": 13150,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://sturgisdaysendcampground.com/rv-camping (a JavaScript app - curl gets an empty shell; read in headless Chrome with a full desktop UA, 2026-11-21): 'FULL HOOKUPS · WATER & ELECTRIC · ELECTRIC ONLY · NO-SERVICE SITES · MONTHLY RV STAYS'; 'Full Hook-Up RV Sites - $43 per night ... level gravel pads with pull-through and back-in options. Big-rig friendly, with cable TV available at select sites and Wi-Fi across every site'; 'Water & Electric RV Sites - $41 per night'; 'Electric-Only RV Sites ... Perfect for overnight or budget stays' (no price); 'No-Service / Boondocking Sites ... on our big open field'; 'Monthly RV Sites (May–October) ... Call for monthly rates'; 'RV site rates range from $30–$60 per night (for 2 people). Weekly and monthly rates available. Additional charges apply for more than 2 guests.'; 'RALLY RATES ... CALL OR TEXT ... 918-327-9529'; 'Dump station; 24-hour laundry facilities; Clean restrooms & showers'",
+  "https://sturgisdaysendcampground.com/ (headless Chrome, 2026-11-21): 'OPEN MAY 1 – OCTOBER 1'; 'Office: 605-347-2331'; 'Full hookups 30 & 50 Amp'; amenities 'Convenience store ... Clean showers; Laundromat; Free WiFi; Cable TV; Dump station (Fee)'; BOOK NOW -> resnexus.com/resnexus/reservations/book/139BF065-0047-45BB-83C6-A289D14996DA (ResNexus refuses automated reads - not opened)",
+  "https://sturgisdaysendcampground.com/faq (headless Chrome, 2026-11-21): 'full hook-up sites with 50/30/20 amp power, water, and sewer; water & electric sites with 30/20 amp; electric-only sites; and boondocking (dry camping) sites. All sites are big-rig friendly with pull-through and back-in options.'; 'Check-in is ... 10:00 AM for RV and tent sites ... Check-out is 11:00 AM'; 'Rally-week reservations require a 50% deposit and balance due by March 1'; 'Up to two well-behaved pets are welcome per site ... at no extra charge'",
+  "Google Maps place panel via headless browser 2026-11-21: 'Days End Campground, Cabins and RV Park' 4.5 (625 reviews), 605-347-2331, 2501 Avalanche Rd, Sturgis",
+  "Esri World_Imagery 44.42147,-103.5348 hw 250 m (2026-11-21): pin in the middle of the campground between the treed tent/cabin loops and the open RV rows, north of I-90 - fine",
+  "audit/price_research/gateways.py 44.42147,-103.5348: none within 40 km (Mount Rushmore 61 km)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 30,
+    "nightly_high": 60,
+    "currency": "USD",
+    "extra_person": {
+     "included": 2
+    },
+    "checked": "2026",
+    "note": "Full hookups $43, water and electric $41 a night for two; RV sites run $30 to $60 across site types. Weekly and monthly rates; Sturgis Rally week priced separately."
+   },
+   "source": "https://sturgisdaysendcampground.com/rv-camping ('Full Hook-Up RV Sites - $43 per night'; 'Water & Electric RV Sites - $41 per night'; 'RV site rates range from $30–$60 per night (for 2 people)'; 'Additional charges apply for more than 2 guests'), read 2026-11-21 in headless Chrome",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "wifi": true,
+    "dump": true,
+    "showers": true,
+    "flush_toilets": true,
+    "laundry": true,
+    "camp_store": true
+   },
+   "source": "https://sturgisdaysendcampground.com/rv-camping ('Dump station; 24-hour laundry facilities; Clean restrooms & showers; Wi-Fi across all sites') and home page ('Convenience store ... Clean showers; Laundromat; Free WiFi ... Dump station (Fee)'), read 2026-11-21 in headless Chrome",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "pull_through": true
+   },
+   "source": "https://sturgisdaysendcampground.com/faq ('All sites are big-rig friendly with pull-through and back-in options'), read 2026-11-21 in headless Chrome",
+   "method": "manual"
+  }
+ },
+ "note": "Campground on Avalanche Road beside I-90 at Sturgis, a few minutes from Main Street: RV sites from full hookups to dry camping on an open field, plus cabins, glamping tents and tent sites. Camp store and laundry. Rally week (August) runs as a rally campground with its own rates and deposits. --Claude",
+ "summary": "Operator site read in headless Chrome. Price gate PASSES: FHU $43, W/E $41 (range $30-60 for 2 people), no gateway needed. Fees written; facilities and sites.pull_through added without changing a held value; note rewritten. The reported season (04-15..10-15), hookups (amperage unset), sites (170) and booking groups disagree with the live site but are 'reported' provenance - flagged for AWH, not overwritten. curation_note should be replaced with the dated gate result.",
+ "flags": [
+  "PRICE GATE (private): PASSES. Cheapest posted RV electric night: water & electric $41 (electric-only sites are unpriced but sit below it in the $30-60 range); full hookups $43. Summer/peak top of the posted range $60 for 2 people; Sturgis Rally rates by phone only (not read). Not a Good Sam Park (directory good_sam false). No gateway within 40 km (Mount Rushmore 61 km) - not needed.",
+  "CURATION_NOTE: replace 'Priced above the sweep's usual private gate.' with 'Price gate 2026-11-21: passes at $41 water & electric / $43 full hookups (operator rv-camping page; RV range $30-60 for 2). --Claude' (apply.py does not write curation_note).",
+  "REPORTED CONFLICT - season: stored 04-15..10-15 (reported 2026-09-20 via a search summary); the operator home page now says 'OPEN MAY 1 – OCTOBER 1'. Suggest opens 05-01, closes 10-01.",
+  "REPORTED CONFLICT - hookups: stored note 'no amperage published, so electric is left unset'; the FAQ now says 'full hook-up sites with 50/30/20 amp power' and the home page 'Full hookups 30 & 50 Amp'. Suggest electric 50 and drop the hookups note.",
+  "FACILITIES / SITES: the reported values (wifi, dump; count 170) are kept; showers, flush toilets, laundry, camp store and pull_through were added from the operator pages (no held value changed). Count 170 is RV Life's; the operator site posts no count.",
+  "REPORTED CONFLICT - booking: platform operator is right; booking runs through ResNexus (https://resnexus.com/resnexus/reservations/book/139BF065-0047-45BB-83C6-A289D14996DA/?NewSearch=1), which is not a schema platform value, so 'operator' stands; the url could point at the ResNexus page. Rally bookings take a 50% deposit with the balance due March 1.",
+  "LONG-STAY: monthly RV sites May-October are offered, but the site sells nightly across four RV site types, cabins and tents - a transient park.",
+  "OHV: the site markets 'ATV riding' among Black Hills activities; it is a general campground, not an ATV trailhead - no flag beyond this.",
+  "GOOGLE: 4.5 (625 reviews). RV Life 4*, $$$. PHONE 605-347-2331 keep (the office line; the rally/text line 918-327-9529 is a person's cell). WEBSITE keep. PIN fine. WATERFRONT: not waterfront."
+ ]
+}
