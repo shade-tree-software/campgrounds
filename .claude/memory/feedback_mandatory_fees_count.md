@@ -10,3 +10,5 @@ A fee every guest must pay to be on the property (resort day fee, grounds fee, p
 **Why:** the gate asks what two adults actually pay to stay a night; a cheap site behind a mandatory admission charge is not a cheap night.
 
 **How to apply:** base rate = cheapest hookup site at 2 adults + any mandatory per-person/per-day charge for 2 adults. Still excluded: reservation/booking fees, tax, optional extras, charges for people beyond base occupancy. Also: Avalon was added as 14262 then removed - when the removed entry was the highest id, run the next append_state.py with --min-id above it so the retired id is never reissued (next free: 14263). Related: [[project_private_gap]].
+
+**Exception, AWH 2026-11-22:** Ingalls Homestead 5814 ($50 site + $21.15/person admission required on the grounds during open hours) was KEPT with a caveat in the note. An attraction admission that buys the attraction itself is not treated like a resort grounds fee; ask when one comes up rather than dropping.
