@@ -1,0 +1,24 @@
+{
+ "id": 5853,
+ "checked": "2026-11-21",
+ "sources": [
+  "http://elkpoint.org/campground/ (stored) -> https://www.elkpoint.org/campground/ answers curl with a 'Client Challenge' bot page; in headless Chrome (full desktop UA, 2026-11-21) it is 'Error: 404 Page not found'",
+  "https://www.elkpoint.org/page/city-campground (headless Chrome, full desktop Chrome UA, read 2026-11-21): 'Heritage Park Campground; Campsite Prices- $15/night, $75/week, or $300/month; 15 available sites (first come, first serve); 30 & 50 amp services; One central hydrant for water; No dump station; Electric Included; Bathhouse/shower included'; City of Elk Point, 106 W. Pleasant St, Phone: 605-356-2141",
+  "Esri World_Imagery at 42.6837,-96.69234 (hw 250 m, 2026-11-21): RVs parked on the pin beside the ball diamonds in Heritage Park; a small pond ~60 m west (well under 5 acres)"
+ ],
+ "groups": {
+  "fees": {"values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2026", "note": "$15 a night, electric included; $75 a week or $300 a month."}, "source": "https://www.elkpoint.org/page/city-campground (read 2026-11-21)", "method": "manual"},
+  "booking": {"values": {"reservable": false, "fcfs": "always"}, "source": "https://www.elkpoint.org/page/city-campground ('first come, first serve')", "method": "manual"},
+  "sites": {"values": {"count": 15}, "source": "https://www.elkpoint.org/page/city-campground ('15 available sites')", "method": "manual"},
+  "hookups": {"values": {"electric": 50, "water": false}, "source": "https://www.elkpoint.org/page/city-campground ('30 & 50 amp services'; 'One central hydrant for water')", "method": "manual"},
+  "facilities": {"values": {"dump": false, "showers": true, "potable_water": true}, "source": "https://www.elkpoint.org/page/city-campground ('No dump station'; 'Bathhouse/shower included'; 'One central hydrant for water')", "method": "manual"}
+ },
+ "note": "City of Elk Point campground in Heritage Park, among the ball diamonds and shelters a mile east of I-29 exit 18; pay at City Hall or the park kiosk. --Claude",
+ "summary": "City page (moved to /page/city-campground) read: $15/night ($75/week, $300/month), 15 FCFS sites (was 23), 30/50 A, one central hydrant (water at site true -> false), no dump station (dump true -> false), bathhouse/showers. Season May 1-Oct 1 not on the current page (left derived).",
+ "flags": [
+  "WEBSITE: http://elkpoint.org/campground/ is now a 404 on the city's new site -> https://www.elkpoint.org/page/city-campground (behind a client bot challenge for curl; loads in a browser). PHONE 605-356-2141 (City Hall) confirmed on the page.",
+  "SITES: derived count 23 -> 15 ('15 available sites'); WATER at site derived true -> false (central hydrant); DUMP derived true -> false ('No dump station').",
+  "SEASON: the city page no longer states May 1-Oct 1; the stored derived season is left as is (unconfirmed).",
+  "PIN 42.6837,-96.69234 sits on the parked RVs - fine. Not waterfront confirmed (a small pond ~60 m west, under 5 acres)."
+ ]
+}

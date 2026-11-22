@@ -1,0 +1,11 @@
+- 5726 Dude Ranch: written. riverfront->riverview rec; entrance 0; max stay 7 cleared; booking FCFS confirmed.
+- 5853 Elk Point: written. new page /page/city-campground; 15 FCFS sites $15; water/dump false.
+- 5865 Eureka: written. SYS engine $35, 22 units; lakeview->not waterfront rec; website/phone flags.
+- 13135 Fort Welikit: written. $51 W/E (2024) gateway Rushmore 15km + 10% AAA etc; Google 4.6/510.
+- 13138 HTR BH: written. Newbook bookingsus.newbook.cloud/htr-black-hills api POST in-browser (equipment_type 5, len 23): Std $34/49/59; resort fee unposted; GS; Google 4.5/588.
+- 5825 Hav-A-Rest: written. Park map: sites at N end (A-I, 1-10); lakefront->lakeview rec; pin move ~300 m to 44.8785,-98.5320.
+- 13134 Heartland: written. Streamside Campspot via block-cs-book.blockcms.build/parks/5348/search (needs x-booking-token header captured in-browser): $43 Discount 30A, $53 Std; GS true; Google 4.7/1773.
+- 5808 Heritage Village: written. No operator site; RoverPass unclaimed -> remove; phone booking (reported); Google 4.6/114.
+- 13140 Hill City KOA: written. $61-159, gate via Mount Rushmore 10 km; season 05-01..10-13.
+- 13145 Hot Springs KOA: written. $36-89, passes; facilities wifi/store.
+- 5772 Horsethief: written. $30, max_rig 25->45, site 017 waterfront lead (~27-30 m open grass).

@@ -1,0 +1,47 @@
+{
+ "id": 13134,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.heartlandcampground.com/ (stored): Cloudflare 403 to curl; in headless Chrome (full Chrome UA, under flock) it lands on https://streamsideparks.com/heartland-rv-park-hermosa-sd/ (read 2026-11-21): 'Heartland RV Resort & Cabins ... 24743 Highway 79, Hermosa, SD 57744 605-255-5460 Now Open Year Around with Limited Amenities October–April'; '230+ Spacious, Well Manicured RV Sites'; '16 Rustic Cabins'; '20 Tent Sites'; amenities 'Event Center; Heated Swimming Pool & Hot Tub; Modern Restrooms; Free WiFi; Modern Laundromats; Full Hookups; Unlimited Hot Showers; Fenced Dog Park; Pickleball Courts; Playground; Propane; Gift Shop; Camp Store w/ Ice'; 'Heartland RV Resort is a Streamside Park'",
+  "Same page FAQ (read 2026-11-21): 'Heartland RV Park is now open year around. Please note: Amenities are limited during the winter months, October – April.'; 'For long-term or monthly reservations, please call us directly'; 'Your reservation includes up to 4 people, with a maximum of 8 per RV site'; 'RV sites require 2 nights for holiday weekends'; 'Campsites: Check-in at 2 PM'; WiFi 'not meant for streaming ... premium WiFi available for $3 per day'",
+  "https://streamsideparks.com/heartland-rv-park-hermosa-sd/ways-to-stay/ (headless Chrome, 2026-11-21): 'Pull-through and back-in RV sites scaled from Standard to 100-foot Ultimate ... Good Sam discounts apply.'; 'Best-value 30-amp pull-throughs for Class A, B, or C RVs ... up to 26'' (Discount); 50/30-amp full-hookup types up to 100' combined",
+  "https://book.streamsideparks.com/south-dakota/heartland-rv-park-hermosa-sd/search -> its search API block-cs-book.blockcms.build/parks/5348/search (Campspot behind it), queried in headless Chrome for one night, 2 adults, 2026-11-21: Tue 2027-05-11, Tue 2027-06-15, Sat 2027-07-17 and Tue 2027-09-14 - Discount RV Site 30 Amp Only $43, Standard $53, Large $63, Premium $73, Super/Deluxe $83, Ultimate $93; Tue 2027-08-10 (Sturgis Rally week) $63 / $73 / $83 / $93 / $103 / $113.30; Tue 2026-12-08 Standard $53, Large $63; every type lists Motorhome Class C, site lengths 30-97 ft; about 214 RV units across the types",
+  "Google Maps 'Heartland RV Resort & Cabins' via headless Chrome (gm.py, 2026-11-21): 4.7 stars over 1,773 reviews; +1 605-255-5460; website streamsideparks.com/heartland-rv-park-hermosa-sd/; 24743 SD-79, Hermosa; pin 43.82070,-103.20169",
+  "audit/price_research/gateways.py 43.81874,-103.20171 -> Mount Rushmore (attraction, 22 km); Wind Cave NP (37 km)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 43,
+    "nightly_high": 113.3,
+    "currency": "USD",
+    "checked": "2026-11-21",
+    "note": "Campspot, one night for 2 adults: 30-amp Discount sites $43, Standard $53, Large $63, Premium $73, Super and Deluxe $83, Ultimate $93 through the 2027 season (Standard $53 in December); Sturgis Rally week $63-113.30. A site includes up to 4 people. Weekly and monthly rates are sold."
+   },
+   "source": "Campspot search behind https://book.streamsideparks.com/south-dakota/heartland-rv-park-hermosa-sd/search (2026-12-08, 2027-05-11, 2027-06-15, 2027-07-17, 2027-08-10, 2027-09-14)",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {
+    "good_sam": true
+   },
+   "source": "https://streamsideparks.com/heartland-rv-park-hermosa-sd/ways-to-stay/ ('Good Sam discounts apply.')",
+   "method": "manual"
+  }
+ },
+ "note": "Open-prairie RV resort on SD-79 south of Hermosa, between Rapid City and Hot Springs and handy for Custer State Park's east side: long angled pull-through rows graded from 30-amp discount sites to 100-ft Ultimate sites, plus cabins and tent sites, an event centre with restaurant and nightly activities, heated pool and hot tub, pickleball and a fenced dog park. Monthly stays are offered alongside nightly, but short-term booking is the front door. Run by Streamside RV Resorts. --Claude",
+ "summary": "Operator site now streamsideparks.com (Cloudflare to curl; headless Chrome) + its Campspot search for six dates: $43 (30 A Discount) / $53 Standard to $93, Rally $63-113.30; 'Good Sam discounts apply' (derived false -> true); 30/50 A (flagged; hookups group is manual); year-round confirmed; 230+ sites; Google 4.7/1,773. Price gate passes on the $43 Discount site (and GS 10%, gateway Mount Rushmore 22 km).",
+ "flags": [
+  "PRICE GATE: cheapest RV night $43 (Discount RV Site, 20/30 A full-hookup pull-through, no fire ring or table, sites 37-48 ft, Class C listed) on every 2027 non-Rally date; Standard $53 (GS 10% -> $47.70); summer peak ordinary night $43-93 by type; Sturgis Rally week $63-113.30. Passes: cheapest night under $50, Good Sam discount stated by the operator, gateway Mount Rushmore 22 km.",
+  "GOOGLE: 'Heartland RV Resort & Cabins' 4.7 stars over 1,773 reviews (gm.py 2026-11-21).",
+  "LONG-STAY: monthly stays by phone and weekly/monthly package rates exist, but ~214 RV units sell single nights on Campspot all season and the FAQ minimum is 2 nights only on holiday weekends - nightly-first, passes.",
+  "DISCOUNTS: good_sam derived false -> true ('Good Sam discounts apply.' on the operator's Ways to Stay page; a 2025 guest review also calls it a Passport America park). military (derived true) not stated on the pages read - left as stored.",
+  "SITES (reported, not overwritten): stored count 150 (RV Life) vs '230+ Spacious, Well Manicured RV Sites' on the operator page (Campspot lists ~214 RV units) - suggest 230 or a manual re-read.",
+  "BOOKING (manual, not overwritten): stored url https://www.heartlandcampground.com/ now redirects to Streamside - suggest booking.url https://book.streamsideparks.com/south-dakota/heartland-rv-park-hermosa-sd/search, platform 'campspot' (the search API returns Campspot errors/fields), min_stay [{\"nights\": 2, \"when\": \"holiday weekends\"}], booking.note 'A site includes up to 4 people; check-in 2 p.m.'",
+  "WEBSITE: https://www.heartlandcampground.com/ -> https://streamsideparks.com/heartland-rv-park-hermosa-sd/ (Google lists the same). PHONE 605-255-5460 confirmed.",
+  "PIN 43.81874,-103.20171 vs Google 43.82070,-103.20169 (~220 m, Google's is at the office by SD-79) - under 250 m, fine. Not waterfront (unchanged).",
+  "curation_note 'Priced above the sweep's usual private gate' is stale: $43-53 base.",
+  "HOOKUPS (manual, not overwritten): water/sewer confirmed; the operator now posts 50/30-amp full hookups (Discount type 20/30 A) - suggest electric 50 and clearing the stored note that no amperage is published.",
+  "FACILITIES (reported, not overwritten): showers and laundry confirmed by the operator page ('Unlimited Hot Showers', 'Modern Laundromats'); it also lists 'Free WiFi' and 'Camp Store w/ Ice' - suggest adding wifi and camp_store with manual provenance."
+ ]
+}
