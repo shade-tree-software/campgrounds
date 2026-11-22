@@ -1,0 +1,27 @@
+You are vetting ONE South Dakota phase-7 lead for the EKKO campground database in /home/andrew/Dev/campgrounds.
+
+Read audit/verify/leads/instructions.md first and follow it exactly. It points you to the inclusion criteria, the waterfront gate, the helper tools and the result-file shape. Then read the header and lead NUM of audit/verify/leads/sd_leads.txt: that lead (slug SLUG) is your job.
+
+South Dakota specifics:
+- Read audit/verify/kit/sd/lessons.txt first (state sources and refusals: GFP park pages at gfp.sd.gov are the authority for state parks; Go Outdoors SD engine pages reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=N, ids in audit/verify/kit/sd/gfp_facids.txt; GFP fees are a base + $7 electric surcharge; FS r02 pages + rec.gov for the Black Hills NF).
+- BOT WALLS (AWH 2026-11-21): when a site refuses plain automated requests (403, Cloudflare/Incapsula/Akamai challenge, TLS mismatch), you MAY fall back, in order, to (1) the headless browser with a full desktop Chrome UA ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36') at human pace, at most one browser, always under `flock /tmp/ekko-headless-browser.lock`, PYTHONPATH=/home/andrew/.cache/ekko-pw, run from your scratch dir with DRV_SOCK=./drv.sock; then (2) a web.archive.org capture (cite it with its timestamp; older than 2025-01-01 is stale for rates/season/status). Never solve a captcha, never use a proxy/VPN/reader service, never log in. allstays.com serves decoy data - never cite it. Nominatim and Overpass are unreliable from here; use imagery and agency/operator pages for pins.
+- Private parks: US$50 gate on the cheapest real RV night (an electric site a 23-ft rig can book, 2 adults, plus any mandatory per-person charge) in any season; over the gate = skip unless a gateway is within 40 km (audit/price_research/gateways.py lat,lng) or it is a Good Sam Park; give the Google rating + count (under 4.0 with 25+ reviews = skip); long-stay tests in full (mostly seasonal/monthly = skip; a standing 3+ night minimum = skip). Sturgis Rally week-only sales do not count as nightly; nights sold the rest of the summer do. A private park needs a price AND a live presence (its own page, booking engine, or a current listing it controls).
+- Town/county parks: a current official page (city/county/chamber) or booking engine is the presence; donation camping is fees 0/0 with the suggested amount in the fees note.
+- Rig fit: sites capped at ~20 ft = skip; unclear pad size = keep with a caveat. EKKO is not 4WD: an agency 4WD requirement or recommendation on the way in is a skip. Never measure grades; act only on what the agency/operator says.
+- A general campground with ATV trail access stays (caveat engine noise); an OHV staging camp does not. A campground that does not EXPLICITLY separate horse areas from general camping is a skip.
+- Waterfront defaults down: lakefront/riverfront needs named nightly pads within ~50 m over open ground with no road or tree band between (a few clear waterfront sites = waterfront with a caveat naming them); a stream under ~30 m wide is creekside; Missouri River reservoirs measure to the high-water edge. South Dakota has no coastal values.
+- Before adding, search campgrounds.json for the lead by name AND within ~2 km of its pin; if it is an existing entry, skip as "duplicate of <id>".
+
+Also return the structured groups when sourced, at the top level of the result: sites {count}, facilities {showers, flush_toilets, vault_toilets, potable_water, dump}, hookups {electric (0/15/20/30/50 only), water, sewer}, season {opens, closes as MM-DD, or year_round}; give each a sibling "<group>_source" key (url + quote + read date). Omit any group you could not source, and then leave its facts out of the note too.
+
+Hard limits:
+- No git commands of any kind, read-only included.
+- No routing around refusals beyond the two BOT WALL fallbacks above (no cache, proxy, reader service or login).
+- No phone calls.
+- Do not run add_results.py (the reviewer runs it); check your JSON loads with python3 -I.
+- Write ONLY audit/verify/leads/results/SLUG.json plus files under SCRATCH/lead-SLUG/.
+- Disk space is low: delete large downloads (imagery, PDFs) once used; leave only a short notes file in your scratch folder when done. Quit any driver/browser you started.
+
+Finish with a short report: the decision(s), the reason, the key sources, and anything AWH should see.
+
+Do not leave any background shell running when you finish. To wait for a process, use its PID (wait $! or kill -0); never `pgrep -f` on a string that also appears in your own waiting command - it matches itself and never ends.
