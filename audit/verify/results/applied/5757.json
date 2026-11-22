@@ -1,0 +1,41 @@
+{
+ "id": 5757,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/pease-creek-recreation-area/ (GFP, read 2026-11-22): 'The wooded terrain provides shaded campsites and hiking opportunities on the bluffs above Lake Francis Case.'; 'Campsites - electrical: $30 per night'; 'Horse Camp: $23 per night'; 'Open: Year-round. Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed... Vault toilets usually remain open.'; 'Park Size: 23 campsites and 5 horse campsites'; '9 miles south of Geddes off SD Highway 1804'; 'Make reservation online or call 1.800.710.2267.'; contact '605.773.8239'; amenities include Drinking Water, Dump Station, Electrical Campsite(s), Flush Toilets, Horse Campsite(s), Horse Trail(s), Showers, Vault Toilets (open year-round); GPS 43.14021,-98.73186",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=45 (engine, header 'Pease Creek Recreation Area', parsed 2026-11-22): loop 126 units 1E-24E 'Back-In Campsite', 'Amp Service: 20/30/50', Max Length 64-96 ft, $30, all online except 11E ($33, not online); loop 193 units A-E 'Equestrian Back-in Campsite', no power, $23; only old (2022) manager holds, no closed season",
+  "Esri World_Imagery 43.1400,-98.7330 (hw 450 m) with the engine's unit points, 2026-11-22: the electric loop (1E-24E) on the wooded bluff top, ~130 m+ from the Lake Francis Case shore through dense forest (nearest 22E/23E); the horse loop A-E is a separate cul-de-sac ~400 m south of the main loop; stored pin 43.1418,-98.7333 is inside the main loop"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 23, "max_rig_ft": 96, "pull_through": false},
+   "source": "gfp page 'Park Size: 23 campsites and 5 horse campsites'; engine facID=45 back-in units, Max Length 64-96 ft (13E 96 ft)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=45 ('Amp Service: 20/30/50' on 1E-24E)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true},
+   "source": "gfp page amenities ('Drinking Water', 'Dump Station', 'Flush Toilets', 'Showers', 'Vault Toilets (open year-round)')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=45"},
+   "source": "gfp page 'Make reservation online or call 1.800.710.2267.' + engine facID=45 (units online)",
+   "method": "manual"
+  }
+ },
+ "note": "GFP recreation area on wooded bluffs above Lake Francis Case, 9 mi S of Geddes off SD-1804: one shaded loop of back-in electric sites, with a separate five-site horse camp ~400 m south. Boat ramp, fish-cleaning station, swim beach, hiking and horse trails. Showers and flush toilets may be shut Oct-Apr; vault toilets stay open. --Claude",
+ "summary": "GFP page + engine facID=45: 23 public electric back-ins (20/30/50 A, 64-96 ft) at $30, plus a separate 5-site horse camp at $23 (separate loop ~400 m south - not a horse-rule problem); year-round. Sites 29 -> 23 (max 96), hookups, facilities (+dump, water) and booking url written. Manual fees $23 is the HORSE-camp rate - should be $30 (flag; manual, not overwritten). Phone '' -> 605.773.8239. Not waterfront confirmed, pin fine.",
+ "flags": [
+  "FEES (manual, NOT overwritten): stored nightly $23-23 with the $7 surcharge is the 'Horse Camp: $23 per night' rate; the fee base for a 23-ft rig is the electric site at $30 ('Campsites - electrical: $30 per night'; engine $30 on 1E-24E; the fees note already says $30). Suggest fees nightly_low/high 30 - the stored figures contradict their own note.",
+  "PHONE: '' -> '605.773.8239' (gfp page contact block).",
+  "SITES: stored 29 (all units) -> 23 public campsites; 11E is listed at $33 and not bookable online (likely host/manager) and A-E are equestrian.",
+  "HORSE CAMP: 'Horse Camp: $23 per night', units A-E 'Equestrian Back-in Campsite' in a separate cul-de-sac (loop 193) ~400 m south of the electric loop - explicitly separated, so no horse-rule drop.",
+  "WEBSITE: stored gfp page + facID=45 confirmed (engine header 'Pease Creek Recreation Area'). SEASON manual year_round matches 'Open: Year-round'.",
+  "WATERFRONT: not waterfront confirmed (nearest sites 22E/23E ~130 m from the shore through dense forest on the bluff). PIN fine."
+ ]
+}

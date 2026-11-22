@@ -1,0 +1,12 @@
+# SD notes p3-575
+- 5876 Bison City Park DONE: no groups; presence question (no town page, no Google listing; ParkAdvisor 2023 review only)
+- 5858 Clay County Park DONE: facID 82, 40E $30 50A 50ft, season 04-15..10-25, phone 605.659.0050, ownership assoc flag
+- 5862 Fall River Fairgrounds DONE: fees 30-40, phone booking, privately owned fair board (ownership flag), long-term sites
+- 5856 Lions DONE: 5 sites, 50A+water, $10, FCFS, 2-night max, closes 10-13
+- 5750 North Wheeler DONE: facID 40 reservable (stored false), lakefront kept 22E-25E, phone 773.8239
+- 5778 Pactola DONE: $30 rec.gov (FS $36), loop B closed 2026-08-06..2027-06-23, lakeview kept, phone 343-1567
+- 5757 Pease Creek DONE: 23E $30, horse camp separate, manual fees $23 wrong (flag), phone 773.8239
+- 5747 Springfield DONE: lakefront kept 04/06/08/10E, manual fees base tent (flag), north loop year-round
+- 5867 Veblen DONE: no city page, RV Life Jul 2025 $10 reported, presence flag
+- 5748 Fisher Grove DONE: 22 sites $30 50A, fcfs never->null, manual fees $23 flag, country club operator
+- 5874 Webster DONE: $25 SYS QR FCFS, 7 FHU+3E, sewer true, lead Ice Rock

@@ -1,0 +1,40 @@
+{
+ "id": 5747,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/springfield-recreation-area/ (GFP, read 2026-11-22): 'nestled along the shore with breathtaking views of the Missouri River'; 'Campsites - electrical: $30 per night'; 'Campsites - non-electrical: $16 per night (tent only)'; 'Camping Cabins: $60 per night'; 'Open: Year-round. Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed...'; 'Park Size: 20 campsites and 2 camping cabins'; '1 mile east of Springfield off SD Hwy 37'; 'Make reservation online or call 1.800.710.2267.'; '1412 Boat Basin Drive ... 605.668.2985'; amenities Boat Ramp(s), Camping Cabin(s), Drinking Water, Dump Station, Electrical Campsite(s), Fish Cleaning Station(s), Flush Toilets, Showers, Vault Toilets (open year-round); GPS 42.85588,-97.88458",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=67 (engine, header 'Springfield Recreation Area', parsed 2026-11-22): 01E-11E (no 02E) 'Amp Service: 20/30', 32-65 ft, $30, 04E 'Pull-Thru Campsite' 65 ft; 12E-20E 'Amp Service: 20/30/50', 45-51 ft, $30; site 2 'Tent Only - Nonelectric' $16; cabins C1-C2 $60; all online; V1 (50 A, $23), OA1-OA2 and YG1 not online. Blackouts: 01E-11E, site 2 and the cabins 'Closed Season' 2026-10-26..2027-04-02; 12E-20E carry no winter closure",
+  "Esri World_Imagery 42.8601,-97.8833 (hw 180 m) and 42.8594,-97.8834 (hw 110 m) with the engine's unit points, 2026-11-22: south row 04E/06E/08E/10E on mowed grass along the east side of the boat basin (a ~55-60 m wide harbor arm of Lewis & Clark Lake), 22-40 m from the water edge over open ground; 01E/03E/05E/07E/09E/11E one row further east under trees; 12E-20E on a separate wooded loop ~150 m north beside a small creek; stored pin 42.8596,-97.8820 ~70 m east of 01E"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 20, "max_rig_ft": 65, "pull_through": true},
+   "source": "gfp page 'Park Size: 20 campsites and 2 camping cabins'; engine facID=67 (19 electric + tent site 2; 04E 'Pull-Thru Campsite', Max Length 65)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=67 ('Amp Service: 20/30/50' on 12E-20E; 20/30 on 01E-11E)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"potable_water": true},
+   "source": "gfp page amenities ('Drinking Water')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=67"},
+   "source": "gfp page 'Make reservation online or call 1.800.710.2267.' + engine facID=67 (units online)",
+   "method": "manual"
+  }
+ },
+ "note": "GFP recreation area on the Lewis & Clark Lake boat basin, 1 mi E of Springfield off SD-37: a row of electric sites along the basin's grassy east bank, a shaded inner row, and a separate wooded north loop with 50-amp sites; one tent site and two camping cabins. Boat ramp, fishing dock, fish-cleaning station; a bike trail runs to town. In winter only the north loop stays open. Lakefront at 04E, 06E, 08E and 10E. --Claude",
+ "summary": "GFP page + engine facID=67: 19 electric sites $30 (12E-20E 50 A, 01E-11E 30 A, 04E a 65-ft pull-through) + 1 tent site $16 + 2 cabins; 01E-11E close Oct 26-Apr 2 while 12E-20E stay open (year-round holds). Sites/hookups/booking url/water written. Manual fees $16-23 base is the TENT site (flag: should be $30). Lakefront kept on 04E/06E/08E/10E (22-40 m over open grass to the boat basin). Phone/website confirmed, pin fine.",
+ "flags": [
+  "FEES (manual, NOT overwritten): stored nightly_low 16 / high 23 - $16 is 'Campsites - non-electrical: $16 per night (tent only)' and $23 matches no current rate; electric sites are $30 (page and engine; the fees note already says $30). Suggest nightly_low/high 30.",
+  "WATERFRONT: stored lakefront KEPT on 04E (42.859482,-97.883158), 06E (42.859163,-97.883048), 08E (42.858988,-97.882904), 10E (42.858834,-97.882808): 22-40 m over open mowed grass to the boat basin, a ~55-60 m wide harbor arm of Lewis & Clark Lake (not creekside). The inner row (01E-11E odd) and the north loop 12E-20E are not. Suggested evidence: 'Esri 2026-11-22 with GFP engine points: 04E/06E/08E/10E 22-40 m over open grass to the ~55 m boat basin of Lewis & Clark Lake -> lakefront on those four'.",
+  "SEASON (manual year_round, matches): engine closes 01E-11E, the tent site and cabins 2026-10-26..2027-04-02; 12E-20E have no winter closure, so the campground is open year-round on the north loop.",
+  "SITES: V1 (50 A, $23, not bookable online) looks like a host/volunteer pad; OA1/OA2 overflow and YG1 group area not online - not counted. Electric max is 50 A on 12E-20E only.",
+  "PHONE 605.668.2985 and WEBSITE (gfp + facID=67, header 'Springfield Recreation Area') confirmed. PIN 42.8596,-97.8820 fine (~70 m east of 01E)."
+ ]
+}

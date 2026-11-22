@@ -1,0 +1,43 @@
+{
+ "id": 5874,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://webstersd.com/city-facilities (Webster Area Chamber, 'Copyright © 2025', read 2026-11-22): 'City of Webster Campground ... Campgrounds are located on US Highway 12. The campground and RV park are located within walking of City Park & Aquatic Center...'; Campground: 'First-come, first-served basis / Scan QR code at campsite upon arrival to pay / $25.00/NIGHT / Three RV hook-ups for electric. Water for dumping only, No sewer hookup available.'; RV Park: 'First-come, first-served basis / Scan QR code at campsite upon arrival to pay / $25.00/NIGHT / Seven RV hook-ups for electric, water and sewer'; both link 'https://portal.setyoursites.com/explore/campground/city-of-webster-campground'",
+  "https://api.setyoursites.com/api/campgrounds/city-of-webster-campground (Set Your Sites, read 2026-11-22): 'City of Webster Campground'; disclaimer 'All camping is first-come, first-served and must be paid on-site. Stays are limited to 14 consecutive days. ... each site must have a self-contained unit. Check-in is 2:00 PM and check-out is 12:00 PM.'; availability: Sites 1-10, $25, siteLength 51-71 ft, has30Amp/has50Amp true, water/sewer false on every site, maxNights 14; calendar 2026-11-22..2027-11-21 shows all 10 sites available every day",
+  "Esri World_Imagery 45.34042,-97.5178 (hw 180 m), 2026-11-22: a gravel pull-around loop with pedestals in a grassy lot just south of US-12 - the stored pin sits on it; the marsh lies ~150 m+ NE across US-12 and an industrial yard"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2026", "note": "$25 a night at every site, paid on arrival by scanning the QR code at the site (Set Your Sites)."},
+   "source": "https://webstersd.com/city-facilities ('$25.00/NIGHT' for both the campground and the RV park) + Set Your Sites price 25 on Sites 1-10, read 2026-11-22",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://webstersd.com/city-facilities ('Seven RV hook-ups for electric, water and sewer' at the RV park; 'Three RV hook-ups for electric ... No sewer hookup available' at the campground) + Set Your Sites has50Amp true on all 10 sites",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 10, "max_rig_ft": 71},
+   "source": "webstersd.com (three campground + seven RV park hook-ups) + Set Your Sites Sites 1-10, siteLength 51-71 ft",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14, "url": "https://portal.setyoursites.com/explore/campground/city-of-webster-campground"},
+   "source": "Set Your Sites disclaimer ('All camping is first-come, first-served and must be paid on-site. Stays are limited to 14 consecutive days.') + webstersd.com ('First-come, first-served basis / Scan QR code at campsite upon arrival to pay')",
+   "method": "manual"
+  }
+ },
+ "note": "City of Webster camping on US-12, walking distance to the city park, aquatic center, groceries and restaurants: seven full-hookup sites in the RV park on a gravel loop south of the highway, plus three electric-only sites at the separate campground (water there is for dumping only). Pay on arrival by scanning the QR code at the site. --Claude",
+ "summary": "City facilities page + Set Your Sites: 10 sites (7 full hookup, 3 electric-only), $25, FCFS pay-by-QR on arrival, 14-night limit, 50 A, 51-71 ft. Fees (method none -> manual), hookups (sewer false -> true for the RV park; 50 A, water), sites (max 71) and booking (url, max stay) written. Note dropped the stale 'Permit/pay at the Municipal Liquor Store; first night free'. Phone is the liquor store's (flag). Pin fine, not waterfront. Lead: Ice Rock Campground (Webster).",
+ "flags": [
+  "HOOKUPS: stored sewer false (derived, from 'full-hookup sites (no sewer)') contradicted by the city page: RV Park 'Seven RV hook-ups for electric, water and sewer'; only the three campground sites lack sewer. Set Your Sites shows water/sewer false on all 10 sites (also has30/50 on all) - treated as unfilled engine defaults against the operator's explicit text; reviewer may prefer to leave sewer unknown.",
+  "NOTE: old note's 'Permit/pay at the Municipal Liquor Store; first night free' is no longer on the page (payment is now by QR code via Set Your Sites; no free night mentioned) - dropped.",
+  "PHONE: stored 605-345-4800 is the Webster Municipal Liquor Store ('For more information, call (605) 345-4800'); the page no longer routes camping through the store. No city-hall camping number is posted on the page read; left as is, reviewer's call.",
+  "WEBSITE: 'https://webstersd.com/city-facilities' -> 'https://webstersd.com/city-facilities\\nhttps://portal.setyoursites.com/explore/campground/city-of-webster-campground' (webstersd.com is the Webster Area Chamber's site; the SYS listing is the city's pay/availability page).",
+  "SEASON: not stated; the SYS calendar shows all 10 sites available every day through 2027-11-21 (no closure set). Not written.",
+  "SPLIT (minor, not proposed): the 3 electric-only sites are 'across from the Municipal Liquor Store' and the 7-site RV park is a separate lot; both in town on US-12 within a few hundred metres, one SYS listing - below the ~1 km split threshold.",
+  "PIN: stored 45.34042,-97.5178 is on the RV park's gravel loop south of US-12 - fine. WATERFRONT: not waterfront confirmed.",
+  "LEAD: a Google search for the city campground surfaced 'Ice Rock Campground', 13486 SD-25, Webster (icerockcampground.com, 605-261-5312, 4.9 stars / 13 reviews, ~10 km N of town) - not in campgrounds.json; not vetted."
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "id": 5748,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/-fisher-grove-state-park/ (GFP, read 2026-11-22): 'Visitors can enjoy camping with 22 electrical sites, picnicking, fishing, and access to the James River for canoeing and kayaking. Fisher Grove State Park is managed and maintained by the Fisher Grove County Club, which offers a ten-hole golf course adjacent to the park. For more information call 605.472.1336.'; 'Campsites - electrical: $30 per night'; 'Open: Year-round. Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed...'; 'Park Size: 22 campsites'; '7 miles east of Redfield off US Hwy 212'; 'Make reservation online or call 1.800.710.2267.'; contact '605.626.3488'; amenities Concessions, Drinking Water, Dump Station, Electrical Campsite(s), Flush Toilets, Showers, Vault Toilets (open year-round), Warming Shelter(s); GPS 44.88346,-98.35471",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=16 (engine, header 'Fisher Grove State Park', parsed 2026-11-22): 21 units 1E-22E (no 3E) 'Amp Service: 20/30/50', $30, all online - 18 back-in, 3 pull-through (6E, 13E, 14E), Max Length 45-85 ft; V1 back-in $37 online; no closed-season blackouts (only short maintenance holds, e.g. 'No Power, waiting on parts' 2026-08-01..03)",
+  "Esri World_Imagery 44.8850,-98.3553 (hw 200 m) with the engine's unit points, 2026-11-22: one loop on a peninsula of the James River (~40 m wide) beside the golf clubhouse; every site is behind a continuous riparian tree band - nearest 9E ~30 m and 13E/14E ~40 m from the water through trees; stored pin 44.8849,-98.3562 at 1E/22E"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 22, "max_rig_ft": 85, "pull_through": true},
+   "source": "gfp page 'Park Size: 22 campsites'; engine facID=16 (3 'Pull-Thru Campsite' units; 17E 'Max Length: 85')",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=16 ('Amp Service: 20/30/50' on every unit)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true, "showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true},
+   "source": "gfp page amenities ('Drinking Water', 'Dump Station', 'Flush Toilets', 'Showers', 'Vault Toilets (open year-round)')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "fcfs": null, "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=16"},
+   "source": "gfp page 'Make reservation online or call 1.800.710.2267.' + engine facID=16 (all units online); fcfs cleared so the state:SD row's 'always' applies (stored 'never' was derived from note prose with no source)",
+   "method": "manual"
+  }
+ },
+ "note": "GFP state park on a wooded bend of the James River, 7 mi E of Redfield off US-212, at the historic Belchers Ford stage crossing. One loop of electric sites (three pull-throughs) under the trees; the park is run by the adjoining Fisher Grove Country Club, whose ten-hole golf course is next door. Canoe and kayak access to the river; warming shelter. --Claude",
+ "summary": "GFP page + engine facID=16: 22 sites, all 20/30/50 A at $30 (V1 $37), 3 pull-throughs, 45-85 ft, all online, year-round (no closed-season holds). Sites (max 85), hookups, facilities and booking url written; derived fcfs 'never' cleared to inherit the SD row. Manual fees $23 should be $30 (flag). Operated by the Fisher Grove Country Club for GFP (ownership note). Not waterfront confirmed (tree band), pin fine.",
+ "flags": [
+  "FEES (manual, NOT overwritten): stored nightly $23-23 contradicts 'Campsites - electrical: $30 per night' and the engine's $30 on every site (the fees note already says $30); there are no non-electric sites. Suggest nightly_low/high 30.",
+  "BOOKING: stored fcfs 'never' (derived) cleared with null - nothing on the GFP pages says walk-ups are refused; the state:SD row's fcfs 'always' then applies. If the reviewer prefers an explicit value, write 'always'.",
+  "OPERATOR: 'Fisher Grove State Park is managed and maintained by the Fisher Grove County Club' - a GFP park run by a concessionaire club; ownership stays `state` (GFP books it, GFP fees). Noted in the note.",
+  "PHONE: stored 605.472.1336 confirmed ('For more information call 605.472.1336'); the contact block gives the district office 605.626.3488. No change.",
+  "WEBSITE: stored gfp slug '-fisher-grove-state-park' is the live page (the slug without the leading hyphen redirects to the parks index); facID=16 header matches. No change.",
+  "WATERFRONT: not waterfront confirmed - the loop sits on a James River peninsula (~40 m river) but every site is screened by a continuous riparian tree band (9E 44.884811,-98.354551 ~30 m; 13E 44.885719,-98.354657 ~40 m, both through trees). At most a filtered view; stays down.",
+  "SEASON manual year_round matches 'Open: Year-round' and the engine (no closed-season holds). PIN fine."
+ ]
+}

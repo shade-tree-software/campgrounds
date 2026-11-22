@@ -775,3 +775,6 @@ Operator: 'Sites are available on a nightly, weekly, monthly, or seasonal basis'
 
 ## 5814 Ingalls Homestead (De Smet SD, private) - $50 + per-person admission (p3-567, 2026-11-21) - OPEN
 4 back-in water/electric sites, $50 a night (exactly at the gate), booked by email with a 50% deposit, grounds open May 1-Oct 31. Admission $21.15 a person, charged once per stay, 'required if you plan to be on our grounds during our open hours'. Under the mandatory-fees rule two adults' admission ($42.30) on top of a one-night $50 puts it well over; no gateway within 40 km, no Good Sam. Is the admission mandatory for campers (camping is on the grounds), so drop on price - or optional (arrive after hours, leave before opening), so keep with a caveat? Kept for now.
+
+## 5876 Bison City Park (Bison SD, local) - no current presence (p3-575, 2026-11-22) - OPEN
+No town page, no phone, no Google listing, no booking engine. The only evidence it operates is one ParkAdvisor review from May 2023 ($20, water + electric, pay showers, dump). Same shape as the ND city parks you dropped on 'no current presence' (Monango, Sarles) and Brooks Memorial here. Drop? Kept for now with the stored values marked unconfirmed. (5867 Veblen City Park, same batch, has a July 2025 RV LIFE stay report at $10 - kept with it as the source.)
