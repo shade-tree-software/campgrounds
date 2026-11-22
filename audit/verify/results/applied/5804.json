@@ -1,0 +1,51 @@
+{
+ "id": 5804,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://sunriseridgecampground.com/ (read 2026-11-21): 'online reservations open year round'; 'Sunrise Ridge is your year-round Hot Springs, SD camping destination'; 'Located just North of Hot Springs, SD on Highway 385'; 'Whether you have a 45 foot motorhome, a tent or something in between'; '12 New Pull-Through RV Sites with Full Hook-Ups'; 605-745-4397; 27288 Wind Cave Rd; Book a Reservation -> reservations.verticalbooking.com (id_albergo=29665)",
+  "https://sunriseridgecampground.com/sites/ (read 2026-11-21): 'All sites have 50/30/20 amp electric, water & sewer.'; 'Large level sites up to 85' long and 35' wide.'; 'Pull through and back in sites available.'",
+  "https://sunriseridgecampground.com/amenities/ (read 2026-11-21): 'On-Site Guest Laundry Facility'; 'WIFI throughout the park'; 'Bathroom & shower facility'; 'small working ranch ... goats ... chickens'; 'Petting Zoo'",
+  "https://sunriseridgecampground.com/wp-content/uploads/2026/01/2026-Site-Policies-2.pdf (read 2026-11-21): 'No campfires are allowed at individual sites. The communal fire pit is available for all to use.'; 'There is a $5.00/night per vehicle charge for each additional vehicle'; 'Minimum stays may apply for camping sites and cabins.'; 'We offer a military discount, weekly discount & monthly discount.'; 'The minimum age to reserve a campsite is 18'",
+  "https://sunriseridgecampground.com/wp-content/uploads/2026/03/2026-Sunrise-Ridge-map-2-1-1536x1187.png (read 2026-11-21): RV sites 1-39, '*RV Sites include water, sewer, & power hook ups', 'OPEN YEAR-ROUND'",
+  "Esri World_Imagery 43.4505,-103.4730 hw 250 m (2026-11-21): RV loops east of US-385 on open grassland, storage sheds on the north edge; no water body",
+  "Booking engine reservations.verticalbooking.com: Cloudflare 'Performing security verification' wall in the headless browser (2026-11-21) - not read; no rate published on the operator site"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://sunriseridgecampground.com/sites/ ('All sites have 50/30/20 amp electric, water & sewer.')",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 39, "max_rig_ft": 85, "pull_through": true},
+   "source": "https://sunriseridgecampground.com/sites/ ('Large level sites up to 85' long'; 'Pull through and back in sites') + 2026 campground map (RV sites 1-39)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "laundry": true, "wifi": true},
+   "source": "https://sunriseridgecampground.com/amenities/ ('On-Site Guest Laundry Facility'; 'WIFI throughout the park'; 'Bathroom & shower facility')",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://sunriseridgecampground.com/ ('We're open year-round to welcome you in every season!') + 2026 map 'OPEN YEAR-ROUND'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://reservations.verticalbooking.com/premium/index.html?id_albergo=29665&dc=7152&lingua_int=usa&id_stile=22297", "note": "Online booking through the park's Vertical Booking engine; a credit card holds a reservation and a cancellation within 7 days is charged the first night."},
+   "source": "https://sunriseridgecampground.com/ + /policies/ (read 2026-11-21)",
+   "method": "manual"
+  }
+ },
+ "note": "Small RV park on a working ranch just north of Hot Springs on US-385, near Wind Cave National Park, with goats, chickens and a petting zoo. No fires at individual sites; a communal fire pit is provided. --Claude",
+ "summary": "Operator site + 2026 policies + 2026 map: 39 full-hookup RV sites (50/30/20 A), pull-through and back-in to 85 ft, open year-round, bath house/laundry/wifi, online booking via Vertical Booking. Transient park (nightly bookings, weekly/monthly discounts only) - long-stay tests pass. No rate found: the booking engine is behind a Cloudflare wall and the site posts no prices; RV Life avg_rate $38 ($$) not stored. Price gate moot anyway - Wind Cave NP gateway 12 km. Google 4.8 (278). Not waterfront kept.",
+ "flags": [
+  "RATE NOT FOUND: operator site posts no prices; reservations.verticalbooking.com answered a Cloudflare 'Performing security verification' page (not solved). RV Life Algolia avg_rate $38, price_level 2 - aggregator figure, not stored. Price gate passes regardless: gateways.py -> Wind Cave NP 12 km.",
+  "LONG-STAY: no seasonal/monthly-only wording; nightly online booking with a first-night cancellation charge, plus 'military discount, weekly discount & monthly discount' -> transient park, keep. The '& Storage' name refers to a separate RV/boat storage business on the north edge (sunriseridgecampground.com/sunrise-ridge-storage/), not long-term sites.",
+  "GOOGLE: 4.8 (278 reviews).",
+  "DISCOUNTS: operator posts a military discount - consistent with stored military true (derived). good_sam true (derived, Good Sam directory) not re-checked (goodsam.com refuses).",
+  "PIN: stored 43.4505,-103.4730 sits inside the RV loops (Google 43.45005,-103.47409, ~90 m) - fine.",
+  "WATERFRONT: not waterfront kept (open grassland, no water).",
+  "Note rewritten: dropped site count/hookups/85 ft/laundry/reservable (fields show them)."
+ ]
+}

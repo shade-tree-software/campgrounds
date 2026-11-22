@@ -1,0 +1,12 @@
+# SD_NOTES p3-569 (2026-11-21)
+- 5717 Rocky Point: written. facID 53, 57 elec 20/30/50, lakefront kept 38E-41E, phone 605.773.2408
+- 5779 Roubaix: written. lakeview kept weakly (~130 m meadow), $30 peak/$15 off-season, Loop C year-round, phone (661) 702-1420
+- 5725 Shadehill: written. facID 58, 82 bookable 20/30/50, lakefront kept 34E-46E ~35-45 m, phone 605.374.5114
+- 5773 Sheridan South: written. lakeview kept (WO066/067 ~45-60 m scattered pines), $30 rec.gov vs FS $36, 127 sites, phone (661) 702-1420
+- 15494 Sioux Falls KOA: written. $49 W/E (May 2027 capture) passes gate, open May 1-Oct 12, Google 4.3/1055
+- 13146 Southern Hills: written. $55 Std/$65 Super Oct 2026, over gate but Mt Rushmore 21 km gateway; Google 4.6/168; 2027 not open
+- 5845 Spearfish City: written. still temp closed to early summer 2027; creekside kept (P1-P6 back to path+creek, canopy); $21 off-season
+- 13147 Spokane Creek: written. CampLife $61-76 flat; gateway Rushmore 8km; propose creekside 54-62; season closes 10-15 flagged (manual); Google 4.7/578
+- 5805 Steel Wheel: written. DROP CANDIDATE price $60 elec (no gateway, Rushmore 50km); OHV-adjacent flag; year-round; Google 4.5/360
+- 5850 Stokes-Thomas: written. Campspot reservable (was fcfs), lakeview kept (riprap, 30-35m), phone added, race track noise
+- 5804 Sunrise Ridge: written. No rate (Vertical Booking Cloudflare-walled; RV Life avg $38 unstored), Wind Cave gateway 12 km, transient, year-round, Google 4.8 (278)

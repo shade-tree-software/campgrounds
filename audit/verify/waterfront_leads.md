@@ -1640,3 +1640,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5735 Pelican Lake (p3-568): lakeview kept; 25E-36E ~28-30 m over open grass to a riprapped shore with a broken tree line - lakefront lead.
 - 5731 Oakwood Lakes (p3-568): not waterfront kept; Campground 2 west row 76E-85E 30-40 m from the lake behind a trail + tree band - lakeview lead (needs site photos).
 - 5719 Oahe Downstream (p3-568): not waterfront kept; Campground 3 201E-205E 20-40 m from the channel behind a tree row + riprap - riverview lead.
+- 5779 Roubaix Lake (p3-569): lakeview kept on a weak basis - FCFS meadow sites 50-53 ~130 m across open meadow from a ~3 ha lake; no RV site within 50 m. Down to not waterfront if a site photo shows no line of sight.
+- 5850 Stokes-Thomas (p3-569): lakeview kept; south-loop west edge ~30-35 m over grass + trees to a riprapped shore.

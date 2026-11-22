@@ -1,0 +1,40 @@
+{
+ "id": 13146,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://southernhillsrvparkandcampground.com/ (read 2026-11-21): 'our family-friendly campground offers full-hookups and spacious pull-through sites'; 'Off Season Savings: Monthly Rentals November-April ... Monthly stays available from November 1st to April 1st at a special discounted rate'; 'Electric, Water, & Sewer Hookups / Free Wifi Internet / Shower House & Laundry / Propane Available / Fire Pit / Dog Park'; '605-939-7609'; '24549 Hwy 79 - Hermosa, SD 57744'; Book Now -> https://www.campspot.com/book/southern-hills-rv",
+  "https://southernhillsrvparkandcampground.com/accommodations/ (read 2026-11-21): 'Whether you're staying for a night or settling in for the season'; 'All RV sites come equipped with electric, sewer, and water hookups, plus free high-speed Wi-Fi'; 'on-site laundry room'; 'Shower Room'",
+  "Campspot API via headless browser 2026-11-21 (park 4059, engine slug southern-hills-rv): types 'Standard Site' (18 sites, max 45 ft, pull-through, 20/30/50-Amp) and 'Super Site' (22 sites, max 60 ft, pull-through, 20/30/50-Amp); 2026-10-20 one night 2 adults: Standard $55.00 site charge, Super $65.00, plus 'Credit Card Processing Fee' (3.3%) and 'Booking Fee' $3.00; 2026-11-22 'RESORT_CLOSED_RULE: Park is closed for your dates'; 2027-01-26, 2027-05-11, 2027-06-08, 2027-07-13 return no types (2027 not yet open). Matches audit/price_research/campspot_tier_2026-10-13.jsonl (Oct 17/20 2026, $55/$65)",
+  "python3 audit/price_research/gateways.py 43.84636,-103.19958 (2026-11-21): 'Mount Rushmore (attraction, 21 km); Wind Cave NP (national park, 39 km)'",
+  "Google Maps place panel via headless browser 2026-11-21: 'Southern Hills RV Park and Campground' 4.6 stars (168 reviews), 24549 SD-79, Hermosa, SD 57744, +1 605-939-7609, 43.84634,-103.20210"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://southernhillsrvparkandcampground.com/accommodations/ ('All RV sites come equipped with electric, sewer, and water hookups') + Campspot types (20/30/50-Amp on both)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "laundry": true, "wifi": true},
+   "source": "https://southernhillsrvparkandcampground.com/ ('Free Wifi Internet', 'Shower House & Laundry')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/park/southern-hills-rv-park-and-campground-hermosa-sd"},
+   "source": "https://southernhillsrvparkandcampground.com/ (Book Now -> campspot.com/book/southern-hills-rv) + Campspot API 2026-11-21",
+   "method": "manual"
+  }
+ },
+ "summary": "Operator site + Campspot API + gateways + Google: full hookups 20/30/50, all pull-through, $55 Standard / $65 Super (Oct 2026; 2027 not yet open on Campspot, closed now for nightly). OVER the $50 gate but Mount Rushmore gateway 21 km brings it under -> passes. Google 4.6 (168). Long-stay: nightly in season, monthly only Nov-Apr off-season -> passes. Groups re-confirmed as manual (same values); note unchanged.",
+ "flags": [
+  "PRICE GATE: cheapest real electric night $55.00 (Standard Site, Campspot site charge before tax and fees, 2026-10-17/20; the same Tuesday and Saturday) - over $50, but GATEWAY: gateways.py names Mount Rushmore at 21 km (Wind Cave NP 39 km), within 40 km -> passes on the gateway exception. Not a Good Sam Park (good_sam false). Summer peak NOT available: Campspot lists no 2027 dates yet (May, June, July 2027 all empty) and the park reads closed for nightly from November; the operator site posts no rates.",
+  "GOOGLE: 4.6 stars, 168 reviews (2026-11-21).",
+  "LONG-STAY: passes - nightly booking on Campspot for all 40 listed sites in season; 'staying for a night or settling in for the season'; discounted monthly stays only November 1 to April 1 (off season). Reviews (Jul-Oct 2026) show 1-night to month-long stays. Not mostly seasonal.",
+  "SITES: stored max_rig_ft 75 (reported, from a search summary) vs Campspot's longest type 60 ft (Super Site; Standard 45 ft) - not overwritten, reviewer's call. Campspot lists 40 sites (18 + 22); stored count 56 is RV Life's.",
+  "SEASON: Campspot answers 'Park is closed for your dates' for 2026-11-22 while the operator rents monthly Nov-Apr; no nightly season dates are posted - season left unwritten.",
+  "FEES (unchanged): $55-65 plus a $3 'Booking Fee' and 3.3% card fee - confirmed again today against the Oct 2026 quote.",
+  "WATERFRONT: not waterfront - unchanged.",
+  "PIN: stored 43.84636,-103.19958 vs Google 43.84634,-103.20210 (~200 m) and Campspot's 43.84604,-103.20247 (~235 m) - borderline; both operator-side points sit ~200-235 m west, near SD-79. Not moved (under 250 m).",
+  "Suggested inclusion_evidence: 'Operator site + Campspot API (2026-11-21): full-hookup 20/30/50A pull-throughs, 40 Campspot sites to 60 ft, $55-65 (Oct 2026), Mount Rushmore gateway 21 km; Google 4.6 (168)'."
+ ]
+}

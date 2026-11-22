@@ -1,0 +1,60 @@
+{
+ "id": 5805,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://steelwheelcampground.com/ (read 2026-11-21): 'Open Year Round'; '12-acre retreat nestled just six miles south of historic Deadwood, SD, along US-385'; 'hot showers, clean restrooms, laundry facilities, and a dump station'; 'All RV camping spots offer 30/50 amp hookups'; 'Steel Wheel offers reliable WiFi'; 'Onsite Gas Station'; 'Easy Access to Trails ... ATV and OTV trails'",
+  "https://steelwheelcampground.com/book-now/rv-and-campgrounds/ (read 2026-11-21): 'Standard Rate $50-70 night'; 'All bookings are subject to a one-night non refundable deposit'; 'No Generators Allowed'; 'Site Rates per night do not include tax'; 'Rally rates are in effect August 6th - August 17th. Reservations for the Sturgis Motorcycle Rally will be accepted starting on January 16th'; FAQ 'full hookup RV sites (30/50 amp), electric-only RV sites, camping cabins, and park model cabins'; 'UTV and Roxor rentals are available on-site through Mad Peak Rentals. Trail passes can be purchased at the Trading Post'",
+  "https://steelwheelcampground.com/about/ (read 2026-11-21): 'full-hookup RV sites with 30/50 amp service, all big-rig friendly and many pull-through accessible'; 'direct access to ATV and snowmobile trails adjacent to the property, with trail passes available on site'; deli/food court Memorial Day-Labor Day",
+  "Recreogo booking engine (recreogo.com/consumer/steelwheel-campground, linked from the operator's Book Now; listings API read in the headless browser 2026-11-21): 34 RV listings - sites 6-12, 15-16, 18-19, 21-23, 25-26, 28-33 'RV Full Hookup' (35-60 ft back-in, 30/50 amp, water, sewer) and 14, 17, 20, 24, 27, 34 'RV Pull-Thru Full' (60-70 ft) at $70 a night; 35-38 'RV Electric Only 50 AMP ONLY (50')' $60; 39-40 'SW Dry R.V. (45')' $50; Sturgis Rally rate $140-150; no seasonal rate tables; 'Two-night minimum stay during holidays and event weeks'; 'Military Discount: Use code Military10 to receive 10% off your rental'; tax 4.2% + 1.5%; policies: 'Steel Wheel includes access to 92 recreational acres located on the west side of the campground, featuring a private lake with a beach'; 'Shower house and laundry facilities are open 24 hours'",
+  "audit/price_research/gateways.py 44.29933,-103.67822: 'none within 40 km; nearest: Mount Rushmore 50 km; Wind Cave NP 84 km'",
+  "Esri World_Imagery 44.2995,-103.6805 hw 350 m, 2026-11-21: RV rows on the west side of US-385 beside the trading post; no water near the sites",
+  "Google Maps place panel via headless browser 2026-11-21: 'Steel Wheel Campground & Trading Post' 4.5 stars (360 reviews), 21399 US-385, Deadwood, +1 605-578-9767"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "Recreogo listings ('full hookups (water, sewer, 30/50 AMP electric)') + steelwheelcampground.com",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 34, "pull_through": true, "max_rig_ft": 70},
+   "source": "Recreogo listings (34 RV sites, six pull-throughs up to 70 ft)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "laundry": true, "camp_store": true, "dump": true, "wifi": true},
+   "source": "https://steelwheelcampground.com/ + /amenities/",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://steelwheelcampground.com/ ('Open Year Round')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://recreogo.com/consumer/steelwheel-campground/steelwheel-campground?type=Campsites", "note": "Two-night minimum on holidays and event weeks. Sturgis Rally bookings open January 16, are paid in full and are non-refundable."},
+   "source": "https://steelwheelcampground.com/book-now/rv-and-campgrounds/ + Recreogo listings",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 50, "nightly_high": 70, "currency": "USD", "checked": "2026", "seasonal": [{"name": "Sturgis Rally", "opens": "08-06", "closes": "08-17", "nightly_low": 140, "nightly_high": 150}], "tax": {"percent": 5.7}, "note": "Dry sites $50, 50-amp electric-only $60, full hookup and pull-through $70, the same all year outside the Rally."},
+   "source": "Recreogo listings API (rates read 2026-11-21) + https://steelwheelcampground.com/book-now/rv-and-campgrounds/",
+   "method": "manual"
+  }
+ },
+ "note": "Family-owned park on US-385 about 6 mi south of Deadwood in the Black Hills, beside its own trading post with fuel and a seasonal deli. Mostly back-in full-hookup sites with a few pull-throughs, 50-amp electric-only and dry sites, plus cabins and a lodge. ATV and snowmobile trails run next to the property and UTVs are rented on site; generators are not allowed. --Claude",
+ "summary": "Operator pages + Recreogo listings API + imagery + Google: open year round; 34 RV sites, $70 full hookup / $60 50-amp electric-only / $50 dry, flat outside the Sturgis Rally ($140-150). PRICE-GATE DROP CANDIDATE: cheapest electric night $60, no gateway within 40 km (Mount Rushmore 50 km), not a Good Sam Park; only a 10% military code ($54). OHV: general campground beside an ATV/snowmobile trail system (flag, kept). Groups written; note rewritten.",
+ "flags": [
+  "DROP CANDIDATE (price gate): cheapest real RV electric night is $60 before 5.7% tax ('Campsite 35 - RV Electric Only 50 AMP ONLY (50')' ... 'Starting at $60 per night'; full hookup 'Starting at $70 per night'); the $50 'Standard Rate' floor is the two dry sites (39-40, no services). Rates are flat all year (no seasonal tables); summer peak = the same $60/$70, Sturgis Rally $140-150. gateways.py: 'none within 40 km; nearest: Mount Rushmore 50 km'. Good Sam: stored false. Only discount is 'Military Discount: Use code Military10 to receive 10% off' -> $54, still over $50 (and a military code is not a membership discount). Google 4.5 (360) - no review-based tiebreak.",
+  "OHV CHECK: general campground, not an OHV base - trading post/fuel stop with cabins, lodge and 34 RV sites; but 'direct access to ATV and snowmobile trails adjacent to the property, with trail passes available on site' and on-site UTV/Roxor rentals (Mad Peak Rentals). No agency noise warning found. Flag for AWH under the 'adjacent trail system' rulings.",
+  "ELECTRIC-ONLY SITES are 50-amp only ('50 AMP ONLY') - a 30-amp rig needs an adapter; full-hookup sites are 30/50.",
+  "FEES: provenance had no method; replaced with Recreogo rates (low 50 = dry site, kept as the posted floor; electric from $60).",
+  "SITES: count 34 RV sites online (6-12, 14-40); cabins 1-8 and a lodge separate. Shortest RV site 35 ft.",
+  "DISCOUNTS: military true (stored derived) confirmed by the operator's 'Military10' code - not written (would replace the derived good_sam false in the same group).",
+  "WATERFRONT: not waterfront KEPT. The operator offers 'access to 92 recreational acres ... featuring a private lake with a beach' west of the campground; imagery shows no water at the RV rows (all along US-385).",
+  "LONG-STAY: passes - nightly online booking, no monthly/seasonal wording, 2-night minimum only on holidays/event weeks.",
+  "GOOGLE: 4.5 stars, 360 reviews.",
+  "PHONE: 605-578-9767 confirmed. WEBSITE: steelwheelcampground.com fine; booking engine Recreogo (written as booking.url).",
+  "PIN: stored 44.29933,-103.67822 is ~120 m SE of the trading post near the highway (Google 44.29998,-103.67958); RV rows within ~250 m - fine."
+ ]
+}
