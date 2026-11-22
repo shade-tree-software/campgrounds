@@ -1,0 +1,41 @@
+{
+  "id": 5793,
+  "checked": "2026-11-22",
+  "sources": [
+    "https://www.fs.usda.gov/r02/blackhills/recreation/custer-trail-campground (read 2026-11-22): 'Site Open'; 'located on the north side of Deerfield Lake. It offers multiple tent sites, as well as more established sites for RVs, popup campers, and small vehicle units.'; 'The campground provides a boat launch'; 'Reservations are not available for Custer Trail Campground. All sites are available on a first come first serve basis.'; 'Seasons of Use: Available year round ... with limited services in the shoulder seasons.'; 'typically open for camping from mid-May through late September, with all amenities (toilets, trash, water) readily available. During the shoulder seasons, the site remains open for winter campers, as well as for access to the lake by ice fishing enthusiasts.'; 'Peak Season: $19 / night (Approximately Mid-May through September 30)', 'Shoulder Season: $0 / night (Approximately October 1 through Late October)'; 'Custer Trail Campground traditionally closes for the season on September 30 each year. No services are available at this site from October through mid-May... may remain open into October'; 'the Forest does not plow or provide any winter maintenance services to the roadway'; Mystic RD (605) 343-1567; 44.02685,-103.799397; 'travel west on Highway 17 (Deerfield Road) approximately 23 miles... Turn south (right) on Forest Service Road 417'",
+    "https://www.recreation.gov/api/camps/campgrounds/10381903 + catalog (catx.py, read 2026-11-22): 'Custer Trail Campground is a small, lakeside campground situated on the north side of Deerfield Reservoir.'; 13 sites: 01-08 'TENT ONLY NONELECTRIC' Hike-In, 09-13 'RV NONELECTRIC' Drive-In (RV/Trailer/Pop up permitted, no length attribute), none reservable; rate table 'Peak Season' $22 2026-05-16..09-30 on every site; phone 605-343-1567",
+    "Esri World_Imagery 44.0250,-103.7980 (hw 150 m) with the rec.gov site points, 2026-11-22: RV sites 09-13 are pull-offs in a row on the WEST side of FSR 417 (09 44.024849,-103.798232 ... 13 44.024523,-103.798047), backed by pines; the nearest Deerfield Reservoir edge is the west shore of a cove east of the road - ~50 m from 11/12 and ~55-65 m from 09/13, across the road and an open grass flat. The boat-launch turnaround ~120 m south is the only developed point at the waterline. Stored pin 44.02495,-103.79809 is beside site 09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 22, "currency": "USD", "checked": "2026", "note": "$22 a night mid-May to Sep 30 per the recreation.gov rate table (the Forest Service page still says $19); free and unserviced in October if the site stays open. A second vehicle pays a nightly fee at the campground."},
+      "source": "recreation.gov 10381903 rate table ('Peak Season' $22, 2026-05-16..09-30) + FS page ('Shoulder Season: $0 / night (Approximately October 1 through Late October)'), read 2026-11-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "09-30", "note": "Full service and fee mid-May to Sep 30. The Forest Service also says the site stays available without services (free in October, ice-fishing access in winter) on an unplowed road."},
+      "source": "FS page ('typically open for camping from mid-May through late September'; 'traditionally closes for the season on September 30'; 'Available year round ... with limited services') + rec.gov rate table 05-16..09-30, read 2026-11-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13},
+      "source": "rec.gov catalog 10381903: 5 drive-in 'RV NONELECTRIC' (09-13) + 8 hike-in 'TENT ONLY' (01-08)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "FS page 'Reservations are not available for Custer Trail Campground. All sites are available on a first come first serve basis.' + rec.gov catalog (none reservable)",
+      "method": "manual"
+    }
+  },
+  "note": "Small Black Hills NF campground on the north side of Deerfield Reservoir, about 23 mi west of Hill City via Deerfield Rd and FSR 417: five drive-in RV pull-offs in a row beside the road, looking across a grass flat to the lake, plus walk-in tent sites. Boat launch (no-wake lake), Deerfield Lake Loop trailhead, vault toilet and drinking water in season. Dark skies. Off season it stays open without services on an unplowed road. Distinct from Dutchman and Whitetail. --Claude",
+  "summary": "FS page + rec.gov 10381903: 5 drive-in RV + 8 hike-in tent sites, FCFS only, $22 (rec.gov; FS says $19) mid-May-Sep 30, free unserviced in October. Fees 0/19 -> 0/22, season 05-15..09-30 with off-season note, sites 10 -> 13, booking confirmed manual. WATERFRONT DOWN lakefront -> lakeview: the RV pull-offs sit on the far side of the road ~50-65 m from the cove. Pin fine, phone confirmed.",
+  "flags": [
+    "WATERFRONT DOWNGRADE lakefront -> lakeview: the only RV sites are pull-offs 09-13 on the WEST side of FSR 417 (11: 44.024685,-103.798142 ~50 m; 12: 44.024609,-103.798104 ~50 m; 09: 44.024849,-103.798232 and 13: 44.024523,-103.798047 ~55-65 m) from the Deerfield Reservoir cove edge, across the road and an open grass flat; the hike-in tent sites are not RV value. At or beyond the ~50 m bound with a road between, so it defaults down. The old evidence ('pull-off sites and a turnaround/dock right at the waterline') described the boat-launch turnaround ~120 m south, which is not a campsite. Suggested waterfront_evidence: 'rec.gov 10381903 site points on Esri imagery 2026-11-22: RV pull-offs 09-13 on the west side of FSR 417, ~50-65 m from the Deerfield Reservoir cove across the road and an open grass flat; open view of the lake; the waterline turnaround is the boat launch'. The value is not --AWH.",
+    "FEES: stored 0/19 (derived) -> 0/22: rec.gov's rate table charges $22 on every site for 2026-05-16..09-30; the FS page still says '$19 / night'. rec.gov trusted; disagreement flagged.",
+    "SEASON: the FS page is internally mixed - 'Available year round ... with limited services' vs 'traditionally closes for the season on September 30'. Written as 05-15..09-30 with the off-season access in the season note.",
+    "SITES: stored count 10 (derived) -> 13 (5 RV drive-in + 8 hike-in tent). No length attribute in the catalog; the FS describes 'more established sites for RVs, popup campers, and small vehicle units'.",
+    "PHONE: stored 605-343-1567 (Mystic RD) matches FS and rec.gov. WEBSITES live. No change.",
+    "PIN: fine (beside site 09); FS's 44.02685,-103.799397 is ~200 m N on the access road."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+ "id": 14580,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://3sonsrvresort.com/ (operator; plain HTTP answers Cloudflare 403 'Sorry, you have been blocked', read in headless Chromium with a desktop Chrome UA, 2026-11-22): 'our 3 tiers of camping spots'; 'Starting at $35 per/night'; 'all of our RV camping spots to include a dedicated soft water hookup'; 'Fishing Pond ... fishing and kayaking during the warmer months'; 'Simply contact us to reserve one of our 3 tiered camp spots or campers.'; 605-653-0965; '705 S. Timberland Drive. Yankton, SD 57078'; '© 2024'",
+  "https://3sonsrvresort.com/vehicle_type/camping-spots/ (headless, 2026-11-22): 'Your search results: 5 available for rent on your selected dates' - Pool #44, #45, #46, #47, #48, each '$50.00 / Night', 'Call for Daily Availability', '*Camping spots are close to the pool pictured.'",
+  "https://3sonsrvresort.com/catalog/pool-47/ , /catalog/pool-44/ , /catalog/pool-45-2/ , /catalog/pool-42/ (headless, 2026-11-22): '$50.00 Per Night', 'Minimum nights for booking: 3' on every one; calendar 'Booked'",
+  "https://3sonsrvresort.com/catalog/ (headless, 2026-11-22): '46 available for rent' - nearly all are rental campers ($125-$300/night) and golf carts; the only camping spots are the five Pool sites",
+  "http://web.archive.org/web/20260521065529/https://3sonsrvresort.com/vehicle_type/camping-spots/ (Wayback capture 2026-05-21): two pond spots '$ 55.00 / Night' ('*Not actual picture of our pond but represents these camping spots are close to the pond.'), the five Pool spots at $50, and 'Pond location (Seasonal): $4200', 'Pool Location (Seasonal): $3200', 'Road location (Seasonal): $3200' - 'Season Long Spots'",
+  "http://web.archive.org/web/20260716020500/https://3sonsrvresort.com/catalog/pond-136/ (Wayback 2026-07-16): 'Pond #136 ... Call for Daily Availability', '$ 55.00 Per Night'; http://web.archive.org/web/20260610022150/https://3sonsrvresort.com/catalog/pool-location-78-spots/ (2026-06-10): 'Pool Location (Seasonal): $3200 ... Season Long Spots ... Please contact us to reserve a seasonal spot.'",
+  "Google Maps panel (headless, 2026-11-22): '3 Sons RV Park' 4.8 (60), 705 S Timberland Dr, Yankton, SD 57078, +1 605-653-0965, website 3sonsrvresort.com, at 42.87463,-97.43818",
+  "audit/price_research/gateways.py 42.8742,-97.4385 (2026-11-22): 'none within 40 km'; trips.campground_references(14580): [] (never stayed)",
+  "Esri World_Imagery 42.8742,-97.4385 (hw 300 m), 2026-11-22: pin on the office/clubhouse beside the pool; about 150 RV pads in two dense north loops plus a loop around a ~270 x 95 m (about 2.5 ha / 6 acres) fishing pond to the south, essentially every pad occupied; the pond loop's pads face the pond across ~20-40 m of open lawn with the loop road on their outer side"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 50, "nightly_high": 55, "currency": "USD", "checked": "2026", "note": "Pool-side spots $50 a night with a 3-night minimum (2026-11); pond-side spots were $55 a night in May-July 2026 and are not listed now. Season-long spots $3,200 (pool or road) and $4,200 (pond). The home page's 'Starting at $35' matches no listed spot."},
+   "source": "https://3sonsrvresort.com/vehicle_type/camping-spots/ + /catalog/pool-47/ (headless, 2026-11-22: '$50.00 Per Night') + Wayback 2026-05-21 camping-spots and 2026-07-16 /catalog/pond-136/ ('$ 55.00 Per Night')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://3sonsrvresort.com/vehicle_type/camping-spots/", "min_stay": [{"nights": 3, "applies": "always"}], "note": "Only a handful of pool-side spots are offered online, each marked 'Call for Daily Availability'; the operator says 'Simply contact us to reserve'. Seasonal spots are by request."},
+   "source": "https://3sonsrvresort.com/catalog/pool-47/ ('Minimum nights for booking: 3', 'Call for Daily Availability'), read 2026-11-22",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"water": true},
+   "source": "https://3sonsrvresort.com/ ('We've designed all of our RV camping spots to include a dedicated soft water hookup'), read 2026-11-22",
+   "method": "manual"
+  }
+ },
+ "note": "Mostly seasonal: about 7 of its roughly 150 sites have been sold by the night, all others season-long. Large RV park and camper-rental operation on the east edge of Yankton (705 S Timberland Dr): pool, clubhouse and a fishing pond with kayaking, the pond-side pads facing the water across open lawn. --Claude",
+ "summary": "Operator site (Cloudflare to curl; read headless) + Wayback: only five Pool spots sold online at $50 with 'Minimum nights for booking: 3' and 'Call for Daily Availability'; two Pond spots at $55 in May-July 2026; seasonal $3,200-$4,200 spots fill ~150 visibly occupied pads. Fees confirmed 50-55 (manual), booking adds the 3-night minimum, water hookup written. DROP CANDIDATE: standing 3-night minimum + under 1 site in 10 sold nightly (long-stay test 4). Pond value kept on the pond-loop pads (pond ~6 acres). Google 4.8/60.",
+ "flags": [
+  "DROP CANDIDATE (standing minimum): every nightly spot the operator sells online carries 'Minimum nights for booking: 3' (Pool #42/#44/#45/#47 read 2026-11-22), no season limit stated - a standing 3+ night minimum.",
+  "DROP CANDIDATE (long-stay test 4 / mostly seasonal): the only nightly inventory ever listed is five Pool spots ($50) plus two Pond spots (#136, #138, $55, May-July 2026 captures); the rest are 'Season Long Spots' ($3,200 pool/road, $4,200 pond, 'Please contact us to reserve a seasonal spot'); a slug 'pool-location-78-spots' and site numbers to #138 match the ~150 pads on Esri imagery, essentially all occupied. About 7 of ~150 = under 1 site in 10 nightly. Nightly spots are marked 'Call for Daily Availability'. Five tests: (1) sells nights - yes, a handful; (2) posted nightly rate - yes $50/$55; (3) not residential - seasonal RVs and ~25 rental campers ($125-$300/night); (4) nightly share ~5% - FAIL; (5) no lots sold - none seen.",
+  "PRICE GATE: cheapest RV night $50 (Pool spots, 3-night minimum) - at the line, passes; pond spots $55 would not. No Good Sam/member discount posted; gateways.py: none within 40 km; never stayed. Google Maps '3 Sons RV Park' 4.8 stars over 60 reviews, phone +1 605-653-0965. RV Life: unrated.",
+  "WATERFRONT (pond kept, reviewer note): the ~2.5 ha fishing pond (about 6 acres by imagery, so near the 5-acre pond/lake line) is ringed by a loop whose inner pads face it across ~20-40 m of open lawn, road on the far side - pond is supported for those pads, but nearly all of them are seasonal ('Pond location (Seasonal): $4200'); only Pond #136/#138 were ever sold by the night ($55, mid-2026) and neither is listed now. If those two stop being nightly, the value is earned only by seasonal sites and should drop to not waterfront.",
+  "INCLUSION_EVIDENCE stale: '7 available ... $50.00 and $55.00/night' and 'the park books nightly online' - now five $50 spots with a 3-night minimum and call-for-availability."
+ ]
+}

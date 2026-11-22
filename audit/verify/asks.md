@@ -778,3 +778,6 @@ Operator: 'Sites are available on a nightly, weekly, monthly, or seasonal basis'
 
 ## 5876 Bison City Park (Bison SD, local) - no current presence (p3-575, 2026-11-22) - OPEN
 No town page, no phone, no Google listing, no booking engine. The only evidence it operates is one ParkAdvisor review from May 2023 ($20, water + electric, pay showers, dump). Same shape as the ND city parks you dropped on 'no current presence' (Monango, Sarles) and Brooks Memorial here. Drop? Kept for now with the stored values marked unconfirmed. (5867 Veblen City Park, same batch, has a July 2025 RV LIFE stay report at $10 - kept with it as the source.)
+
+## 14591 385 Grill & Campground + 5818 Bulldog Creek (Black Hills, private) - ride-from-your-site OHV parks? (p3-576, 2026-11-22) - OPEN
+Both are general campgrounds (nightly sites, 50 A, cabins; 385 Grill has a restaurant) that market trail riding hard. 14591: "Direct ATV & OHV trail access from your campsite into the Black Hills ... No trailering. No driving to a staging area." 5818: "easy trail access to 700+ miles of motorized trails just behind BCC". No agency noise warning on either. I kept both as general campgrounds with an OHV side (the Big Scrub / Mack Lake reading). Keep, or drop as camps that exist for the riders?

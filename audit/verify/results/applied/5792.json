@@ -1,0 +1,42 @@
+{
+  "id": 5792,
+  "checked": "2026-11-22",
+  "sources": [
+    "https://www.fs.usda.gov/r02/blackhills/recreation/black-fox-campground (read 2026-11-22, page updated October 7, 2026): 'Site Open'; 'The Black Fox Campground has nine camp sites. Restroom facilities are available. The campground is in a remote location within a spruce forest on South Fork Rapid Creek... A snowmobile trail with a warming hut is available. The campground is popular on weekends.'; 'Reservations are not available for Black Fox Campground. Sites are available first come, first served.'; 'Roads closed to wheeled vehicles Dec 15-Mar 31 for snowmobile trail.'; 'October through November: $0'; 'Snow plowing is not available on roads to the campground'; Mystic RD (605) 343-1567; 'From Rochford, travel west on FSR 231 for approximately eight miles.'; 'Potable water is not available at this site.'",
+    "https://www.recreation.gov/api/camps/campgrounds/10381878 (read 2026-11-22): 'Black Fox Campground is a remote nine-site campground nestled within a spruce forest along the South Fork Rapid Creek'; notice 'During the off season (from 10/01 until 11/30th) the USFS operates this campground. Closes on 12/01/2026 for snowmobile routes... Daily Fee is $0 per First Come First Served campsite of which there are 9 available... Parking Spur Length is 45 ft. Drinking water is NOT available... open season from May 15th to September 30th.'; '$6.00 per night on the second vehicle'; facility phone 605-343-1567",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10381878 (catx.py, 2026-11-22): 9 sites 1-9, all 'RV NONELECTRIC', not reservable, no length attribute; rate table 'First-come, First-served Season' $24/night (2026-04-15..09-30, 2027 and 2028 05-15..09-30)",
+    "Esri World_Imagery 44.1447,-103.8455 (hw 160 m) with the rec.gov site points, 2026-11-22: two short gravel spurs in a spruce-forest clearing; no open creek channel within ~100 m of any site (the drainage lies off the loop behind the trees). Stored pin 44.1445,-103.8455 is among sites 5-7"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$24 a night in the main season (mid-May to Sep 30; the 2026 rate table started Apr 15). Free in October and November, without drinking water or road maintenance, until the road closes for the snowmobile trail. $6 a night for a second vehicle."},
+      "source": "recreation.gov 10381878 rate table ($24 'First-come, First-served Season') + off-season notice ('Daily Fee is $0') + FS page 'October through November: $0', read 2026-11-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "11-30", "note": "Concessionaire season May 15-Sep 30; Oct-Nov free and unserviced. The road closes to wheeled vehicles for the snowmobile trail (rec.gov: from Dec 1; FS: Dec 15-Mar 31)."},
+      "source": "recreation.gov notice ('off season (from 10/01 until 11/30th)... Closes on 12/01/2026... open season from May 15th to September 30th') + FS page, read 2026-11-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "FS page 'Reservations are not available for Black Fox Campground. Sites are available first come, first served.' + rec.gov catalog (no reservable sites)",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 9, "max_rig_ft": 45},
+      "source": "FS page 'nine camp sites' + rec.gov catalog (9 'RV NONELECTRIC' sites) + rec.gov notice 'Parking Spur Length is 45 ft'",
+      "method": "manual"
+    }
+  },
+  "note": "Remote 9-site Black Hills NF campground in spruce forest on South Fork Rapid Creek, about 8 mi west of Rochford on FSR 231, beside the Black Fox Botanical Area. First-come gravel sites and a vault toilet; no drinking water, so bring your own. Popular on weekends. Free and unserviced in the fall until the road closes for the snowmobile trail. --Claude",
+  "summary": "FS page + rec.gov 10381878: 9 FCFS RV non-electric sites, 45-ft spurs, $24 mid-May to Sep 30, free Oct-Nov, closes for snowmobiles. Fees 0/19 -> 0/24, season written 05-15..11-30, booking/sites confirmed manual. Website rec.gov poi/253807 -> campgrounds/10381878. Not waterfront confirmed; pin fine; phone confirmed.",
+  "flags": [
+    "WEBSITE: 'https://www.fs.usda.gov/r02/blackhills/recreation/black-fox-campground\\nhttps://www.recreation.gov/camping/poi/253807' -> 'https://www.fs.usda.gov/r02/blackhills/recreation/black-fox-campground\\nhttps://www.recreation.gov/camping/campgrounds/10381878' (the campground listing with the site catalog and rate table; 253807 is the old POI record).",
+    "FEES: stored 0/19 (derived from note prose) -> 0/24 per the current rec.gov table.",
+    "SEASON: rec.gov says the campground 'Closes on 12/01/2026 for snowmobile routes'; the FS page says roads close 'Dec 15-Mar 31'. 11-30 written (the earlier, the concessionaire's stated close).",
+    "PHONE: stored 605-343-1567 (Mystic RD) matches FS and rec.gov. No change.",
+    "WATERFRONT: not waterfront confirmed - forest clearing with no open channel near any site.",
+    "PIN: fine (among sites 5-7). Access is FSR 231 gravel from Rochford; no agency road warning found."
+  ]
+}

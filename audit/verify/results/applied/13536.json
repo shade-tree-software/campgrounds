@@ -1,0 +1,45 @@
+{
+  "id": 13536,
+  "checked": "2026-11-22",
+  "sources": [
+    "https://cityofmillersd.com/departments/ (City of Miller, Parks & Recreation, read 2026-11-22): 'Crystal Park - View the fountain in the pond at the City's beautiful Crystal Park. Our 20-acre park provides something for everyone.'; 'Location: W 7th Street'; 'Phone : 605-853-2705'; amenities 'Camping area, Bathhouse/storm shelter, Gazebo, Large play area, Fire pit...'; 'Camping - No reservations. First come, first serve. Free will donation for the first 3 days. A daily fee of $30.00 will be charged for each day after the 3 free will donation days. 15 Electric hook-ups consisting of 30-50 Amps. No water hook-ups, dump station available at south end of park.'",
+    "https://dakotaathome.sd.gov/search/aa9f186a-1ff1-5e61-98cb-68c971a9b4c2 (Dakota at Home, Last Assured 06/04/2026, read 2026-11-22): 'Camping: No reservations required. First come, first serve.'; 'Camping: Free will donation for three days. After 3 days, a daily fee of $30.00'; (605) 853-2705; website 'https://cityofmillersd.com/departments/#parks-and-recreation'; tags 'Campgrounds Public Showers/Baths'",
+    "https://millersd.org/places-to-stay/ (On Hand Development Corporation, read 2026-11-22): 'Crystal Park (Miller) - Maximum Stay is 72 Hours - This is a Pay Campground ($12 or Less) - Drinking Water, Dump Station, Electricity, Restrooms, Playground' (undated; the city's own page now charges $30 after three donation nights)",
+    "Google Maps (headless, earlier this session): 'Crystal Park' 5.0 (5 reviews) at 44.52361,-98.99425, no phone",
+    "Esri World_Imagery 44.5245,-98.9948 (hw 220 m), 2026-11-22: a pull-through camping loop with ~7 parallel lanes at the north end of the park (stored pin 44.5253,-98.9952 on it); the fountain pond is ~300 m SE beyond the park lawns"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": false},
+      "source": "https://cityofmillersd.com/departments/ ('15 Electric hook-ups consisting of 30-50 Amps. No water hook-ups'), read 2026-11-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 15, "pull_through": true},
+      "source": "https://cityofmillersd.com/departments/ ('15 Electric hook-ups') + Esri imagery (pull-through lanes)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "https://cityofmillersd.com/departments/ ('No reservations. First come, first serve.'), read 2026-11-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "potable_water": true, "showers": null, "vault_toilets": null},
+      "source": "https://cityofmillersd.com/departments/ ('dump station available at south end of park', 'Bathhouse/storm shelter') + millersd.org ('Drinking Water, Dump Station, Electricity, Restrooms'); showers/vault toilets unconfirmed",
+      "method": "manual"
+    }
+  },
+  "note": "City of Miller campground at the north end of 20-acre Crystal Park on W 7th St: pull-through sites with 30/50-amp electric, no water hookups. Drinking water and a dump station at the park's south end; bathhouse/storm shelter, playground, disc golf and picnic shelter in the park. The first three nights are by free-will donation, then $30 a day. --Claude",
+  "summary": "City page (+ Dakota at Home, assured 2026-06-04): FCFS, first 3 nights by donation then $30/day, 15 electric 30-50 A pull-through hookups, no water hookups, dump at the south end, bathhouse. Hookups (water false), sites 32 -> 15, booking (FCFS) and facilities written; 'pit toilets, no showers' and 'May-September' were unsourced and dropped. Website dakotaathome -> city page. Not waterfront confirmed; pin fine; phone confirmed. Leads: S & J Campground & RV Park (St. Lawrence), Gnat Campground (Miller).",
+  "flags": [
+    "SITES: stored count 32 (derived from note prose) -> 15 per the city's '15 Electric hook-ups'; imagery shows ~7 pull-through lanes, consistent with ~15 sites. Pull-through kept.",
+    "FACILITIES: stored showers false / vault_toilets true (derived) cleared with null - the city lists a 'Bathhouse/storm shelter' and Dakota at Home tags 'Public Showers/Baths', so 'pit toilets, no showers' is no longer supported; neither source says showers outright. Reviewer may prefer flush_toilets/showers true.",
+    "SEASON: the old note's 'May-September' is on no current page (city, Dakota at Home, development corp); dropped, nothing written.",
+    "FEES: stored 0/0 kept (first 3 nights donation; $30 a day after - already in the fees note). The development corporation's undated page says 'Maximum Stay is 72 Hours' and '$12 or Less' - superseded by the city page.",
+    "WEBSITE: 'https://dakotaathome.sd.gov/search/aa9f186a-1ff1-5e61-98cb-68c971a9b4c2' -> 'https://cityofmillersd.com/departments/#parks-and-recreation' (the city's own Parks & Recreation section, which Dakota at Home links).",
+    "PHONE: stored 605-853-2705 matches the city page. No change.",
+    "WATERFRONT: not waterfront confirmed (pond ~300 m SE).",
+    "LEADS (not in campgrounds.json, not vetted; from millersd.org/places-to-stay): 'S & J Campground & RV Park (Right next to Willie's Bar & Grill), St. Lawrence, SD 57373, (605) 204-0642, State Inspected Campground'; 'Gnat Campground West of Farm Tech, 1301 W. 1st Ave., Miller, SD 57362 & also located north of the nursing home 420 E. 6th St.' (a private individual's sites - likely fails presence)."
+  ]
+}

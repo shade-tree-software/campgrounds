@@ -1,0 +1,42 @@
+{
+ "id": 14591,
+ "checked": "2026-11-22",
+ "sources": [
+  "https://385grillcamp.com/camping (operator booking page; plain HTTP returns an empty single-page-app shell, read in headless Chromium with a desktop Chrome UA, 2026-11-22): '76 unique sites', 'Direct ATV trail access', 'Check-out: 11:00 AM (all sites) | Check-in: 2:00 PM (RV & Tent) · 3:00 PM (Cabins)'; filters '50 Amp + Water RV sites · 22 sites', '30 Amp Full Hookup Water, electric & sewer · 11 sites', '30 Amp + Water · 11 sites'; categories with 'FROM / NIGHT' prices: 'RV Site · Dry Camping RV site without water or electric service $27' (R1-R3), 'Pop Up Trailer or Tent (No Electrical or Water) Compact pop-up RV site without electrical service $34', '30 AMP Pop-Up Trailer or RV Site 30 amp electrical site for a small pop-up trailer or RV $39', 'Parallel 30 Amp Water RV Site $39' (R19-R21), '30 AMP Water RV Site $41', '30 AMP Water RV Site & Awning $44', '30 Amp Full Hookup RV Site $52' (R50-R59), '30 Amp Full Hookup RV Site · Extra Pad $58', '50AMP Deluxe Back-In (Full HookUps) $60', '50 Amp Full Hookup RV Site (Creek View) Creek-view RV site with 50 amp service, water, sewer, and a fire ring $61' (R38-R45), 'Parallel Deluxe 50 AMP Big Rig Full Hook-Up $61'; cabins $89-$190",
+  "https://385grillcamp.com/ (headless, 2026-11-22): '2027 CAMPING RESERVATIONS ARE OPEN'; '2027 SEASONAL RV SITES ... Spend May–September at -385 with a seasonal RV package ... LIMITED SEASONAL PACKAGES'; 'ride out directly into some of the best ATV country in the country. No shuttles. No trailering. Just wake up and ride.'; '700+ MILES OF OHV TRAILS', '1mi TO ATV TRAIL ACCESS'; 'Direct ATV & OHV trail access from your campsite into the Black Hills.'; 'No trailering. No driving to a staging area. Ride out from your campsite'; 'Whether you're rolling in with a 40-foot rig'; RV sites 'Pull-through and back-in RV sites with full hookups ... 30 amp and 50 amp service available'; winter RV storage 'STORAGE ONLY — NO HOOKUPS OR OVERNIGHT STAYS'; (605) 641-8025; 21372 HWY 385, Deadwood",
+  "Google Maps panel (headless, 2026-11-22): '385 Grill & Campground' 4.6 (45), 21372 US-385, Deadwood, SD 57732, +1 605-641-8025, website 385grillcamp.com, at 44.30693,-103.67633",
+  "audit/price_research/gateways.py 44.3062,-103.6749 (2026-11-22): none within 40 km; nearest: Mount Rushmore 51 km (not needed: the rate passes)",
+  "Esri World_Imagery 44.3065,-103.6755 (hw 200 m), 2026-11-22: grill/bar buildings at the US-385 junction; two RV rows run south along a park road either side of a narrow open-grass strip carrying a small creek (a few metres wide, scattered trees); the east row's pads sit ~10-25 m from the creek across open grass; the stored pin is on the lawn between the grill and the RV rows, ~100 m from the pads"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 27, "nightly_high": 61, "currency": "USD", "checked": "2026", "note": "Online 'from' prices (read 2026-11-22): dry RV site $27; parallel 30-amp water/electric $39; 30-amp water/electric $41-44; 30-amp full hookup $52-58; 50-amp full hookup $60-61 (creek-view and big-rig parallel sites $61). The $34-39 pop-up sites are for small pop-up trailers."},
+   "source": "https://385grillcamp.com/camping (live engine, headless, read 2026-11-22)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://385grillcamp.com/camping ('50 Amp Full Hookup RV Site (Creek View) ... 50 amp service, water, sewer'), read 2026-11-22",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://385grillcamp.com/camping", "note": "Check-in 2 p.m., check-out 11 a.m. 2027 reservations are open; May-September seasonal RV packages are sold alongside nightly sites."},
+   "source": "https://385grillcamp.com/camping + https://385grillcamp.com/ ('2027 CAMPING RESERVATIONS ARE OPEN'), read 2026-11-22",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"pull_through": true},
+   "source": "https://385grillcamp.com/ ('Pull-through and back-in RV sites with full hookups'), read 2026-11-22",
+   "method": "manual"
+  }
+ },
+ "note": "Campground, grill and bar on US-385 south of Deadwood (21372 US-385) in the pines, with ATV/OHV trails about a mile away and riding straight out from the sites. RV rows run either side of a small creek; the operator sells creek-view 50-amp sites. Cabins and tent sites too. --Claude",
+ "summary": "Operator's own booking engine (SPA, read headless): 76 sites, RV from $27 dry / $39 water+electric to $61 50-amp full hookup - stored 27/61 confirmed (now manual), hookups 50/water/sewer confirmed, pull-through, booking platform operator + check-in/out. Price gate passes. Google 4.6/45. Mostly nightly (seasonal May-Sep packages are 'limited'). OHV FLAG for the reviewer: markets riding straight out from the campsite. Creek-view sites R38-R45: creekside lead.",
+ "flags": [
+  "OHV (reviewer decides, not a drop by me): the operator markets the campground as an ATV base - 'ride out directly into some of the best ATV country in the country. No shuttles. No trailering. Just wake up and ride.', 'Direct ATV & OHV trail access from your campsite into the Black Hills.', 'No trailering. No driving to a staging area.', '700+ MILES OF OHV TRAILS', '1mi TO ATV TRAIL ACCESS'. Under the hard rule, 'private parks that market ATV trails starting at the campground' are out; against that it is also a general campground with a grill/bar, cabins and 50-amp sites marketed to Sturgis and Mount Rushmore visitors.",
+  "PRICE GATE: passes - cheapest RV night $27 (dry RV site R1-R3, length not shown) and $39 parallel 30-amp water/electric; summer peak $61 (50-amp full hookup). No Good Sam/member discount posted. Google Maps '385 Grill & Campground' 4.6 stars over 45 reviews, phone +1 605-641-8025. RV Life: not listed.",
+  "LONG-STAY: 2027 May-September seasonal RV packages are sold ('LIMITED SEASONAL PACKAGES', 'limited seasonal inventory'); the engine offers ~53 RV sites by the night across 12 categories, so the park is nightly in character. Five tests pass (nights sold online with posted prices; no lots sold; seasonal share limited).",
+  "WATERFRONT LEAD (no change): the operator sells '50 Amp Full Hookup RV Site (Creek View)' R38-R45 and tent sites 'along the creek' with 'Creek Access'. Esri imagery shows a small creek (a few metres wide) in an open grass strip between the two RV rows, ~10-25 m from the east row's pads with no road between. Stored 'not waterfront' could become creekside for R38-R45 if the site map ties those numbers to that row; I could not tie the numbers to the imagery (the site map is a JS canvas), so not upgraded.",
+  "RIG LENGTH: the dry ($27) sites' lengths are not shown; the operator says 'Whether you're rolling in with a 40-foot rig' and a quoted review mentions a 38-ft fifth wheel. A 23-ft rig fits the water/electric and full-hookup sites."
+ ]
+}
