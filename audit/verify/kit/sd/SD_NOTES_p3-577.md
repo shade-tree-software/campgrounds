@@ -1,0 +1,13 @@
+# SD notes p3-577
+- 14583 DONE: $25 confirmed, Google casino-only 3.9/940
+- 5794 DONE: fees 26, phone NHRD, water conflict
+- 15347 DONE: hookups 50 FHU, booking resnexus url, rally packages
+- 5762 DONE: drop cand (no designated camping), wf->not, rename LUA
+- 13555 DONE: city page, fees 15-20, FCFS, web/phone new
+- 5795 DONE: confirmed, horse flag
+- 13554 DONE
+- 13156 DONE: facID 25, lakefront confirmed 3E/4E
+- 5766 DONE: facID 26
+- 5878 DONE: identity/inclusion flag, town parks
+- 5763 DONE: lakefront->lakeview, hookups 0, phone fix
+- GFP engine facID->name list saved: /tmp/claude-1000/-home-andrew-Dev-campgrounds/7d1b656e-3a4e-40e0-8a0b-37eae171d0da/scratchpad/p3-577/facnames.txt (1-110). apply.py dry run: 11 ready, no !!
