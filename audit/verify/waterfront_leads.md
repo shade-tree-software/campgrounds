@@ -1634,3 +1634,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5710 Big Sioux (p3-564): sites 29E/31E 25-35 m from the river through continuous trees - possible riverview lead.
 - 5851 Codington County Memorial (p3-565): lakeview kept; pull-throughs 101-112 20-30 m from Lake Kampeska with their lake-side lane + tree fringe between; 36-43 ~25 m under canopy.
 - 5772 Horsethief Lake (USFS SD, p3-566): site 017 (43.894874,-103.483156; 40-ft, nightly) ~27-30 m from the lake over open grass with only a footpath between; rec.gov lists 'Waterfront Sites'. One site only - lakefront-with-caveat candidate (feedback: a few clear waterfront sites count; one may be too few).
+- 5769 Left Tailrace (USACE SD, p3-567): sites 12 + 22A ~40 m from the Missouri across open grass, loop road and riprap - riverview kept (road between); two sites only.
+- 13148 Kemp's Kamp (p3-567): engine names 'Creekside' sites on Battle Creek - re-audit (stored not waterfront).
+- 5733 Lake Herman (p3-567): lakeview kept; 22E-26E 12-20 m from the bay behind a shoreline tree fringe.

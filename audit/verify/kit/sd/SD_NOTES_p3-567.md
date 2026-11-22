@@ -1,0 +1,13 @@
+# SD_NOTES p3-567 (2026-11-21)
+- 5732 Indian Creek: written. 2 loops (39 east, 40 west), 118 RV sites; lakefront confirmed loop 40 south row 091E-104E; fees low 16 tent tier flag.
+- 5814 Ingalls: written. $50 undated (footer 2025), admission $21.15/pp once per stay flagged; year_round cleared (grounds closed winter); Google 4.8/870 shared.
+- 13148 Kemps Kamp: written. curl 403, home headless ok, subpages bot-wall -> Wayback 2026-07-14. base $57.96 incl tax (W/E 14ft excluded), gateway Rushmore 3km. Creekside lead. Google 4.6/74.
+- 5838 Lake Andes RV: written. Vik Booking POST works (category 3): $42 summer, $52 winter; no restrooms; workforce leaning flagged.
+- 5733 Lake Herman: written. 68 RV, lakeview kept (tree fringe), pin 460m off at office -> 43.98665,-97.16824.
+- 5846 Lake Mitchell: written. 48 RV, not waterfront kept, phone -> 605-432-8795, website old->new.
+- 5712 Lake Vermillion: written. 123 RV, lakefront kept on East pull-off row 55-62; pin 890m off -> 43.59552,-97.18094; phone 605.773.5877.
+- 5815 Lazy JD: written from Wayback (live TLS mismatch; curl -k denied by classifier - not retried). Google 4.2/22.
+- 5769 Left Tailrace: written. 76 RV, $22, riverfront upgrade candidate sites 12/22A ~40 m; USACE page 403; phone 605-245-2255.
+- 5744 Llewellyn Johns: written. facID=36; Flat Creek Lake; water true; 50 A on 1E/2E.
+- 5734 Mina Lake: written. 36 RV, lakefront upgrade candidate 20E/22E/25E.
+- apply.py dry run: 11 ready, 0 !! (13148 booking url moved to a flag). No browser left running.
