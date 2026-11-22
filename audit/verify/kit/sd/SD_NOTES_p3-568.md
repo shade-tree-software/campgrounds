@@ -1,0 +1,12 @@
+# SD_NOTES p3-568 (2026-11-21)
+- 5728 Newton Hills: written. facID=38, 109 RV sites, fees low tent-tier flag, phone 605.987.2263
+- 5836 Nordland: written. 5 pads; cleared showers/laundry/dump/pull_through; lead Maxwell Park; phone flag
+- 5719 Oahe Downstream: written. facID=41, 197 RV; split candidate CG3 (163E-205E); riverview lead 201E-205E
+- 5731 Oakwood Lakes: written. facID=42, 132 RV; lakeview lead CG2 west row; horse camp separate
+- 5775 Oreville: written. 24 sites (FS map), rec.gov $26, fcfs some_sites, closes 10-01, phone flag
+- 5729 Palisades: written. facID 57->44, 92 RV (King 70/Queen 22), dump true, pin ~940 m -> King, split cand Queen
+- 5828 Parkway: written. reported $24 (+2.50 50A, 2025 Campendium), Google 4.1/34, phone -> 605-730-1299, RoverPass unclaimed
+- 5735 Pelican Lake: written. 76 sites, lakeview kept (riprap), horse camp separate spur
+- 5751 Pickerel: written. 63 all-electric, lakeview kept (tree band), split cand East unit, phone 605.910.4515
+- 5739 Randall Creek: written. 131 sites, riverview kept (bank trees), phone 605.487.7046 (map) / 605.773.8239 (page)
+- 13132 Rapid City KOA: written. $50.40 cheapest (May 2027 quote), gateway Mount Rushmore 31 km, Google 4.2/1081, long-stay pass; Wayback only

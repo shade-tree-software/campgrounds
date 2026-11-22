@@ -1,0 +1,53 @@
+{
+ "id": 5775,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/231841 (read 2026-11-21): 'OREVILLE CAMPGROUND'; 'Oreville Campground has sites able to accommodate tents, trailers, and RVs. The campground has picnic tables, campfire rings, vault toilets, and drinking water. Electrical hook-ups are not available.'; notices 'This campground closes for the season on October 1st.', 'Non-reservable sites may be available on a first come, first serve basis', 'A pet fee of $2 per pet per night is required upon check in', 'ExplorUS will be assessing an additional vehicle fee of $6.00 per night on the second vehicle in each single family campsite ... provided these vehicles are not joined to the first vehicle by a hitch and towed onto the site', 'The Senior and Access discounts are only honored for the site that houses the card holder'; contact 'For facility specific information, please call (661) 702-1420', facility_phone 605-673-9200; amenities 'Vault Toilets', 'Water (Seasonal)'",
+  "https://www.recreation.gov/api/camps/campgrounds/231841/rates (read 2026-11-21): STANDARD NONELECTRIC $26 - 'First-come, First-served Season' 2026-04-15 to 2026-05-15, 'Peak Season' 2026-05-16 to 2026-09-30 and 2027-05-15 to 2027-09-30",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231841 (catalog read 2026-11-21): 16 sites, all STANDARD NONELECTRIC, 14 reservable (003-006, 008, 010-012, 014, 015, 021-024) + 007 and 009 not, gravel driveways, Max Vehicle Length 45-82 ft (014 shows 0), equipment incl. RV, Trailer, Fifth Wheel",
+  "https://www.fs.usda.gov/r02/blackhills/recreation/oreville-campground (read 2026-11-21, last updated October 6, 2026): 'Site Closed' (off season); 'Visit Recreation.gov to make your campground reservation.'; 'Oreville Campground closes each year during the Off Season.'; Hell Canyon Ranger District '(605) 673-9200'; 'Restrooms are not available at this site.' 'Potable water is not available at this site.'; Lat/Long 43.8776895,-103.611887; layout map https://www.fs.usda.gov/media/63275 (Oreville CG map image: sites 1-24, R = reservable on 1, 3, 4, 5, 6, 8, 10, 11, 12, 14, 15, 21, 22, 23, 24; first-come 2, 7, 9, 13, 16, 17, 18, 19, 20)"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 24, "max_rig_ft": 82},
+   "source": "FS layout map (https://www.fs.usda.gov/media/63275): sites 1-24; rec.gov catalog Max Vehicle Length to 82 ft (site 012)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/231841 ('Electrical hook-ups are not available'; 'These campsites are non-electric sites')",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/231841 ('vault toilets, and drinking water'; amenities 'Water (Seasonal)')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231841", "fcfs": "some_sites"},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/231841 ('Non-reservable sites may be available on a first come, first serve basis'); FS layout map marks 15 of 24 sites R (reservable)",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}, "checked": "2026", "note": "A towed vehicle hitched to the first is not charged as an extra vehicle. Pets are $2 each a night, paid at check-in."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/231841/rates (STANDARD NONELECTRIC $26 for 2026 and 2027) + notices (extra vehicle $6/night on the second vehicle unless towed; $2 per pet per night)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"closes": "10-01", "note": "Recreation.gov's 2026 rate table runs a first-come season from April 15 and a reservable peak season May 16 - Sept. 30; no opening date is announced as such."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/231841 ('This campground closes for the season on October 1st.') + /rates (2026 rate seasons)",
+   "method": "manual"
+  }
+ },
+ "note": "Black Hills National Forest campground 4 mi S of Hill City on US-16/385, just north of Crazy Horse Memorial: sites on a hillside among aspen, ponderosa pine and grass, run by a concessionaire. Generators 6 a.m. to 10 p.m. only. --Claude",
+ "summary": "rec.gov record/rates/catalog + FS page and layout map read: 24 sites (15 reservable, 9 first-come), no hookups, $26 (2026 and 2027), extra vehicle $6, vault toilets and seasonal water; closes Oct 1. Sites 26 -> 24, max 82; fcfs some_sites; fees confirmed + extra_vehicle; season closes written. Phone empty -> (661) 702-1420.",
+ "flags": [
+  "PHONE: empty -> 661-702-1420 (rec.gov 'For facility specific information, please call (661) 702-1420' - the concessionaire's line); the Hell Canyon Ranger District office is (605) 673-9200 (FS page and rec.gov facility_phone) if the agency number is preferred.",
+  "FACILITIES CONFLICT: the FS page says 'Restrooms are not available at this site.' and 'Potable water is not available at this site.' (page shows 'Site Closed' for the off season); rec.gov says 'vault toilets, and drinking water' and lists 'Water (Seasonal)'. Rec.gov written (trust rec.gov); the FS lines may describe the closed season.",
+  "COUNT: stored 26 (note prose) -> 24 (FS layout map numbers 1-24); rec.gov's catalog lists only 16 of them (site 001 is marked R on the map but missing from the catalog).",
+  "NOTE: the old note's 'one short 25-ft site' is not supported - rec.gov lengths run 45-82 ft (014 shows 0); dropped with the redundant counts/hookups/booking text.",
+  "ALERT: the FS page carries a forest-wide 'Hwy 385 Construction Updates' alert (US-385 is the campground's access) - not read in detail; no campground closure beyond the seasonal 'Site Closed'.",
+  "WEBSITE: rec.gov + FS r02 page confirmed, both current.",
+  "PIN: stored 43.87750,-103.61200 is ~120 m south-west of the site cluster (catalog points ~43.8781,-103.6108) near the entrance - fine."
+ ]
+}

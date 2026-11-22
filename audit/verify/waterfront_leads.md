@@ -1637,3 +1637,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 5769 Left Tailrace (USACE SD, p3-567): sites 12 + 22A ~40 m from the Missouri across open grass, loop road and riprap - riverview kept (road between); two sites only.
 - 13148 Kemp's Kamp (p3-567): engine names 'Creekside' sites on Battle Creek - re-audit (stored not waterfront).
 - 5733 Lake Herman (p3-567): lakeview kept; 22E-26E 12-20 m from the bay behind a shoreline tree fringe.
+- 5735 Pelican Lake (p3-568): lakeview kept; 25E-36E ~28-30 m over open grass to a riprapped shore with a broken tree line - lakefront lead.
+- 5731 Oakwood Lakes (p3-568): not waterfront kept; Campground 2 west row 76E-85E 30-40 m from the lake behind a trail + tree band - lakeview lead (needs site photos).
+- 5719 Oahe Downstream (p3-568): not waterfront kept; Campground 3 201E-205E 20-40 m from the channel behind a tree row + riprap - riverview lead.
