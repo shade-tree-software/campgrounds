@@ -773,13 +773,13 @@ Applied as kept. Operator site (headless 2026-11-21): $50/night (was $40 in 2025
 ## 5817 Bob's Resort (Gettysburg-area SD, private) - long-stay mix unmeasured (p3-565, 2026-11-21) - OPEN
 Operator: 'Sites are available on a nightly, weekly, monthly, or seasonal basis'; 'If you are looking for long term, we have yearly and seasonal rates, you can park your mobile home or build a cabin'. $45 nightly full hookup 50 A, weekly $250, monthly $650; 79 sites on the 2026 map; phone booking (ResNexus is the lodging's, not opened). Summer imagery shows the loop nearly full beside a ~100-unit mobile-home park. Nightly share unmeasurable. Kept for now (dated nightly rate, current map, Google 4.4/345 shared with motel + steakhouse). Keep, or drop as seasonal/residential?
 
-## 5814 Ingalls Homestead (De Smet SD, private) - $50 + per-person admission (p3-567, 2026-11-21) - OPEN
+## 5814 Ingalls Homestead (De Smet SD, private) - $50 + per-person admission (p3-567, 2026-11-21) - RESOLVED (AWH 2026-11-22: keep with a caveat)
 4 back-in water/electric sites, $50 a night (exactly at the gate), booked by email with a 50% deposit, grounds open May 1-Oct 31. Admission $21.15 a person, charged once per stay, 'required if you plan to be on our grounds during our open hours'. Under the mandatory-fees rule two adults' admission ($42.30) on top of a one-night $50 puts it well over; no gateway within 40 km, no Good Sam. Is the admission mandatory for campers (camping is on the grounds), so drop on price - or optional (arrive after hours, leave before opening), so keep with a caveat? Kept for now.
 
-## 5876 Bison City Park (Bison SD, local) - no current presence (p3-575, 2026-11-22) - OPEN
+## 5876 Bison City Park (Bison SD, local) - no current presence (p3-575, 2026-11-22) - RESOLVED (AWH 2026-11-22: drop)
 No town page, no phone, no Google listing, no booking engine. The only evidence it operates is one ParkAdvisor review from May 2023 ($20, water + electric, pay showers, dump). Same shape as the ND city parks you dropped on 'no current presence' (Monango, Sarles) and Brooks Memorial here. Drop? Kept for now with the stored values marked unconfirmed. (5867 Veblen City Park, same batch, has a July 2025 RV LIFE stay report at $10 - kept with it as the source.)
 
-## 14591 385 Grill & Campground + 5818 Bulldog Creek (Black Hills, private) - ride-from-your-site OHV parks? (p3-576, 2026-11-22) - OPEN
+## 14591 385 Grill & Campground + 5818 Bulldog Creek (Black Hills, private) - ride-from-your-site OHV parks? (p3-576, 2026-11-22) - RESOLVED (AWH 2026-11-22: keep both with a noise caveat)
 Both are general campgrounds (nightly sites, 50 A, cabins; 385 Grill has a restaurant) that market trail riding hard. 14591: "Direct ATV & OHV trail access from your campsite into the Black Hills ... No trailering. No driving to a staging area." 5818: "easy trail access to 700+ miles of motorized trails just behind BCC". No agency noise warning on either. I kept both as general campgrounds with an OHV side (the Big Scrub / Mack Lake reading). Keep, or drop as camps that exist for the riders?
 
 ## 5878 Lake Pocasse Campground (Campbell County, near Pollock SD, local) - no current presence; town parks instead? (p3-577, 2026-11-22) - OPEN
