@@ -1,0 +1,40 @@
+{
+ "id": 5869,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://lakeprestonsd.com/campground - live site fails TLS for plain HTTP ('SSL certificate problem: unable to get local issuer certificate', not bypassed); read via Wayback capture http://web.archive.org/web/20260606041641/https://lakeprestonsd.com/campground (2026-06-06): 'City Campground is located by Thorsnes Park, off Park Ave. S. Our 17 site campground is a great quite getaway; with the pool and playground within walking distance. Our new safe room/restroom facility does provide amenities you may need while camping, which includes showers.'; 'Sewer dump and water to fill your tanks are available, as well as electrical hookups at each camping spot.'; 'Reservations can be made at the Finance Office located at 111 3rd St NE or by calling (605) 847-4140.'; 'The cost is $15 per night and $400 per month.'",
+  "audit/price_research/local_browser_2026-10-16/browser.jsonl (headless read of the same page 2026-10-16): same reservation and '$15 per night and $400 per month' lines",
+  "Esri World_Imagery 44.35965,-97.37015 (hw 250 m), 2026-11-21: pin on the loop road south of the town pool in Thorsnes Park (two long buildings inside the loop, ballfield to the east); no water anywhere in frame"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 17},
+   "source": "https://lakeprestonsd.com/campground (Wayback 2026-06-06: 'Our 17 site campground')",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "potable_water": true, "dump": true},
+   "source": "https://lakeprestonsd.com/campground (Wayback 2026-06-06: restroom facility 'includes showers'; 'Sewer dump and water to fill your tanks are available')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "phone", "note": "Reserve at the City Finance Office, 111 3rd St NE, or by phone."},
+   "source": "https://lakeprestonsd.com/campground (Wayback 2026-06-06: 'Reservations can be made at the Finance Office ... or by calling (605) 847-4140')",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2026", "note": "City of Lake Preston: $15 a night, $400 a month (city page, Wayback 2026-06-06; same text read 2026-10-16)."},
+   "source": "https://lakeprestonsd.com/campground (Wayback 2026-06-06: 'The cost is $15 per night and $400 per month.')",
+   "method": "manual"
+  }
+ },
+ "note": "City of Lake Preston campground beside Thorsnes Park, off Park Ave S, with electric at every site and a new restroom/safe-room building; the town pool and playground are within walking distance. --Claude",
+ "summary": "City page (Wayback 2026-06-06; live site's TLS chain fails for curl) + 2026-10-16 headless read + imagery: 17 sites, electric at each (amps unstated), water fill, dump, showers, $15/night ($400/month), reserve at the Finance Office or by phone. Booking platform operator -> phone. Not waterfront and pin confirmed. Season not stated anywhere.",
+ "flags": [
+  "SOURCE ROUTE: lakeprestonsd.com returns an incomplete TLS chain to curl ('unable to get local issuer certificate'); not bypassed - read the Wayback capture of 2026-06-06 (fresh for rates) plus the repo's 2026-10-16 headless read. The site is live (DNS + TLS handshake), not dead.",
+  "PHONE 605-847-4140 confirmed (City Finance Office, the reservation line). WEBSITE confirmed.",
+  "WATERFRONT: not waterfront confirmed - in-town park; no water in a 500 m frame.",
+  "PIN: stored 44.35965,-97.37015 sits on the park loop south of the pool - fine.",
+  "HOOKUPS: electric at every site but no amperage published, so hookups.electric stays unset. Season not stated on the city page (left unset)."
+ ]
+}

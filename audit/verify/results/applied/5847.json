@@ -1,0 +1,55 @@
+{
+ "id": 5847,
+ "checked": "2026-11-21",
+ "sources": [
+  "http://cityofmontrosesd.com/Campground (City of Montrose, read 2026-11-21; plain http - the https host serves a certificate for another name, not bypassed): 'CAMPGROUND SEASON DATES: MAY 1st - OCTOBER 1st'; 'We OFFER 39 Camping Sites! FULL HOOKUPS: 10 Sites Electric/Water: 14 Sites Electric: 15 Sites Five pull-through. The remaining are back-in. Some sites are 30 amp, others are 50 amp. There is a bath house with handicap accessibility. A dump station is available on the north side of the bath house. There is a walking path that circles the pool area and follows along the Vermillion River.'; 'One (1) night - $31.93 Seven (7) nights - $166.55 Seasonal / Annual Site - $2000 year round'; 'Make your reservations online today! https://www.campspot.com/book/montrose-campground-sd'; 'Call our CAMP HOST: 605-363-3010 or City Hall: 605-363-5065'; 'To camp without a reservation: When you arrive at the Montrose Campground, locate your Camp Host located in SITE #S07 or call #605-363-3010 to check availability.'",
+  "http://cityofmontrosesd.com/gallery/CAMPGROUND%20SITES%20map.pdf (read 2026-11-21): '39 CAMPING SPOTS TOTAL'; 'S01-S06 : WATER/SEWER/ELECTRIC - $2000 SEASON RATES'; 'S07-S10 : WATER/SEWER/ELECTRIC - $2000 SEASON RATES'; '#03-#04 : ELECTRIC/WATER - $31.93 DAILY RATES'; '#06-#16 : ELECTRIC/WATER - $31.93 DAILY RATES'; '*ELECTRIC ONLY HOOKUPS* #17 - #31 $31.93 DAILY RATES' (south campground by the softball field)",
+  "http://cityofmontrosesd.com/gallery/Camping%20Terms%20&%20Conditions.pdf (read 2026-11-21): 'Montrose Campground Operation Dates: May 1st - October 1st ; Weather Permitting; Council Advised'; 'Campers will not be allowed to stay for more than 14 consecutive days, unless special approval is received from the Montrose Finance Officer'; 'Tents ... cost an additional $10 per tent, per night'; 'Maximum of 8 people staying at a site'; check-in 3:00 PM, check-out 2:00 PM",
+  "audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot park 4009 'Montrose Campground - Montrose, SD', read 2026-10-13; www.campspot.com answers 403 today): site types 30amp + Water Back In (4, max 50 ft, rig types exclude Motorhome), 30amp + Water Pull Thru (4, 70 ft), 50amp + Water Back-in (4, 70 ft), 50amp + Water Pull Thru (2, 70 ft), 50amp Electric Only Back-In (15, 70 ft); quote 2027-06-08 and 2027-06-12, one night: base $25.00 + 'Booking Fee' $5 + tax $1.93 = $31.93; closed 2026-10-01 to 2027-04-30",
+  "Esri World_Imagery 43.7030,-97.1812 (hw 250 m), 2026-11-21: campground in two parts - rows north of the street beside the pool and a loop by the softball field (stored pin is in the loop); the East Fork Vermillion (~10-15 m wide) runs 60-100 m east behind a continuous tree band"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true},
+   "source": "http://cityofmontrosesd.com/Campground ('Some sites are 30 amp, others are 50 amp'; Electric/Water 14 sites) + site map",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 39, "max_rig_ft": 70, "pull_through": true},
+   "source": "http://cityofmontrosesd.com/Campground ('We OFFER 39 Camping Sites!'; 'Five pull-through') + Campspot site types (max length 70 ft, captured 2026-10-13)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true},
+   "source": "http://cityofmontrosesd.com/Campground ('A dump station is available on the north side of the bath house')",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-01", "closes": "10-01", "note": "Weather permitting; Campspot takes no nights from October 1."},
+   "source": "http://cityofmontrosesd.com/Campground + Camping Terms & Conditions ('May 1st - October 1st ; Weather Permitting')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/montrose-campground-sd", "fcfs": "always", "max_stay_nights": 14, "note": "Without a reservation, find the camp host (site S07) or call to check availability. Check-in 3 p.m., check-out 2 p.m."},
+   "source": "http://cityofmontrosesd.com/Campground ('Make your reservations online'; 'To camp without a reservation ... check availability') + Terms ('not ... more than 14 consecutive days')",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "reservation_fee": 5, "checked": "2026", "note": "Campspot: $25 a night for every RV site type, plus a $5 booking fee per stay and tax; the city posts the one-night total as $31.93 and seven nights as $166.55. Tents add $10 each a night. The ten full-hookup sites are seasonal only ($2,000). Read 2026-11-21 (Campspot quotes from 2026-10-13)."},
+   "source": "http://cityofmontrosesd.com/Campground ('One (1) night - $31.93') + Campspot quote captured 2026-10-13 (base $25.00 + Booking Fee $5 + tax $1.93)",
+   "method": "manual"
+  }
+ },
+ "note": "City of Montrose campground in Pioneer Park, next to the community pool, in two parts: rows beside the pool and a south loop by the softball field. The ten full-hookup sites are held for seasonal campers; nightly sites have water and electric or electric only. A walking path circles the pool area and follows the East Fork of the Vermillion River. --Claude",
+ "summary": "City page + site map + terms + Campspot capture (Campspot 403 today) + imagery: 39 sites (10 seasonal-only full hookups, 14 E/W + 15 E nightly), 30/50 A, 5 pull-throughs, 70 ft, dump, $25 + $5 booking fee ($31.93 all-in), May 1-Oct 1, 14-night limit, walk-ups via the host. Website Campspot marketplace -> city page; phone '' -> 605-363-3010. Not waterfront and pin confirmed.",
+ "flags": [
+  "WEBSITE: https://www.campspot.com/park/montrose-campground-montrose-sd (Campspot marketplace, 403) -> http://cityofmontrosesd.com/Campground (city page; https on that host fails a certificate-name check, use http). Booking url now https://www.campspot.com/book/montrose-campground-sd (the link the city posts).",
+  "PHONE: '' -> 605-363-3010 (camp host, the reservation-questions line on the city page and Campspot); City Hall 605-363-5065.",
+  "SITES: count 12 -> 39 (city: 10 full hookup + 14 E/W + 15 E); max_rig 40 -> 70 (Campspot site types); 29 sites are sold nightly, the 10 full-hookup sites S01-S10 are seasonal only ($2,000), so nightly share ~74% - fine.",
+  "HOOKUPS: sewer false left as stored - sewer exists only on the ten seasonal-only sites; no nightly site has it.",
+  "SEASON: closes 09-30 -> 10-01 (city 'May 1st - October 1st'; Campspot books no night from Oct 1, so Sept 30 is the last night). A stray white-text 'OCTOBER 31ST' sits under the date on the city page (looks like leftover text).",
+  "FACILITIES: showers (derived) left as stored - the city says only 'a bath house with handicap accessibility'.",
+  "WATERFRONT: not waterfront confirmed - the East Fork Vermillion (~10-15 m, creek width) runs 60-100 m east of the sites behind a continuous tree band.",
+  "PIN: stored 43.70200,-97.18080 is in the south loop; the campground's north rows by the pool are ~250 m north - fine as is (Campspot's point 43.703935,-97.18168 is by the pool)."
+ ]
+}

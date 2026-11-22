@@ -1,0 +1,56 @@
+{
+ "id": 5807,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.nomadvancamprv.com/park-details (operator, read 2026-11-21): 'RV & CAMPER SITES $70'; '23 Full Hookups'; '30-50 Amp'; 'Water Sewer'; 'ShowerHouse'; \"Max Rig length 42'\"; '(no pull-through sites)'; 'Sites 1-5, 7 30/50amp Site 6 50amp Sites 11-18 30/50amp'; 'Sites 11-18 are available for nightly rental year-round w/ power only)'; 'van SITES $30 -$50 7 Van/Car Camping Spots ... Max Van length 24' ... Great for vans, trucks with toppers or rooftop tents. Available May 1 - Oct 1'; 'TENT SITES $20 and up plus $10 for each additional tent 5 Creekside Tent Sites ... Available May 1 - Oct 1'",
+  "https://www.nomadvancamprv.com/ (operator, read 2026-11-21): 'Located on the Mickelson Trail in Downtown Custer'; '144 S 4th Street Custer,SD 57730 (605) 440-3188'; reservations link https://parkwith.us/camps/nomad-vancamp-&-rv-park",
+  "https://parkwith.us/camps/nomad-vancamp-&-rv-park (booking engine page, read 2026-11-21, no dates entered): camping styles RV Site / Van / Tent Site; RV sites Site 1-7, Site11-25 and Site A; max_length 34/40/42 ft (vans 24); max_stay_nights 14; minimum_bookable_nights 1 for rv/van/tent; tax_rate 0.087, service_rate 0.06; is_booker_long_term_enabled false; van/tent sites 'along French Creek'",
+  "audit/price_research/gateways.py 43.76458,-103.60002 (2026-11-21): 'Mount Rushmore (attraction, 17 km); Wind Cave NP (national park, 25 km)'",
+  "Google Maps panel (gm.py, read 2026-11-21): 'Nomad Vancamp & RV Park' 4.6 stars over 18 reviews, 144 S 4th St, Custer, 43.764475,-103.600280, phone +1 605-440-3188",
+  "Esri World_Imagery 43.76458,-103.60002 (hw 150 m), 2026-11-21: gravel RV lot south of Mt Rushmore Rd beside the Mickelson Trail; French Creek (a few metres wide) runs 80-100 m south behind trees, where the van and tent sites are"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 70, "nightly_high": 70, "currency": "USD", "checked": "2026", "note": "Operator's posted RV rate $70 a night (full hookups); van spots for vehicles up to 24 ft $30-50 and tent sites from $20. The booking engine adds 8.7% tax and a 6% service fee. Read 2026-11-21 (no year given)."},
+   "source": "https://www.nomadvancamprv.com/park-details ('RV & CAMPER SITES $70'), read 2026-11-21",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://www.nomadvancamprv.com/park-details ('23 Full Hookups', '30-50 Amp', 'Water Sewer')",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 35, "max_rig_ft": 42, "pull_through": false},
+   "source": "https://www.nomadvancamprv.com/park-details (23 full-hookup RV sites + 7 van spots + 5 tent sites; \"Max Rig length 42'\"; 'no pull-through sites')",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true},
+   "source": "https://www.nomadvancamprv.com/park-details ('ShowerHouse')",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Sites 11-18 rent year-round with power only; van and tent sites May 1-Oct 1."},
+   "source": "https://www.nomadvancamprv.com/park-details ('Sites 11-18 are available for nightly rental year-round w/ power only'; van and tent 'Available May 1 - Oct 1')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://parkwith.us/camps/nomad-vancamp-&-rv-park", "max_stay_nights": 14},
+   "source": "https://parkwith.us/camps/nomad-vancamp-&-rv-park (online booking, max_stay_nights 14), linked from https://www.nomadvancamprv.com/reservations",
+   "method": "manual"
+  }
+ },
+ "note": "Gravel in-town park a block off the main street in Custer, on the Mickelson Trail. RV sites are back-ins; separate van spots and creekside tent sites sit along French Creek at the back. Walkable to restaurants and shops. --Claude",
+ "summary": "Operator pages + parkwith.us engine page + gateways + Google + imagery: 23 full-hookup back-in RV sites (30/50 A, 42 ft) at $70, 7 van spots (24 ft max, $30-50), 5 tent sites; showers; 14-night max; sites 11-18 year-round with power only. Over $50 but passes the gate by gateway (Mount Rushmore 17 km). Google 4.6/18. Not waterfront (French Creek, creek-size, 80-100 m south). Pin fine.",
+ "flags": [
+  "PRICE GATE: posted motorhome rate $70 a night (the van spots at $30-50 are for vans/trucks with toppers up to 24 ft, so the motorhome type is priced) - over $50, but within 40 km of a gateway (Mount Rushmore 17 km, Wind Cave NP 25 km; gateways.py), so the gate is lifted. Good Sam: none posted (stored false). No dated engine quote: the parkwith.us page returns no prices without dates and was not driven. Summer peak = the posted $70 (no seasonal schedule posted); an off-season power-only rate for sites 11-18 is not posted.",
+  "GOOGLE: 4.6 stars over 18 reviews.",
+  "LONG-STAY: nightly park - 14-night maximum, long-term booking disabled on the engine, no seasonal sites; nightly share 100%.",
+  "SITES: count 33 -> 35 (23 RV + 7 van + 5 tent; the engine also lists 'OPEN CAMP' tent spots); added max_rig 42, pull_through false.",
+  "FACILITIES: stored wifi true (from the sweep note) not seen on today's pages; left as is.",
+  "PHONE 605-440-3188 and WEBSITE confirmed.",
+  "WATERFRONT: not waterfront confirmed - French Creek is creek-width and runs 80-100 m south of the RV lot behind trees (only van/tent sites are 'creekside').",
+  "PIN: stored 43.76458,-103.60002 is on the RV lot - fine (Google 43.764475,-103.600280)."
+ ]
+}
