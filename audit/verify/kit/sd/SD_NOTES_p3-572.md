@@ -1,0 +1,12 @@
+# p3-572 working notes
+- 5770 DONE (year-round, $12/24, fcfs never, pin 363 m -> 43.5658,-103.4936)
+- 5860 DONE (city govoffice page; $10 FCFS 12x30A; pin on school field -> 45.0184,-102.0376; website new)
+- 5718 DONE (lakefront kept 13E-18E/28E-32E/72E/74E on Hipple Lake; facID 15; split candidate Main/East ~1 km; phone 605.773.2885)
+- 5816 DONE (riverview kept ~90 m; season 4/1-10/31; 30/50 A; phone 605-223-7690)
+- 5861 DONE (riverfront kept, pads 32-45 m; electric amps cleared; closed 10/13/2026 seasonal; phone 605-997-2492)
+- 5824 DONE ($45+ dated 2025 Wayback; phone booking; long-stay flag; Google shared w/ museum)
+- 5820 DONE (riverfront -> riverview, stalls 60-65 m from water; fees seasonal 25/16; phone 605-773-2527)
+- 5841 DONE ($40 nightly online; long-stay flag: permanent/yearly/decks+sheds; Google 4.7/7)
+- 15493 DONE ($50-65 May 2027 quote; passes gate at $50; open 5/1-10/15; Google 4.1/271; peak unread)
+- 5760 DONE (pin move 680 m; 50 A; 13 sites; phone 605.223.5563; fees consistent)
+- 5749 DONE (pin move 840 m to Main CG; split candidate Main/West 1.3 km; not waterfront kept; phone 605.910.4589)

@@ -1,0 +1,54 @@
+{
+ "id": 5770,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/246878 (read 2026-11-21): 'This 63-site campground is open all year with sites available on a reservation basis from May to September 30th. In the off-season, only sites 15 through 35 are available.'; 'Flush toilets and drinking water are available from late spring through early fall. Fees are half-price when water is not available.'; 'Campsites may be reserved all year through Recreation.gov. Reservations may be made 6 months in advance of your stay and same day reservations are available Maximum combined length of campsites is 36 feet'; notice 'you must reserve and pay for your site on Recreation.gov before occupying it'; 'In the off-season (October 1st-May), sites 15 through 35 are available ... Water is not availabe during this time and there is a vault toilet'; 'Maximum Stay. An individual may stay a maximum of 14 consecutive nights, no more than 30 total nights during the calendar year.'; 'Generators are prohibited in sites 1 through 15'; rules reservationWindow 10 Months, maxConsecutiveStay 14",
+  "https://www.recreation.gov/api/camps/campgrounds/246878/rates (read 2026-11-21): Peak Season 2026-05-16..2026-09-30 and 2027-05-22..2027-09-30 $24 (RV B loop, D loop, tent/truck camper); Non-Peak 2026-10-01..12-31 and 2027-01-01..05-21 $12; group sites $45",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:246878 (catalog, read 2026-11-21): 65 records = 63 individual sites + 2 group; loop A 1-14 TENT ONLY; 45 sites permit an RV/trailer/fifth wheel (loops B-D), 34 of them at 23 ft or more, longest 36 ft; electric N/A on every site, water hookup No; one RV pull-through (28, 17 ft)",
+  "https://developer.nps.gov/api/v1/campgrounds?parkCode=wica (Elk Mountain record, read 2026-11-21): toilets 'Flush Toilets - seasonal', 'Vault Toilets - year round'; showers None; dumpStation No; potableWater 'Yes - seasonal'; electricalHookups 0; fees $24 'Campsite Fee', $12 'Campsite Fee - Off-season'; 'The campground is open year-round with drinking water and flush toilets available late spring into early fall.'",
+  "https://www.nps.gov/wica/planyourvisit/campgrounds.htm (read 2026-11-21): 'Maximum site length is 36 feet and maximum width is 10 feet with slides extended.'",
+  "Esri World_Imagery 43.5660,-103.4920 (hw 450 m) with the catalog's site coordinates (2026-11-21): loops run ~800 m west from the entrance along a pine/prairie edge; no water near any site"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov catalog 246878 (every site electric N/A, water hookup No) + NPS campgrounds API (electricalHookups 0)",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 45, "max_rig_ft": 36, "pull_through": true},
+   "source": "recreation.gov catalog 246878 (45 sites permitting an RV/trailer/fifth wheel, longest 36 ft; one RV pull-through, site 28 at 17 ft) + nps.gov 'Maximum site length is 36 feet'",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "vault_toilets": true, "potable_water": true, "showers": false, "dump": false},
+   "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=wica (Flush Toilets - seasonal, Vault Toilets - year round, potable water seasonal, showers None, dumpStation No)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "October 1 to mid-May only sites 15-35 (B loop) stay open, with no water and a vault toilet at half price."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/246878 ('open all year'; 'In the off-season (October 1st-May), sites 15 through 35 are available ... Water is not availabe during this time and there is a vault toilet')",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/246878", "fcfs": "never", "max_stay_nights": 14, "note": "Same-day booking is allowed, but every site must be reserved and paid on Recreation.gov before it is occupied; cashless. Recreation.gov's text says reservations open 6 months ahead while its rule table says 10 months."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/246878 ('you must reserve and pay for your site on Recreation.gov before occupying it'; 'maximum of 14 consecutive nights')",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 12, "nightly_high": 24, "currency": "USD", "checked": "2026", "seasonal": [{"name": "peak", "opens": "05-16", "closes": "09-30", "nightly_low": 24, "nightly_high": 24}], "note": "Peak $24 runs 2026-05-16 to 09-30 (2027: 05-22 to 09-30); $12 the rest of the year, when water is off. Group sites $45 (tents only)."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/246878/rates (Peak Season 2026-05-16..09-30 $24; Non-Peak $12)",
+   "method": "manual"
+  }
+ },
+ "note": "The only campground in Wind Cave National Park, on the edge of ponderosa pine and open prairie about 1 mi north of the visitor center. Loop A (sites 1-14) is tent-only; RV sites are in loops B-D, about 34 of them 23 ft or longer, and many B-loop sites are parallel pull-offs along the road. Generators are not allowed in sites 1-15 and run 8 am-8 pm elsewhere. --Claude",
+ "summary": "rec.gov facility/rates/catalog + NPS API/page + imagery: open year-round (off-season B loop 15-35 only, no water, half price), $24 peak / $12 off-peak, reservation-only on rec.gov (same-day ok), 45 RV-permitted sites (34 at 23 ft+), 36 ft max; no hookups/showers/dump. All derived groups now manual; fees seasonal added; note rewritten.",
+ "flags": [
+  "PIN: stored 43.56534,-103.48915 sits at the entrance by site 1/15 at the east end of an ~800 m campground; centroid of the 65 catalog sites 43.56578,-103.49361 (~363 m W). Suggest moving to 43.5658,-103.4936.",
+  "SITES: stored max_rig_ft 35 (note) -> 36 (NPS + rec.gov). The old note's 'B-loop pull-throughs take RVs to ~35 ft' is not supported: the catalog's only RV pull-through is site 28 (17 ft); most B-loop sites are 'Parallel'. pull_through left true on site 28; reviewer may prefer null.",
+  "FIT: 34 of 45 RV-permitted sites take 23 ft+ (B: 15-21, 23-27, 29, 31-34; C: 36, 41, 62-64; D: 48-52, 54-59, 61). Off-season sites 15-35 are mostly 32-36 ft.",
+  "BOOKING: fcfs 'never' - rec.gov notice requires reserving on Recreation.gov before occupying, even same day (old note said FCFS Oct-May). Window: description says 6 months, rule table 10 months - left inherited (180).",
+  "WATERFRONT: not waterfront kept (no water near any loop on imagery).",
+  "PHONE (605) 745-4600 and websites confirmed (nps.gov campgrounds.htm is now the Elk Mountain page)."
+ ]
+}
