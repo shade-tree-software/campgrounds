@@ -620,6 +620,7 @@ DROPS = {
     6048: ('2026-11-21', "Sarles City Park (Sarles ND): AWH drop - no current presence", "u-10: ND Tourism listing removed (404); last capture 2023-03-27 'Primitive camping, shelter with tables and water'; no city site; not on the ND HHS licensed list; imagery a treed lawn block, no pads, lanes or RVs"),
     5833: ('2026-11-21', "Ace's RV Park (Winner SD): no live presence (private)", "p3-560: acervpark.com answers a Wix ConnectYourDomain 404 (www, bare, http; last good Wayback 2026-05-17); Google open, 4.9 from 17 reviews (under 25) with phone (605) 835-8343; no posted rate, RV Life price3 ($$$, avg 41) - neither price nor presence indicator passes"),
     5873: ('2026-11-21', "Brooks Memorial Park (Martin SD): AWH drop - no evidence of RV camping", "p3-560: no city or chamber page mentions camping (chamber lists picnic shelters); The Dyrt: walk-in tent camping ('Park in a lot, walk to your site'); 2022 camper: 'would not suggest pulling a large trailer down to'; stored detail from Campendium (unreadable)"),
+    5842: ('2026-11-21', "Outback Campground (Lake Preston SD): no posted price, Facebook-only presence (private)", "p3-563: only presence a Facebook page ('Opening April \'24 ... Reserve your Spot Today!', posts unreadable); Google listing 0 reviews, no phone or website; RV Life park page 404; no nightly rate anywhere; The Dyrt's only review (2025-04-19) a summer-long stay, listing 'Reservations are available for campers planning extended stays'. Fails the private price + presence test."),
 }
 
 if __name__ == "__main__":

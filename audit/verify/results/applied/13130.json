@@ -1,0 +1,28 @@
+{
+ "id": 13130,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.sobosllc.com/lodging/campground (read 2026-11-21): 'pull-through RV spots are spacious and equipped with water and electrical hookups. Each spot offers a natural setting with picnic tables and fire rings'; 'Dump station and a BRAND NEW shower house located onsite'; 'gazebo fire pit'; 'Horseshoe pits'; 'sand volleyball court'; 'side-by-side and ATV friendly'; '605-209-2711'",
+  "https://www.sobosllc.com/about-us (read 2026-11-21): 'SOBO'S LLC is Veteran owned, Native American run business that currently provides lodging in South Dakota on the Pine Ridge Indian Reservation'; 'We offer Military discounts'; 'SOBO'S is located approximately 6 miles Northwest of the town of Scenic, South Dakota.'",
+  "https://www.sobosllc.com/contact-us (read 2026-11-21): phone 605-209-2711",
+  "https://app.fireflyreservations.com/reserve/property/SOBOSCAMPGROUND (read 2026-11-21): live Firefly page, unit types 'RV Site' / 'Tent Site', 'Nightly'; rates sit behind the availability search (captcha) - not read",
+  "Google Maps panel (headless, 2026-11-21): 'SOBO'S Campground' 5.0 stars (132 reviews), +1 605-863-6488, sobosllc.com, 24500 Sobos Road, Scenic; point 43.84932,-102.57337",
+  "Esri World_Imagery 43.8530,-102.5712 and 43.8494,-102.5730 (2026-11-21): a graded gravel field of ~30 pull-through lanes between triangular islands at the Google point, with a shower building at its NW corner; the stored pin is ~890 m NNE in an empty creek bottom",
+  "python3 audit/price_research/gateways.py 43.85665,-102.56902 -> 'Badlands NP (national park, 27 km)'",
+  "trip_data/goodsam_parks.json (Good Sam directory cache fetched 2026-10-02): no SOBO's record near Scenic"
+ ],
+ "groups": {},
+ "note": "Veteran-owned, Native-American-run campground on a ranch on the Pine Ridge Reservation about 6 mi NW of the ghost town of Scenic, between the Badlands and the Black Hills. Open gravel field of pull-through sites with picnic tables and fire rings, cabins and primitive tent sites, gazebo fire pit, horseshoes and volleyball; a saloon, shooting range and guided hunts on the property. Side-by-side and ATV friendly. --Claude",
+ "summary": "Operator site + Firefly page live (rates behind captcha); Google 5.0/132. Price: no posted rate, RV Life $$$, but Badlands NP gateway 27 km -> passes. PIN wrong by ~890 m: campground (pull-through grid) at 43.8493,-102.5734. Not waterfront. Sites count 15 looks low (~30 lanes on imagery). Good Sam flag not in the Oct directory cache.",
+ "flags": [
+  "PIN MOVE: stored 43.85665,-102.56902 is ~890 m NNE of the campground, in an empty creek bottom. Target 43.8493,-102.5734 (centre of the gravel pull-through field on imagery; Google's point 43.84932,-102.57337 sits there). Elevation should be re-pinned with it.",
+  "PRICE GATE: no posted rate (operator page none; Firefly rate behind captcha); RV Life $$$. Badlands NP is a gateway 27 km away (gateways.py) -> passes. Firefly sells RV sites nightly (live booking page = price + presence).",
+  "GOOGLE: 5.0 stars, 132 reviews ('SOBO'S Campground'; the listing carries 605-863-6488 - the operator's own pages give 605-209-2711, so the stored phone stays).",
+  "SITES (reported, not overwritten): stored count 15 is RV Life's; imagery shows ~30 pull-through lanes in the gravel field. Not changed.",
+  "DISCOUNTS (derived): good_sam true is not supported by the 2026-10-02 Good Sam directory cache (no SOBO's record anywhere near Scenic) - suggest goodsam_discounts.py --retract review. military true is confirmed by the operator ('We offer Military discounts').",
+  "HOOKUPS (manual, not overwritten): Firefly's search page offers '30 amp' / '50 amp' amenity filters, but these are property-wide filter labels, not per-site facts; electric stays unset.",
+  "OHV: 'side-by-side and ATV friendly' - a general campground welcoming ATVs, not an OHV staging camp. Flag only.",
+  "WATERFRONT: not waterfront confirmed - the creek is ~150 m east beyond a tree belt.",
+  "PHONE 605-209-2711 and WEBSITE links confirmed (operator page + Firefly)."
+ ]
+}

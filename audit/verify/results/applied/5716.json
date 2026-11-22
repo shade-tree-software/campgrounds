@@ -1,0 +1,43 @@
+{
+ "id": 5716,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://gfp.sd.gov/parks/detail/lewis-and-clark-recreation-area/ (read 2026-11-21): 'Four separate campgrounds comprise this modern recreation area'; 'Campsites - electrical: $30 per night'; 'Campsites - non-electrical: $16 per night (tent-only)'; 'Camping Cabins: $60 per night'; 'Horse Camp: $30 per night'; 'Open: Year-round. Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed... Vault toilets usually remain open.'; 'Park Size: 418 campsites, 20 camping cabins and 5 tent-only sites. Same-day reservations: 108 sites.'; 'The entire Yankton campground is available for same-day reservations. Reserve available sites online or through the call center on the morning of your arrival for stays up to 14 nights.'; contact '43349 SD Hwy 52 Yankton, SD 57078 605.668.2985'; amenities incl. 'Drinking Water', 'Dump Station', 'Flush Toilets', 'Showers', 'Vault Toilets (open year-round)', 'Horse Campsite(s)'",
+  "https://gfp.sd.gov/userdocs/gavins_cg.pdf, midway_cg.pdf, yankton_cg.pdf, lc_cg_with_trails.pdf (campground maps, read 2026-11-21): Gavins Section sites 1-100 + cabins A-K; Gavins Point Horse Camp H1-H8 'Equestrian site includes a 20'x20' corral'; Midway Sections; Yankton Section",
+  "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=33 (embedded per-unit list, active units only, read 2026-11-21): Gavins Point 1-100 (loop 54), Midway 101-178 and 179-311 (loops 57, 53), Yankton 312-419 'Back-in Campsite (Same Day)' (loop 58), all $30 with 'Amp Service: 20/30/50' (some 30-only or 50-only), Max Length 45-90 ft; 'Tent Only - Nonelectric' $16; cabins $60; 'Equestrian Back-in Campsite' H1-H8 $30 in their own loop; per-site coordinates",
+  "Esri World Imagery around 42.8590,-97.5445 (hw 220 m), 42.8610,-97.5340 (hw 250 m), 42.8650,-97.5180 (hw 300 m), 42.8690,-97.5090 (hw 400 m) and 42.8660,-97.5100 (hw 130 m) with the engine's site points (2026-11-21)"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50},
+   "source": "reservations.gooutdoorssouthdakota.com facID=33: 'Amp Service: 20/30/50' on most campsites",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 418, "max_rig_ft": 90},
+   "source": "GFP park page 'Park Size: 418 campsites, 20 camping cabins and 5 tent-only sites'; engine Max Length up to 90 ft (Yankton section) - stored 50 came from note prose",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+   "source": "GFP park page amenities 'Drinking Water', 'Dump Station', 'Flush Toilets', 'Showers', 'Vault Toilets (open year-round)'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "url": "https://reservations.gooutdoorssouthdakota.com/FacilityDetails.aspx?facID=33", "note": "The Yankton campground (sites 312-419) is booked only on the morning of arrival, online or through the call center from 7 a.m. CT; the Gavins Point and Midway campgrounds book ahead in the usual window."},
+   "source": "GFP park page 'The entire Yankton campground is available for same-day reservations... on the morning of your arrival'; engine facID=33 types Yankton units 'Back-in Campsite (Same Day)'",
+   "method": "manual"
+  }
+ },
+ "note": "GFP recreation area on the north shore of Lewis and Clark Lake just above Gavins Point Dam, 5 miles west of Yankton. Three campgrounds strung about 4 km along the shore (Gavins Point, Midway, Yankton), mostly in shade trees; a paved shore trail and riprap separate even the front-row sites from the water. Gavins Point Horse Camp (8 sites with corrals) is its own loop at the west end. The marina, motel and restaurant are run by a private resort. --Claude",
+ "summary": "GFP page, four campground maps and engine facID=33 read: 418 campsites (Gavins Point 1-100, Midway 101-311, Yankton 312-419 same-day only) + 20 cabins + 5 tent-only + 8-site horse camp; electric 20/30/50 A at $30, spurs 45-90 ft (stored 50 replaced); showers, flush/vault toilets, water, dump; year-round. Lakeview kept (paved shore trail + riprap between the front rows and the lake). Fees base still the $16 tent-only rate (manual, flagged).",
+ "flags": [
+  "WATERFRONT: lakeview kept. Closest rows: Gavins Point 30-40 (e.g. 33 at ~42.8603,-97.5370) ~40-50 m from the riprap with a paved trail between and the sites under trees; Yankton 332-344 (334 at 42.86644,-97.51106, 340 at 42.86687,-97.51005) ~20-25 m from the riprap but with a paved trail along the shore between; Midway 222-229 sit behind a shore path. No site has open ground to the water. Stored evidence ('behind a day-use swim beach') read at the stored pin, which is in a field west of the Gavins sites; suggested waterfront_evidence: 'Esri imagery with the Go Outdoors SD per-site points (2026-11-21): front rows of all three campgrounds (Gavins 30-40, Midway 222-229, Yankton 332-344) are 20-50 m from Lewis and Clark Lake, but a paved shore trail and riprap run between every row and the water, sites under shade trees - lakeview, not lakefront.'",
+  "FEES (manual group, not overwritten): nightly_low 16 is the tent-only rate (GFP 'Campsites - non-electrical: $16 per night (tent-only)'; engine types every $16 unit 'Tent Only - Nonelectric'). Every RV campsite is electric at $30. Under the stored convention (base + $7 electric surcharge) fees should read nightly_low 23, nightly_high 23, surcharges {electric: 7}; the fees note's 'non-electric $16' should say tent-only.",
+  "PIN (whole-park entry): stored 42.8598,-97.5460 sits in a mown field ~150 m west of Gavins Point site 1, at the far west end of a 4 km campground strip; the campsites' centroid is 42.8655,-97.5219 (2.1 km east). Suggested target: Midway section centre 42.8644,-97.5270 (on campsites, mid-park).",
+  "SITES: stored max_rig_ft 50 (note prose 'RVs under ~50 ft') replaced by the engine's 90; engine Max Length 45-90 ft, every RV unit 45 ft+ so a 23-ft rig fits all. Note's '400+ electric sites' and 'paved pads' superseded.",
+  "HORSE: Gavins Point Horse Camp H1-H8 is its own loop at the west end (engine loop 55, map 'Equestrian site includes a 20'x20' corral'), not mixed into the general loops - not a horse-rule problem.",
+  "PHONE: 605-668-2985 matches the GFP page. WEBSITE: both stored lines live and correct (facID=33 is Lewis and Clark).",
+  "LEAD (not vetted, already in DB): the GFP page also carries Clay County Park maps - that is entry 5858 (local); not part of this entry. Pierson Ranch (5761) and Chief White Crane (5721) are separate entries."
+ ]
+}

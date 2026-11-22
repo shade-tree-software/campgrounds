@@ -1,0 +1,46 @@
+{
+ "id": 13125,
+ "checked": "2026-11-21",
+ "sources": [
+  "https://www.rafterj.com/early-bird-rates-2027/ (read 2026-11-21): Campsites 'Regular Season May 10- June 30: 30 AMP Electric/ Water: $94.95; 30 AMP Elec/Water/Sewer: $98.95; 50 AMP Elec/ Water/ Sewer: $104.95'; 'Patio Sites (47, 49, 65, 129, 130, 131, 160, 161 162, 203, 211, 265-270): $129.95'; 'Delux Patio Sites (85, 86, 128, 151, 171, 189, 190, 222, 231, 270): $159.95'; 'Buddy Site (#67/68): $228.95'; 'Independance Day Season July 1 - 5': $104.95 / $108.95 / $114.95; 'Peak Season July 6 - Aug 5': $94.95 / $98.95 / $104.95; Sturgis Rally 'Aug 6 - 15': $104.95 / $108.95 / $114.95; 'Regular Season Aug 16 - Sept 18': $94.98 / $98.95 / $104.95",
+  "https://www.rafterj.com/rates/ (read 2026-11-21): 'Rates & Policies Under Construction'; '$20/day/additional vehicle'; 'Ages 10 and below are free. Above 10 are $5/night'; 'Pets on campsites are $3 per night per pet. There is a maximum of 3 pets allowed per campsite'; 'Regular Reservation Bookings beginning January 12th 2027: A two-night deposit is required to hold all reservations.'",
+  "https://www.rafterj.com/early-bird-reservations/ (read 2026-11-21): request form; 'SUBMITTING THIS FORM DOES NOT CONFIRM YOUR RESERVATION'; early-bird bookings paid in full and 'NON-REFUNDABLE'",
+  "https://www.rafterj.com/policies/ (read 2026-11-21): 'To reserve a campsite or cabin you must be 21 years of age or older'",
+  "Google Maps panel (headless, 2026-11-21): 'Rafter J Bar Ranch' 4.7 stars (604 reviews), +1 605-574-2527, 12325 Rafter J-Bar Rd, Hill City; point 43.89199,-103.59426",
+  "python3 audit/price_research/gateways.py 43.8905,-103.5945 -> 'Mount Rushmore (attraction, 11 km); Wind Cave NP (national park, 38 km)'"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 94.95,
+    "nightly_high": 114.95,
+    "seasonal": [
+     {"name": "spring", "opens": "05-10", "closes": "06-30", "nightly_low": 94.95, "nightly_high": 104.95},
+     {"name": "Independence Day", "opens": "07-01", "closes": "07-05", "nightly_low": 104.95, "nightly_high": 114.95},
+     {"name": "peak", "opens": "07-06", "closes": "08-05", "nightly_low": 94.95, "nightly_high": 104.95},
+     {"name": "Sturgis Rally", "opens": "08-06", "closes": "08-15", "nightly_low": 104.95, "nightly_high": 114.95},
+     {"name": "late summer", "opens": "08-16", "closes": "09-18", "nightly_low": 94.95, "nightly_high": 104.95}
+    ]
+   },
+   "source": "https://www.rafterj.com/early-bird-rates-2027/ (2027 early-bird table: 30 A electric/water $94.95 to 50 A full hookup $114.95; patio sites from $129.95 and the $228.95 buddy site are premium classes not in the range)",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"opens": "05-10", "closes": "09-18"},
+   "source": "https://www.rafterj.com/early-bird-rates-2027/ (2027 campsite rate seasons run 'May 10- June 30' through 'Aug 16 - Sept 18')",
+   "method": "manual"
+  }
+ },
+ "note": "Large private resort 3 mi south of Hill City off US-16/385 on Rafter J-Bar Rd, backing onto Black Hills National Forest and the Mickelson Trail. Six camping areas (Main, Base, Ranch, Lower Ranch, The Island, Line) plus a separate cabin camp; concrete-pad patio sites, pool and hot tub, playground. --Claude",
+ "summary": "Operator's 2027 early-bird table read: campsites $94.95 (30 A E/W) to $114.95 (50 A FHU, July 1-5 and Rally), patio $129.95+, season May 10 - Sep 18 - written to fees/season. Price gate: over $50 but Mount Rushmore is a gateway 11 km away -> passes. Google 4.7/604. Booking now an early-bird request form (non-refundable, paid in full) with regular bookings from Jan 12, 2027; stored booking/fees notes are stale (manual, flagged).",
+ "flags": [
+  "PRICE GATE: cheapest RV night $94.95 (30 A electric/water, May 10 - June 30 and Aug 16 - Sept 18, 2027 early-bird table); summer peak $94.95-$104.95, July 1-5 and Sturgis Rally (Aug 6-15) up to $114.95. Over US$50, but gateways.py finds Mount Rushmore 11 km away (Wind Cave NP 38 km) -> passes on the gateway rule. Good Sam discount (derived from the GS directory) is not stated on the operator's pages.",
+  "GOOGLE: 4.7 stars, 604 reviews ('Rafter J Bar Ranch'). RV Life $$$ stored.",
+  "FEES NOTE (manual, not overwritten): stored 'The operator publishes no nightly rate table, so no base rate is recorded here; RV Life's average was $67/night in 9/2026' is now wrong - the 2027 early-bird table is posted. Suggested fees.note: 'Operator's 2027 early-bird table: 30 A electric/water $94.95, 30 A full hookup $98.95, 50 A full hookup $104.95 ($10 more July 1-5 and Aug 6-15); patio sites $129.95-$139.95, deluxe patio $159.95+, buddy site $228.95. $20/day per additional vehicle or ATV (advance booking, gravel pad only); $3/night per pet; rates cover 2 people, $5/night for each additional person over age 10.' The rates page now shows an unlabelled '$7' where the stored $6 reservation fee was - unconfirmed, left alone.",
+  "BOOKING NOTE (manual, not overwritten): stored 'The online reservation page was refusing bookings in Sept 2026 (\"please call us directly\")' - the reservations page now carries no engine at all; 2027 early-bird requests go through https://www.rafterj.com/early-bird-reservations/ ('SUBMITTING THIS FORM DOES NOT CONFIRM YOUR RESERVATION', paid in full by phone, non-refundable) and 'Regular Reservation Bookings beginning January 12th 2027' need 'a two-night deposit'. Suggested booking.note: 'No online engine: early-bird requests by web form (paid in full, non-refundable); regular bookings open January 12 by phone 605-574-2527, two-night deposit.' Suggested booking.url: https://www.rafterj.com/early-bird-reservations/.",
+  "LONG-STAY: nightly-priced resort; a 'Long Duration Stay Policy' covers reservations over 15 nights (paid by March 15) - no seasonal-only or monthly sale seen. Must be 21+ to reserve (not an age-restricted park).",
+  "SITES: stored count 200 is RV Life's (reported); the 2026 map PDF is image-only - site numbers on the rate page run to 270. Not changed.",
+  "PIN: stored 43.8905,-103.5945 is ~165 m from the Google point 43.89199,-103.59426 - fine.",
+  "PHONE 605-574-2527 and WEBSITE https://rafterj.com/ (now redirects to https://www.rafterj.com/) confirmed."
+ ]
+}
