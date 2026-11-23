@@ -101291,7 +101291,7 @@
     "waterfront": "not waterfront",
     "website": "https://www.recreation.gov/camping/campgrounds/232505",
     "phone": "423-286-7275",
-    "note": "NPS, Big South Fork National River & Recreation Area (Stearns), on the plateau near the Blue Heron historic mining community. 45 sites, all water+electric, back-in + pull-through, pads to ~61 ft; flush toilets, hot showers, dump station. Wooded (not on the water; the river gorge is below the rim). ~Apr-Nov. Reserve online. --Claude",
+    "note": "NPS, Big South Fork National River & Recreation Area: wooded, paved campground on the plateau 9 miles west of Stearns off KY 742, a few miles from the Blue Heron mining community. Not on the water (the river gorge is below the rim). --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -101299,64 +101299,88 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": false
     },
     "sites": {
       "count": 45,
       "max_rig_ft": 61,
-      "pull_through": true
+      "pull_through": false,
+      "note": "All 45 are paved back-in sites with water and electric; site 29 is a double. Posted lengths run 28-61 ft, so every site takes a 23-ft rig (lengths are measured from the curb stop to the road edge)."
     },
     "facilities": {
       "flush_toilets": true,
       "showers": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true,
+      "laundry": false,
+      "camp_store": false
     },
     "season": {
-      "year_round": false,
-      "opens": "04-01",
-      "closes": "11-30",
-      "note": "Approximate: Open about April to November."
+      "year_round": true,
+      "note": "The park's campground page (updated June 2026) says the campground is open year-round, and recreation.gov carries rates for December 2026 and all of 2027. The 2024 campground map still said April 1 through November 30."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/232505",
+      "window_opens_days": 180,
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": 0
+      },
+      "max_stay_nights": 14,
+      "note": "Reservable up to the day of arrival; sites not reserved are taken first-come. 14 consecutive nights, 30 nights a year. Check-in and check-out noon ET."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('45 sites all with water and electric hook-ups'; 'Sites with 50-amp electric service are shaded in gray') + NPS campgrounds API ('All sites have 20 and 30 amp service with water. There are no sewer hookups on each site.'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-CAMPGROUND-SITE-LENGTH.pdf (sites 1-45, 28-61 ft, '29 H Dbl', 'Distance measured is from the parking curb stop to the edge of roadway') + recreation.gov campsite catalog for 232505 (45 sites, every one 'Driveway Entry: Back-In'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('access to restrooms and showers and a dump station') + NPS campgrounds API (flush toilets, hot showers, dump station, potable water; laundry 'No', camp store 'No'; 'Free WiFi is available at the campground kiosk'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('Blue Heron Campground is open year-round and operates on the reservation system'; page 'Last updated: June 22, 2026') + https://www.recreation.gov/api/camps/campgrounds/232505/rates (Peak Season 2026-12-01..2026-12-31 and 2027-01-01..2027-12-31), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('Reservations may be made up to 180 days in advance'; 'Check-out and check-in time is 12:00 pm (ET)') + NPS campgrounds API ('Campsites that are not reserved are on a first-come/first-served basis throughout the season') + https://www.recreation.gov/api/camps/campgrounds/232505 (rules: reservationCutOff 0 days, maxConsecutiveStay 14, maxStay 30 days each year), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232505/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232505/rates (Peak Season 2026-04-01..2026-11-30, 2026-12-01..12-31 and 2027: 'STANDARD ELECTRIC': 30, the other site category 35) + https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-Campground-Map-and-Regs-2024.pdf ('With 30 amp hook-ups - $30*', 'With 50 amp hook-ups (gray sites) - $35*', '*50% off rate for holders of Interagency Access/Senior Passes') + NPS campgrounds API ('This fee covers one night of camping for up to 6 persons'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-Campground-Map-and-Regs-2024.pdf ('*50% off rate for holders of Interagency Access/Senior Passes'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 35,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$30 a night with 30-amp hookups, $35 at the sites with 50-amp service (shaded gray on the campground map). The fee covers one night for up to 6 people. Interagency Access/Senior pass holders pay half."
     },
-    "policy_ref": "federal:nps"
+    "policy_ref": "federal:nps",
+    "discounts": {
+      "interagency_senior_access": true
+    }
   },
   {
     "id": 1579,
@@ -101515,14 +101539,14 @@
     "id": 1581,
     "kind": "campground",
     "name": "Holly Bay Campground",
-    "location": "36.9791667,-84.2666667",
-    "elevation_meters": 357.0,
+    "location": "36.98132,-84.26508",
+    "elevation_meters": 350.0,
     "state": "KY",
     "ownership": "federal",
-    "waterfront": "lakefront",
-    "website": "https://www.recreation.gov/camping/campgrounds/232259",
+    "waterfront": "lakeview",
+    "website": "https://www.fs.usda.gov/r08/danielboone/recreation/holly-bay-campground\nhttps://www.recreation.gov/camping/campgrounds/232259",
     "phone": "606-878-8134",
-    "note": "USFS Daniel Boone NF, Laurel River Lake (Keavy/London), ~2 mi N of Laurel River Dam. ~75 drive-in sites (single + double family), 20/30/50A electric + water, paved pads to ~50 ft, flush toilets, showers; near Holly Bay Marina/boat ramp. Many sites have water views but none directly on the shore. Run by concessionaire American Land & Leisure. ~early Apr-mid Oct. Reserve online. --Claude",
+    "note": "Wooded loops on the west shore of Laurel River Lake, two miles north of the dam, beside Holly Bay Marina; a boat ramp inside the campground is for registered campers. The Sheltowee Trace runs between the loops and the shore. Operated by a concessionaire. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -101534,57 +101558,91 @@
     },
     "sites": {
       "count": 75,
-      "max_rig_ft": 50
+      "max_rig_ft": 90,
+      "pull_through": false
     },
     "facilities": {
       "flush_toilets": true,
-      "showers": true
+      "showers": true,
+      "potable_water": true,
+      "dump": true
     },
     "season": {
       "year_round": false,
-      "opens": "04-01",
-      "closes": "10-15",
-      "note": "Approximate: About early April to mid-October."
+      "opens": "04-09",
+      "closes": "10-19",
+      "note": "2026 season; recreation.gov priced 2026 from March 13 to October 17 and lists 2027 from March 26 to October 16."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/232259",
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -48
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Loops A, D, E, F, G and H take reservations; a site not reserved is first-come. Up to 6 people and 2 vehicles a single site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov catalog 232259 (46 sites 'Electricity Hookup' 50/30; every one of the 70 drive-in sites carries a water hookup) + FS page ('The 75 drive-in campsites are reservable and have electricity, water, a paved vehicle pad'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "FS page ('The 75 drive-in campsites') + guide ('75 Drive-in Sites') + recreation.gov catalog (70 bookable-listed drive-in sites, all 'Back-in'; Max Vehicle Length 20-90 ft, most 25-70 ft), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232259 ('flush toilets (with one accessible facility), two shower houses, potable drinking water, and a convenient dump station') + guide ('Dump Station Near the campground entrance'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/danielboone/recreation/holly-bay-campground ('Seasons of Use April 9th - October 19th'; 'Site Closed - Closed for the season.') + recreation.gov rate seasons 2026-03-13..10-17 and 2027-03-26..10-16, read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/danielboone/recreation/holly-bay-campground ('Loops A, D, E, F, G and H may be reserved in advance. All sites are first-come, first-served unless reserved.') + https://www.recreation.gov/api/camps/campgrounds/232259 (rules: reservationCutOff 2, minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14; occupancy notice 'Each single campsite is limited to 6 people and 2 vehicles'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232259/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/danielboone/recreation/holly-bay-campground ('Single Site: $46 per night', 'Double Site: $92 per night', 'Additional Vehicle Fee: $10 per vehicle per night'; walk-in $32/$63 are the tent-only walk-in sites) + recreation.gov rate season 2026-03-13..2026-10-17 STANDARD ELECTRIC $46 / double $92, read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/danielboone/recreation/holly-bay-campground ('America the Beautiful Interagency Senior and Access passes will provide a 50% discount on single sites only.'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 46,
-      "nightly_high": 46,
-      "currency": "USD"
-    }
+      "nightly_high": 92,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$46 a single site, $92 a double; an extra vehicle $10 a night."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "policy_ref": "federal:usfs"
   },
   {
     "id": 1582,
@@ -102582,29 +102640,35 @@
     "waterfront": "not waterfront",
     "website": "https://cccamp.us/",
     "phone": "606-370-0544",
-    "note": "Private (Crab Orchard), ~1 mi from Cedar Creek Lake. Family-owned: 10 shady water+electric sites on gravel pads, modern bathhouse, laundry/washroom; reservations. --Claude",
+    "note": "Small wooded campground right off US 150 at Crab Orchard (the red-roof barn), about a mile from Cedar Creek Lake; also cabins, vintage campers and month-to-month stays. At most 4 adults and one vehicle per site; tents only where designated. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "sewer": true
     },
     "sites": {
       "count": 10
     },
     "facilities": {
-      "laundry": true
+      "laundry": true,
+      "wifi": true,
+      "dump": true,
+      "flush_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "phone",
+      "note": "All bookings by call or text (8 am-8 pm daily); drop-ins are taken if a site is free. Book at 21 or older with photo ID and signed policies. Stays under 30 nights are paid in full 14 days ahead; cancellations by phone only (full refund less $20 more than 14 days out, half refund less $20 at 7-14 days). Check-in 3-5 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cccamp.us/quick-stays ('Electric/Water Hookup Sites', 'Electric/Water/Sewer Hookup Sites', 'Graveled, Shady Sites'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -102612,25 +102676,35 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cccamp.us/quick-stays ('Camp-wide Wifi') + https://cccamp.us/policies ('Wastewater from RVs ... can be disposed of into tank at Dump Station', 'the Bath House restrooms are open 24/7'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cccamp.us/rv-sites-1 ('At this time all reservations are made by call or text', 'If you don't have a reservation and are on the road, please don't hesitate to call. If we can fit you in, we will.') + https://cccamp.us/quick-stays ('All booking is done by phone at this time', 'Call 8am to 8 pm / 7 days a week') + https://cccamp.us/policies (check-in/out, payment and refund terms), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://cccamp.us/rv-sites-1 ('$49 / Night (up to 6 nights)', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://cccamp.us/rv-sites-1 ('$49 / Night (up to 6 nights)', '$289.00 / Week (Over 7 nights, then prorated)', 'Discounted monthly stays with easy month to month terms! $650 to $745') + https://cccamp.us/extended-stays-1 ('There is a 3% fee'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://cccamp.us/quick-stays ('Do you have a discount for veterans & military? Yes, there is a discount on stays of 1 to 6 nights'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 49,
       "nightly_high": 49,
       "currency": "USD",
-      "note": "RV sites $49 a night (up to 6 nights), $289 a week."
+      "note": "$49 a night for stays up to 6 nights; $289 a week (over 7 nights, then prorated); month-to-month $650-745 depending on amps, hookups and location. 3% fee on card payments.",
+      "checked": "2026"
+    },
+    "discounts": {
+      "military": true
     }
   },
   {
@@ -102902,60 +102976,6 @@
     }
   },
   {
-    "id": 1607,
-    "kind": "campground",
-    "name": "Cedars RV Park",
-    "location": "37.30266,-85.29468",
-    "elevation_meters": 264.0,
-    "state": "KY",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "website": "https://www.cedarsrvparkky.com/",
-    "phone": "270-403-8865",
-    "note": "Private (Campbellsville), <1 mi from Green River Lake. Family-owned (since 2011): 25 spacious full-hookup sites (20/30/50A, city water, sewer), WiFi, community pavilion; year-round. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 1,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 25
-    },
-    "facilities": {
-      "wifi": true
-    },
-    "season": {
-      "year_round": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    }
-  },
-  {
     "id": 1608,
     "kind": "campground",
     "name": "Creekside Cabins & RV Park",
@@ -102965,8 +102985,8 @@
     "ownership": "private",
     "waterfront": "not waterfront",
     "website": "https://creeksidecabinsrvpark.com/",
-    "phone": "606-831-2212",
-    "note": "Private (Louisa/Fallsburg, E KY), near Yatesville Lake SP. Full-hookup sites (50A, water/sewer) + cabins, on-site restaurant, WiFi; family-run, nightly stays. --Claude",
+    "phone": "606-686-2267",
+    "note": "Open grassy park on KY 3 north of Louisa, minutes from Yatesville Lake, with RV spots along a wooded creek; popular with Tri-State work crews as well as weekenders. Cabins too. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -102982,18 +103002,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://creeksidecabinsrvpark.com/index.php/campground/ ('All sites include electric, water, sewer, and GREAT WIFI. Many 50 amp and 30 amp services are offered.'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://creeksidecabinsrvpark.com/ ('FREE WIFI'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://creeksidecabinsrvpark.com/ ('NIGHTLY RV SPOTS $35', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://creeksidecabinsrvpark.com/ ('MONTHLY RV $700 – $750 (Electric Included)', 'WEEKLY RV SPOTS $200', 'NIGHTLY RV SPOTS $35', 'PLEASE CALL FOR LONG TERM RV RATES'; page footer '© 2026'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://creeksidecabinsrvpark.com/ ('OPEN ALL YEAR!'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://creeksidecabinsrvpark.com/ ('CALL FOR RESERVATIONS 1 (606) 686-CAMP'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
@@ -103001,7 +103032,14 @@
       "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "Nightly RV $35."
+      "note": "Nightly RV $35; weekly $200; monthly $700-750 with electric included (call for long-term rates)."
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone"
     }
   },
   {
@@ -103193,7 +103231,7 @@
     "waterfront": "not waterfront",
     "website": "https://hopewellrvpark.com/",
     "phone": "270-725-0364",
-    "note": "Private (Drakesboro, Muhlenberg Co). 40 full-hookup sites (city water/sewer, upgraded electric), WiFi; level large pads, big-rig friendly. Mixed clientele - vacation overnighters plus some longer-term contract workers (TVA Paradise / Logan Aluminum). --Claude",
+    "note": "Gravel park in Drakesboro, reopened in 2024 under new owners (formerly English RV Park). Caters to contract workers at nearby plants and also takes overnighters. Self-contained RVs only: no restrooms or showers. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -103201,29 +103239,33 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "count": 40
+      "count": 39,
+      "pull_through": true
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "flush_toilets": false,
+      "showers": false
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hopewellrvpark.com/ ('RV Sites 1-37: 50/30/20 amp service Water Sewer Back-in 30'x60' Gravel pad'; 'RV Sites 38-39 ... Pull-Through'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hopewellrvpark.com/ (RV Sites 1-37 back-in, RV Sites 38-39 pull-through, 30'x60' gravel pads), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hopewellrvpark.com/ ('Free WiFi'; 'Because we are licensed as a \"Self-Contained Campground\" we have no restroom or shower facilities, each RV must have its own facilities.'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -103231,8 +103273,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://hopewellrvpark.com/ ('Nightly: $40 - $50', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://hopewellrvpark.com/ ('Nightly: $40 - $50', 'Monthly: $ 585', 'Base price includes up to two adults and their dependents, one RV and one vehicle.') + Let's Camp camp record minimumPrice 40, read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://hopewellrvpark.com/ ('Open year-round'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://hopewellrvpark.com/ ('Reserve Now!' -> hopewellrvparkcampground.campgroundonline.org; 'Must be 21 years of age to reserve a campsite.'; 'At the time of booking, all reservations must be paid in full.') + Let's Camp camp record (allowOnlineBookings true), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "discounts": {
@@ -103243,21 +103296,34 @@
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "Nightly $40-50, for two adults and their dependents."
+      "note": "Nightly $40-50; monthly $585. The base price covers two adults and their dependents, one RV and one vehicle.",
+      "extra_person": {
+        "included": 2,
+        "child": 0
+      }
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://hopewellrvparkcampground.campgroundonline.org/",
+      "note": "Online through Let's Camp or by phone; paid in full when booked, and the person reserving must be 21 or older. Self-contained RVs only; no tents."
     }
   },
   {
     "id": 1615,
     "kind": "campground",
     "name": "Timeless Days Campground",
-    "location": "36.84995,-86.04829",
+    "location": "36.849,-86.0502",
     "elevation_meters": 226.0,
     "state": "KY",
     "ownership": "private",
     "waterfront": "not waterfront",
     "website": "https://timelessdayscampground.com/",
     "phone": "270-983-2143",
-    "note": "Private (Lucas), 0.5 mi from Barren River Lake SP (formerly Spring Hill RV Park, new management). 40 full-hookup gravel sites (30/50A), nightly to seasonal; quiet, helpful owner. --Claude",
+    "note": "Gravel park half a mile from Barren River Lake State Park, formerly Spring Hill RV Park. WiFi is a paid service from the local provider. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -103273,15 +103339,55 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://timelessdayscampground.com/ ('Full hookups with water, electric and Sewer.'; 'Gravel lots, 30 & 50 amp hookups with picnic tables'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://timelessdayscampground.com/ ('40 RV Sites'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://timelessdayscampground.com/reserve/ ('Daily: $39 (2 night min. on weekends)', 'Weekly: $234', 'Monthly: $650', 'Seasonal: $1,675 (7 months)', '*Tax is included on the rates above.', '*3% fee added for card transactions'; © 2026), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://timelessdayscampground.com/ ('Wi-Fi is available and provided through local service company (SCRTC) by day, week, or month' - paid), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://timelessdayscampground.com/reserve/ ('Reservation Request - Fill out the information below to request a spot!'; '2 night min. on weekends'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
+    },
+    "fees": {
+      "nightly_low": 39,
+      "nightly_high": 39,
+      "currency": "USD",
+      "checked": "2026",
+      "tax": {
+        "included": true
+      },
+      "note": "Daily $39, weekly $234, monthly $650, seasonal $1,675 for 7 months; 3% added for card payments."
+    },
+    "facilities": {
+      "wifi": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://timelessdayscampground.com/reserve/",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "note": "A request form on the operator's site, or call; the park confirms the spot."
     }
   },
   {
@@ -103490,8 +103596,8 @@
     "ownership": "local",
     "waterfront": "not waterfront",
     "website": "https://pikevilleky.gov/pikeville-rv-park/",
-    "phone": "606-437-5100",
-    "note": "Local (City of Pikeville). Level concrete full-hookup pads (30/50A, continuous sewer), free cable + WiFi, daily-serviced trash. In the city's rec corridor (dog park, courts, trails). --Claude  CAMPER-REPORTED RATE: $42 a night including $3.20 tax in October 2025 (Campendium review); the city's pages post no rate (2026-10-11). --Claude",
+    "phone": "606-437-5129",
+    "note": "City-run park on Bob Amos Drive in Pikeville's recreation corridor beside ballfields, a dog park, courts and trails; concrete pads. --Claude",
     "rating": {
       "stars": 5,
       "source": "rvlife"
@@ -103502,30 +103608,54 @@
       "sewer": true
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "showers": true,
+      "flush_toilets": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://bitbooking.onrender.com/resources (each Camp Site: '30/50 amp hook up', 'continuous sewer hook ups'), read 2026-11-23 (water not restated; left untouched)",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://bitbooking.onrender.com/resources (each Camp Site: 'Free WiFi', 'Clean Bathrooms & Showers'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
-        "source": "our note: 'daily-serviced trash; $25'; recheck https://pikevilleky.gov/pikeville-rv-park/",
-        "checked": "2026-10-11",
-        "method": "derived"
+        "source": "https://www.pikevillebooking.com/ -> https://bitbooking.onrender.com/resource-types ('RV Site', defaultPriceCents 4200, unitLabel 'night', updated 2026-09-10) + /resources (21 'Camp Site' resources, pricingOverrideCents null on all), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://bitbooking.onrender.com/resources (Camp Site 01-21: 'Dimensions: 1 x 40 Back In Capacity: 6'; 'each site is a back-in site with a maximum length of 40 feet'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://pikevilleky.gov/pikeville-rv-park/ ('Click here to reserve your RV Spot today!' -> pikevillebooking.com) + https://bitbooking.onrender.com/resources ('Check-in @ 1PM', 'Check-out @ 12PM', 'Capacity: 6'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
-      "nightly_low": 25,
-      "nightly_high": 25,
+      "nightly_low": 42,
+      "nightly_high": 42,
       "currency": "USD",
-      "note": "Full-hookup pads $25/night. From our own note; not re-confirmed with the operator as of 2026-10-11."
+      "note": "$42 a night on the city's booking site, the same at every site.",
+      "checked": "2026"
+    },
+    "sites": {
+      "count": 21,
+      "max_rig_ft": 40,
+      "pull_through": false
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.pikevillebooking.com/",
+      "note": "Booked on the city's own site; check-in 1 pm, check-out noon; up to 6 people a site."
     }
   },
   {
@@ -103917,7 +104047,7 @@
     "waterfront": "not waterfront",
     "website": "https://www.portal31.org/",
     "phone": "606-848-3131",
-    "note": "Local (Harlan County Fiscal Court / Tourist & Convention Commission), in Lynch next to the Portal 31 Exhibition Mine. 12 full-hookup sites + 8 primitive, big-rig friendly gravel, laundry, on-site coffee shop; year-round. --Claude",
+    "note": "Beside the Portal 31 underground mine tour in Lynch, a historic coal town at the foot of Black Mountain. --Claude",
     "rating": {
       "stars": 5,
       "source": "rvlife"
@@ -103927,39 +104057,46 @@
       "sewer": true
     },
     "sites": {
-      "count": 20
+      "count": 20,
+      "note": "12 full-hookup spaces and 8 primitive spaces."
     },
     "facilities": {
-      "laundry": true
+      "laundry": true,
+      "dump": true
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.portal31.org/tours.html ('12 Full Hookup Spaces - Electric, water, and sewer connections available'; amperage not stated), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.portal31.org/tours.html ('12 Full Hookup Spaces', '8 Primitive Spaces - No-hookup sites for tents and rustic camping'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.portal31.org/tours.html ('Sewer Dump Station - Available for buses and larger RVs'), read 2026-11-23 (laundry: operator page silent, left untouched)",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.portal31.org/tours.html ('Open Year-Round - The RV Park is open in all seasons'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
         "source": "our note: 'year-round, $15'; recheck https://www.portal31.org/",
         "checked": "2026-10-11",
         "method": "derived"
+      },
+      "booking": {
+        "source": "https://www.portal31.org/tours.html ('Call for RV Reservations'; home page '606.848.3131'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
@@ -103967,6 +104104,10 @@
       "nightly_high": 15,
       "currency": "USD",
       "note": "$15/night (12 full-hookup and 8 primitive sites). From our own note; not re-confirmed with the operator as of 2026-10-11."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone"
     }
   },
   {
@@ -929380,7 +929521,7 @@
     "waterfront": "not waterfront",
     "website": "https://campsafehaven.com/",
     "phone": "270-229-2528",
-    "note": "Small family campground at 7364 KY-815 south of Owensboro, beside a creek bend: RV sites with water and electric (2 adults + 2 children), weekly and monthly rates too; also rental campers and a cabin. --Claude",
+    "note": "Small family campground at 7364 KY-815, 11 miles west of Owensboro, in a wooded creek bend; some full-time residents alongside overnighters. Pool, playground and trails; rental campers and a cabin too. --Claude",
     "rating": {
       "stars": 5.0,
       "price_tier": 2,
@@ -929391,13 +929532,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://campsafehaven.com/ ('Sites offer water and electric.'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://campsafehaven.com/ (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://campsafehaven.com/ ('Rates include 2 adults and 2 children; additional guests $10 per night.', 'Monthly full and partial hook-up rate: $500.00 includes water. $100 electric deposit.', 'Weekly full and partial hook-up rates: $225.00.', 'Nightly rates: $41.00, which includes water and electric.', '6% sales tax', '1% rental tax', '4% fee on all credit card transactions'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://campsafehaven.com/ ('Dump station on site.', 'Wash and Dryer on site $3 per load', 'A convenient bathhouse is provided nearby for your comfort and bathing needs'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://campsafehaven.com/ ('We're open year round!'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://campsafehaven.com/contact/ ('If you are interested in booking your next adventure at Camp Safe Haven please call or fill out the form below', '(270) 229-2528') + https://campsafehaven.com/ ('A one-night deposit is required at the time of reservation.', 'Cancellations require a 72-hour notice for a refund.', 'A 2-night minimum stay is required for all rentals.'), read 2026-11-23",
+        "checked": "2026-11-23",
+        "method": "manual"
       }
     },
     "fees": {
@@ -929405,7 +929562,30 @@
       "nightly_high": 41,
       "currency": "USD",
       "checked": "2026",
-      "note": "Camp Safe Haven: $41 a night with water and electric, for 2 adults and 2 children; 6% tax. Read 2026-10-15."
+      "note": "$41 a night with water and electric; weekly $225, monthly $500 plus a $100 electric deposit. 4% fee on credit-card payments.",
+      "extra_person": {
+        "included": 2,
+        "included_children": 2,
+        "amount": 10,
+        "per": "night"
+      },
+      "tax": {
+        "percent": 7,
+        "name": "6% sales tax + 1% rental tax"
+      }
+    },
+    "facilities": {
+      "dump": true,
+      "laundry": true,
+      "showers": true
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Book by phone or the contact form; a one-night deposit is taken and cancellations need 72 hours' notice for a refund. The 2-night minimum applies to the rental units only."
     }
   },
   {

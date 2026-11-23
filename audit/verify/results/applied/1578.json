@@ -1,0 +1,59 @@
+{
+  "id": 1578,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm",
+    "https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-Campground-Map-and-Regs-2024.pdf",
+    "https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-CAMPGROUND-SITE-LENGTH.pdf",
+    "https://www.recreation.gov/api/camps/campgrounds/232505",
+    "https://www.recreation.gov/api/camps/campgrounds/232505/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232505 (public campsite catalog)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=biso"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 35, "currency": "USD", "checked": "2026", "note": "$30 a night with 30-amp hookups, $35 at the sites with 50-amp service (shaded gray on the campground map). The fee covers one night for up to 6 people. Interagency Access/Senior pass holders pay half."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232505/rates (Peak Season 2026-04-01..2026-11-30, 2026-12-01..12-31 and 2027: 'STANDARD ELECTRIC': 30, the other site category 35) + https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-Campground-Map-and-Regs-2024.pdf ('With 30 amp hook-ups - $30*', 'With 50 amp hook-ups (gray sites) - $35*', '*50% off rate for holders of Interagency Access/Senior Passes') + NPS campgrounds API ('This fee covers one night of camping for up to 6 persons'), read 2026-11-23",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-Campground-Map-and-Regs-2024.pdf ('*50% off rate for holders of Interagency Access/Senior Passes'), read 2026-11-23",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('45 sites all with water and electric hook-ups'; 'Sites with 50-amp electric service are shaded in gray') + NPS campgrounds API ('All sites have 20 and 30 amp service with water. There are no sewer hookups on each site.'), read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 45, "max_rig_ft": 61, "pull_through": false, "note": "All 45 are paved back-in sites with water and electric; site 29 is a double. Posted lengths run 28-61 ft, so every site takes a 23-ft rig (lengths are measured from the curb stop to the road edge)."},
+      "source": "https://www.nps.gov/biso/planyourvisit/upload/Blue-Heron-CAMPGROUND-SITE-LENGTH.pdf (sites 1-45, 28-61 ft, '29 H Dbl', 'Distance measured is from the parking curb stop to the edge of roadway') + recreation.gov campsite catalog for 232505 (45 sites, every one 'Driveway Entry: Back-In'), read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true, "laundry": false, "camp_store": false},
+      "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('access to restrooms and showers and a dump station') + NPS campgrounds API (flush toilets, hot showers, dump station, potable water; laundry 'No', camp store 'No'; 'Free WiFi is available at the campground kiosk'), read 2026-11-23",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "opens": null, "closes": null, "note": "The park's campground page (updated June 2026) says the campground is open year-round, and recreation.gov carries rates for December 2026 and all of 2027. The 2024 campground map still said April 1 through November 30."},
+      "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('Blue Heron Campground is open year-round and operates on the reservation system'; page 'Last updated: June 22, 2026') + https://www.recreation.gov/api/camps/campgrounds/232505/rates (Peak Season 2026-12-01..2026-12-31 and 2027-01-01..2027-12-31), read 2026-11-23",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232505", "window_opens_days": 180, "fcfs": "after_cutoff", "reserve_until": {"relative_to": "arrival", "offset_hours": 0}, "max_stay_nights": 14, "note": "Reservable up to the day of arrival; sites not reserved are taken first-come. 14 consecutive nights, 30 nights a year. Check-in and check-out noon ET."},
+      "source": "https://www.nps.gov/biso/planyourvisit/blueheroncampground.htm ('Reservations may be made up to 180 days in advance'; 'Check-out and check-in time is 12:00 pm (ET)') + NPS campgrounds API ('Campsites that are not reserved are on a first-come/first-served basis throughout the season') + https://www.recreation.gov/api/camps/campgrounds/232505 (rules: reservationCutOff 0 days, maxConsecutiveStay 14, maxStay 30 days each year), read 2026-11-23",
+      "method": "manual"
+    }
+  },
+  "note": "NPS, Big South Fork National River & Recreation Area: wooded, paved campground on the plateau 9 miles west of Stearns off KY 742, a few miles from the Blue Heron mining community. Not on the water (the river gorge is below the rim). --Claude",
+  "summary": "Confirmed $30-35 (rec.gov 2026/2027; 50-amp gray sites $35), 45 water+electric sites, max 61 ft, flush toilets/showers/dump, rec.gov booking. Changed pull_through true->false (every site back-in), sewer -> false, season Apr-Nov approx -> year-round (NPS page updated 2026-06). Added 180-day window, same-day cutoff with walk-up for unreserved sites, 14-night limit, senior/access 50% confirmed. Note trimmed of field-repeating text.",
+  "flags": [
+    "Season: the NPS campground page (last updated 2026-06-22) says 'open year-round', and rec.gov has rate seasons for 2026-12 and all of 2027; the park's 2024 map PDF and its NPS API record still say April 1 - November 30. Wrote year-round from the current page.",
+    "Phone: stored 423-286-7275 is the park's main information line (rec.gov facility phone). The 2024 campground map gives the campground office as (423) 286-8368. Either is defensible; the campground office number would be more direct: 423-286-7275 -> 423-286-8368 (optional).",
+    "Amperage: the stored 50 is right (50-amp sites shaded gray on the map, $35), although the rec.gov catalog types every site at 30 amp and the NPS API says '20 and 30 amp'.",
+    "Pin 36.6780556,-84.5188889 sits inside the loop (catalog site centroid ~36.6785,-84.5187): fine. Waterfront 'not waterfront' stands.",
+    "NPS API's fee record still shows the old $20; ignored in favour of rec.gov and the map."
+  ]
+}

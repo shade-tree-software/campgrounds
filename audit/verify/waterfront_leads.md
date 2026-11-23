@@ -1646,3 +1646,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14591 385 Grill & Campground (p3-576): creekside lead for sites R38-R45 (not upgraded).
 - 13537 River Park (Baltic) (p3-578): riverfront lead - north-edge spurs ~43.7657,-96.7386..-96.7375 are 5-20 m from the Big Sioux over open grass on leaf-off imagery; no site map to tie site numbers.
 - 4143 The Pastures (p3-581): riverview kept; RV pads ~50-60 m back behind the loop road, tent sites at the river end - no upgrade.
+- **1608 Creekside Cabins & RV Park (KY, private), p3-586 2026-11-23:** operator advertises 'creek side setting', 'CREEKSIDE FISHING', 'KAYAK LANDING'; creek ~5-10 m wide (creekside at most); east row of rigs (~38.1703,-82.6760) ~20-25 m from it behind mature trees, bank unreadable, no site numbers published. Stays not waterfront unless a photo/site map shows an easy walk down from named sites.
