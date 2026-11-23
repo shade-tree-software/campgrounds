@@ -24,3 +24,5 @@ explicit paths. Leads -> audit/verify/leads/nd_leads.txt, vetted one at a time a
 ILLINOIS (203 queued; needs kit/il like this one), then the 33 Vermont entries (kit/vt).
 
 **After each commit (AWH 2026-11-12, disk space):** copy any result JSON still in `$S/p3-NNN/` (drops, held) to `audit/verify/kept_results/` (in git; was `$S/kept_results/` before 2026-11-15), then `rm -rf $S/p3-NNN $S/p3-NNN_agent.txt $S/p3-NNN_prompt.txt $S/post_p3-NNN.py`. Post scripts now use the tracked `audit/verify/kit/post_head.py` (see kit/il/RESUME_IL.md).
+
+2026-11-23: 5979 Strasburg + 6010 Bisbee KEPT with a call-city-hall caveat (AWH; dialmcp calls failed on a service fault). City hall numbers stored as phone; verify_scan stamped.
