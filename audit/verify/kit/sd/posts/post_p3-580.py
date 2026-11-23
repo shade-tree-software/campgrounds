@@ -1,0 +1,6 @@
+exec(open("audit/verify/kit/post_head.py").read())
+web(5835,by[5835].get('website'),None) if by[5835].get('website')=='https://fortpierremotel.com/' else (_ for _ in ()).throw(SystemExit(('5835 web',by[5835].get('website'))))
+wf(5835,'not waterfront','not waterfront',"Esri World_Imagery at 44.35205,-100.37342: back-in RV pads on the gravel lot west of US-83 beside the rail line; the Bad River channel (~40-50 m wide) is ~140 m south behind the motel's southern building and a wooded strip; the Missouri ~450 m east across town. Not waterfront.")
+pin(5736,'43.9534,-97.0262',43.9547,-97.0249)
+wf(5736,'lakeview','lakeview',"Go Outdoors SD facID=71 per-site coordinates on Esri World_Imagery: shore-side pads 30E-42E and 23E/26E/28E sit ~15-30 m from Lake Madison behind a continuous band of shoreline trees and shrubs; inland pads in woods or across the loop road. Lake views through trees, not open-apron -> lakeview. Re-pinned off the neighbouring private park onto the RV-site centroid.")
+save()
