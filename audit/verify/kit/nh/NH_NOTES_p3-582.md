@@ -1,0 +1,12 @@
+# NH p3-582 notes
+- 18 Hancock: DONE. AWH riverfront agrees (51/52/54); 33 RV sites; $30.
+- 4114 Lake Francis: DONE. lakefront confirmed 13-18; ATV flag; season 5/10-10/24.
+- 4109 Moose Brook: DONE. park page $29 vs RA $35 flagged; 26/56 fit.
+- 4127 Sugarloaf 2: DONE. 32 sites, 20 res, max 30, $24; not wf.
+- 4142 Riverbend: DONE. $47, G 4.7/51.
+- 4135 Sunshine Valley: DONE. DROP CANDIDATE mostly seasonal (5 transit).
+- 4139 Wolfeboro: DONE. $45, G 4.7/52, owner died 6/2026.
+- 4101 Greenfield: DONE. 156/255 fit; phone change; fcfs never.
+- 804 Hampton: DONE. AWH coastal dunes kept; front row on harbour mouth; $70; 12-mo window contradiction.
+- 4111 Umbagog: DONE. lakefront kept (3,4,10); electric 50; 15 fit.
+- 4105 White Lake: DONE. lakeview kept; $35/$40; pets banned; pin between areas.
