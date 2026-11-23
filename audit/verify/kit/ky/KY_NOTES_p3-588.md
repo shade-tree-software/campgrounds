@@ -1,0 +1,12 @@
+# KY p3-588 notes
+- 1565 Eureka done: 30-32, lakefront confirmed 04/05/09/13 lidar; pin move 350m -> 37.0223,-88.1957; season 04-30..10-17
+- 1558 Fishing Creek done: 30; lakefront->lakeview recommended (3-4 m steep bank); pin 340m -> 37.0720,-84.6860; season 05-13..10-17
+- 1533 General Burnside done: 30-41 confirmed, 92 RV sites, season 03-15..11-08, website 404 replace, phone ->606-561-3625, laundry dropped
+- 1612 Grayson Getaways done: DROP CANDIDATE no RV sites (cabins/tiny homes/Jupe only, ResNexus 11 units); Google 4.6/74
+- 1582 Grove done: 46 confirmed; 50 sites; sewer dropped; season 04-09..10-10; loop B only reservable
+- 1534 Green River done: closed, reopening TBD 2027 (manual status - flagged); fees 30-40; lakefront->lakeview recommended (road between, 35-50 m, 3.6-4.9 m)
+- 1613 Harlan done: OHV trailhead flag (drop candidate per rule, flag only); 29 sites, 45 confirmed; Google 4.6/218
+- 684 Hillman done: AWH lakefront unchanged (report: C63/B16/B17 'Lakeside'); phone add 270-924-2181; usedirect not recgov; season 03-01..11-30
+- 1564 Hurricane Creek done: lakefront CONFIRMED (19,20,22,23 open grass 21-30 m, 2.1-3.0 m); 45 RV sites; season 04-30..10-24
+- 1529 Audubon done: fees 32-36; sewer unsupported; 68 RV, max 63; season 03-15..11-10; parks.ky.gov URL 404 -> /henderson/parks/historic/...; not waterfront
+- 1556 Kendall done: riverview CONFIRMED (bluff 11-14 m); 113 RV; max 99; pin move ~320 m suggested -> 36.87433,-85.14802

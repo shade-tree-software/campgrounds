@@ -1,0 +1,52 @@
+{
+  "id": 1558,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232587 (description, amenities, rules, notices) and /rates, read 2026-11-23",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232587 (46-site catalog: coordinates, permitted equipment lengths, hookups, per-site price), read 2026-11-23",
+    "https://www.recreation.gov/api/camps/availability/campground/232587/month for 2026-10, 2026-11, 2027-04, 2027-05 (read 2026-11-23)",
+    "Esri World_Imagery around 37.0723,-84.6855 and 37.0716,-84.6880 with the catalog sites plotted; USGS 3DEP 1-m elevations (epqs.nationalmap.gov) on profiles from sites 04-26 to the lake"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026-11", "note": "$30 for every water/electric RV site; double site 03 is $56; the 20 tent-only electric sites are $24."},
+      "source": "recreation.gov rates Peak Season 2027-05-13..2027-10-17 ('PeakSTANDARD ELECTRIC': 30, u32 variant 56, 'PeakTENT ONLY ELECTRIC': 24) and per-site price_range: 25 RV sites $30, site 03 ('Capacity/Size Rating: Double') $56, 20 tent-only $24, read 2026-11-23",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov: '26 RV sites and 20 tent-only sites, all with water and electric hookups'; catalog 'Electricity Hookup: 50', 'Water Hookup: Y' at all 46, no sewer, read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 46, "max_rig_ft": 66},
+      "source": "recreation.gov catalog: 26 'STANDARD ELECTRIC' (RV/Trailer/Fifth Wheel permitted, 23-66 ft; site 45: 66) + 20 'TENT ONLY ELECTRIC'; every RV site takes 23 ft+, read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": true},
+      "source": "recreation.gov: 'Amenities include flush toilets, showers, drinking water, washer/dryer, boat ramp and a dump station', read 2026-11-23",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-13", "closes": "10-17", "note": "Mid-May to mid-October; 2026 ran May 14 to October 18."},
+      "source": "recreation.gov availability: 2027 calendar's first night 2027-05-13 (none in April); 2026-10 nights Oct 1-18 only, November none; rate seasons 2026-05-14..2026-10-18 and 2027-05-13..2027-10-17, read 2026-11-23",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232587", "min_stay": [{"nights": 2, "applies": "weekend"}], "max_stay_nights": 14},
+      "source": "recreation.gov 232587: every site 'reservable: true'; rules minWeekendStay 2 ('Ignore Holidays', not marked soft), maxStay 14 nights ('Rolling 30 Days'), read 2026-11-23",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Nashville District campground on the Fishing Creek arm of Lake Cumberland, west of Somerset. Wooded; the shore-row sites (04-13) sit 3-4 m above the summer lake at the top of a steep bank. Steep inclines between areas and a sharp entrance. Playground, boat ramp and day-use picnic area. --Claude",
+  "summary": "Kept. Fees $30 confirmed (double site 03 $56, tent-only $24 noted). 46 sites (26 RV), 50A water/electric, max 66 ft; facilities + flush/potable; season 05-13..10-17 (was approximate Apr-Oct); weekend 2-night minimum, max 14. WATERFRONT DOWNGRADE RECOMMENDED lakefront -> lakeview (pads 3-4 m above summer pool over a steep bank). PIN MOVE ~340 m (day-use lot) -> 37.0720,-84.6860.",
+  "flags": [
+    "WATERFRONT DOWNGRADE RECOMMENDED (stored lakefront -> lakeview): the shore-row RV sites 04 (37.0714,-84.6874), 06, 07, 09, 10, 11 and 13 are 9-12 m from Lake Cumberland's summer-pool line (723 ft = ~220.4 m), but USGS 3DEP 1-m lidar puts their pads at 223.4-225.9 m: 3.0-4.0 m (13: 5.5 m) above the summer edge, and the drop is a steep bank right off the pad (site 04: 224.3 m to 221.4 m within 3 m; 10: 223.3 to 220.8 within 3 m; 11: 222.8 to 219.3 within 3 m). The sites further east (15, 16, 19, 20, 24, 26) are 6-7 m above pool at 15-24 m. That is the curation doc's bluff/bench case (a 2-3.7 m bank at ~30 deg is a view): no RV site passes the kayak test. rec.gov's own text agrees: 'The campground is situated above the shore of Fishing Creek'. The view holds: on (leaf-off) Esri imagery the shore row looks over the water through a thin fringe of shoreline trees. The stored evidence ('pad row directly along Fishing Creek arm shoreline, nearest pads ~15-30m from waterline') measured distance only, not height.",
+    "PIN MOVE: stored 37.0713889,-84.6891667 (rec.gov's facility point) is on the day-use/boat-ramp parking lot ~145 m west of site 01 and ~340 m from the middle of the campground. Suggest location -> 37.0720,-84.6860 (the loop between sites 12 and 17).",
+    "SEASON: stored approximate 04-01..10-31 ('Open about April to October') -> 05-13..10-17 from the rec.gov calendar and rate seasons (2026: May 14 - Oct 18).",
+    "DOUBLE SITE 03 ($56, 'Capacity/Size Rating: Double', 10 people) left out of nightly_high, as a two-party site.",
+    "RULES: militaryDiscount rule present (not a discount claim; nothing written). Notice: 'America the Beautiful discount cards do not apply to group sites or shelters'.",
+    "PHONE/WEBSITE: 606-679-5174 and the rec.gov link match recreation.gov. No change."
+  ]
+}

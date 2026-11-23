@@ -1,0 +1,53 @@
+{
+  "id": 1564,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232609 (description 'The campground offers 51 sites with water and electric hookups. Six of these are walk-to sites. Hot showers, laundry facilities and a playground are available'; facility_phone 'HURRICANE CREEK CAMPGROUND: 270-522-8821; LAKE BARKLEY RESOURCE MANAGERS OFFICE: 27-362-4236'; rules maxConsecutiveStay 14, militaryDiscount) and /rates (Peak Season 2027-04-30..2027-10-24: RV ELECTRIC $30, premium RV ELECTRIC $32, WALK TO $16), read 2026-11-23",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232609 (51-site catalog with coordinates, Electricity Hookup 50, Water Hookup, Max Vehicle Length, Site Access, price), read 2026-11-23",
+    "https://www.recreation.gov/api/camps/availability/campground/232609/month for 2026-10, 2026-11, 2027-04, 2027-05 (every site 'Site-Specific', nights through 2026-10-25, opening 2027-04-30), read 2026-11-23",
+    "Esri World_Imagery (leaf-on, full pool) at 36.9188,-87.9770 (380 m) and 36.9177,-87.9765 (200 m) with the catalog site points overlaid; USGS 3DEP 1-m elevation profiles south from sites 19, 20, 22, 23, 25, 27, 29 (lidar water surface 108.2 m; summer pool 359 ft = 109.4 m)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 32, "currency": "USD", "checked": "2026-11", "note": "$32 at the premium lakeside sites (15-17, 19-20, 22-23, 25, 27, 29-31). Walk-to tent sites $16."},
+      "source": "recreation.gov rates Peak Season 2027-04-30..2027-10-24 'PeakRV ELECTRIC': 30, premium RV ELECTRIC 32, 'PeakWALK TO': 16; catalog price_range $32 at sites 15, 16, 17, 19, 20, 22, 23, 25, 27, 29, 30, 31, read 2026-11-23",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov catalog 'Electricity Hookup: 50' at 42 of 45 drive-in sites (44, 50 list the attribute without a value), 'Water Hookup: Y/Yes' at 35; description 'sites with water and electric hookups'; no sewer attribute, read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 45, "max_rig_ft": 78},
+      "source": "recreation.gov catalog: 51 sites, of which 06, 07, 09, 11, 12, 14 are 'Hike-In' walk-to ($16, length 0), leaving 45 electric drive-in sites; Max Vehicle Length 26-78 ft (41: 78, 13: 75, 51: 72), read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true},
+      "source": "recreation.gov description 'Hot showers, laundry facilities and a playground are available'; amenities 'Showers', read 2026-11-23",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-30", "closes": "10-24", "note": "Late April to late October."},
+      "source": "recreation.gov rate season 2027-04-30..2027-10-24 (2026: 04-24..10-25); availability: 2026 nights through Oct 25, then 'Not Available'; 2027 first bookable night Apr 30, read 2026-11-23",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232609", "max_stay_nights": 14},
+      "source": "recreation.gov availability: all 51 sites 'Site-Specific' with 'Reserved'/'Available' nights in May 2027; rules maxConsecutiveStay 14 ('maxStay 14 nights, Rolling 30 Days'), read 2026-11-23",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on a wooded point of Lake Barkley near Eddyville, with a swimming beach, fishing dock and playground. The drive-in sites ring one loop; sites 19-23 and 25-31 line the shore, and six walk-to tent sites sit along the beach side. --Claude",
+  "summary": "Kept; lakefront CONFIRMED. Fees 30 -> 30-32. 45 drive-in RV sites (+6 walk-to), 50A + water, max 78 ft. Showers/laundry. Season 04-30..10-24 (new). Reservable on rec.gov, max stay 14. Pin OK, phone OK.",
+  "flags": [
+    "WATERFRONT CONFIRMED lakefront: on leaf-on Esri imagery sites 19 (36.917734,-87.977246), 20 (36.917833,-87.977011), 22 (36.917885,-87.976817) and 23 (36.917915,-87.976633) sit on open mowed grass that slopes straight to the shore, with no road, parking or tree screen between (the loop road is behind them). Lidar: summer pool (109.4 m) reached at 21 m / 3.0 m below (19), 30 m / 2.6 m (20), 24 m / 2.1 m (22), 21 m / 2.1 m (23) - gentle grass banks of about 6-8 degrees, passing the kayak test. Site 27 (36.917579,-87.976006) is 18 m from the water but 2.7 m above over a short tree-lined bank (view-type); 25 and 29 are behind trees. All are electric RV sites sold by the night on recreation.gov (sites 19-20, 22-23 at the $32 premium rate).",
+    "SITE COUNT: stored 51 (note prose) includes the six walk-to tent sites; written 45 drive-in RV sites.",
+    "MAX RIG: stored 40 (note prose 'Max site ~40 ft') -> 78 per catalog (many sites 40-78).",
+    "PHONE: 270-522-8821 matches rec.gov. The rec.gov resource-office number is mistyped there ('27-362-4236', i.e. 270-362-4236). No change.",
+    "PIN: stored 36.92,-87.9758333 (rec.gov facility point) is ~180 m NE of the site centroid 36.91867,-87.97701 at the entrance road. No change (under 250 m).",
+    "DISCOUNT: rec.gov rules carry militaryDiscount (value 1) - not written (discounts group not in scope here); reviewer may note it.",
+    "NOTE: old note's 'Reserve online', 'Max site ~40 ft; a 23-ft rig is fine' and the facility list removed (fields show them)."
+  ]
+}

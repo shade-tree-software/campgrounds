@@ -1,0 +1,56 @@
+{
+  "id": 1582,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://www.fs.usda.gov/r08/danielboone/recreation/grove-drive-campground ('Site Closed - Closed for the season.'; 'Of the 40 drive-in sites, Loop B is reservable, and Loop A is first come, first served'; 'Seasons of Use April 15th - October 5th'; 'Single Site: $46 per night Double Site: $92 per night ... Dump Fee: $10 (non-registered camper)'; London Ranger District 859-428-7706 / 606-864-4163; last updated October 14, 2026), read 2026-11-23",
+    "https://www.recreation.gov/api/camps/campgrounds/232258 (description, amenities, facility rules, notices) and /rates, read 2026-11-23",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232258 (54-unit catalog: loops A, C, BSNG and C Walk-in; reservable flag, coordinates, permitted lengths, hookups, price), read 2026-11-23",
+    "https://www.recreation.gov/api/camps/availability/campground/232258/month for 2026-09, 2026-10, 2027-04, 2027-05, 2027-06 (read 2026-11-23)",
+    "Esri World_Imagery around 36.9425,-84.2160 (900 m)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 46, "nightly_high": 46, "currency": "USD", "checked": "2026-11", "note": "Double sites $92."},
+      "source": "recreation.gov rates Peak Season 2027-04-09..2027-10-10 'PeakSTANDARD ELECTRIC': 46, double 92; per-site price_range $46 at every single electric site, $92 at the 30-ft double sites (03 A, 08 A, 10 A, 12-13 C, 17-20 C, 20 A); fs.usda.gov 'Single Site: $46 per night Double Site: $92 per night', read 2026-11-23",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": true},
+      "source": "recreation.gov catalog: 'Electricity Hookup: 30' and 'Water Hookup: Y' at all 50 STANDARD ELECTRIC sites, no sewer attribute anywhere; description 'single and double family campsites, which have 30-amp electric hookups', read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 50, "max_rig_ft": 50},
+      "source": "recreation.gov catalog: 50 STANDARD ELECTRIC drive-in sites (loop A 18, loop C 20, loop BSNG 12) plus 4 walk-in tent sites; permitted RV/Trailer 30-50 ft (B02, B04, B06: 50), every site 30 ft+; fs.usda.gov says 'Of the 40 drive-in sites', read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "recreation.gov amenities 'Showers', 'Flush Toilets', 'Drinking Water', 'Dump Station'; description 'Flush toilets, drinking water and showers are provided'; fs.usda.gov 'Dump Fee: $10 (non-registered camper)', read 2026-11-23",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-09", "closes": "10-10", "note": "Mid-April to early October; the Forest Service page gives April 15 - October 5."},
+      "source": "recreation.gov rate seasons 2026-04-09..2026-10-11 and 2027-04-09..2027-10-10; availability: 2026-10 nights through Oct 11 only, 2027 calendar opens Apr 9; fs.usda.gov 'Seasons of Use April 15th - October 5th' and 'Closed for the season', read 2026-11-23",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232258", "fcfs": "some_sites", "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "note": "Only loop B (11 sites) is reservable; loops A and C are first come, first served."},
+      "source": "recreation.gov catalog: BSNG sites 'campsite_status: Open', reservable (11 of 12; B11 Not Reservable); all loop A and C sites 'Not Reservable' (2027-05/06 availability 'Not Reservable' every night); fs.usda.gov 'Loop B may be reserved in advance. All sites are first-come, first-served unless reserved'; facility rules minWeekendStay 2 ('Ignore Holidays'), minHolidayWeekendStay 3, maxConsecutiveStay 14, read 2026-11-23",
+      "method": "manual"
+    }
+  },
+  "note": "Daniel Boone National Forest campground on a wooded ridge above Laurel River Lake, near Grove Boat Ramp and Marina; no swimming beach (the Corps runs one at the dam). Three loops under full forest canopy. Duff Branch, Spruce Creek, Fishing Point, Singing Hills and Oak Branch trails start in the campground. Separate from the Grove boat-in campground. --Claude",
+  "summary": "Kept. Fees $46 confirmed (doubles $92). 50 electric sites (rec.gov; FS page says 40), 30A + water, max 50 ft; sewer not supported - dropped. Facilities + dump. Season 04-09..10-10 (new; FS page Apr 15-Oct 5). Only loop B reservable (fcfs some_sites), weekend 2 / holiday 3 minimums, max stay 14. Not waterfront confirmed. Pin OK.",
+  "flags": [
+    "HOOKUPS: stored sewer true (from note prose 'some full-hookup') is not supported - the rec.gov catalog has no sewer attribute at any site and neither the rec.gov description nor the FS page mentions sewer. Omitted from the manual hookups group (unknown).",
+    "SITE COUNT: rec.gov catalog lists 50 electric drive-in sites (A 18, C 20, BSNG 12); the FS page says 'Of the 40 drive-in sites, Loop B is reservable, and Loop A is first come, first served' (no loop C). Wrote the catalog's 50.",
+    "SEASON: rec.gov (Apr 9-Oct 10/11 rate seasons and calendar) is wider than the FS 'Seasons of Use April 15th - October 5th'; recorded rec.gov's per the trust-rec.gov rule, with the FS dates in season.note.",
+    "WATERFRONT: stored 'not waterfront' confirmed - loops under continuous canopy on the ridge; rec.gov 'less than a mile from the shoreline'; nearest lake arm ~250 m+ through forest.",
+    "PIN: stored 36.9416667,-84.2166667 (rec.gov facility point) is ~115 m from the site centroid 36.9425,-84.2160 (loop A). No change.",
+    "PHONE: stored 606-528-6156 is rec.gov's facility_phone; rec.gov contact text says 'For facility specific information, please call (606) 878-8134'; FS district office 859-428-7706 / 606-864-4163. No change suggested without confirming which line the concessionaire answers; reviewer may prefer 606-878-8134.",
+    "WEBSITE: rec.gov link fine; optional addition https://www.fs.usda.gov/r08/danielboone/recreation/grove-drive-campground",
+    "ALERT: FS 'Low water levels at Laurel River Lake' (forest alert) - affects ramps, not the campground.",
+    "RULES: reservationCutOff 2 days; no militaryDiscount rule."
+  ]
+}
