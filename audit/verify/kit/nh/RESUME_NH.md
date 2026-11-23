@@ -42,3 +42,4 @@ Batches applied:
 - p3-583 (2026-11-23): 11 applied, no drops; 4110 Jericho OHV ask (asks.md); water down 4108/4110; 4104 pond kept on RA per-site data.
 - p3-584 (2026-11-23): 11 applied, no drops, no water changes; 4124/4125 now rec.gov-reservable; pin 4123.
 - p3-585 (2026-11-23): 7 applied, 1 drop (4133 Wheelock Park, campground closed); 4130 Zealand riverfront->not; pins 14368/4130; lead 2 Ashuelot River.
+- Lead 1 jacobs-brook-orford +15764 (2026-11-23): private, W/E $48 (passes by $2), ~half seasonal (27 'All Season' of ~60), operator's truck detour around the 3-ton Archertown Rd bridge in the note; not waterfront. Next id 15765.
