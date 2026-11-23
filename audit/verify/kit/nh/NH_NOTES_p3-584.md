@@ -1,0 +1,12 @@
+# NH p3-584 notes
+- 4124 Big Rock: DONE. rec.gov 239417 exists -> some_sites; 5 sites 23ft+; phone->802; not wf.
+- 4107 Dry River: DONE. 36 sites, 13 fit; phone->603-374-0848; season 5/23-10/24; not wf.
+- 4123 Russell Pond: DONE. 86 sites, 11 RV 24-40; pin move 330m; phone->802; not wf.
+- 4134 Storrs Pond: DONE. $47 passes, G 4.6/221 (whole area), transient max 1 wk, 15/17 RV fit; sewer/laundry cleared.
+- 4131 Basin: DONE. 13 sites, 8 std 25-40 all fit; max 30->40; not wf ~80m; status manual left.
+- 4116 Waterville: DONE. 27 sites, 19 std 25-30 all fit; phone->802; recgov site coords bogus; pin kept.
+- 4117 White Ledge: DONE. 28 sites, 9 public RV 25-35; phone->802; pin at entrance kept; recgov coords bogus.
+- 4125 Wildwood: DONE. rec.gov 270967 exists -> reservable some_sites; website add; closes 10-31->10-15; 14 fit.
+- 4129 Cold River: DONE. $24 recgov vs FS $30; 8 catalogued all fit; phone->802.
+- 4102 Pawtuckaway: DONE. lakefront kept, 27/56 RA Lakefront RV sites 20-35 m under canopy; phone->603-895-3031; season 04-25/10-24; fcfs cleared.
+- 13961 Deer Mountain: DONE. phone ''->603-538-6965; URL moved; 2/25 fit; season 05-22/10-11.
