@@ -632,8 +632,8 @@ DROPS = {
     5876: ('2026-11-22', "Bison City Park (Bison SD): no current presence (local)", "p3-575: no town page, phone, Google listing or booking engine; the only sign it operates is one ParkAdvisor review from May 2023; AWH 2026-11-22: drop"),
     14582: ('2026-11-22', "Schmidt's Landing (SD): mostly seasonal, no operator price (private)", "p3-578: operator site posts no camping rate, site count or nightly/seasonal split and its reservations page has no booking widget; Esri summer frame shows ~60-70 trailers in fixed rows, nearly all occupied, most with no tow vehicle; the only price is one RV Life camper report ($34), which the camper-report rule does not allow when the operator has a web page"),
     5765: ('2026-11-22', "Sica Hollow State Park campground (SD): horse sites not separated from general camping", "p3-578: GFP campground map 'Equestrian sites include a 10'x10' corral' with corrals drawn beside sites 1-8 and 11-14; engine site 8 'A corral will be added in the spring of 2025'; the RV sites are the horse sites, no separate general loop (AWH 2026-11-12 horse rule; Smith Rapids pattern)"),
+    4146: ('2026-11-23', "Rudy's Cabins and Campground (NH): over the US$50 price gate and mostly seasonal (private)", "p3-581: operator about page '$60.00 per night 30amp and $65.00 per night 50 amp'; no gateway within 40 km, not a Good Sam Park; operator 'Rudy's is now mainly a seasonal RV park with a few sites for overnight guests', seasonal sites booked with a waiting list"),
 }
-
 if __name__ == "__main__":
     sys.path.insert(0, ROOT)
     import trips

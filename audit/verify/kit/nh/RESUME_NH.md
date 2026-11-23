@@ -13,7 +13,7 @@ www.reserveamerica.com/explore 403. Split template: copy kit/sd/split_prompt_tem
 
 ## RESUME HERE
 
-STARTED 2026-11-23 on AWH's go-ahead: first batch p3-581.
+STARTED 2026-11-23 on AWH's go-ahead. Next batch p3-582 (41 entries left after p3-581).
 
 Build + launch (repo root; S = session scratch dir):
 
@@ -37,3 +37,4 @@ Apply a batch (as WY):
 6. `git add campgrounds.json campgrounds_audit.json audit/verify/criteria_drops.py audit/verify/removals.json audit/verify/results/applied audit/verify/asks.md audit/verify/criteria_followups.md audit/verify/waterfront_leads.md audit/verify/kit/sd`, commit on master with the session trailers, then save held results to kept_results/ and `rm -rf $S/p3-NNN*`.
 
 Batches applied:
+- p3-581 (2026-11-23): 10 applied, 1 drop (4146 Rudy's, price + seasonal); water down 4141/4106/4132, 4137 -> creekside; pins 4100/4103/4141. Lead Jacobs Brook (leads/nh_leads.txt).
