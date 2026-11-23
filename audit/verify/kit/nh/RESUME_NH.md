@@ -13,7 +13,7 @@ www.reserveamerica.com/explore 403. Split template: copy kit/sd/split_prompt_tem
 
 ## RESUME HERE
 
-STARTED 2026-11-23 on AWH's go-ahead. NH QUEUE COMPLETE 2026-11-23 (p3-581..585). Next: leads 1 Jacobs Brook and 2 Ashuelot River (leads/nh_leads.txt), one agent each; open ask 4110/14368 Jericho OHV (asks.md).
+STARTED 2026-11-23 on AWH's go-ahead. **NH PHASE 7 COMPLETE 2026-11-23**: queue p3-581..585, leads 1-2 done, Jericho ask resolved (4110 kept with ATV caveat, 14368 dropped). Next id 15765.
 
 Build + launch (repo root; S = session scratch dir):
 
@@ -43,3 +43,4 @@ Batches applied:
 - p3-584 (2026-11-23): 11 applied, no drops, no water changes; 4124/4125 now rec.gov-reservable; pin 4123.
 - p3-585 (2026-11-23): 7 applied, 1 drop (4133 Wheelock Park, campground closed); 4130 Zealand riverfront->not; pins 14368/4130; lead 2 Ashuelot River.
 - Lead 1 jacobs-brook-orford +15764 (2026-11-23): private, W/E $48 (passes by $2), ~half seasonal (27 'All Season' of ~60), operator's truck detour around the 3-ton Archertown Rd bridge in the note; not waterfront. Next id 15765.
+- Lead 2 ashuelot-river-keene SKIP (2026-11-23): private, cheapest RV night $52 ($2 over), no gateway/GS; Google 4.5/329 + RV Life 9.53/78 - below the ~4.7 tiebreaker, so skip; result file carries every add field (flip decision to reverse).
