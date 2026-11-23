@@ -1,0 +1,55 @@
+{
+  "id": 1566,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233488 (description, amenities, notices, rules) and /rates, read 2026-11-23",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233488 (68-site catalog: loops, coordinates, hookups, Max Vehicle Length, per-site price), read 2026-11-23",
+    "https://www.recreation.gov/api/camps/availability/campground/233488/month for 2026-11, 2027-04, 2027-05, 2027-10 (read 2026-11-23); audit/recgov_calendar.json 2026-06..2026-10",
+    "Esri World_Imagery around 37.3220,-86.1320 with every catalog site plotted (winter-drawdown frame)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 32, "currency": "USD", "checked": "2026-11", "note": "$18 for a non-electric site, $32 for water/electric."},
+      "source": "recreation.gov rates 2027 Peak Season 2027-05-07..2027-10-16 ('PeakSTANDARD ELECTRIC': 32, 'PeakSTANDARD NONELECTRIC': 18) and per-site price_range in the catalog: 52 electric sites $32, 16 non-electric $18 (14 of them 45 ft+), read 2026-11-23",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "recreation.gov campsite catalog: all 52 STANDARD ELECTRIC sites 'Water Hookup' Y; 'Electricity Hookup' 50 at 18 sites, '20/30/50' at 4, and '100' at 30 (taken as 50A); no Sewer Hookup anywhere, read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 68, "max_rig_ft": 105},
+      "source": "recreation.gov campsite catalog: 68 reservable sites (52 electric, 16 non-electric; A021/A024 are the volunteers' sites per the notice); Max Vehicle Length up to 105 ft (B019), read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true},
+      "source": "recreation.gov 233488: 'complete with modern amenities like electric hookups and flush toilets'; amenities list 'Showers', read 2026-11-23",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-07", "closes": "10-16", "note": "Opens the first weekend of May and closes mid-October; exact dates shift each year."},
+      "source": "recreation.gov availability: 2027 calendar starts 2027-05-07 (no site-days in 2027-04 or before May 7) and runs to 2027-10-16; 2026 rate season 2026-05-01..2026-10-17 with nights open to Oct 17 (audit/recgov_calendar.json); 2027 Peak Season 2027-05-07..2027-10-16, read 2026-11-23",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233488", "fcfs": "never", "max_stay_nights": 14},
+      "source": "recreation.gov 233488 notice 'Reservations are required for camping'; every catalog site reservable; rules maxStay 14 nights ('Rolling 30 Days', 2018-10-01..2028-09-30), read 2026-11-23",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Louisville District campground on a wooded peninsula in Nolin River Lake near Cub Run; many sites along the shoreline. The lake is drawn down in winter, leaving a wide sand-and-mud margin. Run by volunteer hosts with no staffed gate; swimming beach, boat ramp, fishing pier, playground and picnic shelters. --Claude",
+  "summary": "Kept. Fees $18-32 confirmed. 68 reservable sites (52 W/E to 50A, 16 non-electric), no sewer, max 105 ft; season 05-07..10-16 (new); reservations required. Lakefront confirmed: B18, B20, B22, A13, A11, A09, C10/C11 within ~10-25 m of the summer-pool line on open, thinly treed ground, all sold by the night. PIN MOVE ~260 m: stored pin is in forest east of the loops -> 37.3219,-86.1318. Dump not confirmed (left as stored).",
+  "flags": [
+    "WATERFRONT CONFIRMED (stored lakefront): on Esri imagery (a winter-drawdown frame) the peninsula's perimeter sites sit beside the vegetation line that marks summer pool, on open ground with scattered and dead trees, and the drawdown margin below them slopes gently: B18 (37.323146,-86.132220) ~15-20 m, B20 (37.323117,-86.132688) ~20-25 m, B22 (37.322927,-86.132936) ~15-20 m, A13 (37.322856,-86.131154) ~20 m, A11 (37.322655,-86.130845) ~20 m, A09 (37.322374,-86.130778) ~25 m, C11 (37.321801,-86.133477) ~10 m and C10 (37.321874,-86.133284) ~15 m. All are reservable by the night. Distances are to the summer-pool vegetation line (the drawdown memory rule), not to the winter water. rec.gov: 'Campsites are located along the shoreline, allowing easy access to the lake and beaches'.",
+    "PIN MOVE: stored 37.3208333,-86.1291667 (rec.gov's facility point) is in unbroken forest ~180 m east of site A01 and ~260 m from the middle of the loops. Suggest location -> 37.3219,-86.1318 (between loops A and B).",
+    "ELECTRIC '100': 30 sites carry 'Electricity Hookup: 100' in the catalog (likely a data-entry slip); taken as 50A, the highest the other sites list. Four sites (B001-B003, C004) are '20/30/50' with Max Vehicle Length 20 - too short for a 23-ft rig.",
+    "DUMP: stored facilities.dump true (from the old note) is not confirmed - rec.gov's amenities don't list a dump station, and the Louisville District Nolin camping page didn't load (no response). Left as stored; not written.",
+    "SITE COUNT: rec.gov text says '70 reservable campsites'; the catalog has 68, and the notice puts volunteers on A21 and A24 (both missing from the catalog). Count 70 -> 68.",
+    "SEASON (new): 2027 calendar 05-07..10-16; 2026 was 05-01..10-17. Stored had none.",
+    "PHONE: 270-524-5454 is rec.gov's facility phone; the description says the campground is unstaffed and gives the Nolin Lake office (270) 286-4511. No change proposed; either works.",
+    "RULES: militaryDiscount rule present (not a discount claim; nothing written). No minimum stay.",
+    "OLD NOTE dropped its hookup/site figures and 'Reserve online' (fields hold them)."
+  ]
+}

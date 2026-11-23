@@ -1,0 +1,51 @@
+{
+  "id": 15434,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://koa.com/campgrounds/bowling-green/ (headless browser, Linux UA): 'We are open year-round!', 'Reserve: 1-800-562-2458', 'Maximum RV Length: 100 ft', 'Maximum Amp Service: 50A', amenities, read 2026-11-23",
+    "https://koa.com/campgrounds/bowling-green/site-type/rv-camping-sites/ (15 RV site types, all pull-through; descriptions), read 2026-11-23",
+    "Wayback 2025-09-01 https://koa.com/campgrounds/bowling-green/amenities/ ('Open All Year', 'Reserve: 1-800-562-2458', 'Info: 1-270-843-1919', Laundry $, Kamp Store, Wi-Fi) and /general-information/ (check-in/out, store hours)",
+    "audit/koa_backlog_2026-10-19/quotes.jsonl + dumps/bowling-green_05.txt (koa.com booking form, 2027-05-18, 1 night, 23-ft motorhome, read 2026-10-19): 14 of 15 site types priced $41-155 avg/night",
+    "Google Maps 'Bowling Green KOA Holiday' (4.3, 883 reviews), read 2026-11-23",
+    "Esri World_Imagery around 36.9165,-86.4353",
+    "audit/price_research/gateways.py 36.91568,-86.43438 -> none within 40 km (Mammoth Cave NP 42 km)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "koa.com/campgrounds/bowling-green/ 'Full Hookup Pull-Through sites feature water, 30/50 amp electric, and sewer', 'Maximum Amp Service: 50A'; RV site types 'Pull Thru, 50/30 Amps, Full Hookups' and 'Pull Thru, 30 Amps, Water/Electric', read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 100, "pull_through": true},
+      "source": "koa.com/campgrounds/bowling-green/ 'Maximum RV Length: 100 ft'; every RV site type on /site-type/rv-camping-sites/ is 'Pull Thru', read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true, "camp_store": true, "wifi": true},
+      "source": "koa.com RV sites page 'near the office/kampstore, laundry room, and front bathhouse'; home page amenities 'Wi-Fi'; Wayback 2025-09-01 amenities 'Laundry $', 'Kamp Store', 'Wi-Fi'",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "koa.com/campgrounds/bowling-green/ 'We are open year-round!' (read 2026-11-23); Wayback 2025-09-01 amenities 'Open All Year'",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/bowling-green/reserve/", "note": "Online on koa.com or by phone; choosing a specific site costs extra (KOA Select My Site)."},
+      "source": "koa.com/campgrounds/bowling-green/ 'BOOK NOW', 'Reserve: 1-800-562-2458'; booking form 'KOA Select My Site (+$25.00)' (2026-10-19 dump)",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Holiday off I-65 at 1960 Three Springs Road, Bowling Green. Spring-fed catfish pay lake (no license), pool in summer, mini golf, jumping pillow, dog park; cabins, covered wagons and tent sites as well. The cheapest sites are 30A water/electric pull-throughs the park calls best suited to pop-ups and vans, sloping slightly uphill. Some sites are let long-term. --Claude",
+  "summary": "Kept (fees not re-read). koa.com's booking form was refused this session by Cloudflare, so the stored $41-155 (koa.com form for 2027-05-18, read 2026-10-19) stands unconfirmed; everything else read from KOA's own pages: year-round, 50A full hookups plus 30A water/electric, all pull-through, max 100 ft, Wi-Fi/laundry/store/bathhouse. Price-gate question on the $41 W/E sites (see flags). Not waterfront (pay pond only). Pin OK. Google 4.3/883.",
+  "flags": [
+    "FEES NOT RE-READ: koa.com/campgrounds/bowling-green/reserve/ answered 'Performing security verification' / 'Just a moment...' (Cloudflare) on submit, twice, 2026-11-23; not solved or clicked through. Wayback has no reservation-results page. Fees group left as stored ($41-155 from the 2026-10-19 form read).",
+    "PRICE GATE (borderline, judgement): the only site type under $50 on the 2026-10-19 form read was '$41.00 avg/night' for 'Pull Thru, 30 Amps, Water/Electric', which KOA describes as 'best suited for pop-ups and vans. Sites slope slightly up hill if you need the entire length of the site.' The form did return it for a 23-ft motorhome. The next cheapest is $62 (30A full hookup) and $66 (50A); KOA Rewards' posted 10% would make $62 -> $55.80, still over $50. If the W/E sites don't count as a real 23-ft-rig night, this is a DROP CANDIDATE on price; no Good Sam Park (good_sam false), and gateways.py 36.91568,-86.43438 -> 'none within 40 km; nearest: Mammoth Cave NP 42 km'.",
+    "LONG-STAY: KOA blog posts 'Long-term RV rental sites at Bowling Green KOA Holiday' and 'Settle in for the season' exist but were Cloudflare-blocked; 14 of 15 RV site types were sold by the night online with no minimum, so tests 2-4 pass on what was read; not a home community.",
+    "PHONE: stored 800-562-2458 is KOA's reservation line; the park's own number is 270-843-1919 ('Info: 1-270-843-1919' on its amenities page; Google shows the same; the booking form says 'call (270) 843-1919'). Suggest phone 800-562-2458 -> 270-843-1919. Website https://koa.com/campgrounds/bowling-green/ current.",
+    "WATERFRONT: stored 'not waterfront' confirmed: Esri shows the RV rows south/southeast of the office between a subdivision and a wooded drainage; the only water is the ~1 ha catfish pay pond west of the office and a detention lake beyond a tree line to the SE.",
+    "PIN: stored 36.91568,-86.43438 is at the north end of the RV rows just south of the office (~150 m from the rows' centre). No move.",
+    "RATING: Google 4.3 / 883 reviews (stored RV Life 4.5*, $$$)."
+  ]
+}

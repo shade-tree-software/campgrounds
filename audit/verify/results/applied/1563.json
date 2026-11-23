@@ -1,0 +1,52 @@
+{
+  "id": 1563,
+  "checked": "2026-11-23",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232541 (description, amenities, rules, notices) and /rates, read 2026-11-23",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232541 (115-site catalog: loops, coordinates, max vehicle length, hookups, per-site price), read 2026-11-23",
+    "https://www.recreation.gov/api/camps/availability/campground/232541/month for 2026-12, 2027-03, 2027-04, 2027-05 (read 2026-11-23); audit/recgov_calendar.json 2026-10 (open nights Oct 1-25)",
+    "Esri World_Imagery around 36.9975,-88.2135 with the catalog sites plotted (whole campground; Boat Ramp Point/Flats at 37.0003,-88.2118; Hill loop at 36.9971,-88.2105)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 40, "currency": "USD", "checked": "2026-11", "note": "$20 for the 30A water/electric sites in the Primitive loop, $30-32 for 50A water/electric, $40 for 50A full hookup; group site $256."},
+      "source": "recreation.gov rates 2027 Peak Season 2027-03-26..2027-10-24 ('PeakSTANDARD ELECTRIC': 30, u30 variant 32, u34 variant 40, 'PeakTENT ONLY ELECTRIC': 20, group 256) and per-site price_range in the campsite catalog: 18 sites $20 (Primitive loop, 30A, incl. 23-ft+ sites 001, 002, 003, 008, 009, 014, 016, 017, 019), 59 sites $30, 20 sites $32, 17 sites $40 (all with sewer), read 2026-11-23",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "recreation.gov campsite catalog: Electricity Hookup 50 at 95 sites, 30 at 19; Water Hookup at every site; Sewer Hookup Y at 17 (16 reservable: 044, 047, 049, 052, 069-072, 091-098), read 2026-11-23",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 115, "max_rig_ft": 99},
+      "source": "recreation.gov campsite catalog: 115 sites (113 standard electric, 1 tent-only, 1 group); Max Vehicle Length up to 99 ft (site 092), read 2026-11-23",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "laundry": true},
+      "source": "recreation.gov amenities 'Dump Station', 'Flush Toilets', 'Showers', 'Washer & Dryer'; facilities text 'Electric hook-ups, showers and flush restrooms', read 2026-11-23",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-26", "closes": "10-25", "note": "Late March to late October; exact dates shift a day or two each year."},
+      "source": "recreation.gov availability: 2027 calendar starts 2027-03-26 (no site-days before it; 2026-12 all 'Not Available'); 2026 nights open Oct 1-25 (audit/recgov_calendar.json); rate season 2026-03-27..2026-10-25 and 2027-03-26..2027-10-24, read 2026-11-23",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232541", "max_stay_nights": 14},
+      "source": "recreation.gov 232541: every site but 020 'reservable: true', 'campsite_reserve_type': 'Site-Specific'; rules maxStay 14 nights ('Rolling 30 Days', 2018-10-01..2028-09-30), read 2026-11-23",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Nashville District campground on Lake Barkley where the canal joins it to Kentucky Lake, at the north end of Land Between the Lakes near Grand Rivers; views of Barkley Dam and the canal traffic. Wooded loops; the cheaper Primitive loop's sites are mostly under 23 ft. Swimming beach, boat ramp and courtesy dock, fishing float, playground, picnic pavilions, short hiking trail. --Claude",
+  "summary": "Kept. Fees $30 -> $20-40 (Primitive loop $20, 50A W/E $30-32, full hookup $40). 50A, 17 sewer sites, 115 sites, max 99 ft, season 03-26..10-25 from the rec.gov calendar. Lakefront confirmed on Boat Ramp Point (093-095) and the Hill loop (075-077), all sold by the night. Phone/website current; pin in the woods ~145 m from the Hill loop (under the 250 m line).",
+  "flags": [
+    "WATERFRONT CONFIRMED (stored lakefront): on Esri imagery the Boat Ramp Point loop's sites 093 (37.000507,-88.211403), 094 (37.000612,-88.211567) and 095 (37.000703,-88.211530) sit on an open grassy point ~23-30 m from Lake Barkley's summer-pool edge, with only a thin fringe of shoreline trees; Hill loop sites 075 (36.997519,-88.210337), 076 (36.997596,-88.210669) and 077 (36.997609,-88.210798) are ~23 m from the water but under canopy (bank height can't be read; the loop name suggests a rise). The Flats (103-110) sit behind the boat-ramp parking lot, ~60-90 m from water. All of these are reservable by the night. rec.gov: 'The campground faces Barkley Lake, and the shore of Kentucky Lake is a brisk one-mile walk across the canal' - the old note's 'waterfront on one of the two lakes' was wrong about Kentucky Lake and is dropped.",
+    "FEES: stored 30/30 -> 20/40. The $20 sites are 30A in the Primitive loop and many are short (18-24 ft), but 001 (32 ft), 003 (30), 008 (35) and 009 (30) take a 23-ft rig.",
+    "SITE 020 (50A, sewer, 36.996544,-88.216644) is the only non-reservable site - likely the host's; not counted in the hookup source.",
+    "RULES: militaryDiscount rule present (not a discount claim; nothing written). No minimum-stay rule.",
+    "PIN: stored 36.9955556,-88.2097222 (rec.gov's facility point) is in the woods on the peninsula SE of the Hill loop, ~145 m from site 068 and ~400 m from the middle of the campground; under the 250 m line, so no move. A better point would be the Beach loop, ~36.9969,-88.2128, if wanted.",
+    "PHONE/WEBSITE: 270-362-4840 (rec.gov) and https://www.recreation.gov/camping/campgrounds/232541 current. No change. Nashville District's own lake page not read."
+  ]
+}
