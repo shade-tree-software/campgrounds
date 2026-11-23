@@ -70,7 +70,11 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
          'elevation_meters': r['elevation_meters'], 'state': r['state'], 'ownership': r['ownership'],
          'waterfront': r['waterfront'], 'waterfront_evidence': r['waterfront_evidence'],
          'inclusion_evidence': r['inclusion_evidence'], 'website': r.get('website'), 'phone': r.get('phone'),
-         'note': r['note']}
+         'note': r['note'],
+         # vetted from scratch today: phase 7 treats it as done, so the queue doesn't re-batch it
+         'verify_scan': {'checked': TODAY, 'sources': f"Lead add {TODAY}: vetted from scratch that day, every group read "
+                         f"with manual provenance (audit/verify/leads/results/{os.path.basename(p)})",
+                         'note': 'Created by the phase-7 lead stage; no re-read needed.'}}
     for k in ('website', 'phone'):  # absent is unknown: omit, never store an empty value
         if not e[k]:
             del e[k]
