@@ -45,3 +45,5 @@ Things to watch in WY (from the sweep handoff, project_wy_sweep_handoff):
 - Yellowstone campground closures/construction change year to year (Norris, Pebble Creek, Tower Fall were closed at the sweep).
 
 WY leads/splits to vet after the queue (detail in criteria_followups.md): City Slickers RV Park; Buffalo Bill SP Lake Shore; BJ's Hwy 20 second location; Jackson RD designated sites (Spread Creek, Shadow Mountain, Curtis Canyon dispersed, Pacific Creek, Buffalo Valley); Elk Fork (likely out); Seminoe South Red Hills + Sunshine Beach; split 6359 Sinks Canyon SP -> Sawmill; re-read 6547 Larson Park; Natrona Casper Mountain campgrounds (Deer Haven, Elkhorn Springs, Skunk Hollow, Tower Hill, Archery Range); ten Glendo SP campgrounds (p3-552 followups).
+
+2026-11-22: 13585 Sage (Pathfinder) re-checked under AWH's high-water-edge ruling: raised to lakefront at the three westernmost shore shelters (~7-14 m to the 5,852.49 ft spillway-crest edge over open ground); the old "sage draw" read was wrong. Follow-ups: 13586 Weiss (south-row shelters ~12-15 m, likely lakefront) and 13584 Diabase (2023 rebuild pads need placing first) - not decided.
