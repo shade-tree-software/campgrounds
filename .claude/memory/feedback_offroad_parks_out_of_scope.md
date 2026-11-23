@@ -23,4 +23,6 @@ Off-road parks are not in scope (AWH 2026-10-02, settling the AL private-gap hol
 
 **AWH 2026-11-10 (third):** "Drop 15321" - Tiadaghton MF 001, which the agency calls adjacent to the ATV trail system with trail noise in season. So adjacent-with-an-agency-noise-warning drops too, not only part-of.
 
+**Jericho Mountain SP 4110 (NH) KEPT with a caveat, AWH 2026-11-23**: a state park built around 75 mi of OHRV trails that riders reach from their sites on the campground roads, but with a beach, boat launch, showers and a new full-hookup RV loop. The note warns of ATV traffic and engine noise. **Jericho Gateway 14368 next door DROPPED** the same day: a private rider base ('no reason to trailer your machine'), mostly primitive sites sold weekly or monthly. So an agency park with real general amenities stays with the noise caveat, and a private camp pitched at riders goes.
+
 Folders under `audit/` that this note cites were removed from the working tree on 2026-11-21 (commit c086982c, finished passes). Read them with `git show c086982c^:<path>` or list them with `git ls-tree -r --name-only c086982c^ audit/<folder>`.
