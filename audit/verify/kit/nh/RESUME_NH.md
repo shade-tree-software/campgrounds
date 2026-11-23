@@ -13,7 +13,7 @@ www.reserveamerica.com/explore 403. Split template: copy kit/sd/split_prompt_tem
 
 ## RESUME HERE
 
-STARTED 2026-11-23 on AWH's go-ahead. Next batch p3-583 (30 entries left after p3-582).
+STARTED 2026-11-23 on AWH's go-ahead. Next batch p3-584 (19 entries left after p3-583).
 
 Build + launch (repo root; S = session scratch dir):
 
@@ -39,3 +39,4 @@ Apply a batch (as WY):
 Batches applied:
 - p3-581 (2026-11-23): 10 applied, 1 drop (4146 Rudy's, price + seasonal); water down 4141/4106/4132, 4137 -> creekside; pins 4100/4103/4141. Lead Jacobs Brook (leads/nh_leads.txt).
 - p3-582 (2026-11-23): 11 applied, no drops; 4135 Sunshine Valley kept with seasonal caveat (~14% nightly); 804 Hampton coastal dunes vs bayfront ask (asks.md).
+- p3-583 (2026-11-23): 11 applied, no drops; 4110 Jericho OHV ask (asks.md); water down 4108/4110; 4104 pond kept on RA per-site data.
