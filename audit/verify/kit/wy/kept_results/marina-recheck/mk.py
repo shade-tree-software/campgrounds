@@ -1,0 +1,50 @@
+import json
+HW=("High water: Reclamation Pathfinder Reservoir allocations sheet (rev. 2016-05-19; UNT web archive capture 2016-12-24 of "
+    "usbr.gov/gp/aop/resaloc/pathfinder.pdf): top of active conservation = uncontrolled spillway crest 5,852.49 ft (1,783.84 m), "
+    "the edge used in the Sage 13585 re-check, where the USGS 3DEP 1,783.84 m contour follows the vegetation/sand line (2022) and the 2011 water.")
+diab_ev=("2026-11-23 re-check under AWH's high-water-edge ruling (curation doc open-apron rule). "+HW+
+ " Pads: the 2023 rebuild is on today's Esri World_Imagery here (GE01 2023-09-30, 0.46 m; Esri Wayback release 43291): concrete pads with "
+ "dark-roofed shelters on a new road layout, where the WV02 2022-09-19 capture (release 37965) still shows the old green-roofed shelters on dirt; "
+ "11 sheltered pads counted, matching Rec1's DB Site 01-11. The county's 'Diabase Campground Map' (natronacounty-wy.gov DocumentCenter/View/8097, "
+ "linked from Rec1) is 403 and has no Wayback capture (checked 2026-11-23), and Rec1's per-site photos are sign-post close-ups, so pads are named "
+ "by position, not DB number. Frames, all rendered: Esri at 450 m half-width (0.9 m/px), 150 m (0.3 m/px) and three 70 m frames (0.23 m/px) over the "
+ "northeast row, the middle and the southwest lane, each with the 3DEP 1 m lidar DEM in the same EPSG:3857 frame and its 1,783.84 m contour drawn; "
+ "Wayback 2011-06-22 (UC-G 0.3 m, release 25521) shows high water at the foot of the terrace. Measured shelter/pad to the 1,783.84 m edge, pad height "
+ "above it, and the bank's steepest 3 m (median of five transects), reservoir side of the roads from northeast to southwest: NE-end pad "
+ "(42.46924,-106.86982) ~16 m, +1.6 m, 13%, but straight through a cottonwood clump; (42.46908,-106.87004) ~15 m, +3.7 m, 54%; "
+ "(42.46888,-106.87041) ~12 m, +3.3 m, 71%; (42.46858,-106.87072) ~13 m, +3.1 m, 53%; (42.46846,-106.87090) ~12 m, +2.8 m, 54%; on the "
+ "southwest lane at the north end of a tree clump (42.46810,-106.87135) ~11 m, +1.0 m, 10%; at its south end (42.46756,-106.87183) ~7 m, +2.0 m, 52%. "
+ "Between each of the last six and the edge: open, unused ground with low sage and scattered shrubs; no road, day use or tree screen. The three "
+ "inner pads (42.46821,-106.87162; 42.46805,-106.87175; 42.46791,-106.87185) sit 32-36 m back behind the lane and the tree clump, and the pad "
+ "north of the marina road (42.46895,-106.87115) 61 m back and 8.8 m up. Bank: the northeast row is on a terrace 2.8-3.7 m above full pool whose "
+ "edge drops 1.3-2.2 m at about 28-35 degrees, steeper than Sage's accepted shore (pads 1.8-2.1 m up, steepest 3 m 25-42%) but a low bank, not a "
+ "bluff; the lidar predates the 2023 pad work. In the 2023 frame the water stood ~100 m (marina bay) to ~200 m from the pads. Result: lakefront at "
+ "six of the seven reservoir-side pads, with the drawdown caveat. The stored 'sites on the bench' read is superseded. --Claude")
+diab_note=("Natrona County campground west of Pathfinder Dam off County Road 409, beside the boat ramp, dock and Pathfinder Marina. Lakefront at six "
+ "of the seven pads on the reservoir side of the campground roads, on open ground above a low bank at the high-water line; the pad at the "
+ "northeast end looks at the water through trees, and the three inner pads and the one north of the road are set back. Water levels vary "
+ "greatly: in a low year the water is 100-200 m from the pads, and the county says it can be 1,500 feet off. No cell service at the sites, so "
+ "reserve before setting out. --Claude")
+weiss_ev=("2026-11-23 re-check under AWH's high-water-edge ruling (curation doc open-apron rule). "+HW+
+ " Frames, all rendered: Esri World_Imagery (WV02 2022-09-19, a drawdown year) at 150 m half-width (0.3 m/px) and 70 m half-width (0.23 m/px) "
+ "over the south and west shore, each with the 3DEP 1 m lidar DEM in the same EPSG:3857 frame and its 1,783.84 m contour drawn; Esri Wayback "
+ "2011-06-22 (UC-G 0.3 m, release 25521; z18 and z19) and 2020-06-05 (WV02, release 11475; z19). The 2011 frame has the water at the shelter "
+ "fronts along the south and west shore, where the contour runs on the 2022 frame. Rec1 lists one 'Weiss Non-Reservable Sites' facility with no "
+ "site names, so shelters are named by position. Measured shelter to the 1,783.84 m edge, pad height above it, and the bank's steepest 3 m "
+ "(median of five transects): south shore outside the loop road, west shelter (42.46805,-106.86074) ~15 m, +2.1 m, 31%, and middle shelter "
+ "(42.46797,-106.86038) ~11 m, +1.3 m, 21%, both over open, unused bare ground with a post and a shrub, no road or tree screen; east shelter "
+ "(42.46803,-106.86012, plain on 2011 and 2020) ~13 m, +1.0 m, but under and behind a shore tree on the 2022 frame; west shore outside the loop "
+ "road (42.46870,-106.86133) ~20 m, +3.5 m, 46%, over sparse sage with scattered small trees to the south. Inside the loop road the shelters are "
+ "26-51 m back with the road between (42.46841,-106.86093 ~26 m; 42.46854,-106.86069 ~51 m; 42.46826,-106.86008 ~30 m behind the road and the "
+ "tree belt) and the north ones farther. In 2022 the water was ~115-140 m from the south shelters; in 2011 ~5-10 m. Result: lakefront at the "
+ "two south-shore shelters and the west-shore shelter, with the drawdown caveat; the earlier 'loop in cottonwoods above the reservoir beach' read "
+ "was the interior. --Claude")
+weiss_note=("Natrona County campground on Pathfinder Reservoir just west of Pathfinder Dam, off County Road 409 (Pathfinder Road); the closest "
+ "campground to the dam and its interpretive trail. Sheltered and open sites, ADA sites, restrooms, no drinking water; the RV dump is a quarter "
+ "mile away on the county road. Lakefront at three sheltered sites outside the loop road, the two at the west end of the south shore and the one "
+ "on the west shore, on open ground at the high-water line; the shelter at the east end of the south shore stands behind a tree, and the sites "
+ "inside the loop are set back. Water levels vary greatly: in a low year the water is 100 m or more from the shore sites, and the county says it "
+ "can be 1,500 feet off. --Claude")
+out=[{"id":13584,"waterfront":"lakefront","waterfront_evidence":diab_ev,"note":diab_note,"location":None},
+     {"id":13586,"waterfront":"lakefront","waterfront_evidence":weiss_ev,"note":weiss_note,"location":None}]
+json.dump(out,open('results.json','w'),indent=1,ensure_ascii=False)
