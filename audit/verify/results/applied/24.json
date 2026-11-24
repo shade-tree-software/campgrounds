@@ -1,0 +1,56 @@
+{
+ "id": 24,
+ "checked": "2026-11-24",
+ "sources": [
+  "https://www.recreation.gov/camping/campgrounds/267551 (facility API, read 2026-11-24): 'There are 27 fully accessible single and five double campsites in Rock Creek Recreation Area; all with electric hook-ups. In addition, there are five walk-in tent sites without electric hookups, which are available first-come, first served only. Three bathhouses ... Each bathhouse has flush toilets and shower facilities. A dump station is located on site. An on-site host is located in the campground.'; notices 'Water spigots are shared between sites', 'Gates to the campground are closed from 10:00 p.m. to 7:00 a.m.', 'Sites 6, 10, 17, 20, and 21 are double sites'; amenities incl. Drinking Water, Showers, Electric Hookups, Creek Access; rules maxStay 13 nights (rolling 30 days), reservationCutOff 4 days; phone 423-638-4109",
+  "https://www.recreation.gov/api/camps/campgrounds/267551/rates (read 2026-11-24): Peak Season 2026-05-05..10-28 and 2027-05-07..10-24: STANDARD ELECTRIC $20, double $40, group site $50",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:267551 (catalog, read 2026-11-24): 31 STANDARD ELECTRIC records 03-033 (A loop 03-010, B loop 011-021 at 30 A, C loop 022-033 at 50 A; all drive-in back-in, RV/trailer lengths 26-50 ft where given, A loop site lengths 53-70 ft) plus GROUP site 1 (non-electric, 25 ft, tagged Riverfront)",
+  "https://www.recreation.gov/api/camps/availability/campground/267551/month (Oct-Nov 2026, Apr-May 2027, read 2026-11-24): booked nightly through 2026-10-28; nothing in November or April; 2027 nights listed from 05-07 (not yet released)",
+  "https://www.fs.usda.gov/r08/cherokee/recreation/rock-creek-recreation-area (read 2026-11-24): 'Site Open'; 'Spring Opening May 5th, 2026 (Campground)'; 'Single Site: $12 per night / Single Site with electric hook-up: $20 per night / Double Site with electric hook-up: $40 per night'; 'named for the creek that runs alongside this developed recreation site'; 'offering electric hookups, RV sites, double sites, walk-in tent sites, and multiple bathhouses'; template line 'Potable water is not available at this site.'; Supervisor's Office (423) 476-9700; alerts list (Citico Creek, Spring Creek Road, Peavine Sheeds Road) does not include Rock Creek",
+  "Esri World Imagery with the catalog site points (satpts.py 36.1382,-82.3480 half 330 m, read 2026-11-24): the A/B/C loops run ~200-450 m east of the stored pin, which sits at the day-use area beside the CCC pond; sites under hardwood canopy"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 20, "nightly_high": 40, "currency": "USD", "checked": "2026", "note": "Single electric site $20, double electric site $40; walk-in tent sites $12. recreation.gov rate table for 2026-2027 and the Forest Service page, read 2026-11-24."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/267551/rates (2026 and 2027 seasons) and https://www.fs.usda.gov/r08/cherokee/recreation/rock-creek-recreation-area (fee list), read 2026-11-24",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": false},
+   "source": "recreation.gov catalog for 267551 (Electricity Hookup 30 on B loop, 50 on C loop; Water Hookup 'No' on A loop) and facility notice 'Water spigots are shared between sites', read 2026-11-24",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 31, "max_rig_ft": 50, "pull_through": false, "note": "31 reservable electric sites (five of them doubles), all back-in; five first-come walk-in tent sites and a group site besides."},
+   "source": "recreation.gov catalog for 267551 (site records 03-033, equipment lengths 26-50 ft, Driveway Entry back-in) and facility description, read 2026-11-24",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+   "source": "recreation.gov facility description ('Each bathhouse has flush toilets and shower facilities. A dump station is located on site.'; Drinking Water amenity; shared water spigots), read 2026-11-24",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-07", "closes": "10-24"},
+   "source": "recreation.gov rate season 2027-05-07..10-24 (2026: 05-05..10-28, matching the FS page's 'Spring Opening May 5th, 2026' and the 2026 calendar booked through 10-28), read 2026-11-24",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/267551", "max_stay_nights": 13},
+   "source": "recreation.gov facility rules (maxStay 13 nights rolling 30 days; reservationCutOff 4 days; every electric site reservable), read 2026-11-24",
+   "method": "manual"
+  }
+ },
+ "note": "Cherokee National Forest; small pond nearby.  --AWH\nRock Creek runs beside the campground and feeds a CCC-era swimming pool in the day-use area. The gate is closed from 10 pm to 7 am. --Claude",
+ "summary": "Cherokee NF Rock Creek confirmed open (FS 'Site Open', 2026 season May 5 - Oct 28): 31 reservable electric sites (B loop 30 A, C loop 50 A, shared water spigots), back-in to 50 ft, $20 single / $40 double; showers, flush toilets, dump; season 2027 05-07..10-24; rec.gov max stay 13. PIN MOVE ~340 m to the loops. Phone '' -> 423-638-4109. --AWH not waterfront consistent.",
+ "flags": [
+  "PIN MOVE (>250 m): stored 36.1379,-82.3508 (the FS page's point, at the day-use area/CCC pond) -> ~36.1384,-82.3471, the centre of the A/B/C campsite loops on the rec.gov catalog points (~340 m east).",
+  "PHONE: '' -> 423-638-4109 (rec.gov facility phone, Unaka Ranger District). The FS page lists only the Supervisor's Office, (423) 476-9700.",
+  "WATERFRONT --AWH not waterfront (not changed): consistent. Rock Creek is a small creek 'that runs alongside' the area. The only catalog 'Riverfront' tag is on the non-electric group site 1 at the west end; the electric loops sit under canopy with no water tag.",
+  "WATER CONFLICT: the FS page template says 'Potable water is not available at this site', but rec.gov lists Drinking Water and 'Water spigots are shared between sites' (same template conflict as 4414). Wrote potable_water true from rec.gov.",
+  "SITES: rec.gov text says 27 single + 5 double electric sites; the catalog has 31 electric records (03-033; no 01/02). Wrote 31.",
+  "FCFS: the five walk-in tent sites are first-come only; every RV site is reservable (fcfs not written).",
+  "FEES: stored $20-20 -> $20-40 (double electric sites $40).",
+  "ACCESS: TN 395, 3.5 miles from Erwin; no road warnings from the agency. The FS alerts list does not name Rock Creek."
+ ]
+}

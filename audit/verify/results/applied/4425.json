@@ -1,0 +1,53 @@
+{
+ "id": 4425,
+ "checked": "2026-11-24",
+ "sources": [
+  "https://www.recreation.gov/camping/campgrounds/232684 (facility API, read 2026-11-24): 'This waterfront campground offers 40 sites with water and electric hookups, as well as 16 primitive tent sites ... Amenities like flush toilets, showers and drinking water are provided'; amenities incl. Dump Station, Laundry Facilities, Washer & Dryer, Sewer Hookups, Showers, Flush Toilets, Waterfront Sites; 'Paymeny only accepted by debit or credit card. No cash.'; rules maxStay 14 nights (rolling 30 days), reservationCutOff 0 days; phone 931-761-3616",
+  "https://www.recreation.gov/api/camps/campgrounds/232684/rates (read 2026-11-24): Peak Season 2026-04-09..2026-10-31 and 2027-04-08..2027-10-31: STANDARD ELECTRIC $34, RV ELECTRIC $36, TENT ONLY ELECTRIC $26, TENT ONLY NONELECTRIC $24",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:232684 (catalog, read 2026-11-24): LAKE 01-20 STANDARD ELECTRIC (50 A where stated, water, max vehicle 54-125 ft; 01-15 tagged Lakefront), LAKE 21-30 TENT ONLY ELECTRIC (30 A), MIDDLE 33-40 RV ELECTRIC (50 A, water, sewer, 51-81 ft), HILL 42-57 TENT ONLY NONELECTRIC, P-1 group picnic area",
+  "https://www.recreation.gov/api/camps/availability/campground/232684/month (Oct 2026, Nov 2026, Mar-Apr 2027, read 2026-11-24): sites booked through 2026-10-31, none open in November 2026 or March 2027, open from 2027-04-08",
+  "Esri World Imagery with the catalog site points (satpts.py 35.9765,-85.7230 half 170 m, read 2026-11-24): LAKE loop along the west shore of the Ragland Bottom peninsula; sites 06-09 sit on an open sandy/grassy apron ~15-20 m from the top of the beach and ~35 m from the water at capture; 10-15 ~36-43 m from the water behind a partial tree fringe; 16-20 and MIDDLE 33-40 are inland in the woods"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 34, "nightly_high": 36, "currency": "USD", "checked": "2026", "note": "Water/electric sites (LAKE 01-20) $34; full-hookup sites (MIDDLE 33-40) $36. recreation.gov rate table for the 2026 and 2027 seasons, read 2026-11-24."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232684/rates (Peak Season 2026-04-09..10-31 and 2027-04-08..10-31), read 2026-11-24",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "recreation.gov catalog for 232684 (Electricity Hookup 50 on LAKE and MIDDLE RV sites; Water Hookup; Sewer Hookup Y on MIDDLE 33-40), read 2026-11-24",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 54, "max_rig_ft": 125, "note": "28 take an RV: water/electric 01-20 on the LAKE loop and full-hookup 33-40 on MIDDLE; 21-30 are electric tent sites and 42-57 primitive tent sites."},
+   "source": "recreation.gov catalog for 232684 (site records, types and Max Vehicle Length 51-125 ft on RV sites), read 2026-11-24",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": true},
+   "source": "recreation.gov facility description and amenities ('flush toilets, showers and drinking water'; Dump Station; Laundry Facilities / Washer & Dryer), read 2026-11-24",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-08", "closes": "10-31"},
+   "source": "recreation.gov rate season 2027-04-08..10-31 (2026: 04-09..10-31) and month availability (booked through 2026-10-31, none in Nov 2026 or Mar 2027, open from 2027-04-08), read 2026-11-24",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232684", "max_stay_nights": 14},
+   "source": "recreation.gov facility rules (maxStay 14 nights rolling 30 days; every site record reservable), read 2026-11-24",
+   "method": "manual"
+  }
+ },
+ "note": "Corps campground on a Center Hill Lake peninsula near Sligo Bridge. The lake loop's water/electric sites run along an open sandy shore; the full-hookup sites sit back in the woods. Card payment only, no cash. --Claude",
+ "summary": "USACE Ragland Bottom confirmed: 54 sites (28 RV: LAKE 01-20 water/electric 50 A, MIDDLE 33-40 full hookup 50 A), $34-36 (stored $30-32 stale), open Apr 8 - Oct 31 (stored Apr 1 - Nov 30 derived), showers, laundry, dump. Lakefront kept: LAKE sites 06-09 on an open apron ~15-20 m from the beach top.",
+ "flags": [
+  "WATERFRONT lakefront kept: catalog tags LAKE 01-15 'Lakefront'; plotted on Esri, sites 06, 07, 08, 09 (~35.9773,-85.7232 to 35.9769,-85.7235) sit on an open sandy/grassy apron ~15-20 m from the top of the beach (the high-water edge) and ~35 m from the water at capture; 10-15 (~35.9763,-85.7235 to 35.9757,-85.7236) ~36-43 m from the water at capture behind a partial tree fringe. All are STANDARD ELECTRIC sites sold nightly at $34 and take 57-80 ft. 01-05 are ~50-65 m back at the north end; 16-20 and MIDDLE are inland.",
+  "FEES: stored $30-32 (rate table read 2026-10-09) -> $34-36: the current table shows STANDARD ELECTRIC $34 and RV ELECTRIC $36 for 2026 and 2027 (the 2019-2028 seasons all carry the same figures).",
+  "SEASON: stored 04-01..11-30 (derived, 'Approximate: Open April to November') -> 04-08..10-31 from rec.gov's 2027 season and calendar (2026 ran 04-09..10-31; nothing open in November 2026).",
+  "SITES: stored count 57 / max 72 (note prose) -> 54 site records (the facility text says 40 water/electric + 16 primitive; the catalog has 30 electric LAKE sites incl. 10 tent-only, 8 MIDDLE full hookup, 16 HILL tent) and max vehicle length up to 125 ft (site 16).",
+  "PIN: stored 35.97650,-85.72320 sits among the LAKE/MIDDLE loop roads; fine.",
+  "PHONE 931-761-3616 confirmed (rec.gov)."
+ ]
+}

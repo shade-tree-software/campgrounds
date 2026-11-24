@@ -1,0 +1,13 @@
+# p3-604 notes
+- tncal.py (plain POST calendar) + tncp.py/tnattr.py parse reserve.tnstateparks.com
+- 4394 done: $32-53, 50 sites 45-65 ft, sites 8-27 closed Dec-Feb, phone -> 931-461-7676, bridge closure access
+- 4406 done: $32-68, 49 sites, creekside lead sites 1-5, website path
+- 4414 done: $20, 02-24..01-24, Ocoee flood alert not naming CG; phone -> 423-338-3300
+- 4444 done: riverview kept (~110 m), season 03-15..11-14, fees not reread (Campspot closed), Google 4.5/317
+- 15500 done: $50 Dec 2026 / $61.56 2027 low; gateway GSMNP 11 km + KOA Rewards; riverfront kept ~20-25 m; Google 4.4/2464
+- 685 done: pin move to 36.4855,-88.0395 (~520 m); phone '' -> 931-232-5331; season 03-01..11-29; --AWH lakefront consistent
+- 4425 done: $34-36, 04-08..10-31, lakefront kept (06-09 ~15-20 m)
+- 191 done: $31-68, 90 sites, year-round, --AWH lakefront consistent; phone 731-253-8003 -> 731-253-9652
+- 4405 done: $40-62, upper loop closed (Helene), waterfront riverfront -> not waterfront CANDIDATE (creekside lead 39-41/50), phone '' -> 423-547-3900
+- 24 done: $20-40, 05-07..10-24, pin move ~340 m to 36.1384,-82.3471, phone '' -> 423-638-4109
+- 4401 done: $40-85 (holiday wknds), 47 RV sites, year-round, not waterfront kept, website line 2 path
