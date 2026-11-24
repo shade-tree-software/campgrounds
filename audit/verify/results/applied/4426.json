@@ -1,0 +1,58 @@
+{
+  "id": 4426,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://www.fs.usda.gov/r08/cherokee/recreation/paint-creek-campground (plain curl, read 2026-11-24): banner 'Site Closed'; Current Conditions 'Site is closed for the 2026 season due to extensive road damage leading to the campground'; 'located in Greene County along the banks of Paint Creek ... Most of the widely-spaced campsites have streamside views and are well screened with native vegetation'; Seasons of Use 5/5/2026 - 10/24/2026; 'Group size is 5 people, 2 vehicles per site'; 'Single Site: $10 per night', 'Camping is $10 (20 sites)'; Restrooms 'Vault toilet(s)'; Water 'Potable water is not available at this site'; directions TN 70 south from Greeneville, Rollins Chapel Road; no rig-length or road warning beyond the closure",
+    "https://www.recreation.gov/api/camps/campgrounds/10056245 (read 2026-11-24): not reservable ('reservationCutOff ... Not Reservable'), is_deactivated false, phone 423-638-4109; Facilities '20 total campsites ... 3 sites (13, 14, and 16) are tent-only ... 2 vault toilets, one in each loop ... Drinking water available at the center of the campground'; Overview 'A majority of the widely-spaced campsites have streamside views and are screened by a variety of native plants, including rhododendron, hemlock and laurel'",
+    "https://www.recreation.gov/api/camps/campgrounds/10056245/rates (read 2026-11-24): Standard Nonelectric $10 every season 2020-2028; 2026 season 05-05 to 10-28, 2027 season 05-07 to 10-24",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10056245 (catalog, read 2026-11-24): 17 STANDARD NONELECTRIC drive-in sites (1-5, 7-12, 15, 17-21; no site 6) and 3 TENT ONLY (13, 14, 16); site lengths 27-66 ft, back-in except parallel site 9; 'Proximity to Water: Riverfront' on 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14; preview photos (May, leaf-on) of 3, 4, 7, 9, 10, 11 show gravel pads in forest with rhododendron and hemlock behind - no water visible in any",
+    "Esri World Imagery z18 at 35.9780,-82.8440 (read 2026-11-24): continuous canopy over the loops; only Forest Road 41's curve shows - canopy-blind"
+  ],
+  "groups": {
+    "status": {
+      "values": {"operating": "temporarily_closed", "note": "Closed for the 2026 season after extensive damage to the access road."},
+      "source": "https://www.fs.usda.gov/r08/cherokee/recreation/paint-creek-campground ('Site is closed for the 2026 season due to extensive road damage leading to the campground'), read 2026-11-24",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 10, "currency": "USD", "checked": "2026"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10056245/rates (Standard Nonelectric $10, 2026-2028 seasons); FS page 'Single Site: $10 per night', read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10056245 (reservationCutOff 'Not Reservable'), read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-07", "closes": "10-24"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10056245/rates (2027 season 05-07 to 10-24; 2026 05-05 to 10-28); FS Seasons of Use 5/5/2026 - 10/24/2026, read 2026-11-24",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10056245 (every site STANDARD NONELECTRIC or TENT ONLY NONELECTRIC, Water Hookup No), read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 20},
+      "source": "https://www.recreation.gov/camping/campgrounds/10056245 ('20 total campsites ... 3 sites (13, 14, and 16) are tent-only'); FS 'Camping is $10 (20 sites)', read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "https://www.fs.usda.gov/r08/cherokee/recreation/paint-creek-campground (Restrooms 'Vault toilet(s)'); rec.gov '2 vault toilets, one in each loop', read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "Cherokee National Forest campground in a mountain cove along Paint Creek, a stocked trout stream, with widely spaced sites screened by rhododendron and hemlock; the Paint Mountain and Paint Creek trails start nearby. Five people and two vehicles per site. --Claude",
+  "summary": "Cherokee NF first-come campground, 20 sites (17 drive-in nonelectric, 3 tent-only), $10, vault toilets, season May-Oct (2027: 05-07 to 10-24 on rec.gov). CLOSED for the 2026 season for access-road damage. Stored riverview not supported by the site photos: proposed down to not waterfront.",
+  "flags": [
+    "WATERFRONT DOWNGRADE (default-down): stored 'riverview' -> 'not waterfront'. Paint Creek here is a creek (well under 30 m), so the on-water value would be creekside; nothing earns it - the imagery is canopy-blind, and the rec.gov preview photos (May, leaf-on) of the six 'Riverfront'-tagged RV sites 3, 4, 7, 9, 10, 11 show pads backed by forest and rhododendron with no water in sight. The only view basis is the agency prose ('streamside views and are well screened with native vegetation'), which can't stand alone, and rec.gov's 'Riverfront' site tags are known to be loose. After every source the view is unconfirmed, so it goes down. If the reviewer prefers to hold the view on the agency wording, 'riverview' is the ceiling (screened = view, never creekside).",
+    "STATUS: FS page 'Site Closed' - 'closed for the 2026 season due to extensive road damage leading to the campground' (written as temporarily_closed, no reopening date announced; rec.gov still carries a 2027 season 05-07 to 10-24 and is not deactivated). Re-check before the 2027 season.",
+    "ACCESS: neither the FS page nor rec.gov carries any 'trailers/RVs not recommended' or high-clearance wording; the stored note's 'Narrow/steep access road -- fine for 23 ft, not big rigs' has no source on either page and was removed from the note. Sites are 27-66 ft long (site length, no vehicle limit published); no criteria problem found.",
+    "WATER: FS says 'Potable water is not available at this site'; rec.gov says 'Drinking water available at the center of the campground' - conflict, potable_water left unwritten.",
+    "SEASON: FS 2026 05-05 to 10-24 vs rec.gov 2026 05-05 to 10-28; rec.gov's 2027 season 05-07 to 10-24 written (lesson: FS and rec.gov disagree -> rec.gov).",
+    "Phone 423-638-4109 confirmed (rec.gov). Pin 35.97840,-82.84451 vs RV-site centroid ~35.9779,-82.8440 (~60 m) - fine. Websites (FS r08 page + rec.gov) unchanged. Agency name 'Paint Creek Campground' (stored 'Paint Creek') - optional."
+  ]
+}

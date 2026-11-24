@@ -1,0 +1,53 @@
+{
+  "id": 4482,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://steadystays.com/green-acres-rv-park-savannah-tn/ (operator page, headless browser with a desktop Chrome UA - plain curl gets a Cloudflare 403; read 2026-11-24): 'Green Acres RV Park, RV Park and Campground | Savannah, Tennessee, 215 Ziffle Circle Savannah, TN 38372, 731-926-1928'; 'Whether you're here for a night or staying for the season, we're proud to offer year-round hospitality'; 'large, graveled RV sites with 50/30/20-amp electricity, sewer, and water hookups. Every site includes free Wi-Fi'; 'saltwater pool, playground, pavilion, and even a well-stocked camp store'; 'modern bathhouses and laundry'; 'Open Year-Round with Extended Stay Options ... Call for monthly rates'; footer 'SteadyStays offers welcoming, reliable communities for long-term RV living. Proudly managed by Streamside RV Resorts & Campgrounds.'",
+    "Campspot API through the headless driver (park 3978, engine slug greenacrescampground, marketplace green-acres-campground-savannah-tn; read 2026-11-24, 2 adults): site types 'Pull Through' (11 sites, rigs to 45 ft, 30/50-amp, water, sewer, Motorhome allowed) and 'primitive tent' (3 sites). Pull Through site charge before tax: $50 Tue 2026-12-08, $52 Sat 2026-12-12, $53 Tue 2027-03-09 and 2027-06-08, $55 Sat 2027-03-13 and 2027-06-12; plus Campspot's own $3 Booking Fee per stay; 10-11 of the 11 pull-throughs free on every date. Park record phone 7319261928, lat/lng 35.140561,-88.249604.",
+    "https://www.greenacresrvparkandcabins.com/ and /amenities-and-pricing (plain curl, 2026-11-24): a DIFFERENT park - 'Green Acres RV Park and Cabins, 233 Scotts Chapel Rd, Cumberland City, Tennessee 37050', phone (931) 801-2664, 'RV Site Nightly: $50 plus tax, Weekly: $300, Monthly: $600'",
+    "Google Maps (headless browser, 2026-11-24): 'Green Acres RV Park', 215 Ziffle Cir, Savannah, 4.7 from 295 reviews, phone +1 731-926-1928, website steadystays.com/green-acres-rv-park-savannah-tn/, pin 35.140403,-88.2495761",
+    "audit/price_research/gateways.py 35.1404,-88.2496: none within 40 km"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 50, "nightly_high": 55, "currency": "USD", "checked": "2026", "note": "Pull-through full-hookup sites $50 a night on a December 2026 weeknight, $52-55 on weekends and from March 2027 (site charge before tax, Campspot quotes read 2026-11-24); Campspot adds its own $3 booking fee once per stay. Monthly rates by phone."},
+      "source": "Campspot availability/pricing API for park 3978 (greenacrescampground), one night from 2026-12-08, 2026-12-12, 2027-03-09, 2027-03-13, 2027-06-08, 2027-06-12, 2 adults, read 2026-11-24",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://steadystays.com/green-acres-rv-park-savannah-tn/ ('50/30/20-amp electricity, sewer, and water hookups'); Campspot Pull Through amenities 30-Amp, 50-Amp, Sewer Hook-Up, Water Hook-Up, read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 45, "pull_through": true},
+      "source": "Campspot park 3978 site type 'Pull Through' (11 sites, longest rig 45 ft, Pull-Through amenity), read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"laundry": true, "showers": true, "camp_store": true, "wifi": true},
+      "source": "https://steadystays.com/green-acres-rv-park-savannah-tn/ ('access to modern bathhouses and laundry'; 'a well-stocked camp store'; 'Every site includes free Wi-Fi'), read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://steadystays.com/green-acres-rv-park-savannah-tn/ ('Open Year-Round with Extended Stay Options'; 'year-round hospitality'), read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/greenacrescampground"},
+      "source": "https://steadystays.com/green-acres-rv-park-savannah-tn/ ('BOOK YOUR STAY'); Campspot park 3978 bookable on every date read, 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "Private RV park in the farmland south of Savannah, near Shiloh National Military Park and Pickwick Lake; not on the water. Now under the SteadyStays long-term RV brand: online booking offers only its 11 pull-through sites (plus 3 tent sites), the rest of the park being let by the month. --Claude",
+  "summary": "The stored website, fees and evidence belonged to a different Green Acres (Cumberland City). This park (215 Ziffle Circle, Savannah) is now a SteadyStays/Streamside park booking on Campspot: 11 pull-throughs to 45 ft at $50 (Dec 2026 weeknight) to $55, full hookups 50A, year-round, laundry/showers/store/WiFi. Google 4.7/295. Passes the gate exactly at $50; mostly long-term (~11 of ~50 RV sites nightly).",
+  "flags": [
+    "WRONG PARK DATA: stored website https://www.greenacresrvparkandcabins.com/ is 'Green Acres RV Park and Cabins, 233 Scotts Chapel Rd, Cumberland City, TN' (931-801-2664), a different park ~150 km away; the stored $50 fee (read 2026-10-16) came from that page. WEBSITE old -> new: https://www.greenacresrvparkandcabins.com/ -> https://steadystays.com/green-acres-rv-park-savannah-tn/ (Cloudflare-walled to curl, reads in a browser; Campspot's park record names https://www.greenacresrvparktn.com/, also Cloudflare-walled). PHONE 731-926-1928 confirmed (operator page, Google, Campspot). Replacement inclusion_evidence: 'steadystays.com/green-acres-rv-park-savannah-tn (2026-11-24): 215 Ziffle Circle, Savannah, full-hookup graveled RV sites 50/30/20A, open year-round; Campspot books 11 pull-throughs to 45 ft nightly; Google 4.7/295 -> real RV park, mostly long-term'.",
+    "GATE FACTS (private): cheapest RV night $50.00 site charge (Pull Through, Tue 2026-12-08, Campspot), $52 Sat 2026-12-12, $53 weekdays / $55 Saturdays in March and June 2027 - summer peak $55. Passes only on December weeknights, exactly at the line (Campspot's own $3 booking fee is per stay, not counted). gateways.py: none within 40 km. No Good Sam discount on record (stored good_sam false). GOOGLE 4.7 from 295 reviews; RV Life 5*/$$ stored. Narrow pass with strong reviews.",
+    "LONG-STAY (SteadyStays brand, 'communities for long-term RV living', monthly rates by phone): (1) the operator page leads with 'Whether you're here for a night or staying for the season' and 'Extended Stay Options'; (2) nightly rate bookable online on Campspot; (3) the reviews on its page (Jan-Jul 2025) describe one- and two-night stays visiting Shiloh; (4) nightly share: Campspot sells only the 11 pull-throughs (10-11 free on all six dates read) plus 3 tent sites, against a stored ~50 RV sites (count from old note prose, unsourced) - about 14 of ~53, ~26%, inside the 10-50% keep-with-caveat band; (5) no lots or homes sold. Reads as mostly long-term; keep with the caveat now in the proposed note.",
+    "LEAD (not vetted): 'Green Acres RV Park and Cabins', 233 Scotts Chapel Rd, Cumberland City TN 37050 (greenacresrvparkandcabins.com, 931-801-2664) is not in campgrounds.json; nightly $50/weekly $300/monthly $600, but it books by 'Application' with a 'Rules and Lease Agreement' page and markets being 'close to work' at the Cumberland City TVA plants - looks workforce/long-stay, likely fails the long-stay tests.",
+    "PIN: stored 35.13995,-88.24993 vs Google 35.140403,-88.249576 and Campspot 35.140561,-88.249604 (~60 m) - fine. Waterfront 'not waterfront' unchanged (inland farmland).",
+    "Stored sites.count 50 (from 2026-09 note prose) has no operator source; left alone. Name: operator and Google 'Green Acres RV Park' (Campspot 'Green Acres Campground') - stored name fine."
+  ]
+}

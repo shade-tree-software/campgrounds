@@ -8,3 +8,4 @@ Batches p3-598 onward, 11 entries each, ONE agent at a time. Build/apply exactly
 
 Batches applied:
 - p3-598 (2026-11-24): 9 applied, 2 drops (4475 Coops Creek no presence, 4481 Green Acres long-stay with no posted rate); 701 --AWH lakefront agreed (sites 012-016), pin + phone; 4453 lakeview held (Waterfront pads 4-5 m above summer pool); 4471 phone -> operator's store line; 15497 KOA $50 winter.
+- p3-599 (2026-11-24): 11 applied, no drops; 4435 Lock A riverview->riverfront (sites 27-33), 14637 Mountain View -> creekside (sites 6/7), 4426 Paint Creek riverview->not waterfront + temporarily closed 2026; 4482 Green Acres Savannah carried another park's website/fee/evidence (fixed, SteadyStays, $50 Dec weeknights); 4388 renamed Fiery Gizzard SP - Foster Falls; pin 4399; Myers Landing 14636 nightly-share ask.
