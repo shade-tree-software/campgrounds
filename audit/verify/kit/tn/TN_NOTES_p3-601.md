@@ -1,0 +1,12 @@
+# p3-601 notes
+- 4404 done: 107 sites, $39-85, phone 615-443-2769
+- 15496 done: KOA $48-85, gate passes $48 Jan, G 4.3/822
+- 4473 done: $39.56, horse question flagged, website -> own site
+- 4415 done: rec.gov 59 sites $12-20, season 04-14..11-14, pin move 570 m
+- 4402 done: $41-85, 131 sites, Area 1 year-round, phone 931-484-6138
+- 4440 done: $32, rec.gov 'Lakefront' tag on 43-60 re-audited -> not waterfront kept; phone
+- 4392 done: $32-65, 96 sites, max 70; pin between CGs (split cand. CG1 35.2472,-87.3483 / CG2 35.2595,-87.3613); phone -> 931-903-2323
+- 4452 done: lakefront kept (WF sites 45-59 point, 3DEP); Google 4.6 (1021); max 21, fcfs some
+- 4451 done: riverfront kept (French Broad, River Sites 01-37); Google 4.5 (620); long-term some sites, ~89% nightly
+- 4403 done: lakeview kept (6-15 m above pool, filtered view photo); fees 32-63; phone -> 931-646-3080
+- 14632 done: $45-60 posted ($50/night), Google 4.5 (189), monthly marketed, imagery near-full, phone booking; not waterfront kept
