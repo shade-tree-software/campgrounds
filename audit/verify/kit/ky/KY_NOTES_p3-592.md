@@ -1,0 +1,12 @@
+# KY p3-592 notes
+- 1574 done: 20-32, 123 public, season 04-17..10-24, not wf kept, pin optional 270m, volunteers
+- 1594 done: DROP CANDIDATE 91 seasonal/2 daily; Google 4.4/37
+- 15435 done: fees unread (CF), gateway 14km, Google 4.2/769, yr-round
+- 1618 done: 35-53, 257 sites, pin ~950m -> 38.1481,-84.5069, horse ok
+- 1630 done: kept, Bonfire booking, max 7, holiday min 3
+- 1623 done: lakefront->lakeview (pads interior 8-9 m up), 70 sites, JO Investments LLC, Google 4.2/209
+- 1569 done: fees 24-34, lakefront kept C46-C51, season 2027 05-13..10-30
+- 1620 done: facilities + year_round; Firefly unread; 146 sites flag
+- 15437 done: fees unread (CF), 79-90 capture, gateway Louisville 29 km, Wayback open all year
+- 1629 done: drop candidate long-stay (RoverPass sells nothing, rent/impound rule, full imagery); fees 55/250/650
+- 1624 done: lakefront kept (pads 0.8-2.3 m up at 16-28 m), county pages Akamai 403 -> Wayback 2026-04/08

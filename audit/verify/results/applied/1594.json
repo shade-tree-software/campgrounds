@@ -1,0 +1,43 @@
+{
+  "id": 1594,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://kamptown.com/ ('Kamptown RV Resort is a quiet, family-friendly campground offering full hookup RV sites, short-term, long-term stays'; 'CALL FOR AVAILABILITY 270-522-7976'; 'Daily Rates/Seasonal Rates Call For More Information 270-522-7976'; 'Season Mid March - November'; 4124 Rockcastle Rd, Cadiz), read 2026-11-24 with the full desktop UA (the bare 'Mozilla/5.0' got a Mod_Security 406)",
+    "https://kamptown.com/about/ ('Founded in 1972, Kamptown has grown along the shores of Lake Barkley's Little River Bay and now features 93 RV sites. While many sites are seasonal, we also offer full-hookup RV sites for overnight guests'; 'Seasonal and Daily Sites - We offer 91 seasonal sites as well as 2 daily sites. Come stay all summer long'; 'private stocked pond'), read 2026-11-24",
+    "https://kamptown.com/campground-policies/ (check-in 2:00 PM, check-out 12:00 PM; 'Registered guests and tenants are responsible for their visitors'; 'Seasonal and Daily Rates Available'), read 2026-11-24",
+    "https://kamptown.com/outdoor-adventures/ ('Seasonal camping: friends, sunshine, and golf cart rides every evening'; 'courtesy dock located on Little River Bay'; 'Whether you're staying for a weekend getaway or all season ... You have found a second home'; 'Call for Seasonal or Daily Rates'), and https://kamptown.com/contact/, read 2026-11-24",
+    "Google Maps 'Kamptown RV Resort', 4124 Rockcastle Rd, Cadiz: 4.4 stars, 37 reviews, phone 270-522-7976, website kamptown.com, read 2026-11-24 (headless browser)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"water": true, "sewer": true},
+      "source": "https://kamptown.com/ 'offering full hookup RV sites'; /about/ 'full-hookup RV sites for overnight guests', read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 93},
+      "source": "https://kamptown.com/about/ 'now features 93 RV sites' ... 'We offer 91 seasonal sites as well as 2 daily sites', read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-15", "closes": "11-30", "note": "Posted as 'Mid March - November'."},
+      "source": "https://kamptown.com/ 'Season Mid March - November', read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "phone"},
+      "source": "https://kamptown.com/ 'CALL FOR AVAILABILITY 270-522-7976'; /about/ 'Book Your Stay at Kamptown RV Park 270-522-7976'; no online booking, read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "Mostly seasonal: only 2 of its 93 sites are sold by the night. Private RV park on Lake Barkley's Little River Bay south of Cadiz, with a courtesy dock on the bay, a stocked pond and a pool. --Claude",
+  "summary": "DROP CANDIDATE (long-stay): operator says '91 seasonal sites as well as 2 daily sites' (2% nightly, fails test 4); no posted rate ('Call For More Information'), booking by phone only. Confirmed 93 full-hookup sites, season mid-March to November. Google 4.4/37.",
+  "flags": [
+    "DROP CANDIDATE (long-stay test 4, and the reviewer's mostly-seasonal rule): https://kamptown.com/about/ 'We offer 91 seasonal sites as well as 2 daily sites. Come stay all summer long or enjoy a vacation you won't forget' and 'While many sites are seasonal, we also offer full-hookup RV sites for overnight guests' - 2 of 93 sites (~2%) sold by the night, under the 1-in-10 line. The operator leads with seasonal life ('Seasonal camping: friends, sunshine, and golf cart rides every evening', 'You have found a second home'; policies address 'guests and tenants').",
+    "LONG-STAY TESTS: (1) seasonal sites dominate - fail; (2) no nightly rate posted anywhere on the operator site ('Daily Rates/Seasonal Rates - Call For More Information', 'Call for Seasonal or Daily Rates') - fail; (3) booking is 'CALL FOR AVAILABILITY' only - weak; (4) 2 daily sites of 93 - fail; (5) no lots for sale seen - pass. Read as mostly seasonal and iffy (no rate, only 2 transient sites).",
+    "GOOGLE: 'Kamptown RV Resort' 4.4 stars, 37 reviews, phone 270-522-7976 (matches stored), read 2026-11-24. RV Life 4*/$$ stored. Presence passes (operator site + phone); price does not rest on a posted rate.",
+    "PRICE GATE: no rate posted; not measurable. gateways.py not needed for the long-stay drop.",
+    "WATERFRONT (not waterfront kept, unchecked on imagery this round): the operator markets 'along the shores of Lake Barkley's Little River Bay', 'beautiful waterfront scenery' and a courtesy dock; the stored satellite evidence says the RV sites sit behind a continuous treeline from the bay and the shoreline buildings are cabins/houses. If the park is kept, re-audit from the 2 daily sites (which the operator does not identify).",
+    "WEBSITE https://kamptown.com/ and PHONE 270-522-7976 current. The old note's 'swimming pool, playground' confirmed (pool and playground pictured on /outdoor-adventures/)."
+  ]
+}

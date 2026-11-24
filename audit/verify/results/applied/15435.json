@@ -1,0 +1,48 @@
+{
+  "id": 15435,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://koa.com/campgrounds/horse-cave/ (headless browser, full desktop Chrome UA): 'Reserve: 1-270-786-2819', 'Info: 1-270-786-2819', 'Open All Year', 'KOA AVE, Horse Cave, KY 42749' / '489 Flint Ridge Road'; amenities '50 Max Amp', '60' Max Length', 'Wi-Fi', 'Pool (5/31 - 9/6)', Fishing, Mini Golf, Pavilion, Dog Park; description '... top-notch family bathrooms and laundry facilities. We also offer Camping Cabins, Wagons, Teepees, Treehouses and shady Pull-Thru RV Sites, a swimming pool, mini golf, a jumping pillow, free fishing ... Max pull thru: 70 feet'; camper reviews dated 2026-10-26..2026-11-18, read 2026-11-24",
+    "https://koa.com/campgrounds/horse-cave/reserve/ (headless browser, RV, 2 adults, Motorhome 23 ft, 2027-03-16, 2027-06-15, 2027-10-19): step 1 loaded, submit answered 'Performing security verification ... Performance and Security by Cloudflare' / 'Just a moment...'; not solved, read 2026-11-24 - UNREAD",
+    "audit/koa_backlog_2026-10-19/quotes.jsonl + dumps/horse-cave_05.txt (koa.com booking form, 1 night 2027-05-18, RV, 2 adults, 23-ft motorhome, read 2026-10-19): 8 of 9 RV site types priced - 'Pull In, 30/20 Amps, Water/Electric Great for smaller Rv's' $52.00, 'Pull Thru, 50/30/20 Amps, Water/Electric' $52.00, 'Pull Thru, 30/20 Amps, Full Hookups' $55.00, 'Back In, 50/30 Amps, Full Hookups' $57.00, 'Pull Thru, 50/30 Amps, Full Hookups' $62.00, 'Back In, 50/30 Amps, Water/Electric, KOA Patio' $67.00 avg/night; every type 'Up to 6 people.'",
+    "Google Maps 'Horse Cave KOA Holiday': 4.2 stars, 769 reviews, phone 270-786-2819, website koa.com/campgrounds/horse-cave/, read 2026-11-24 (headless browser)",
+    "audit/price_research/gateways.py 37.19923,-85.9415 -> Mammoth Cave NP (national park, 14 km), run 2026-11-24"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://koa.com/campgrounds/horse-cave/ '50 Max Amp'; booking form site types '50/30 Amps, Full Hookups' (2026-10-19 dump), read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 60, "pull_through": true},
+      "source": "https://koa.com/campgrounds/horse-cave/ '60' Max Length' (the description also says 'Max pull thru: 70 feet'); 'shady Pull-Thru RV Sites', read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"wifi": true, "laundry": true, "flush_toilets": true, "showers": true},
+      "source": "https://koa.com/campgrounds/horse-cave/ amenities 'Wi-Fi'; 'top-notch family bathrooms and laundry facilities'; camper review 2026-11-10 'The laundry room was very clean', read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://koa.com/campgrounds/horse-cave/ 'Open All Year', read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://koa.com/campgrounds/horse-cave/reserve/"},
+      "source": "https://koa.com/campgrounds/horse-cave/ 'BOOK NOW' -> koa.com reservation form (step 1 loaded 2026-11-24; priced 2026-10-19)",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Holiday just off I-65 at Horse Cave, about 20-25 minutes from Mammoth Cave National Park, with cabins, wagons, teepees and treehouses alongside the RV sites. Campers mention audible highway noise and some hard-to-level full-hookup sites (reviews, autumn 2026). Pool (Memorial Day to Labor Day weekend), mini golf, jumping pillow, free fishing, dog park. --Claude",
+  "summary": "Kept on the gateway rule. Fees not re-read (Cloudflare on the KOA form); stored $52-67 rests on the 2026-10-19 form read. Confirmed open all year, 50A, max 60 ft, pull-throughs, wifi, laundry. Google 4.2/769. Gateway Mammoth Cave NP 14 km.",
+  "flags": [
+    "FEES NOT RE-READ: koa.com/campgrounds/horse-cave/reserve/ answered Cloudflare 'Performing security verification' / 'Just a moment...' on submit for 2027-03-16, 2027-06-15 and 2027-10-19 (2026-11-24, headless browser with the full desktop UA); not solved or clicked through. Wayback holds no results page. Fees left as stored ($52-67, 2026-10-19 form read for 2027-05-18). No shoulder-season or winter quote was readable, so whether any night is $50 or under is unknown.",
+    "PRICE GATE: cheapest RV type on the 2026-10-19 read was $52.00 ('Pull In, 30/20 Amps, Water/Electric Great for smaller Rv's', and the 50/30/20 W/E pull-through) - over $50; summer peak $67 (KOA Patio). Good Sam false, military true stored (Good Sam directory, derived; not re-checked). GATEWAY: gateways.py -> Mammoth Cave NP 14 km, within 40 km, so the gate is lifted (as the stored inclusion_evidence already says).",
+    "GOOGLE: 'Horse Cave KOA Holiday' 4.2 stars, 769 reviews, phone 270-786-2819, read 2026-11-24. KOA camper reviews (Oct-Nov 2026) mostly positive; complaints: I-65 noise, site #84 / full-hookup row hard to level, site #31 close to the road, one 'to stay in an RV not what I would do'.",
+    "LONG-STAY: nothing on the KOA pages markets monthly or seasonal sites; all RV types sold by the night online (2026-10-19). Not a long-stay park.",
+    "SITES: KOA page gives '60' Max Length' and, in its description, 'Max pull thru: 70 feet' - wrote 60. RV Life stored 93 sites (inclusion_evidence) - no operator count found, not written.",
+    "PHONE 270-786-2819 and WEBSITE https://koa.com/campgrounds/horse-cave/ current (KOA page, Google). PIN OK (Google 37.199842,-85.941476 is ~20 m from stored)."
+  ]
+}
