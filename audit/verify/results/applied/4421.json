@@ -1,0 +1,50 @@
+{
+  "id": 4421,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsm (the data behind https://www.nps.gov/grsm/planyourvisit/cades-cove-campground.htm, page last updated 2026-08-12; read 2026-11-24): 'Cades Cove Campground—open year-round—combines the feel of primitive camping with the modern convenience of flush toilets and drinking water ... No hookups or showers'; 'Reservations are now required year-round'; 'All campsites are drive-up'; 'Check out time is 1:00 p.m. Check in time is 1:00 p.m. Your stay is limited to 14 consecutive days'; 'Generator quiet hours are from 8:00 PM-8:00 AM'; operating hours 'Cades Cove Campground is open year-round. Loop B and parts of Loop C are open from mid-spring through Nov. 30. During the winter, only sites C1-12 and C26-61 are open (reservations required)'; amenities flush toilets, potable water and dump station year round, camp store seasonal, showers None, laundry No, internet No; fees 'Camping Fee' $30.00 'per site, per night'; campsites totalSites 161 (tentOnly 31), reservable 164, first-come 0; rvMaxLength 40, trailerMaxLength 35, 'Site driveways are also paved'; phone (865) 448-2472 ext. 2; pin 35.60272,-83.77629",
+    "https://www.recreation.gov/api/camps/campgrounds/232488 (read 2026-11-24): 'This location has limited staffing. Please call (865) 448-4103 for general information'; notices: 'Front country campers parked at their designated campsite will not be required to have a parking tag. If they park elsewhere in the park, a parking tag will be required ... parking tags will be required for vehicles in excess of what is allowable for each campsite'; 'There are no showers or electric, water or sewer hook-ups in the park. Some accessible sites have a 5 amp electric hookup for medical equipment use only'; 'Generator use and the idling of engines to charge batteries is prohibited in C Loop whenever Loop B is open for camping'; 'You must check-in with the campground office staff UPON ARRIVAL ... Failure to check-in with the office staff by noon following the day of your arrival will be considered a no show'; 'Reservations may be made up to 6 months in advance'; rule maxConsecutiveStay 14",
+    "https://www.recreation.gov/api/camps/campgrounds/232488/rates (read 2026-11-24): 2026 and 2027 all site types $30",
+    "recreation.gov campsite catalog for 232488 (read 2026-11-24): 161 overnight sites (130 standard nonelectric, 31 tent-only, one tent site Not Available); 127 permit an RV, trailer or fifth wheel, 123 of them 23 ft or longer (shorter of driveway and equipment cap); C45 15 ft, C51 and C53 20 ft, C70 21 ft; B46, B48, B65, C08, C13, C14 pull-through"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "No entrance fee. The park's parking tag is not needed for a vehicle parked at its own campsite, only for extra vehicles or parking elsewhere in the park."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsm ('Camping fee is per site, per night' $30.00) and https://www.recreation.gov/api/camps/campgrounds/232488 (rates $30; parking-tag notice), read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232488", "fcfs": "never", "max_stay_nights": 14, "note": "Check in at the campground office on arrival; arriving after hours, check in by noon the next day or the reservation counts as a no-show."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsm ('Reservations are now required year-round'; first-come sites 0; 'limited to 14 consecutive days') and https://www.recreation.gov/api/camps/campgrounds/232488 (check-in notice), read 2026-11-24",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232488 ('There are no showers or electric, water or sewer hook-ups in the park. Some accessible sites have a 5 amp electric hookup for medical equipment use only'); NPS 'No hookups or showers', read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 161, "max_rig_ft": 40, "pull_through": true},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsm (totalSites 161, rvMaxLength 40, trailerMaxLength 35) and the recreation.gov catalog for 232488 (six pull-through sites), read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "camp_store": true, "wifi": false},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsm (amenities: flush toilets, potable water and dump station year round; camp store seasonal; showers None; laundry No; internet No), read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Loop B and part of Loop C open from mid-spring through November 30; in winter only sites C1-12 and C26-61 are open."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsm (operating hours: 'Cades Cove Campground is open year-round. Loop B and parts of Loop C are open from mid-spring through Nov. 30. During the winter, only sites C1-12 and C26-61 are open'), read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "In the Cades Cove valley of Great Smoky Mountains National Park. Generators may run in Loop B outside 8 p.m.-8 a.m.; Loop C is generator-free while Loop B is open. Some accessible sites have a 5-amp outlet for medical equipment only. The trailer limit is 35 ft; sites C45, C51, C53 and C70 are under 23 ft. --Claude",
+  "summary": "NPS campground confirmed: year-round (winter: C1-12, C26-61 only), reservation-only on rec.gov, $30, no hookups/showers, flush toilets, water, dump (new), seasonal store; 161 sites (stored 159), RV 40/trailer 35 ft. Parking tag not needed at the campsite (fee fact only, not counted for the gate). Phone 865-436-1200 -> 865-448-4103.",
+  "flags": [
+    "PHONE 865-436-1200 (park headquarters) -> 865-448-4103 (recreation.gov: 'Please call (865) 448-4103 for general information'). The NPS API lists (865) 448-2472 ext. 2 for the campground. Websites unchanged.",
+    "PARKING TAG (fee fact, not counted for the price gate): rec.gov 'Front country campers parked at their designated campsite will not be required to have a parking tag'; needed only for vehicles beyond the site's allowance or parked elsewhere in the park. Written into fees.note.",
+    "SITES: 161 overnight sites (NPS totalSites 161, rec.gov catalog 161; stored 159), 31 of them tent-only; 127 take an RV, trailer or fifth wheel and 123 of those are 23 ft or more. Four RV-permitted sites are under 23 ft (C45 15, C51 20, C53 20, C70 21).",
+    "Status operating; season year_round confirmed by the NPS statement (stored value was derived). Pin matches NPS's own (35.60272,-83.77629). Not waterfront (unchanged). No policy-row contradiction: NPS fees are untaxed as the federal:nps row says; the 6-month window matches."
+  ]
+}
