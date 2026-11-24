@@ -819,6 +819,30 @@ class TestShippedRegistry(unittest.TestCase):
                     with self.subTest(id=e["id"], group=group, key=key):
                         self.assertEqual(r["values"][key], dec[group][key])
 
+    def test_land_between_the_lakes_is_not_booked_on_recreation_gov(self):
+        """LBL is a Forest Service unit with its own UseDirect booking site.
+
+        As federal:usfs its campgrounds printed recreation.gov's $8 reservation
+        fee (phase 7 KY, 2026-11-24); LBL charges $6 online / $10 by phone and
+        never sells through recreation.gov. Its row must outrank both the
+        usfs row (by replacing it) and the bare federal row's platform.
+        """
+        import json
+        import os
+        cg = os.path.join(os.path.dirname(__file__), os.pardir,
+                          "campgrounds.json")
+        with open(cg) as f:
+            entries = [e for e in json.load(f) if e.get("policy_ref") == "federal:lbl"]
+        self.assertGreaterEqual(len(entries), 7)
+        for e in entries:
+            with self.subTest(id=e["id"]):
+                self.assertNotIn("federal:usfs", cs.policy_refs(e))
+                r = cs.resolve(e, self.rows)
+                booking = r.get("booking", {}).get("values", {})
+                self.assertNotEqual(booking.get("platform"), "recreation.gov")
+                fee = r.get("fees", {}).get("values", {}).get("reservation_fee")
+                self.assertIn(fee, (None, 6))
+
     def test_the_federal_row_withholds_what_varies_per_facility(self):
         # The most expensive possible default in the registry: 3,738 entries.
         # FCFS and minimum stay vary campground by campground on federal land,

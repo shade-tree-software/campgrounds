@@ -5084,6 +5084,7 @@ _POLICY_INITIALISMS = {"dec", "dnr"}
 # would be the slug rule's reading.
 _POLICY_NAMES = {
     "federal:usfs": "Forest Service campgrounds",
+    "federal:lbl": "Land Between the Lakes campgrounds",
     "federal:usace": "Army Corps of Engineers campgrounds",
     "federal:blm": "BLM campgrounds",
     "federal:nps": "National Park Service campgrounds",
