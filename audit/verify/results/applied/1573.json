@@ -1,0 +1,76 @@
+{
+  "id": 1573,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233633 (facility 'SMITH RIDGE', is_deactivated false), read 2026-11-24: 'Smith Ridge Campground offers 80 campsites, 62 of which have water and electric hookups. Amenities such as flush toilets, showers, fire rings, and drinking water'; 'A playground and hiking trail'; 'Between 05/08/2026 and 09/13/2026 this location is staffed. Please call (270) 789-2743 ... From 09/14/2026 to 05/13/2027 this location is unstaffed. Please call (270) 465-4463'; notice 'Campground now ran by volunteers. There will be limited tollhouse hours and services offered. Reservations will not be marked in advance at the campsite. Do not set up at any campsite without reserving the site first. Reservations can be made by calling 1-877-444-6777 or on www.recreation.gov.'; rules maxStay 14 nights per rolling 30 days, minHolidayWeekendStay 3, reservationCutOff 0",
+    "https://www.recreation.gov/api/camps/campgrounds/233633/rates, read 2026-11-24: Peak only, 2026-05-08..2026-09-12 and 2027-05-14..2027-09-11; Standard Electric $32, Standard Nonelectric with water $26, Standard Nonelectric $20; no off-peak season rated",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233633, read 2026-11-24: 79 sites, 61 STANDARD ELECTRIC (50 amp, 60 with water), 18 STANDARD NONELECTRIC (5 with water); 78 back-in, 1 pull-through; electric driveways 43-84 ft (one listed max vehicle 20 ft on an 81-ft driveway)",
+    "Esri World_Imagery with every rec.gov site point plotted (centre 37.2943,-85.2940, hw 260 m), viewed 2026-11-24: sites 01-30 on a wooded ridge to the west, 31-80 in a partly open loop to the east; no lake water within the frame except a sliver ~250 m north of site 80",
+    "USGS 3DEP 1 m DEM (400 m half-width around 37.2943,-85.2940), queried 2026-11-24: west-ridge pads (01-30) 249-254 m; east-loop pads (31-80) 221-230 m, 13-23 m above a bottomland at 207-209 m that lies 50-240 m to their east and south (sites 50/51 nearest at 52-54 m, bearing 160); lowest cell in the box 206.4 m, none at or below Green River Lake summer pool (205.7 m, 675 ft), so the pool edge is more than ~250-400 m from every site"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "recreation.gov campsite catalog 233633 (61 electric sites at 50 amp, 60 with water), read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 80,
+        "pull_through": true
+      },
+      "source": "recreation.gov 233633 'offers 80 campsites, 62 of which have water and electric hookups'; catalog: one pull-through, read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true,
+        "potable_water": true
+      },
+      "source": "recreation.gov 233633 'flush toilets, showers, fire rings, and drinking water', read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-14",
+        "closes": "09-11"
+      },
+      "source": "recreation.gov 233633 rate table Peak 2027-05-14..2027-09-11 (2026: 05-08..09-12), no off-peak season rated, read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "max_stay_nights": 14
+      },
+      "source": "recreation.gov 233633 notice 'Do not set up at any campsite without reserving the site first. Reservations can be made by calling 1-877-444-6777 or on www.recreation.gov.'; maxStay 14 nights per rolling 30 days, read 2026-11-24",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 32,
+        "currency": "USD"
+      },
+      "source": "recreation.gov 233633 rate table 2027 peak: Standard Nonelectric $20, Nonelectric with water $26, Standard Electric $32, read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Louisville District campground on a wooded ridge above Green River Lake near Campbellsville; the lake is not visible from the sites. Mostly long back-in sites; playground and hiking trail. Now run by volunteers with limited tollhouse hours; marina swim beach and disc golf within about a mile. Weak cell signal. --Claude",
+  "summary": "Corps campground, rec.gov 233633 active, 80 sites (61-62 W/E 50A), $20/$26/$32, peak season only (2027: May 14-Sep 11), reserve first (no walk-up setup), 14-night limit. Not waterfront confirmed: no cell at summer pool within the 400 m DEM box; nearest low ground is above-pool bottomland 13+ m below the pads. Old note's 'along the lake perimeter with many waterfront-access sites' was wrong and is replaced.",
+  "flags": [
+    "WATERFRONT: stays not waterfront. 3DEP: west-ridge pads 249-254 m, east-loop pads 221-230 m; Green River Lake summer pool 205.7 m and no cell at or below it within 400 m of the centroid 37.2943,-85.2940 (box minimum 206.4 m). The nearest low ground (207-209 m, a bottomland field on imagery) is 52 m+ from sites 50/51 and 13+ m below them - fails the kayak test even if it flooded. The previous note's 'set along the lake perimeter with many waterfront-access sites' is contradicted and removed.",
+    "OPERATIONS: rec.gov notice 'Campground now ran by volunteers. There will be limited tollhouse hours and services offered.' and 'Do not set up at any campsite without reserving the site first' - put in the note; fcfs never.",
+    "SEASON: peak-only rate table (2026 05-08..09-12; 2027 05-14..09-11); unstaffed 09/14/2026-05/13/2027. Written as the 2027 dates.",
+    "SITE 'Max Vehicle Length' 20 ft on one electric site with an 81-ft driveway (catalog oddity); every other site 43-84 ft. Fits a 23-ft rig.",
+    "PIN 37.2944,-85.2921 is ~170 m east of the site centroid (inside the east loop's edge). No move. PHONE 270-789-2743 (staffed season) matches rec.gov; off-season general line (270) 465-4463 - not written. WEBSITE recreation.gov/camping/campgrounds/233633 unchanged.",
+    "POLICY ROW federal:usace: nothing contradicting seen."
+  ]
+}
