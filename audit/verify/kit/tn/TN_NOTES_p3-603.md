@@ -1,0 +1,11 @@
+# p3-603 notes
+- 27 done: $10-12, 66 sites, season 04-06..11-02, pin ~1 km -> 36.5205,-82.0625, phone add 423-735-1500, AWH lakefront unchanged
+- 4429 done: $30-32, 55 sites, season 04-08..10-31, riverview kept (pads ~5 m above tailwater behind trees), extra vehicle $3
+- 4439 done: lakefront confirmed, $22-32, season 04-16..10-25, weekend 2/holiday 3 min
+- 4398 done: $27-54, 25 sites, year-round, pin ~600 m -> 35.6636,-88.0054, phone add 731-847-0841, Spring Creek primitive lead
+- 4400 done: Campground One closed on calendar 2026-11-29..2027-11-23 (status flag); season unwritten; WF kept not waterfront (sites 19-23 ~25-40 m behind trees); website slug stale
+- 4463 done: 5 sites (was 9), $25, dump 'not for public use' flag
+- 4489 done: $45-105, lakefront kept on sites 16/17 only (21-27 behind trees), Google 4.5/164, 29 nightly sites Dec 2026
+- 4454 done: season 03-15..11-14 manual (Campspot closed dates), max 21, lakefront kept outer ring, 2027 rates not open
+- 4493 done: 14 sites (7 FHU + 7 W/E), phone booking cash/check, still being finished 2026
+- 15498 done: $59.24-82.24, over gate, gateway Nashville 37 km; 15499 done: $39-249, under gate

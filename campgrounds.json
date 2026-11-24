@@ -1884,8 +1884,8 @@
     "id": 27,
     "kind": "campground",
     "name": "Little Oak Campground",
-    "location": "36.5156,-82.0520",
-    "elevation_meters": 588.0,
+    "location": "36.5205,-82.0625",
+    "elevation_meters": 540.0,
     "website": "https://www.fs.usda.gov/r08/cherokee/recreation/little-oak-campground\nhttps://www.recreation.gov/camping/campgrounds/122240",
     "state": "TN",
     "ownership": "federal",
@@ -1907,16 +1907,70 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/122240/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/122240/rates and https://www.fs.usda.gov/r08/cherokee/recreation/little-oak-campground (Peak $12, Non-Peak $10), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/122240 (notice 'Campers may camp on unreserved sites for no more than two nights at a time'; rules maxConsecutiveStay 14, minHolidayWeekendStay 3) and its campsite catalog (45 reservable / 21 not), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:122240 (66 overnight sites, every one back-in), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/122240 ('Each loop has a pair of vault toilets'; 'shower house with 8 showers'; amenities Dump Station, Drinking Water) and https://www.fs.usda.gov/r08/cherokee/recreation/little-oak-campground ('Flush toilet(s)'; 'Potable water is available'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/cherokee/recreation/little-oak-campground ('Seasons of Use 4/6/26 - 11/2/26'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 10,
       "nightly_high": 12,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$12 a night in peak season (late April to mid-October); $10 in the early-April and late-October shoulder weeks, when the water and showers are off. recreation.gov rate table and Forest Service page, read 2026-11-24."
     },
-    "policy_ref": "federal:usfs"
+    "policy_ref": "federal:usfs",
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/122240",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "45 of the 66 sites are reservable; the other 21 are first-come, and an unreserved site may be held for no more than two nights at a time."
+    },
+    "sites": {
+      "count": 66,
+      "pull_through": false
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-06",
+      "closes": "11-02",
+      "note": "2026 dates; recreation.gov's 2027 rate seasons run April 5 to October 31. Water and showers are off in the shoulder weeks."
+    },
+    "phone": "423-735-1500"
   },
   {
     "id": 28,
@@ -303619,14 +303673,14 @@
     "id": 4398,
     "kind": "campground",
     "name": "Mousetail Landing State Park",
-    "location": "35.66861,-88.00835",
-    "elevation_meters": 143.0,
+    "location": "35.6636,-88.0054",
+    "elevation_meters": 187.0,
     "state": "TN",
     "ownership": "state",
     "waterfront": "not waterfront",
     "website": "https://tnstateparks.com/parks/mousetail-landing/camping\nhttps://reserve.tnstateparks.com/mousetail-landing/camping",
-    "phone": "",
-    "note": "Tennessee State Parks main campground on the east bank of the Tennessee River (3 Campground Rd, Linden). 25 sites; 19 with water + 20/30/50-amp electric (4 primitive), modern bathhouse, laundromat, dump station, WiFi at sites 1-13. Mix of tent and RV sites; fits a 23-ft rig. Reservable online up to 1 yr ahead ($5 fee). Separate Spring Creek primitive campground (21 tent sites) on the river is tent-only. --Claude",
+    "phone": "731-847-0841",
+    "note": "Main Campground strung along Campground Road on a wooded ridge north of the visitor center; the park's map warns that its access road has a steep grade. WiFi reaches sites 1-13. The separate Spring Creek primitive campground (21 sites, no hookups) sits on the Spring Creek embayment of the Tennessee River. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -303637,31 +303691,36 @@
       "water": true
     },
     "sites": {
-      "count": 25
+      "count": 25,
+      "max_rig_ft": 90,
+      "pull_through": true,
+      "note": "Main Campground only; 23 of the 25 take a rig of 23 ft or more (site 5 is 22 ft, site 25 20 ft). Site 16 is a 90-ft pull-through; site 14, the only one with sewer, books by phone."
     },
     "facilities": {
       "laundry": true,
       "wifi": true,
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true
     },
     "booking": {
       "reservable": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reserve.tnstateparks.com/mousetail-landing/campsites (all 25 Main sites water + electric, 50 A at 6-24; sewer at site 14 only, so sewer stays unset) and the campground map, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reserve.tnstateparks.com/mousetail-landing/campsites (per-site max RV length, access type), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://tnstateparks.com/parks/mousetail-landing/camping ('modern bathhouse, laundromat'; 'Wifi is available at campsites 1-13'; 'A dump station') and the campground map (shower icon), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -303669,17 +303728,26 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://reserve.tnstateparks.com/mousetail-landing/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15 with a Tennessee zip, read 2026-10-12; '$5.00 Advanced Reservation Fee per campsite' in its policies)",
-        "checked": "2026-10-12"
+        "source": "https://reserve.tnstateparks.com/mousetail-landing/campsites (Calendar View, seven two-week windows 2026-11-25 to 2027-10-26), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://reserve.tnstateparks.com/mousetail-landing/campsites (every Main site priced and bookable for 2027-01-12..01-26), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 27,
-      "nightly_high": 51,
+      "nightly_high": 54,
       "currency": "USD",
       "reservation_fee": 5,
       "checked": "2026",
-      "note": "$27-51 a night for a campsite, plus tax and a $5 reservation fee per site. The Spring Creek campground's primitive sites are $19-23. The price changes by site and night, higher on weekends and busy dates. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+      "note": "$27-30 at sites 21, 22 and 25; $32-46 at the other 20/30-amp sites and most 50-amp sites; $40-45 at the WiFi sites 6-13, up to $54 on holiday weekends. Spring Creek's primitive sites are $19-22. Every bookable night on the park's reservation calendar for two weeks from 2026-11-25, 2027-01-12, 2027-03-16, 2027-05-25, 2027-06-29, 2027-09-01 and 2027-10-12, read 2026-11-24."
+    },
+    "season": {
+      "year_round": true
     }
   },
   {
@@ -303771,9 +303839,9 @@
     "state": "TN",
     "ownership": "state",
     "waterfront": "not waterfront",
-    "website": "https://tnstateparks.com/parks/campground/natchez-trace\nhttps://reserve.tnstateparks.com/natchez-trace/campsites",
+    "website": "https://tnstateparks.com/parks/natchez-trace/camping\nhttps://reserve.tnstateparks.com/natchez-trace/campsites",
     "phone": "731-968-3742",
-    "note": "Tennessee State Parks campground on Cub Lake. Cub Lake Camp 1: 23 sites, all with water and 20/30-amp electric (sites 8, 9, 11, 12 are 50-amp), one bathhouse, dump station nearby (no sewer); max RV/trailer 25 ft (fits a 23-ft rig). Open seasonally Apr 1-Oct 31; reservable online via reserve.tnstateparks.com. (Adjacent primitive Cub Lake Camp 2, water-only, 20-ft max, is closed for renovations.) --Claude",
+    "note": "Cub Lake's Campground 1: a single lane of gravel back-in sites through the woods, ending at the bathhouse by the Cub Lake swim beach; sites 19-23 at the far end sit nearest the lake, behind a strip of trees. The reservation calendar offers no nights here from 2026-11-29 through at least November 2027. The primitive Campground 2 next door (20-ft limit) has been closed for renovation and takes bookings from August 2027. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -303786,7 +303854,9 @@
     },
     "sites": {
       "count": 23,
-      "max_rig_ft": 25
+      "max_rig_ft": 25,
+      "pull_through": true,
+      "note": "20 sites take a 25-ft unit; site 5 takes only 10 ft. Site 10 is the one pull-through."
     },
     "season": {
       "year_round": false,
@@ -303799,14 +303869,14 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reserve.tnstateparks.com/natchez-trace/campsites (50 A at sites 8, 9, 11, 12; water at every site; no sewer) and the camping page, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reserve.tnstateparks.com/natchez-trace/campsites (per-site max RV length and access) and the campground map (sites 1-23), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -303819,9 +303889,9 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://tnstateparks.com/parks/natchez-trace/camping ('1 bathhouse', 'a dump station') and the campground map (restroom, shower and dump icons by site 19), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.tnstateparks.com/natchez-trace/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15 with a Tennessee zip, read 2026-10-12; '$5.00 Advanced Reservation Fee per campsite' in its policies)",
@@ -303829,7 +303899,9 @@
       }
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "showers": true
     },
     "fees": {
       "nightly_low": 32,
@@ -305956,7 +306028,7 @@
     "waterfront": "riverview",
     "website": "https://www.recreation.gov/camping/campgrounds/232630",
     "phone": "615-548-8002",
-    "note": "USACE (Caney Fork River tailwater below Center Hill Dam, Nashville District). 60 sites: 52 water + 50-amp electric (loop LBRA) + 9-site group loop (GLOO); max length 45-75 ft, easily fits a 23-ft rig. Flush toilets, showers, laundry, dump station, boat ramp. Reservable online; season ~April-October; credit card only. --Claude",
+    "note": "USACE (Nashville District) on the Caney Fork River below Center Hill Dam, a stocked trout tailwater. The riverside row sits on a terrace behind a wooded bank about 5 m above the water; boat ramp and fish-cleaning station in the campground. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -305967,59 +306039,71 @@
       "water": true
     },
     "sites": {
-      "count": 60,
-      "max_rig_ft": 75
+      "count": 55,
+      "max_rig_ft": 156,
+      "pull_through": false,
+      "note": "52 electric sites on the riverside loop and a nine-site group loop (49-57) also sold singly; recreation.gov allows 45-156 ft by site, all back-in."
     },
     "facilities": {
       "flush_toilets": true,
       "showers": true,
       "laundry": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true
     },
     "season": {
       "year_round": false,
-      "opens": "04-01",
+      "opens": "04-08",
       "closes": "10-31",
-      "note": "Approximate: Open April to October."
+      "note": "Opens on a Thursday in early April (2026-04-09, 2027-04-08); last night October 31."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "Every site is on recreation.gov; 14 nights in any rolling 30 days."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232630 ('water and 50-amp electric hookups') and the campsite catalog (water at all 55 sites; sewer at site 58 only, so sewer stays unset), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:232630 (55 overnight sites, Max Vehicle Length 45-156, every one back-in), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232630 (description + amenities), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232630/rates (Peak Season 2026-04-09..10-31, 2027-04-08..10-31) and the cached rec.gov calendar (no nights November-March), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232630 (rules maxStay 14 nights 'Rolling 30 Days'; reservationCutOff 0) and its catalog (all 55 sites reservable), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232630/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232630/rates and the facility notices, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
-      "nightly_high": 30,
-      "currency": "USD"
+      "nightly_high": 32,
+      "currency": "USD",
+      "extra_vehicle": {
+        "included": 2,
+        "amount": 3
+      },
+      "note": "$30 for a water/electric site; $32 for the one site with sewer (58). Credit card only. Extra vehicles beyond the two a site includes are $3, visitors' vehicles too."
     },
     "policy_ref": "federal:usace"
   },
@@ -306796,7 +306880,7 @@
     "waterfront": "lakefront",
     "website": "https://www.recreation.gov/camping/campgrounds/232654\nhttps://www.lrn.usace.army.mil/locations/lakes/DaleHollowLake.aspx",
     "phone": "931-864-6388",
-    "note": "USACE Nashville District, Dale Hollow Lake. 123 single + 4 group sites; mix of paved RV sites, gravel RV/tent sites, and tent-only sites. Most have electric, many with water; some 50-amp; no sewer. RV sites well over 23 ft. Swimming beach, boat launch, courtesy float, playgrounds. Reservable via recreation.gov; 14-day stay limit. Season ~mid-April to mid-October. --Claude",
+    "note": "USACE (Nashville District) on Dale Hollow Lake beside Sunset Marina; the lake's largest campground, with its biggest swimming beach and a boat ramp. Paved RV pads and gravel pads that also take tents. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -306808,51 +306892,85 @@
       "sewer": false
     },
     "sites": {
-      "count": 123
+      "count": 123,
+      "max_rig_ft": 91,
+      "pull_through": true,
+      "note": "79 electric and 20 water-only gravel sites take RVs, plus 19 tent-only and four double group sites; recreation.gov allows up to 91 ft by site (site 118, 20 ft). 22 pull-throughs."
     },
     "season": {
       "year_round": false,
-      "opens": "04-15",
-      "closes": "10-15",
-      "note": "Approximate: Mid-April to mid-October."
+      "opens": "04-16",
+      "closes": "10-25",
+      "note": "Opens on a Friday in mid-April and closes after the last full weekend in October (2026: April 17 - October 25; 2027: April 16 - October 24)."
     },
     "booking": {
       "reservable": true,
       "platform": "recreation.gov",
-      "max_stay_nights": 14
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "14 nights in any 30. The weekend minimum is a recreation.gov 'soft' rule and may be relaxed for a same-day booking. Gates are shut 10 pm - 6 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232654 ('50 Amp Service Available'; water at 114 of 124 catalog sites; no sewer in the catalog), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232654 ('123 single party campsites') and its campsite catalog, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-11-07",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232654/rates (Peak Season 2026-04-17..10-25, 2027-04-16..10-24), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232654 (notice 'Two-night weekend and three-night holiday weekend minimum reservation requirement'; rules minWeekendStay 'soft'; 14-day stay within 30 days), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232654/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232654/rates and the facility notices, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232654 (description + amenities Showers, Washer & Dryer, Wireless Internet), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 22,
       "nightly_high": 32,
-      "currency": "USD"
+      "currency": "USD",
+      "extra_vehicle": {
+        "included": 2,
+        "amount": 5,
+        "per": "night"
+      },
+      "note": "$22 for a gravel site with water but no electric; $32 with electric. Extra vehicles beyond the two a site includes are $5 a day, visitors' vehicles too."
     },
-    "policy_ref": "federal:usace"
+    "policy_ref": "federal:usace",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "laundry": true,
+      "wifi": true
+    }
   },
   {
     "id": 4440,
@@ -308069,7 +308187,7 @@
     "waterfront": "lakefront",
     "website": "https://gocamptennessee.com/loyston-point-campground/\nhttps://www.campspot.com/park/loyston-point-campground",
     "phone": "865-494-9369",
-    "note": "TVA campground on Norris Lake run by the concessionaire Go Camp Tennessee (Vista Recreation), with a swimming beach and three cabins; 59 of its 64 or 65 sites have electric.  The interior roads are paved, but a reviewer found the approach road tight. --Claude",
+    "note": "TVA campground on a Norris Lake peninsula run by the concessionaire Go Camp Tennessee, with a swimming beach and three cabins; 59 of its 64-65 sites have electric, and the outer ring of sites lines the shore. Only 27 RV sites book online (7 sold as waterfront); long-term sites take some of the rest. The interior roads are paved, but a reviewer found the approach road tight. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -308092,7 +308210,8 @@
           "applies": "always"
         }
       ],
-      "note": "All sites need 2 nights; call the campground to ask for a one-night exception (Go Camp Tennessee page)."
+      "note": "All sites need 2 nights; call the campground to ask for a one-night exception (Go Camp Tennessee page).",
+      "max_stay_nights": 21
     },
     "provenance": {
       "sites": {
@@ -308101,17 +308220,19 @@
         "method": "derived"
       },
       "season": {
-        "source": "https://www.campspot.com/park/loyston-point-campground (Campspot park record: closed 2025-11-16 to 2026-03-14 and from 2026-11-15), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "Campspot park 3430 resortClosedDates 2026-11-15..2027-03-14 (same window 2023-24, 2024-25, 2025-26), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://gocamptennessee.com/loyston-point-campground/ ('All sites require a 2-night minimum stay. Please call the campground directly to request an exception if you wish to stay for just 1 night'; 'Reserve Campground Now' opens Campspot), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "Campspot park 3430 rules ('The maximum camping stay is 21 consecutive days unless renting a long-term site'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gocamptennessee.com/loyston-point-campground/ ('campground restroom facilities and bath houses') and the Campspot park map (two bathhouses), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "hookups": {
         "source": "https://www.campspot.com/park/loyston-point-campground (Campspot park record and RV site types' amenities: 30-Amp, Water Hook-Up), read 2026-10-13",
@@ -308123,7 +308244,9 @@
       }
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true
     },
     "hookups": {
       "electric": 30,
@@ -308647,7 +308770,7 @@
     "waterfront": "not waterfront",
     "website": "https://cityofmilantn.com/city-departments/parks-recreation",
     "phone": "731-238-3064",
-    "note": "City of Milan campground inside 160-acre City Park. ~5 paved RV sites (1-5) near entrance with back-in/pull-through, 20/30/50-amp power + water; sites 6-9 gravel overflow (~50x15 ft) by the RC course. Sewer dump station on site (no per-site sewer). Max reported RV 32 ft. 14-night max. Reservations by phone (731-238-3064), 48-hr advance, M-F office hours. --Claude",
+    "note": "Five sites inside the 160-acre City Park, just inside Entrance #4 on Ellington Drive, beside the ballfields and horse arena, whose events can bring noise and lights past quiet hours. Reservations by phone in weekday office hours, ideally 48 hours ahead; arriving after hours without one, call first, as power and water may be locked until morning. The city posts the park's RV dump as not for public use. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -308659,9 +308782,10 @@
       "sewer": false
     },
     "sites": {
-      "count": 9,
+      "count": 5,
       "max_rig_ft": 32,
-      "pull_through": true
+      "pull_through": true,
+      "note": "Each lot at least 30 x 50 ft."
     },
     "booking": {
       "reservable": true,
@@ -308670,14 +308794,14 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofmilantn.com/city-departments/parks-recreation ('water hook ups, 20/30/50 amp service'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cityofmilantn.com/city-departments/parks-recreation ('5 fully accessible sites', 'a minimum of 30' x 50''), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose (cleaned out of the note 2026-11-07)",
@@ -308690,8 +308814,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://cityofmilantn.com/city-departments/parks-recreation (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-16"
+        "source": "https://cityofmilantn.com/city-departments/parks-recreation, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "facilities": {
@@ -308702,7 +308827,7 @@
       "nightly_high": 25,
       "currency": "USD",
       "checked": "2026",
-      "note": "City of Milan: $25 a night plus 4% hotel/motel tax; 14-night maximum. Read 2026-10-16."
+      "note": "$25 a night plus 4% hotel/motel tax; card payments carry a 3.5% service fee. Read 2026-11-24."
     }
   },
   {
@@ -309947,7 +310072,7 @@
     "waterfront": "lakefront",
     "website": "https://www.littleeaglervpark.com/\nhttps://www.campspot.com/park/little-eagle-rv-buchanan-tn",
     "phone": "731-642-4669",
-    "note": "Private RV park on Kentucky Lake at Buchanan. --Claude",
+    "note": "Private RV park on a cove of Kentucky Lake beside an RV sales and service lot. Only sites 16 and 17, at the south-east corner of the loop, open onto the water over mown grass; the 'waterfront' row 21-27 sits behind a wooded strip. Renters must be 21+, and RVs must be 15 years old or newer unless approved. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -309959,7 +310084,10 @@
       "electric": 50
     },
     "sites": {
-      "max_rig_ft": 50
+      "max_rig_ft": 55,
+      "count": 66,
+      "pull_through": true,
+      "note": "52 full-hookup and 14 water/electric sites per the operator; Campspot's map draws 53 pads, and 29 were offered by the night on two December 2026 dates."
     },
     "booking": {
       "reservable": true,
@@ -309971,9 +310099,9 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.littleeaglervpark.com/rvs (site counts) and the Campspot availability records (max RV length 30-55 ft, 'Water View Pull Thru' sites), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -309986,8 +310114,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.campspot.com/park/little-eagle-rv-buchanan-tn (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "Campspot API for park 5019 (availability list and type quotes for 2026-12-01 and 2026-12-05), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "discounts": {
@@ -309999,7 +310128,7 @@
       "nightly_high": 105,
       "currency": "USD",
       "checked": "2026",
-      "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Deluxe 30 Backin, Deluxe 40 Back In, Deluxe 45 Back In, Deluxe 50 Back In, Premium Back In Patio and 10 more). October 2026: $45-105, Tuesday and Saturday alike. June 2027 isn't open for booking yet. The park adds 3% of the site charge as a 'Credit Card Processing' fee. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
+      "note": "Site charge before tax for one night, 2 adults: $45 Deluxe 30 back-in, $55 Deluxe 40/45, $65 Deluxe 50 and the patio, waterview and pull-through sites, $75 waterfront, $85 premium waterfront and covered, $105 covered waterfront/waterview. The park adds 3% of the site charge as a 'Credit Card Processing' fee; Campspot adds its own booking fee at checkout. December 2026 nights, read 2026-11-24; 2027 is not yet open for booking."
     }
   },
   {
@@ -310147,7 +310276,7 @@
     "waterfront": "not waterfront",
     "website": "https://www.mcmillanfarms-retreat.com/",
     "phone": "423-823-2867",
-    "note": "Private farm retreat at 495 McMillan Rd, Mosheim; 7 full-hookup back-in sites for RVs of any size, bathhouse, on-site fishing ponds. Gated, reservation required (email/phone). --Claude",
+    "note": "Private farm retreat near Mosheim with fishing ponds, hiking trails, a pavilion and a new bathhouse; 7 full-hookup and 7 water/electric sites, no tent sites. Horse layover stalls are a side use. The owners describe the retreat as still being finished in 2026. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -310158,41 +310287,54 @@
       "sewer": true
     },
     "sites": {
-      "count": 7,
+      "count": 14,
       "pull_through": false
     },
     "booking": {
       "reservable": true,
-      "fcfs": "never"
+      "fcfs": "never",
+      "platform": "phone",
+      "note": "All sites by reservation (same-day accepted); cash or check only, paid in full at check-in."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mcmillanfarms-retreat.com/rates ('FULL HOOK UP SITE (W/S/E)'), read 2026-11-24; amperage not stated",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mcmillanfarms-retreat.com/rates ('FULL HOOK UP SITE (W/S/E) $45. Sites 1-7; PARTIAL HOOK UP SITE (W/E) $35. Sites 8-14'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mcmillanfarms-retreat.com/rates ('All sites require reservations. We accept cash and check only... Same day reservations are accepted') and home page ('FULL PAYMENT IS REQUIRED UPON CHECK IN'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mcmillanfarms-retreat.com/rates ('FULL HOOK UP SITE ( W/S/E) $45. Sites 1-7', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.mcmillanfarms-retreat.com/rates, read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.mcmillanfarms-retreat.com/ equine page ('Bathhouse available with showers, sinks, toilets'), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 35,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "2026: water + electric $35, full hookup $45; primitive $25."
+      "note": "2026 rates on the operator's site: water + electric $35 (sites 8-14), full hookup $45 (sites 1-7); primitive $25. Cash or check only, paid in full at check-in. Read 2026-11-24.",
+      "checked": "2026"
     },
-    "curation_note": "general campground (offers horse/hiking trails, not equestrian-only). RV Life 4.5★/$$, 9 reviews; confirmed operating."
+    "curation_note": "general campground (offers horse/hiking trails, not equestrian-only). RV Life 4.5★/$$, 9 reviews; confirmed operating.",
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true
+    }
   },
   {
     "id": 4494,
@@ -978520,22 +978662,24 @@
     "waterfront": "not waterfront",
     "website": "https://koa.com/campgrounds/nashville-east/",
     "phone": "615-449-5527",
-    "note": "KOA Journey at 2100 Safari Camp Road, Lebanon; full-hookup and water/electric RV sites, pull-throughs. --Claude",
+    "note": "KOA Journey beside I-40 east of Nashville, with RV sites strung down a wooded valley below the office; water/electric and full-hookup sites, some pull-through, and hammock-hut sites. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 68.24,
+      "nightly_low": 59.24,
       "nightly_high": 82.24,
       "currency": "USD",
-      "checked": "2026"
+      "checked": "2026",
+      "note": "KOA's booking form, one night for 2 adults and a 23-ft motorhome, site rate before tax across every RV site type: December 2026 $59.24-77.24; January 2027 $60.50-73.50; May 2027 $68.24-82.24. KOA Rewards takes 10% off. Read 2026-11-24."
     },
     "provenance": {
       "fees": {
-        "source": "https://koa.com/campgrounds/nashville-east/reserve/ (cheapest hookup site type and dearest site type, one night from 2027-05-18; RV, 2 adults, a 23-ft motorhome), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://koa.com/campgrounds/nashville-east/reserve/ (one night from 2026-12-01, 2027-01-12, 2027-03-09, 2027-05-18), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -978548,14 +978692,19 @@
         "method": "derived"
       },
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/nashville-east/reserve/ (site types 'Pull Thru, 50/30 Amps, Full Hookups' etc.), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose (cleaned out of the note 2026-11-07)",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/nashville-east/reserve/ (RV sites priced and bookable for December 2026, January and March 2027), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "discounts": {
@@ -978568,10 +978717,14 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
       "pull_through": true
+    },
+    "season": {
+      "year_round": true
     }
   },
   {
@@ -978585,22 +978738,24 @@
     "waterfront": "not waterfront",
     "website": "https://koa.com/campgrounds/nashville/",
     "phone": "615-889-0282",
-    "note": "KOA Resort at 2626 Music Valley Drive, Nashville; full-hookup and water/electric RV sites, pull-throughs. --Claude",
+    "note": "Large KOA Resort on Music Valley Drive near the Opryland area, with a pool; value water/electric and full-hookup sites in the South Section, patio and premium sites in the North Section, most of them pull-through. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 4,
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 59.0,
-      "nightly_high": 179.0,
+      "nightly_low": 39,
+      "nightly_high": 249,
       "currency": "USD",
-      "checked": "2026"
+      "checked": "2026",
+      "note": "KOA's booking form, one night for 2 adults and a 23-ft motorhome, site rate before tax across every RV site type: January 2027 $39 (South Section 50/30 water/electric value site) to $149; December 2026 $60-119; May 2027 $59-249 (KOA Signature pull-through). KOA Rewards takes 10% off. Read 2026-11-24."
     },
     "provenance": {
       "fees": {
-        "source": "https://koa.com/campgrounds/nashville/reserve/ (cheapest hookup site type and dearest site type, one night from 2027-05-18; RV, 2 adults, a 23-ft motorhome), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://koa.com/campgrounds/nashville/reserve/ (one night from 2026-12-01, 2027-01-12, 2027-05-18), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose (cleaned out of the note 2026-11-07)",
@@ -978608,14 +978763,19 @@
         "method": "derived"
       },
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-11-07)",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/nashville/reserve/ (site types 'Pull Thru, 50/30 Amps, Full Hookups' etc.), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose (cleaned out of the note 2026-11-07)",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/nashville/reserve/ (RV sites priced and bookable for December 2026 and January 2027), read 2026-11-24",
+        "checked": "2026-11-24",
+        "method": "manual"
       }
     },
     "booking": {
@@ -978624,10 +978784,14 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
       "pull_through": true
+    },
+    "season": {
+      "year_round": true
     }
   },
   {
