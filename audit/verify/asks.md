@@ -807,5 +807,5 @@ $35 nightly ($45 holiday weekends), Google 4.6/110. Nightly sites are only "camp
 ## 4484 Hatchie Cove Campground (TN, private) — p3-602, 2026-11-24 — KEPT, flag
 Seven RV sites near BlueOval City; only site 6 is sold by the night online (~14%), the rest go by phone, and it markets stays "for work". $40 a night, 50 A full hookups, Google 4.8 (70). Kept in the 10-50% caveat band (note says mostly longer stays); Myers Landing was dropped at 7-13%. Drop if you'd rather not have it.
 
-## 4400 Natchez Trace SP, Cub Lake Campground (TN, state) — p3-603, 2026-11-24 — OPEN
+## 4400 Natchez Trace SP, Cub Lake Campground (TN, state) — p3-603, 2026-11-24 — ANSWERED: leave as is (AWH 2026-11-24)
 On reserve.tnstateparks.com every Campground One night is Unavailable from 2026-11-29 to the end of the horizon (2027-11-23), while Pin Oak and Campground Two (from 2027-08-01) are offered. No park page explains it (renovation?). Options: leave as is until a notice appears, add a "not bookable in 2027" caveat, or a phone call to the park (731-968-3742) - your OK needed for a call.
