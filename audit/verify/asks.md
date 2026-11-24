@@ -799,5 +799,7 @@ Cheapest site a 23-ft rig fits is $50 (back-in water/electric, 2026-10-19 quote;
 Calls to 606-256-2474 (dialmcp, at AWH's request): 2026-11-24 09:02 ET and 10:08 ET both went to voicemail, no message left. Try again later or another day.
 **AWH 2026-11-24: keep it in** - his read is that the permit fees are not for registered campers. No change to the entry.
 
-## 14636 Myers Landing RV Resort (TN, private) - keep at a 7-13% nightly share? (p3-599, 2026-11-24) - OPEN
+## 14636 Myers Landing RV Resort (TN, private) - keep at a 7-13% nightly share? (p3-599, 2026-11-24) - ANSWERED
 $35 nightly ($45 holiday weekends), Google 4.6/110. Nightly sites are only "campsites (1-13) ... around the pool" (the engine lists 10); the operator leads with "Seasonal - Most Sites $2,000 + Electric". Against the operator map's ~140 sites the nightly share is 7-9% (under the 10% line); against RV Life's 100 sites it is 10-13% (inside the keep-with-caveat band). Kept for now with a "Mostly seasonal" note.
+
+**AWH 2026-11-24: drop.** Removed via criteria_drops.py.
