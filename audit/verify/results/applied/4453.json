@@ -1,0 +1,44 @@
+{
+  "id": 4453,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://www.campspot.com/book/cherokee-dam-campground (Campspot booking engine via headless browser, park record api/gator-core/v2/parks/slug/cherokee-dam-campground read 2026-11-24): park 3714 'Cherokee Dam Campground - Jefferson City, TN', 2805 North Highway 92, phone 8653612151, cherokee@vista-rec.com, marketingSite https://vista-rec.com/parks/tennessee/tva-6/cherokee-dam-campground/, closed 2025-11-15..2026-03-14 and 2026-11-15..2027-03-14; terms: 'Camping is on a reservation system. If you do not have a reservation please see a host before choosing a site.'; 'The maximum camping stay is 21 consecutive days unless renting a long-term site.'; Campspot rating 4.6 from 69. A May 2027 search returned no site types (next season not yet bookable).",
+    "https://park-maps.campspot.com/a3a69c0a-8bbe-4cdf-87a4-f22d95eadc32 (Campspot park map SVG, read 2026-11-24): loop of sites between the store/office and Cherokee Lake, a short spur of sites at the east end toward the water, two bathhouses, a water/dump station icon by the exit, boat ramp and swim beach to the west",
+    "https://web.archive.org/web/20260716170145/https://gocamptennessee.com/cherokee-dam-campground/ (operator page, Wayback capture 2026-07-16; live site 403s): 'The campground has a total of 44 camp sites. With the exception of 5 primitive sites, all the sites have electrical and water hookups, and 4 sites meet ADA guidelines. Nearly every campsite in the campground has a view of the beautiful lake and mountains. ... most campsites are level with gravel parking pads. ... The campground bathhouse has warm showers and flush toilets. The campground's water pressure is 100psi and requires having a water pressure regulator'; 'All sites require a 2-night minimum stay. Please call the campground directly to request an exception if you wish to stay for just 1 night.'; Season Opens March 15, 2025 / Closed November 15th, 2025; phone 865-361-2151",
+    "audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot site types read 2026-10-13): Non Waterfront Site 12+3 sites max 45 ft, Waterfront Site 4 RV sites max 40 ft, Tent Site 2, Waterfront Tent Site 3; base $33-35 plus $10 Reservation Surcharge; RESERVATION_MIN_RULE 2 nights",
+    "Esri World Imagery (sat.py / satz.py z19 at 36.15445,-83.51400) + USGS 3DEP point elevations 2026-11-24: pads nearest the lake ~331-332.5 m (36.15461,-83.51410; 36.15497,-83.51381; 36.15530,-83.51370); bare drawdown shore below a wooded bank at 320.8-324 m (36.15452,-83.51365; 36.15457,-83.51377); TVA summer pool ~1,073 ft (327 m)",
+    "Google Maps (headless browser, 2026-11-24): 'Cherokee Dam Campground' 4.5 from 519 reviews, phone 865-361-2151, gocamptennessee.com, pin 36.1557,-83.5142"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 44, "max_rig_ft": 45},
+      "source": "Go Camp Tennessee operator page (Wayback 2026-07-16: 'a total of 44 camp sites'); Campspot site types (Non Waterfront Site max 45 ft, Waterfront Site max 40 ft), read 2026-10-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true},
+      "source": "Go Camp Tennessee operator page (Wayback 2026-07-16: 'bathhouse has warm showers and flush toilets'); Campspot park map (dump station icon), read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "03-15", "closes": "11-14"},
+      "source": "Campspot park record closed dates 2025-11-15..2026-03-14 and 2026-11-15..2027-03-14 (read 2026-11-24); Go Camp Tennessee page 'Season Opens March 15 / Closed November 15th' (Wayback 2026-07-16)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "max_stay_nights": 21},
+      "source": "Campspot park terms ('Camping is on a reservation system'; 'The maximum camping stay is 21 consecutive days unless renting a long-term site'), read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "TVA campground on the upstream south side of Cherokee Dam, run by the concessionaire Go Camp Tennessee (Vista Recreation), beside a large public boat ramp and a swim beach; 5 of the sites are primitive. Water pressure runs about 100 psi, so bring a regulator. The perimeter and waterfront sites are the roomiest. --Claude",
+  "summary": "Re-read on the Campspot park record/map and the Go Camp Tennessee page (Wayback, live site 403s): 44 sites, 2-night minimum (stored), season Mar 15-Nov 14, 21-night max stay, showers/flush toilets/dump; max_rig_ft 30 (from note prose) corrected to Campspot's 45. Lakeview holds: the four Campspot 'Waterfront' RV pads sit 4-5 m above summer pool on a wooded bank. Next season not yet bookable, so fees stay as read 2026-10-13 ($33-35 + $10 surcharge).",
+  "flags": [
+    "GATE FACTS (TVA campground stored private): $33 Non Waterfront / $35 Waterfront base per night plus a $10 Reservation Surcharge per stay (Campspot, read 2026-10-13; May 2027 not bookable yet 2026-11-24). Under $50. Google 4.5 from 519; Campspot 4.6 from 69.",
+    "WATERFRONT: lakeview holds (no change). Campspot sells 4 RV 'Waterfront Site' pads (max 40 ft) on the east spur toward the water, but on imagery + 3DEP the nearest pads (~36.15461,-83.51410 at 332.5 m; ~36.15497,-83.51381 at 331.5 m) sit on a wooded bank 4-5 m above TVA's ~327 m summer pool, ~25-40 m back from the summer edge with a steep drop to the bare drawdown shore (321-324 m) - fails the kayak test (pads 1-2 m above). The 3 'Waterfront Tent Site' pads are not RV sites.",
+    "SITES: count 44 per the operator; Campspot lists only 24 bookable units (15 Non Waterfront RV incl. 3 accessible, 4 Waterfront RV, 5 tent) - the rest may be walk-in/host-assigned or not loaded on Campspot. max_rig_ft 30 was note-derived; Campspot types say 45 / 40 ft.",
+    "BOOKING: 2-night minimum (stored) re-confirmed on the operator page with a one-night exception by phone; kept as is.",
+    "WEBSITE: gocamptennessee.com still 403s to scripts (Wayback 2026-07-16 fine); Campspot's marketingSite now points to https://vista-rec.com/parks/tennessee/tva-6/cherokee-dam-campground/ - not read. Stored websites kept. PHONE 865-361-2151 confirmed (Campspot + Google).",
+    "PIN: stored 36.15491,-83.51469 = Campspot's 36.154912,-83.514693 (at the store/office loop); Google's pin 36.1557,-83.5142 is ~90 m off. No move."
+  ]
+}

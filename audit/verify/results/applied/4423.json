@@ -1,0 +1,52 @@
+{
+  "id": 4423,
+  "checked": "2026-11-24",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232479 (facility record, read 2026-11-24): 'Cosby is mostly a tent campground ... flush toilets and drinking water. Some RV sites are available and there is a dump station'; 'RV only: A01-03, A21, A23, A36; B48, B75, B88 RV w Tent pad: A17, A20, A25, A28, A57; B93 Van/Compact camper w Tent: A11; B20,B34-35, B58 (**These sites do not accomodate RVs**)'; 'RESERVATION ONLY. NO CASH ACCEPTED AT CAMPGROUND OFFICE'; 'Reservations can be made the day of arrival'; 'The park stay-limit is 14 consecutive days'; parking-tag notice 'Front country campers parked at their designated campsite will not be required to have a parking tag ... parking tags will be required for vehicles in excess of what is allowable for each campsite'; rules maxConsecutiveStay 14, reservationCutOff 0; rate table 2026-05-15..2026-10-25 RV/STANDARD/TENT NONELECTRIC $30 (2025: 04-18..10-26, 2024: 03-29..10-27; 2027 shows only a 05-28..09-06 peak block)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232479 (per-site catalog, read 2026-11-24): 157 sites, 134 TENT ONLY; RV/Trailer equipment permitted on 17 sites, every one capped at 25 ft (A01-A03, A17, A20, A21, A23, A25, A28, A36, A42, A57, A59, A61, B75, B88, B93); no electric, water or sewer at any site",
+    "https://www.recreation.gov/api/camps/availability/campground/232479/month (Oct-Nov 2026 and Apr-May 2027, read 2026-11-24): nights reserved through 2026-10-25, Not Reservable from 2026-10-26; 2027 shows Open only from 05-28",
+    "https://www.nps.gov/grsm/planyourvisit/frontcountry-camping.htm (rendered in headless browser 2026-11-24, last updated August 12, 2026): Cosby card 'CLOSED'; 'Campsites for both tents and RVs, flush toilets, and drinking water are available. No hookups or showers'; TOTAL SITES 157, Tent Only 134; Camp Store No; Dump Station Yes, Seasonal; 'The park-wide camping limit is 14 consecutive days with no more than 60 total days in a calendar year'. The Cosby page itself (cosby-campground.htm) answers 'Page In-Progress'.",
+    "https://www.nps.gov/grsm/planyourvisit/fees.htm (read 2026-11-24): parking tags Daily $5, Weekly $15, Annual $40; 'America the Beautiful entrances passes ... are not accepted in place of a parking tag'"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 157, "max_rig_ft": 25},
+      "source": "recreation.gov per-site catalog for 232479 (157 sites; RV/Trailer permitted on 17, all max 25 ft) and NPS frontcountry page (TOTAL SITES 157), read 2026-11-24",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS frontcountry page ('No hookups or showers are available at the campground'; Electric Hookups: 0), read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": false, "flush_toilets": true, "camp_store": false, "dump": true},
+      "source": "NPS frontcountry page (Cosby card: flush toilets, no showers, Camp Store No, Dump Station Yes, Seasonal), read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "10-25", "note": "2026 season per recreation.gov (rate season May 15-Oct 25; last reservable night Oct 25). Earlier years opened from late March to mid-April and ran to the last weekend of October; 2027 dates not yet loaded."},
+      "source": "recreation.gov rate table and availability calendar for 232479, read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": "never", "max_stay_nights": 14},
+      "source": "recreation.gov facility record ('All sites in Cosby Campground are available by RESERVATION ONLY'; 'Reservations can be made the day of arrival'; 'The park stay-limit is 14 consecutive days'), read 2026-11-24",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "Every site $30 (2026 and 2027 rate tables). A Smokies parking tag ($5 day, $15 week, $40 year) is not needed for vehicles parked at the reserved site, but is for vehicles beyond what the site allows and for parking anywhere else in the park; interagency passes don't replace it."},
+      "source": "recreation.gov rate table for 232479; NPS GSMNP fees page; recreation.gov parking-tag notice; read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "Mostly a tent campground: only 17 sites take an RV or trailer (A01-A03, A17, A20, A21, A23, A25, A28, A36, A42, A57, A59, A61; B75, B88, B93); the van/compact-camper sites A11, B20, B34-35 and B58 do not. Reserve online, same day included; no cash at the office, and check in with staff on arrival. --Claude",
+  "summary": "Confirmed on rec.gov's record/catalog and the NPS frontcountry page: 157 sites, RVs on 17 sites all capped at 25 ft (max_rig_ft 30 -> 25), no hookups/showers/store, dump, reservation-only, 14-night limit, $30; 2026 season May 15-Oct 25 (was 'approx Apr 15-Oct 31'); parking-tag rule in fees.note. Note trimmed of field facts.",
+  "flags": [
+    "FIT: every RV/trailer site on recreation.gov is capped at 25 ft (17 sites); a 23-ft rig fits those. The stored 'some RV-only to 30 ft' came from old note prose; the only 30-ft value in the catalog (A16 Max Vehicle Length) permits no RV equipment.",
+    "SEASON: the 2026 season opened late (May 15 vs Mar 29-Apr 18 in 2021-2025); written as 2026's dates. Re-read when 2027 loads (rec.gov now shows only a May 28-Sep 6 peak block).",
+    "PIN: stored 35.75561,-83.20817 vs rec.gov facility point 35.75454,-83.20925 (~150 m); fine.",
+    "PHONE 423-487-2683 not on either page read (rec.gov gives the 877-444-6777 reservation line; NPS Cosby page is 'In-Progress'); kept. WEBSITE: nps.gov cosby-campground.htm currently returns an NPS 'Page In-Progress' placeholder - keep, but recheck.",
+    "WATERFRONT: not waterfront holds (rec.gov lists 'River Access' as an amenity only; Cosby Creek is a small mountain stream)."
+  ]
+}
