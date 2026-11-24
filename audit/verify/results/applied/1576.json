@@ -1,0 +1,91 @@
+{
+  "id": 1576,
+  "checked": "2026-11-24",
+  "sources": [
+    "recreation.gov 232625 facility API, read 2026-11-24: 'The campground offers 45 sites with electric and water hookups. Amenities include flush toilets, showers, drinking water, laundry facilities and a dump station.' 'Littcarr Campground is located on the shores of Carr Creek Lake'; facility_rules maxStay 14 nights (rolling 30 days), minHolidayWeekendStay 3; phone 606-642-3052; 'For facility specific information, please call (606) 288-5471.'",
+    "recreation.gov 232625 rates API, read 2026-11-24: 2026 'Walk In' 04-27..05-15 ($24/$30), 'Peak' 05-16..10-11; 2027 Peak 04-01..10-09: STANDARD ELECTRIC $24, STANDARD ELECTRIC-72522 / RV ELECTRIC-72531 $30",
+    "recreation.gov 232625 campsite catalog (search API), read 2026-11-24: 45 STANDARD ELECTRIC sites, all reservable; 01-14 water+sewer (full hookup) $30; 15-34 water/electric $24-30; B1-B11 30-ft $24; electric 50A on 42, 15A on 14 and 16, 30A on 01; max lengths up to 54 ft",
+    "recreation.gov availability April 2027, read 2026-11-24: all 45 sites bookable from 2027-04-01",
+    "USGS 3DEP (epqs) elevations, 2026-11-24: west-row pads 01-21 at 315.2-316.5 m; water surface in the lidar 312.08 m; profile west from site 05: 316.0 m at 0 m, 315.4 at 16 m, 313.7 at 24 m, water 312.1 at 32 m",
+    "Esri World_Imagery around 37.2368,-82.9490 (hw 120 m), leaf-off capture, viewed 2026-11-24: west row of pads ~25-35 m from the vegetated high-water line of the Carr Fork arm (~35-50 m wide), a band of trees and shrubs between most pads and the water; riprap below 01-03"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 30,
+        "currency": "USD",
+        "checked": "2026-11",
+        "note": "Water/electric sites $24-30, full-hookup sites (01-14) $30."
+      },
+      "source": "recreation.gov 232625 rates (2027 Peak 04-01..10-09) + campsite catalog prices, read 2026-11-24",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "recreation.gov 232625 catalog: 'Electricity Hookup' 50 on 42 sites; water on all 45; sewer on 01-14, read 2026-11-24",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 45,
+        "max_rig_ft": 54,
+        "note": "Sites 01-14 full hookup; B1-B11 take rigs to 30 ft."
+      },
+      "source": "recreation.gov 232625 catalog (45 sites, Max Vehicle Length up to 54), read 2026-11-24",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true,
+        "potable_water": true,
+        "laundry": true,
+        "dump": true
+      },
+      "source": "recreation.gov 232625 'flush toilets, showers, drinking water, laundry facilities and a dump station', read 2026-11-24",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "10-09",
+        "note": "2027 dates. In 2026 it opened 04-27, walk-in only until 05-15, and closed 10-11."
+      },
+      "source": "recreation.gov 232625 rate seasons (2027 Peak 04-01..10-09; 2026 Walk In 04-27..05-15, Peak 05-16..10-11) and April 2027 availability, read 2026-11-24",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232625",
+        "min_stay": [
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "max_stay_nights": 14
+      },
+      "source": "recreation.gov 232625 facility_rules minHolidayWeekendStay 3, maxStay 14 nights; all 45 sites reservable, read 2026-11-24",
+      "method": "manual"
+    }
+  },
+  "note": "USACE Louisville District campground on the Carr Fork arm of Carr Creek Lake, SE Kentucky mountains. Two playgrounds, picnic shelter, horseshoe, basketball and shuffleboard courts. The lake offers boating, skiing, swimming and fishing. Distinct from Carr Creek State Park on the same lake. --Claude",
+  "summary": "Kept. USACE, rec.gov 232625: 45 reservable W/E sites (01-14 full hookup), $24-30 (high was 24), 50A, to 54 ft; 2027 season 04-01..10-09. Waterfront: recommend lakefront -> lakeview (pads ~3 m above summer pool, 25-35 m back behind a tree band on a narrow arm).",
+  "flags": [
+    "WATERFRONT LEAD (recommend downgrade lakefront -> lakeview): the west-row pads (01, 03, 05, 07, 09, 11, 13, 15, 17, 19, 21; all reservable nightly) stand at 315.2-316.5 m (3DEP) against Carr Creek Lake's summer pool of about 313.0 m (1,027 ft; the lidar water is 312.08 m), so ~2.5-3.5 m above it. Profile west from site 05 (37.23716,-82.94876): 316.0 m at 0 m, 315.4 at 16 m, 313.7 at 24 m, water at ~30 m - a 2-3 m bank, and imagery shows a band of trees and shrubs between most pads and the vegetated high-water line, with riprap below 01-03. The water is the narrow Carr Fork arm (~35-50 m at summer pool). Under the kayak test this is a view, not on-water; unsure after every source -> down to lakeview. The note's 'waterfront sites with direct lake access' (Claude wording) is dropped.",
+    "FEES: nightly_high 24 -> 30 (the full-hookup sites 01-14 and several W/E sites are $30; $24 is the B loop and some W/E sites).",
+    "SEASON: 2027 runs 04-01..10-09 (reservable from April 1); 2026 was 04-27..10-11 with walk-in only to 05-15.",
+    "PHONE 606-642-3052 matches rec.gov's facility phone; rec.gov also lists (606) 288-5471 for facility information (lake office). No change proposed.",
+    "PIN 37.2375,-82.9497222 sits ~35 m west of the B loop on the arm's west bank road; the loops are at ~37.2368,-82.9478 (~170 m). Under 250 m, no move needed.",
+    "rec.gov facility_rules carries a militaryDiscount flag (value 1) with no description; not written.",
+    "POLICY ROW federal:usace: no contradiction."
+  ]
+}
