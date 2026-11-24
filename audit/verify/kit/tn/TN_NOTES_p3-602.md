@@ -1,0 +1,11 @@
+- 288 done: NPS/rec.gov $30, 211 sites, 04-03..11-29, phone->865-430-5560, riverfront->creekside lead (Little River ~20-25 m)
+- 4397 done: $32-85, 198 RV + 3 prim, year-round, pin move ~500 m to 35.6575,-85.3493, phone -> 423-881-5298
+- 4479 done: DROP cand (monthly 'Annual' rates only, test 2), lakefront holds (peninsula pads), Google 4.5/197
+- 4396 done: $32-44, 30 sites, year-round, pin left (canopy)
+- 4433 done: rec.gov $22, 14 sites, riverfront holds (07-15)
+- 4484 done: $40 (+8%), 7 RV sites only Site 6 online (~14% nightly caveat), Google 4.8/70
+- 4395 done: $40-62, 54 RV, pin move ~720 m to 35.5890,-86.7031, phone suggest 931-364-7724
+- 4449 done: $44-60 confirmed, lakefront kept (Campspot Waterfront 26 sites), long-stay passes 60% nightly, Google 4.7/227
+- 4485 done: $20, 86 sites, lakefront -> lakeview (sites 016-018 filtered view, 45-75 m through forest)
+- 4412 done: $40-60, 46 full-hookup, pin move ~670 m to 36.5895,-84.1398, waterfront upgrade candidate (north pond, sites ~31/32/34)
+- 699 done: $26-36, 109 singles, season 04-30..09-20, phone add 931-823-4155, --AWH lakefront agrees

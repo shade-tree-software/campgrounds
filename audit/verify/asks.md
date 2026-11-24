@@ -803,3 +803,6 @@ Calls to 606-256-2474 (dialmcp, at AWH's request): 2026-11-24 09:02 ET and 10:08
 $35 nightly ($45 holiday weekends), Google 4.6/110. Nightly sites are only "campsites (1-13) ... around the pool" (the engine lists 10); the operator leads with "Seasonal - Most Sites $2,000 + Electric". Against the operator map's ~140 sites the nightly share is 7-9% (under the 10% line); against RV Life's 100 sites it is 10-13% (inside the keep-with-caveat band). Kept for now with a "Mostly seasonal" note.
 
 **AWH 2026-11-24: drop.** Removed via criteria_drops.py.
+
+## 4484 Hatchie Cove Campground (TN, private) — p3-602, 2026-11-24 — KEPT, flag
+Seven RV sites near BlueOval City; only site 6 is sold by the night online (~14%), the rest go by phone, and it markets stays "for work". $40 a night, 50 A full hookups, Google 4.8 (70). Kept in the 10-50% caveat band (note says mostly longer stays); Myers Landing was dropped at 7-13%. Drop if you'd rather not have it.

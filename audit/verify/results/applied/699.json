@@ -1,0 +1,51 @@
+{
+ "id": 699,
+ "checked": "2026-11-24",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/232623 (read 2026-11-24): 'Lillydale Campground features 112 single party campsites ... Electric hookups, drinking water, flush toilets and a dump station'; '30 Amp Service and Water Hookups on sites 68, 71, 74, 78-93'; '50 Amp Service and Water Hookups on sites 16-67, 69-70, 72-73, 75-77, 94-99'; 'Tent Only Sites: 2, 3, 8-15, 23, 31, 32, 34, 101-115'; 'A Wi-Fi hub is provided in the vicinity of the registration center'; 'Lillydale hosts the best lake view of any campground on Dale Hollow Lake, with the most waterfront campsites'; notice 'Two-night weekend and three-night holiday weekend minimum reservation requirement'; amenities incl. Showers, Washer & Dryer, Dump Station; phone '931-823-4155 CAMPGROUND; 931-243-3136 RESOURCE MANAGER'S OFFICE'",
+  "https://www.recreation.gov/api/camps/campgrounds/232623/rates (read 2026-11-24): 2026 (05-01..09-20) and 2027 (04-30..09-19) identical: STANDARD NONELECTRIC $26, STANDARD ELECTRIC and RV ELECTRIC $36, one STANDARD ELECTRIC variant $44, tent sites $22-36",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:232623 (read 2026-11-24): 84 RV-capable sites (72 standard electric, 7 RV electric, 5 standard non-electric, water at all), 3 pull-through, lengths to 77 ft; 25 tent-only sites; 2 group island sites; 1 shelter",
+  "https://www.recreation.gov/api/camps/availability/campground/232623/month for 2026-09 to 2027-05 (read 2026-11-24): sites in service through the night of 2026-09-20, nothing after; 'Not Reservable' through 2027-04-29, first nights 2027-04-30",
+  "Esri World Imagery with the catalog's site points (read 2026-11-24, drawdown): the west-shore sites 050-073 and east-shore sites 023-029 sit ~10-20 m from the vegetated high-water line"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 26, "nightly_high": 36, "currency": "USD", "checked": "2026"},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232623/rates ($26 standard non-electric, $36 electric, 2026 and 2027 seasons), read 2026-11-24",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": false},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232623 ('50 Amp Service and Water Hookups on sites 16-67 ...'; no sewer in the catalog or text), read 2026-11-24",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 109, "max_rig_ft": 77, "pull_through": true},
+   "source": "recreation.gov campsite catalog (109 single sites: 84 RV-capable + 25 tent-only; lengths to 77 ft; 3 pull-through), read 2026-11-24",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": true, "wifi": true, "note": "Wi-Fi only near the registration center."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232623 (description: drinking water, flush toilets, dump station, Wi-Fi hub at the registration center; amenities Showers, Washer & Dryer), read 2026-11-24",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"opens": "04-30", "closes": "09-20"},
+   "source": "https://www.recreation.gov/api/camps/availability/campground/232623/month (last night in service 2026-09-20; first night 2027-04-30), read 2026-11-24",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}]},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232623 (notice: 'Two-night weekend and three-night holiday weekend minimum reservation requirement'), read 2026-11-24",
+   "method": "manual"
+  }
+ },
+ "summary": "USACE Dale Hollow, rec.gov 232623: $26-36 (2026 and 2027), 84 RV-capable sites with water (50A at most, 30A at 68/71/74/78-93), 3 pull-through, to 77 ft; season ~04-30..09-20; showers, laundry, dump, wifi at registration; 2-night weekend / 3-night holiday minimum. Lakefront (--AWH) agrees with imagery. Phone missing: add 931-823-4155.",
+ "flags": [
+  "PHONE: stored empty -> 931-823-4155 (campground; rec.gov facility_phone). The resource manager's office is 931-243-3136.",
+  "WATERFRONT (--AWH lakefront, unchanged): imagery agrees - west-shore sites 050-073 (e.g. 063 ~36.6050,-85.3035) and east-shore sites 023-029 (e.g. 028 ~36.6052,-85.2978) sit ~10-20 m from the vegetated high-water line over open ground.",
+  "SITES: description says 112 single party campsites; the catalog has 109 singles + 2 group island sites + 1 shelter (=112 records). Wrote 109.",
+  "FEES: the rate table also lists one STANDARD ELECTRIC variant at $44 that no site name explains; left out of nightly_high. rec.gov's facility_rules carry 'militaryDiscount' = 1 with no explanation; not written.",
+  "PIN: stored 36.6027,-85.3016 is at the entrance road ~200 m south of the RV loops (~36.6045,-85.3018); under 250 m, left."
+ ]
+}
