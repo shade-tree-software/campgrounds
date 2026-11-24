@@ -25,7 +25,7 @@ def pt(loc):
     return tuple(map(float, loc.split(',')))
 
 
-GROUPS = ('hookups', 'sites', 'facilities', 'season', 'booking', 'status')
+GROUPS = ('hookups', 'sites', 'facilities', 'season', 'booking', 'status', 'discounts')
 
 
 def provenance(r, g):
@@ -90,6 +90,8 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
             prov[g] = provenance(r, g)
     if r.get('curation_note'):
         e['curation_note'] = r['curation_note']
+    if r.get('policy_ref'):  # e.g. 'none' for a concession outside its agency's terms (15765)
+        e['policy_ref'] = r['policy_ref']
     if prov:
         e['provenance'] = prov
     adds.append(e)
