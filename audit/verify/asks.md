@@ -796,3 +796,4 @@ For OHV: park page 'provides opportunities for miles of trail riding for ATV, UT
 
 ## 15438 Renfro Valley KOA Holiday (KY, private) - does the $5 parking permit count toward the price? (p3-593, 2026-11-24) - OPEN
 Cheapest site a 23-ft rig fits is $50 (back-in water/electric, 2026-10-19 quote; koa.com now behind Turnstile), exactly at the gate. The campground page says "ALL guests must register at the office to obtain a parking permit at $5 per person, $5 per day, & $5 per vehicle". If that binds registered campers (not just day visitors), the real night is $55+ and it is a drop under the mandatory-fees rule; read as a visitor charge, it stays. Kept for now; no gateway within 40 km (Louisville 157 km), Google 4.2/568.
+Calls to 606-256-2474 (dialmcp, at AWH's request): 2026-11-24 09:02 ET and 10:08 ET both went to voicemail, no message left. Try again later or another day.
