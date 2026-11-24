@@ -1663,4 +1663,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1569 Laurel Branch (KY, Corps), p3-592:** lakefront kept on C46-C51 (8-32 m from the 150.9 m pool); rec.gov's 'Lakefront' tag on B21-B24 is a bluff view (~10 m up).
   - wf-ky-1: lakefront kept (C46-C51 7-15 m, 1.3-2.8 m up).
 - **698 Cumberland Point (KY, --AWH lakefront), p3-594 2026-11-24:** rec.gov 'Fourteen of these sites are waterfront', but south-loop sites 10 (36.965265,-84.840304) / 11 are 9-12 m above the 220.4 m pool at 31-33 m down a wooded slope (kayak test: view); north loop 28-32 m up. --AWH value unchanged; report only.
-  - wf-ky-1: --AWH lakefront unchanged; agent reads site 10 as a view (~12 m up a ~30 m wooded slope). Reported to AWH.
+  - wf-ky-1: --AWH lakefront unchanged; agent reads site 10 as a view (~12 m up a ~30 m wooded slope). Reported to AWH. **AWH 2026-11-24: leave Cumberland Point (698) and Zilpo (709) as they are.**
