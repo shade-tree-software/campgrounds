@@ -1,0 +1,11 @@
+# p3-613 notes
+- 4460 DONE: monthly/seasonal except site 35 $50 -> drop cand; lakefront on seasonal sites -> lakeview proposed
+- 4500 DONE: $40 incl tax, 48 sites no sewer, G 4.1/133, lakefront->lakeview proposed, long-stay lean
+- 13391 DONE: event-tied policy flag, 56 spots 30A, RecDesk
+- 13395 DONE: FB page + govserv mirror; $22/$10, FCFS, 05-15..11-02; pin move 260 m; phone/website candidates
+- 13392 DONE: 20-ft temp bridge limit still posted (drop cand), $40-45, 9 RV, website moved to dmra.gov/camping
+- 13726 DONE: still closed, calendar unavailable thru Oct 2027; 36 sites; pin move 700 m
+- 4416 DONE: open FCFS $10/20, riverfront->not waterfront proposed (narrow, FR210 between), passes don't apply (policy contradiction)
+- 13393 DONE: TRDA confirmed, lakefront kept (N ring + E point pads ~1.5 m over pool), 142 sites, season Mar-Nov (FB), fees not re-readable
+- 4413 DONE: free FCFS no rec.gov, 8 sites, creekside kept (~2 m over 30 m), elevation 468 vs 445
+- 14643 DONE: $40/250/650, 50A W/S, long-stay pass (share unmeasured), OHV side flag, G 4.9/36

@@ -1677,3 +1677,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-610, TN 2026-11-25) 28 Jacobs Creek --AWH lakefront: agrees for site 27 (NW tip, 2-3 m gentle fall); FS map puts site 22 inside Loop C - check if 22 is the site the --AWH call meant.
 - (p3-611, TN 2026-11-25) 14639 Cedar Grove Marina not waterfront -> lakefront/lakeview? East loop (~36.36565,-83.71489) ~2.2 m above Norris summer pool at 30-45 m; no site numbers published.
 - (p3-611, TN 2026-11-25) 4441 Gatlin Point lakeview: mown clearing by the ramp (36.5586,-87.9047) ~1 m above pool at 30-40 m, but no designated sites there (2018 camper) - stays lakeview unless LBL names sites.
+- (p3-613, TN 2026-11-25) 13395 Rhea Springs not waterfront -> lakeview? NW pads 20-40 m from the drawn-down Watts Bar shore; no site numbers.
+- (p3-613, TN 2026-11-25) 4416 State Line not waterfront -> creekside? only if a site map shows pads between FR 210 and the Tellico.

@@ -825,3 +825,6 @@ Stored lakefront rests on your note "site 29 is the only RV site on the Lake. --
 ## 14644 Frank's at Cane Hollow RV Park (TN, private, Sparta) — p3-611, 2026-11-25 — ANSWERED: keep for now, re-check in 2027 (AWH 2026-11-25)
 Its Campspot terms post "$39 a night plus ALL TAXES" (Google 4.5/188, Good Sam and military 10%), but Campspot now lists zero sites on every date from 2026-11-30 to 2027-06-12 (it priced four RV types at $41.99 in October), and the terms speak of residents and lot-rental due dates. It may have stopped selling nights online. Kept for now. A short call to 931-761-2267 would settle it - may I place one?
 AWH 2026-11-25: call approved. Called 2026-11-25 ~12:20 CT: answered, hung up within seconds of the AI disclosure ("Hello?" twice, no conversation). Still kept; status unsettled.
+
+## 13391 RV Campground at Camp Jordan Park (TN, City of East Ridge) — p3-613, 2026-11-25 — OPEN, event-tied
+The city says the RV lot "is available only in connection with events held within the park" and also "RV sites are available only on weekends and during special events." Booking is RecDesk (log-in needed, so I couldn't test an ordinary weekend). $30/35, 56 pads, 30 A, 4 days' notice. Keep (weekends bookable), or drop as event-only like a fairground that doesn't rent ordinary nights?
