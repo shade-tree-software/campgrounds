@@ -28,3 +28,4 @@ Batches applied:
 - TN leads (2026-11-25): lead 2 hales-bar-marina SKIPPED, price ($70-80 nightly on its own page, no gateway, not a Good Sam Park).
 - TN leads (2026-11-25): lead 3 shellmound-campground SKIPPED, long-stay (on the fence: many seasonal/permanent sites per reviews, no website or posted nightly rate; Facebook + phone hold only).
 - TN leads (2026-11-25): lead 4 sasquatch-farm-rv SKIPPED, price ($65 flat RV night on its own engine; military 10% $58.50; no gateway; not a GS Park).
+- TN leads (2026-11-25): lead 5 birch-branch-cherokee-nf ADDED 15768 (federal, $10 FCFS, year-round, vault toilet, pad size unconfirmed, not waterfront); FS site count 5 vs 7 conflict left out. Leads 7-9 (Holder Cove, Rough Ridge, Spivey Cove rec.gov facilities) appended. Next id 15769.
