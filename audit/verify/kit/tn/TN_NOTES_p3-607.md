@@ -1,0 +1,12 @@
+# p3-607 notes
+- 25 done: $10/$20 dbl, 15 sites (RV on 9), 04-27..10-13, pin ~260 m -> 36.2566,-82.1103, phone '' -> 423-735-1500, --AWH creekside consistent (05-08 Riverfront tags)
+- 4427 done
+- 4448 done: $40-47 (Oct read) +$10 res, 54 sites W/30A, Google 4.6/217, WF flagged up (>= lakeview; 22 Campspot Waterfront, point loop 1-2 m over pool), fcfs never
+- 4483 done: $35-59 ResNexus, 128 sites 62% seasonal, pin ~690 m (on Fall Creek Marina) -> 36.2912,-83.2290, WF lakefront->lakeview recommended (old evidence was the neighbour), Google 4.5/111
+- 700 done: $27-62 (8 windows), 126 RV W/E 50A no sewer + 27 D tent, year-round (D not winter), --AWH lakefront consistent, phone '' -> 423-344-6214
+- 4391 done: $19-21, sold thru 2027-01-01 then closed to summer 2028, website line1 404 -> /parks/hiwassee-river/camping, season conflict flagged
+- 4487 done: DROP CANDIDATE price $70 (Dec) / $91-98 2027 Newbook, no GS/gateway; Google 4.3/397; website line 2 redirects
+- 4488 done: DROP CANDIDATE Google 3.9/159; $55-65 tax incl (borderline gate ~$50.2 pre-tax); month-to-month; phone 865-986-3539 -> 865-389-8543; booking phone/email
+- 4492 done: lakefront kept (3DEP 0.8-1.4 m, 13-32 m, no site numbers), pin ~255 m -> 35.0297,-85.5613, fees not written (camper $23 2026-05), leads Hales Bar / Shellmound / Sasquatch Farm
+- 4450 done: 61 sites confirmed, fees not reread (2027 closed on Campspot), not waterfront kept, Google 4.6/921
+- 4494 done: Campspot $52.53-63.86 (page $50-61), GS 10% -> $47.28 passes; 29 RV + 8 tent; Google 4.7/256; hairpin note reworded

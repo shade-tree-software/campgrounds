@@ -1,0 +1,52 @@
+{
+ "id": 4448,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://gocamptennessee.com/fooshee-pass-campground/ (operator page, headless Chrome, read 2026-11-25): 'Fooshee Pass Campground has 54 sites, all sites with water and electricity. Each site also has a picnic table and a fire ring. 30 amp service only at the campground and some sites may require an extra 30 amp extension. There is a boat ramp, playground area, roped off swimming area, bathhouse/restrooms, hot showers and a dump station.'; phone 865-361-1233; season block still shows 2025 dates (opens March 15, closed November 15)",
+  "https://www.campspot.com/api/gator-core/v2/parks/slug/fooshee-pass-campground (park record via a campspot.com page in headless Chrome, read 2026-11-25): park rules 'Sites in the campground are able to be reserved via walk-in, phone call or our online reservation system. We do not have first come - first serve sites.', 'A maximum of 2 vehicles are allowed per campsite (if space permits).', 'Additional vehicle passes must be purchased at the office for $10.00', 'The maximum camping stay is 21 consecutive days unless renting a long-term site.', 'Online reservations require a 2-night minimum stay.'; cancellation 'full refund minus the $10 reservation fee'; Campspot rating 4.8 (109); park map (park-maps.campspot.com) draws a shore-side row and a loop on the point, unlabelled; 2027 availability searches (April 13-15, June 8-14) return no site types yet",
+  "audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot read 2026-10-13): RV types 'Non-WaterFront' 6 sites (40 ft max) and 'Waterfront' 22 sites (50 ft max, 20 fit 23 ft+), 30-Amp, Water Hook-Up, Pull-Through, Gravel Pad; October 2026 base $40-47 plus a $10 Reservation Surcharge per stay; closed dates 2026-11-15 to 2027-03-14",
+  "Campspot park photos (5 slideshow images, read 2026-11-25): gravel pads on mown grass under tall scattered hardwoods and pines, the lake visible through the trunks beyond the pads",
+  "Esri World Imagery (winter drawdown) and USGS NAIP (summer) frames at 35.6644,-84.7578, plus USGS 3DEP elevations (read 2026-11-25); Watts Bar summer pool 741 ft (225.9 m)",
+  "Google Maps (headless Chrome, read 2026-11-25): 'Fooshee Pass Campground' 4.6 stars, 217 reviews, 185 Sandy Bottoms Ln, Ten Mile"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 30, "water": true, "sewer": false},
+   "source": "https://gocamptennessee.com/fooshee-pass-campground/ ('all sites with water and electricity', '30 amp service only'), read 2026-11-25; Campspot RV types list no sewer",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 54, "max_rig_ft": 50, "pull_through": true,
+              "note": "28 RV sites book online (6 standard, 22 sold as waterfront); some sites need a 30-amp extension cord to reach the pedestal."},
+   "source": "https://gocamptennessee.com/fooshee-pass-campground/ (54 sites, read 2026-11-25) and Campspot RV types (Waterfront max 50 ft, Pull-Through amenity; campspot_tier_2026-10-13.jsonl)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "dump": true},
+   "source": "https://gocamptennessee.com/fooshee-pass-campground/ ('bathhouse/restrooms, hot showers and a dump station'), read 2026-11-25",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 40, "nightly_high": 47, "currency": "USD", "reservation_fee": 10, "checked": "2026",
+              "extra_vehicle": {"included": 2, "amount": 10},
+              "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Non-WaterFront and Waterfront). October 2026: $40-44 on a Tuesday; $43-47 on a Saturday. Plus the park's $10 'Reservation Surcharge', once per stay. A third vehicle needs a $10 pass from the office. Read 2026-10-13; the 2027 season was not open for booking on 2026-11-25."},
+   "source": "Campspot pricing read 2026-10-13 (campspot_tier_2026-10-13.jsonl) and the Campspot park rules on vehicle passes, read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/fooshee-pass-campground", "fcfs": "never",
+              "min_stay": [{"nights": 2, "applies": "always"}],
+              "note": "The 2-night minimum is for online bookings; the park also rents sites by phone and at the office."},
+   "source": "Campspot park rules ('reserved via walk-in, phone call or our online reservation system. We do not have first come - first serve sites.', 'Online reservations require a 2-night minimum stay.'), read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "TVA campground on Watts Bar Lake run by the concessionaire Tennessee Valley Hospitality (Go Camp Tennessee): gravel sites under tall scattered trees along the shore and around a loop on the point, with a boat ramp, a roped-off swimming beach and a pavilion. --Claude",
+ "summary": "Fooshee Pass (Go Camp Tennessee, TVA): operator confirms 54 sites, all water + 30 A, showers, dump; 28 RV sites book online on Campspot (22 sold as 'Waterfront'); October 2026 $40-47 + $10 reservation surcharge stands (2027 not open); season 03-15..11-14 stands; Google 4.6 (217). Waterfront: stored 'not waterfront' looks too low - flagged as at least lakeview, lakefront candidate, site numbers unreadable.",
+ "flags": [
+  "WATERFRONT (stored 'not waterfront' looks too low; reviewer to decide): Campspot sells 22 RV sites as 'Waterfront' by the night (2-night online minimum). The Campspot park map puts a row of sites along the shore and a loop on the point. The stored evidence ('loop set back behind treeline', read at 35.6605,-84.756) looked about 450 m south of the campground. On NAIP summer imagery the point loop (~35.66464,-84.75734) sits under tall trees with summer water on three sides; 3DEP puts its centre at 227.7 m and its edges at 225.2-225.3 m, against Watts Bar's 741-ft (225.9 m) summer pool, so the outer pads are ~1-2 m above the water and ~10-25 m from it. The shore-side row pads (~35.66463,-84.75830 to 35.66400,-84.75900) sit 229.7-234.9 m, 4-9 m above pool, ~25-40 m back. The operator's photos show gravel pads on mown grass under scattered tall trunks, with the lake visible beyond; that open view puts the floor at lakeview. Lakefront for the point loop is plausible, but no site numbers could be read (2027 inventory not open; the map is unlabelled), so no upgrade past lakeview is supported.",
+  "PRIVATE CHECKS: Google 4.6 (217 reviews); presence: operator site + phone 865-361-1233; price under the gate ($40-47 base). Long-stay: 28 of 54 sites book online; the rules mention long-term sites and a 21-day limit otherwise - about half nightly, not mostly seasonal.",
+  "SEASON: the operator page still shows the 2025 season (March 15 - November 15); Campspot's closed dates 2026-11-15 to 2027-03-14 back the stored 03-15..11-14.",
+  "WEBSITE: Campspot names the marketing site as camprrm.com/parks/tennessee/tva-easements/fooshee-pass-campground/, and Google lists none; gocamptennessee.com is live and current, so the stored website stays."
+ ]
+}

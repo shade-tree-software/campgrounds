@@ -1,0 +1,48 @@
+{
+ "id": 4487,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://roadville.com/lakeview/ (headless Chrome after plain curl got a 'Just a moment...' 403; read 2026-11-25; http://www.lakeviewrvpark.com/ redirects here): 'All RV sites have full hookups with water, sewer, electric and free WiFi.'; 'Daily, weekly and monthly rentals are available'; 'First-responder & military discounts available.'; amenities list incl. 'Camp Store', 'Swimming Pool', 'Restrooms', 'Showers', 'Laundry', 'Docks'; 'Cyber Sale 35% Off ... USE CODE: BF2026 *Book by December 2, 2026 ... Two-night minimum.'; 4550 Hwy 11 E, Bluff City; 423-538-5600",
+  "https://roadville.com/lakeview/rv-sites/ (headless Chrome, read 2026-11-25): 'Our year-round RV campground'; 'full-hookup sites featuring 20/30/50 amp service ... level concrete pads'; the reservations, seasonal-sites, campground-map and rules pages then answered 403 to the same browser and were not read",
+  "https://bookingsus.newbook.cloud/lakeview/index.php (Newbook booking engine, headless Chrome, 2 adults, 2-night searches 2026-12-01, 2027-01-12, 02-09, 03-09 and 05-11, read 2026-11-25): 'RV 50' X 35' FHU 30/50 AMP' $70.04 / night (Dec 1-3 2026), $90.64 (Jan, Feb, Mar 2027), $97.85 (May 11-13 2027); 'RV 50' X 35' FHU 30/50 AMP W/Patio' $93.73-111.24; cabin $114-138",
+  "Google Maps (headless Chrome, read 2026-11-25): 'Lakeview RV Resort' 4.3 stars, 397 reviews, 4550 Hwy 11 E, Bluff City, 423-538-5600, roadville.com/lakeview",
+  "audit/price_research/gateways.py 36.46508,-82.28515 (run 2026-11-25): 'none within 40 km; nearest: Asheville 100 km'"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 70, "nightly_high": 111, "currency": "USD", "checked": "2026",
+              "note": "Full-hookup back-in sites $70 a night in early December 2026 and $91-98 from January to May 2027; patio sites $94-111. The park's Newbook booking page for two adults, read 2026-11-25."},
+   "source": "https://bookingsus.newbook.cloud/lakeview/index.php (2-night searches from 2026-12-01, 2027-01-12, 2027-02-09, 2027-03-09, 2027-05-11), read 2026-11-25",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://roadville.com/lakeview/rv-sites/ ('full-hookup sites featuring 20/30/50 amp service') + Newbook 'FHU 30/50 AMP' site types, read 2026-11-25",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "laundry": true, "camp_store": true, "wifi": true},
+   "source": "https://roadville.com/lakeview/ amenities list ('Restrooms', 'Showers', 'Laundry', 'Camp Store', 'Free WIFI'), read 2026-11-25",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "https://roadville.com/lakeview/rv-sites/ ('Our year-round RV campground') + Newbook sells December-March nights, read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://bookingsus.newbook.cloud/lakeview/index.php"},
+   "source": "Newbook booking engine linked from roadville.com/lakeview 'BOOK NOW', read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Private RV resort on Hwy 11E in Bluff City, across the highway from Boone Lake, with a pool, docks and an on-site grill; it also rents monthly. --Claude",
+ "summary": "Lakeview RV Resort (Roadville): full hookup 20/30/50 A, year-round, Newbook booking. Cheapest RV night $70 (Dec 2026), $91-98 in 2027 - over the $50 gate with no Good Sam, no gateway within 40 km and no posted member discount that closes the gap: DROP CANDIDATE. Google 4.3 (397).",
+ "flags": [
+  "DROP CANDIDATE (price gate): cheapest RV night on the park's Newbook engine is 'RV 50' X 35' FHU 30/50 AMP' at $70.04 (2026-12-01..03); $90.64 for Jan-Mar 2027 and $97.85 for May 2027. good_sam is false; gateways.py finds none within 40 km (Asheville 100 km); the posted 'First-responder & military discounts available' gives no amount, and the 35% 'Cyber Sale' code (book by 2026-12-02) is a promotion, not a member discount - even 35% off $90.64 is $58.92.",
+  "PRIVATE: Google 4.3 (397 reviews); presence fine (own site, live booking, 423-538-5600). Long-stay share not measured: the seasonal-sites and map pages answered 403 after the first two pages; the site says 'Daily, weekly and monthly rentals are available'.",
+  "WEBSITE: line 2 'http://www.lakeviewrvpark.com/' now redirects to line 1 'https://roadville.com/lakeview/' and could be dropped.",
+  "WATERFRONT 'not waterfront' kept: the operator says 'steps away from beautiful Boone Lake' but the park sits across Hwy 11E from the shore (stored evidence); no site sold as lakeside.",
+  "UNREAD: roadville.com/lakeview/reservations/, /seasonal-rv-sites/, /campground-map/ and roadville.com/rules-regulations/ (403 to headless Chrome at human pace; no archive fallback tried because the price question was settled on the booking engine). Site count not found."
+ ]
+}
