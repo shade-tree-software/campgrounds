@@ -818,3 +818,6 @@ Facebook-only operator (page unreadable without login); Hipcamp listing is an un
 
 ## 4498 Outer Haven Campground (TN, private, Cosby) — p3-608, 2026-11-25 — KEPT, flag
 New park (opened 2025), 17 RV sites, ~6 miles from the Smokies' Cosby entrance (gateway, so its $75 Airbnb night passes). The RV page leads with "***Now offering monthly rates. $800 All RV sites." and only site 17 is sold by the night online (Airbnb); the other 16 have no online nightly channel or posted nightly rate. Google 5.0 from 6 reviews; own website with phone. Nightly share can't be measured (at least 1 of 17); under the 10% line it would fail like Myers Landing. Keep, or drop?
+
+## 26 Cardens Bluff Campground (TN, Cherokee NF, Watauga Lake) — p3-609, 2026-11-25 — OPEN, --AWH waterfront
+Stored lakefront rests on your note "site 29 is the only RV site on the Lake. --AWH". Measured: site 29 (36.313511,-82.117738, the one RV site rated 30 ft) is on the bluff top at 610.9 m (3DEP), ~14 m above Watauga's 597.1 m summer pool, with the ground reaching the water in ~25-30 m at ~27° under continuous canopy. By the kayak test that is lakeview. rec.gov tags 25 and 28 "Lakefront", not 29, and neither is rated for a 23-ft rig. Left lakefront; downgrade to lakeview, or keep on what you saw there?

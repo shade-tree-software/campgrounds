@@ -1,0 +1,13 @@
+# p3-609 notes
+- 4461 Riley Creek done: 45 sites (22 seasonal lottery), lakefront kept W-1..12, pin ~260 m, phone -> 865-250-6152, G 4.4/84
+- 4506 Smooth Rapids done: $35-55 by length, 50A FHU lots 2-4 sewer, FareHarbor, phone -> 931-452-9251, G 4.7/815
+- 4508 Swiss Haven done: $35, 16 sites, phone booking, RV<20yr rule, G 5.0/17
+- 4509 Tanbark done: website dead tripod -> wixsite, $41/47 GS $27.50/30.50 PA, pin ~320 m, G 4.3/232
+- 4390 Tims Ford Main done: $32-65, 52 sites, sewer 1-4, lakeview kept, PIN ~950 m (stored = cabins/VC) -> 35.2190,-86.2496
+  - tncal.py (POST parkwide/map) + tnrows.py in scratch
+- 14633 Volunteer Park done: Firefly 1 quote $54.99/59.99 Dec 2026 -> PRICE DROP candidate; long-stay heavy; G 4.1/479
+- 4512 Whispering Oaks done: $50 operator (2024-25), camper 2026-11 $55; long-stay heavy; G 4.5/241; reviewer call
+- 26 Cardens Bluff: done. rec.gov+FS read; 29 only 30-ft RV site; AWH lakefront kept, measured 12-15 m above water ~30 m => view (report); pin in lake 190 m -> 36.3119,-82.1171; phone ''->423-735-1500.
+- 4464 Cherokee Park: done. lakefront kept (Prime Lake Access row ~1.6 m above est summer pool, 15-20 m open bank); pin ~320 m -> 36.2586,-83.2737; $35-45; long-term phase-out; county page has spam injection.
+- 4422 Look Rock: done. operating 2026 (sold thru 10-25), 2027 from 05-28; 10 elec all 50A; max 48; $30/36; phone option 865-448-4103.
+- 4462 Meadow Park Lake: done. now 6 RV+5 tent=11; no rate anywhere dated; website line 2 404.
