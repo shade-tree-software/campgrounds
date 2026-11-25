@@ -1,0 +1,12 @@
+# p3-612 notes
+- 13394 done: TRDA confirmed; lakefront confirmed east ring (3DEP 1.6-1.8 m over 247.8); Campspot [] every date 11-26..2027-07; GS season Mar15-Nov15 via search only; 95 sites
+- 13719 Meeman-Shelby: DONE. $32-64 (holiday high), 48 sites 20/30/50 water, 27 sewer, 40-60 ft; year-round; website slug fix; elev 132->109.
+- 13720 Montgomery Bell Four Mile Creek: DONE. still closed thru Oct 2027 calendar; 109 sites; creekside upgrade proposed (21 named sites).
+- 4424 Moonhill Bridge: DONE. lakefront kept (3DEP/USGS summer); no TVA page names it; Dyrt '20 ft' aggregator; residents/trash caveat.
+- 13721 Happy Hollow: DONE. still closed early 2027; no HH sites on calendar; stored $30-35 unverifiable (likely Lake Front); Lake Front reopened but 10-20 ft -> not lead.
+- 13723 Norris East: DONE closed, cal unavailable thru 9/2027; 16 RV(engine) vs 25 on map; phone->865-425-4500.
+- 13722 Norris West: DONE closed, road closed; 49+host; 'steep with dangerous curves' kept w/ warning; phone->865-425-4500.
+- 4419 North River: DONE open $8 FCFS; unsourced 'sites 2-3 trailers' quote dropped; creekside lead unconfirmed; phone ''->423-397-8455; elev 612->581.
+- 14641 Old Mill: DONE pass $44 dated Dec 2026 Campspot (+$4 booking, 3.5% processing); Google 4.8/934 (incl store); long-stay pass.
+- 13724 Pickett: DONE closed, cal bookable 2027-01-01 -> reopens Jan 2027; 7 of 26 fit 23ft; fees 19-31; 30A.
+- 13725 Pickwick Main: DONE closed, no date, all Unavailable to Sep 2027; 48 sites 26-72 ft; no rate; phone -> 731-689-3129.
