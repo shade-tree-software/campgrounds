@@ -1,0 +1,50 @@
+{
+ "id": 4467,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://aroundpondrvparks.com/ (the stored website): refuses https; on http a Network Solutions 'Under Construction' parked page, 2026-11-25 - not the operator's site any more",
+  "https://aroundpondrvparks.net/ (operator site, named by the Google listing; a React app, text read from its bundle /assets/index-Bh3PCYHt.js, 2026-11-25): 'All sites feature 30/50 amp electric, water, and sewer connections'; 'Waterfront Sites: Premium sites available with direct pond access and beautiful water views'; 'Modern Bathhouses: Clean, spacious shower facilities with hot water'; '617 Van Hill Rd, Greeneville, TN 37745'; '(423) 234-0229'; two booking buttons, 'Around Pond RV Park' and 'Around Pond RV Resort'; no rates and no stay-length wording; 'Interactive map coming soon!'",
+  "https://app.fireflyreservations.com/Reserve/Property/AroundPondRVParks (Firefly, headless Chromium, one-night 'Nightly' searches for 2 adults, a 23-ft Class C, no slides, arriving 2026-12-08 and 2027-06-08, read 2026-11-25): 104 RV sites listed; 25 accept a nightly booking (sites 14, 49-51, 53-56, 65-70, 72, 74-77, 79-84) at '$51.39 avg per night' both dates, fitting 30-108 ft; the other 79 answer 'Requested reservation type not accepted'. Two more searches (2026-12-01, 2027-04-13) were refused by Firefly's invisible reCAPTCHA ('ErrorCode':'Recaptcha') - nothing was clicked through",
+  "https://app.fireflyreservations.com/Reserve/Property/AroundPondRVResort (Firefly, same searches, 2026-12-08, 2027-01-12, 2027-04-13, 2027-06-08, read 2026-11-25): 78 RV sites (S02-S95, back-ins and pull-throughs) - every one 'Requested reservation type not accepted' for a nightly stay on every date; one search refused by the reCAPTCHA",
+  "Google Maps (gm.py, 2026-11-25): 'Around Pond RV Park' and 'Around Pond RV Resort' both resolve to the one listing, 617 Van Hill Rd, Greeneville; 4.3 over 250 reviews; +1 423-234-0229; website aroundpondrvparks.net",
+  "Esri World Imagery (sat.py 36.33038,-82.83945 half 250 m), audit/price_research/gateways.py (none within 40 km; Asheville 86 km, Great Smoky Mountains NP 95 km), trip_data/goodsam_parks.json (no match), read 2026-11-25"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 51.39, "nightly_high": 51.39, "currency": "USD", "checked": "2026", "note": "Firefly quotes $51.39 a night for every site that takes a nightly booking, December 2026 and June 2027 alike; the quote shows no tax line. Read 2026-11-25."},
+   "source": "https://app.fireflyreservations.com/Reserve/Property/AroundPondRVParks ('$51.39 avg per night', one night from 2026-12-08 and 2027-06-08, 2 adults, 23-ft Class C), read 2026-11-25",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://aroundpondrvparks.net/ ('All sites feature 30/50 amp electric, water, and sewer connections'), read 2026-11-25",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 25, "max_rig_ft": 108, "pull_through": true, "note": "25 of the RV Park's 104 sites take nightly stays (14, 49-51, 53-56, 65-70, 72, 74-77, 79-84); the rest of the Park and all 78 sites of the adjoining RV Resort booking don't. Site 74 fits only 30 ft, site 14 40 ft."},
+   "source": "https://app.fireflyreservations.com/Reserve/Property/AroundPondRVParks and /AroundPondRVResort (per-site 'Fits RVs up to N ft' and nightly acceptance; Resort site names 'Pull Thru'), read 2026-11-25; replaces the allstays-derived max_rig_ft 100",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true},
+   "source": "https://aroundpondrvparks.net/ ('Modern Bathhouses: Clean, spacious shower facilities with hot water'), read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://app.fireflyreservations.com/Reserve/Property/AroundPondRVParks", "fcfs": "never", "note": "Online on Firefly; the separate 'Around Pond RV Resort' booking (S-numbered sites) takes no nightly stays. Office (423) 234-0229 for other payment arrangements."},
+   "source": "https://aroundpondrvparks.net/ (booking buttons) + Firefly property pages ('If you have circumstances that prevent you to pay for your reservation in full, please call our office (423) 234-0229'), read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Private RV park off Van Hill Rd between Greeneville and Baileyton, around a fishing pond, with a bathhouse, nature trail and gated entrance. Most sites are let for long stays; the nightly sites are a numbered subset (see sites). --Claude",
+ "summary": "Around Pond RV Park: stored website is a parked domain, operator now aroundpondrvparks.net (Firefly). DROP CANDIDATE on two counts: only 25 of 182 RV sites across its two Firefly properties take nightly stays (Park 25/104, Resort 0/78), and the nightly rate is $51.39 with no Good Sam listing and no gateway within 40 km. Full hookups 30/50 A, showers confirmed; pond value plausible on imagery but site numbers not tied.",
+ "flags": [
+  "DROP CANDIDATE (long-stay share): the Park's Firefly 'Nightly' search lists 104 RV sites and 79 answer 'Requested reservation type not accepted'; only 25 (14, 49-51, 53-56, 65-70, 72, 74-77, 79-84) take a nightly stay. The second Firefly property on the same site, 'Around Pond RV Resort' (78 sites S02-S95), refuses nightly on all four dates tried (Dec 2026, Jan, Apr, Jun 2027). Nightly share ~14% of 182 (24% of the Park's own list). No tent sites listed. Google 4.3 over 250 reviews; RV Life 4*/$$.",
+  "DROP CANDIDATE (price gate): '$51.39 avg per night' on every nightly site, Dec 2026 and Jun 2027 alike - over US$50. Firefly's list price normally excludes tax (no tax line shown), so treated as before tax; if it were tax-inclusive at Greene County's ~9.75% it would be ~$46.80. Not a Good Sam Park (no match in the directory cache; no discounts on the entry); gateways.py: none within 40 km (Asheville 86 km, GSMNP 95 km); no member discount posted.",
+  "WEBSITE https://aroundpondrvparks.com/ -> https://aroundpondrvparks.net/ (old domain refuses https and shows a Network Solutions parked 'Under Construction' page on http; Google's listing links the .net, which carries the same phone and address).",
+  "PHONE '' -> 423-234-0229 (operator site, both Firefly pages and Google).",
+  "WATERFRONT pond (kept, flag): the pond is ~105 x 95 m (~0.8 ha) on Esri imagery, and the southern loop's pads sit ~15-25 m from its north shore over open mowed grass, matching the stored evidence. The operator advertises 'Premium sites available with direct pond access'. Neither the site nor Firefly has a map, so I could not name which site numbers front the pond or whether any of them are among the 25 nightly sites. Under 'defaults down' the reviewer may want 'pond view' unless pond-side nightly sites can be named; moot if the entry is dropped.",
+  "SITES: allstays-derived max_rig_ft 100 replaced by Firefly's per-site fits (nightly sites 30-108 ft; site 74 only 30 ft). count set to the 25 nightly sites.",
+  "UNREAD: Firefly's invisible reCAPTCHA refused 3 of 8 searches (no captcha was attempted); no rate for the monthly/'Ongoing' type was read; Firefly gave no per-site photos tied to the pond."
+ ]
+}

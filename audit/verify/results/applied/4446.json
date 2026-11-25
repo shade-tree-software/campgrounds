@@ -1,0 +1,37 @@
+{
+ "id": 4446,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://gocamptennessee.com/cedar-point-campground/ (curl answers a Cloudflare 403; read in one headless page with a desktop Chrome UA, 2026-11-25): 'Cedar Point Campground lies on the Normandy TVA Reservoir'; 'Cedar Point has a day use area, boat launch, and a small general store'; 'Season Opens Friday, March 15th / Season Closed: Friday, November 15th'; 'Phone: 931-857-3705'; 'Cedar Point has 53 campsites (45 have water and electric; 8 of which have 20/30 amp, and the remaining 37 hookup sites have 20/30/50 amp; 8 campsites are primitive)'; 'All sites require a 2-night minimum stay. Please call the campground directly to request an exception if you wish to stay for just 1 night.'; 'A camping store is available, where you can purchase ice, firewood, snacks, and also fishing worms'; 'a swimming beach, grills, fishing areas, a designated swimming area and max amp 50 campsites'",
+  "https://camprrm.com/parks/tennessee/tva-easements/cedar-point-campground/ (Google's website link): redirects to gocamptennessee.com - same operator, no change",
+  "https://www.campspot.com/book/cedarpointcampground/search/2027-04-13/2027-04-14/guests0,2,0/map (headless Chromium, availability JSON + park-map SVG for park 3537, read 2026-11-25): 'Waterfront Water & Electric RV Site' 05, 07, 09, 11, 13, 15, 17, 19, 21, 22 (36-40 ft); 'Non-Waterfront Electric & Water RV Site' 06-32 even + 24A (25-43 ft); 'Primitive Tent Site' 34-48 even; every type 'There is a 2 night minimum over the requested period of time'; list averages with fees $50 / $53 (waterfront)",
+  "Esri World Imagery (sat.py 35.47605,-86.22725 half 220 m; 35.4738,-86.2285 half 250 m; winter-drawdown capture) and USGS 3DEP elevations (epqs.nationalmap.gov), read 2026-11-25; Normandy summer pool ~875 ft (266.7 m)",
+  "Google Maps (gm.py, 2026-11-25): 1659 Cedar Point Rd, Manchester; 4.5 over 321 reviews; 931-857-3705"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": false},
+   "source": "https://gocamptennessee.com/cedar-point-campground/ ('45 have water and electric; 8 of which have 20/30 amp, and the remaining 37 hookup sites have 20/30/50 amp') + Campspot site amenities (no sewer), read 2026-11-25",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 53, "max_rig_ft": 43, "note": "45 sites have water and electric (8 of them 20/30-amp only) and 8 are primitive; Campspot lists sites at 25-43 ft."},
+   "source": "https://gocamptennessee.com/cedar-point-campground/ ('53 campsites (45 have water and electric ... 8 campsites are primitive)') + Campspot per-site rvLengthMax 25-43 ft, read 2026-11-25",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"camp_store": true},
+   "source": "https://gocamptennessee.com/cedar-point-campground/ ('a small general store'; 'A camping store is available'), read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Go Camp Tennessee campground on Normandy Lake (TVA land) near Manchester, across the lake from Barton Springs, with a swimming beach, a boat ramp and a pavilion. The lakefront sites line the shore side of the loop by the beach. --Claude",
+ "summary": "Cedar Point: operator page (headless; curl 403) and Campspot confirm 53 sites (45 water/electric to 50 A, 8 primitive), store, season Mar 15-Nov 15, 2-night minimum (Apr 2027 too). Lakefront KEPT on Campspot's 10 waterfront sites (05-21 odd, 22) along the beach-side shore. No operator change. max_rig set 43.",
+ "flags": [
+  "WATERFRONT lakefront KEPT: Campspot's 'Waterfront Water & Electric RV Site' type names 05, 07, 09, 11, 13, 15, 17, 19, 21, 22, sold by the night (2-night minimum); the Campspot map draws them along the shore beside the swim beach. On Esri imagery (winter drawdown) the loop's shore-side pads run ~35.47472,-86.22832 to 35.47370,-86.22697 on open grass with scattered trees; 3DEP gives the pads 267.8-268.9 m and the grass edge 265.6-267.5 m against a ~266.7 m summer pool - pads ~1-2 m above the summer waterline ~15-25 m away over a gentle (~6%) slope. Kayak test passes.",
+  "OPERATOR: Google's camprrm.com link redirects to gocamptennessee.com (Vista/RRM = Go Camp Tennessee); stored website and phone current.",
+  "SEASON: operator 'Season Opens Friday, March 15th / Season Closed: Friday, November 15th' agrees with the stored 03-15..11-14 (Campspot's closure starts 11-15, so the last night is the 14th) - left as stored.",
+  "SITE SHARE: Campspot lists 23 hookup RV sites of the 45 the operator counts; the rest are drawn unlisted on its map. The operator page does not mention long-term camping here (Barton Springs' page does). Likely nightly-dominant on the evidence; noted for completeness.",
+  "FEES left as stored ($40-47 site rate + $10 surcharge, 2026-10-13); April 2027 Campspot list averages $50/$53 are consistent once the $10 surcharge and Campspot's 3% are taken out."
+ ]
+}

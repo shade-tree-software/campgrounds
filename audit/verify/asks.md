@@ -812,3 +812,6 @@ On reserve.tnstateparks.com every Campground One night is Unavailable from 2026-
 
 ## 4515 Windy Rivers Campground (TN, private, Holston River) — p3-605, 2026-11-24 — ANSWERED: drop (AWH 2026-11-25)
 Facebook-only operator (page unreadable without login); Hipcamp listing is an unclaimed placeholder. Google 4.6 (54) with phone 423-585-7927 is the presence; price rests on RV Life $$ only. Imagery shows tightly packed trailers with sheds and decks, so it may be a long-stay park - and a long-stay park needs a posted nightly rate or booking site, which this lacks. Waterfront downgraded riverfront -> riverview. Keep, or drop as probably long-stay?
+
+## 14634 Coal Creek Campground (TN, private, Rocky Top) — p3-606, 2026-11-25 — KEPT, flag
+18 full-hookup pull-throughs, $40 every date tried on its own booking engine, Google 4.5 (51). OHV side: the home page leads with "Access to Windrock Park and Royal Blue Off-road Riding Trails", the rules let early arrivals "access the trails" and mention "extra parking in the stage area". Against: "2.8 miles from campground to trail head. YOU MUST HAVE A WINDROCK RIDING PERMIT", and it also markets the Devil's Triangle motorcycle roads and Norris Lake. Read as a general RV park with an OHV side (like Windrock Gap 4514). Drop if you read it as an OHV base.

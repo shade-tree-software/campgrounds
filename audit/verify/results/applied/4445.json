@@ -1,0 +1,42 @@
+{
+ "id": 4445,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://gocamptennessee.com/barton-springs/ (curl answers a Cloudflare 403; read in one headless page with a desktop Chrome UA, 2026-11-25): 'The campground lies on Normandy TVA Reservoir'; 'large gravel sites, with sites that are pull-through that have electrical and water hookups. A majority of sites accommodate big rigs'; 'Season Opens: Friday, March 15th / Season Closes: Sunday, November 15th'; 'Check-in time is 1:00 PM; check-out time is 11:00 AM'; 'Phone: 931-857-3777'; 'The campground has a total of 128 campsites. All sites have a lake view, and 11 sites are lakefront, offering the availability to fish from your campsite! There are 49 back-in sites, with the remaining being gravel and pull-through ... Each offer electric power of 50/30/20 and has a water faucet'; 'The campground offers both short-term and long-term camping'; day-use beach, $10 day-use parking; footer 'Tennessee Valley Hospitality LLC'",
+  "https://camprrm.com/parks/barton-springs-campground/ (Google's website link): redirects to vista-rec.com (404 for that path); the matching camprrm.com Cedar Point path redirects to gocamptennessee.com, so RRM/Vista and Go Camp Tennessee are the same operator - no operator change",
+  "https://www.campspot.com/book/barton-springs-campground/search/2027-04-13/2027-04-14/guests0,2,0/map (headless Chromium, availability JSON + park-map SVG for park 3428, read 2026-11-25): RV types 'Waterfront 30/50 Amp RV Site' (11 sites: 9, 11, 13, 15, 17, 19, 21, 33, 35, 36, 37; 40 ft), 'Non-Waterfront 30/50 Amp RV Site' (35 sites, 34-40 ft) and 'Non-Waterfront 30/50 Amp Island Site' (31 sites E1-E31, 24-60 ft), all 30-Amp/50-Amp/Water Hook-Up/Back-In; list averages with fees $50 / $53 (waterfront); every type 'There is a 2 night minimum over the requested period of time' for a Tuesday in April 2027. Four Peninsula RV Rentals besides",
+  "Esri World Imagery (sat.py 35.4545,-86.2205 half 350 m; 35.4552,-86.2226 half 110 m; winter-drawdown capture) and USGS 3DEP elevations (epqs.nationalmap.gov), read 2026-11-25; Normandy's summer pool ~875 ft (266.7 m)",
+  "Google Maps (gm.py, 2026-11-25): 158 Barton Springs Rd, Normandy; 4.5 over 616 reviews; 931-857-3777"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": false},
+   "source": "https://gocamptennessee.com/barton-springs/ ('Each offer electric power of 50/30/20 and has a water faucet') + Campspot site amenities (30-Amp, 50-Amp, Water Hook-Up; no sewer on any site), read 2026-11-25",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 128, "max_rig_ft": 60, "pull_through": true, "note": "Campspot sells 77 RV sites by the night; the operator also takes long-term campers. Island sites run 24-60 ft, the rest 34-40 ft."},
+   "source": "https://gocamptennessee.com/barton-springs/ ('a total of 128 campsites'; '49 back-in sites, with the remaining being gravel and pull-through') + Campspot per-site rvLengthMax (24-60 ft), read 2026-11-25; replaces the note-derived max_rig_ft 40",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "03-15", "closes": "11-15"},
+   "source": "https://gocamptennessee.com/barton-springs/ ('Season Opens: Friday, March 15th'; 'Season Closes: Sunday, November 15th'), read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/barton-springs-campground", "min_stay": [{"nights": 2, "applies": "always"}], "note": "Campspot asks 2 nights on a weeknight in October 2026 and April 2027; Go Camp Tennessee's other park pages invite a call to ask for a one-night exception. Check-in 1 p.m., check-out 11 a.m."},
+   "source": "https://www.campspot.com/book/barton-springs-campground/search/2027-04-13/2027-04-14/guests0,2,0 ('There is a 2 night minimum over the requested period of time' on every type), read 2026-11-25, with the 2026-10-12 read; check-in/out from https://gocamptennessee.com/barton-springs/",
+   "method": "manual"
+  }
+ },
+ "note": "Go Camp Tennessee campground on the south shore of Normandy Lake (TVA land) with gravel sites, a swimming beach, a boat ramp, a bathhouse and a pavilion. Every site has a lake view; the 11 lakefront sites ring the outer edge of the two loops west of the entry road. Four rental RVs. --Claude",
+ "summary": "Barton Springs: operator page (headless; curl 403) and Campspot confirm 128 sites, 50/30/20 A + water, season Mar 15-Nov 15, 2-night minimum still on (Apr 2027). Lakefront KEPT: the operator's 11 lakefront sites (Campspot 9-21 odd, 33, 35-37) sit on open grass at the high-water edge. No operator change (camprrm.com/vista-rec redirect to Go Camp Tennessee). max_rig 40 -> 60.",
+ "flags": [
+  "WATERFRONT lakefront KEPT: operator 'All sites have a lake view, and 11 sites are lakefront, offering the availability to fish from your campsite!' Campspot names them: 'Waterfront 30/50 Amp RV Site' 9, 11, 13, 15, 17, 19, 21, 33, 35, 36, 37, sold by the night (2-night minimum). The Campspot map puts them on the outer, northwest-facing edges of the two loops west of the entry road. On Esri imagery (winter drawdown, bare flats) the upper loop's outer gravel pads (~35.45555,-86.22226 to 35.45565,-86.22187) open straight onto mowed grass that ends at the flats ~10-20 m out; 3DEP gives the pads ~267.2 m and that edge ~266.8 m against Normandy's ~266.7 m summer pool - pads ~0.5 m above the summer waterline over a gentle bank, no tree line between. The west loop's outer pads (~35.45478,-86.22337) sit at 267.2-267.5 m beside flats at 266.4 m. Kayak test passes.",
+  "OPERATOR: Google's website link is camprrm.com; that path redirects to vista-rec.com (404) and the matching Cedar Point path redirects to gocamptennessee.com. Same company (Vista Recreation / RRM / Go Camp Tennessee, footer 'Tennessee Valley Hospitality LLC'); stored website links are current.",
+  "LONG STAY: the operator says it offers 'both short-term and long-term camping'; Campspot sells 77 of 128 sites by the night (~60%), so it passes the share test. Google 4.5 over 616 reviews; RV Life 4*/$$. Not a Good Sam Park; prices under $50 (site rate $40-47 stored from 2026-10-13; April 2027 list averages $50/$53 include the $10 per-stay surcharge and Campspot's 3% fee) - fees left as stored.",
+  "SITES: note-derived max_rig_ft 40 replaced with Campspot's 60 (island sites). Campspot tags every site Back-In while the operator says all but 49 are pull-through; pull_through kept on the operator's word.",
+  "PHONE 931-857-3777 and WEBSITE unchanged (gocamptennessee.com refuses plain curl with a Cloudflare 403 but renders in a browser)."
+ ]
+}

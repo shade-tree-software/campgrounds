@@ -1,0 +1,53 @@
+{
+ "id": 4465,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://www.andersoncountypark.com/acpark/ (plain curl answers Mod_Security 406; read in one headless page with a desktop Chrome UA, 2026-11-25): '196 Acres on Norris Lake'; '40 short-term RV and Tent sites with water and 30/50 amp and 110V electric hook-up ($30 to $35 per night plus taxes and fees)'; '30 long-term sites ($427.31 including taxes and fees)'; 'Group camp ... ($60 per night plus taxes and fees)'; 'Two ADA accessible shower/restroom facilities and 2 other bath facilities'; 'Two Dump stations'; 'Boat Ramp and swimming area for campers only and a additional public boat ramp and swimming area'; 'Camping Season for short-term spots is March 1st – December 1st'; footer 'Anderson County Park System | 865-253-3364 (call or text)'",
+  "https://www.andersoncountypark.com/campground-reservations/ (headless, read 2026-11-25): 'Anderson County Park uses an online reservation system for its short-term electrical and non-electrical camp sites.' 'You can make a reservation for a short-term sites starting January 1st. The short-term camp sites are open from March through November.' 'Visitors will not be able to occupy a site without making a reservation.' 'The rates for short-term camping sites are $30 to $35 for electrical sites plus taxes and processing fees. You must be at least 21 years old ... there is a maximum of 6 adults and 12 people total per site at any time.' 'Campers can only make a reservation and occupy a site for 14 consecutive days.' 'call the park office at 865-253-3364'",
+  "https://www.andersoncountypark.com/wp-content/uploads/2023/11/Anderson-County-Park-Map-UPDATED-6-22-23.png (operator campground map, via i0.wp.com, read 2026-11-25): C road along the Norris Lake shore (C10-C38 on the lake side, unstarred = short-term), A and B roads inland (starred = long-term), D loop beside the boat launch; campers' ramp, swimming area and playground between the C road and the cove; '(865) 253-3364 / 865-494-5059'; 'Check in-1 p.m. Check out 11 a.m.'",
+  "https://book.letsbonfire.com/andersoncountypark (the park's Bonfire booking engine; page shell only - Bonfire searches carry a reCAPTCHA and were not automated)",
+  "Esri World Imagery (sat.py at 36.28760,-84.03011 half 300 m, 36.28800,-84.03150 half 130 m, 36.28860,-84.03250 half 110 m) and USGS 3DEP elevations (epqs.nationalmap.gov), read 2026-11-25"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 30, "nightly_high": 35, "currency": "USD", "extra_person": {"max_people": 12}, "checked": "2026", "note": "Short-term electric sites $30-35 a night plus taxes and processing fees; at most 6 adults and 12 people a site; the registering camper must be 21. The 30 long-term sites are $427.31 including taxes and fees (period not stated); the group camp $60 a night. Read 2026-11-25."},
+   "source": "https://www.andersoncountypark.com/campground-reservations/ ('$30 to $35 for electrical sites plus taxes and processing fees'; 'maximum of 6 adults and 12 people total per site') + /acpark/, read 2026-11-25",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true},
+   "source": "https://www.andersoncountypark.com/acpark/ ('40 short-term RV and Tent sites with water and 30/50 amp and 110V electric hook-up'), read 2026-11-25",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 40, "max_rig_ft": null, "note": "40 short-term sites; the park also has 30 long-term sites (starred on the park map) and a group camp."},
+   "source": "https://www.andersoncountypark.com/acpark/ ('40 short-term RV and Tent sites'; '30 long-term sites'), read 2026-11-25; max_rig_ft 33 came from a camper review in the note and no park page states a length, so it is cleared",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "dump": true},
+   "source": "https://www.andersoncountypark.com/acpark/ ('Two ADA accessible shower/restroom facilities and 2 other bath facilities'; 'Two Dump stations'), read 2026-11-25",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "03-01", "closes": "12-01", "note": "The reservations page says the short-term sites are open 'from March through November'."},
+   "source": "https://www.andersoncountypark.com/acpark/ ('Camping Season for short-term spots is March 1st – December 1st'), read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://book.letsbonfire.com/andersoncountypark", "fcfs": "never", "max_stay_nights": 14, "note": "Online only, by card, on the county's Bonfire engine; reservations for the season open January 1. After 14 consecutive days a camper must leave for at least a day. Cancel by calling the park office: 14+ days out a refund; inside 14 days, a refund less the first night. Check-in 1 p.m., check-out 11 a.m."},
+   "source": "https://www.andersoncountypark.com/campground-reservations/ ('uses an online reservation system'; 'starting January 1st'; 'Visitors will not be able to occupy a site without making a reservation'; '14 consecutive days') + operator map ('Check in-1 p.m. Check out 11 a.m.'), read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Anderson County park on a Norris Lake peninsula off Park Lane near Andersonville. The short-term sites are the unstarred ones on the park map, mostly along the C road by the shore; the starred A/B-road sites are long-term. Campers have their own boat ramp and swim area. --Claude",
+ "summary": "Anderson County Park confirmed on the county's own pages (curl refused, headless read): 40 short-term water + 30/50 A sites $30-35 (stored confirmed), season Mar 1-Dec 1, online-only on Bonfire, 14-day limit; derived max_rig 33 (camper review) cleared; lakefront UPGRADE LEAD for the north-end C-road sites; phone change suggested.",
+ "flags": [
+  "WATERFRONT UPGRADE LEAD lakeview -> lakefront (flag only): the stored evidence ('RV loop ... set back ~60-80m behind a developed day-use swim beach') was read at the pin, which sits ~110 m SE of the camping loops at a road junction. The operator map puts the short-term C-road sites on the lake side of the road from the campers' swim area/playground north to the road's end (unstarred C12-C22 there). On Esri imagery the north end of that shore (pads ~36.28856-36.28860,-84.03269 to -84.03280 and a trailer pad at ~36.28821,-84.03263) sits on open mowed grass ~13-27 m from the high-water/vegetation line, north of (not behind) the campers' swim beach. 3DEP: pads 313.8-315.1 m, grass edge 310.3-311.4 m (Norris June summer target ~1,020 ft = 310.9 m), so the pads are ~2.5-4 m above summer pool over an even 12-20% grass slope - not a 30-degree bank; a kayak can be carried down. I could not tie each pad on imagery to a map number with certainty, so the site numbers are the map's (C12-C22 region), and the Bonfire site list (reCAPTCHA) stayed unread. Reviewer decides; if upgraded, evidence should name the north-end C sites, not the swim beach.",
+  "PHONE 865-494-5059 -> 865-253-3364 (suggested): every page footer gives 'Anderson County Park System | 865-253-3364 (call or text)' and the reservations page says to 'call the park office at 865-253-3364'; 865-494-5059 appears only as a second number on the 2023 map.",
+  "SITES: max_rig_ft 33 (derived from a 'firsthand review' in the note) cleared - no park page states a length. The park also has 30 long-term sites ($427.31, period not stated) beside the 40 short-term ones: local park, so the long-stay tests don't apply, but nightly sites are 40 of 70.",
+  "SEASON: acpark page 'March 1st – December 1st'; reservations page 'open from March through November' - kept 03-01..12-01 with the second wording in season.note.",
+  "WEBSITE: both stored links work (andersoncountypark.com refuses plain curl with Mod_Security 406 but renders in a browser). Bonfire's search carries a reCAPTCHA, so per-site types/lengths and the nightly calendar were not read.",
+  "PIN 36.28760,-84.03011 is ~110 m SE of the camping loops (under the 250 m threshold); a loop-centre point would be ~36.2881,-84.0311."
+ ]
+}

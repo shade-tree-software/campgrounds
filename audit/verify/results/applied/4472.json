@@ -1,0 +1,55 @@
+{
+ "id": 4472,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://buchananresort.com/camping-kentucky-lake/ (curl answers a Cloudflare 403; this and the pages below read in one headless page each with a desktop Chrome UA, 2026-11-25): 'Select from our 3 campgrounds to meet your nightly, monthly, seasonal or yearly camping needs. All campgrounds are within walking distance of all resort amenities.' 'Seasonal reservations begin on the 2nd Saturday in January ... via an online reservation system.' 'Deposits are equal to a one night rental ... refundable upon 3 weeks' notice with a 15% service charge'; check-in 3-5 pm, check-out 11 am; 'Buchanan Resort Office: 731-642-2828'",
+  "https://buchananresort.com/resort-campground/ (headless, 2026-11-25): 'Friday March 20th – Sunday November 1st'; 'Our Resort Campground offers nightly, monthly, and seasonal camping. The sites are located in the heart of the resort, overlooking the lake, swimming pool, and playground/volleyball area. Contact the Resort Office: 731-642-2828'; 'Electricity is not included in our campsite rates & will be paid by each renter.'; 'Nightly Rates $45', 'Additional Person $5', '$860 Monthly', '$3,100 Seasonal Rates'; features 'Water', 'Wi-Fi', 'Dump Station', 'Bathhouse', 'Grills', 'Pavillion'",
+  "https://buchananresort.com/big-eagle-campground/ (headless, 2026-11-25): 'Friday March 20th - Sunday November 1st'; 'Big Eagle Campground offers seasonal camping.'; 'Waterfront $3,850', 'Waterview $3,500' (electricity not included), 'Nightly Rate $45', 'Additional Person $5'; features 'Water', 'Electric (50a)', 'Wi-Fi', 'Weekly Pump out', 'Dump Station', 'Bathhouse'; 'Register Now' -> beagle2026.html (a seasonal application form: Waterfront $3,850 / Waterview $3,500)",
+  "https://buchananresort.com/pine-point-campground/ (headless, 2026-11-25): 'A favorite for long-term camping and mooring is Pine Point dock and campground'; '$3,000 to $3,400 Seasonal Rates' only; features Water, Sewer, Wi-Fi",
+  "https://buchananresort.com/wp-content/uploads/2026/01/Buchanan-Resort-Map-Website.pdf (operator resort map, 2026, read 2026-11-25): 'RESORT CAMPGROUND' sites 7-50 with legend 'SEASONAL CAMPING' (grey: 7-25, 44-50), 'NIGHTLY CAMPING' (orange: 26-33, 36-43), 'TENT SITE' (34-35); 'Dock Store', 'Marine Shop', 'Dump Station', 'Bath House'",
+  "Esri World Imagery (sat.py 36.4146,-88.1095 half 400 m; 36.41505,-88.10940 half 110 m) and USGS 3DEP elevations, read 2026-11-25; Kentucky Lake summer pool 359 ft (109.4 m)",
+  "Google Maps (gm.py, 2026-11-25): 785 Buchanan Resort Rd, Springville; 4.5 over 452 reviews (the whole resort); 731-642-2828"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "extra_person": {"amount": 5, "per": "night"}, "checked": "2026", "note": "$45 a night, $5 for each additional person; the campground pages add that 'Electricity is not included in our campsite rates & will be paid by each renter.' A one-night deposit holds a site. Read 2026-11-25."},
+   "source": "https://buchananresort.com/resort-campground/ ('Nightly Rates $45'; 'Additional Person $5'; 'Electricity is not included in our campsite rates') + /big-eagle-campground/ ('Nightly Rate $45') + /camping-kentucky-lake/ (deposit), read 2026-11-25",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": null},
+   "source": "https://buchananresort.com/big-eagle-campground/ ('Water', 'Electric (50a)', 'Weekly Pump out') + /resort-campground/ ('Water'; no sewer among its features), read 2026-11-25; sewer appears only at Pine Point, which is seasonal-only, so the note-derived sewer: true is cleared",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": null, "note": "Nightly sites are 26-33 and 36-43 in the Resort Campground; its other sites, and Big Eagle and Pine Point, are let by the season."},
+   "source": "https://buchananresort.com/wp-content/uploads/2026/01/Buchanan-Resort-Map-Website.pdf (legend 'NIGHTLY CAMPING' 26-33, 36-43; 'SEASONAL CAMPING' 7-25, 44-50), read 2026-11-25; max_rig_ft 40 came from note prose and no resort page states a length, so it is cleared",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true},
+   "source": "https://buchananresort.com/resort-campground/ ('Dump Station', 'Bathhouse') + resort map ('Dump Station'), read 2026-11-25",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "03-20", "closes": "11-01", "note": null},
+   "source": "https://buchananresort.com/resort-campground/, /big-eagle-campground/, /pine-point-campground/ ('Friday March 20th – Sunday November 1st'), read 2026-11-25; replaces the note-derived approximate mid-March to mid-November",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "phone", "note": "Nightly sites are booked through the Resort Office; a deposit of one night's rent holds a site, refundable on 3 weeks' notice less 15%. Seasonal sites open for booking online on the second Saturday in January. Check-in 3-5 p.m. (call ahead if later), check-out 11 a.m."},
+   "source": "https://buchananresort.com/resort-campground/ ('Contact the Resort Office: 731-642-2828') + /camping-kentucky-lake/ (deposit, seasonal reservations, check-in/out), read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Kentucky Lake fishing resort and marina near Springville, est. 1946, with cabins, a pool and a dock store. Its three campgrounds are mostly let by the season; the nightly sites are in the Resort Campground beside the pool, and the ones at its north end sit at the head of a cove. --Claude",
+ "summary": "Buchanan Resort (pages behind Cloudflare, read headless): $45 nightly + $5/person, electricity billed separately, season Mar 20-Nov 1, nightly only in the Resort Campground (16 of 42 RV sites by the 2026 map; Big Eagle and Pine Point seasonal); LONG-STAY flag for the reviewer; lakefront kept on a few north-end sites; sewer and max_rig cleared; pin sits in the seasonal campground east of the cove.",
+ "flags": [
+  "LONG STAY (reviewer): of three campgrounds, Pine Point is seasonal-only ('A favorite for long-term camping and mooring'; '$3,000 to $3,400 Seasonal Rates'), Big Eagle 'offers seasonal camping' (its Register link is a seasonal application; a $45 nightly rate is also printed), and the Resort Campground sells nightly 16 RV sites (26-33, 36-43) of its 42 on the 2026 map (26 seasonal, plus tent sites 34-35). Resort-wide the nightly share is well under half; within the Resort Campground ~38%. Not iffy: posted $45 rate, site map, Google 4.5 over 452 (whole resort); RV Life 4*/$$ on only 3 reviews. No discouraging wording toward nightly guests found. 'Electricity is not included in our campsite rates & will be paid by each renter' appears on the pages that print the nightly rate - unclear whether nightly guests are billed for power.",
+  "WATERFRONT lakefront KEPT on a few sites: the Resort Campground's north end meets the head of a Kentucky Lake cove. On Esri imagery the north-end pads (~36.41484,-88.10924 for the east column; ~36.41484,-88.10962 for the west) sit ~10-20 m from the cove edge over gravel and grass with no tree line; 3DEP gives 110.0-110.4 m against a 109.4 m (359 ft) summer pool, ~0.6-1 m above the water. On the 2026 map those are nightly sites 32-33 and 36-37 (34-35 are tent sites). Further south the east column runs beside a narrow, tree-lined inlet (view only). Per the few-clear-sites rule, lakefront with the caveat naming 32-33 and 36-37.",
+  "PIN 36.4148,-88.1082 sits in the campground on the peninsula east of the cove (likely Pine Point, seasonal-only), ~100 m from the nightly Resort Campground; suggested 36.41470,-88.10940 (under 250 m).",
+  "HOOKUPS: note-derived sewer: true cleared - only Pine Point (seasonal-only) lists sewer; the Resort Campground lists Water and a Dump Station. electric 50 from Big Eagle's 'Electric (50a)'; the Resort Campground page gives no amperage.",
+  "SITES: max_rig_ft 40 (note prose) cleared; no resort page states a length.",
+  "BOOKING platform phone: nightly sites through the Resort Office (731-642-2828); the online system is for seasonal reservations. Big Eagle's page also gives 731-642-3688 for check-in. PHONE unchanged."
+ ]
+}

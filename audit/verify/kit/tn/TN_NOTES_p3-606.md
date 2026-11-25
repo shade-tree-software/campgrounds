@@ -1,0 +1,11 @@
+- 4465 done: $30-35 confirmed; phone -> 865-253-3364; max_rig cleared; lakefront upgrade lead north C sites (2.5-4 m over gentle grass); Bonfire reCAPTCHA unread
+- 4467 Around Pond: DONE. drop cand (nightly 25/182; $51.39 no GS/gateway); web .com parked -> .net; phone 423-234-0229; pond kept flag (sites not named)
+- 4445 Barton Springs: DONE. lakefront kept (CS waterfront 9-21 odd,33,35-37); max_rig 60; no operator change (camprrm->vista/gocamptennessee)
+- 4468 Bean Pot: DONE. ResNexus rendered: $58 FHU / $48 W/E; passes gate on $48; max_rig 75
+- 4469 Blue Moon: DONE. $51 incl tax (ResNexus $51 std); 9 nightly PT of ~16; workforce flavor; gate borderline flag
+- 4472 Buchanan: DONE. LONG-STAY flag (Resort CG 16/42 nightly; BE+PP seasonal); lakefront kept on 32-33/36-37; sewer+max_rig cleared; season 03-20..11-01; pin in PP ~100m
+- 4446 Cedar Point: DONE. lakefront kept (CS waterfront 05-21 odd,22); max_rig 43; no operator change
+- 4456 Chester Frost: DONE. lakefront kept; fees 30-35 res/+10 nonres; itinio captcha unread; max_rig 65 unverified
+- 4393 Chickasaw: DONE. 52 RV full hookups, max 94, phone -> 731-989-5141, pin tentative ~700m SW, fees left 40-50 (all $40 sampled)
+- 14634 Coal Creek: DONE. OHV flag (reviewer); $40 all dates; 18 FHU 80ft PT; Google 4.5/51
+- 4476 Crazy Horse: DONE. riverview kept; not OHV (no 4-wheelers); season manual; Google 4.7/935
