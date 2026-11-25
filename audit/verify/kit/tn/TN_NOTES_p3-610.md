@@ -1,0 +1,12 @@
+# p3-610 notes
+- 4466 Observation Knob done: 5-45 (2026), 04-01..10-31, Staylist, lakefront kept B row (~1-2.5 m above 527.0 m), pin ~290 m -> 36.5830,-82.0452, website line 2 -> booking.staylist.app/observationknob
+- 4387 T.O. Fuller done: $32-44, 44 sites (40 online), pin ~1.2 km (visitor center) -> 35.0593,-90.1273, phone ''->901-543-7581. tncal.sh/tnrows.py in scratch (per-date cells offset by one in tnrows; use date script)
+- 4457 Winchester done: bot-walled city page read headless; Rec1 tab empty off-season, rate unread; season Apr1-Oct31; mixed seasonal/monthly rentals flagged
+- 28 Jacobs Creek done: temporarily closed (Helene), $12, AWH lakefront agrees for 27 (tip), 22 looks interior; pin ~450 m
+- 13396 Agricenter done: $48+tax ($45 sen/mil) unchanged since 2024-10; G 4.1/331; long-stay not drop
+- 29 Backbone Rock done: $10, 10 sites, AWH creekside agrees (rec.gov Riverfront 03-10), pin 253 m (elev 753->649)
+- 4459 Beech Bend done: Campspot $25 RV/$20 tent, closed 11/1-2/28 (vs yr-round), 54 RV+19 tent, WATERFRONT types under canopy ~30m -> lakeview cand, booking phone->campspot
+- 15353 Beech Lake done: $28-40 + $5/stay (Campspot), 2-night standing min confirmed, lakefront kept on L15/L16 (~14 m, 2.8 m), Point Loop not online (long-stay unresolved), season 04-02..11-14, Google 4.0(110)
+- 13717 Big Hill Pond done: still closed (agrees), 28 primitive, 'most sites trailer up to 20 ft' vs calendar 24+ on 22 sites, rate unread
+- 4417 Big Oak Cove done: $10, 11 sites, FCFS; riverfront -> creekside (narrow under canopy), elev 834->771
+- 4438 Boswell Landing done: $10 self-service FCFS year-round; lakefront kept borderline (no site numbers); policy row booking contradicts; elev 123->111.5
