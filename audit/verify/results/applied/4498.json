@@ -1,0 +1,55 @@
+{
+ "id": 4498,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://www.outerhavencampandglamp.com/types-of-accomidations/rv-sites (read 2026-11-25): '***Now offering monthly rates. $800 All RV sites.'; 'We also have 17 RV sites available for rent'; 'sites 1-10 have full hook ups (water, electric & sewer)'; 'Sites 11-17 only have water & electric'; 'sites 1-7 are 34' X 65' / sites 8-13 are 35' X 55' / sites 14-17 are 40' X75''; 'All RV sites have: Wi-Fi picnic table & firepit'; 'Each site is graveled'; 'Book Online Now' -> the operator's Airbnb host profile https://www.airbnb.com/users/show/538555663",
+  "https://www.outerhavencampandglamp.com/faq-policies (read 2026-11-25): 'Check in time is at 3pm ... Check out time is at 11am for all tents and RV's'; 'Cancellations: We will do a full refund of your stay within 14 days of your arrival. NO refunds will be given for early departure.'; 'RV SITES: Are based on 4 people and 5.00 for every additional person 5 and above. Maximum occupancy 8 people.'; 'Pets are allowed for all RV sites only ... Pets under 50 pounds'",
+  "https://www.outerhavencampandglamp.com/ (read 2026-11-25): 'family owned and operated'; 'spacious RV sites, cozy tent sites, and fully equipped glamping rentals. Our facilities include a fire pit, grill, and beautifully done showers house and restrooms'; /blank: 'we kick off a season of fun starting March 2025'",
+  "https://www.airbnb.com/users/show/538555663 (operator's Airbnb profile, read 2026-11-25): five listings - four glamping tents (Bunny's Bungalow, Gypsy's BoHo Retreat, Jolene, Papaw's Place) and one RV site, 'Outer Haven RV pull through site 17' (room 1177757209448552673, Campsite, instant book)",
+  "https://www.airbnb.com/rooms/1177757209448552673 (headless Chrome, full desktop UA, 2 guests, read 2026-11-25): 'This is just a campsite there is no RV provided. This is a pull through site and has a picnic table, firepit, wifi,water and electric hook ups NO septic but does have a dump station on site, and a shared bath house. This site is 40' by 75''; 2027-04-13 to 04-15: '$150 for 2 nights', 'Prices include all fees'; 2026-12-08 for one night: 'Minimum stay is 2 nights'; listing rating 4.0 from 1 review",
+  "Google Maps (headless Chrome, read 2026-11-25): 'Outer Haven Campground' 5.0 stars, 6 reviews, 4111 Chavis Rd, Cosby, TN 37722, +1 865-304-4145, point 35.814843,-83.251753",
+  "audit/price_research/gateways.py 35.81563,-83.25251 (run 2026-11-25): 'Great Smoky Mountains NP (national park, 29 km)'"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 75, "nightly_high": 75, "currency": "USD", "checked": "2027",
+              "extra_person": {"included": 4, "amount": 5, "per": "night", "max_people": 8},
+              "note": "Airbnb quote for the one RV site listed online (pull-through site 17, water and electric): $150 for two weeknights in April 2027 including Airbnb's fees, before tax. The park also rents every RV site by the month at $800."},
+   "source": "https://www.airbnb.com/rooms/1177757209448552673 (2027-04-13..15, 2 guests, '$150 for 2 nights', 'Prices include all fees') + outerhavencampandglamp.com/types-of-accomidations/rv-sites and /faq-policies, read 2026-11-25",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"water": true, "sewer": true},
+   "source": "https://www.outerhavencampandglamp.com/types-of-accomidations/rv-sites ('sites 1-10 have full hook ups (water, electric & sewer)'), read 2026-11-25",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 17, "pull_through": true, "note": "Graveled sites, 55-75 ft long; sites 1-10 full hookup, 11-17 water and electric."},
+   "source": "https://www.outerhavencampandglamp.com/types-of-accomidations/rv-sites + Airbnb site 17 ('a pull through site'), read 2026-11-25",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "dump": true, "wifi": true},
+   "source": "https://www.outerhavencampandglamp.com/ ('showers house and restrooms'); RV sites page ('Wi-Fi'); Airbnb site 17 ('does have a dump station on site, and a shared bath house'), read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://www.airbnb.com/rooms/1177757209448552673",
+              "min_stay": [{"nights": 2, "applies": "always"}],
+              "note": "Only site 17 is listed on Airbnb; the other RV sites by phone or email. Check-in 3 pm, check-out 11 am. Full refund on cancellation within 14 days of arrival (as the park words it); no refund for an early departure. Pets under 50 lb."},
+   "source": "Airbnb room 1177757209448552673 ('Minimum stay is 2 nights', instant book) + outerhavencampandglamp.com/faq-policies, read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Family-run campground opened in 2025 at 4111 Chavis Rd, Cosby, about 6 miles from the Cosby entrance to Great Smoky Mountains National Park, with glamping tents beside the RV sites. --Claude",
+ "summary": "Outer Haven: 17 graveled RV sites (1-10 FHU, 11-17 W/E), opened 2025. Only one RV site (17) sells nights online, on Airbnb at $75/night incl. fees (2-night minimum); all RV sites offered at $800/month. Over the $50 gate but GSMNP is 29 km -> gateway exception. Google 5.0 from only 6 reviews. Possible long-stay question for the reviewer.",
+ "flags": [
+  "PRICE: $75/night (Airbnb, $150 for 2 nights April 2027, incl. Airbnb fees, before tax) is over the US$50 gate; gateway exception applies - gateways.py: 'Great Smoky Mountains NP (national park, 29 km)'. No Good Sam listing (discounts not stored). Not a drop on price.",
+  "LONG-STAY (reviewer question, not a clear drop): the RV page leads with '***Now offering monthly rates. $800 All RV sites.' and the only RV site sold by the night online is site 17 (Airbnb); the other 16 have no online nightly channel or posted nightly rate. Nightly share can't be measured: at least 1 of 17 sites is sold by the night online; policies (3 pm / 11 am check-in/out, cancellations) read like a transient campground. No wording discourages nightly guests.",
+  "PRESENCE: Google 5.0 from only 6 reviews (under 25); Airbnb site 17 4.0 from 1 review; RV Life 4 stars from 1 review (curation_note). New park ('starting March 2025'); own website with phone and email, and a live booking channel (Airbnb instant book) for one RV site.",
+  "HOOKUPS: electric amperage not stated anywhere (left absent). Sewer true holds for sites 1-10 only.",
+  "WATERFRONT 'not waterfront' kept; Esri imagery at the pin predates the campground (open field and a house), so the site layout can't be checked on imagery.",
+  "PIN: Google 35.814843,-83.251753 vs stored 35.81563,-83.25251 (~110 m) - no move.",
+  "Phone 865-304-4145 and website unchanged. booking.platform 'operator' with the Airbnb listing URL (Airbnb is not on the platform list)."
+ ]
+}
