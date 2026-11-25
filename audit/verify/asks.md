@@ -804,11 +804,11 @@ $35 nightly ($45 holiday weekends), Google 4.6/110. Nightly sites are only "camp
 
 **AWH 2026-11-24: drop.** Removed via criteria_drops.py.
 
-## 4484 Hatchie Cove Campground (TN, private) — p3-602, 2026-11-24 — KEPT, flag
+## 4484 Hatchie Cove Campground (TN, private) — p3-602, 2026-11-24 — ANSWERED: keep (AWH 2026-11-25)
 Seven RV sites near BlueOval City; only site 6 is sold by the night online (~14%), the rest go by phone, and it markets stays "for work". $40 a night, 50 A full hookups, Google 4.8 (70). Kept in the 10-50% caveat band (note says mostly longer stays); Myers Landing was dropped at 7-13%. Drop if you'd rather not have it.
 
 ## 4400 Natchez Trace SP, Cub Lake Campground (TN, state) — p3-603, 2026-11-24 — ANSWERED: leave as is (AWH 2026-11-24)
 On reserve.tnstateparks.com every Campground One night is Unavailable from 2026-11-29 to the end of the horizon (2027-11-23), while Pin Oak and Campground Two (from 2027-08-01) are offered. No park page explains it (renovation?). Options: leave as is until a notice appears, add a "not bookable in 2027" caveat, or a phone call to the park (731-968-3742) - your OK needed for a call.
 
-## 4515 Windy Rivers Campground (TN, private, Holston River) — p3-605, 2026-11-24 — KEPT, flag
+## 4515 Windy Rivers Campground (TN, private, Holston River) — p3-605, 2026-11-24 — ANSWERED: drop (AWH 2026-11-25)
 Facebook-only operator (page unreadable without login); Hipcamp listing is an unclaimed placeholder. Google 4.6 (54) with phone 423-585-7927 is the presence; price rests on RV Life $$ only. Imagery shows tightly packed trailers with sheds and decks, so it may be a long-stay park - and a long-stay park needs a posted nightly rate or booking site, which this lacks. Waterfront downgraded riverfront -> riverview. Keep, or drop as probably long-stay?
