@@ -29,3 +29,4 @@ Batches applied:
 - TN leads (2026-11-25): lead 3 shellmound-campground SKIPPED, long-stay (on the fence: many seasonal/permanent sites per reviews, no website or posted nightly rate; Facebook + phone hold only).
 - TN leads (2026-11-25): lead 4 sasquatch-farm-rv SKIPPED, price ($65 flat RV night on its own engine; military 10% $58.50; no gateway; not a GS Park).
 - TN leads (2026-11-25): lead 5 birch-branch-cherokee-nf ADDED 15768 (federal, $10 FCFS, year-round, vault toilet, pad size unconfirmed, not waterfront); FS site count 5 vs 7 conflict left out. Leads 7-9 (Holder Cove, Rough Ridge, Spivey Cove rec.gov facilities) appended. Next id 15769.
+- TN leads (2026-11-25): lead 6 double-camp-citico ADDED 15769 (federal, temporarily_closed since the July 2026 flood, FS 35-1/2659 washed out; only FS mention is the closure alert - designated primitive cluster, not dispersed; recheck when the road reopens). Next id 15770.
