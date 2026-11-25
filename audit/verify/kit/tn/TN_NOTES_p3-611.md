@@ -1,0 +1,14 @@
+# p3-611 notes
+- Google batch: Cedar Grove 4.2/214 ph 865-278-3131; Cottonport 4.7/314 797 Cottonport Ferry Rd; Fall Hollow 4.0/216; Frank's 4.5/188; Grandview 4.6/28; Kinser Park 4.4/456 ph 423-620-9646 (stored 423-639-5912); Bruton Google ll 35.0707,-88.1934
+- tncal.sh/tnrows.py in scratch (POST view=parkwide). Pickwick: whole park Unavailable from 2027-01-01 (Oct read had June 2027 $19)
+- 4386 done: $19 thru 2026-12-31, 2027 all Unavailable; lakefront confirmed (1,2,10-19,26-29); pin 1.7 km -> 35.0707,-88.1934; max_rig cleared
+- 14639 done: $45-50 (page mod 2026-03-27), Storable engine, yearly rentals waitlist (share unmeasured), WF lead (2.2 m, 30-45 m, no site nos)
+- 14640 done: $50-65 (Wayback-dated 2025-12/2026-07), phone booking, lakefront kept (cove lawn; riprap row view-like), monthly rates
+- 13718 done: closed through 2026, reopens 2027; no sites on calendar
+- 4418 done: $10, year-round, pin -> 35.27896,-84.09637 (~290 m), phone -> 423-397-8455, lead Birch Branch
+- 14642 done: $35-50 (op vs RP), year-round, 50A, 42 sites, RP request-to-book
+- 14644 done: $39 terms, GS+military 10%, Campspot 0 site types all dates (flag), pin ~260 m
+- 4441 done: $10 yr-round FCFS confirmed (LBL page), no rec.gov; lakeview kept (clearing by ramp ~1 m above pool, no named sites); website dead -> self-service page
+- 14638 done: Campspot $39/$49 (+$2/stay) Dec 2026, op $45/$55; 14 sites, 10 nightly online; Google 4.6/28
+- 4420 done: $6 FCFS scan&pay, season 03-03..11-17 (2025 dates), open despite flood road closure (Vonore access), phone -> 423-397-8455, lead Double Camp (closed)
+- 13390 done: no website exists (kinserpark.com parked, no county page), Google 4.4/456, phone conflict 639-5912 vs 620-9646, $55 only from 2025 camper, FB check-in 2026-11-01 'closing day'

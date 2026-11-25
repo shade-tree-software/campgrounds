@@ -1,0 +1,80 @@
+{
+ "id": 14642,
+ "checked": "2026-11-25",
+ "sources": [
+  "https://www.roverpass.com/c/fall-hollow-campground-hohenwald-tn/ (claimed listing, 'Booking Requires Approval ... Request to Book', 'Last Updated: 11/25/2026'; read 2026-11-25): 'Offering 42 30 amp and 50 amp full hook up RV sites and numerous tent camping sites'; rates '30 amp Full Hook-Up - Sites 1-3, 6, 9-19 $50.00 / $300.00 / $700.00' (monthly Jan-Jul), '50 amp Full Hook-Up - Sites 4, 5, 7, 8, 20-42 $50.00 / $300.00 / $700.00', 'Water & Electric Site #12 $40.00 / $250.00', Tent/Primitive $12, cabins, B&B rooms; rules 'RV & Tent Sites: 72 hours cancellation notice is required'; amenity tags incl. Dump Station, Community Showers, WiFi, Pull-Thru RV Sites, Waterfront. (roverpass_api.py could not get an API session: token regex failed, so no per-date quote)",
+  "https://www.fallhollow.com/lodging (Cloudflare-walled to curl; rendered in the headless browser 2026-11-25): 'Fall Hollow's Campgrounds and Bed & Breakfast are Open Year Round!'; 'RV campsite includes up to 4 people.'; '$35/night for 30amp water & electric site. (1 pull-thru site available) / $45/night for 30 amp water, electric, sewer & Wi-Fi site (13 sites available 1 site is pull-thru) / $45/night for 50amp water, electric, sewer & Wi-Fi site. (22 sites available - 21 are back-in, 1 is pull-thru)'; 'Taxes are not included'; tent '$12/night per person'; 'three \"beach area\" sites in the woods, where you can camp right on Big Swan Creek' (tent). Home page: 'We have a mobile office! Please call the campground at 931-796-1480 upon arrival'; 'Reservations' -> RoverPass. /policies and /lodging/campground-map stayed on the Cloudflare check page in the browser (unread)",
+  "Google Maps 'Fall Hollow Campground RV Park And B&B' (read 2026-11-25): 4.0 (216), pin 35.57805,-87.43168, website fallhollow.com",
+  "audit/price_research/gateways.py 35.5777,-87.4300 (2026-11-25): none within 40 km (Nashville 87 km)",
+  "Esri World_Imagery at 35.5779,-87.4305 hw 200 (read 2026-11-25): open grass RV loops north of US-412 behind the restaurant/B&B; an outer gravel loop runs along the wooded bank of Big Swan Creek to the north-east"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 50,
+    "currency": "USD",
+    "checked": "2026",
+    "extra_person": {
+     "included": 4
+    },
+    "note": "The park's site: $35 water/electric, $45 30- or 50-amp full hookup, plus tax. RoverPass, where it books: $40 water/electric, $50 full hookup; $300 a week; $700 a month Jan-Jul."
+   },
+   "source": "https://www.fallhollow.com/lodging ('$35/night for 30amp water & electric site ... $45/night for 30 amp water, electric, sewer & Wi-Fi site ... $45/night for 50amp ...'; 'RV campsite includes up to 4 people') + https://www.roverpass.com/c/fall-hollow-campground-hohenwald-tn/ ($40 / $50 / $300 / $700), read 2026-11-25",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "https://www.fallhollow.com/lodging ('50amp water, electric, sewer & Wi-Fi site (22 sites available ...)'), read 2026-11-25",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true
+   },
+   "source": "https://www.fallhollow.com/lodging ('Fall Hollow's Campgrounds and Bed & Breakfast are Open Year Round!'), read 2026-11-25",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "wifi": true
+   },
+   "source": "https://www.fallhollow.com/lodging ('water, electric, sewer & Wi-Fi site'), read 2026-11-25",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 42,
+    "pull_through": true
+   },
+   "source": "https://www.roverpass.com/c/fall-hollow-campground-hohenwald-tn/ ('Offering 42 30 amp and 50 amp full hook up RV sites'; sites 1-42 by rate) + https://www.fallhollow.com/lodging ('1 pull-thru site available', '1 site is pull-thru'), read 2026-11-25",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "roverpass",
+    "url": "https://www.roverpass.com/c/fall-hollow-campground-hohenwald-tn/",
+    "note": "Request to book: the park approves each booking after checking availability. 72 hours' notice to cancel; holiday and event-weekend bookings are non-refundable. No office on site - call on arrival to be met and shown to the site."
+   },
+   "source": "https://www.roverpass.com/c/fall-hollow-campground-hohenwald-tn/ ('Booking Requires Approval'; 'RV & Tent Sites: 72 hours cancellation notice is required') + https://www.fallhollow.com/ ('Reservations during Holidays or Special Events are non-refundable'; mobile office), read 2026-11-25",
+   "method": "manual"
+  }
+ },
+ "note": "Campground with a B&B, cabins and restaurant at 1329 Columbia Hwy (US-412) east of Hohenwald, beside the Natchez Trace Parkway and Big Swan Creek; open-field and wooded tent sites, three of them on the creek. --Claude",
+ "summary": "Fall Hollow: RoverPass claimed listing, operator lodging page (headless browser past Cloudflare), Google, gateways, Esri read. Year-round; 30/50 A FHU and a W/E site; operator $35-45 vs RoverPass $40-50 (both under the gate); 42 numbered RV sites; request-to-book on RoverPass; monthly $700 offered. Electric raised 30 -> 50.",
+ "flags": [
+  "PRICE GATE: pass - cheapest RV night $35 (operator, W/E) / $40 (RoverPass); full hookup $45 operator / $50 RoverPass. Not needed, but no gateway within 40 km. Google 4.0 (216).",
+  "RATE CONFLICT: the park's own page posts $35/$45/$45, RoverPass (its booking channel) $40/$50/$50; both recorded in the fee note, range 35-50.",
+  "ELECTRIC 30 -> 50: the stored 30 came from the old note; the operator lists '50amp water, electric, sewer & Wi-Fi site (22 sites available ...)'.",
+  "SITE COUNT: RoverPass says 42 and numbers sites 1-42; the operator's page adds up to 36 (1 W/E + 13 30 A FHU + 22 50 A FHU). 42 written.",
+  "LONG-STAY: $700 monthly offered Jan-Jul on RoverPass; imagery shows a modest number of rigs spread over open loops, no sheds or decks - reads as a mostly nightly park. Tests pass.",
+  "WATERFRONT LEAD (not changed): RoverPass tags 'Waterfront'; the operator puts only three tent 'beach area' sites on Big Swan Creek. The outer RV loop runs along the creek's wooded bank (e.g. ~35.5785,-87.4290), with a continuous tree line between; no RV site is named on the water. Stays not waterfront.",
+  "UNREAD: fallhollow.com/policies and /lodging/campground-map (Cloudflare check page held in the headless browser; no captcha attempted).",
+  "PHONE 931-796-1480 kept (operator). Websites kept; the RoverPass listing is claimed and bookable."
+ ]
+}

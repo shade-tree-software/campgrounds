@@ -1675,3 +1675,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-610, TN 2026-11-25) 4459 Beech Bend not waterfront -> lakeview? Campspot sells 24 'WATERFRONT' sites (01,03,05-07,09,11,13-15,17,18,20,22,23,26,27,32,34,36,38,40, Point 29/30); pad 35.61436,-88.04046 ~30 m and ~4 m above the 109.4 m pool behind a tree band under canopy.
 - (p3-610, TN 2026-11-25) 4457 Winchester not waterfront -> lakeview? West end of the loop (~35.2040,-86.1352) ~50 m over open grass from Tims Ford summer pool beside the city dock; sites unnumbered.
 - (p3-610, TN 2026-11-25) 28 Jacobs Creek --AWH lakefront: agrees for site 27 (NW tip, 2-3 m gentle fall); FS map puts site 22 inside Loop C - check if 22 is the site the --AWH call meant.
+- (p3-611, TN 2026-11-25) 14639 Cedar Grove Marina not waterfront -> lakefront/lakeview? East loop (~36.36565,-83.71489) ~2.2 m above Norris summer pool at 30-45 m; no site numbers published.
+- (p3-611, TN 2026-11-25) 4441 Gatlin Point lakeview: mown clearing by the ramp (36.5586,-87.9047) ~1 m above pool at 30-40 m, but no designated sites there (2018 camper) - stays lakeview unless LBL names sites.

@@ -821,3 +821,6 @@ New park (opened 2025), 17 RV sites, ~6 miles from the Smokies' Cosby entrance (
 
 ## 26 Cardens Bluff Campground (TN, Cherokee NF, Watauga Lake) — p3-609, 2026-11-25 — OPEN, --AWH waterfront
 Stored lakefront rests on your note "site 29 is the only RV site on the Lake. --AWH". Measured: site 29 (36.313511,-82.117738, the one RV site rated 30 ft) is on the bluff top at 610.9 m (3DEP), ~14 m above Watauga's 597.1 m summer pool, with the ground reaching the water in ~25-30 m at ~27° under continuous canopy. By the kayak test that is lakeview. rec.gov tags 25 and 28 "Lakefront", not 29, and neither is rated for a 23-ft rig. Left lakefront; downgrade to lakeview, or keep on what you saw there?
+
+## 14644 Frank's at Cane Hollow RV Park (TN, private, Sparta) — p3-611, 2026-11-25 — KEPT, flag
+Its Campspot terms post "$39 a night plus ALL TAXES" (Google 4.5/188, Good Sam and military 10%), but Campspot now lists zero sites on every date from 2026-11-30 to 2027-06-12 (it priced four RV types at $41.99 in October), and the terms speak of residents and lot-rental due dates. It may have stopped selling nights online. Kept for now. A short call to 931-761-2267 would settle it - may I place one?
