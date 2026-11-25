@@ -1,0 +1,13 @@
+# p3-605 notes
+- 4436 done: pin 1.96 km -> 36.32020,-85.78697; WF upgrade lead lakefront (042-053, 022); $20-32; 04-21..10-03
+- 4431 done: $36-40, 04-05..10-28, lakeview kept (~45-55 m woods), max 45
+- 4442 done: lakefront kept on 13-15 only; NW rows view; $36; 05-21..09-06; min 2wk/3hol; max 81
+- 4504 done: $41-49 +$10 confirmed; phone -> 865-350-6053; lakefront kept; G 4.6/168
+- 4505 done: $50 flat +3% conv fee; gateway GSMNP 8km; 3-night min holidays+Oct only; G 4.1/64
+- 4510 done: $40 incl tax, 22 sites, monthly $450 too; G 4.2/119; share unmeasured
+- 4389 done: $40-65 (holiday $65), 81 sites, lakefront kept E row 25-28 + tip 39-42; phone -> 931-967-4230 suggested
+- 4411 done: $32-65, 132 RV sites, phone 423-239-8531; split candidate Main/Moody Bluff ~1 km; pin at HQ
+- 15501 done: rates unread (Cloudflare on step 2); open all year, 50A, 60ft, ev $20; riverfront kept; G 4.6/1726
+- 4515 done: nothing readable (FB login wall); riverfront unconfirmed -> downgrade candidate; long-stay look; G 4.6/54
+- 4458 done: online booking since 7/2026 (fcfs never); $30/$40 +9.5% tax; sewer false; creekside lead sites 5-18; phone/website/name suggestions; pin ~230 m off
+- dry run: 11 ready, 0 !!

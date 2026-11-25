@@ -1,0 +1,53 @@
+{
+ "id": 4431,
+ "checked": "2026-11-24",
+ "sources": [
+  "https://www.recreation.gov/camping/campgrounds/232702 (facility API, read 2026-11-24): 'Seven Points Campground offers 59 shady and spacious campsites, along with two large group picnic shelters. The campground features drinking water, a dump station, flush toilets and hot showers ... A boat ramp and swimming beach are provided'; amenities incl. Laundry Facilities, Dump Station, Showers; notices: 'Two vehicles allowed per site.', '$5 fee per vehicle for guests of campers.', 'Camping limit is 14 days in any 30-consecutive-day period on J. Percy Priest Lake', 'No drive-thrus on Friday, Saturday & Sunday.', 'Wifi is NOT provided at this campground.'; rules maxStay 14 (rolling 30 days); phone (615)-889-5198; 1810 Stewarts Ferry Pike, Hermitage",
+  "https://www.recreation.gov/api/camps/campgrounds/232702/rates (read 2026-11-24): Peak Season 2026-04-01..2026-10-29 and 2027-04-05..2027-10-28: STANDARD ELECTRIC $36, a second STANDARD ELECTRIC template $40, group shelters $50",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:232702 (catalog, read 2026-11-24): 58 STANDARD ELECTRIC sites (01, 03-15, 17-60), all 50 A + water, no sewer; $40 at the west-row odd sites 11-41, $36 elsewhere; permitted RV/Trailer max length 45 ft at most sites (40, 36 and 28 at a few); pull-through 03, 57, 59; 'Max Vehicle Length' 20 on nearly every site (the parking spur figure beside RV 45)",
+  "https://www.recreation.gov/api/camps/availability/campground/232702/month (Oct-Nov 2026, Mar-Apr 2027, read 2026-11-24): booked through 2026-10-29, nothing in November or March, first open night 2027-04-05",
+  "Esri World Imagery with the catalog site points (satpts.py 36.1331,-86.5735 half 250 m, read 2026-11-24): winter drawdown capture; the west row (odd sites 15-35) sits in continuous woods ~45-55 m back from the vegetation line (the summer-pool edge), with the bare drawdown apron beyond"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 36, "nightly_high": 40, "currency": "USD", "extra_vehicle": {"max_vehicles": 2}, "checked": "2026", "note": "$36 at most water/electric sites, $40 at the 16 west-row sites toward the lake. Guests' vehicles $5 each. recreation.gov rate table for the 2026 and 2027 seasons, read 2026-11-24."},
+   "source": "https://www.recreation.gov/api/camps/campgrounds/232702/rates (2026-04-01..10-29, 2027-04-05..10-28) + catalog prices per site + notices 'Two vehicles allowed per site', read 2026-11-24",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": false},
+   "source": "recreation.gov catalog for 232702 (Electricity Hookup 50 and Water Hookup Yes on every site; no sewer attribute; facility amenities list no sewer hookups), read 2026-11-24",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 58, "max_rig_ft": 45, "pull_through": true},
+   "source": "recreation.gov catalog for 232702 (58 single-site records; permitted RV max length 28-45 ft; Pull-Through at 03, 57, 59), read 2026-11-24",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "laundry": true, "wifi": false},
+   "source": "recreation.gov facility description ('drinking water, a dump station, flush toilets and hot showers'), amenities (Laundry Facilities) and notice 'Wifi is NOT provided at this campground', read 2026-11-24",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-05", "closes": "10-28", "note": "2027 dates; the 2026 season ran April 1 to October 29."},
+   "source": "recreation.gov rate seasons (2027-04-05..10-28, 2026-04-01..10-29) and month availability (booked through 2026-10-29, first open night 2027-04-05), read 2026-11-24",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232702", "max_stay_nights": 14},
+   "source": "recreation.gov facility rules (maxStay 14 nights rolling 30 days, 'applies to all campgrounds combined' on the lake; sites Site-Specific reservable), read 2026-11-24",
+   "method": "manual"
+  }
+ },
+ "note": "Corps campground in the woods on a J. Percy Priest Lake point off Stewarts Ferry Pike, about 10 miles east of downtown Nashville; the west row looks through trees to the lake. The 14-night limit counts every campground on the lake together. No drive-throughs Friday to Sunday. --Claude",
+ "summary": "USACE Seven Points confirmed: 58 water/electric 50 A sites (no sewer), RV to 45 ft, $36-40 (stored $32 stale), 2027 season Apr 5 - Oct 28 (2026 Apr 1 - Oct 29), showers, laundry, dump, no wifi. Lakeview kept (west row ~45-55 m behind continuous woods). Pin fine.",
+ "flags": [
+  "WATERFRONT lakeview kept: plotted on Esri (winter drawdown capture), the lake-side west row (odd sites 15-35, ~36.1352,-86.5735 to 36.1322,-86.5747) sits in continuous woods ~45-55 m from the vegetation line that marks the summer-pool edge; no site has open ground to the water. The $40 west-row sites are the lake-side ones.",
+  "FEES: stored $32 (rate table read 2026-10-09) -> $36-40 (the current 2026 and 2027 tables: $36 standard, $40 west-row sites).",
+  "SEASON: stored 04-01..10-31 (derived 'Approximate') -> 04-05..10-28 (2027; 2026 ran 04-01..10-29).",
+  "SITES: rec.gov 'Max Vehicle Length' reads 20 ft on nearly every site while the permitted RV/Trailer length is 45 ft (40/36/28 at a few); 20 is the parking-spur figure, not the rig limit. Written max_rig 45 (manual). Count 58 (facility text says 59).",
+  "PIN 36.1331,-86.5731 confirmed: within ~20 m of the catalog's site centroid (36.1331,-86.5732, shelters excluded).",
+  "PHONE 615-889-5198 confirmed (recreation.gov)."
+ ]
+}
