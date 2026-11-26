@@ -837,3 +837,6 @@ Horse-separation question. rec.gov: "includes three equestrian sites with horse 
 
 ## 12347 Ivanpah Dry Lake East (CA, BLM) — p3-628, 2026-11-26 — OPEN (lean drop)
 Inclusion is weak. BLM's only page for the area (Ivanpah Windsailing SRMA) never mentions camping; it says gates are locked "during wet seasons" and "Individual use of the dry lake bed for non-motorized sports is allowed with a permit". Needles FO's camping list omits Ivanpah. Only RV LIFE (4 reviews) supports overnight use; imagery at the pin shows playa edge by the railroad and a fenced pond installation, no camp vehicles. Not an FS small-free-site case (no agency ever listed it). Kept for now; drop?
+
+## 277 Kirk Creek (CA, Los Padres NF) — p3-629, 2026-11-26 — OPEN (--AWH value)
+Stored waterfront 'coastal dunes' (--AWH). The camp is an open bluff top above the ocean with no dune field; under the current vocabulary it reads as 'coastal walk'. Not changed because the value is yours. Change to coastal walk?

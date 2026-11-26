@@ -1,0 +1,90 @@
+{
+ "id": 12368,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.fs.usda.gov/r05/cleveland/recreation/laguna-campground (read 2026-11-26): 'Site Open'; 'Operational Hours Open year round'; 'Restrictions Vehicles 40 ft. max.'; 'Single Site: $35 per night Additional Vehicle Fee: $10 per vehicle per night'; 'Campsites $35/Night for single unit (one vehicle included)'; 'five loops of campsites ... flush toilet restrooms and coin-operated showers'; 'Potable water is available at this site.'; 'A reservation charge is added to the price of the site using Recreation.gov'; Lat/Long 32.8881,-116.4483",
+  "https://www.recreation.gov/api/camps/campgrounds/232279 (read 2026-11-26): 'This location is staffed. Please call (619) 354-8776 to speak with local staff.'; notices 'The ROADSIDE LOOP is only for large rigs. RV'S MUST be 30 feet or LARGER. No vans. No tent camping.', 'One RV with tow vehicle per single site ... Most sites can accommodate 1 extra vehicle ... charged a per night fee', 'Due to local temperatures, showers are open from mid-May through early October', 'Two Pets are allowed'; rules maxConsecutiveStay 14, maxStay 14 nights each year, minHolidayWeekendStay 3, minWeekendStay 2; facility_phone 619-473-2082",
+  "https://www.recreation.gov/api/camps/campgrounds/232279/rates (read 2026-11-26): 2026, 2027 and 2028 Peak Season STANDARD NONELECTRIC / TENT ONLY $35",
+  "recreation.gov campsite search API asset 232279 (read 2026-11-26): 72 sites in loops SHADY 25, MEADOW 19, SUNNY 16, ROADSIDE 9, WALK-IN 3; 62 take RV equipment; RV max lengths 15-50 ft; 44 sites outside the Roadside loop take 23 ft+ (SHADY 20, MEADOW 18, SUNNY 6); no electric; site centroid 32.88716,-116.44887 (stored pin ~198 m)",
+  "recreation.gov availability API 232279 (read 2026-11-26): Dec 2026, Feb 2027 and Apr 2027 - 44 sites Available/Reserved every night, 25 Closed; May 2027 all 69 open"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 35,
+    "currency": "USD",
+    "checked": "2026-11",
+    "extra_vehicle": {
+     "included": 1,
+     "amount": 10,
+     "per": "night"
+    }
+   },
+   "source": "fs.usda.gov Laguna page ('Single Site: $35 per night Additional Vehicle Fee: $10 per vehicle per night'; 'one vehicle included') and recreation.gov 232279 rates (2026-2028 $35), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "max_stay_nights": 14,
+    "note": "Three-night minimum on holiday weekends."
+   },
+   "source": "recreation.gov 232279 rules (maxConsecutiveStay 14, maxStay 14 nights each year, minHolidayWeekendStay 3), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 72,
+    "max_rig_ft": 50
+   },
+   "source": "recreation.gov campsite catalog 232279 (72 sites; longest RV site 50 ft), read 2026-11-26; FS page 'Vehicles 40 ft. max.'",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0,
+    "water": false,
+    "sewer": false
+   },
+   "source": "recreation.gov campsite catalog 232279 (all NONELECTRIC), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "showers": true,
+    "potable_water": true
+   },
+   "source": "fs.usda.gov ('flush toilet restrooms and coin-operated showers'; 'Potable water is available at this site.'); recreation.gov amenities 'Flush Toilets', 'Showers', read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true,
+    "note": "One loop (25 sites) closes in winter; showers run mid-May to early October."
+   },
+   "source": "fs.usda.gov ('Open year round'); recreation.gov availability (44 sites bookable every night Dec 2026-Apr 2027, 25 Closed; all open May 2027); shower notice, read 2026-11-26",
+   "method": "manual"
+  },
+  "status": {
+   "values": {
+    "operating": "open"
+   },
+   "source": "fs.usda.gov 'Site Open'; recreation.gov availability, read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Cleveland NF campground in the Laguna Mountain Recreation Area off Sunrise Highway, among pines, oaks and a meadow, with the Pacific Crest and Big Laguna trails reachable from camp. Coin-operated showers. The Roadside loop is only for rigs 30 ft and longer; a 23-ft rig books the Shady, Meadow or Sunny loops. --Claude",
+ "summary": "Laguna (Cleveland NF): open year-round (stored year_round false corrected; 25 sites close in winter), $35 + $10 extra vehicle confirmed, rec.gov reservable 14-night max, 72 sites in five loops (44 non-Roadside sites take 23 ft+, max 50), no hookups, flush toilets, coin showers, water. Note rewritten (the '~100+ sites' and 'reservable in season' claims were wrong). Website and phone suggested.",
+ "flags": [
+  "SEASON: stored year_round false -> true. FS 'Open year round'; rec.gov sells 44 sites every winter night (25 Closed Dec-Apr).",
+  "SITE LENGTH: 44 sites outside the Roadside loop take 23 ft+; the 9-site Roadside loop is 'only for large rigs. RV'S MUST be 30 feet or LARGER', so it is closed to a 23-ft rig. Caveat in the note.",
+  "WEBSITE: stored https://www.fs.usda.gov/r05/cleveland/recreation (forest-wide) -> https://www.fs.usda.gov/r05/cleveland/recreation/laguna-campground (or https://www.recreation.gov/camping/campgrounds/232279).",
+  "PHONE: empty -> 619-354-8776 (rec.gov 'call (619) 354-8776 to speak with local staff'; rec.gov facility_phone 619-473-2082 is the concessionaire).",
+  "PIN: stored 32.88800,-116.44700 is ~198 m from the catalog centroid 32.88716,-116.44887 - under 250 m, left.",
+  "WATERFRONT: not waterfront confirmed (Little Laguna Lake is 'a short distance from the campground', a hiking destination; no shore sites).",
+  "LEADS: none. Burnt Rancheria (rec.gov 232278) is already in the database (12308); El Prado, Horse Heaven and Wooded Hill are group camps (out of scope)."
+ ]
+}

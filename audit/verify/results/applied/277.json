@@ -1,0 +1,59 @@
+{
+ "id": 277,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233116 (read 2026-11-26): 'Utility hookups are not available and parking surfaces within the campground are gravel and grass'; 'Vault toilets are provided throughout the campground'; 'located on a bluff overlooking the Pacific Ocean, at an elevation of about 100 feet'; 'There is short walk to a rocky beach from the campground'; notices 'Each campsite allows up to 8 people and 2 vehicles ... extra vehicles are $10 per vehicle per night', 'No water is available at the campground', 'no public showers in the area'; 'Camp Los Padres manages this campground ... call 820-500-1099'; rules maxConsecutiveStay 14, minHolidayWeekendStay 3 (strict), minWeekendStay 2 (soft)",
+  "https://www.recreation.gov/api/camps/campgrounds/233116/rates (read 2026-11-26): 2026, 2027 and 2028 Peak Season STANDARD NONELECTRIC $47",
+  "recreation.gov campsite search API asset 233116 (read 2026-11-26): 32 sites - 31 STANDARD NONELECTRIC taking RV/Tent/Trailer, 1 tent-only; RV max lengths 26-56 ft (all 31 take 23 ft+); site centroid 35.99004,-121.49585 (stored pin ~15 m away)",
+  "recreation.gov availability API 233116 (read 2026-11-26): Dec 2026 and Mar 2027 sites Reserved/Available every night; Jun 2027 Open then NYR - bookable through the winter",
+  "https://www.fs.usda.gov/r05/lospadres/recreation/kirk-creek-campground (read 2026-11-26): 'Site Open'; 'Campground access from Highway 1 and Nacimiento Road may be subject to winter closures. Call ahead to confirm road access 831-385-5434'; 'There are only 2 campsites open on a first-come, first-serve basis'; 'Recreational Vehicles no longer than 30 feet. There are 40 campsites.'; 'There are vault toilets. No potable water.'; 'Individual sites at this campground operate on a 6-month rolling basis.'"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 47, "nightly_high": 47, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 2, "amount": 10, "per": "night"}, "extra_person": {"max_people": 8}},
+   "source": "recreation.gov 233116 rates (2026/2027/2028 $47) and notices ('up to 8 people and 2 vehicles ... extra vehicles are $10 per vehicle per night'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Three-night minimum on holiday weekends."},
+   "source": "recreation.gov 233116 rules (maxConsecutiveStay 14, minHolidayWeekendStay 3 strict); fs.usda.gov ('only 2 campsites open on a first-come, first-serve basis'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": 56},
+   "source": "recreation.gov campsite catalog 233116 (RV max lengths 26-56 ft), read 2026-11-26; FS page says 'no longer than 30 feet' (see flags)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov 233116 ('Utility hookups are not available'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false, "showers": false},
+   "source": "recreation.gov 233116 ('Vault toilets are provided'; 'No water is available at the campground'; 'no public showers in the area'); fs.usda.gov ('vault toilets. No potable water.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Highway 1 and Nacimiento Road may close in winter; call 831-385-5434 to confirm road access."},
+   "source": "recreation.gov availability (bookable Dec 2026 and Mar 2027); fs.usda.gov winter-closure caution, read 2026-11-26",
+   "method": "manual"
+  },
+  "status": {
+   "values": {"operating": "open"},
+   "source": "fs.usda.gov 'Site Open'; recreation.gov taking reservations, read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "summary": "Kirk Creek (Los Padres NF, Big Sur): open; rate now $47 (stored $45); rec.gov reservable with 2 first-come sites, 14-night max; 32 bookable sites, every RV site 26-56 ft per rec.gov (FS page says 30 ft max); no hookups, no water, vault toilets; year-round with winter road-closure caution. --AWH note and coastal dunes untouched.",
+ "flags": [
+  "FEES: stored $45 -> $47 (rec.gov rate table 2026-2028 all $47).",
+  "WATERFRONT (--AWH, not changed; disagreement reported only): stored 'coastal dunes'. The sites sit on an open grassy bluff ~30 m (100 ft) above the surf, with a 'short walk to a rocky beach'; Highway 1 is inland (east) of the camp, so nothing developed separates the bluff from the ocean, but there is no dune field. Under the current vocabulary it would read as 'coastal walk' (ocean within an easy walk, own beach trail).",
+  "SITE LENGTH: FS page says 'Recreational Vehicles no longer than 30 feet'; the rec.gov catalog gives 26-56 ft per site. Either way a 23-ft rig fits every RV site. max_rig_ft written from rec.gov (trusted over the FS page).",
+  "SITE COUNT: rec.gov catalog 32 reservable sites; FS page says 40 sites including 2 first-come. Count left unwritten.",
+  "PHONE: entry has none. Suggest -> 820-500-1099 (Camp Los Padres, the concessionaire, per rec.gov notice; rec.gov facility_phone still shows the old 805-434-1996 PMC line). FS road-access line 831-385-5434. Website (rec.gov 233116) confirmed; FS page https://www.fs.usda.gov/r05/lospadres/recreation/kirk-creek-campground is the agency alternative.",
+  "PIN: stored 35.9900,-121.4957 is ~15 m from the catalog centroid - fine.",
+  "POLICY ROW: booking window_opens_days 180 matches the FS '6-month rolling basis'. A rec.gov notice says 'Reservations can be made three days in advance' (likely a booking cutoff); no contradiction with the row recorded.",
+  "ACCESS: winter closures of Highway 1 / Nacimiento Road are possible (FS); not a 4WD or rig restriction."
+ ]
+}

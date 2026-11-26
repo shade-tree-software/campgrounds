@@ -1,0 +1,12 @@
+# p3-629 notes
+- 295 Jumbo Rocks: done. $30, fcfs never, 33/41 RV sites >=23 ft, phone ->760-367-5554
+- 11997 June Lake: done. $32+tax, 7 RV sites >=23 ft, lakeview kept (photo), season opens 04-23, phone ->760-934-5795
+- 12320 KCL: done. free FCFS, 12 sites (8 drive-in), rec.gov 404 -> BLM page, phone 661-391-6000
+- 11770 Kern River: done; riverfront->riverview (operator 'Non-Waterfront' + riparian belt); 49 sites; website dead; phone 661-868-7000
+- 277 Kirk Creek: done; $45->$47; coastal dunes (AWH) reported as coastal walk; FS 30 ft vs rec.gov 56
+- 12368 Laguna: done; year_round false->true; Roadside loop 30ft+ only; website/phone
+- 11776 Lake Morena: done; $39-42; pin move 810 m to 32.68448,-116.51798; lakeview kept weakly
+- 12380 Lake Piru: done; low 32->28; max 30->42; lakeview kept unproven; PDF curl DENIED
+- 11781 Lake Solano: done; count 90->58; sewer true; lakefront kept (sites 25,26); website 404 fixed
+- 12448 Lakeshore Bucks: DROP CANDIDATE seasonal-only RV sites; pin 1.45 km off; G 4.6/193
+- 11782 Launch Pointe: done; lakefront->lakeview; 0-125 campspot; city-owned >50
