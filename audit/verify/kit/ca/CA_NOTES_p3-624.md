@@ -1,0 +1,12 @@
+# p3-624 notes
+- 11613 done (creekside kept w/ caveat sites 4/5/7/10/11, $43, 24/31 ft, Napa County operates)
+- 12416 done (riverfront->creekside by size, season cleared, Google 4.5/202, $40)
+- 12308 done ($35+$10 veh, season late Apr-Oct, seasonal closed, nothing to drop)
+- 11732 done (wifi false, $60-70 from 11/2024 schedule, phone 707-942-2780)
+- 11733 done ($51-53+$10, 180 d window, Itinio, pin ~235 m off)
+- 12433 done (lakefront holds 5-9/14-19, prototype website flag, South Shore not a split)
+- 11812 done ($20+$6, website 404 -> parks.oc.gov/caspers, no pets, Ortega Flats split?)
+- 11622 done ($30, 10 sites fit, pin move 375 m, phone, flood partial closure)
+- 12376 done ($68-114 Newbook; gateway Joshua Tree 27 km keeps it)
+- 12133 done (creekside kept weak, North Loop note dropped)
+- 14921 done (drop candidate: operator site silent on camping; hookups/sites cleared)

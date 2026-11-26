@@ -1,0 +1,69 @@
+{
+ "id": 11732,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://app.fireflyreservations.com/reserve/property/CalistogaRVPark (curl, read 2026-11-26): 'This is an older RV Park maintained to give you an option for an economical stay in the Napa Valley. There is no WIFI'; 'The Deluxe Sites have 50 AMP/Water/Sewer/ Room for large slides. There are 24 of these sites.'; 'The Regular Sites are 30/110 and water with a clean out station by the bathrooms'; 'TENT SITES - ARE ONLY FOR LARGE APPROVED EVENTS - NO REGULAR TENT CAMPING'; 'No extra vehicle parking.'; 'If you are booking for an event weekend, 4 nights are required, if you are booking for Labor Day weekend, 4 nights are required.'; unit classes Deluxe - Full Hook-up / Event Site / Regular - No Sewer Hook Up / TENT, durations Nightly / Day Use / Hourly",
+  "https://www.calistogaca.gov/Fairgrounds/Calistoga-Fairgrounds-RV-Park (403 to curl; headless browser with the full Chrome/131 UA, read 2026-11-26): 'The City of Calistoga is proud to own and operate our RV Park'; 'Deluxe Sites with full hookups (50 AMP, water, sewer) and Regular Sites with water and power. While there's no Wi-Fi'; 'Reserve Your Space Today' -> Firefly; contact 'Phone: 707-942-2780' (Fairgrounds Revitalization Director)",
+  "https://www.calistogaca.gov/Fairgrounds/Rent-Fairgrounds-Facilities (headless browser, 2026-11-26): 'Fairgrounds Rental Fee Schedule(PDF, 184KB) - Adopted 8/3/2026' - the PDF 403s to curl and to the browser context; no archive capture",
+  "https://web.archive.org/web/20251029005257/https://www.calistogaca.gov/files/assets/city/v/1/fairgrounds/documents/fairgrounds-rental-fee-schedule.pdf (Wayback capture 2025-10-29 of the city's Fairgrounds Rental Fee Schedule dated 11/2024): 'RV Space (Site with Sewer/ Dump only) 69 sites 25 with Sewer $70 Sewer Site $60 No Sewer Booking & local taxes are additional'; 'Includes dump/ Stand Alone Dump $20'",
+  "Web search 2026-11-26: no official current nightly rate found; a camper report gives $60 (2026-06-24) - corroboration only"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 60,
+    "nightly_high": 70,
+    "currency": "USD",
+    "checked": "2025-10",
+    "note": "$60 for a site without sewer, $70 with sewer, plus a booking fee and local taxes (city fee schedule of November 2024)."
+   },
+   "source": "https://web.archive.org/web/20251029005257/https://www.calistogaca.gov/files/assets/city/v/1/fairgrounds/documents/fairgrounds-rental-fee-schedule.pdf ('$70 Sewer Site $60 No Sewer Booking & local taxes are additional'), capture 2025-10-29; a newer schedule adopted 8/3/2026 exists but could not be read",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "https://app.fireflyreservations.com/reserve/property/CalistogaRVPark ('Deluxe Sites have 50 AMP/Water/Sewer'; 'Regular Sites are 30/110 and water') and https://www.calistogaca.gov/Fairgrounds/Calistoga-Fairgrounds-RV-Park, read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "wifi": false,
+    "dump": true
+   },
+   "source": "https://app.fireflyreservations.com/reserve/property/CalistogaRVPark ('There is no WIFI'; 'clean out station by the bathrooms') and https://www.calistogaca.gov/Fairgrounds/Calistoga-Fairgrounds-RV-Park ('there's no Wi-Fi'), read 2026-11-26; fee schedule 'Includes dump/ Stand Alone Dump $20'",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://app.fireflyreservations.com/reserve/property/CalistogaRVPark",
+    "min_stay": [
+     {
+      "nights": 4,
+      "applies": "holiday"
+     }
+    ],
+    "note": "Event weekends also require four nights."
+   },
+   "source": "https://app.fireflyreservations.com/reserve/property/CalistogaRVPark ('If you are booking for an event weekend, 4 nights are required, if you are booking for Labor Day weekend, 4 nights are required.'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Older city-run RV park at the Calistoga Fairgrounds, a short walk from downtown. Deluxe sites have full hookups; regular sites have 30-amp power and water, with a sewer clean-out by the restrooms. No tent camping outside large approved events. The Vine shuttle runs into town. --Claude",
+ "summary": "Calistoga Fairgrounds RV Park: city-owned/operated, nightly RV sites sold on Firefly outside events (event weekends and Labor Day need 4 nights); 24 deluxe 50A full-hookup + regular 30A/water; NO Wi-Fi (stored wifi true corrected); rate $60/$70 + booking fee & taxes from the city's 11/2024 fee schedule (Wayback 2025-10-29; the 8/3/2026 schedule unreadable); phone 707-942-2780 proposed.",
+ "flags": [
+  "FACILITIES: stored wifi true is wrong - operator and city both say no Wi-Fi; set false.",
+  "FAIRGROUNDS TEST: ordinary nights are sold - Firefly offers RV Site / Nightly with Deluxe and Regular classes separate from 'Event Site', and the 4-night rule is only for event weekends and Labor Day. Keep.",
+  "FEES: $60-70 rests on the city's Fairgrounds Rental Fee Schedule dated 11/2024 (Wayback capture 2025-10-29). A newer schedule 'Adopted 8/3/2026' is linked from the city page but the PDF returns 403 to curl and the browser; Firefly availability (a known refuser) not tried. Local ownership, so no price gate; the rate may have changed.",
+  "PHONE: stored empty -> 707-942-2780 (city page contact for the RV park; Fairgrounds Revitalization Director). City Hall is 707-942-2800.",
+  "SITES: stored count 50 / max_rig 50 from note prose - not changed. Firefly says 24 deluxe sites; the fee schedule says '69 sites 25 with Sewer' (may include event spaces). 'Room for large slides' on deluxe sites; no length limit posted.",
+  "SHOWERS: stored showers true (note-derived) - neither page read mentions showers (only 'bathrooms'); left, unconfirmed.",
+  "PIN 38.58330,-122.58480 sits among fairgrounds buildings SE of the track; the RV rows could not be picked out on imagery, so no move proposed.",
+  "STATUS: the city is planning a Fairgrounds revitalization (concept plan heard 2026-10-29, not approved); the park operates now."
+ ]
+}

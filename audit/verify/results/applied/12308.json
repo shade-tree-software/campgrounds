@@ -1,0 +1,95 @@
+{
+ "id": 12308,
+ "checked": "2026-11-26",
+ "sources": [
+  "recreation.gov 232278 API (campground + /rates + campsite catalog, read 2026-11-26): 'There are no hookups or dump station for RVs'; 'restrooms and coin-operated showers (showers open only during reservation season)'; 'open from mid-April through October'; amenities Flush Toilets, Showers, Vault Toilets; rules maxStay 14, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; rates Peak Season 2026-04-25..10-18 and 2027-04-25..10-18 $35 all site types; catalog 56 sites (47 STANDARD NONELECTRIC RV/Trailer, 1 Tent/Trailer, 8 tent-only), 47 with an RV/Trailer limit of 23 ft or more; notice 'Most sites can accommodate 1 extra vehicle... charged a per night fee'",
+  "https://www.fs.usda.gov/r05/cleveland/recreation/burnt-rancheria-campground (read 2026-11-26, last updated August 21, 2025): 'Site Closed - Closed for the season. Will re-open in April 2027'; 'open during late April through late October/early November, opening & closing dates are determined by weather'; 'Vehicles 40 ft. max.'; 'Single Site: $35 per night'; 'Additional Vehicle Fee: $10 per vehicle per night'; 'Vault Toilets'; 'Potable water is available at this site.'; Latitude 32.8605 Longitude -116.4172",
+  "Esri World_Imagery 32.86139,-116.41611 (600 m frame), viewed 2026-11-26: loops in open pine/oak woodland SW of the pin, no water nearby"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 35,
+    "currency": "USD",
+    "extra_vehicle": {
+     "included": 1,
+     "amount": 10,
+     "per": "night"
+    },
+    "checked": "2026-11"
+   },
+   "source": "https://www.fs.usda.gov/r05/cleveland/recreation/burnt-rancheria-campground ('Single Site: $35 per night'; 'Additional Vehicle Fee: $10 per vehicle per night') and recreation.gov 232278 rates (2027 Peak Season $35), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0,
+    "water": false,
+    "sewer": false
+   },
+   "source": "recreation.gov 232278 ('There are no hookups or dump station for RVs'; catalog: no electric/water/sewer attributes on any site), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "vault_toilets": true,
+    "showers": true,
+    "potable_water": true,
+    "dump": false
+   },
+   "source": "recreation.gov 232278 (amenities Flush Toilets, Showers, Vault Toilets; 'no hookups or dump station') and https://www.fs.usda.gov/r05/cleveland/recreation/burnt-rancheria-campground ('Potable water is available at this site.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 56,
+    "max_rig_ft": 40
+   },
+   "source": "recreation.gov 232278 catalog (56 sites, 8 tent-only) and https://www.fs.usda.gov/r05/cleveland/recreation/burnt-rancheria-campground ('Vehicles 40 ft. max.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "opens": "04-25",
+    "note": "Late April to late October or early November, set by weather; reservations run April 25 to October 18. Showers run only in the reservation season."
+   },
+   "source": "https://www.fs.usda.gov/r05/cleveland/recreation/burnt-rancheria-campground ('open during late April through late October/early November, opening & closing dates are determined by weather'; 'Will re-open in April 2027') and recreation.gov 232278 rates (Peak Season 2026-04-25..10-18, 2027-04-25..10-18), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/232278",
+    "max_stay_nights": 14,
+    "reserve_until": {
+     "relative_to": "arrival",
+     "offset_hours": -96
+    },
+    "min_stay": [
+     {
+      "nights": 2,
+      "applies": "weekend"
+     },
+     {
+      "nights": 3,
+      "applies": "holiday"
+     }
+    ]
+   },
+   "source": "recreation.gov 232278 facility_rules (maxStay 14, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Pine-and-oak campground on Mount Laguna off the Sunrise Highway, with the Pacific Crest Trail and the Desert View picnic site a short walk away. --Claude",
+ "summary": "Burnt Rancheria (Cleveland NF): $35 + $10 extra vehicle confirmed, no hookups/dump, flush+vault toilets, coin showers in reservation season, 56 sites (47 fit a 23-ft rig), 40 ft max; season late April to late Oct/early Nov (reservations Apr 25-Oct 18); closed now, reopens April 2027 (seasonal). Not waterfront confirmed. Nothing to drop.",
+ "flags": [
+  "STATUS: FS page 'Closed for the season. Will re-open in April 2027' - ordinary seasonal closure, status left open.",
+  "PHONE: stored 619-473-0120 is recreation.gov's facility phone (concessionaire); recreation.gov also says 'For facility specific information, please call (619) 354-8776' (Cleveland NF). Keep stored; optional add 619-354-8776.",
+  "PIN: stored 32.86139,-116.41611 vs FS page 32.8605,-116.4172 (~140 m); loops spread SW of the pin. Under 250 m, no move.",
+  "NOTE: dropped the old note's facts now in fields (sites, toilets/showers, hookups, length, booking)."
+ ]
+}

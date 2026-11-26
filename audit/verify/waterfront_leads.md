@@ -1697,3 +1697,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-622, CA 2026-11-26) 11968 Wishon not waterfront -> creekside? sites 20/21/23 19-25 m from the North Fork Tule River under dense canopy.
 - (p3-622, CA 2026-11-26) 12425 Wright's Beach coastal dunes: front row WB01-WB10 on open sand ~100 m from the surf, no buffer; twice the ~50 m on-water bound, so not raised.
 - (p3-623, CA 2026-11-26) 11610 Bidwell Canyon lakeview -> lakefront? Gold Flat's east edge (~39.5326,-121.4567) ~20-25 m from Lake Oroville's full-pool contour, wooded, no site numbers.
+- (p3-624, CA 2026-11-26) 12133 Cave creekside (weak): no site numbers; westernmost sites (~40.6846,-121.4252) 35-50 m from Hat Creek over flat open pine. Down to not waterfront if named sites are required.
