@@ -1,0 +1,12 @@
+# p3-623 notes
+- 12356 done (lakefront upgrade lead, season W loop, pin ~400m)
+- 12338 done (confirmed, OHV staging mention flagged)
+- 11717 done (fees added 39-42, 50A, season manual)
+- 11719 done (temp closed to Dec 1; max 39)
+- 11972 done (pin 330m, fcfs some_sites, winter 21 sites)
+- 11610 done ($60, 50A, loop names swapped, phone 2218, waterfront lead S loop)
+- 12255 done (reservable->fcfs always, riverfront->creekside)
+- 12251 done (creekside->not waterfront candidate, OHV flag, season May1-Oct31)
+- 11606 done (free, 2WD first half mile per 10/30/2026 road report, leads Mountain Palm Springs/Culp Valley)
+- 11708 done (coastal dunes->coastal walk candidate: park road + day-use lot; phone added; after_cutoff 48h)
+- 11607 done (30A added, pin move 675 m to hookup block, summer off reservations)

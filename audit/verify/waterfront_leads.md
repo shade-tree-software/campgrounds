@@ -1696,3 +1696,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-621, CA 2026-11-26) 12214 Plum Valley: FS 'bordered by South Fork Davis Creek'; canopy hides it.
 - (p3-622, CA 2026-11-26) 11968 Wishon not waterfront -> creekside? sites 20/21/23 19-25 m from the North Fork Tule River under dense canopy.
 - (p3-622, CA 2026-11-26) 12425 Wright's Beach coastal dunes: front row WB01-WB10 on open sand ~100 m from the surf, no buffer; twice the ~50 m on-water bound, so not raised.
+- (p3-623, CA 2026-11-26) 11610 Bidwell Canyon lakeview -> lakefront? Gold Flat's east edge (~39.5326,-121.4567) ~20-25 m from Lake Oroville's full-pool contour, wooded, no site numbers.

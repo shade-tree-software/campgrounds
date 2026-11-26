@@ -1,0 +1,65 @@
+{
+ "id": 12255,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.fs.usda.gov/r05/inyo/recreation/big-bend-campground (last updated September 28, 2026; read 2026-11-26): banner 'Site Closed' (off-season); '17 campsites on Lee Vining Creek. Near the Tuolumne Meadows entrance of Yosemite National Park.'; 'Campsites can accommodate a 30-foot vehicle. Drinking water and vault toilets are available. 14 day stay limit.'; 'Each campsite has a bear locker'; 'No reservations, register at campground, first-come first-served.'; 'Single Site: $30 per night / Additional Vehicle: $10 per night'; 'Mono Basin Scenic Area Visitor Center ... Phone: (760) 647-3044'; 'Latitude: 37.945076 Longitude: -119.200987'; 'Elevation 7,800''; 'From US 395 at Lee Vining, go west on CA 120 and turn onto Poole Power Plant Road.'",
+  "https://www.recreation.gov/api/search?q=Big Bend Lee Vining (read 2026-11-26): no Inyo NF Big Bend listing (only Tahoe NF's Big Bend Group)",
+  "https://www.fs.usda.gov/r05/inyo/alerts (read 2026-11-26): no Big Bend or Lee Vining Canyon closure",
+  "USGS 3DEP (epqs) 3 x 300 m N-S transects through the pin, read 2026-11-26: the pin (2350.1 m) is the valley-floor low point; the floor is flat within ~2 m for ~75 m either side of the channel, rising steeply beyond ~100 m",
+  "Esri World_Imagery 37.9450,-119.2020 (500 m frame), viewed 2026-11-26: continuous conifer canopy over the canyon floor; neither the creek nor the pads are visible"
+ ],
+ "groups": {
+  "booking": {
+   "values": {
+    "reservable": false,
+    "platform": "none",
+    "fcfs": "always",
+    "max_stay_nights": 14
+   },
+   "source": "fs.usda.gov/r05/inyo/recreation/big-bend-campground ('No reservations, register at campground, first-come first-served'; '14 day stay limit') + no recreation.gov listing, read 2026-11-26",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {
+    "nightly_low": 30,
+    "nightly_high": 30,
+    "currency": "USD",
+    "extra_vehicle": {
+     "included": 1,
+     "amount": 10,
+     "per": "night"
+    },
+    "checked": "2026-11"
+   },
+   "source": "fs.usda.gov/r05/inyo/recreation/big-bend-campground ('Single Site: $30 per night', 'Additional Vehicle: $10 per night'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 17,
+    "max_rig_ft": 30
+   },
+   "source": "fs.usda.gov Big Bend page ('17 campsites'; 'Campsites can accommodate a 30-foot vehicle'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "vault_toilets": true,
+    "potable_water": true
+   },
+   "source": "fs.usda.gov Big Bend page ('Drinking water and vault toilets are available'; 'Potable water is available at this site'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Inyo NF campground in Lee Vining Canyon at 7,800 ft, on Lee Vining Creek off SR-120 (Poole Power Plant Road), between Lee Vining and the Tioga Pass entrance to Yosemite. Each site has a bear locker. Summer season only. --Claude",
+ "summary": "Big Bend (Inyo NF): confirmed 17 sites, 30-ft vehicles, $30 (+$10 per extra vehicle), water + vault toilets; NOT reservable (stored reservable true -> first-come always, no rec.gov listing); riverfront -> creekside (Lee Vining Creek is a creek); off-season 'Site Closed' banner; pin on the creek.",
+ "flags": [
+  "BOOKING: stored reservable true is wrong. The FS page says 'No reservations, register at campground, first-come first-served', and recreation.gov has no listing -> reservable false, fcfs always.",
+  "WATERFRONT riverfront -> creekside (downgrade by size): Lee Vining Creek is well under 30 m wide. The canopy hides the creek and the pads on Esri imagery. The only site-level evidence is the stored campendium line ('several sites right on the water', secondary; campendium 403 today) and the flat valley floor in 3DEP. The reviewer may want photos before keeping creekside rather than going lower. Proposed waterfront_evidence: Inyo NF page (2026-09-28): '17 campsites on Lee Vining Creek'. Lee Vining Creek here is a mountain creek well under 30 m wide (canopy hides it on Esri imagery). 3DEP puts the pin on the channel low point, with the valley floor flat within ~2 m for ~75 m either side, so the sites are an easy walk to the creek. riverfront -> creekside by size (curation doc: under ~30 m is creekside). Checked 2026-11-26 --Claude",
+  "facilities.potable_water added (FS: 'Drinking water ... available'); the stored note didn't say.",
+  "SEASON: the 'Site Closed' banner is the seasonal closure (page updated Sept 28). The FS page gives no season dates, so season stays year_round false with no dates.",
+  "WEBSITE: stored is the forest home page https://www.fs.usda.gov/r05/inyo -> suggest https://www.fs.usda.gov/r05/inyo/recreation/big-bend-campground. PHONE 760-647-3044 matches.",
+  "PIN 37.9450,-119.2020 sits on the 3DEP valley-floor channel, 89 m W of the FS point (37.945076,-119.200987) - fine.",
+  "Policy row federal:usfs: nothing contradicted."
+ ]
+}
