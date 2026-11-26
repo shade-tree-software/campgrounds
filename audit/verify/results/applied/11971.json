@@ -1,0 +1,62 @@
+{
+ "id": 11971,
+ "checked": "2026-11-26",
+ "sources": [
+  "developer.nps.gov/api/v1/campgrounds?parkCode=seki, Dorst Creek Campground (read 2026-11-26): description 'Not taking reservations in 2026 due to past winter storm damage. When open, individual site reservations can be made up to one month in advance. Group sites are available up to four months in advance. All sites are reservation only.'; reservationInfo 'Dorst Creek Campground does not have a determined reopening date due to ongoing storm damage repair.'; operatingHours exception '2026 Closure For Repairs' 2026-01-01..2026-12-31, 'Dorst Creek Campground usually opens in mid-June and closes on Labor Day weekend.'; fees 'Tent or RV Sites' $32 'valid for up to six people'; campsites totalSites 222 (group 4, tentOnly 12, rvOnly 33), numberOfSitesReservable 202, FCFS 0; rvInfo 'sites for RVs and trailers of nearly any length, including pull-through sites ... A dump station is available at the campground.'; amenities flush toilets seasonal, potable water seasonal, showers None (dumpStation listed 'No' - contradicts rvInfo); phone 559-565-3341",
+  "https://www.nps.gov/seki/planyourvisit/campgrounds.htm (last updated October 23, 2026, read 2026-11-26): 'Enter the parks via Highway 180 if your vehicle is over 22 feet (6.7 m) long.' (Lodgepole and Giant Forest campgrounds); the per-campground blocks load from the API above",
+  "developer.nps.gov/api/v1/alerts?parkCode=seki (read 2026-11-26): four alerts, side-road closures (Moro Rock, Crescent Meadow, Panoramic Point); none names Dorst Creek",
+  "https://www.recreation.gov/api/camps/campgrounds/232460 (updated 2026-07-17, read 2026-11-26): 'paved roads, flush toilets, and drinking water, but no electricity ... A free dump station is located on-site'; 'For facility specific information, please call (559) 565-4404.'; directions 'Vehicles longer than 22 feet (including trailers) are not advised between Potwisha Campground and the Giant Forest Museum. Visitors with vehicles over 22 feet in total length hoping to visit the Giant Forest or camp at Lodgepole and Dorst Creek Campgrounds are advised to enter via the northern, Highway 180, entrance'; '6 Person Limit - There is a maximum of 6 people per campsite'; rules reservationWindow 1 month, maxConsecutiveStay 14 (summer), maxStay 30 days each year; rates Peak $32 RV/standard/tent",
+  "recreation.gov campsite catalog 232460 (204 sites) and month availability 2026-12 and 2027-06 (read 2026-11-26): 140 sites take an RV/trailer of 23 ft+ (loops A, B, D-H); no availability loaded for either month",
+  "Esri World_Imagery with the catalog's per-site points, and USGS USATopo, at 36.6350,-118.8120 (900 m frame, read 2026-11-26): loops under conifer canopy; fit-site centroid 36.63530,-118.81152, 184 m from the pin"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 32, "nightly_high": 32, "currency": "USD", "extra_person": {"max_people": 6}},
+   "source": "developer.nps.gov campgrounds API ('Tent or RV Sites' $32, 'valid for up to six people') + recreation.gov rates (Peak $32) and notice ('maximum of 6 people per campsite'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232460", "window_opens_days": 30, "fcfs": "never", "max_stay_nights": 14},
+   "source": "developer.nps.gov campgrounds API ('individual site reservations can be made up to one month in advance ... All sites are reservation only') + recreation.gov rules (reservationWindow 1 month; maxConsecutiveStay 14), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "06-15", "closes": "09-07", "note": "Usually mid-June to Labor Day weekend."},
+   "source": "developer.nps.gov campgrounds API operatingHours ('usually opens in mid-June and closes on Labor Day weekend'), read 2026-11-26",
+   "method": "manual"
+  },
+  "status": {
+   "values": {"operating": "temporarily_closed", "reopens": "no date set", "note": "Closed through 2026 for repair of winter storm damage; the Park Service has set no reopening date."},
+   "source": "developer.nps.gov campgrounds API ('Not taking reservations in 2026 due to past winter storm damage'; 'does not have a determined reopening date due to ongoing storm damage repair'; '2026 Closure For Repairs'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 222, "note": "140 of the 204 sites in the recreation.gov catalog take a 23-ft RV or trailer."},
+   "source": "developer.nps.gov campgrounds API (totalSites 222) + recreation.gov campsite catalog 232460, read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov facility description ('no electricity') + NPS API (electricalHookups 0), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false},
+   "source": "recreation.gov facility description ('flush toilets, and drinking water ... A free dump station is located on-site') + NPS API rvInfo ('A dump station is available at the campground'; showers None), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Large Sequoia National Park campground in lodgepole pine and red fir near Dorst Creek, off the Generals Highway 9 miles from Lodgepole Village (coin showers and laundry there). The Park Service advises vehicles over 22 ft to enter by Highway 180 from Kings Canyon, not up the Generals Highway from the south (198) entrance. --Claude",
+ "summary": "Dorst Creek (Sequoia NP): NPS API + nps.gov + alerts + rec.gov facility/rules/rates/catalog/availability + imagery. CLOSED all 2026 for storm-damage repair, no reopening date (status written). $32/6 people confirmed; 1-month window, reservation-only, 14-night max; season mid-June..Labor Day; 222 sites (140 of 204 catalogued take 23 ft+); dump confirmed despite one NPS field. Route advisory for >22 ft vehicles noted. Phone option.",
+ "flags": [
+  "STATUS: temporarily_closed written - NPS: 'Not taking reservations in 2026 due to past winter storm damage' and 'does not have a determined reopening date due to ongoing storm damage repair'. rec.gov shows no availability loaded for Dec 2026 or Jun 2027. Keep with the caveat (AWH: add with a caveat, don't withhold).",
+  "ACCESS (agency wording, keep): NPS and rec.gov: 'Vehicles longer than 22 feet (including trailers) are not advised between Potwisha Campground and the Giant Forest Museum ... advised to enter via the northern, Highway 180, entrance'. This is a route advisory with an agency-named alternative (Hwy 180), not a campground restriction; NPS says the campground takes 'RVs and trailers of nearly any length, including pull-through sites'. Per the Montana precedent, kept with the route in the note. A 23-ft rig is over 22 ft, so the reviewer may want to see it.",
+  "BOOKING: NPS rolling window is ONE month for individual sites (rec.gov reservationWindow 1 Months) - window_opens_days 30 overrides the federal:nps policy row's 180. 'All sites are reservation only' -> fcfs never.",
+  "FACILITIES: NPS API amenities list dumpStation 'No', but its own rvInfo and rec.gov both say a dump station is on site - dump true written; reported as a source conflict.",
+  "SITES: stored count 218 (note prose) -> 222 (NPS totalSites; 4 group, 12 tent-only). rec.gov catalog has 204 sites, 140 taking an RV/trailer of 23 ft+.",
+  "PHONE (option): stored 559-565-3341 is the park's main information line; rec.gov gives the campground's own facility line: 559-565-3341 -> 559-565-4404 ('For facility specific information, please call (559) 565-4404').",
+  "WATERFRONT: stored not waterfront kept. rec.gov says 'perched ... on the banks of scenic Dorst Creek', but the loops sit under conifer canopy and no site can be shown within ~50 m of the creek on imagery; marketing wording only. No lead.",
+  "PIN: stored 36.63611,-118.80972 (rec.gov facility point) is 184 m from the fit-site centroid 36.63530,-118.81152 - no move.",
+  "UNREAD: the nps.gov per-campground page (planyourvisit/dorst-creek-campground.htm) is 404; the campground block on campgrounds.htm loads by script from the NPS API, which was read instead."
+ ]
+}

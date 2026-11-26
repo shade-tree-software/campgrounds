@@ -1682,3 +1682,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-614, CA 2026-11-26) 12272 Camp 9 lakefront rests on group sites G03-G05; a strict named-site reading of the family loops would make it lakeview.
 - (p3-614, CA 2026-11-26) 12183 Camino Cove lakeview -> lakefront again only if a site map puts named pads within 50 m of full pool (~4,870 ft).
 - (p3-615, CA 2026-11-26) 11741 Coyote Lake lakeview -> lakefront? tent sites 29/30/32/34 ~45-60 m from the mapped shore over open grass; full-pool edge unmeasured, and these are tent sites an RV may use.
+- (p3-616, CA 2026-11-26) 12254 Ellery Lake lakeview -> creekside? west-side pads 15-30 m from Lee Vining Creek through trees.
+- (p3-616, CA 2026-11-26) 12118 Elam not waterfront -> creekside if a site map names pads on the benches 1.8-3 m above Deer Creek (east loop ~40.2469,-121.4478; west-bank spur).
+- (p3-616, CA 2026-11-26) 12241 East Fork creekside rests on canopy-blind 100-series sites (111, 112, 114, 116, 102, 104) on the creek floodplain; downgrade lead if a per-site check fails.
