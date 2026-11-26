@@ -1,0 +1,50 @@
+{
+ "id": 12205,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/232137 (recreation.gov facility record, read 2026-11-26): phone 530-836-2575; 'Twelve of the campgrounds 38 campsites can be reserved during peak camping season. All other campsites may be taken on a First Come basis.'; 'Vault toilets and drinking water are also provided.'; 'Situated on a pine covered hillside overlooking the lake'; 'situated at the southeastern peninsula of the lake'; amenities 'Drinking Water (peak season)', 'Vault Toilets', 'Paved Parking', 'Boat Ramp'; notices 'Electric hookups are not available.', 'The first vehicle is included in the site fee, the second vehicle fee will be collected onsite'; rate table Peak Season 2027-05-23..08-31 and First-come, First-served Season 2027-09-01..10-12, $38 STANDARD NONELECTRIC; reservationCutOff 4",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id:232137 (per-site catalog, read 2026-11-26): 38 STANDARD NONELECTRIC sites, 15 reservable, RV/Trailer/Tent on all; Max Vehicle Length 25-50 ft (every site 25 ft+)",
+  "https://www.fs.usda.gov/r05/plumas/recreation/frenchman-campground (Plumas NF, 'Last updated September 3, 2026', read 2026-11-26): 'Site Closed'; 'Closed for the season October 11, 2026.'; 'situated on a hillside next to the Frenchman Boat Launch Facility. In winter, snow usually closes the road. 17 of the 38 campsites may be reserved. This campground has seasonal water, paved roads and vault toilets.'; '14 day limit / 6 people per site / 2 vehicles per site'; 'Single Site: $38 per night / Additional Vehicle Fee: $5 per vehicle per night'; facility boilerplate 'Flush toilet(s)', 'Potable water is not available at this site.'",
+  "Esri World_Imagery with the 38 rec.gov site points (260 m half-width, read 2026-11-26; lake drawn down below a bare beach): all sites under pine canopy on the hillside; nearest sites 22-25 and 24 are ~60-80 m from the forest edge at the full-pool line; the south loop (1-8, 36-38) is ~150 m+ from the water behind the boat-launch parking"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 38, "nightly_high": 38, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 5, "per": "night", "max_vehicles": 2}},
+   "source": "recreation.gov rate table 2027 ($38) and Plumas NF page ('Additional Vehicle Fee: $5 per vehicle per night'; '2 vehicles per site'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"max_stay_nights": 14},
+   "source": "Plumas NF page ('14 day limit'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 38, "max_rig_ft": 50},
+   "source": "recreation.gov campsite catalog (38 sites, Max Vehicle Length 25-50 ft), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov ('Electric hookups are not available'; all 38 sites STANDARD NONELECTRIC), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true},
+   "source": "recreation.gov ('Vault toilets and drinking water are also provided'; 'Drinking Water (peak season)') and Plumas NF ('seasonal water ... vault toilets'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Plumas NF campground on a pine-covered hillside at the southeast end of Frenchman Lake, beside the boat launch, north of Chilcoot. Drinking water is seasonal; snow usually closes the road in winter. --Claude",
+ "summary": "Frenchman (Plumas NF): rec.gov facility + catalog, FS page, imagery. Keep; lakeview kept (hillside under pines 'overlooking the lake', nearest sites 22-25 ~60-80 m from full pool). $38 + $5 extra vehicle, 14-day limit, 38 sites all 25 ft+ (max 50), seasonal water. Closed for the season since 2026-10-11.",
+ "flags": [
+  "WATERFRONT (stored lakeview, kept): rec.gov 'Situated on a pine covered hillside overlooking the lake'. Imagery with site points: all sites under pine canopy; nearest 22 (39.90147,-120.18710 area), 23, 25 and 24 ~60-80 m from the forest edge at the full-pool line; nothing within 50 m over open ground, so no upgrade. Proposed evidence: 'rec.gov site points on Esri imagery 2026-11-26: nearest sites 22-25 ~60-80 m from full pool on a pine hillside rec.gov calls overlooking the lake; lakeview'.",
+  "RESERVABLE COUNT: rec.gov text says 12 of 38 reservable, the FS page 17 of 38, the catalog marks 15 reservable. fcfs some_sites unchanged.",
+  "WATER/TOILET boilerplate: FS facility block says 'Flush toilet(s)' and 'Potable water is not available at this site', contradicting its own 'seasonal water ... vault toilets' line and rec.gov. Wrote potable_water true (seasonal) and vault_toilets true; flush not written.",
+  "FIT: every site 25 ft+; stored max_rig_ft 45 -> 50 (catalog).",
+  "STATUS/SEASON: FS 'Closed for the season October 11, 2026' - stored season.closes 10-11 (manual) unchanged; rec.gov 2027 FCFS season runs to 10-12. rec.gov's 'The campground remains open throughout the years. However, most winters include enough snow to keep the road closed' conflicts with the FS seasonal closure. No opens date stated (2027 reservable season starts 05-23).",
+  "PHONE: stored 530-836-2575 matches rec.gov - keep.",
+  "WEBSITE: stored 'https://www.fs.usda.gov/r05/plumas\\nhttps://www.recreation.gov/camping/campgrounds/232137' -> 'https://www.recreation.gov/camping/campgrounds/232137\\nhttps://www.fs.usda.gov/r05/plumas/recreation/frenchman-campground' (the FS link is the forest home page).",
+  "PIN: stored 39.89972,-120.18667 is inside the campground (beside site 34) - fine.",
+  "LEADS: none checked (Spring Creek, Big Cove, Cottonwood Springs on the same lake are likely in the DB)."
+ ]
+}
