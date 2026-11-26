@@ -1,0 +1,12 @@
+# p3-625 notes
+- 12444 done (no op site, domain parked; Google 4.6/97 phone 707-964-4589; cleared aggregator hookups/sites/wifi/booking; website roverpass -> empty)
+- 11735 done ($40/45, skedda engine (webs call denied by permission system - not pursued), fair closure window)
+- 11625 done ($20/30, 17 sites, 45 ft mh, after_cutoff 48h, phone)
+- 11626 done (not sold on RC; hookups water->false; riverview->not wf rec; max stay 15)
+- 12198 done ($20, fcfs some_sites 8, season 05-24..10-14, water conflict FS vs rec.gov)
+- 12350 done ($5 FCFS, riverfront sites 10-11, rec.gov listing non-reservable, phone)
+- 14918 done (keep; $45 reported; G 4.6/170; site dead; long-stay ok)
+- 11982 done ($49-52, lakefront->lakeview rec, season FS Jun-Sep, phone)
+- 12015 done (87 sites, 18 elec, pin 275 m, phone)
+- 11631 done (website was Torrey Pines; closure 2027-29 anticipated; 3-month window; bayfront ok)
+- 11746 done (coastal dunes ok, max rig cleared, engine captcha unread)
