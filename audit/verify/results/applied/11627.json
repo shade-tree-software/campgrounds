@@ -1,0 +1,55 @@
+{
+ "id": 11627,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=644 (read 2026-11-26): Current Restrictions, last checked 11/26/2026: 'Crystal Cove Historic District is experiencing impacts from the current swell event coupled with high tides.' 'The park is currently Open with restrictions in services and/or facilities.'; Contact (949) 494-3539; 'The park is located off Pacific Coast Highway between Corona del Mar and Laguna Beach.'; services list 'RV/Trailer Campsites w/Hookups', 'RV Dump Station'; 'LUV-2-CAMP, LLC (Camp Trailer Rentals in Moro Campground)'",
+  "https://www.parks.ca.gov/pages/644/files/CrystalCoveSP_Infosheet_85x14_021825_FINAL.pdf (read 2026-11-26; Feb 2025 infosheet): 'Moro Campground—This campground is open year-round and offers 58 sites with unparalleled ocean views. There are 28 hookup sites with water and electricity. Maximum vehicle length is 38 feet. There are 30 dry sites with a maximum vehicle length of 25 feet.'; 'No fires are allowed on the sand or in the campgrounds. Gas powered barbecues are permitted.'",
+  "https://www.parks.ca.gov/NewsRelease/1595 and /NewsRelease/1597 (read 2026-11-26; Oct 2026): storm closures of parts of the Historic District beach and cottages; 'Moro Cove Bluff Instability: The beach area at Moro Cove, south of Lifeguard Headquarters, remains closed until further notice due to a significant crack and instability in the coastal bluff.'; the campground is not named as closed",
+  "ReserveCalifornia RDR API (read 2026-11-26): fd/citypark/namecontains 'Crystal Cove' -> PlaceId 635 'Crystal Cove SP Moro Campground' 33.56314167,-117.8220556; search/place -> facility 447 'Moro Campground' (unit types 4443 Premium Hook Up (E/W) Campsite, 4434 Premium Tent Campsite); search/grid 447 -> 24 hookup + 26 tent units, all web-bookable; restrictions FutureBookingStarts 2026-11-26, FutureBookingEnds 2027-05-25, MaximumStay 7; search/details: hookup #3/#5/#27 'Absolute maximum length at 38 feet ... There is a single shared dump-station located at the entrance of the campground. It is included in reservation fee.', 'Electricity Hookup: Amps 30 & 50', 'Hook Up Type: E,W', $75.00 on every night sampled (Wed/Sun/Fri/Sat, Jan-May 2027); tent #40/#55 'Absolute maximum length of 25 feet for Standard Tent Sites. All RVs/Trailers will be measured upon entry', $38.50 on Sun-Wed nights 2027-01-13, 01-17, 03-10, 03-14 and $55.00 on 2027-01-15 (Fri), 01-16 (Sat), 03-31, 04-14, 05-19 (Wed), 05-20, 05-22",
+  "audit/price_research/gateways.py 33.5631,-117.8221 (run 2026-11-26): 'Anaheim (metro, 32 km)'",
+  "Esri World_Imagery 900 m frame at 33.5630,-117.8220 (read 2026-11-26): the campground's paved rows sit on a bench inland (northeast) of Pacific Coast Highway; PCH lies between the lowest row and the sand; the beach is ~150-250 m southwest and the surf ~250-300 m; a school and sports field adjoin to the northwest; the bench is open, with nothing tall between the west rows and the ocean"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 38.5, "nightly_high": 75, "currency": "USD", "note": "Water-and-electric sites $75 every night. Dry sites (rigs to 25 ft) $55, or $38.50 on Sunday-Thursday nights in winter (seen January to mid-March 2027). Plus the $8.25 reservation fee. The dump station is included."},
+   "source": "ReserveCalifornia RDR search/details for Moro Campground units #3/#5/#27 (hookup) and #40/#55 (dry), nights 2027-01-13..2027-05-22, read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "usedirect", "url": "https://www.reservecalifornia.com/", "max_stay_nights": 7},
+   "source": "ReserveCalifornia RDR search/grid facility 447 (all 50 units web-bookable; MaximumStay 7), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "parks.ca.gov Crystal Cove infosheet (Feb 2025) ('This campground is open year-round') and ReserveCalifornia grid (bookable through winter), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 58, "max_rig_ft": 38},
+   "source": "parks.ca.gov Crystal Cove infosheet ('58 sites ... 28 hookup sites ... Maximum vehicle length is 38 feet. There are 30 dry sites with a maximum vehicle length of 25 feet') and ReserveCalifornia unit descriptions ('Absolute maximum length at 38 feet'), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": false},
+   "source": "ReserveCalifornia RDR unit details ('Electricity Hookup: Amps 30 & 50'; 'Hook Up Type: E,W'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true},
+   "source": "ReserveCalifornia RDR unit details ('a single shared dump-station located at the entrance of the campground'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "California State Parks campground on a coastal bench above Pacific Coast Highway between Corona del Mar and Laguna Beach; the west rows look across the highway to the ocean. All RVs are measured on entry; dry sites take rigs up to 25 ft. No wood or charcoal fires (gas barbecues only). Camp trailer rentals are on site. Tide pools, seven coves and the El Moro backcountry trails. --Claude",
+ "summary": "Crystal Cove SP Moro (state): parks.ca.gov page + infosheet + Oct 2026 storm releases + ReserveCalifornia API (place, grid, unit details) + gateways.py + Esri. Hookups $75 every night (30/50 A, E/W, 38 ft); dry sites (25 ft) $55, $38.50 winter Sun-Thu, so nightly_low 38.50; Anaheim gateway at 32 km also clears the price gate. 58 sites, year-round, 7-night max. Bayview kept (PCH between, so no on-water value). Phone added.",
+ "flags": [
+  "PRICE GATE: hookup sites are $75 on every night sampled, over US$50. Two things clear it: the dry sites (25-ft limit; a 23-ft rig fits) are $38.50 on Sunday-Thursday nights in winter ($55 otherwise), and gateways.py finds a gateway within 40 km ('Anaheim (metro, 32 km)'). No drop proposed.",
+  "FEES: the stored surcharges.weekend 0 holds for the hookup sites but not for dry sites in winter (Fri/Sat $55 vs $38.50 Sun-Thu). The dry-site split is in fees.note; the reviewer may want to clear surcharges.",
+  "WATERFRONT: stored 'bayview' kept. Esri: the sites are on a bench inland of Pacific Coast Highway (PCH/Hwy 1 runs between the lowest row and the beach, ~150-250 m to the sand), so no on-water or coastal walk/dunes value is possible. The bench is open toward the sea and the infosheet says 'unparalleled ocean views'. The view is of the open ocean rather than a bay, but bayview is the only marine view value in the vocabulary.",
+  "PHONE: empty -> (949) 494-3539 (parks.ca.gov contact and infosheet).",
+  "STATUS: the park is 'Open with restrictions' (Historic District swell impacts, 2026-11-26). The Oct 2026 storm releases close the Moro Cove beach south of Lifeguard Headquarters 'until further notice' (bluff crack, Caltrans repair) and the Pelican Point P2 beach access. The campground isn't named as closed and ReserveCalifornia is taking bookings. Worth a caveat if the beach closure persists.",
+  "SITES: 58 per the Feb 2025 infosheet (28 hookup + 30 dry); ReserveCalifornia sells 50 (24 + 26), possibly with others held for the on-site trailer rentals. max_rig_ft 38 is the hookup-site limit.",
+  "Website unchanged (the parks.ca.gov page and ReserveCalifornia root)."
+ ]
+}

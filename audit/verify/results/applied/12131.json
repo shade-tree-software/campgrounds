@@ -1,0 +1,49 @@
+{
+ "id": 12131,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/232901 and /rates (read 2026-11-26): 'CHRISTIE CAMPGROUND'; 'For facility specific information, please call (530) 825-3454.'; 'Each site is equipped with a paved parking spur, table and campfire ring/grill. Almost half of the sites feature a pull-through parking spur and nine of these sites are large enough that they have been designated as group sites. An RV Dump Station Facility is conveniently located about two miles away'; 'Forty-seven sites, #1-#25, #27-#30, and #32-#49 are designated reservation sites, the other 22 sites are walk-in sites, available on a first-come, first-served basis.'; 'Christie Campground is located in a mature conifer forest of pines and firs, on the southwestern shoreline of Eagle Lake'; notices 'One RV with tow vehicle per single site ... Extra vehicle will be charged a per night fee', 'Off-road vehicle use is prohibited within the campground'; rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; rates Peak Season 2026-05-15..2026-09-07 and 2027-05-15..2027-09-05: STANDARD/RV NONELECTRIC $30, GROUP $60",
+  "recreation.gov campsite search API, facility 232901 (read 2026-11-26): 66 sites (42 reservable, 24 walk-up), all NONELECTRIC, every site permits RV/Trailer/Tent; Max Vehicle Length 35-65 ft (35: 3 sites, 40: 7, 45: 31, 50: 7, 55: 1, 60: 13, 65: 4); max 8 people a site; site points 40.56596-40.56984, -120.83865 to -120.83557",
+  "https://www.fs.usda.gov/r05/lassen/recreation/christie-campground (read 2026-11-26, 'Last updated May 28, 2026'): 'Site Closed / Closed for 2026/2027 winter season'; same description; 'Seasons of Use May - September'; 'Peak season is from mid-May through Labor Day. Walk-In only season is from Labor Day to December 31st.'; fees 'Standard Non-electric Site: $25 per night / RV Non-electric Site: $25 per night / Group Non-electric Site: $40 per night'; 'Vault toilet(s)'; 'Potable water is not available at this site.'; active alert 'Harmful Algal Blooms'; Eagle Lake Ranger District (530)257-4188",
+  "Esri World_Imagery at 40.5679,-120.8350 (1.4 km frame) with the rec.gov site points, read 2026-11-26: all loops in continuous pine forest; nearest site (39) ~140 m through forest from the treeline/bare-lakebed edge and ~265 m from the current waterline of Eagle Lake"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "extra_person": {"max_people": 8}},
+   "source": "recreation.gov 232901 rates (Peak Season 2026 and 2027: STANDARD/RV NONELECTRIC $30) and catalog ('Max Num of People' 8), read 2026-11-26",
+   "method": "manual",
+   "note": "The Forest Service page still posts $25; recreation.gov charges $30. Extra vehicles pay a nightly fee collected at the campground."
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232901", "fcfs": "some_sites", "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "season": {"opens": "05-15", "closes": "09-07"}, "note": "47 sites (1-25, 27-30, 32-49) are reservable from mid-May to Labor Day; the other 22 are first come, first served, and after Labor Day the campground is walk-in only. Reservations close 4 days before arrival."},
+   "source": "recreation.gov 232901 (description on reservation vs walk-in sites; rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; Peak Season 05-15..09-07) and fs.usda.gov ('Walk-In only season is from Labor Day to December 31st'), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-15", "closes": "09-30", "note": "Mid-May through September; the Forest Service page also describes a walk-in season from Labor Day to December 31, but it was posted closed for the 2026/2027 winter by late November."},
+   "source": "fs.usda.gov Christie page ('Seasons of Use May - September'; 'Peak season is from mid-May'; 'Closed for 2026/2027 winter season'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 69, "max_rig_ft": 65, "pull_through": true},
+   "source": "recreation.gov 232901 description ('Forty-seven sites ... the other 22 sites are walk-in sites'; 'Almost half of the sites feature a pull-through parking spur') and catalog (Max Vehicle Length up to 65 ft; 66 sites listed), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "flush_toilets": null, "potable_water": false, "dump": false},
+   "source": "fs.usda.gov Christie page ('Vault toilet(s)'; 'Potable water is not available at this site') and recreation.gov 232901 ('An RV Dump Station Facility is conveniently located about two miles away'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Lassen NF campground in mature pine and fir forest above the southwest shore of Eagle Lake, the quietest of the Eagle Lake Recreation Area campgrounds and about 5 miles from the marina and boat ramp. The loops are about 140 m through the forest from the lakeshore. The paved bike path to the other campgrounds starts here; a dump station is about 2 miles away. --Claude",
+ "summary": "Christie (Lassen NF, Eagle Lake): rec.gov 232901 + FS page + Esri. Fees $28 -> $30 (rec.gov 2026/2027; FS still says $25); added weekend 2 / holiday 3 minimums, booking season, 69 sites to 65 ft with pull-throughs, vault toilets (flush cleared), no potable water, dump off-site; season mid-May to Sept. Not waterfront confirmed (loops ~140 m in forest from the shore). Phone flag.",
+ "flags": [
+  "FEES: the Forest Service page posts $25 standard/RV and $40 group; recreation.gov charges $30 and $60 for 2026 and 2027. Wrote rec.gov.",
+  "FACILITIES: stored flush_toilets true came from note prose; the FS page lists 'Vault toilet(s)' only, so flush is cleared and vault written. The FS page also says 'Potable water is not available at this site.' (no water source named on rec.gov either).",
+  "SEASON: FS says 'May - September' and also 'Walk-In only season is from Labor Day to December 31st'; the page now shows 'Closed for 2026/2027 winter season'. Wrote mid-May to end of September with the walk-in season in the note.",
+  "WATERFRONT: stored 'not waterfront' confirmed. Esri with all 66 rec.gov site points: every loop is in continuous forest; nearest site 39 (40.5687,-120.8358) is ~140 m through trees from the treeline/high-water edge and ~265 m from the current waterline. The FS 'on the southwestern shoreline' wording is marketing against that.",
+  "PHONE: empty -> (530) 825-3454 (rec.gov: 'For facility specific information, please call (530) 825-3454'); rec.gov's facility_phone is 530-825-3212 and the Eagle Lake Ranger District is (530) 257-4188.",
+  "OHV: the operator notes 'almost direct access to the Forest Service riding trails' and bans off-road vehicles inside the campground: a general campground with an OHV side, not a staging camp.",
+  "ALERT: the FS page carries an active 'Harmful Algal Blooms' alert for Eagle Lake (not a closure)."
+ ]
+}

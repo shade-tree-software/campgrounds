@@ -1681,3 +1681,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-613, TN 2026-11-25) 4416 State Line not waterfront -> creekside? only if a site map shows pads between FR 210 and the Tellico.
 - (p3-614, CA 2026-11-26) 12272 Camp 9 lakefront rests on group sites G03-G05; a strict named-site reading of the family loops would make it lakeview.
 - (p3-614, CA 2026-11-26) 12183 Camino Cove lakeview -> lakefront again only if a site map puts named pads within 50 m of full pool (~4,870 ft).
+- (p3-615, CA 2026-11-26) 11741 Coyote Lake lakeview -> lakefront? tent sites 29/30/32/34 ~45-60 m from the mapped shore over open grass; full-pool edge unmeasured, and these are tent sites an RV may use.

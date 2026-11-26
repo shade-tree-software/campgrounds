@@ -1,0 +1,49 @@
+{
+ "id": 12262,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/10292145 and /rates (read 2026-11-26): 'Chris Flat', phone 760-932-7070; 'well suited for tent and RV camping ... Vault toilets, drinking water, and garbage service are provided. Firewood is available for purchase from the host.'; notice 'Campground is first come first serve, open mid April to early October.'; rules hasTaxes; rates 'First-come, First-served Season' 2026-04-23..2026-10-04 and 2027-04-23..2027-10-20, WalkInS&PStandard $28",
+  "recreation.gov campsite search API, facility 10292145 (read 2026-11-26): 15 STANDARD NONELECTRIC sites, all non-reservable, no length or equipment data; points for sites 1-9 between 38.39284 and 38.39451, -119.45211 to -119.45236",
+  "https://www.fs.usda.gov/r04/humboldt-toiyabe/recreation/chris-flat-campground (read 2026-11-26, 'Last updated October 15, 2026', 'Site Closed' - off season): 'The West Walker River is located directly adjacent to this campground'; 'Seasons of Use Late April - early October, as weather and conditions allow'; 'Single Site: $28 per night / Additional Vehicle Fee: $6 per vehicle per night'; 'Vault toilet(s)'; 'Potable water is available at this site.'; Bridgeport Ranger District 760-932-7070; lat/lng 38.39486,-119.452568",
+  "https://www.fs.usda.gov/r04/humboldt-toiyabe/alerts (read 2026-11-26): Bridgeport RD orders name Twin Lakes, Pine Grove, Hoover Wilderness/Virginia Lakes, Powell Canyon Road and food-storage rules; none closes Chris Flat",
+  "Esri World_Imagery at 38.3937,-119.4523 (320 m frame) with the rec.gov site points, read 2026-11-26: one loop on a sage/pine bench between US-395 and the West Walker; open bank from the loop to the river; channel ~20 m wide at site 1, ~30-36 m at a pool beside sites 4-6",
+  "USGS 3DEP (epqs.nationalmap.gov, read 2026-11-26): site 1 1996.1 m, bank top 1996.0 m 5 m east, water 1991.8 m 18 m east (a 4.2 m drop over ~10 m, ~40%); site 2 1996.2 m, water 1991.7 m 36 m east (last 4.5 m over ~25 m); sites 4/6/8 1996.1-1996.5 m, water 1992.0-1992.7 m 50-60 m east"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}},
+   "source": "recreation.gov 10292145 rates (2026/2027 $28) and fs.usda.gov Chris Flat page ('Single Site: $28 per night / Additional Vehicle Fee: $6 per vehicle per night'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "platform": "none", "url": "https://www.recreation.gov/camping/campgrounds/10292145", "fcfs": "always", "note": "First come, first served; pay on site with recreation.gov Scan & Pay."},
+   "source": "recreation.gov 10292145 notice ('Campground is first come first serve'), catalog (all 15 sites non-reservable) and 'First-come, First-served Season' WalkInS&P rates, read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-23", "closes": "10-04", "note": "Late April to early October, as weather and conditions allow; the 2027 first-come season on recreation.gov runs April 23 to October 20."},
+   "source": "recreation.gov 10292145 2026 'First-come, First-served Season' 04-23..10-04 (2027: 04-23..10-20); fs.usda.gov Chris Flat page ('Late April - early October'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 15, "max_rig_ft": null},
+   "source": "recreation.gov 10292145 catalog (15 sites, no length data); neither rec.gov nor the FS page states a rig length, so the note-derived 40 ft is cleared, read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true},
+   "source": "fs.usda.gov Chris Flat page ('Vault toilet(s)'; 'Potable water is available at this site') and recreation.gov 10292145, read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Humboldt-Toiyabe NF campground in Walker Canyon, one loop on a bench between US-395 and the West Walker River; the sites sit about 4 m above the river, with a short steep bank down to it. Firewood is sold by the host. --Claude",
+ "summary": "Chris Flat (Humboldt-Toiyabe NF): rec.gov 10292145 + FS page + alerts + Esri + 3DEP. Booking changed reservable -> first-come Scan & Pay (all 15 sites non-reservable); $28 confirmed, +$6 extra vehicle; season late Apr-early Oct; derived 40-ft max cleared (no source). Waterfront: riverfront fails the kayak test (pads ~4 m above the river over a ~40% bank) -> riverview lead. Website/phone flags.",
+ "flags": [
+  "WATERFRONT LEAD (downgrade, riverfront -> riverview): the loop sits on a bench ~4 m above the West Walker. 3DEP: site 1 (38.39451,-119.45212) at 1996.1 m, bank top 1996.0 m, water 1991.8 m 18 m east - a 4.2 m drop over ~10 m (~40%); site 2 (38.39422,-119.45225) 1996.2 m, water 36 m east, last 4.5 m over ~25 m; sites 4, 6, 8 sit 50-60 m from the water at the same 4 m height. That is taller and steeper than the 2-3.7 m/30-degree bank the curation doc calls a view, so no site passes the kayak test. Channel width on Esri is ~20 m at site 1 and ~30-36 m at the pool by sites 4-6, so it is borderline river/creek, but the bank fails the creekside 'easy walk down' too. Proposed evidence: 'Esri 2026-11-26 with rec.gov site points: one loop on an open bench between US-395 and the West Walker; nearest pad (site 1) 18 m from the water but 4.2 m above it over a ~40% bank (3DEP), sites 2-9 36-60 m off at the same height -> view, not on-water. --Claude'",
+  "BOOKING: stored reservable/recreation.gov (from note prose) is wrong: recreation.gov lists all 15 sites as non-reservable, first-come Scan & Pay ('Campground is first come first serve').",
+  "SITES: stored max_rig_ft 40 came from note prose; no agency page states a length, cleared. The FS and rec.gov call it 'well suited for tent and RV camping'.",
+  "WEBSITE: stored is the forest root plus rec.gov. Old -> new: 'https://www.fs.usda.gov/htnf\\nhttps://www.recreation.gov/camping/campgrounds/10292145' -> 'https://www.fs.usda.gov/r04/humboldt-toiyabe/recreation/chris-flat-campground\\nhttps://www.recreation.gov/camping/campgrounds/10292145'",
+  "PHONE: empty -> 760-932-7070 (Bridgeport Ranger District, on the FS page and rec.gov)",
+  "PIN: stored 38.39364,-119.45226 sits on site 4, inside the loop; no move."
+ ]
+}
