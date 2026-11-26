@@ -1,0 +1,12 @@
+# p3-620 notes
+- 11915 done (fees 40-70, lakeview lead front row)
+- 11673 done
+- 11886 done (closed, fcfs)
+- 12473 done (Google 4.7/150)
+- 12445 done (Google 4.5/38, phone change)
+- 11953 done (lakefront kept, lidar 40-60 m)
+- 12250 done (no designated sites; keep with caveat)
+- 12386 done ( added)
+- 12002 done (creekside kept, count 21)
+- 12436 done (lakefront->lakeview proposed, pin candidate)
+- 11944 done (creekside upgrade proposed, pin move ~870 m)

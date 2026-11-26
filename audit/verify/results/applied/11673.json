@@ -1,0 +1,45 @@
+{
+ "id": 11673,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=636 (Mount San Jacinto SP, read 2026-11-26): 'Notice 6/17/2026: Mount San Jacinto State Park is currently under fire restrictions'; 'Park Headquarters (Idyllwild) Everyday 8:00 AM to 4:00 PM'; '(951) 659-2607'; 'Dogs allowed only in the Idyllwild and Stone Creek Campground'; 'Camping Fees - Developed Campgrounds: Tent Site : $25.00/night; Site with Electric : $35.00/night; Site with Full Hook-Ups : $45.00/night; Additional Vehicle : $10.00; *Reservable through ReserveCalifornia.com'; 'Park Headquarters at the Idyllwild Campground'; 25905 Highway 243, Idyllwild; reservation availability shown for late November-December 2026; no maximum trailer/motorhome length posted on this page",
+  "ReserveCalifornia API (california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr): fd/citypark/namecontains/jacinto -> PlaceId 684; search/place -> Idyllwild Campground FacilityId 593 (33.74891,-116.71526) and Stone Creek 595; search/grid 593 for 2027-01-12 / 2027-06-08 / 2027-07-03: 28 units - Hook Up (E/W/S) ID01, ID02, ID26 (24 ft), Hook Up (E) ID04-ID06 (24 ft), Campsite ID08 and ID33 (24 ft), ID30 (18), ID31 (20), Tent Campsite x18 (0-24 ft; ID16 24); FutureBookingEnds 2027-05-26; search/details for ID01/ID04/ID08/ID33/ID16 on 2027-01-12 (Tue), 2027-01-16 (Sat), 2027-05-22 (Sat): $45 / $35 / $25 / $25 / $25 every date, Fee 8.25; unit text 'Only 8 people per site at any time', '24' Maximum trailer length', 'your reservation fee only covers the cost of 1 vehicle and 1 legally towed vehicle'; amenities 'Toilet Type: Flushing', 'Shower Type: Token', 'Food Locker: No', 'Hook Up Type: E,W,S' (ID01), 'Site has electric 1pedestal' (ID04), read 2026-11-26"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 45, "currency": "USD", "surcharges": {"electric": 10, "full_hookup": 20, "weekend": 0}, "extra_vehicle": {"included": 1, "amount": 10, "per": "night"}, "extra_person": {"max_people": 8}, "checked": "2026-11", "note": "2027 nights on ReserveCalifornia (January and May, Tuesday and Saturday alike): plain sites $25, electric $35, full hookups $45."},
+   "source": "parks.ca.gov page_id=636 ('Tent Site : $25.00/night; Site with Electric : $35.00/night; Site with Full Hook-Ups : $45.00/night; Additional Vehicle : $10.00') and ReserveCalifornia search/details for units ID01/ID04/ID08/ID33 on 2027-01-12, 2027-01-16 and 2027-05-22 ($45/$35/$25/$25 each date; 'Only 8 people per site'; '1 vehicle and 1 legally towed vehicle'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 28, "max_rig_ft": 24},
+   "source": "ReserveCalifornia search/grid FacilityId 593 (28 units, VehicleLength up to 24) and unit text ('24' Maximum trailer length'), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"water": true, "sewer": true},
+   "source": "ReserveCalifornia units ID01/ID02/ID26 'Hook Up (E/W/S) Campsite' ('Hook Up Type: E,W,S'; Water Hookup Yes; Sewer Hookup Yes), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "showers": true},
+   "source": "ReserveCalifornia unit amenities ('Toilet Type: Flushing'; 'Shower Type: Token'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true},
+   "source": "parks.ca.gov page_id=636 ('*Reservable through ReserveCalifornia.com') and ReserveCalifornia FacilityId 593 (AllowWebBooking true), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "State park campground at the park headquarters on the edge of Idyllwild off Hwy 243, walkable to shops. Only 8 of the 28 sites take a 23-ft rig: the full-hookup sites 1, 2 and 26, the electric sites 4-6 and plain sites 8 and 33; the rest are tent sites or shorter pads. --Claude",
+ "summary": "Idyllwild Campground (Mt. San Jacinto SP, ReserveCalifornia 593): fees 25-45 confirmed (parks.ca.gov + RC 2027 Jan/May weekday and Saturday: $25 plain/$35 electric/$45 FHU), extra vehicle $10 and 8-person cap added; sites 33 -> 28 (RC units), max 24 ft confirmed; water/sewer, flush toilets, token showers confirmed; 8 units take 23 ft+; fire-restriction notice only, no closure.",
+ "flags": [
+  "FIT: only 8 of 28 units take a 23-ft rig - ID01, ID02, ID26 (E/W/S), ID04-ID06 (electric), ID08 and ID33 (plain, 24 ft); every unit text says '24' Maximum trailer length'. The 24-ft cap passes a 23-ft rig with 1 ft to spare. parks.ca.gov posts no maximum trailer/motorhome length on the park page.",
+  "SITES: stored count 33 (from note prose) -> 28 (ReserveCalifornia units; numbers run 1-33 with 3, 10, 24, 28 and 32 absent).",
+  "Season not written: no campground season statement on either page; ReserveCalifornia sells January 2027 nights and parks.ca.gov shows December 2026 availability, so the campground is open in winter.",
+  "Electric amperage not written: ReserveCalifornia says only 'Electricity Hookup: Yes' / 'Site has electric 1pedestal' (the map icon is named 'E30', not a statement).",
+  "Status: open; parks.ca.gov carries only 'Notice 6/17/2026: ... currently under fire restrictions'.",
+  "Website: the bare https://www.reservecalifornia.com line is the agency root (the policy row holds it) - it could go; parks.ca.gov page_id=636 is right."
+ ]
+}
