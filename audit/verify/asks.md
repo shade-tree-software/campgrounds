@@ -831,3 +831,6 @@ The city says the RV lot "is available only in connection with events held withi
 
 ## 12370 Leapin' Lizard RV Ranch (CA, private, Ocotillo Wells) — p3-619, 2026-11-26 — OPEN
 Off-road scope question. The operator: "Come to the Largest ATV Adventure Park", "we have a gated OHV entrance to an idle in area inside the RV Park", "Easy riding access to the Ocotillo Wells State Vehicular Recreation Area"; riders push machines out "across Kunkler Lane to the dirt trail before starting"; park map shows a "GATED OFF-ROAD VEHICLE ENTRANCE". Against: pool, spa, playground, no riding inside the park; Good Sam Park, $40-60, Google 4.7 (87), phone booking. Read as a riders' base camp (drop) or a general RV park with an OHV side (keep)? Kept for now.
+
+## 12359 Wildcat Recreation Area (CA, USACE Eastman Lake) — p3-622, 2026-11-26 — OPEN
+Horse-separation question. rec.gov: "includes three equestrian sites with horse corrals"; all 19 sites are one loop ("WCAT"); equestrian W16-W18 sit together at one end of a lobe (37.2083-37.2089,-119.9660..-119.9663) with standard sites W19 and W01 beside them. 16 general sites, $20, year-round. Read under the 11-17 ruling (a few sold horse sites in a general campground = keep, like Pietrek) or the 11-12 one (horse sites mixed into the general loop = drop)? Kept for now.

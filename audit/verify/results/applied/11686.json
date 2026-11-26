@@ -1,0 +1,47 @@
+{
+ "id": 11686,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=507 (read 2026-11-26): 'Max trailer: 24 feet Max camper/motorhome: 28 feet'; 'RV Dump Station'; 'Restrooms / Showers'; 'Campground is closed starting September 8th, 2026'; 'The Upper Jamison Creek Campground closes to camping on Labor Day and will reopen on or before the Memorial Day weekend the following year.'; 'Jamison Creek flows through the campground'; '(530) 836-2380'; Current Restrictions box still reads 'Upper Jamison Campground: Open for the Season'",
+  "ReserveCalifornia RDR API (read 2026-11-26): fd/citypark/namecontains/Plumas -> PlaceId 692 'Plumas-Eureka SP'; search/place 692 -> FacilityId 622 'Jamison Creek Campground (sites 1-70)' (39.74143,-120.70722), MaximumStay 30, booking window currently to 2027-05-26; search/grid 622 -> 58 units: 36 'Campsite' with vehicle lengths 14-24 ft (21 at 24 ft, 1 at 23 ft) and 22 'Tent Campsite' (15 with no vehicle length); search/details sites 010, 023, 032 for 2027-05-29, 06-15, 06-19, 07-03, 08-14 -> Rate 35.00 every night, Fee 8.25; site description 'Hot water available at restrooms'",
+  "Esri World_Imagery 39.7413,-120.7052 (600 m frame), viewed 2026-11-26: loops under continuous conifer canopy; Jamison Creek runs along the west edge through trees"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "surcharges": {"weekend": 0}, "checked": "2026-11", "note": "Every 2027 season night sampled on ReserveCalifornia (late May to mid-August, weekdays and Saturdays) is $35."},
+   "source": "ReserveCalifornia RDR search/details, FacilityId 622, sites 010/023/032 on 2027-05-29, 06-15, 06-19, 07-03 and 08-14 (Rate 35.00), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "usedirect", "url": "https://www.reservecalifornia.com/", "max_stay_nights": 30},
+   "source": "ReserveCalifornia RDR search/place 692 (Jamison Creek Campground FacilityAllowWebBooking true, MaximumStay 30), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-28", "closes": "09-06", "note": "Closes on Labor Day and reopens on or before Memorial Day weekend (2027 dates)."},
+   "source": "https://www.parks.ca.gov/?page_id=507 ('closes to camping on Labor Day and will reopen on or before the Memorial Day weekend the following year'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 58, "max_rig_ft": 28, "note": "Trailers to 24 ft, motorhomes to 28 ft; ReserveCalifornia lists 36 drive-in campsites (spurs 14-24 ft, 22 of them 23-24 ft) and 22 tent sites."},
+   "source": "parks.ca.gov page_id=507 ('Max trailer: 24 feet Max camper/motorhome: 28 feet') + ReserveCalifornia grid 622 (58 units, per-site vehicle length), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "showers": true, "dump": true},
+   "source": "parks.ca.gov page_id=507 ('RV Dump Station', 'Restrooms / Showers') + ReserveCalifornia ('Hot water available at restrooms'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Plumas-Eureka State Park's campground, in conifer forest along Jamison Creek about 5 mi west of Blairsden; the creek holds the occasional trout. The park's mining museum and historic stamp mill are nearby. --Claude",
+ "summary": "Upper Jamison Creek (Plumas-Eureka SP): $35 every sampled 2027 night; season Memorial Day weekend to Labor Day (closed for 2026 since Sept 8); trailers 24 ft / motorhomes 28 ft, but no ReserveCalifornia spur over 24 ft; 58 units on ReserveCalifornia (36 drive-in, 22 tent), max stay 30; not waterfront kept.",
+ "flags": [
+  "SITE COUNT 67 -> 58: ReserveCalifornia's facility is 'sites 1-70' but its grid lists 58 units (36 'Campsite', 22 'Tent Campsite'). Some numbers may be first-come or retired; nothing published accounts for 67.",
+  "FIT: parks.ca.gov 'Max trailer: 24 feet Max camper/motorhome: 28 feet'; ReserveCalifornia's longest listed spur is 24 ft (21 sites at 24, one at 23). Fine for a 23-ft rig, tight on choice.",
+  "WATERFRONT not waterfront KEPT: 'Jamison Creek flows through the campground', but the loops sit under continuous canopy and the creek runs along the west edge through trees; no per-site points exist to name any creekside site. At most creekview, so no upgrade.",
+  "STATUS: seasonal closure only ('Campground is closed starting September 8th, 2026'); the page's Current Restrictions box still says 'Upper Jamison Campground: Open for the Season' (stale). Not written as temporarily_closed.",
+  "PHONE keep 530-836-2380. WEBSITE keep.",
+  "Pin 39.7413,-120.7052 is on the loops (RDR facility point 39.74143,-120.70722, ~170 m) - fine.",
+  "Policy rows state:CA / state not contradicted."
+ ]
+}

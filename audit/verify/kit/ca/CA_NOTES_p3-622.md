@@ -1,0 +1,12 @@
+# p3-622 notes
+- 12435 done (DROP: Google 3.4/40, $60 no gateway, mostly LT)
+- 12001 done (lakeview kept, phone, website r04)
+- 11686 done (58 sites, season 05-28..09-06, waterfront kept)
+- 12011 done (PIN MOVE 1.15 km, creekside kept lean, lead Sage Flat)
+- 12359 done (DROP CAND horse sites in loop; phone; website)
+- 11968 done (season not YR, website, waterfront kept)
+- 12182 done (phone, FS web, fit flag)
+- 12425 done (coastal dunes kept, storm closure)
+- 12451 done (price drop cand $65)
+- 12392 done (marginal price cand, mostly seasonal 20/120)
+- 12468 done (55+ MHP, $60, aggregator link)

@@ -1694,3 +1694,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-621, CA 2026-11-26) 12270 Tillie Creek lakeview -> lakefront? east-loop spurs 20-50 m from Lake Isabella over open ground under scattered oaks (35.7005-35.7015,-118.4545..-118.4535); rec.gov sells site types only, no site map.
 - (p3-621, CA 2026-11-26) 11948 Sand Flat not waterfront -> riverview? pads 20-40 m from the South Fork American (~30 m wide) through pines; no site numbers.
 - (p3-621, CA 2026-11-26) 12214 Plum Valley: FS 'bordered by South Fork Davis Creek'; canopy hides it.
+- (p3-622, CA 2026-11-26) 11968 Wishon not waterfront -> creekside? sites 20/21/23 19-25 m from the North Fork Tule River under dense canopy.
+- (p3-622, CA 2026-11-26) 12425 Wright's Beach coastal dunes: front row WB01-WB10 on open sand ~100 m from the surf, no buffer; twice the ~50 m on-water bound, so not raised.

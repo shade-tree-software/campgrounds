@@ -1,0 +1,47 @@
+{
+ "id": 12425,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=451 (read 2026-11-26): 'Wright's Beach Campground Reservation Cancellation Notice - Campground Closure November 16-30 ... Due to forecasted high ocean swells and associated coastal hazards, Wright's Beach Campground will be closed to overnight camping from November 16 through November 30'; 'Wright's Beach offers 27 developed campsites located adjacent to the beach. There are no showers, but registered campers may use the token operated hot showers at Bodega Dunes Campground ... Bodega Dunes has a potable water fill station and a dump station that service both campgrounds. There are no potable RV water filling areas at Wright's Beach ... Maximum trailer length is 27' and hook-ups are not available. Each site has a picnic table, fire ring and a paved parking spur. Running water and flush toilets are available in the bathrooms.'; 'When the campground is full, the overflow area on either side of the kiosk may be used for self-contained vehicles on a first come, first served basis.'; 'Within 48 hours, all reservations are closed and you must arrive at the park in person for first come, first serve camping ... sold at the kiosk ... starting at 12 noon.'",
+  "ReserveCalifornia RDR (read 2026-11-26): fd/citypark 'Sonoma Coast' -> PlaceId 718; search/place 718 -> facility 706 'Wright's Beach (sites 1-27)', MaximumStay 30; search/grid 706 -> 24 units (Premium Campsite #WB01, WB03-WB10; Campsite #WB11-WB25), VehicleLength 31, every site blocked 2026-11-28 to 12-10, reservations from 12-11 onward through 2027; search/details WB01 (45538) and WB11 (45548) on 2026-12-15, 2027-01-12, 03-16, 04-17 (Sat), 05-18: Rate 45.00, Fee 8.25; unit description 'No electric or water/refuse hook ups available ... Shower stalls at Bodega Dunes campground ... Extra cost for more than 1 vehicle. RV Dump Station at Bodega Dunes Campground'",
+  "Esri World_Imagery 38.4010,-123.0950 (500 m) and 38.4004,-123.0972 (240 m), and World_Topo_Map 38.4010,-123.0950, viewed 2026-11-26: Highway 1 runs EAST of the campground (inland, ~200-300 m); the front row of sites sits at the back edge of open Wright's Beach sand with nothing built between it and the surf, ~90-110 m to the wet sand; the beach day-use parking is at the south end of the loop, not in front of the sites"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "surcharges": {"weekend": 0}, "checked": "2026-11", "note": "Premium and standard sites both $45 on every night checked, December 2026 to May 2027, Saturdays included."},
+   "source": "ReserveCalifornia search/details 45538 + 45548, 5 dates 2026-12-15 to 2027-05-18 (Rate 45.00), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "usedirect", "url": "https://www.reservecalifornia.com/", "fcfs": "after_cutoff", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 30, "note": "Unreserved sites are sold first-come at the kiosk from noon inside 48 hours; a self-contained overflow area by the kiosk is used when the campground is full."},
+   "source": "parks.ca.gov page_id=451 (48-hour first-come rule, overflow) + ReserveCalifornia place 718 (MaximumStay 30), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Open all year; closed for storm swells at times (closed November 16-30, 2026)."},
+   "source": "parks.ca.gov page_id=451 closure notice + ReserveCalifornia grid 706 (bookable December 2026 to May 2027), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 27, "max_rig_ft": 27},
+   "source": "parks.ca.gov page_id=451 ('27 developed campsites', 'Maximum trailer length is 27'') ; ReserveCalifornia lists 24 bookable units, read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "showers": false, "dump": false, "potable_water": true},
+   "source": "parks.ca.gov page_id=451 ('Running water and flush toilets are available in the bathrooms'; no showers, dump and RV fill at Bodega Dunes), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Sonoma Coast State Park campground on Wright's Beach north of Bodega Bay, the front row on the back of the open sand; paved spurs. No RV water fill: fill tanks at Bodega Dunes, about 5 miles south, which also has the dump station and token showers that Wright's Beach campers may use. The surf here is not for swimming. --Claude",
+ "summary": "Wright's Beach (Sonoma Coast SP): $45 every night checked; 27 sites, 27-ft trailer limit; FCFS inside 48 hours; coastal dunes KEPT - Hwy 1 is inland of the camp, front row on open beach sand ~100 m from surf; closed Nov 16-30 2026 for storm swells and every site blocked on ReserveCalifornia to Dec 10.",
+ "flags": [
+  "WATERFRONT coastal dunes KEPT: Highway 1 runs inland (east) of the campground, no town and no day-use between the front row and the shore; the front sites (premium WB01-WB10, around 38.4005,-123.0958) sit at the back edge of open beach sand ~90-110 m from the wet sand. A case could be made for an on-water value (no buffer at all), but the apron is twice the ~50 m bound, so coastal dunes stays. Proposed evidence: 'Esri imagery + topo 2026-11-26: Hwy 1 inland of camp; front row (WB01-WB10) on the back of open Wright's Beach sand, ~100 m to surf, nothing between; parks.ca.gov: 27 sites adjacent to the beach.'",
+  "STATUS: closed to overnight camping November 16-30, 2026 (high-swell closure); ReserveCalifornia blocks every site 2026-11-28 through 12-10, so the closure may run longer. Left status open - a storm closure, not a seasonal one; recheck if it persists.",
+  "SITE COUNT: parks.ca.gov 27; ReserveCalifornia lists 24 units (WB02, WB26, WB27 not listed). Kept 27.",
+  "RIG: parks.ca.gov 'Maximum trailer length is 27''; RDR VehicleLength 31 on every unit. Kept 27.",
+  "WEBSITE kept (parks.ca.gov page_id=451 is live); phone (707) 875-3483 matches.",
+  "Pin 38.40118,-123.09451 is at the entrance road ~100 m from the site centroid (~38.4003,-123.0957) - fine.",
+  "Policy row state:CA: nothing contradicted (6-month window, 8 people, $8.25 fee all match)."
+ ]
+}

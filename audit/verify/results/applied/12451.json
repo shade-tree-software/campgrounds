@@ -1,0 +1,47 @@
+{
+ "id": 12451,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://99westrvpark.com/ (rendered in headless browser 2026-11-26): 'Daily, Weekly & Long-Term RV Stays'; 'Move-In Special $400/month + utilities for your first 3 months with a 12-month lease'; 'Long-Term RV Spaces Available'; 'Looking for short-term stays? View booking options here' (-> parkn.booking.rentmanager.com propertyID=160); '30/50 amp service with water and sewer connections at every site'; laundry, pet area, pool, bocce, clubhouse, free WiFi; 'Regular monthly rates are $650-$675'; 'A premier long-term RV community in Corning, California where people put down roots.'; Call (530) 999-7757; 'G 4.5 (289 reviews)'",
+  "https://99westrvpark.com/view-rates (rendered 2026-11-26): 'Short-Term Stay Stay up to 21 nights. View our nightly rates and book your space instantly online.' / 'Monthly Residency Stay a month or longer'",
+  "https://parkn.bookingapi.rentmanager.com/Booking/Settings?propertyID=160 (read 2026-11-26): 'Short-Term Booking', PhoneNumber '(530) 999-7757', NumberMaximumNightsAllowed 30, NumberMinimumNightsAllowed 0 (no minimum), MaxRVAgeInYears 47, booking message 'please contact us at: 530-670-1057'",
+  "https://parkn.bookingapi.rentmanager.com/Booking/SiteGroups?propertyID=160 one-night searches 2026-12-08, 2027-01-13, 02-16, 04-13, 07-13, 09-14 (read 2026-11-26): 'RV Back-In Spaces' 27 available and 'RV Pull-Through Spaces' 24 available, AveragePerNight 65.00 on every date; 7 nights from 2027-02-16 = $395.00 (56.43/night); 51 sites, lengths 26-65 ft, amps '30' (26) or '30, 50' (25)",
+  "Google Maps listing (read earlier in this batch, 2026-11-26): 99 West RV Park, 975 Hwy 99 W, Corning, 4.4 stars (293 reviews), phone +1 530-670-1057, website 99westrvpark.com/gmb",
+  "audit/price_research/gateways.py 39.92673,-122.19644: none within 40 km (Lassen Volcanic NP 80 km)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 65, "nightly_high": 65, "currency": "USD", "checked": "2026-11", "note": "Every night checked from December 2026 to September 2027, back-in or pull-through; a week is $395."},
+   "source": "Rent Manager SiteGroups propertyID=160, six one-night searches + one 7-night search, read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://parkn.booking.rentmanager.com/#/home?locationID=1&propertyID=160", "fcfs": "never", "max_stay_nights": 30, "note": "Online booking takes up to 30 nights (the park's site says short stays run up to 21); longer stays are monthly residency by application. Office open weekdays 9-5."},
+   "source": "Rent Manager Booking/Settings propertyID=160 (max 30 nights) + 99westrvpark.com/view-rates ('Stay up to 21 nights') + office hours, read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 51, "max_rig_ft": 65, "pull_through": true},
+   "source": "Rent Manager SiteGroups propertyID=160 (51 short-term sites, 24 pull-through, 26-65 ft), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "99westrvpark.com ('30/50 amp service with water and sewer connections at every site') + Rent Manager amps per site, read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Private RV park (formerly Heritage RV Park) behind Heritage Square on Hwy 99W in Corning, near I-5; walk to groceries and restaurants. Long-term residents share the park; nightly and weekly stays book online. Pool, bocce, clubhouse with fire pit, pet area. --Claude",
+ "summary": "99 West RV Park (Corning): PRICE DROP CANDIDATE - $65 every night checked Dec 2026-Sep 2027 ($395/week), not a Good Sam Park, no gateway within 40 km; Google 4.4 (293); 51 online-bookable sites 26-65 ft, 30/50A full hookups; phone and booking link updated.",
+ "flags": [
+  "DROP CANDIDATE (price): Rent Manager short-term booking 'AveragePerNight 65.00' on every date checked (2026-12-08, 2027-01-13, 02-16, 04-13, 07-13, 09-14), back-in and pull-through alike; 7 nights $395 = $56.43/night, still over $50. discounts.good_sam false; gateways.py: none within 40 km (Lassen Volcanic NP 80 km).",
+  "GOOGLE: 4.4 (293 reviews) - passes. The site's own badge shows 4.5 (289).",
+  "LONG-STAY: marketed as 'A premier long-term RV community ... where people put down roots' with a 12-month-lease move-in special, but 51 sites (27 back-in, 24 pull-through) were bookable online for one night on every date checked, summer and winter, no minimum stay. Not mostly seasonal on that evidence; total space count not published (numbers run to 92).",
+  "PHONE: (530) 505-2470 -> (530) 999-7757 (the operator's website and booking engine). Google lists 530-670-1057, which the booking confirmation also gives.",
+  "WEBSITE: kept https://99westrvpark.com/ ; booking URL https://parkn.booking.rentmanager.com/#/home?locationID=1&propertyID=160 (Rent Manager, written as platform operator).",
+  "RIG: stored max_rig_ft 70 -> 65 (longest site in the booking engine); shortest 26 ft.",
+  "RV AGE: booking engine MaxRVAgeInYears 47 - no practical age rule for short stays.",
+  "Pin 39.92670,-122.19660 vs Google 39.92673,-122.19644 - ~15 m, fine. Not waterfront kept (town lot, no water).",
+  "Policy row private:CA: nothing contradicted."
+ ]
+}

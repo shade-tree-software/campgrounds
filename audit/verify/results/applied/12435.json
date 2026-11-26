@@ -1,0 +1,50 @@
+{
+ "id": 12435,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://travelhomepark.com/ (read 2026-11-26): '1257 Live Oak Blvd – Yuba City, CA 95991'; 'We offer overnight, weekly, or monthly reservations'; 'All sites include 30 & 50-amp service along with water and sewer connections.'; 'a well-maintained laundry room ... clean restrooms, showers, and Wifi for our overnight visitors'; 'Overnight and weekly stays can be booked easily through our online link. For long-term stays, please contact us directly to learn more about our screening process and availability.'; 'Long-Term Stays ... Electrical usage is billed monthly ... Requires a background check and screening process'; '(530) 674-8910'; booking link https://parkwith.us/camps/travelhome-park",
+  "https://parkwith.us/camps/travelhome-park (Park With Us engine; page JSON read with curl 2026-11-26): 44 sites listed (RV-1..RV-4, RV-6, numbered rows 1-A..18-A, 1-B..6-B, 1-C..13-C, S-6, T-4), all 30 or 30/50 A with water and sewer; 5 flagged is_bookable online (RV-1, RV-2, RV-3, 6-B, RV-6 at 21 ft); 10 sites share the price bundle of the online sites, 30 another bundle, plus 3 singles; 'minimum_bookable_nights':2, 'max_stay_nights':14, 'For reservations longer than %% nights, please call us'; 'service_rate':'0.08'; 'extra_adult_price_in_cents':500, 'extra_kid_price_in_cents':250, 'extra_pets_price_in_cents':500, 'max_free_pets':2",
+  "Park With Us booking flow in the headless browser (2026-11-26; Dec 8-10 2026 and Mar 9-11 2027, 23-ft rig, 2 adults): Dec 8-10 offers RV-1 (30A, 55 ft), RV-2 (30/50A, 58 ft), 6-B (30/50A, 49 ft) each '$60.00 / night'; Mar 9-11 offers RV-3 '$133.78 2 nights including fees'; a one-night selection (Mar 9-10) leaves the date-confirm button disabled",
+  "Google Maps listing 'Travelhome Park', 1257 Live Oak Blvd, Yuba City (headless browser, read 2026-11-26): 3.4 stars (40 reviews), phone +1 530-674-8910, website travelhomepark.com",
+  "audit/price_research/gateways.py 39.14706,-121.62062 (run 2026-11-26): 'none within 40 km; nearest: Sacramento 64 km'"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 60, "nightly_high": 60, "currency": "USD", "extra_person": {"amount": 5, "per": "night", "child": 2.5}, "checked": "2026-11", "note": "Online bookings add an 8% service fee. Weekly and monthly rates by arrangement."},
+   "source": "Park With Us engine https://parkwith.us/camps/travelhome-park: '$60.00 / night' on RV-1, RV-2 and 6-B for Dec 8-10 2026; extra adult 500 / kid 250 cents in the page JSON; 'service_rate':'0.08'; read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://parkwith.us/camps/travelhome-park", "min_stay": [{"nights": 2, "applies": "always"}], "max_stay_nights": 14, "note": "The online engine takes 2-14 nights; longer stays by phone, and long-term stays need a background check."},
+   "source": "https://parkwith.us/camps/travelhome-park ('minimum_bookable_nights':2; one-night selection disabled; 'max_stay_nights':14 'For reservations longer than %% nights, please call us') + travelhomepark.com ('Requires a background check and screening process'), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://travelhomepark.com/ ('All sites include 30 & 50-amp service along with water and sewer connections'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 44, "pull_through": true},
+   "source": "Park With Us site list (44 sites; RV-1 to RV-4 'pull-through'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"laundry": true, "showers": true, "wifi": true},
+   "source": "https://travelhomepark.com/ ('laundry room ... restrooms, showers, and Wifi for our overnight visitors'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Family-run in-town RV park off Live Oak Blvd, a few blocks from downtown Yuba City, shaded by mature trees. Mostly long-term: about 5 of its 44 sites are sold online by the night, and long-term guests are screened. --Claude",
+ "summary": "Travelhome Park (Yuba City): DROP CANDIDATE - $60/night on its own engine (Dec 2026 and Mar 2027, +8% service fee), no gateway within 40 km, not a Good Sam Park; Google 3.4 (40 reviews) is under the 4.0/25-review line; mostly long-term (5 of 44 sites bookable online, 2-night online minimum).",
+ "flags": [
+  "DROP CANDIDATE (Google): 3.4 stars from 40 reviews on Google Maps - under 4.0 with 25+ reviews, an automatic drop for a private park (AWH 2026-11-02). No --AWH note.",
+  "DROP CANDIDATE (price): cheapest RV night $60.00 on the operator's Park With Us engine (RV-1/RV-2/6-B, Dec 8-10 2026; Mar 9-11 2027 RV-3 '$133.78 2 nights including fees'), over the US$50 gate; gateways.py: none within 40 km (Sacramento 64 km); no Good Sam designation stored or posted; no member discount on the operator pages.",
+  "LONG-STAY: operator leads with 'overnight, weekly, or monthly'; the engine lists 44 sites but only 5 are bookable online (RV-1, RV-2, RV-3, 6-B, and RV-6 at 21 ft - so 4 a 23-ft rig fits), ~10 share the short-term price bundle; long-term stays 'Requires a background check and screening process'. Nightly share ~10% (borderline test 4). Rates for nightly posted on the engine (test 2 passes).",
+  "MIN STAY: the online engine will not sell a single night ('minimum_bookable_nights':2; the Mar 9-10 one-night selection stays disabled). Recorded as a 2-night standing minimum for online bookings; a phone booking might differ (unverified).",
+  "PHONE: empty -> (530) 674-8910 (operator site and Google).",
+  "WEBSITE: https://travelhomepark.com/ keep (the operator's own site; it links the parkwith.us engine, written to booking.url).",
+  "SITE COUNT: stored 40 (note prose) -> 44 on the engine's site list.",
+  "Pin 39.14706,-121.62062 is ~50 m from Google's point 39.14747,-121.62031 - fine."
+ ]
+}
