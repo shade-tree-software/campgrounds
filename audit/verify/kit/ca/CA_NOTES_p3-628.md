@@ -1,0 +1,11 @@
+# p3-628 notes
+- 12387 Hole-in-the-Wall: done. $25, reservations required (fcfs never), max 30, pin -> 35.0481,-115.3940 (460 m)
+- 11762 Horseshoe Bend: done. Campspot 38/48, lakefront->lakeview rec, pin in private block -> 37.6997,-120.2436 (~220 m)
+- 11649 Burlington: done. $35, year-round, 21/50 tent-only. 11650 Hidden Springs: done. seasonal 05-25..09-30, 87/120 tent-only, 32 RV sites
+- 12422 Hunewill's: done. $35-45, 2-night min, 20 RV+23 camp, GM 4.7/133, creekside->not waterfront rec
+- 11765 Idyllwild County: done. web dead->new URL, phone 800-234-7275, engine captcha unread, brochure 403
+- 12348 Imperial Dam LTVA: done. no rec.gov booking -> reservable false fcfs always (policy contradiction); fees unchanged; leads Senator Wash N/S Shore
+- 12030 Indian Cove: done. fcfs after_cutoff->never, 10 sites >=23 ft of 52 std, group sites tent-only
+- 11670 Islay Creek: done. $25, 47/41, 27 ft, coastal walk upgrade candidate, phone ->772-6101
+- 12347 Ivanpah: done. no rec.gov; BLM SRMA page silent on camping -> inclusion weak flag; web -> SRMA page
+- 12336 JT BLM South: done. NPS page+map = agency source, dispersed blocks, keep, web -> NPS page

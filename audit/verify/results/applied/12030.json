@@ -1,0 +1,47 @@
+{
+ "id": 12030,
+ "checked": "2026-11-26",
+ "sources": [
+  "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=jotr, 'Indian Cove Campground' (read 2026-11-26): 'It has 101 campsites, including thirteen group campsites. Between Memorial Day and Labor Day, there are 39 reservable sites. There are vault toilets but no water at the campsites. There is a water bottle/jug filling station at the small ranger station roughly two miles north'; reservationInfo 'Reservations are required year-round and can be made up to six months in advance.'; numberOfSitesFirstComeFirstServe 0; fees 'Individual Campsite at Indian Cove' $35 ('A maximum of six people, three tents, and two cars'); regulations 'A vehicle towing a trailer... or a motorhome towing a vehicle, is considered two vehicles', 'There is a 30-day camping limit each year. Only 14 of these nights may take place from October-May.'; amenities toilets 'Vault Toilets - year round', potableWater 'No water', dumpStation 'No', showers 'None', trash 'Yes - year round'; rvMaxLength 35; operatingHours exception 'Partial Summer Closure' 2027-06-01 to 2027-08-28; campground phone 760-367-3001",
+  "https://www.nps.gov/jotr/planyourvisit/indian-cove-campground.htm (read 2026-11-26): 'Some sites can accommodate an overall combined RV length (including a towed vehicle) of up to 35 feet.'; 'all park campgrounds usually fill on weekends October through May'; park phone 760 367-5500",
+  "https://www.recreation.gov/api/camps/campgrounds/232472 (read 2026-11-26): '101 individual campsites, as well as 13 tent-only group sites' (group sites are facility 10053779); 'Indian Cove is one of four campgrounds in the park that requires reservations year-round.'; notices 'Reservations are required year round and can be made the same day or up to 6 months in advance.', 'There is no access into the main portion of the park from the campground except by hiking trails; $30 per vehicle entrance fee is in addition to the camping fee.', 'Potable water is available at the Ranger Station, about 2 miles from the campground.', 'FIRE BAN... June 1 through October 1 each year', 'Please call 760-362-4367 for Indian Cove information.'",
+  "recreation.gov campsite search API asset 232472 (read 2026-11-26): 97 sites - 52 STANDARD NONELECTRIC, 45 TENT ONLY NONELECTRIC; RV permitted on 27 standard sites, of which 10 take 23 ft or more (007 25, 021 32, 022 35, 025 23, 027 24, 035 27, 048 24, 052 33, 053 25, 061 28 ft) and 17 are 18-22 ft; standard-site centroid 34.09337,-116.15853",
+  "Esri World_Imagery 700 m frame at 34.0925,-116.1585 (viewed 2026-11-26): campground roads spread ~1.3 km E-W among rock outcrops; the stored pin 34.0930,-116.1567 sits on an outcrop inside the loops, ~175 m east of the site centroid"
+ ],
+ "groups": {
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "max_stay_nights": 14, "note": "30 nights a year in the park's campgrounds, no more than 14 of them October-May."},
+   "source": "NPS API campground record ('Reservations are required year-round'; numberOfSitesFirstComeFirstServe 0; '30-day camping limit each year. Only 14 of these nights may take place from October-May') and recreation.gov 232472 notices, read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 52, "max_rig_ft": 35},
+   "source": "recreation.gov campsite catalog 232472 (52 standard + 45 tent-only individual sites; longest RV site 022 at 35 ft) and nps.gov ('up to 35 feet'), read 2026-11-26",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 2}, "extra_person": {"max_people": 6}, "note": "Park entrance fee ($30 a vehicle) is charged on top of the camping fee."},
+   "source": "NPS API fees ('Individual Campsite at Indian Cove' $35; 'six people, three tents, and two cars'; a towed vehicle counts as the second vehicle) and recreation.gov notice ('$30 per vehicle entrance fee is in addition to the camping fee'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false, "dump": false, "showers": false},
+   "source": "NPS API amenities (toilets 'Vault Toilets - year round', potableWater 'No water', dumpStation 'No', showers 'None'), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Only part of the campground stays open in summer (39 reservable sites Memorial Day-Labor Day; 2027 partial closure Jun 1-Aug 28)."},
+   "source": "NPS API campground record ('Between Memorial Day and Labor Day, there are 39 reservable sites'; operatingHours exception 'Partial Summer Closure' 2027-06-01..2027-08-28), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Joshua Tree NP campground on the park's north edge off Hwy 62, between Joshua Tree village and Twentynine Palms; sandy sites tucked among granite boulders, popular with climbers. Only hiking trails link it to the rest of the park, so seeing the park means driving back out to an entrance. Only about ten sites take a 23-ft rig; many are tent-only or under 23 ft, so check the site's length before booking. Water is at the ranger station about 2 mi north. Wood and charcoal fires are banned June 1-October 1. --Claude",
+ "summary": "Indian Cove (Joshua Tree NP): $35, reservations required year-round (fcfs after_cutoff -> never), 52 standard + 45 tent-only sites, only 10 sites take 23 ft+ (max 35), no water/dump/hookups, vault toilets, year-round with a partial summer closure; keep with the site-length caveat; group sites are tent-only (note corrected).",
+ "flags": [
+  "BOOKING CORRECTION: stored fcfs after_cutoff ('FCFS in summer') contradicted - NPS 'Reservations are required year-round', 0 first-come sites; recreation.gov 'one of four campgrounds in the park that requires reservations year-round'. Written fcfs never.",
+  "SITE LENGTH (keep with caveat): of 52 standard sites only 27 permit an RV and 10 take 23 ft or more (007, 021, 022, 025, 027, 035, 048, 052, 053, 061); 17 more are 18-22 ft. The stored note's 'Individual sites take RVs (group sites cap ~25 ft)' was wrong both ways - recreation.gov calls the 13 group sites tent-only.",
+  "PIN: stored 34.0930,-116.1567 sits on a rock outcrop inside the loops, ~175 m east of the standard-site centroid 34.09337,-116.15853 (NPS point 34.09347,-116.15885). Under 250 m; optional move to 34.0934,-116.1585.",
+  "PHONE: stored 760-367-5500 (park main line, nps.gov footer) kept; NPS API lists 760-367-3001 for the campground and recreation.gov says 'call 760-362-4367 for Indian Cove information'. Website confirmed (nps.gov campgrounds page + rec.gov 232472); the campground's own page is https://www.nps.gov/jotr/planyourvisit/indian-cove-campground.htm.",
+  "UNREAD: NPS alerts API (DEMO_KEY rate limit); nps.gov conditions page shows no Indian Cove alert in its text."
+ ]
+}

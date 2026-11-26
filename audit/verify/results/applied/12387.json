@@ -1,0 +1,52 @@
+{
+ "id": 12387,
+ "checked": "2026-11-26",
+ "sources": [
+  "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=moja, 'Hole-in-the-Wall Campground' (read 2026-11-26): 'Thirty-five campsites accommodate RVs and tents; two walk-in sites are also available. Maximum RV or trailer length is 30 Feet.'; fees 'Beginning January 1, 2025, campground fees are $25 nightly per site.'; reservationInfo 'Reservations are required for all sites beginning January 1, 2025.' (recreation.gov 10332664); amenities toilets 'Vault Toilets - year round', showers 'None', dumpStation 'Yes - year round', potableWater 'Yes - year round'; rvInfo 'Most sites can accommodate a maximum length of 30 feet, although 2 pull-though sites can accommodate longer lengths.'; accessRoads 'Paved Roads - All vehicles OK'; wheelchairAccess 'Campground is unpaved, consisting of packed dirt and gravel.'; operatingHours 'Hole-in-the-Wall Camground is open year round.'; totalSites 38, walkBoatTo 2; phone 760-252-6100; url https://www.nps.gov/moja/planyourvisit/hole-in-the-wall-campground.htm (200, banner 'Open')",
+  "NPS API alerts parkCode=moja (read 2026-11-26): 'South Kelbaker Road from I-40 to Kelso and Kelso-Dunes Road will be closed starting November 16, 2026 for road rehabilitation. Closure will be approximately 12 to 18 months.'; no campground closure",
+  "https://www.recreation.gov/api/camps/campgrounds/10332664 (read 2026-11-26): 'Hole-in-the-Wall has 38 campsites... Water spigots and vault toilets are available around the campground... A dump station is available for campers.'; directions 'The roads are paved until the turn-off into the campground.'; notices 'Parking is limited to 2 vehicles/trailers per site'; rate table Peak Season 2026 and 2027 StandardSite $25",
+  "recreation.gov campsite search API asset 10332664 (read 2026-11-26): 37 sites - 35 STANDARD NONELECTRIC drive-in (gravel) and 2 HIKE TO (21, 22); RV/Trailer max length 25 ft on 28 sites, 30 ft on 9 (7, 13, 14, 23, 25, 26, 28, 35, 38); no water/electric/sewer hookups; site-point centroid 35.0481,-115.3940",
+  "Esri World_Imagery 800 m frame at 35.0481,-115.3940, viewed 2026-11-26: the campground's two gravel loops with spurs lie between 35.0455 and 35.0515; the stored pin 35.0440,-115.3950 is south of the loops' entrance road"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2026-11"},
+   "source": "NPS API campground record ('Beginning January 1, 2025, campground fees are $25 nightly per site.') and recreation.gov rates 10332664 (2026 and 2027 StandardSite $25), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never"},
+   "source": "NPS API campground record ('Reservations are required for all sites beginning January 1, 2025.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 35, "max_rig_ft": 30, "pull_through": true},
+   "source": "NPS API campground record ('Thirty-five campsites accommodate RVs and tents; two walk-in sites are also available. Maximum RV or trailer length is 30 Feet.'; 'Most sites can accommodate a maximum length of 30 feet, although 2 pull-though sites can accommodate longer lengths.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov campsite catalog 10332664 (every site STANDARD NONELECTRIC / HIKE TO, no water or sewer hookup) and NPS electricalHookups 0, read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true, "dump": true, "showers": false},
+   "source": "NPS API campground record (toilets 'Vault Toilets - year round', potableWater 'Yes - year round', dumpStation 'Yes - year round', showers 'None'), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "NPS API campground record ('Hole-in-the-Wall Camground is open year round.'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "NPS Mojave National Preserve campground beside the Hole-in-the-Wall Information Center, at 4,400 ft among sculpted volcanic rock walls; gravel and packed-dirt sites. The road is paved to the campground turn-off. No cell service (free Wi-Fi at the information center), and no gas or food anywhere in the preserve. --Claude",
+ "summary": "Hole-in-the-Wall (Mojave NPres): $25, reservations required for all sites since 2025 (fcfs never), 35 drive-in sites + 2 walk-in, max 30 ft with 2 longer pull-throughs, no hookups, vault toilets/water/dump, year-round; note's 'any size RV' was wrong (cleaned); pin moved ~460 m onto the loops; website narrowed to the campground page.",
+ "flags": [
+  "PIN: stored 35.0440,-115.3950 sits ~460 m south of the loops; move to the recreation.gov site-point centroid 35.0481,-115.3940 (on the loops in Esri imagery).",
+  "WEBSITE: https://www.nps.gov/moja/planyourvisit/camping.htm -> https://www.nps.gov/moja/planyourvisit/hole-in-the-wall-campground.htm (the campground's own NPS page, 200); keep https://www.recreation.gov/camping/campgrounds/10332664. Phone 760-252-6100 confirmed (NPS and rec.gov).",
+  "NOTE CORRECTION: the stored note's 'Sites large enough for any size RV' is contradicted by NPS ('Maximum RV or trailer length is 30 Feet'; rec.gov catalog 25 ft on 28 sites, 30 ft on 9). A 23-ft rig fits every drive-in site.",
+  "ROUTE: NPS alert - South Kelbaker Road (I-40 to Kelso) and Kelso Dunes Road closed from 2026-11-16 for ~12-18 months; the campground's own approaches (Essex Rd / Black Canyon Rd from I-40, or Cedar Canyon Rd) are not named in it. Not a campground closure.",
+  "Count: NPS totals 38 sites; rec.gov catalogs 37 (35 drive-in + 2 hike-to). sites.count kept at the 35 drive-in RV/tent sites."
+ ]
+}
