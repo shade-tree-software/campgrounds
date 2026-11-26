@@ -1,0 +1,53 @@
+{
+ "id": 11647,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=546 (read 2026-11-26; Current Restrictions 'Last Checked: 11/26/2026', no campground restriction listed): 'Max trailer: 31 feet' / 'Max camper/motorhome: 35 feet'; 'The park's campground is situated in a mixed evergreen forest and is near the Santa Cruz Sandhills habitat ... vehicles must enter the campground east of Felton, via Graham Hill Road.'; facilities Tent Camping, RV Access, Restrooms, Drinking Water Available; phone numbers 'Campground Kiosk 831-438-2396', 'Day-use Kiosk 831-335-4598'",
+  "https://www.parks.ca.gov/NewsRelease/1364 (3/21/25, read 2026-11-26): 'the seasonal campground at Henry Cowell Redwoods SP, originally set to reopen on April 1, has been delayed until Aug. 1, 2025' (upgrades incl. 'Restroom and Shower Buildings')",
+  "https://www.parks.ca.gov/pages/546/files/Henry_Cowell_Redwoods_FinalWebLayout070324.pdf (park brochure, Rev. 2024, read 2026-11-26): 'Campsites at Henry Cowell Redwoods State Park are open seasonally'; 'The campground has accessible sites with restrooms and showers'; 'Campground: 2591 Graham Hill Road Scotts Valley, CA 95060 (831) 438-2396'",
+  "ReserveCalifornia RDR API (read 2026-11-26): citypark 655 'Henry Cowell Redwoods SP'; facilities 504 'Cowell Campground South (sites 1-51)' (37.030417,-122.043021) and 505 'Cowell Campground North (sites 52-113)' (37.031856,-122.042398); search/grid: 99 web-bookable units (69 'Campsite', 30 'Tent Campsite'), MinimumStay 1 / MaximumStay 7; season flags out of season 2026-11-28..12-31, in season 2027-04-01 through 2027-10-31, out from 2027-11-01; search/details every unit 2027-04-14: 'Rate' 35.00, 'Fee' 8.25, all Back In, Electricity Hookup None, Water/Sewer Hookup No, Site Length 35, campsite pads 19-35 ft (most 33)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "checked": "2026-11"},
+   "source": "ReserveCalifornia search/details, every unit in facilities 504/505 (the Graham Hill Road campground) for 2027-04-14 ('Rate': 35.00, 'Fee': 8.25), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "max_stay_nights": 7},
+   "source": "ReserveCalifornia search/grid facilities 504/505 (Restrictions MaximumStay 7), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "ReserveCalifornia search/details, all 99 units: Electricity Hookup None, Water Hookup No, Sewer Hookup No, read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": 35, "pull_through": false},
+   "source": "https://www.parks.ca.gov/?page_id=546 ('Max camper/motorhome: 35 feet') and ReserveCalifornia unit details (all Back In), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "potable_water": true},
+   "source": "park brochure Rev. 2024 ('The campground has accessible sites with restrooms and showers'), NewsRelease/1364 (campground 'Restroom and Shower Buildings') and parks.ca.gov page_id=546 (Drinking Water Available), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"opens": "04-01", "closes": "10-31"},
+   "source": "park brochure ('Campsites ... are open seasonally'), NewsRelease/1364 ('the seasonal campground ... originally set to reopen on April 1') and ReserveCalifornia season flags for facilities 504/505 (in season 2027-04-01 through 2027-10-31, out of season from 2027-11-01 and 2026-11-28..12-31), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Graham Hill Campground, on a hilltop in ponderosa pine and oak near the Santa Cruz Sandhills (separate entrance off Graham Hill Rd, not in the redwoods; trails link it to the redwood grove). Coin-op hot showers. Trailers to 31 ft; back-in pads 19-35 ft, so check the pad length when booking. --Claude",
+ "summary": "Henry Cowell Graham Hill campground: $35 (+$8.25), no hookups, 1-7 nights, motorhome 35 / trailer 31 ft, showers + water, seasonal Apr 1 - Oct 31; RC facility names 'Cowell Campground South/North' confirmed as this campground; phone to fix.",
+ "flags": [
+  "FEES PROVENANCE: the stored fees source names ReserveCalifornia 'Cowell Campground South (sites 1-51)' and 'Cowell Campground North (sites 52-113)'. Confirmed correct: those are the only two campground facilities under citypark 655 Henry Cowell Redwoods SP, and their points (37.03042,-122.04302 / 37.03186,-122.04240) are this Graham Hill Road campground, ~65 m from the stored pin.",
+  "SITES: count 107 (note prose) left alone; ReserveCalifornia lists 99 web units numbered 3-111 (69 campsites + 30 tent campsites); parks.ca.gov gives no count.",
+  "FCFS: stored some_sites (note prose) left alone; no page says anything about first-come sites and RC shows every unit web-bookable.",
+  "SEASON: written 04-01..10-31 from the brochure's 'open seasonally', the news release's April 1 reopening, and the RC in-season flags. A curator may prefer to treat the RC flags as a booking calendar only.",
+  "PHONE: stored (831) 335-4598 is the day-use kiosk; the campground kiosk is 831-438-2396 (parks.ca.gov and brochure). apply.py does not write phone.",
+  "STATUS: open; the 2025 delayed-reopening news release is superseded (no current restriction; RC is selling 2027 nights).",
+  "WATERFRONT not waterfront kept: the campground is on the sandhill ridge, away from the San Lorenzo River."
+ ]
+}

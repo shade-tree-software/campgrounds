@@ -1,0 +1,12 @@
+# p3-627 notes
+- 12252 Glass Creek: done (FS page, no rec.gov, pin -> 37.7517,-118.9897)
+- 12204 Grasshopper: done lakeview kept (bench 4-6 m above full pool)
+- 11759 Guajome: done. $42+$8 res; 31 FHU 50A back-in 26-52 ft; phone (760) 724-4489; not waterfront.
+- 12271 Hanning Flat: done. free, year-round, lakefront kept, pin in water -> 35.6772,-118.3728; phone 760-376-3781.
+- 12132 Hat Creek: done. $16; FCFS individual; creekside kept.
+- 12381 Havasu Landing: done. $50 base at gate; Google 4.1/3238; lakefront kept; phone x242.
+- 12298 Heart Bar: done. $29/31; 89 sites; Hilary banner flagged; pin -> 34.15826,-116.78945.
+- 11646 Hendy Woods: done. $45; 92 sites; Azalea winter closure; phone office 707 895-3537.
+- 11647 Henry Cowell: done. $35; season 04-01..10-31; RC facility names OK; phone campground kiosk 831-438-2396.
+- 12463 Hirz Bay: done. $30/32; lakeview kept (13 m above full pool, 70+ m); pin -> 40.86597,-122.25072; FS fee/water conflicts.
+- 12302 Holcomb Valley: done. 19 FCFS sites $27; rec.gov 249733 info-only; phone/website flags.

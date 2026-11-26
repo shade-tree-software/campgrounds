@@ -1,0 +1,50 @@
+{
+ "id": 11646,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=438 (read 2026-11-26; Current Restrictions 'Last Checked: 11/26/2026'): 'Azalea Campground is closed for the winter season, camping is available in the Wildcat Campground.'; 'The park is currently Open with restrictions in services and/or facilities.'; 'Open year-round for camping and day use, four cabins and 92 campsites are available year round.'; facilities RV Dump Station, RV Access, Restrooms / Showers, Drinking Water Available; 'Hendy Woods SP Office: 707 895-3537 / Kiosk: 707 895-3141 (seasonal)'; 'periodically early morning noise and agricultural spraying occurs adjacent to the park'",
+  "ReserveCalifornia RDR API (read 2026-11-26): citypark 654 'Hendy Woods SP'; facilities 502 Azalea Campground (39.076272,-123.476329) and 503 Wildcat Campground (39.075389,-123.474612); search/grid 2027-04-14: Azalea 36 web-bookable 'Campsite' units, Wildcat 43; Restrictions MinimumStay 1, MaximumStay 7, booking through 2027-05-26; search/details for every unit 2027-04-14: 'Rate' 45.00, 'Fee' 8.25, Back In, Electricity Hookup None, Water/Sewer Hookup No, Site Length 35, Pad Length 20-35 ft (Azalea: one 20, twelve 25, four 30, nineteen 35; Wildcat: twenty 25, five 30, eighteen 35)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "checked": "2026-11"},
+   "source": "ReserveCalifornia search/details, every Azalea and Wildcat campsite for 2027-04-14 ('Rate': 45.00, 'Fee': 8.25), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "max_stay_nights": 7},
+   "source": "ReserveCalifornia search/grid facilities 502/503 (Restrictions MaximumStay 7), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "ReserveCalifornia search/details, all 79 campsites: Electricity Hookup None, Water Hookup No, Sewer Hookup No, read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 92, "max_rig_ft": 35, "pull_through": false},
+   "source": "https://www.parks.ca.gov/?page_id=438 ('92 campsites') and ReserveCalifornia unit details (Site Length 35, pads 20-35 ft, all Back In), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "dump": true, "potable_water": true},
+   "source": "https://www.parks.ca.gov/?page_id=438 (RV Dump Station; Restrooms / Showers; Drinking Water Available), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Azalea Campground closes for the winter; Wildcat Campground stays open."},
+   "source": "https://www.parks.ca.gov/?page_id=438 ('92 campsites are available year round'; 'Azalea Campground is closed for the winter season, camping is available in the Wildcat Campground.'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "California State Parks redwood campground in Anderson Valley off Philo-Greenwood Rd, ~8 mi from Boonville, in the woods between the Big Hendy and Little Hendy groves; the Navarro River runs through the park. Two loops, Azalea and Wildcat; back-in pads 20-35 ft, so check the pad length when booking. Early-morning farm noise and spraying next to the park at times. --Claude",
+ "summary": "Hendy Woods SP: $45 (+$8.25 RC fee), 92 sites in Azalea/Wildcat, back-in pads 20-35 ft (site length 35), no hookups, 1-7 nights, showers/dump/water; year-round with Azalea closed in winter; phone flagged.",
+ "flags": [
+  "STATUS: parks.ca.gov banner (checked 11/26/2026) 'Azalea Campground is closed for the winter season, camping is available in the Wildcat Campground.' -- seasonal loop closure, not a campground closure; written into season.note.",
+  "SITES: count 94 (note prose) -> 92 (parks.ca.gov). parks.ca.gov gives no max trailer/motorhome length; ReserveCalifornia gives Site Length 35 on every unit with Pad Length 20-35 (one Azalea pad 20 ft).",
+  "PHONE: stored 707-895-3141 is the seasonal kiosk; the park office is 707 895-3537 (parks.ca.gov). apply.py does not write phone.",
+  "WATERFRONT not waterfront kept (not re-measured): parks.ca.gov puts the campgrounds 'in the woods between the two old-growth groves'; the river is by the day-use meadow.",
+  "PIN 39.0760,-123.4735 OK: ~180 m from the midpoint of the two RC facility points.",
+  "WEBSITE OK (parks.ca.gov page + ReserveCalifornia)."
+ ]
+}

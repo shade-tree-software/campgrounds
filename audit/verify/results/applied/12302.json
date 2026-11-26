@@ -1,0 +1,48 @@
+{
+ "id": 12302,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.fs.usda.gov/r05/sanbernardino/recreation/holcomb-valley-campground (last updated January 12, 2026; read 2026-11-26): 'Site Open'; 'This family campground has 19 single-family campsites. All sites are first-come-first-serve basis (no reservations). ... off Forest Service Road 3N16. Although this campground is open year-round, vehicle access will be based on road conditions.'; 'Amenities include a picnic table, 1 fire ring, bear boxes and vault toilets. There is no water available. A campground host is on site during mid-May through October.'; 'Single Site: $27 per night / Additional Holiday Fee: $10 per night / Additional Vehicle Fee: $8 per vehicle per night'; 'Single Site $27 - Holiday $28 - 8 person maximum'; 'Camping fee includes entry for 1 vehicle.'; 'For winter access take Polique Canyon Road when Van Dusen Canyon Road is closed for winter.'; amenity box 'Restrooms are not available at this site.'; Mountaintop Ranger District and Discovery Center (909) 382-2790; lat/long 34.30194444,-116.8944444",
+  "recreation.gov search API, entity 249733 'Holcomb Valley Campground' (read 2026-11-26): reservable False, information-only listing (the campground detail API returns 404; no campsites); same description ('All sites are first-come-first-serve basis (no reservations)'); point 34.302593,-116.895933",
+  "Esri World Imagery frame centred 34.3020,-116.8952, half-width 250 m (winter capture)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 27, "nightly_high": 27, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 8, "per": "night"}, "note": "Holiday nights cost more; the forest's page gives both $28 and a $10 holiday add-on.", "checked": "2026-11"},
+   "source": "https://www.fs.usda.gov/r05/sanbernardino/recreation/holcomb-valley-campground ('Single Site: $27 per night'; 'Camping fee includes entry for 1 vehicle.'; 'Extra vehicle fee $8 per night.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "fcfs": "always"},
+   "source": "FS page and recreation.gov info listing 249733 ('All sites are first-come-first-serve basis (no reservations)'; rec.gov reservable False), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 19},
+   "source": "FS page ('This family campground has 19 single-family campsites'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false},
+   "source": "FS page ('Amenities include a picnic table, 1 fire ring, bear boxes and vault toilets. There is no water available.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Vehicle access depends on road conditions; in winter, when Van Dusen Canyon Road (3N09) is closed, the way in is Polique Canyon Road (2N09)."},
+   "source": "FS page ('Although this campground is open year-round, vehicle access will be based on road conditions.'; 'For winter access take Polique Canyon Road when Van Dusen Canyon Road is closed for winter.'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "San Bernardino NF campground in historic Holcomb Valley (the old goldfields) about 5 mi north of Big Bear Lake, on dirt Forest Road 3N16 in pine and juniper. Bear boxes. A host is on site mid-May through October. --Claude",
+ "summary": "Holcomb Valley (SBNF): 19 first-come sites, $27 (+$8 extra vehicle), vault toilets, no water, open year-round with winter access via Polique Canyon Rd; rec.gov 249733 is info-only (not reservable); phone and website to fix; no RV-suitability statement found.",
+ "flags": [
+  "REC.GOV: facility 249733 'Holcomb Valley Campground' is an information-only listing (search API reservable False; /api/camps/campgrounds/249733 returns 404, no campsites, no Scan&Pay rule visible). It confirms first-come only. Stored reservable false / fcfs always now confirmed manual.",
+  "RIG FIT: neither page gives a rig length or says anything about trailers or RVs; access is a graded dirt forest road (3N09 then 3N16, ~4 mi). No 4WD or high-clearance requirement or 'not recommended' statement found. Noting only.",
+  "FEES: the FS page contradicts itself on holidays ('Additional Holiday Fee: $10 per night' vs 'Holiday $28'); left nightly_high at 27 and said so in fees.note.",
+  "FACILITIES: the FS amenity box says 'Restrooms are not available at this site.', but its description lists vault toilets; wrote vault_toilets true from the description.",
+  "PIN 34.30155,-116.89570 sits on FR 3N16 ~120 m from the rec.gov point 34.302593,-116.895933 and ~130 m from the FS point 34.30194,-116.89444; under 250 m, OK. Winter imagery does not show the loop clearly; the rec.gov point is in the trees north of the road.",
+  "PHONE: stored empty -> Mountaintop Ranger District / Big Bear Discovery Center (909) 382-2790. apply.py does not write phone.",
+  "WEBSITE: stored https://www.fs.usda.gov/r05/sanbernardino (forest home) -> https://www.fs.usda.gov/r05/sanbernardino/recreation/holcomb-valley-campground (optionally also https://www.recreation.gov/camping/campgrounds/249733, the info-only listing).",
+  "STATUS: open ('Site Open'); no forest alert names it."
+ ]
+}
