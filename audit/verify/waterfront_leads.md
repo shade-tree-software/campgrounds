@@ -1690,3 +1690,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-620, CA 2026-11-26) 11944 Pipi not waterfront -> creekside? lidar puts the Middle Fork Cosumnes (~15 m wide) 35-50 m from site 017 (38.566667,-120.434833) and 45-55 m from 016, 3.5-4.5 m down a gentle slope; canopy-blind, so not raised.
 - (p3-620, CA 2026-11-26) 12436 Peninsula lakeview -> lakefront if The Point's sites 44-54 can be shown at the water (operator sells them as 'Lakefront').
 - (p3-620, CA 2026-11-26) 11915 Merrill not waterfront -> lakeview? front row (FCFS 057-075, 157, 171-173) faces an open lakebed apron 120-250 m to Eagle Lake's water.
+- (p3-621, CA 2026-11-26) 11983 Rancheria not waterfront -> lakeview/lakefront? RV site 068 (37.251738,-119.163448; 41 ft, reservable) ~40 m from Huntington Lake's shore through scattered trees; rec.gov tags 042/045/046/049/068 Lakefront (the others 50-60 m through canopy).
+- (p3-621, CA 2026-11-26) 12270 Tillie Creek lakeview -> lakefront? east-loop spurs 20-50 m from Lake Isabella over open ground under scattered oaks (35.7005-35.7015,-118.4545..-118.4535); rec.gov sells site types only, no site map.
+- (p3-621, CA 2026-11-26) 11948 Sand Flat not waterfront -> riverview? pads 20-40 m from the South Fork American (~30 m wide) through pines; no site numbers.
+- (p3-621, CA 2026-11-26) 12214 Plum Valley: FS 'bordered by South Fork Davis Creek'; canopy hides it.

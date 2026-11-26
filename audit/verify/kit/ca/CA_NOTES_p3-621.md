@@ -1,0 +1,12 @@
+# p3-621 notes
+- 12316 done (first-come, , phone add, drive-in flag)
+- 12214 done (free fcfs, no restrooms, rough road caveat)
+- 11983 done (49, lakeview lead 068, pin 300 m)
+- 11695 done (creekside->not, pin 1.2 km, count 63)
+- 12319 done (lakefront kept, phone/website flags, lead Rocky Point West)
+- 12026 done (fees+entrance, 6 fit)
+- 11948 done (S&P only, season, riverview lead)
+- 12447 done (keep, stale 2020 rate, G 3.9/30)
+- 12391 done (DROP CANDIDATE long-term, no nightly rate, G 3.3/74)
+- 11934 done (lakeview->not, pin 350m, 8 reservable)
+- 12270 done (lakeview kept, lakefront lead, pin 960m, season conflict)
