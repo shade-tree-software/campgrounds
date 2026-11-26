@@ -1,0 +1,13 @@
+# p3-630 notes
+- 12467 Likely Place: checkfront engine live $43 W/E30, $48 FHU50 (May/Jul 2027); winter page open; pin OK on loops
+- 12467 WRITTEN
+- 12373 WRITTEN (drop cand Google 3.8/169)
+- 12283 WRITTEN (creekside kept, max_rig 50->40, phone)
+- 11783 WRITTEN (lakeview kept, phone 805-788-2381, fees 38-65)
+- 11924 WRITTEN (riverfront kept; count 74; phone)
+- 11661 WRITTEN (coastal walk kept, phone, E Pinewood tent-only)
+- 11664 WRITTEN (FCFS only, season MDW-LDW, coastal dunes kept, no rate)
+- 11874 WRITTEN (pin ~700 m, max 40, count 170, phone)
+- 11786 WRITTEN (ordinary nights FCFS, $55, phone, sewer unclear)
+- 11665 WRITTEN ($50 vs $35 conflict, pin across gorge, phone)
+- 12083 WRITTEN (lakefront kept on AH Hogue, phone, season Jul-Oct)
