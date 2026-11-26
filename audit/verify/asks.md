@@ -828,3 +828,6 @@ AWH 2026-11-25: call approved. Called 2026-11-25 ~12:20 CT: answered, hung up wi
 
 ## 13391 RV Campground at Camp Jordan Park (TN, City of East Ridge) — p3-613, 2026-11-25 — ANSWERED: drop (AWH 2026-11-25), applied
 The city says the RV lot "is available only in connection with events held within the park" and also "RV sites are available only on weekends and during special events." Booking is RecDesk (log-in needed, so I couldn't test an ordinary weekend). $30/35, 56 pads, 30 A, 4 days' notice. Keep (weekends bookable), or drop as event-only like a fairground that doesn't rent ordinary nights?
+
+## 12370 Leapin' Lizard RV Ranch (CA, private, Ocotillo Wells) — p3-619, 2026-11-26 — OPEN
+Off-road scope question. The operator: "Come to the Largest ATV Adventure Park", "we have a gated OHV entrance to an idle in area inside the RV Park", "Easy riding access to the Ocotillo Wells State Vehicular Recreation Area"; riders push machines out "across Kunkler Lane to the dirt trail before starting"; park map shows a "GATED OFF-ROAD VEHICLE ENTRANCE". Against: pool, spa, playground, no riding inside the park; Good Sam Park, $40-60, Google 4.7 (87), phone booking. Read as a riders' base camp (drop) or a general RV park with an OHV side (keep)? Kept for now.

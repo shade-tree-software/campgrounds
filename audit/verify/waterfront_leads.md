@@ -1685,3 +1685,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-616, CA 2026-11-26) 12254 Ellery Lake lakeview -> creekside? west-side pads 15-30 m from Lee Vining Creek through trees.
 - (p3-616, CA 2026-11-26) 12118 Elam not waterfront -> creekside if a site map names pads on the benches 1.8-3 m above Deer Creek (east loop ~40.2469,-121.4478; west-bank spur).
 - (p3-616, CA 2026-11-26) 12241 East Fork creekside rests on canopy-blind 100-series sites (111, 112, 114, 116, 102, 104) on the creek floodplain; downgrade lead if a per-site check fails.
+- (p3-619, CA 2026-11-26) 12234 Lower Billy Creek lakeview -> lakefront? premium singles 004/005/006 (37.23739,-119.22866..) ~22-25 m from Huntington Lake's high-water line over mostly open ground; no site photos to confirm the kayak test.
+- (p3-619, CA 2026-11-26) 12186 Loon Lake not waterfront -> lakeview? Ellis Loop 040-042 (38.98351,-120.31560..) 45-55 m from full pool behind conifers; needs a photo view.

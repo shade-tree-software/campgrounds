@@ -1,0 +1,12 @@
+# p3-619 notes
+- 11771 done
+- 12172 done (West Shore; Lodgepole lead)
+- 12370 done (OHV flag)
+- 12110 done
+- 11659 done ($35 now)
+- 12186 done (lakeview cand, pin 440m)
+- 11785 done (riverview rec, pin 1.6km)
+- 12234 done (fit drop cand, lakefront cand 004-006)
+- 12285 done (pin 480m, Upper GM lead)
+- 11862 done (fcfs only, riverview stands)
+- 12220 done
