@@ -1,0 +1,12 @@
+# p3-626 notes
+- 11747 done (9 PH, 67 sites, phone)
+- 12313 done ($20, 23 sites, riverview ok, pin 285 m, season closes 11-01)
+- 12462 done ($50 GS, Google 4.5/135, lakeview distant kept, closes 10-31)
+- 11633 done ($35, year-round winter loop, name dukMéʔem wáťa, phone 525-9528, pin ~620m to RC pts)
+- 11634 done ($45, website 602->601, pin 285 m, bayview kept + coastal walk lead, lower loop closure)
+- 12432 done ($47, pin 2.35 km, phone 530-541-1537, max 45, count 206)
+- 11753 done ($39-51 seasonal, FHU +20, website -> parks.venturacounty.gov, bayfront kept, king-tide closure thru 11-27)
+- 12329 done ($6 fcfs 11 sites, pin -> 35.9745,-117.9118 ~300m off trailhead lot)
+- 12080 done ($15, 8 fcfs, large RVs not recommended -> kept, phone 530-964-2184)
+- 12245 done ($35 +$10 veh, pin 370 m, phone -> 760-935-4824, flush per FS, creekside lead)
+- 12020 done ($30 + $14 FHU, booking season 10-15..04-15, NPS URL 404)

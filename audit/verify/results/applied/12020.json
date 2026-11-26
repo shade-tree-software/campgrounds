@@ -1,0 +1,54 @@
+{
+ "id": 12020,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/232496 + rates + rules (read 2026-11-26): 'Furnace Creek has 136 campsites with drinking water, picnic tables, flush toilets and a dump station.'; 'Full Hook-up Pull-through Sites: 67, 68, 69, 72, 73, 74, 75, 76, 77 Full Hook-up Back-in Sites: 39, 41, 43, 45, 47, 49, 50, 51, 52'; tent-only 100-110, 115-150, group 1-4; 'This facility is on a first-come, first-served basis from mid-April through mid-October (summer). All sites are reservable from mid-October to mid-April.'; '$30 per vehicle, valid for 7 days' entrance; staffed 10/15/2026-04/15/2027 (760) 786-2441, unstaffed (760) 786-3200; maxConsecutiveStay 14 (2026-10-15..2027-04-15); rates 2026-2027 STANDARD NONELECTRIC $30, STANDARD ELECTRIC $44, group $40/$60",
+  "recreation.gov campsite catalog 232496 (read 2026-11-26): 129 records; 17 STANDARD ELECTRIC, all 50 A with water and sewer; RV/trailer max lengths 22-107 ft, none posted on 51 (tent/walk-to); centroid 36.46279,-116.86937",
+  "https://developer.nps.gov/api/v1/campgrounds?parkCode=deva (DEMO_KEY, read 2026-11-26): Furnace Creek fees 'Standard RV/Tent Sites' $30 ('No more than eight people and two vehicles or one recreational vehicle per site'), 'Full Hook-up Sites' $44 ('Standard RV/Tent site fee $30 ... plus $14 Utility Fee (not discounted). Full Hookup Sites provide 30/50-amp electrical service, sewer, and water.'); hours 'Open year round, but reservations are accepted only from October 15 to April 15. During the summer months, some loops within the campground close.'; reservations 'from 5 days to 6 months in advance ... The remainder of the year, the campground reduces to 41 sites and is first-come, first-served.'; amenities flush toilets, dump station, potable water year round, showers None; sites total 136, electrical hookups 18; phone 760-786-3203",
+  "https://www.nps.gov/deva/planyourvisit/campgrounds.htm (2026-11-26): 404; the stored website line is dead"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "surcharges": {"full_hookup": 14}, "extra_person": {"max_people": 8}, "checked": "2026-11"},
+   "source": "NPS campgrounds API (DEVA Furnace Creek: $30 standard; $44 full hookup = $30 + $14 utility fee) and recreation.gov rates 232496, read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true, "note": "Full hookups on 18 sites: pull-through 67-69 and 72-77, back-in 39, 41, 43, 45, 47 and 49-52."},
+   "source": "recreation.gov facility 232496 and its catalog (17 STANDARD ELECTRIC, 50 A + water + sewer); NPS API ('30/50-amp electrical service, sewer, and water'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false},
+   "source": "recreation.gov facility 232496 and NPS API amenities (Flush Toilets, Dump Station, Potable Water year round; Showers None), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232496", "max_stay_nights": 14, "season": {"year_round": false, "opens": "10-15", "closes": "04-15"}, "note": "All sites reservable Oct 15 - Apr 15, from 5 days to 6 months ahead; first-come mid-April to mid-October, when the campground shrinks to 41 sites."},
+   "source": "recreation.gov facility 232496 notices and rules; NPS API reservationInfo, read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "NPS API operatingHours ('Open year round ... During the summer months, some loops within the campground close'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 136},
+   "source": "recreation.gov facility 232496 and NPS API (totalSites 136), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Death Valley NP campground on the open valley floor below sea level, a half mile north of the Furnace Creek Visitor Center; mostly unshaded. Tent-only sites 100-110 and 115-150 and group sites 1-4 take no RVs or campervans. Park entrance fee on top. Summer heat is extreme, and some loops close then. --Claude",
+ "summary": "Furnace Creek (DEVA): $30 base, +$14 for full hookups (18 sites, 50A/water/sewer), max 8 people; reservable Oct 15-Apr 15 (5 days to 6 months ahead), first-come in summer with 41 sites; open year-round. Flush toilets, dump, water, no showers. Entrance $30/vehicle for 7 days. NPS website line is a 404.",
+ "flags": [
+  "WEBSITE: https://www.nps.gov/deva/planyourvisit/campgrounds.htm returns 404. rec.gov's notice points to https://www.nps.gov/deva/planyourvisit/camping.htm, so replace the first line with that; I didn't fetch it. Keep the rec.gov line.",
+  "PHONE 760-786-3200 kept: rec.gov's line for the unstaffed season, and the park's general line. The campground kiosk is (760) 786-2441 while staffed Oct 15-Apr 15; the NPS API lists 760-786-3203.",
+  "FEES: the stored nightly_high 44 was the full-hookup price. It is now base 30/30 plus surcharges.full_hookup 14, per the schema's base-rate rule.",
+  "BOOKING fcfs: stored 'after_cutoff' (derived from note prose) is left untouched but does not match the published pattern. The whole campground is first-come from mid-April to mid-October and all reservable in winter. I recorded that as booking.season 10-15..04-15 plus a note; a curator may want fcfs cleared or set otherwise.",
+  "ENTRANCE: rec.gov says '$30 per vehicle, valid for 7 days'; the NPS policy row's entrance note covers this, so no entrance key is written.",
+  "CAMP STORE: the NPS API says campStore 'Yes - year round'. That is the nearby Oasis/Ranch general store, not a campground store, so it is not written.",
+  "PIN 36.46420,-116.86940 OK: ~157 m from the site centroid 36.46279,-116.86937.",
+  "WATERFRONT not waterfront kept (desert valley floor, no water)."
+ ]
+}
