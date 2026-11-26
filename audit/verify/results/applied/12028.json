@@ -1,0 +1,50 @@
+{
+ "id": 12028,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.nps.gov/jotr/planyourvisit/campgrounds.htm (Joshua Tree NP, last updated 2026-08-16, read 2026-11-26): 'Hidden Valley, White Tank, and Belle Campgrounds are first-come, first-served ... Proceed immediately to an entrance station to complete registration and pay. You must pay for the site within one hour of set up. The fee is $25 per night.'; 'Hidden Valley Campground is open year-round.'; 'Hidden Valley | 44 sites. $25 per night. 4,200 feet. Pit toilets, tables, and fire grates. No water.'; 'White Tank and Hidden Valley campgrounds have a length limit of 25 feet combined.'; 'For first-come, first-served campgrounds, up to six people and three tents (if they fit) are allowed.'; 'Generator use is only permitted 7-9 am, noon-2 pm, and 5-7 pm.'; 'All Campgrounds: 760-367-5554'",
+  "https://developer.nps.gov/api/v1/campgrounds?parkCode=jotr (read 2026-11-26): Hidden Valley 'first-come, first-served year round'; totalSites 44; electricalHookups 0; Vault Toilets; showers None; potableWater 'No water'; dumpStation No; rvMaxLength 24, trailerMaxLength 24; alerts list no campground closure",
+  "recreation.gov search 'hidden valley joshua tree' (read 2026-11-26): no campground listing - first-come only"
+ ],
+ "groups": {
+  "booking": {
+   "values": {"reservable": false, "fcfs": "always", "note": "Claim an empty site, then register and pay at an entrance station within one hour. Usually full on weekends from September to May."},
+   "source": "nps.gov/jotr campgrounds page ('first-come, first-served'; 'You must pay for the site within one hour of set up'; 'full nearly every weekend from Sept-May'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 44, "max_rig_ft": 25},
+   "source": "nps.gov/jotr campgrounds page ('44 sites'; 'a length limit of 25 feet combined'), read 2026-11-26; the NPS API lists 24 ft",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "NPS API campgrounds (electricalHookups 0) and nps.gov page ('No water'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false, "showers": false, "dump": false},
+   "source": "nps.gov/jotr page ('Pit toilets ... No water') and NPS API (showers None, dumpStation No), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "nps.gov/jotr page ('Hidden Valley Campground is open year-round.'), read 2026-11-26",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "extra_person": {"max_people": 6}},
+   "source": "nps.gov/jotr page ('The fee is $25 per night'; 'up to six people and three tents'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Joshua Tree NP campground among the boulders of the park's central Hidden Valley, popular with climbers. The 25-ft limit is for vehicle and trailer combined. Generators are allowed only 7-9 am, noon-2 pm and 5-7 pm. --Claude",
+ "summary": "Hidden Valley (Joshua Tree NP): nps.gov + NPS API + rec.gov search. Keep. First-come confirmed (no rec.gov listing), $25, 44 sites, 25 ft combined, year-round, pit toilets, no water; filled no hookups/showers/dump, 6-person cap. Phone flag.",
+ "flags": [
+  "PHONE: stored 760-367-5500 is the park's main line; nps.gov campgrounds page gives 'All Campgrounds: 760-367-5554'. Suggest 760-367-5554.",
+  "FIT: 25 ft combined (nps.gov); the NPS API says 24 ft. A 23-ft motorhome alone fits; towing a car would not.",
+  "WEBSITE: stored nps.gov campgrounds page is right.",
+  "PIN: stored 34.01700,-116.16150 vs NPS API 34.01719,-116.16274 (~115 m) - fine.",
+  "WATERFRONT: not waterfront confirmed (desert)."
+ ]
+}
