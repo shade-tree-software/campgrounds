@@ -1,0 +1,54 @@
+{
+ "id": 12297,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/231975 and /rates (read 2026-11-26): 'BARTON FLATS', concessionaire contact 'For facility specific information, please call (909) 866-8550'; 'There are no hookups at the campground, however, the parking aprons are paved and a dump station is available ... Accessible flush toilets, showers and drinking water are provided'; notices 'Barton Flats is reservations Only, No First Come First Serve sites.', 'Fee for use of dump station will be collected at the time of use.', '$8 additional vehicle fee per night on the second vehicle in each single family campsite, and on the third and fourth vehicles in any double family campsite'; rules maxStay 14 (rolling 30 days), minWeekendStay 0 soft, minHolidayWeekendStay 0 soft, reservationCutOff 1 day; 2026 Peak Season 04-03..10-24 and 2027 04-02..10-23: STANDARD NONELECTRIC $36, double $71",
+  "recreation.gov campsite search API, facility 231975 (read 2026-11-26): 52 STANDARD NONELECTRIC sites, all reservable, every one Max Vehicle Length 35 ft, no electric/water/sewer; site centroid 34.1722,-116.8766; availability August 2026 all 'Reserved', November 2026 empty (season over)",
+  "https://www.fs.usda.gov/r05/sanbernardino/recreation/barton-flats-family-campground (read 2026-11-26, 'Last updated November 25, 2026', status 'Site Closed' - off season): '51 reservable sites; 7 are accessible'; 'Includes showers, RV dump station, and firewood for sale'; 'Barton Flats is reservations only. No first-come, first-served sites.'; 'Seasons of Use April 3rd - October 25th'; 'This campground requires 2-day minimum stay on weekends and 3-day minimum stay on holiday weekends.'; 'Single site is allowed 1 vehicle. Extra vehicles are $8/night.'; 'Single Site: $36 holiday, $38 - 8 person max / Double Site: $71 holiday, $73 - 16 person max'; 'RV dump: $10'; 'Potable water is available'; Mill Creek Visitor Center (909) 382-2882",
+  "https://www.fs.usda.gov/r05/sanbernardino/alerts (read 2026-11-26): no alert names Barton Flats or SR-38; Forest Order 05-12-00-26-06 closes listed backcountry Forest Roads only",
+  "Esri World_Imagery at 34.1722,-116.8766 (1.4 km, read 2026-11-26): loops in continuous pine forest north of SR-38; no water in view"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 36, "nightly_high": 36, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 8, "per": "night"}, "extra_person": {"max_people": 8}, "note": "Double sites $71 (two vehicles, 16 people). Dump station $10."},
+   "source": "recreation.gov 231975 rates (2026/2027 STANDARD NONELECTRIC $36, double $71) and notices ($8 additional vehicle); fs.usda.gov Barton Flats page ('8 person max', 'RV dump: $10'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/231975", "fcfs": "never", "max_stay_nights": 14, "note": "Bookable up to the day before arrival; 14 nights in any 30 days."},
+   "source": "recreation.gov 231975 notices ('reservations Only, No First Come First Serve sites') and rules (maxStay 14 rolling 30 days, reservationCutOff 1 day), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-03", "closes": "10-25"},
+   "source": "fs.usda.gov Barton Flats page ('Seasons of Use April 3rd - October 25th'), matching the recreation.gov 2026 season 04-03..10-24, read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 52, "max_rig_ft": 35},
+   "source": "recreation.gov 231975 campsite catalog (52 sites, all Max Vehicle Length 35 ft), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov 231975 ('There are no hookups at the campground'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+   "source": "recreation.gov 231975 ('a dump station is available ... Accessible flush toilets, showers and drinking water are provided') and fs.usda.gov page, read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "San Bernardino NF campground on Hwy 38 among pines and oaks, with paved parking aprons and bear boxes at every site. Trails lead to Jenks Lake and the Santa Ana River. --Claude",
+ "summary": "Barton Flats (San Bernardino NF): rec.gov 231975 + FS page + alerts + Esri. Operating (August 2026 fully reserved; off season now). $36 confirmed (double $71), reservation-only, Apr 3-Oct 25, 52 sites all 35 ft, no hookups, showers/flush/water/dump ($10). Not waterfront confirmed.",
+ "flags": [
+  "POLICY/SOURCE CONFLICT, min stay: the FS page says 'This campground requires 2-day minimum stay on weekends and 3-day minimum stay on holiday weekends', but recreation.gov's rules give minWeekendStay 0 and minHolidayWeekendStay 0 (soft). Following rec.gov, no min_stay written; the FS wording may be out of date.",
+  "Fee wording on the FS page is garbled ('Single Site: $36 holiday, $38'; 'Double Site: $71 holiday, $73'), which may mean a $38 / $73 rate exists; recreation.gov's 2026 and 2027 tables show $36 / $71 only. Wrote rec.gov's.",
+  "Phone: stored '' -> suggest (909) 866-8550 (concessionaire Mountain Top Recreation, from the rec.gov facility page); the FS office is Mill Creek Visitor Center (909) 382-2882.",
+  "Website: replace the generic 'https://www.fs.usda.gov/r05/sanbernardino' with 'https://www.fs.usda.gov/r05/sanbernardino/recreation/barton-flats-family-campground'; keep 'https://www.recreation.gov/camping/campgrounds/231975'.",
+  "Site count: rec.gov catalog 52; FS page '51 reservable sites'. Kept 52.",
+  "Pin 34.17126,-116.87551 is ~140 m from the site centroid (34.1722,-116.8766): fine.",
+  "WATERFRONT not waterfront confirmed."
+ ]
+}

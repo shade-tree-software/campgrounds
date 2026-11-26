@@ -1,0 +1,44 @@
+{
+ "id": 12261,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/10290699 and /rates (read 2026-11-26): 'Bootleg', phone 760-932-7070; 'The campground has four restroom buildings that house flush toilets. Drinking water and garbage service is provided.'; 'The campground is across highway from West Walker River'; notice 'single and double-family sites ... Sites are $28 per day, extra vehicles $6 per day. No reservations needed, first come, first serve. Campground is operational late May to mid September, as weather and conditions allow.'; rules scanAndPay 1; rates 'First-come, First-served Season' 2026-05-15..2026-09-13 and 2027-05-14..2027-09-12, WalkInStandardS&P $28",
+  "recreation.gov campsite search API, facility 10290699 (read 2026-11-26): 63 STANDARD NONELECTRIC sites, all non-reservable, no length or equipment data; site centroid 38.42108,-119.45109",
+  "https://www.fs.usda.gov/r04/humboldt-toiyabe/recreation/bootleg-campground (read 2026-11-26, 'Last updated September 14, 2026'): 'The West Walker River is located on the opposite side of US-395'; 'single and double-family sites ... Flush toilets, drinking water and trash collection are provided.'; 'Seasons of Use Late May - mid-September, as weather and conditions allow.'; 'Single Site: $28 per night / Additional Vehicle Fee: $6 per vehicle per night'; Bridgeport Ranger District 760-932-7070",
+  "https://www.fs.usda.gov/r04/humboldt-toiyabe/alerts (read 2026-11-26): Bridgeport RD orders cover Twin Lakes, Pine Grove, Hoover Wilderness/Virginia Lakes, Powell Canyon Road; none names Bootleg or Walker Canyon",
+  "Esri World_Imagery at 38.4190,-119.4520 (1 km, read 2026-11-26): loops in Jeffrey pine forest west of US-395; the West Walker River runs east of the highway"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}},
+   "source": "recreation.gov 10290699 rates (2026/2027 $28) and notice ('extra vehicles $6 per day'); fs.usda.gov Bootleg page ('Single Site: $28 per night / Additional Vehicle Fee: $6'), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "platform": "none", "url": "https://www.recreation.gov/camping/campgrounds/10290699", "fcfs": "always", "note": "First come, first served; pay on site with recreation.gov Scan & Pay."},
+   "source": "recreation.gov 10290699 notice ('No reservations needed, first come, first serve'), rules (scanAndPay), catalog (all 63 sites non-reservable) and 'First-come, First-served Season' rates, read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-15", "closes": "09-13", "note": "Late May to mid-September, as weather and conditions allow."},
+   "source": "recreation.gov 10290699 2026 'First-come, First-served Season' 05-15..09-13; fs.usda.gov Bootleg page ('Late May - mid-September'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "vault_toilets": false, "potable_water": true},
+   "source": "recreation.gov 10290699 ('four restroom buildings that house flush toilets. Drinking water ... provided') and fs.usda.gov page ('Flush toilet(s)'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Humboldt-Toiyabe NF campground in Walker Canyon, under Jeffrey pines on the west side of US-395, across the highway from the West Walker River. Single and double sites with food lockers. --Claude",
+ "summary": "Bootleg (Humboldt-Toiyabe NF): rec.gov 10290699 + FS page + alerts + Esri. Operating (season ended Sept 13). $28 + $6 extra vehicle confirmed; NOT reservable: first-come with Scan & Pay (stored reservable true was wrong); 05-15..09-13; flush toilets (stored vault_toilets was wrong) + water. Not waterfront kept.",
+ "flags": [
+  "BOOKING CORRECTION: stored reservable true / platform recreation.gov -> first-come only. recreation.gov's listing is Scan & Pay ('No reservations needed, first come, first serve'; all 63 sites non-reservable). The stored note's 'Reservable on recreation.gov' is wrong and is removed in the rewrite.",
+  "FACILITIES CORRECTION: stored vault_toilets true -> flush toilets (rec.gov 'four restroom buildings that house flush toilets'; FS 'Flush toilet(s)'). Wrote vault_toilets false.",
+  "Phone: stored '' -> 760-932-7070 (Bridgeport Ranger District; FS page and rec.gov).",
+  "Website: replace the generic 'https://www.fs.usda.gov/htnf' with 'https://www.fs.usda.gov/r04/humboldt-toiyabe/recreation/bootleg-campground'; keep 'https://www.recreation.gov/camping/campgrounds/10290699'.",
+  "Site length: rec.gov gives no per-site lengths and the FS page no limit; nothing to write. 63 sites matches the stored count.",
+  "Pin 38.42108,-119.45109 sits exactly on the rec.gov site centroid: fine.",
+  "WATERFRONT not waterfront confirmed: US-395 between the sites and the West Walker River."
+ ]
+}

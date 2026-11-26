@@ -1679,3 +1679,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - (p3-611, TN 2026-11-25) 4441 Gatlin Point lakeview: mown clearing by the ramp (36.5586,-87.9047) ~1 m above pool at 30-40 m, but no designated sites there (2018 camper) - stays lakeview unless LBL names sites.
 - (p3-613, TN 2026-11-25) 13395 Rhea Springs not waterfront -> lakeview? NW pads 20-40 m from the drawn-down Watts Bar shore; no site numbers.
 - (p3-613, TN 2026-11-25) 4416 State Line not waterfront -> creekside? only if a site map shows pads between FR 210 and the Tellico.
+- (p3-614, CA 2026-11-26) 12272 Camp 9 lakefront rests on group sites G03-G05; a strict named-site reading of the family loops would make it lakeview.
+- (p3-614, CA 2026-11-26) 12183 Camino Cove lakeview -> lakefront again only if a site map puts named pads within 50 m of full pool (~4,870 ft).

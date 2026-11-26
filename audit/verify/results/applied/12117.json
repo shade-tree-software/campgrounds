@@ -1,0 +1,52 @@
+{
+ "id": 12117,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.fs.usda.gov/r05/lassen/recreation/almanor-campground (read 2026-11-26, 'Last updated May 29, 2026', 'Site Open'): Current Conditions 'Almanor North Campground and the Almanor Group Campgrounds are open now. Almanor South plans to open for the 2026 season as early as July. Almanor South has been closed multiple seasons for health and safety concerns ... hazard trees'; 'A fee is required for camping at this site, fees must be paid upon arrival'; 'A boat ramp can be found in the north campground. The adjacent beach is mostly rocky, but contains some sand.'; 'numerous single-family campsites, as well as a group site. Campsites are available for tent and RV camping, however, no hookups are provided. Many sites are available on a first-come, first-served basis.'; 'Accessible vault toilets and drinking water are provided.'; 'Reservations are available in Almanor South Campground and Almanor Group Campground.'; 'Seasons of Use: Almanor Campground is generally open from Memorial Day to Labor Day.'; '2 vehicles (including RVs/Boats/Etc.) and 8 persons allowed in each campsite'; 'Single Site: $18 per night'; Almanor Ranger District (530) 258-2141",
+  "https://www.recreation.gov/api/camps/campgrounds/232246 and /rates (read 2026-11-26): facility 'ALMANOR', phone 530-258-2141; notice 'Limited parking is available. Most sites can accomodate 1 RV or two cars.'; rules maxStay 14, minHolidayWeekendStay 3 (hard), minWeekendStay 0 soft; 2026 and 2027 Peak Season STANDARD NONELECTRIC $18, group $100",
+  "recreation.gov campsite search API, facility 232246 (read 2026-11-26): 17 reservable STANDARD NONELECTRIC sites 001-019 in loop SOUT (RV/Tent/Trailer, Max Vehicle Length 30-70 ft), 2 TENT ONLY (005, 011), group 053 and GS ALMA, 5 non-reservable 'Walk-in S&P Site' NORTH; availability month API: August 2026 shows SOUT sites 'Reserved' (South did open in 2026), June 2027 'Open' from the rolling window",
+  "Esri World_Imagery at 40.2195,-121.1760 (1.4 km, with rec.gov site points), 40.2205,-121.1765 (700 m) and 40.2202,-121.1760 (320 m), read 2026-11-26: the South loop (sites 001-019, centroid ~40.2163,-121.1780) sits in continuous pine forest ~280-400 m back from the shore; the North loop beside the boat ramp (~40.2203,-121.1765) runs through open, scattered pines ~40-60 m from the treeline at the top of the bare drawdown beach",
+  "Google Maps panel (tools/gm.py, read 2026-11-26): 'Almanor South Campground' 40.21795,-121.17607, 4.4 (109), +1 530-258-2141"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 18, "nightly_high": 18, "extra_vehicle": {"max_vehicles": 2}, "extra_person": {"max_people": 8}},
+   "source": "fs.usda.gov Almanor page ('Single Site: $18 per night'; '2 vehicles (including RVs/Boats/Etc.) and 8 persons allowed in each campsite') and recreation.gov 232246 rates (2026/2027 STANDARD NONELECTRIC $18), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "min_stay": [{"nights": 3, "applies": "holiday"}], "note": "Almanor South and the group site are reservable; Almanor North is first-come, paid on arrival."},
+   "source": "fs.usda.gov Almanor page ('Reservations are available in Almanor South Campground and Almanor Group Campground'; 'Many sites are available on a first-come, first-served basis') and recreation.gov 232246 rules (maxStay 14, minHolidayWeekendStay 3), read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "note": "Generally open Memorial Day to Labor Day."},
+   "source": "fs.usda.gov Almanor page ('Almanor Campground is generally open from Memorial Day to Labor Day'), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true},
+   "source": "fs.usda.gov Almanor page ('Accessible vault toilets and drinking water are provided'), read 2026-11-26",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "fs.usda.gov Almanor page ('no hookups are provided'), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"note": "Almanor South's 17 reservable RV sites take 30-70 ft on recreation.gov; most sites hold one RV or two cars."},
+   "source": "recreation.gov 232246 campsite catalog and notice ('Most sites can accomodate 1 RV or two cars'), read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Lassen NF campground on the west shore of Lake Almanor, about 12 miles from Chester. Two areas off Almanor Drive West: Almanor North beside the boat ramp, and Almanor South in the forest about 300 m back from the shore; the group site is across Hwy 89 at the rest area. Almanor South was closed several seasons for hazard-tree removal and reopened in 2026. --Claude",
+ "summary": "Almanor (Lassen NF): FS page + rec.gov 232246 + Esri. Open (North + group all along; South reopened July 2026 after hazard-tree closure, Reserved in Aug 2026). $18 confirmed (rec.gov + FS), Memorial Day-Labor Day, 2 vehicles/8 people, 3-night holiday minimum, 14-night max, vault toilets + water, no hookups. Lakeview kept (North loop only).",
+ "flags": [
+  "WATERFRONT lakeview kept, but only the North loop supports it: rec.gov site points put Almanor South's sites 001-019 280-400 m back from the shore in continuous pine forest (no view); the North loop beside the boat ramp (~40.2203,-121.1765) runs through open scattered pines ~40-60 m from the treeline at the top of the drawdown beach. No per-site data for North (rec.gov lists only 5 unlocated 'Walk-in S&P' sites there), so no on-water upgrade. Suggested evidence: 'Esri 2026-11-26: South loop (rec.gov 001-019) 280-400 m inland in forest; North loop by the ramp ~40-60 m from the high-water treeline through scattered pines -> lakeview from North only'.",
+  "Pin 40.21774,-121.17607 is fine: ~75 m north of South site 001 and ~290 m south of the North loop.",
+  "Not a split: North (by the ramp) and South (centroid ~40.2163,-121.1780) are ~500 m apart on the same Almanor Drive West; the group camp (GS ALMA, 40.2166,-121.1913) is across Hwy 89, a group site only.",
+  "Phone 530-258-2141 and both websites confirmed. Google 'Almanor South Campground' 4.4 (109).",
+  "rec.gov reservationCutOff value 4 (no unit) not written."
+ ]
+}

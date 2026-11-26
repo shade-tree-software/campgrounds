@@ -7,3 +7,4 @@ Batches p3-614 onward, 11 entries each, ONE agent at a time. Build/apply exactly
 ## RESUME HERE
 
 Batches applied:
+- p3-614 (2026-11-26, first CA batch): 11 applied, 0 drops; 12183 Camino Cove lakefront->lakeview (under canopy, no site map, apron is drawdown); 12272 Camp 9 lakefront kept (group sites G03-G05 20-60 m from gross pool; family sites unnumbered); 12339 American Girl Mine BLM dispersed KEPT with a call-first caveat (AWH 2026-11-12 small-free-sites rule; verifier offered a drop); 12261 Bootleg booking -> first-come (rec.gov Scan & Pay); 11925 Bridalveil Creek closed early 2026-08-14 (lightning), 16 of 106 sites take 23 ft+; phones 12297/12213/12261/11925/12183, 12272 phone changed; websites 12297/12213/12261/12183/12272/12173/12339.
