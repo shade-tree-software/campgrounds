@@ -829,11 +829,15 @@ AWH 2026-11-25: call approved. Called 2026-11-25 ~12:20 CT: answered, hung up wi
 ## 13391 RV Campground at Camp Jordan Park (TN, City of East Ridge) — p3-613, 2026-11-25 — ANSWERED: drop (AWH 2026-11-25), applied
 The city says the RV lot "is available only in connection with events held within the park" and also "RV sites are available only on weekends and during special events." Booking is RecDesk (log-in needed, so I couldn't test an ordinary weekend). $30/35, 56 pads, 30 A, 4 days' notice. Keep (weekends bookable), or drop as event-only like a fairground that doesn't rent ordinary nights?
 
-## 12370 Leapin' Lizard RV Ranch (CA, private, Ocotillo Wells) — p3-619, 2026-11-26 — OPEN
+## 12370 Leapin' Lizard RV Ranch (CA, private, Ocotillo Wells) — p3-619, 2026-11-26 — ANSWERED
 Off-road scope question. The operator: "Come to the Largest ATV Adventure Park", "we have a gated OHV entrance to an idle in area inside the RV Park", "Easy riding access to the Ocotillo Wells State Vehicular Recreation Area"; riders push machines out "across Kunkler Lane to the dirt trail before starting"; park map shows a "GATED OFF-ROAD VEHICLE ENTRANCE". Against: pool, spa, playground, no riding inside the park; Good Sam Park, $40-60, Google 4.7 (87), phone booking. Read as a riders' base camp (drop) or a general RV park with an OHV side (keep)? Kept for now.
 
-## 12359 Wildcat Recreation Area (CA, USACE Eastman Lake) — p3-622, 2026-11-26 — OPEN
+**AWH 2026-11-27: keep with a caveat.** Note now warns of off-road riders, ATV traffic and engine noise.
+
+## 12359 Wildcat Recreation Area (CA, USACE Eastman Lake) — p3-622, 2026-11-26 — ANSWERED
 Horse-separation question. rec.gov: "includes three equestrian sites with horse corrals"; all 19 sites are one loop ("WCAT"); equestrian W16-W18 sit together at one end of a lobe (37.2083-37.2089,-119.9660..-119.9663) with standard sites W19 and W01 beside them. 16 general sites, $20, year-round. Read under the 11-17 ruling (a few sold horse sites in a general campground = keep, like Pietrek) or the 11-12 one (horse sites mixed into the general loop = drop)? Kept for now.
+
+**AWH 2026-11-27: borderline - keep with a caveat** naming the sites next to the stalls (W16-W18 corral sites; W19 and W01 adjacent). Done in the note.
 
 ## 12347 Ivanpah Dry Lake East (CA, BLM) — p3-628, 2026-11-26 — ANSWERED
 Inclusion is weak. BLM's only page for the area (Ivanpah Windsailing SRMA) never mentions camping; it says gates are locked "during wet seasons" and "Individual use of the dry lake bed for non-motorized sports is allowed with a permit". Needles FO's camping list omits Ivanpah. Only RV LIFE (4 reviews) supports overnight use; imagery at the pin shows playa edge by the railroad and a fenced pond installation, no camp vehicles. Not an FS small-free-site case (no agency ever listed it). Kept for now; drop?
