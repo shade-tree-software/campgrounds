@@ -683,6 +683,8 @@ DROPS = {
     12042: ("2026-11-27", "agency says a high-clearance vehicle is needed on the road in (EKKO is not 4WD / high-clearance)", "p3-642, read 2026-11-27: fs.usda.gov Howard Lake Campground page: 'A high-clearance vehicle is needed to cross the creek on one section of the road into Howard Lake.'; 4 sites, closed for the season 11/9/2026"),
     15406: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-643, read 2026-11-27: Google 3.8 (308 reviews); koa.com rates unread (Cloudflare)"),
     12406: ("2026-11-27", "no live web presence (dead domain, 'Coming Soon'); no current posted price", "p3-643, read 2026-11-27: operator domain dead / 'Coming Soon'; Hipcamp listing unclaimed; only price a 2023 Campendium $35; advertises 'long term vacation rentals'"),
+    12367: ("2026-11-27", "no live web presence (operator site now redirects to the casino home page, no RV page) and mostly long-stay", "p3-644, read 2026-11-27: matarawarvpark.com 301 -> viejas.com with no RV content (last read live 2026-10-16, $35); camper report ~10 of ~70 sites short-term; 'Monthly Rates Available'; Google 4.0/174"),
+    14913: ("2026-11-27", "a residential seniors community, not an RV park (long-stay test 5; Ridge Manor / Abrams Lake precedent)", "p3-644, read 2026-11-27: operator 'a member owned park; primarily designed as a permanent residency seniors park', 'A SENIOR CITIZENS COMMUNITY', 'SALES - MEMBERSHIPS AVAILABLE', 'MONTHLY AND LONG TERM RENTALS', 55+ max 2 people; nightly share unmeasurable ('Limited availability'); $45"),
 }
 
 if __name__ == "__main__":
