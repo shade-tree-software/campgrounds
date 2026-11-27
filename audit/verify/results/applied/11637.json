@@ -1,0 +1,55 @@
+{
+  "id": 11637,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=500 (Folsom Lake SRA, read 2026-11-27): Current Restrictions only the 5-mph boating order ('Due to decreasing lake levels ... the speed limit for motorized vessels on Folsom Lake has been reduced to 5 miles per hour'); Nimbus Shoals 'closed to vehicles until further notice' (not Beals Point); 'Max trailer: 31 feet'; 'Max camper/motorhome: 31 feet'; facilities 'RV/Trailer Campsites w/Hookups', 'RV Dump Station', 'Restrooms / Showers'; 'Camping is available year-round at Beals Point Campground. No rservations are needed during our off-season.'; phone '(916) 988-0205'",
+    "https://california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr/ (ReserveCalifornia API, read 2026-11-27): PlaceId 643; FacilityId 481 'Beals Point Campground (sites 1-49)' at 38.7178,-121.1737 - 21 'Campsite' units and 15 'Tent Campsite' units online, all posted 31 ft; FacilityId 1129 'Beals Point Campground (sites 50-69)' at 38.7225,-121.1732 - 13 'Hook Up (E/W/S) Campsite' units online posted 35-120 ft (BP53 45, BP54 40, BP55 120 pull-through, BP56 66, BP57 40, BP58 40, BP59 48, BP60 56, BP61 55, BP62 60, BP63 60, BP66 35, BP68 35); search/details: BP11 Campsite 'Rate' 28.00 (2027-01-12) and 33.00 (2027-05-22), 'Electricity Hookup' 'None'; BP55 and BP66 Hook Up 'Rate' 48.00 (2027-01-12) and 58.00 (2027-05-22), 'Electricity Hookup' '100 Amp Max' (BP55) / 'Yes' (BP66), 'Water Hookup' 'Yes', 'Sewer Hookup' 'Yes'; 'Fee' 8.25",
+    "Esri World_Imagery 900 m frame at 38.7200,-121.1720, read 2026-11-27: the loops sit in oak woodland west of the raised Beals Point dike and its road; the lake, day-use beach and parking lot are on the far side of the dike, ~200-300 m from the sites"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 28, "nightly_high": 58, "currency": "USD", "checked": "2026-11",
+        "note": "Standard sites $28 in winter and $33 in late spring and summer; full-hookup sites (50-69) $48 in winter, $58 in summer. Read 2026-11-27."
+      },
+      "source": "ReserveCalifornia search/details (BP11 Campsite $28 on 2027-01-12, $33 on 2027-05-22; BP55/BP66 Hook Up $48 on 2027-01-12, $58 on 2027-05-22), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "ReserveCalifornia search/details for sites BP55/BP66 ('Hook Up (E/W/S) Campsite'; 'Electricity Hookup' '100 Amp Max', snapped down to 50; 'Water Hookup' 'Yes'; 'Sewer Hookup' 'Yes') + parks.ca.gov ('RV/Trailer Campsites w/Hookups'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 69, "max_rig_ft": 31, "pull_through": true, "note": "Sites 50-69 are full-hookup sites that ReserveCalifornia posts at 35-120 ft (site 55 is a pull-through); sites 1-49 are posted at 31 ft, 15 of them tent sites."},
+      "source": "parks.ca.gov ('Max trailer: 31 feet'; 'Max camper/motorhome: 31 feet') + ReserveCalifornia facilities 'sites 1-49' and 'sites 50-69' with per-unit lengths, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true, "dump": true},
+      "source": "parks.ca.gov Folsom Lake SRA facilities ('RV Dump Station'; 'Restrooms / Showers'; 'Drinking Water Available'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "parks.ca.gov ('Camping is available year-round at Beals Point Campground.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": "some_sites", "note": "No reservations needed in the off-season."},
+      "source": "parks.ca.gov ('No rservations are needed during our off-season.'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Beals Point campground at Folsom Lake SRA in Granite Bay, in oak woodland behind the Beals Point dike; the beach and day-use area are over the dike. Full-hookup sites are 50-69. --Claude",
+  "summary": "parks.ca.gov page, ReserveCalifornia API (grid + per-unit details) and imagery read. HOOKUPS WRONG IN DB: stored electric 0 / water false / sewer false, but sites 50-69 are full hookup (E/W/S) -> 50 A (RC '100 Amp Max', snapped down), water, sewer. Fees $33 -> $28-58 (standard $28 winter / $33 summer; hookup $48 / $58). 69 sites; park max 31 ft (hookup sites post 35-120). Showers, water, dump; year-round; off-season first-come. No closure banner. Not waterfront kept.",
+  "flags": [
+    "HOOKUPS: stored electric 0, water false, sewer false (note prose 'no hookups') are wrong. ReserveCalifornia lists 13 'Hook Up (E/W/S) Campsite' units in 'Beals Point Campground (sites 50-69)'; BP55 'Electricity Hookup' '100 Amp Max' (snapped down to 50, the schema's top value), 'Water Hookup' 'Yes', 'Sewer Hookup' 'Yes'. parks.ca.gov also lists 'RV/Trailer Campsites w/Hookups'.",
+    "FEES: low is $28 (standard campsite, winter); stored $33 was a June quote. Full hookup $48-58.",
+    "RIG LENGTH: parks.ca.gov 'Max trailer: 31 feet' / 'Max camper/motorhome: 31 feet'; RC posts sites 1-49 at 31 ft and the hookup sites at 35-120 ft. 31 kept (park's own figure); a 23-ft rig fits every site.",
+    "STATUS: open; Current Restrictions carry only the lake's 5-mph boating order and the Nimbus Shoals vehicle closure (2026-11-27).",
+    "PHONE: 916-988-0205 confirmed. WEBSITE: fine.",
+    "WATERFRONT 'not waterfront' kept: imagery shows the loops west of the raised Beals Point dike, lake and beach beyond it ~200-300 m; the stored evidence stands.",
+    "BOOKING: fcfs 'some_sites' from 'No rservations are needed during our off-season' (the state row's walk-up wording otherwise applies)."
+  ]
+}

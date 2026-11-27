@@ -1,0 +1,53 @@
+{
+  "id": 12440,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/tahoe/recreation/goose-meadow-campground (Tahoe NF, read 2026-11-27): status 'Site Closed' (out of season); 'located between the Truckee River and Highway 89, five miles south of Truckee'; 'The campground is situated on the banks above the Truckee River. Most sites are forested and shaded, and all are a short walking distance to the river.'; 'Accessible vault toilets and drinking water also provided.'; 'Most single family sites and group campgrounds can be reserved at www.recreation.gov'; 'Number of sites: 25'; 'Seasons of Use May 27 - October 11'; 'Single Site: $22 per night'; 'Additional Vehicle Fee: $5 per vehicle per night'; amenity block 'Vault toilet(s)' and 'Potable water is not available at this site.'; 'Highway 89 road noise can be heard from this campground'",
+    "https://www.recreation.gov/api/camps/campgrounds/232755 (read 2026-11-27): 'FOR RESERVATIONS, PLEASE CALL: 1 (877) 444-6777', facility phone '(530)587-3558'; 'Between 05/21/2027 and 09/25/2027 this location is staffed'; 'Vault toilets and drinking water are provided.'; 'situated on the banks of the Truckee River. A scenic forest of lodgepole pine and fir trees covers the area.'; 'operated and maintained by Lake Tahoe Hospitality LLC'",
+    "https://www.recreation.gov/api/camps/campgrounds/232755/rates (read 2026-11-27): Peak Season 2027-05-21 to 2027-09-25, STANDARD NONELECTRIC and TENT ONLY NONELECTRIC 'per_night': 22; an 'S&P Single' (Scan & Pay) rate 22",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232755 (per-site catalog, read 2026-11-27): 24 sites - 20 STANDARD NONELECTRIC (19 reservable, site 014 not reservable), 4 TENT ONLY (009, 010, 015, 016); 'Max Vehicle Length' 30 ft on 22 sites, 25 ft on 018 and 024; every site 'Shade' 'Yes'; no hookup attributes",
+    "Esri World_Imagery 400 m frame at 39.2593,-120.2100 and z19 tile at 39.2599,-120.2092, read 2026-11-27: the loops sit under continuous lodgepole/fir canopy between Hwy 89 and the Truckee River; the river is ~15-22 m wide here; the nearest RV site (011, 39.26010,-120.20947) is ~50-55 m from the water through the trees, others 60-110 m; tent sites 009/010 ~35 m"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 22, "nightly_high": 22, "currency": "USD", "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 5, "per": "night"},
+        "note": "$22 a site a night; an extra vehicle $5. Read 2026-11-27."
+      },
+      "source": "recreation.gov rates (2027 Peak Season, 'per_night': 22) + fs.usda.gov ('Single Site: $22 per night'; 'Additional Vehicle Fee: $5 per vehicle per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24, "max_rig_ft": 30, "note": "Four of the sites are tent-only; sites 18 and 24 take 25 ft, the rest 30 ft."},
+      "source": "recreation.gov per-site catalog (24 sites, 4 TENT ONLY; 'Max Vehicle Length' 30 on 22 sites, 25 on 018/024), read 2026-11-27; the FS page says 25 sites",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": null},
+      "source": "fs.usda.gov ('Vault toilet(s)'; the amenity block says 'Potable water is not available at this site.' while the description and recreation.gov say drinking water is provided - left unknown), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-21", "closes": "09-25", "note": "Approximate: recreation.gov's 2027 season; the Forest Service page gives May 27 to October 11."},
+      "source": "recreation.gov (Peak Season 2027-05-21 to 2027-09-25; 'Between 05/21/2027 and 09/25/2027 this location is staffed') + fs.usda.gov ('Seasons of Use May 27 - October 11'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites"},
+      "source": "fs.usda.gov ('Most single family sites ... can be reserved at www.recreation.gov') + recreation.gov catalog (site 014 not reservable; an 'S&P Single' Scan & Pay rate), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Tahoe National Forest campground under lodgepole pine and fir between Hwy 89 and the Truckee River, ~5 mi south of Truckee; the river is a short walk through the trees. Highway noise carries into camp. --Claude",
+  "summary": "FS page, recreation.gov facility/rates/per-site catalog and imagery read. $22 + $5 vehicle confirmed; 24 sites (4 tent), max 30 ft (two at 25); vault toilets; drinking water contradictory on the FS page -> unknown; season 05-21..09-25 (rec.gov 2027); reservable, one walk-up site. Phone '' -> 530-587-3558. Riverview kept after a hard look: the river is ~15-22 m wide and the nearest RV site is ~50-55 m away through continuous canopy.",
+  "flags": [
+    "WATERFRONT 'riverview' KEPT after a hard check. Imagery: continuous lodgepole/fir canopy over every loop; the Truckee River here is ~15-22 m wide, which is creek-size under the 30 m rule, so an on-water value would be creekside at most. The nearest RV site, 011 (39.26010,-120.20947), is ~50-55 m from the water through the trees; 008 (39.25963,-120.20956) ~80 m; the southern loop (14-24) 60-110 m. Only tent-only sites 009/010 (~35 m) come close. FS 'situated on the banks above the Truckee River ... all are a short walking distance to the river' does not put any RV pad at the water. If the canopy is judged to block any sightline, 'not waterfront' is the next step down; not upgraded.",
+    "PHONE: stored '' -> 530-587-3558 (Truckee Ranger District, recreation.gov facility phone). In season the concessionaire's local line is (530) 606-3978.",
+    "FACILITIES: potable_water true -> null. The FS amenity block says 'Potable water is not available at this site.' while its own description and recreation.gov say 'drinking water' is provided; unresolved.",
+    "SITES: rig length added (30 ft; 018 and 024 are 25 ft). Count 19 -> 24 (rec.gov catalog; FS says 25; the old note's '25-37 ft' had no current source).",
+    "SEASON: no stored season; written as rec.gov's 2027 season 05-21..09-25 with the FS's May 27 - Oct 11 named in the note. FS status 'Site Closed' is the off-season, no closure order.",
+    "WEBSITE: both lines fine (FS page and recreation.gov 232755).",
+    "OPERATOR: concessionaire Lake Tahoe Hospitality LLC (no change needed)."
+  ]
+}
