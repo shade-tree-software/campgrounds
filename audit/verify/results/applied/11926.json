@@ -1,0 +1,53 @@
+{
+  "id": 11926,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.nps.gov/yose/planyourvisit/campgrounds.htm (read 2026-11-27): table row 'Hodgdon Meadow | All year | 4900 ft/1500 m | 35 ft/30 ft | 5 months ahead on 15th for Apr 15-Oct 26 | $36 | 100 | 0 | Tap'; 'No campsites in Yosemite have hook-ups of any kind.'; dump stations at Upper Pines (all year), Wawona and Tuolumne (summer); 'Showers are available at the Curry Village pool showerhouse for a fee. Showers are not available elsewhere in the park.'",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=yose (NPS campground API, Hodgdon Meadow record, read 2026-11-27): 'Reservations are required from April 15 through October 26, 2026. During the rest of the year, the entire campground (other than the group sites, which close) are available on a first-come, first-served basis.'; 'up to five months in advance, on the 15th of each month at 7 am Pacific'; rvInfo '105 sites with space for tents, RVs up to 35 feet, and trailers up to 27 feet. Not every site can accommodate equipment of these lengths'; rvMaxLength 40, trailerMaxLength 30; campsites totalSites 100, tentOnly 67, group 4; 'A maximum of six people (including children) are allowed per campsite'; 'A maximum of two motor vehicles are allowed per campsite'; fees $36 reserved (mid-Apr to mid-Oct), $28 first-come (mid-Oct to mid-Apr), $75 group; amenities flush toilets and potable water year round, showers None, dump station No; phone 209/379-2123; accessRoads 'Paved Roads - All vehicles OK'",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=yose (read 2026-11-27): tire-chain advisory and Tioga/Glacier Point Road seasonal closures only; nothing on Hodgdon Meadow or Big Oak Flat Road",
+    "https://www.recreation.gov/api/camps/campgrounds/232451 (read 2026-11-27): 'Roads and parking spurs are paved, and flush toilets and drinking water are provided. Each campsite contains a picnic table, fire ring and a food storage locker.'; 'There are no electric, water, or sewer hook-ups at this facility; however, a dump station is located in Yosemite Valley.'; 'There is no cell phone coverage or public phone at Hodgdon Meadow Campground'; rules blockReleaseDay 15, maxStay 14 days (May 1 - Sep 15); facility phone '(209) 379-2123 OR (209) 372-8502'",
+    "https://www.recreation.gov/api/camps/campgrounds/232451/rates (read 2026-11-27): 2026 Peak 04-15..10-25 STANDARD NONELECTRIC 36; 2026 'First-come, First-served Season' 10-26..12-31 and 2027 01-01..03-31 STANDARD NONELECTRIC 28; 2027 Peak 04-01..10-31 STANDARD 36, GROUP 75",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232451 (per-site catalog, read 2026-11-27): 104 records - 35 STANDARD NONELECTRIC drive-in sites (RV max 40 ft on 7 sites, 35 on 2, 30 on 5, 25 on 13, 20 on 8; trailer max 10-30 ft), 60 'HIKE-IN' sites, 5 TENT ONLY, 4 group tent areas; no hookup attributes"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 36, "currency": "USD", "checked": "2026-11", "extra_person": {"max_people": 6}, "note": "$36 a night in the reservation season (about mid-April to late October), $28 first-come the rest of the year. Up to two motor vehicles a site. Read 2026-11-27."},
+      "source": "NPS campground API fees (36 reserved / 28 first-come) + recreation.gov rates (2026 Peak 36; 2026-27 First-come season 28), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 100, "max_rig_ft": 40, "note": "Only 35 sites are drive-in; 27 of them take an RV of 25 ft or more, 7 up to 40 ft. The other 65 are hike-in or tent-only sites, plus 4 group tent sites. The park's table gives 35 ft RV / 30 ft trailer."},
+      "source": "nps.gov/yose campgrounds table (100 sites, 35 ft/30 ft) + NPS API (rvMaxLength 40) + recreation.gov per-site catalog (35 STANDARD sites, RV max 20-40 ft), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": false, "dump": false},
+      "source": "recreation.gov ('flush toilets and drinking water are provided'; 'a dump station is located in Yosemite Valley') + NPS API amenities (showers None, dump station No), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 232451 notice ('There are no electric, water, or sewer hook-ups at this facility'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open all year; first-come only from late October to mid-April, when the group sites close."},
+      "source": "nps.gov/yose campgrounds table ('Hodgdon Meadow | All year') + NPS API reservationInfo, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232451", "fcfs": null, "window_opens_days": 150, "max_stay_nights": 14, "season": {"opens": "04-15", "closes": "10-26"}, "note": "Reservations are required from April 15 to October 26 (2026 dates); nights release on the 15th of each month at 7 a.m. Pacific, five months ahead, and summer dates sell out in minutes. The rest of the year the whole campground is first-come. The 14-night limit applies May 1 to September 15."},
+      "source": "NPS API reservationInfo ('Reservations are required from April 15 through October 26, 2026. During the rest of the year, the entire campground ... first-come, first-served') + recreation.gov rules (blockReleaseDay 15; maxStay 14 days 05-01..09-15), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Yosemite National Park campground in mixed conifer forest beside Hodgdon Meadow, half a mile inside the Big Oak Flat entrance and 25 miles from Yosemite Valley; paved roads and spurs, a food locker at every site. Most sites are hike-in tent sites; only the drive-in sites take an RV, so check the site's own length. No cell service or public phone. Showers and the dump station are in the Valley. The park entrance fee is extra. --Claude",
+  "summary": "NPS table + NPS API + rec.gov facility/rates/catalog read. Open all year; reservations Apr 15 - Oct 26 (2026), first-come the rest of the year ($28 vs $36). 100 sites but only 35 drive-in (27 take 25 ft+, 7 to 40 ft), 60 hike-in, 5 tent-only, 4 group. No hookups, flush toilets + water, no showers/dump (confirmed). fcfs after_cutoff (derived) -> null with booking.season, window 150, max stay 14. Pin, phone, website fine. Not waterfront kept.",
+  "flags": [
+    "SITES: the per-site catalog has only 35 drive-in STANDARD sites of 104 records; 60 are now 'HIKE-IN' tent sites (NPS API: tentOnly 67 of 100). 27 drive-in sites post an RV length of 25 ft or more (7 at 40 ft: 064, 076, 086, 089, 090, 092, 104). A 23-ft rig still fits, but the stored note's '~105 sites ... most are drive-in' was wrong and has been removed.",
+    "LENGTHS: NPS table '35 ft/30 ft', NPS rvInfo 'RVs up to 35 feet, and trailers up to 27 feet', NPS API rvMaxLength 40 / trailerMaxLength 30, catalog RV max 40 on seven sites. max_rig_ft 35 (derived) -> 40.",
+    "BOOKING: fcfs 'after_cutoff' (derived from note prose) -> null: the campground is reservation-only Apr 15 - Oct 26 and entirely first-come the rest of the year (written as booking.season + note, as the Wawona result did).",
+    "PIN: stored 37.79990,-119.86693 is ~120 m north of the drive-in site centroid (~37.7990,-119.8665); fine.",
+    "STATUS: open; NPS alerts carry only chain controls and the Tioga/Glacier Point Road winter closures."
+  ]
+}

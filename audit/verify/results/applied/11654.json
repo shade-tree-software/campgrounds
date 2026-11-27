@@ -1,0 +1,41 @@
+{
+  "id": 11654,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=413 (read 2026-11-27, 'Last Checked: 11/27/2026 11:52 AM'): Current Advisories and Notices only 'Traffic Delays on State Route 197' and 'Traffic Delays on U.S. Highway 199 near Patrick Creek'; 'Open year-round. Day use sunrise to sunset. Campground open all year. November-April First Come First Served'; 'Contact Information (707) 464-6101'; facilities list 'RV Dump Station', 'RV Access', 'Restrooms / Showers', 'Drinking Water Available'; no trailer/motorhome length shown on the page",
+    "https://www.parks.ca.gov/pages/413/files/JedediahSmithRedwoodsSP_CampMap2019.pdf (read 2026-11-27): 'The park has a campground with 87 family campsites'; '(707) 464-6101'; 'The campsite fee covers one vehicle. Extra vehicles will be charged a fee.'; 'Two vehicles maximum per campsite (if there is room)'; per-site map (marked 'Map not to scale') shows the west rows 15-22 and 51-60 on the river side of the loops with River Beach Trail between them and the Smith River",
+    "https://www.parks.ca.gov/pages/413/files/JedediahSmithSP_InfoSheet_8.5x11_071025_FINAL.pdf (read 2026-11-27): 'Trailers and RV's are not permitted on Howland Hill Rd.' (a scenic side road, not the campground access)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=redw (Jedediah Smith Campground, read 2026-11-27): 'on the banks of the wild and scenic Smith River'; 'From early October to mid-May, this campground switches to \"First come, first served\" sites.'; Standard Camping Fee 35.00; totalSites 86, tentOnly 22; rvMaxLength 25, trailerMaxLength 21; 'Paved Roads - All vehicles OK'; flush toilets year round; showers 'Coin-Operated - Year Round'; dumpStation 'Yes - year round'; potableWater 'Yes - year round'; point 41.79573,-124.08645",
+    "ReserveCalifornia API (california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr, read 2026-11-27): citypark 'Jedediah Smith Redwoods SP' PlaceId 660; search/place facilities 517 'Main Loop (sites 1-44, 92-106)' and 791 'Outer Loop (sites 45-60, 76-91)' (plus cabins and hike/bike); search/grid 2027-05-18..20: 73 web units - 65 'Campsite' (VehicleLength 21 on 48 of them, 11-20 on the rest), 6 'Tent Campsite', 2 'Tent Only - Walk-In'; search/grid shows no bookable nights 2026-11-28 through 2027-03-31 and bookable nights from 2027-04-01 (MinStay 1)",
+    "Esri World_Imagery frames 700 m and 440 m around 41.7965,-124.0870 (read 2026-11-27): the loops are under unbroken old-growth canopy (no pads visible); west of the forest edge an open cobble bar ~45-70 m wide, then the Smith River's wetted channel ~80 m wide"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 86, "max_rig_ft": 25, "note": "The National Park Service posts RVs to 25 ft and trailers to 21 ft. ReserveCalifornia lists most campsites at 21 ft, which reads as the trailer cap rather than a measured pad. 22 of the sites are tent-only."},
+      "source": "NPS campground API (totalSites 86, tentOnly 22, rvMaxLength 25, trailerMaxLength 21) + ReserveCalifornia search/grid (VehicleLength 21 on 48 of 65 campsites), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true},
+      "source": "NPS campground API (flush toilets, coin showers, potable water, dump station - all year round) + parks.ca.gov facility list ('RV Dump Station', 'Restrooms / Showers', 'Drinking Water Available'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://www.reservecalifornia.com/Web/#!park/660", "fcfs": null, "season": {"opens": "04-01", "closes": "10-31"}, "note": "Reservable through ReserveCalifornia in season (bookable nights load from April 1 for 2027); the park gives November through April as first-come, first-served, and the Park Service says the switch happens from early October to mid-May."},
+      "source": "parks.ca.gov ('November-April First Come First Served') + ReserveCalifornia search/grid (no bookable nights 2026-11-28..2027-03-31, bookable from 2027-04-01) + NPS API ('From early October to mid-May ... First come, first served'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Campground among old-growth redwoods on the Smith River off US 199 east of Crescent City, with river access by trail, a summer swimming beach and a seasonal footbridge across the river. No hookups. Howland Hill Road, the scenic drive through the park, is closed to trailers and RVs. --Claude",
+  "summary": "parks.ca.gov page + camp map + infosheet, NPS API, ReserveCalifornia place/grid, imagery read. No closure (only highway traffic-delay notices). 86 sites (22 tent-only), RVs to 25 ft per NPS (stored 36 unsourced), dump/showers/water confirmed; reservable Apr-Oct, FCFS Nov-Mar. Phone 707-458-3018 -> 707-464-6101. Riverfront: downgrade candidate (pads unseen under canopy; summer water ~55-100 m from the forest edge across an open bar).",
+  "flags": [
+    "WATERFRONT (stored riverfront, signed --Claude evidence, not --AWH) - DOWNGRADE CANDIDATE to riverview. The stored evidence rests on the park's per-site map (marked 'Map not to scale'), which draws the west rows 15-22 and 51-60 along River Beach Trail on the Smith River side. On imagery the loops are hidden under unbroken redwood canopy, so no pad can be measured. West of the forest edge an open cobble bar ~45-70 m wide runs to a wetted channel ~80 m wide (a river by width). The summer water is therefore ~55-100 m from the forest edge plus however far the pads sit inside the trees. The case for keeping it: the bar is the river's own high-water bed, so measured to the high-water edge the water reaches the treeline. Satellite can only veto under canopy, and nothing site-level confirms a pad within ~50 m over open ground. Read: riverview at best on the default-down rule, unless site photos of 15-22 / 51-60 show open ground to the bar.",
+    "FIT: NPS posts RVs to 25 ft and trailers to 21 ft (a 23-ft motorhome fits). ReserveCalifornia gives 21 ft on 48 of its 65 web-bookable 'Campsite' units and 11-20 ft on the rest; the uniform 21 looks like the trailer cap used as a placeholder. Stored max_rig_ft 36 has no source found -> 25.",
+    "SITES: count 86 confirmed (NPS 86 with 22 tent-only; camp map '87 family campsites'; ReserveCalifornia shows 73 web units on the non-ADA grid).",
+    "BOOKING/SEASON: season year_round (manual) unchanged ('Campground open all year'). Booking: state row's fcfs some_sites -> null with booking.season 04-01..10-31 (Wawona pattern). Sources disagree on the edges: parks.ca.gov 'November-April First Come First Served'; NPS 'early October to mid-May'; ReserveCalifornia loads bookable nights from 2027-04-01. Deep link https://www.reservecalifornia.com/Web/#!park/660.",
+    "PHONE: 707-458-3018 -> 707-464-6101 (the number on the parks.ca.gov park page and camp map; 707-458-3018 appears on neither, nor on the NPS record).",
+    "WEBSITE: https://www.parks.ca.gov/?page_id=413 is current. The bare https://www.reservecalifornia.com line could become https://www.reservecalifornia.com/Web/#!park/660.",
+    "STATUS: open; the parks.ca.gov banner lists only highway traffic delays (SR 197; US 199 near Patrick Creek). PIN 41.79430,-124.08470 is ~215 m SE of the NPS campground point 41.79573,-124.08645; the loops can't be seen under canopy, so no move is proposed. No split: Main and Outer loops are one campground on one entrance road.",
+    "Fees not rewritten: NPS 'Standard Camping Fee' $35 matches the stored $35."
+  ]
+}

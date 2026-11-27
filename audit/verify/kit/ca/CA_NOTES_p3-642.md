@@ -1,0 +1,12 @@
+# p3-642 notes
+- 11926 Hodgdon Meadow: DONE. 35 drive-in of 100; low 28 (winter FCFS) high 36; fcfs null + booking.season.
+- 12174 Hope Valley: DONE. re-pin 1.5km; phone; website.
+- 12324 Horton Creek: DONE. fee 12.
+- 12042 Howard Lake: DONE. DROP CAND high-clearance; repin 450m.
+- 12094 Indian Springs: DONE. OHV adjacent flag; riverfront lead.
+- 11767 Inter-Mountain Fair RV Park: DONE. Ordinary nights shown; $50; 53 sites; Google 4.2/30.
+- 11654 Jedediah Smith: DONE. Riverfront downgrade candidate; RV 25 ft (NPS); phone -> 707-464-6101.
+- 12337 JT BLM North: DONE. NPS page maps the area; keep. Lead Joshua Tree Lake RV.
+- 11769 Kenney Grove: DONE. 52 sites, $40-52, 30A, year-round, new Cedar engine; phone/website added.
+- 11772 Laguna Seca: DONE. 164 sites, W/E 30A $56-61, dry $55, sewer->false, non-potable water, operator raceway; phone/website new.
+- 11773 Lake Cahuilla: DONE. $30-50, 107 sites, pin move ~617 m (was day-use lot), lakeview kept + lakefront lead; booking site human-verification unread.
