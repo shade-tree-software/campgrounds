@@ -1,0 +1,60 @@
+{
+  "id": 11624,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=473 (read 2026-11-27): 'Clear Lake State Park has four campgrounds: Cole Creek, Kelsey Creek, Lower Bayview, and Upper Bayview. Kelsey Creek campground is open year round. All of our sites can fit a maximum camper/trailer length of 35 feet. There are no electrical or water hookups.'; Cole Creek '26 well shaded campsites and 2 Hike and Bike sites'; Kelsey Creek 'This is the only campground with lakeside sites. Located in between the waters of Clear Lake and Kelsey Slough, these 65 sites'; Lower Bayview '22 partially shaded sites'; Upper Bayview '33 sites'; 'Nearby restroom facilities offer pay showers and flushable toilets'; 'Current Restrictions' panel empty (Last Checked 11/27/2026); contact (707) 279-4293",
+    "https://www.parks.ca.gov/pages/473/files/ClearLakeSP_CampMap2019.pdf (read 2026-11-27): 'Accommodations are available year-round at Clear Lake State Park. Reservations are recommended mid-May through mid-September.'; legend 'Lakeside Premium Campsite' on 58, 59, 60 (Kelsey Creek, east end by the swim area) and 110, 111, 112 (Lower Bayview); legend 'RV Sanitation Station' at the day-use area",
+    "ReserveCalifornia API (Tyler rdr; PlaceId 628; facilities 440 Cole Creek (sites 1-26), 442 Kelsey Creek (sites 27-91), 443 Lower Bay View (sites 92-112), 444 Upper Bay View (sites 113-147)), search/grid + search/details per unit, read 2026-11-27: every unit $35.00 on 2027-05-12 (Wed); Kelsey Creek also $35.00 on 2026-12-02 and 2027-05-29 (Sat, Memorial Day weekend); 130 web-bookable units; 'Electricity Hookup: None', 'Water Hookup: No', 'Toilet Type: Flushing', 'Shower Type: Pay'; 'Pad Length' Kelsey Creek 32-35 ft (all 57), Cole Creek 20-28 ft (17 of 22 at 24 ft+), Lower and Upper Bay View 15-21 ft; grid 'VehicleLength' a uniform 30 on every unit; premium 58, 59, 60 'Proximity to Water: Lakefront'; Cole Creek and the Bay View loops have no in-season dates before 2027-05-07 (Kelsey Creek open throughout)",
+    "Esri World_Imagery 2026-11-27 (220 m half-width at 39.0187,-122.8100; z19 tiles at 39.01870,-122.80700) + USGS 3DEP EPQS 2026-11-27: Kelsey Creek east-end pads ~39.01866,-122.80700 at 405.6 m; lidar water 403.9-404.4 m ~13-18 m north over open sand with a few trees"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 35,
+        "currency": "USD",
+        "surcharges": {"weekend": 0},
+        "checked": "2026-11",
+        "note": "Every family site is $35 a night on ReserveCalifornia, the lakeside premium sites included, midweek, on a Memorial Day weekend Saturday and in winter (read 2026-11-27)."
+      },
+      "source": "ReserveCalifornia search/details for every unit of facilities 440/442/443/444 on 2027-05-12, and Kelsey Creek on 2026-12-02 and 2027-05-29, read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "parks.ca.gov page_id=473 ('There are no electrical or water hookups') + ReserveCalifornia unit amenities ('Electricity Hookup: None', 'Water Hookup: No', 'Sewer Hookup: No'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 147,
+        "max_rig_ft": 35,
+        "note": "The park says every site takes 35 ft, but ReserveCalifornia's pad lengths are 32-35 ft in Kelsey Creek, 20-28 ft in Cole Creek (most 24 ft) and 15-21 ft in Lower and Upper Bayview: a 23-ft rig is best placed in Kelsey Creek or Cole Creek."
+      },
+      "source": "ReserveCalifornia facility names (sites 1-26, 27-91, 92-112, 113-147) and unit 'Pad Length' + parks.ca.gov page_id=473 ('All of our sites can fit a maximum camper/trailer length of 35 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true},
+      "source": "parks.ca.gov page_id=473 ('pay showers and flushable toilets') + campground map legend ('RV Sanitation Station'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Kelsey Creek is open all year; Cole Creek and the Bayview loops are seasonal (on ReserveCalifornia they open 2027-05-07)."
+      },
+      "source": "parks.ca.gov page_id=473 ('Kelsey Creek campground is open year round') + campground map ('Accommodations are available year-round') + ReserveCalifornia grid (no in-season dates for 440/443/444 before 2027-05-07), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Four loops on the south shore of Clear Lake: Kelsey Creek (sites 27-91) on the spit between the lake and Kelsey Slough, Cole Creek along the creek, and Lower and Upper Bayview on the hill above Dorn Cove. Only Kelsey Creek has lakeside sites; premium sites 58-60 at its east end sit at the shore by the swim area. --Claude",
+  "summary": "parks.ca.gov, camp map and ReserveCalifornia read. Rate $30 -> $35 (every site, every date sampled, premium included). 147 sites, no hookups, dump, pay showers, flush toilets. Kelsey Creek year-round, other loops open 2027-05-07. Pad lengths: Kelsey 32-35, Cole 20-28, Bayview 15-21 (page says 35 everywhere). No closure banner. Lakefront KEPT at Kelsey Creek premium 58-60.",
+  "flags": [
+    "WATERFRONT lakefront KEPT (not --AWH): Kelsey Creek's lakeside premium sites 58, 59 and 60 (campground map 'Lakeside Premium Campsite'; ReserveCalifornia 'Proximity to Water: Lakefront'; pad length 35 ft, so a 23-ft rig can book them, $35) sit at the east end of the spit, ~39.01866,-122.80700. Esri z19 shows pads on open sand with a few trees, water 13-18 m north. 3DEP puts the pads at 405.6 m and lidar water at 403.9-404.4 m (~1.3-1.7 m up), so the kayak test passes. Clear Lake is a natural lake, so there is no reservoir drawdown issue. Most other Kelsey Creek lake-side spurs (77-88) sit 45-60 m back behind a continuous tree belt. Replacement evidence: 'Esri z19 + 3DEP 2026-11-27: Kelsey Creek premium 58-60 (map Lakeside Premium; RC Lakefront; 35 ft) at ~39.01866,-122.80700, pads 405.6 m, open sand 13-18 m to lidar water 403.9-404.4 m; other lake-side spurs 45-60 m back behind trees.'",
+    "SITE LENGTH CONFLICT (no drop): the park page says 'All of our sites can fit a maximum camper/trailer length of 35 feet', but ReserveCalifornia pad lengths are 15-21 ft in both Bayview loops and 20-28 ft in Cole Creek. Kelsey Creek's 57 web units (32-35 ft) clear 23 ft easily. RC's grid VehicleLength is a uniform 30 (placeholder).",
+    "PRICE: stored $30 (read 2026-10-12) is now $35 on every date sampled, including winter.",
+    "PIN: stored 39.0185,-122.8093 is inside Kelsey Creek (RC facility point 39.01869,-122.81034, ~90 m), fine for a whole-park entry.",
+    "WEBSITE: the second line, the bare https://www.reservecalifornia.com root, is redundant with the state:CA booking row. Phone 707-279-4293 confirmed."
+  ]
+}
