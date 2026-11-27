@@ -685,6 +685,8 @@ DROPS = {
     12406: ("2026-11-27", "no live web presence (dead domain, 'Coming Soon'); no current posted price", "p3-643, read 2026-11-27: operator domain dead / 'Coming Soon'; Hipcamp listing unclaimed; only price a 2023 Campendium $35; advertises 'long term vacation rentals'"),
     12367: ("2026-11-27", "no live web presence (operator site now redirects to the casino home page, no RV page) and mostly long-stay", "p3-644, read 2026-11-27: matarawarvpark.com 301 -> viejas.com with no RV content (last read live 2026-10-16, $35); camper report ~10 of ~70 sites short-term; 'Monthly Rates Available'; Google 4.0/174"),
     14913: ("2026-11-27", "a residential seniors community, not an RV park (long-stay test 5; Ridge Manor / Abrams Lake precedent)", "p3-644, read 2026-11-27: operator 'a member owned park; primarily designed as a permanent residency seniors park', 'A SENIOR CITIZENS COMMUNITY', 'SALES - MEMBERSHIPS AVAILABLE', 'MONTHLY AND LONG TERM RENTALS', 55+ max 2 people; nightly share unmeasurable ('Limited availability'); $45"),
+    12374: ("2026-11-27", "long-stay park with no nightly rate posted (long-stay test 2)", "p3-646, read 2026-11-27: rates page 'Full hook-up starts at just $949/month plus electricity & propane / Security deposit equaling one month rent'; rv.htm 'Enjoy the experience of living in the mountains', 'daily, weekly and monthly rates' with no daily price; every Wayback capture 2021-2026 monthly only; no booking engine; Google 4.1/80"),
+    12417: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-646, read 2026-11-27: Google 3.6 (185 reviews); no nightly rate posted (booking page password-gated, 2027 booking opens in February)"),
 }
 
 if __name__ == "__main__":

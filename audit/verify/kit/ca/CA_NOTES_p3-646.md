@@ -1,0 +1,12 @@
+# CA phase 7 p3-646 notes (2026-11-27)
+- 12374 Ortega Oaks: monthly-only rates ($949/mo + deposit) -> test 2 drop candidate; Google 4.1/80; cleared 50A/60 sites/50ft/wifi.
+- 12142 Paradise: rec.gov 14 sites $42, year-round, phone -> 820-500-1099.
+- 12036 Patrick Creek: 13 sites 8 res/5 fcfs, $14, season 05-18..09-14, view lead (30ft bank, creek-size), phone 707-457-3131
+- 11682 Pfeiffer: open (reopened 11-26), $50/60, riverfront->creekside proposed, pin -> Weyland ~1 km, 6 people vs row 8
+- 11683 Picacho: open, FCFS 54, no official fee, access 'passable for trailers and motorhomes' (4x4 claim unsourced, dropped)
+- 12417 Pine Cliff: DROP CAND Google 3.6/185; no rate (book page password); lakeview->not wf; pin -> 37.79630,-119.07520
+- 12017 Pine Knot: 47 res, no fcfs, RV 25 ft max, flush toilets, $34+$8, season 04-17..10-18, phone -> 909-866-8550
+- 11888 Pinnacles: confirmed, phone -> 831-200-1722, pin -> 36.49046,-121.14847 (~395 m)
+- 12309 Pinyon Flat: $8 + $5, 18 FCFS, no water, toilets conflict cleared
+- 12464 Pit River Casino: keep, $30, Google RV 3.1/9 casino 3.9/748, pin -> 40.87526,-121.67367
+- 12072 Potato Patch: FCFS $14, season mid-Apr..Oct

@@ -1,0 +1,72 @@
+{
+  "id": 11682,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=570 (read 2026-11-27): 'November 25, 2026- Pfeiffer remains temporarily closed due to flooding and other storm damages. Pfeiffer Big Sur State Park will REOPEN to Day Use and Camping on Thanksgiving Day, Thursday, November 26, 2026.'; 'Due to severe damages from the Timber Fire, several areas of the park will remain closed until further notice' (trails incl. Big Sur River Gorge Trail); 'Areas of Pfeiffer Open to the Public: Campground, River Path ...'; 'Max trailer: 27 feet / Max camper/motorhome: 32 feet'; news '10/9/26 : Pfeiffer Big Sur State Park to Reopen Oct. 16 Following Timber Fire'",
+    "https://www.parks.ca.gov/?page_id=29832 (camping, read 2026-11-27): '189 RV and tent sites are situated on or near the Big Sur River'; 'Reservations fill up six months in advance, even in the winter'; 'Campsites cannot be reserved online or by phone within a 48-hour arrival window.'; 'Standard site: $50/night Premium Riverfront site: $60/night'; 'Second vehicle : $10/night (Towed vehicles or trailers are counted as a vehicle ...)'; 'Maximum 2 vehicles per site'; 'Maximum 6 people per campsite'; 'During peak season, this park has a maximum stay limit of seven consecutive nights ... Maximum length of stay per calendar year is 30 days.'; 'No hookups are provided at any site. Fresh water, hot showers and toilets are located throughout the campground.'; 'Hot showers are token-operated'; 'has a dump station that includes potable water'; walk-up: 'All campsites at Pfeiffer Big Sur are on a reservation system ... cancellations that allow some day-of sites ... check with the entrance kiosk after 3 p.m.'",
+    "ReserveCalifornia API (california-rdr...tylerapp.com/rdr/, read 2026-11-27): fd/citypark/namecontains/pfeiffer -> Pfeiffer Big Sur SP PlaceId 690; search/place -> facilities 611 South Camp (sites 1-78) 36.242526,-121.774306, 612 Weyland Camp (sites 79-130) 36.247217,-121.777911, 767 Main Camp (sites 131-188) 36.250435,-121.78143; search/grid 2027-05-20/21 Restrictions FutureBookingEnds 2027-05-27, MaximumStay 15; search/details per unit for 2027-04-14 (190 units): Standard $50, Premium (Proximity to Water 'Riverfront') $60, 07-10 and 12-08 the same; 5 'Hook Up (E,W,S) RV/Trailer Only Admin Campsite' units (SCHA-SCHD, WCHE, not web-bookable); 'Electricity Hookup: None' on every public site; pad lengths 12-32 ft, 90 of 131 RV-type units 23 ft+",
+    "Esri World_Imagery 700 m and 120-150 m frames over the three camps (read 2026-11-27): continuous redwood canopy and coastal fog over Main and Weyland camps; by South Camp a bare gravel bar ~20-25 m wide (36.2433,-121.7765) with the wetted channel itself hidden; stored pin at 36.25275,-121.78709 sits beside Hwy 1 north-west of the camps"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 189, "max_rig_ft": 32},
+      "source": "parks.ca.gov page_id=29832 ('189 RV and tent sites') + page_id=570 ('Max camper/motorhome: 32 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "parks.ca.gov page_id=29832 ('No hookups are provided at any site') + ReserveCalifornia details (the five hookup units are admin sites, not bookable), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "parks.ca.gov page_id=29832 ('Fresh water, hot showers and toilets'; 'dump station that includes potable water') + ReserveCalifornia unit details ('Toilet Type: Flushing'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "parks.ca.gov page_id=29832 ('Reservations fill up six months in advance, even in the winter') + ReserveCalifornia grid (bookable December through May), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open", "note": "Reopened 26 November 2026 after flood and storm damage; several trails stay closed after the 2026 Timber Fire."},
+      "source": "parks.ca.gov page_id=570 alert dated November 25, 2026, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 50,
+        "nightly_high": 60,
+        "currency": "USD",
+        "surcharges": {"weekend": 0},
+        "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 10, "per": "night", "max_vehicles": 2},
+        "extra_person": {"max_people": 6},
+        "note": "Standard sites $50, premium riverfront sites $60, the same on a Saturday and in July and December."
+      },
+      "source": "parks.ca.gov page_id=29832 ('Standard site: $50/night Premium Riverfront site: $60/night'; 'Second vehicle : $10/night'; 'Maximum 6 people per campsite') + ReserveCalifornia search/details for 2027-04-14, 2027-07-10, 2026-12-08, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "fcfs": "after_cutoff",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+        "max_stay_nights": 7,
+        "note": "Seven nights in a row in peak season, 30 a year. Day-of sites come only from cancellations, at the kiosk after 3 p.m."
+      },
+      "source": "parks.ca.gov page_id=29832 ('cannot be reserved online or by phone within a 48-hour arrival window'; walk-up paragraph; 'maximum stay limit of seven consecutive nights ... 30 days'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Big Sur's largest campground, in coast redwoods along the Big Sur River in three camps (South, Weyland and Main). Trailers to 27 ft. Many pads are under 23 ft; the booking site lists each site's pad length. Fills six months ahead, even in winter. --Claude",
+  "summary": "parks.ca.gov park + camping pages, ReserveCalifornia (all 190 units' details) and imagery read. Open again since 26 Nov 2026 (flood closure; Timber Fire trail closures remain). 189 sites, motorhome 32 / trailer 27 ft, no public hookups, flush toilets, token showers, dump with water. $50 standard / $60 premium riverfront (unchanged). 48-h cutoff, day-of sites only from cancellations, 7-night peak limit, max 6 people (state row says 8). Waterfront: riverfront -> creekside proposed (river creek-size). Pin move proposed (~1 km).",
+  "flags": [
+    "WATERFRONT: riverfront -> creekside proposed (stored value is not --AWH). The Big Sur River at the campground is creek-size: imagery shows only a ~20-25 m bare gravel bar by South Camp (36.2433,-121.7765), the wetted channel is hidden under redwood canopy and fog over Weyland and Main camps, and nothing seen approaches the ~30 m riverfront line. Imagery is canopy-blind, so the sites themselves can't be measured; the per-site evidence is ReserveCalifornia's 'Proximity to Water: Riverfront' tag on 30 premium units sold nightly at $60 - RV-capable ones with 23 ft+ pads: SC60 (28 ft), SC63 (32), SC66 (32), SC69 (25), W093 (23), W114 (27), W116 (30), W130 (23), P179 (24), P181 (32), P183 (23), P185 (23), P186 (32); shorter riverfront pads: SC59, W090, W095, W112, W113, W123, W127-W129, P171, P174, P175, P177 (16-22 ft); W118, W120, P133, P189 are admin sites. With 13+ bookable 23-ft+ sites tagged on the river, creekside clearly holds. Suggested evidence: 'ReserveCalifornia 2026-11-27: 30 premium units tagged Riverfront ($60), incl. SC60/63/66/69, W093/114/116/130, P179/181/183/185/186 with 23-32 ft pads; Esri: canopy, river bar ~20-25 m by South Camp -> creek-size -> creekside.'",
+    "PIN: stored 36.25275,-121.78709 sits beside Hwy 1 ~570 m from Main Camp and ~1.6 km from South Camp; the three camps (ReserveCalifornia facility points) run 36.250435,-121.78143 (Main) - 36.247217,-121.777911 (Weyland) - 36.242526,-121.774306 (South). Suggest the middle loop, Weyland Camp 36.24722,-121.77791 (~1.0 km move).",
+    "POLICY ROW: the state:CA row allows 8 people; this park's camping page says 'Maximum 6 people per campsite' (written as extra_person.max_people 6).",
+    "STATUS: was closed for the Timber Fire (reopened Oct 16, 2026) and then for flooding; parks.ca.gov 'will REOPEN to Day Use and Camping on Thanksgiving Day, Thursday, November 26, 2026'. Group camp 'CLOSED UNTIL FURTHER NOTICE'.",
+    "RIG: 'Max trailer: 27 feet / Max camper/motorhome: 32 feet'; pad lengths per unit 12-32 ft, 90 of 131 RV-type units 23 ft+. En-route overnight parking in day-use lots 3 and 4 is $60 (self-contained RVs).",
+    "PHONE 831-667-2315 and website unchanged (park page_id=570 + reservecalifornia.com)."
+  ]
+}

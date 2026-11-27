@@ -1,0 +1,71 @@
+{
+  "id": 12142,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233870 (read 2026-11-27): 'just over a dozen sites for single and double-family tent and RV camping ... Accessible flush toilets and drinking water are provided. Utility hookups are not provided. Parking spurs are paved and can accommodate most RVs. ... The nearest fee dump station is about 11 miles away at Cachuma Lake County Park'; 'The Santa Ynez River can be accessed through a tunnel beneath adjacent Paradise Road.'; notices 'Camp Los Padres manages this campground. For questions, email ... or call 820-500-1099.', 'Each campsite allows up to 8 people and 2 vehicles. Additional vehicles are $10 per vehicle per night'; rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 1; rate tables 2026, 2027, 2028 Peak Season STANDARD NONELECTRIC $42 (double variant $82); facility_phone 805-434-1996",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233870 (read 2026-11-27): 14 sites (001-003, 005-015), all reservable STANDARD NONELECTRIC, RV/Trailer/Tent; RV lengths 40 ft (7 sites), 38 (3), 36 (2), 24 (011, 013); site centroid 34.54223,-119.81195",
+    "https://www.recreation.gov/api/camps/availability/campground/233870/month 2026-12, 2027-01, 2027-02, 2027-05 (read 2026-11-27): sites available every night of the winter months",
+    "https://www.fs.usda.gov/r05/lospadres/recreation/paradise-campground (read 2026-11-27): 'Site Open'; 'Single and double sites for tent and RV camping. Utility hookups are not provided. Parking spurs are paved and can accommodate most RVs.'; 'Reservations: 12 campsites are on the reservation system and (2 sites) are first-come, first-serve.'; 'Seasons of Use January - December'; '14-day stay limit'; '$40.00 per site, per night. Additional $2.00 weekend and holiday fees.'; 'Campsite reservation fee covers 6 people and 1 vehicle. Maximum number of people per site is 8 ($10.00 additional charge per person, per night after 6 people). Maximum number of vehicles per site is 2'; 'Potable water is available at this site.'; Santa Barbara Ranger District 805-724-0079 or 805-967-3481; alerts list only 'Santa Barbara Front Country Fire Use Restrictions' for this area"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 14, "max_rig_ft": 40},
+      "source": "recreation.gov campsite search for 233870 (14 sites, RV to 40 ft), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 233870 ('Utility hookups are not provided.') + fs.usda.gov Paradise Campground page (same words), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": false},
+      "source": "recreation.gov 233870 ('Accessible flush toilets and drinking water are provided ... The nearest fee dump station is about 11 miles away at Cachuma Lake County Park'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "fs.usda.gov Paradise Campground ('Seasons of Use January - December') + recreation.gov availability (bookable through Dec 2026 - Feb 2027), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 42,
+        "nightly_high": 42,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {"included": 2, "amount": 10, "per": "night"},
+        "extra_person": {"max_people": 8},
+        "note": "Double sites $82. The Forest Service page instead gives $40 plus $2 at weekends and holidays, and $10 a person past six."
+      },
+      "source": "recreation.gov 233870 rate tables 2026-2028 (STANDARD NONELECTRIC $42, double $82) + notice ('up to 8 people and 2 vehicles. Additional vehicles are $10 per vehicle per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233870",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -24},
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "max_stay_nights": 14
+      },
+      "source": "recreation.gov 233870 rules (minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 1) and catalog (all 14 sites reservable) + fs.usda.gov ('14-day stay limit'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Los Padres NF campground in oak woodland beside Paradise Road in the Santa Ynez valley, run by the concessionaire Camp Los Padres. The Santa Ynez River is reached through a tunnel under Paradise Road; White Rock day-use area is under half a mile away. Sites 11 and 13 take 24 ft at most. The nearest dump station is at Cachuma Lake County Park, about 11 miles. --Claude",
+  "summary": "rec.gov API + catalog + availability + FS page read. 14 sites (was ~15), all reservable, RV to 40 ft (12 of 14 36 ft+); no hookups, flush toilets + water, no dump (11 mi); $40 -> $42 (rec.gov 2026-2028), double $82; year-round (was unknown); weekend 2 / holiday 3 minimums, max 14. Open, only fire-use restrictions. Not waterfront confirmed (river across Paradise Road via a tunnel). Pin OK (~85 m from centroid).",
+  "flags": [
+    "FEES: stored $40 -> $42 (rec.gov rate tables 2026, 2027, 2028: $42 single, $82 double). The FS page says '$40.00 per site, per night. Additional $2.00 weekend and holiday fees' - rec.gov written, FS figure in fees.note.",
+    "PEOPLE/VEHICLES conflict: rec.gov notice 'up to 8 people and 2 vehicles. Additional vehicles are $10'; FS page 'covers 6 people and 1 vehicle ... $10.00 additional charge per person, per night after 6 people ... $10.00 additional charge for 2nd vehicle'. rec.gov written; FS version in fees.note.",
+    "BOOKING: FS says '12 campsites are on the reservation system and (2 sites) are first-come'; rec.gov now lists all 14 as reservable - rec.gov used, fcfs left unset.",
+    "PHONE: 805-434-1996 (rec.gov facility_phone) -> 820-500-1099 (rec.gov notice: 'Camp Los Padres manages this campground ... call 820-500-1099'; the facility description also says '(820) 500-1099'). Santa Barbara Ranger District: 805-724-0079 or 805-967-3481.",
+    "WEBSITE: https://www.fs.usda.gov/r05/lospadres -> https://www.fs.usda.gov/r05/lospadres/recreation/paradise-campground (keep the rec.gov link).",
+    "WATERFRONT: not waterfront kept - the river is across Paradise Road, reached through a tunnel (rec.gov). Pin 34.54298,-119.81167 is ~85 m from the site centroid 34.54223,-119.81195 - kept.",
+    "OHV: rec.gov mentions the Camuesa OHV Route within 10 miles - general campground, not an OHV camp."
+  ]
+}

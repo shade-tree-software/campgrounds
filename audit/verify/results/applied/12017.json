@@ -1,0 +1,66 @@
+{
+  "id": 12017,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232286 (read 2026-11-27): 'dozens of single-family sites for tent or RV camping ... Flush toilets and drinking water are provided. No hookups are available. ... A dump station is available across the lake at Serrano Campground.'; 'sits at the base of Snow Summit Ski Resort at an elevation of 6,900 feet ... dense forest of fir, pine and oak'; 'While the campground can accommodate RVs, it is best situated for tent camping.'; notices 'RV Length: Limited turnaround space restricts RVS longer than 25 feet.', 'Mountain Top Recreation will be assessing a $8 additional vehicle fee per night on the second vehicle ... provided these vehicles are not joined to the first vehicle by a hitch and towed'; rules maxConsecutiveStay 14, reservationCutOff 1; rates Peak STANDARD NONELECTRIC $34 every season 2019-2028 (2026-04-17..10-17, 2027-04-16..10-23); facility_phone 909-866-8550",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232286 (read 2026-11-27): 47 sites, all reservable STANDARD NONELECTRIC (46 RV/Tent/Trailer, 1 RV/Small Tent); RV lengths 26 ft (43), 25 (3), 20 (1); centroid 34.23502,-116.88384",
+    "https://www.recreation.gov/api/camps/availability/campground/232286/month 2026-12, 2027-04, 2027-05 (read 2026-11-27): nothing in December; dates from 2027-04-16 available",
+    "https://www.fs.usda.gov/r05/sanbernardino/recreation/pineknot-campground (last updated November 25, 2026; read 2026-11-27): 'Site Closed'; 'There are 47 sites that are reservable through the Recreation.gov ... There are no first come/first serve sites.'; 'Reservations can be placed as late as 24 hours in advance'; 'Seasons of Use 04/17/2026 - 10/18/2026'; 'Single Site $34 - Holiday $34 - 8 person maximum / Camping fee includes entry for 1 vehicle. / Extra vehicle fee $8 per night.'; Mountaintop Ranger District (909) 382-2790; amenity boxes 'Restrooms are not available' / 'Potable water is not available' (the closed-season template; rec.gov describes flush toilets and drinking water)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 47, "max_rig_ft": 25},
+      "source": "recreation.gov 232286 notice ('Limited turnaround space restricts RVS longer than 25 feet') + catalog (47 sites, 20-26 ft), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 232286 ('No hookups are available'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": null, "potable_water": true, "dump": false},
+      "source": "recreation.gov 232286 ('Flush toilets and drinking water are provided ... A dump station is available across the lake at Serrano Campground'; amenity 'Flush Toilets'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-17", "closes": "10-18", "note": "2026 dates; 2027 runs April 16 to October 23 on the booking site."},
+      "source": "fs.usda.gov Pineknot ('Seasons of Use 04/17/2026 - 10/18/2026'; 'Site Closed') + recreation.gov rate season 2027-04-16..10-23, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 34,
+        "nightly_high": 34,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 8, "per": "night"},
+        "extra_person": {"max_people": 8}
+      },
+      "source": "fs.usda.gov Pineknot ('Single Site $34 - Holiday $34 - 8 person maximum ... Extra vehicle fee $8 per night') + recreation.gov rate tables 2026-2028 ($34), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232286",
+        "fcfs": "never",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -24},
+        "max_stay_nights": 14
+      },
+      "source": "fs.usda.gov Pineknot ('There are no first come/first serve sites'; 'as late as 24 hours in advance') + recreation.gov rules (maxConsecutiveStay 14, reservationCutOff 1), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "San Bernardino NF campground in fir, pine and oak at the foot of Snow Summit, on the edge of Big Bear Lake village, run by a concessionaire. Tight turnaround; the agency says it suits tents best. The nearest dump station is at Serrano Campground across the lake. --Claude",
+  "summary": "rec.gov API + catalog + availability + FS page read. 47 reservable sites (no FCFS), RVs over 25 ft restricted (catalog 20-26 ft; 23-ft rig fits); flush toilets (was vault), drinking water, no dump; $34 + $8 extra vehicle, 8 people; season Apr 17 - Oct 18 2026 (2027 Apr 16 - Oct 23), closed now; 24-h cutoff, 14-night max. Not waterfront confirmed. Pin ~230 m from the site centroid (kept). Phone 909-382-2600 -> 909-866-8550.",
+  "flags": [
+    "RIG: max_rig_ft 40 -> 25. rec.gov notice: 'RV Length: Limited turnaround space restricts RVS longer than 25 feet.'; catalog 26 ft on 43 sites, 25 on 3, 20 on 1. A 23-ft rig fits. rec.gov also says 'While the campground can accommodate RVs, it is best situated for tent camping.' - not an access warning.",
+    "TOILETS: vault_toilets true -> cleared, flush_toilets true (rec.gov 'Flush toilets and drinking water are provided'). The FS page's amenity boxes ('Restrooms are not available', 'Potable water is not available') appear with the 'Site Closed' off-season state.",
+    "PHONE: 909-382-2600 (Forest Supervisor's office) -> 909-866-8550 (rec.gov facility_phone, concessionaire). Mountaintop Ranger District: (909) 382-2790.",
+    "WEBSITE: add https://www.fs.usda.gov/r05/sanbernardino/recreation/pineknot-campground beside the rec.gov link.",
+    "WATERFRONT: not waterfront kept (forest above the village, lake ~0.8 km north; no water at the sites).",
+    "PIN: stored 34.23588,-116.88608 is ~230 m from the site centroid 34.23502,-116.88384 - under 250 m, kept; 34.23502,-116.88384 would sit among the sites."
+  ]
+}

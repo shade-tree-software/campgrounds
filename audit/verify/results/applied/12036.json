@@ -1,0 +1,65 @@
+{
+  "id": 12036,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232316 (read 2026-11-27): 'multiple single-family accessible campsites, available for tent and RV camping. ... Accessible flush toilets and drinking water are also available.'; 'sits at the confluence of Patrick Creek and the middle fork of Smith River'; notices 'Additional fees will be collected at the campground for more than one vehicle; A limit of one extra vehicle is allowed', 'There are no electricity, water or sewer hookups at the campground'; rules reservationCutOff 3; rate seasons Peak 2026-05-18..09-14, 2027-05-24..09-13, 2028-05-22..09-11: STANDARD NONELECTRIC $14; facility_phone 707-457-3131",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232316 (read 2026-11-27): 13 sites 001-013, all STANDARD NONELECTRIC RV/Trailer/Tent; 8 reservable, 5 not (004, 006, 008, 012, 013); RV lengths 40 ft (8), 45 (3), 38 (007), 30 (011); centroid 41.87195,-123.84701",
+    "https://www.recreation.gov/api/camps/availability/campground/232316/month 2026-11, 2026-12, 2027-04, 2027-05 (read 2026-11-27): 'Not Available' through the winter; May 2027 'NYR' (not yet released) on the reservable sites, 'Not Reservable' on the walk-up ones",
+    "https://www.fs.usda.gov/r05/sixrivers/recreation/patrick-creek-campground (read 2026-11-27): 'Site Closed / Seasonal Closure'; 'The campsites are situated on a flat about 30 feet above the river. From the campground, the river can only be viewed from sites 7, 8, 9, and 12 looking down over a fence and vertical bank. Short trails provide access to the river.'; 'Reservations are not required but recommended on summer weekends and holidays ... Walk-in campers can self-register at the entrance.'; 'Seasons of Use 5/17/25-9/19/25. Closed during winter months.'; 'Single Site: $14 per night / Additional Vehicle Fee: $5 per vehicle per night'; 'Potable water is not available at this site.'; Gasquet Ranger District (707) 457-3131; alerts: fireworks prohibition and 'Limited Sale Hours' only",
+    "Esri World_Imagery 400 m frame at 41.8720,-123.8470 with the rec.gov site points (read 2026-11-27): one loop under continuous conifer canopy between Hwy 199 (north) and the Middle Fork Smith River (south); the south-row sites (005-008) sit ~30 m from the channel; summer wetted channel ~15 m, ~25 m with the gravel bar"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 45},
+      "source": "recreation.gov campsite search for 232316 (13 sites, RV 30-45 ft), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 232316 notice ('There are no electricity, water or sewer hookups at the campground'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true},
+      "source": "recreation.gov 232316 ('Accessible flush toilets and drinking water are also available'; amenities Drinking Water, Flush Toilets), read 2026-11-27; the FS page's 'Potable water is not available' conflicts (flag)",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-18", "closes": "09-14", "note": "2026 dates; 2027 is posted as May 24 to September 13."},
+      "source": "fs.usda.gov Patrick Creek ('Closed during winter months'; 'Seasonal Closure') + recreation.gov rate seasons 2026-05-18..09-14 and 2027-05-24..09-13, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 14,
+        "nightly_high": 14,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 5, "per": "night", "max_vehicles": 2}
+      },
+      "source": "recreation.gov 232316 rate tables 2026-2028 ($14) + notice ('A limit of one extra vehicle is allowed') + fs.usda.gov ('Additional Vehicle Fee: $5 per vehicle per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232316",
+        "fcfs": "some_sites",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -72}
+      },
+      "source": "recreation.gov catalog for 232316 (8 reservable, 5 not: 004, 006, 008, 012, 013) + rules reservationCutOff 3 + fs.usda.gov ('Walk-in campers can self-register at the entrance'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Six Rivers NF campground in Douglas fir on Hwy 199 at the confluence of Patrick Creek and the Middle Fork Smith River, with CCC-built stone steps, walls and fire circles. The sites sit on a flat about 30 ft above the river; short trails lead down to a fishing platform and a small sandy beach. Sites 4, 6, 8, 12 and 13 are first-come. --Claude",
+  "summary": "rec.gov API + catalog + availability + FS page + imagery read. 13 sites (8 reservable, 5 walk-up), RV 30-45 ft; no hookups; flush toilets + drinking water (FS says no potable water - flag); $14 + $5 extra vehicle (one extra max); season ~May 18 - Sep 14 (2026; was unknown), closed now (seasonal). Not waterfront kept (sites 30 ft above the river over a vertical bank; river creek-size at the camp) - lead given. Phone '' -> 707-457-3131. Pin OK (~30 m).",
+  "flags": [
+    "WATERFRONT LEAD (not waterfront kept): FS page: 'The campsites are situated on a flat about 30 feet above the river. From the campground, the river can only be viewed from sites 7, 8, 9, and 12 looking down over a fence and vertical bank.' Imagery (Esri, 41.8717,-123.8477): the Middle Fork Smith's summer wetted channel by the south-row sites is ~15 m (~25 m with the gravel bar), so it is creek-size at the camp (<30 m); creekside fails on the ~9 m vertical bank (no easy walk down from the sites; access is by short trails). If AWH counts the Middle Fork as a river, sites 7, 8, 9 and 12 (all bookable, 38-45 ft; 8 and 12 first-come) would support riverview. Suggested evidence: 'FS page 2026-11-27: sites on a flat ~30 ft above the river, river seen only from 7, 8, 9, 12 down a fence and vertical bank; Esri: wetted channel ~15 m at the camp -> creek-size, bank fails creekside -> not waterfront.'",
+    "WATER conflict: rec.gov 'Accessible flush toilets and drinking water are also available' (amenity 'Drinking Water'); FS page 'Potable water is not available at this site.' rec.gov written (potable_water true).",
+    "SEASON: FS gives 2025 dates '5/17/25-9/19/25. Closed during winter months.'; rec.gov rate seasons 2026-05-18..09-14 and 2027-05-24..09-13 used.",
+    "PHONE: '' -> 707-457-3131 (Gasquet Ranger District, on the FS page and rec.gov facility_phone).",
+    "WEBSITE: https://www.fs.usda.gov/r05/sixrivers -> https://www.fs.usda.gov/r05/sixrivers/recreation/patrick-creek-campground (keep the rec.gov link).",
+    "PIN: stored 41.87194,-123.84667 is ~30 m from the site centroid 41.87195,-123.84701 - kept."
+  ]
+}
