@@ -1,0 +1,67 @@
+{
+  "id": 11881,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=labe (the data behind nps.gov/labe/planyourvisit/campgrounds.htm, read 2026-11-27): '43 sites available on a first-come, first serve basis'; 'Sites can accommodate tents, pickup campers, small trailers and motor homes up to 30 feet. Note: not all sites can accommodate motor homes'; 'designed primarily for tent camping but small (less than 35 ft long) RV and trailers can be accommodated at a few sites', rvMaxLength 30, trailerMaxLength 30; fees 'Sites are $20 per night, per site ... Holders of an Access or Senior pass receive a 50% discount' and 'We only accept contactless “Tap” credit/debit card payment for camping fees. No cash or check'; 'Loop B closes for the winter after the Thanksgiving holiday'; amenities flush toilets and potable water year round, showers none, dump station no, laundry no, camp store no, internet no, host seasonal; 'Maximum 8 persons per site, 2 vehicles or 3 motorcycles Maximum stay is 14 consecutive days in a 30-day period'; 'The campground typically only fills on summer weekends near holidays'; accessRoads 'Paved Roads - All vehicles OK'",
+    "https://developer.nps.gov/api/v1/parks?parkCode=labe (read 2026-11-27): 'Park Entrance is $25 per vehicle and is good for 7 days'",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=labe (read 2026-11-27): 'Park Phones are Down' (Nov 4-5, 2026) and the standing white-nose syndrome cave notice; no campground closure",
+    "https://www.nps.gov/labe/planyourvisit/campgrounds.htm (read 2026-11-27): campground regulations - self-registration permit within 30 minutes, 'A maximum of two vehicles or three motorcycles per campsite', rigs must stay on the site's pavement or buy the next site",
+    "https://www.recreation.gov/api/camps/campgrounds/10334752 + /rates + campsite catalog (read 2026-11-27): rates $20 standard all year (2026 peak 04-01 to 10-31 and first-come spans both $20), group $60; 43 standard nonelectric sites not reservable, 1 reservable group site (tent); 'A-Loop of the campground is open year-round and B-Loop closes in mid-November'; 'Each campsite driveway is paved with either back in or pull through available'; 'no showers or RV hookups'; notice 'An entrance pass is required in the park and while staying in the campground ... $25 per vehicle' and the 4-park annual pass $55"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026",
+                 "entrance": {"resident": 25, "nonresident": 25, "per": "vehicle_stay", "annual": 55},
+                 "extra_person": {"max_people": 8},
+                 "extra_vehicle": {"included": 2, "max_vehicles": 2},
+                 "note": "Camping is paid at the self-pay kiosk by contactless card only (no cash or cheques), or at the visitor center. The $25 vehicle entrance pass covers 7 days; the $55 annual pass covers Lava Beds, Whiskeytown, Lassen and Crater Lake. Read 2026-11-27."},
+      "source": "developer.nps.gov campgrounds + parks (entranceFees) + recreation.gov 10334752 rates and notices, read 2026-11-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "developer.nps.gov campgrounds fees ('Holders of an Access or Senior pass receive a 50% discount on their site'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "developer.nps.gov campgrounds (electricalHookups 0) + recreation.gov ('There are no showers or RV hookups available'; catalog water 'No'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 43, "max_rig_ft": 30, "pull_through": true,
+                 "note": "Paved spurs, back-in or pull-through. The campground is laid out mostly for tents; only a few sites take an RV or trailer, and a rig overhanging its spur must pay for the next site."},
+      "source": "developer.nps.gov campgrounds (totalSites 43; rvMaxLength 30; 'designed primarily for tent camping but small ... RV and trailers can be accommodated at a few sites') + recreation.gov description + nps.gov regulations, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false},
+      "source": "developer.nps.gov campgrounds amenities (flush toilets and potable water year round; showers none; dump, laundry, camp store, internet no), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "recreation.gov 10334752 ('A-Loop of the campground is open year-round and B-Loop closes in mid-November and reopens in the spring') + NPS ('Loop B closes for the winter after the Thanksgiving holiday'), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "developer.nps.gov alerts for labe (no campground closure), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "max_stay_nights": 14,
+                 "note": "Self-registration at the kiosk within 30 minutes of taking a site. The campground usually fills only on summer weekends near holidays; when it is full, staff point campers to campgrounds within 30 minutes and to dispersed camping on the Modoc National Forest just south. Only the tent-only group site books on recreation.gov."},
+      "source": "developer.nps.gov campgrounds (reservationInfo, additionalInfo, regulationsOverview) + recreation.gov rules ('reservationCutOff ... Not Reservable' for standard sites), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Lava Beds National Monument's only developed campground, in juniper and sagebrush half a mile from the visitor center and the Cave Loop. Loop A stays open all winter and Loop B closes after Thanksgiving. Caving needs a free permit from the visitor center. --Claude",
+  "summary": "NPS API (campgrounds/parks/alerts) + nps.gov regulations + rec.gov facility/rates/catalog read. $20 all year, FCFS only (kiosk, contactless card only), 43 sites, motorhomes/trailers to 30 ft at a few sites, no hookups/showers/dump; A loop year-round, B loop closes after Thanksgiving; $25/vehicle 7-day entrance; Senior/Access 50%. Not waterfront (unchanged). Pin within ~35 m of the NPS point.",
+  "flags": [
+    "FIT CAVEAT: NPS says the campground is 'designed primarily for tent camping but small (less than 35 ft long) RV and trailers can be accommodated at a few sites' and 'not all sites can accommodate motor homes'. A 23-ft rig fits under the 30-ft limit; with first-come only and few RV-capable spurs, arriving early on a summer weekend matters. Not a drop.",
+    "ENTRANCE: $25 per vehicle for 7 days is charged on top of camping ('An entrance pass is required in the park and while staying in the campground'); written as entrance per vehicle_stay with the $55 4-park annual pass. Lava Beds is not one of the 11 parks with the $100 non-resident surcharge in the federal:nps row.",
+    "PHONE: 530-667-8113 unchanged (NPS posted a Nov 4-5, 2026 phone outage; email labe_information@nps.gov). WEBSITE unchanged.",
+    "PAYMENT: contactless 'Tap' card only at the kiosk - no cash or cheques (in fees.note)."
+  ]
+}

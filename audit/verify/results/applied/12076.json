@@ -1,0 +1,62 @@
+{
+  "id": 12076,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232758 (read 2026-11-27): 'Lakeshore East sits along the shore of the Sacramento Arm of Shasta Lake. The facility is partially shaded by oak and pine ... offers direct access to the lake from a number of sites. Walk-ins are accepted year-round'; 'Each site has a picnic table, raised fire ring and paved parking spur. Two yurts'; 'there are no electrical hookups or dump stations for trailers. Standard single sites can accommodate up to 8 people ...; double sites can accommodate up to 16 people'; 'Drinking water and flush toilets are provided'; 'Lake Shasta sits at an elevation of 1,067 feet'; notices 'Average maximum trailer size is 30 feet', 'Extra Vehicle fee of $12 per night', 'Campsites: Check-in time 3 P.M. and Check-out 2 P.M.'; rules minWeekendStay 2, minHolidayWeekendStay 3, scanAndPay 1",
+    "https://www.recreation.gov/api/camps/campgrounds/232758/rates (read 2026-11-27): 'Peak Season' 2026-05-09 to 2026-09-11 standard nonelectric $32, double $64, yurt $105; 'First-come, First-served Season' 2026-01-01 to 2026-05-08 and the walk-in span 2026-09-12 to 2026-12-31 standard $30, double $60, yurt $100; 2027 peak 05-07 to 09-08 at the same rates",
+    "recreation.gov campsite catalog (api/search/campsites + api/camps/campsites/<id>, read 2026-11-27): 25 sites 002-026 - 23 standard nonelectric (22 permit RV/trailer, 011 tent-only), 2 yurts (020, 022); 6 not reservable (007, 011, 021, 022, 023, 025); 23 back-in, 2 pull-through; max vehicle length 45 ft on 22 sites; no water/sewer/electric attributes; no Proximity to Water tags; field positions 40.87102-40.87499, -122.38837 to -122.38895",
+    "https://www.fs.usda.gov/r05/shasta-trinity/recreation/lakeshore-east-campground (last updated August 6, 2025, read 2026-11-27): 'Seasons of Use Open Year round'; 'Single Site: $28 per night / Yurt Site: $95 per night / Double Site: $58 per night'; 'Additional vehicles, if space allows, will be charged $12 per night'; 'Campground Host available during the reservation season'; 'Restrooms Flush toilet(s)'; 'Potable water is not available at this site'; Shasta Lake Ranger Station (530) 275-1587",
+    "https://www.fs.usda.gov/r05/shasta-trinity/alerts (read 2026-11-27): no alert for Lakeshore East",
+    "Esri World_Imagery (sat.py 500 m frame, zoom-19 tile, satpts.py frames with the 25 catalog field positions plotted) + USGS 3DEP transects due east from every site (epqs.nationalmap.gov), read 2026-11-27: lidar water surface 311.6 m; the 325.2 m (1,067 ft) full-pool contour lies 25-68 m east of the pads, which sit 3-8 m above it; a continuous band of pine and oak, ~15-25 m deep, stands between every site row and the bare drawdown apron"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 32, "currency": "USD", "checked": "2026",
+                 "extra_vehicle": {"included": 1, "amount": 12, "per": "night"},
+                 "extra_person": {"max_people": 8},
+                 "note": "Single sites $32 a night in the reservation season (May 9 to September 11 in 2026) and $30 first-come the rest of the year. Double sites (two vehicles) are $64 and $60, and the two yurts $105 and $100. The forest page still shows older prices ($28 single, $58 double, $95 yurt). Read 2026-11-27."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232758/rates + campground notices ('Extra Vehicle fee of $12 per night'), read 2026-11-27; rec.gov outranks the FS page's $28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232758 ('there are no electrical hookups or dump stations for trailers') + catalog (every site STANDARD/SHELTER NONELECTRIC), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 23, "max_rig_ft": 30, "pull_through": true,
+                 "note": "23 campsites on paved back-in spurs (two pull-throughs), 22 of them taking an RV or trailer, plus two yurts."},
+      "source": "recreation.gov campsite catalog for 232758 + notice 'Average maximum trailer size is 30 feet', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "dump": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232758 ('Drinking water and flush toilets are provided'; 'no ... dump stations') + FS page ('Flush toilet(s)'), read 2026-11-27; potable water left unset because the FS page says 'Potable water is not available at this site'",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "FS page 'Site Open' + forest alerts page (no Lakeshore East alert), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites",
+                 "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+                 "season": {"opens": "05-09", "closes": "09-11"},
+                 "note": "Reservations are taken for the summer season only (about the second weekend of May to just after Labor Day; the 2027 span is May 7 to September 8). Six sites are first-come all year, and the rest of the year the whole campground is first-come, paid on site with Scan & Pay."},
+      "source": "recreation.gov rate table seasons ('Peak Season' vs 'First-come, First-served Season'), facility rules (minWeekendStay 2, minHolidayWeekendStay 3, scanAndPay) and catalog (6 non-reservable sites), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Shasta-Trinity NF campground on the Sacramento Arm of Shasta Lake at Lakehead, under oak and pine. The sites sit back from the shore behind a band of trees, with paths down to the water from several of them. --Claude",
+  "summary": "rec.gov facility/rates/catalog + FS page + alerts + imagery/3DEP read. $30 (first-come off-season) to $32 (summer reservation season) single; doubles $60-64; extra vehicle $12. 23 sites (22 RV) + 2 yurts, no hookups, no dump; reservations May 9-Sep 11 only, FCFS otherwise (Scan & Pay), 6 sites FCFS always; 2-night weekend / 3-night holiday minimums. Lakefront -> LAKEVIEW proposed (nearest pads 25-45 m from full pool behind a tree band). Pin ~360 m south of the sites -> 40.8730,-122.3886. Potable water conflict (rec.gov yes, FS page no).",
+  "flags": [
+    "WATERFRONT (lakefront -> LAKEVIEW proposed): the stored evidence rests on 'peninsula sites near the shoreline with open drawdown apron' - the drawdown apron is lake bed below full pool and cannot earn the value. Measured instead to the full-pool line: rec.gov gives Shasta Lake at 1,067 ft (325.2 m; ~326 m if the figure is NGVD29 against 3DEP's NAVD88). 3DEP transects east from each rec.gov field position put the closest pads at 25 m (site 003, pad 328.4 m, 40.87467,-122.38852), 38 m (002), 40 m (005, 017), 43 m (004, 016) and 45 m (015), 3-4.5 m above the line over a gentle slope; the other sites are 48-68 m back and 5-8 m up. Imagery shows a continuous belt of pine and oak, ~15-25 m deep, between every site row and the shore, so no site sits over open ground to the high-water edge. rec.gov's own wording is 'direct access to the lake from a number of sites' (paths), and the catalog carries no 'Waterfront' tags. No --AWH value involved.",
+    "PIN MOVE ~360 m (suggested): stored 40.86980,-122.38950 is a cluster of buildings and parking ~135 m south of the southernmost site (026 at 40.87102,-122.38883). The 25 rec.gov field positions run 40.87102-40.87499 along -122.3884 to -122.3890; suggest 40.8730,-122.3886 (middle of the loop). The FS page's own point is 40.87224,-122.38754 (near the shore, inside the span).",
+    "POTABLE WATER CONFLICT: rec.gov says 'Drinking water and flush toilets are provided'; the FS page (updated 2025-08-06) says 'Potable water is not available at this site'. potable_water left unset.",
+    "FEES: the FS page's $28 single / $58 double / $95 yurt is older than rec.gov's current $30-32 / $60-64 / $100-105 (rec.gov fees outrank). The public boat launch nearby charges a separate $17 daily fee.",
+    "SITES: count 24 -> 23 (25 catalog units = 23 campsites + 2 yurts; 011 is tent-only). max_rig_ft kept at 30 from rec.gov's 'Average maximum trailer size is 30 feet', although the per-site Max Vehicle Length reads 45 ft on 22 sites (an average-trailer notice and a per-site field disagree; the smaller is kept).",
+    "PHONE / WEBSITE: unchanged (530-275-1587, Shasta Lake Ranger Station; rec.gov page). rec.gov also links 'Shasta Recreation Company' (shastatrinitycamping.com), whose campground list was not readable as text; the FS page names no concessionaire and says a host is present in the reservation season.",
+    "NEIGHBOUR (not vetted): a private RV park with a pool adjoins the campground's north end (~40.8750,-122.3893); nothing in the DB within 1.7 km besides Antlers (11876). Name not established - mention only."
+  ]
+}

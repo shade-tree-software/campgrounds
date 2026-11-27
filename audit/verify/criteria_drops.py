@@ -681,6 +681,8 @@ DROPS = {
     12404: ("2026-11-27", "operator discourages nightly guests ('call to see if we have room' - Cavens Landing rule)", "p3-637, read 2026-11-27: boladoparkeventcenter.com/rv-camping: 'Please call (831) 628-3421 to ask about current openings. Weekday business hour check in is required.'; no booking engine; weekly $325 and monthly $790 by application sold alongside $48 nights; no restrooms"),
     12453: ("2026-11-27", "private park over US$50 a night, no exception (price gate)", "p3-638, read 2026-11-27: cariboucrossroads.com: '$79 per night 35amps and under $89 per night 50amps or over (not including tax and fees)', no cheaper season; not a Good Sam Park, no member discount; gateways.py: none within 40 km (Lassen Volcanic NP 54 km)"),
     12042: ("2026-11-27", "agency says a high-clearance vehicle is needed on the road in (EKKO is not 4WD / high-clearance)", "p3-642, read 2026-11-27: fs.usda.gov Howard Lake Campground page: 'A high-clearance vehicle is needed to cross the creek on one section of the road into Howard Lake.'; 4 sites, closed for the season 11/9/2026"),
+    15406: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-643, read 2026-11-27: Google 3.8 (308 reviews); koa.com rates unread (Cloudflare)"),
+    12406: ("2026-11-27", "no live web presence (dead domain, 'Coming Soon'); no current posted price", "p3-643, read 2026-11-27: operator domain dead / 'Coming Soon'; Hipcamp listing unclaimed; only price a 2023 Campendium $35; advertises 'long term vacation rentals'"),
 }
 
 if __name__ == "__main__":

@@ -1,0 +1,46 @@
+{
+  "id": 15406,
+  "checked": "2026-11-27",
+  "sources": [
+    "Google Maps place panel (headless browser, read 2026-11-27): 'Lake Tahoe KOA Journey', 760 US-50, South Lake Tahoe, CA 96150, +1 530-577-3693, rating 3.8 over 308 reviews",
+    "https://web.archive.org/web/20260826031031/https://koa.com/campgrounds/lake-tahoe/ (koa.com itself answers a Cloudflare 'Performing security verification' page to the headless browser at the booking step - not worked around): 'alongside Echo Creek'; 'shaded full- and partial-hookup RV sites'; 'Lake Tahoe KOA is open year-round'; '30 Max Amp', \"65' Max Length\", 'Wi-Fi', 'Pool (5/22 - 9/1)'; reviews 'Small, cramped sites and noisy highway', 'a little tight for class A motorhome', 'Had a spot near the creek'",
+    "https://web.archive.org/web/20250602230729/https://koa.com/campgrounds/lake-tahoe/amenities/ : '30 Max Amp', \"65' Max Length\", '24/7 Laundry Facility', 'Camp Store', 'Creek', 'Showers', 'Limited WIFI'; 'Open All Year'",
+    "https://web.archive.org/web/20250602230729/https://koa.com/campgrounds/lake-tahoe/general-information/ : 'Site Guarantee - Lock a specific site for $50 per reservation'; RV cancellation 7 days; store hours May 1-November 1 only",
+    "https://web.archive.org/web/20250602230737/https://koa.com/content/campgrounds/lake-tahoe/sitemap/05148sitemap4016ce57-b843-4e9f-ba75-4587263382d1.png (Guest Services Guide map, (c) 2024, 'CAMPSITES NOT DRAWN TO SCALE'): Echo Creek along the south edge beside sites 150-163 and 354-363; full/partial/no-hookup key; dump station; reservations (800) 562-3477",
+    "https://koa.com/campgrounds/lake-tahoe/reserve/ (headless browser, 2026-11-27): step 1 read (RV / Lodging / Tent Site; 1-530-577-3693); step 2 (site types and prices) returned Cloudflare security verification for every date tried - unread, so the stored $100-127 (read 2026-10-19) is not re-confirmed",
+    "audit/price_research/gateways.py 38.84594,-120.02884: 'Lake Tahoe (South) (attraction, 11 km)'",
+    "Esri World_Imagery (sat.py 440 m frame) + USGS 3DEP, read 2026-11-27: sites under continuous pine canopy between US-50 and the creek side; Echo Creek not legible; a 3DEP low (1944.2 m vs 1948-1950 m around) at 38.8448,-120.0296 inside the park may be its channel"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 30, "water": true, "sewer": true},
+      "source": "https://web.archive.org/web/20250602230729/https://koa.com/campgrounds/lake-tahoe/amenities/ ('30 Max Amp') + 2026-08-26 capture of the campground page ('full- and partial-hookup RV sites'); 2024 site map key",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true, "max_rig_ft": 65, "note": "Shaded sites under pines in a 100s, 200s and 300s section; reviewers call them small and tight for big rigs."},
+      "source": "Wayback captures of koa.com/campgrounds/lake-tahoe/ (2026-08-26), /amenities/ and /map/ (2025-06-02)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "camp_store": true, "dump": true, "wifi": true},
+      "source": "https://web.archive.org/web/20250602230729/https://koa.com/campgrounds/lake-tahoe/amenities/ + 2024 Guest Services Guide map (dump station)",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://web.archive.org/web/20260826031031/https://koa.com/campgrounds/lake-tahoe/ ('Lake Tahoe KOA is open year-round'; 'Open All Year')",
+      "method": "manual"
+    }
+  },
+  "note": "A KOA Journey on US-50 at Meyers, about 4 miles from Lake Tahoe's south shore, in pines beside Echo Creek; sites run small, and the highway is audible. --Claude",
+  "summary": "koa.com booking step 2 behind Cloudflare verification (unread); park pages read from 2025-2026 Wayback captures; Google read. GOOGLE 3.8 over 308 reviews = automatic DROP CANDIDATE (under 4.0 with 25+). Stored $100-127 not re-confirmed; price gate lifted anyway by gateway Lake Tahoe (South) 11 km. Year-round, 30-amp max, 65-ft max, full and partial hookups, laundry/store/showers/wifi. Echo Creek along the south edge (2024 site map: sites 150-163, 354-363) - possible creekside, unconfirmable under canopy; left not waterfront. Phone and website unchanged.",
+  "flags": [
+    "DROP CANDIDATE (Google): Google Maps panel 'Lake Tahoe KOA Journey' 3.8 over 308 reviews (read 2026-11-27) - under 4.0 with 25+ reviews is the automatic drop. Review themes on koa.com: 'Small, cramped sites and noisy highway', 'a little tight for class A motorhome'.",
+    "PRICE: koa.com's step 2 returned Cloudflare 'Performing security verification' every time (not solved or worked around), so the stored $100-127 (koa.com, 2027-05-18, read 2026-10-19) is unconfirmed and no cheaper shoulder night could be looked for. Price gate: over US$50, but gateways.py finds 'Lake Tahoe (South)' at 11 km, so the gate is lifted; no Good Sam check needed for that reason.",
+    "WATERFRONT (possible creekside, not proposed): koa.com says the park sits 'alongside Echo Creek' and lists 'Creek' as an amenity; a reviewer 'had a spot near the creek'; the 2024 Guest Services Guide map ('CAMPSITES NOT DRAWN TO SCALE') draws Echo Creek along the south edge against sites 150-157 (no hookups), 158-163 and 354-363. Imagery is solid pine canopy and the creek is not legible, so distance can't be measured; per the canopy rule this stays not waterfront unless AWH confirms. Candidate pads: the south row (around 38.8448,-120.0296, where 3DEP shows a 4-6 m low that may be the channel).",
+    "LONG-STAY tests: a KOA Journey selling RV nights online year-round; an 'Extended Stays' option exists but nightly booking is the norm - passes.",
+    "SITE GUARANTEE: a specific site costs $50 extra per reservation (optional; not in the nightly rate).",
+    "PHONE 530-577-3693 and WEBSITE https://koa.com/campgrounds/lake-tahoe/ unchanged (Google panel and koa.com agree). Pin 38.84594,-120.02884 vs KOA's posted 38.845986,-120.029284: ~40 m, fine."
+  ]
+}

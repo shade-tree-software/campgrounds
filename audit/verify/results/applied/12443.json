@@ -1,0 +1,58 @@
+{
+  "id": 12443,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/tahoe/recreation/logger-campground (last updated October 13, 2026, read 2026-11-27): 'Site Closed' (out of season); 'over 240 single, double and triple-family sites. Sites are in a sage and pine forest on small hills above Stampede Reservoir. All sites are within walking distance to the reservoir'; 'accessible vault toilets and drinking water'; 'Roads within campground are paved. Boat ramp adjacent to campground ... Dump station adjacent to campground'; 'Most single family sites and group campgrounds can be reserved at www.recreation.gov'; 'Seasons of Use May 27 - October 10'; 'Single Site: $23 per night / Double Site: $49 per night / Triple Site: $75 per night'; 'Non-street legal OHVs must be trailered from the campground to the OHV trails'",
+    "https://www.fs.usda.gov/r05/tahoe/alerts (read 2026-11-27): no Logger, Stampede or Dog Valley alert",
+    "https://www.recreation.gov/api/camps/campgrounds/232858 + /rates + campsite catalog (read 2026-11-27): phone '(530)587-3558'; 'Between 05/21/2027 and 09/25/2027 this location is staffed. Please call (530) 606-3978'; 'The dump station is a quarter mile from the campground entrance and is $10 per dump, credit card only'; operated by Lake Tahoe Hospitality LLC; notices 'One vehicle included with a single site reservation ... Additional vehicle fee cost is $10/each per night'; rules hasTaxes, maxConsecutiveStay 14; rates Peak Season 2026-05-22 to 2026-09-26 and 2027-05-21 to 2027-09-25: STANDARD NONELECTRIC $23, double $49, triple $75; facility amenities include 'Waterfront Sites', 'Lake Access'; catalog 202 sites (196 reservable), all STANDARD NONELECTRIC but one tent-only, 153 single / 48 double / 1 triple, Driveway Surface Paved, 200 back-in + 2 pull-through, Max Vehicle Length 15 (5), 20 (6), 25 (8), 30 (32), 34-50 (151), Max Num of People 6 per single site",
+    "Esri World_Imagery (satpts.py 1.3 km and 440 m frames with all 201 catalog positions plotted; reservoir drawn down with a bare bathtub ring below the tree line) + USGS 3DEP transects (epqs.nationalmap.gov), read 2026-11-27: the north loops' nearest sites (090, 092, 094) are ~50-60 m from the treeline/high-water edge through a continuous pine stand; pad 092 (39.46909,-120.12380) 1818.1 m, ground 1813.9 m at 50 m west and 1812.9 m at 60 m (satellite altimetry on DAHITI puts the 2018-2026 high at ~1813.4 m); site 084 still 1813.9 m 100 m north"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 23, "nightly_high": 23, "currency": "USD", "checked": "2026",
+                 "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+                 "extra_person": {"max_people": 6},
+                 "note": "$23 for a single site; double sites (two families) are $49 and the one triple $75. Tax is added. The dump station near the entrance is $10 a use, card only."},
+      "source": "recreation.gov 232858 rates (Peak Season 2027-05-21 to 09-25: $23 / $49 / $75) + notices + rules hasTaxes + facility text; FS page fees agree, read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov catalog (202 sites, all NONELECTRIC, no water/sewer attributes), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 202, "max_rig_ft": 50, "pull_through": true,
+                 "note": "Most sites take 40 ft; about 19 short sites are capped at 15-25 ft."},
+      "source": "recreation.gov campsite catalog 232858 (202 sites; Max Vehicle Length 15-50, 121 at 40; 2 pull-through), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "FS page ('accessible vault toilets and drinking water', 'Dump station adjacent to campground') + recreation.gov ('vault toilets and drinking water'; dump 'a quarter mile from the campground entrance'), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "FS alerts page (no Logger alert); the FS page's 'Site Closed' is the off season, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14,
+                 "season": {"opens": "05-21", "closes": "09-25"}},
+      "source": "recreation.gov 232858 rates (Peak Season 2027-05-21 to 09-25) + catalog (196 of 202 reservable) + rules maxConsecutiveStay 14; FS page ('Most single family sites ... can be reserved'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Large Tahoe NF campground run by a concessionaire on the south shore of Stampede Reservoir, with six loops among Jeffrey pines on low hills above the water; a shoreline trail, the Captain Roberts boat ramp and an amphitheater are close by. OHVs must be trailered to the trails. --Claude",
+  "summary": "FS page + alerts + rec.gov facility/rates/catalog + imagery/3DEP read. $23 single (double $49, triple $75), extra vehicle $10, tax; 202 sites (FS says 240+), most to 40 ft, 2 pull-through, paved; vault toilets, water, dump nearby ($10); rec.gov, some FCFS, 14-night max. Not waterfront kept (closest sites 50-60 m back through a pine stand). SEASON CONFLICT: manual 05-27..10-10 (FS) vs rec.gov's 2026/2027 season 05-22..09-26 / 05-21..09-25 - not overwritten. Pin at the entrance ~380 m from the loops' centre. Phone '' -> 530-587-3558.",
+  "flags": [
+    "SEASON CONFLICT (manual season not overwritten): stored 05-27..10-10 comes from the FS page ('Seasons of Use May 27 - October 10', page updated 2026-10-13). recreation.gov sells the season 2026-05-22 to 2026-09-26 and 2027-05-21 to 2027-09-25, and says the site is staffed 05/21/2027-09/25/2027 and unstaffed from 09/27/2026. There has been no first-come season after the reservable one since 2019 (2019-09-30 to 10-13). The FS dates look stale: rec.gov suggests about 05-21..09-25.",
+    "WATERFRONT: not waterfront kept. recreation.gov lists 'Waterfront Sites' and 'Lake Access' among its facility amenities, and the FS page says 'All sites are within walking distance to the reservoir'. On imagery with all 201 positions plotted, though, the nearest sites (090, 092, 094 at the north loop's tip, 39.4691,-120.1238) are ~50-60 m from the tree line and high-water edge through a continuous pine stand. 3DEP: pad 092 is at 1818.1 m and the ground is 1813.9 m 50 m west; the reservoir high is ~1813.4 m. No named site is within ~50 m over open ground, and the pine band is too thick to give a view.",
+    "PIN ~380 m (suggested): stored 39.46434,-120.12144 is the campground entrance and fee station on Stockrest Springs Road (rec.gov's facility point is 45 m away). The nearest site is 166 m north and the loops' centre is ~380 m NW. Suggest 39.4667,-120.1246, the centroid of the 201 catalog positions. The loops span about 1 km on one entrance road, so this is not a split.",
+    "PHONE: '' -> 530-587-3558 (Truckee Ranger District, rec.gov facility phone). In season the concessionaire is at (530) 606-3978. Website unchanged.",
+    "COUNT: the rec.gov catalog has 202 sites; the FS page says 'over 240' (site numbers run to 252). Count set from the catalog.",
+    "FIT: about 19 sites are capped at 15-25 ft; 151 take 34 ft or more.",
+    "OHV: trailered access to OHV trails only, and riding inside the campground is prohibited. It is a general campground, not an OHV staging camp: flag only."
+  ]
+}

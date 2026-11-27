@@ -1,0 +1,12 @@
+# p3-643 notes
+- 11774 Lake Casitas: DONE. $50-92; lakefront kept on Fox F14-40 even (3DEP 2 m above 567 ft); pin Mallard->Fox 1.37 km; website dead->casitaswater.gov/camping; phone 805-649-1122. Booking site human-verification.
+- 11775 Lake McSwain DONE: lakefront kept (A loop lake side), Campspot, $38-65, phone 855-800-2267
+- 11778 Lake San Antonio NS DONE: lakefront->lakeview proposed, FCFS only, $45-55, open
+- 11780 Lake Skinner: rivcoparks.org via headless (accordions need DOM textContent); brochure PDF fetchable by in-page fetch; reserve.rivcoparks.org = human check. FAQ 'closest sites 277-298'; lakeview kept on DEM line of sight only (flagged). Phone 951-926-1541.
+- 15406 Lake Tahoe KOA: koa.com step 2 = Cloudflare with the required UA (no quote); Wayback 2025-26 captures carry amenities + 2024 site map; Google 3.8/308 -> DROP candidate; Echo Creek possible creekside under canopy.
+- 12406 Lakeridge: DROP candidate - dead domain, new domain 'Coming Soon', no nightly rate/booking, long-term vacation rentals + MH-park imagery; Google 4.3/61, phone 559-902-4500.
+- 12076 Lakeshore East: rec.gov $30-32 (summer reservations only, FCFS rest of year), 23 sites no hookups; lakefront -> lakeview proposed (25-45 m to full pool behind tree band); pin ~360 m; potable-water conflict rec.gov vs FS. --done
+- 11881 Lava Beds Indian Well: $20 FCFS only, 43 sites, few take RVs (30 ft), A loop year-round; entrance $25/vehicle/7 days. --done
+- 12162 Leavitt Meadows: $28 FCFS, under-24-ft RVs (tight), May 16-Sep 14; riverview -> not waterfront (creek-sized, sites 20-46 m back & 6 m up), creekside lead SE loop; pin 150 m; 2nd website 404. --done
+- 11656 Leo Carrillo: $45 / $60 electric, 128 units 31 ft back-in, electric 0 -> 50 (20/30/50 A), year-round, max stay 15; not waterfront kept (PCH between); phone 8143 -> 8144; old 2021 closure order superseded. --done
+- 12443 Logger: $23 single, 202 sites to 40-50 ft, rec.gov + some FCFS; not waterfront kept (50-60 m through pines); SEASON CONFLICT manual 05-27..10-10 vs rec.gov 05-21..09-25 (not overwritten); pin entrance ~380 m; phone '' -> 530-587-3558. --done
