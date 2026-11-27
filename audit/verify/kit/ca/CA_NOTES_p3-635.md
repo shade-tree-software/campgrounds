@@ -1,0 +1,12 @@
+- 11825 WRITTEN: lakeview kept (~300 m); pin 375 m; equestrian mixed (keep w/ caveat); $39-42
+- 12439 WRITTEN: $50-65 FY26/27, Itinio captcha unread, phone/website
+- 12466 WRITTEN: Park With Us 50/70 RV bookable, $39.50, 4.7/130, not wf, note fixed (no beach trail)
+- 11827 WRITTEN: Ventura County, $41-53, Itinio, phone/website from empty, horses unsupported
+- 12401 WRITTEN: FCFS, rec.gov info-only 246818, 106 sites, Oct15-Apr12, phone
+- 11688 WRITTEN: temp closed (high tide 10/8/26), 59 sites/34 web, coastal dunes kept w/ caveat, phone 8144
+  (11688 revised: waterfront coastal dunes -> bayfront recommended per Doheny precedent)
+- 12429 WRITTEN: Topaz Lake RV Park $46/60/49, 54 FHU 30A, phone/text, Mar-Oct 10, G 4.4/168, long-stay pass w/ caveat (monthly/weekly regulars), lakefront kept sites 15-21
+- 12403 WRITTEN: Tuttle Creek FCFS only (reservable->false), $12, 83 sites, water/dump off till May 2027, creekside kept (N row 4-17), 2 horse-corral sites caveat
+- 11922 WRITTEN: Upper Pines all year $36, 236 sites, rec.gov 5 mo on 15th, 7-night max summer, free dump, phone -> 209-372-8502, not waterfront kept
+- 11713 WRITTEN: Van Damme open, winter 1-13 FCFS only, $45, pads 27 (7=35), 10-ft temp bridge caveat, creekside kept low-conf, phone -> 937-0851
+- 11838 WRITTEN: Swimmers Delight 30 sites FCFS $30+$15 elec cash, electric 0 wrong, website+phone fixes, not waterfront kept
