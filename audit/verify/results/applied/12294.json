@@ -1,0 +1,64 @@
+{
+ "id": 12294,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.fs.usda.gov/r05/inyo/recreation/big-pine-creek-campground (last updated 2026-09-28, read 2026-11-27): 'Site Open'; 'Anticipated closing date October 26, 2026.'; 'This traditional family campground adjacent to Big Pine Creek has 30 campsites'; 'Electrical hookups not available. This is a dry campground, no water.'; 'Maximum stay 14 days'; 'America the Beautiful Senior and Access Passes are accepted for half priced camping'; 'Single Site: $26 per night'; 'Additional Vehicle Fee: $10 per vehicle per night'; office 'White Mountain Public Lands Information Center ... Phone: (760) 873-2501'; Lat/Long 37.125068,-118.435244; 'Vault toilet(s)'; 'Potable water is not available at this site.'",
+  "https://www.recreation.gov/api/camps/campgrounds/232305 (read 2026-11-27): 'Some campsites boast creek-front access, and each site accommodates a maximum of six campers. Vault toilets are provided'; 'Campsites are perched along the cool, fish-filled waters of Big Pine Creek'; notices 'Electric hookups are not available', 'This is a dry campground, no water.', 'One vehicle per single site is included with your reservation. Most sites can accommodate 1 extra vehicle ... charged a per night fee'; 'For facility specific information, please call (760) 872-4552'; rules maxConsecutiveStay 14, minWeekendStay 2 ('Ignore Holidays'), minHolidayWeekendStay 3 ('softAny')",
+  "https://www.recreation.gov/api/camps/campgrounds/232305/rates (read 2026-11-27): Peak Season 2026-04-17 to 2026-10-24 and 2027-04-16 to 2027-10-23, STANDARD NONELECTRIC 26, TENT ONLY 26",
+  "recreation.gov campsite catalog 232305 (search API, read 2026-11-27): 30 sites - 21 reservable STANDARD NONELECTRIC, 5 non-reservable STANDARD (001-005), 4 reservable TENT ONLY (009, 012, 016, 018); paved; RV max length 25-35 ft at 006, 008, 014, 020-027, 029, 030, 30-45 ft at 001-005 (004: 45), 20 ft at 007, 010, 011, 013, 015, 017, 028, 15 ft at 019",
+  "Esri World_Imagery and World_Topo_Map at 37.12565,-118.4332 (200 m half-width) with the catalog site points, viewed 2026-11-27: Big Pine Creek (topo line) runs along the north edge of the campground inside a continuous belt of pines; sites 029, 024, 022, 021 sit ~6-10 m from the creek line and 020 ~15 m, north of the campground road with nothing between; the other sites are south of the road"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026-11",
+              "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+              "extra_person": {"max_people": 6}},
+   "source": "recreation.gov rates 232305 (Peak 2026/2027 $26) + FS page ('Single Site: $26 per night', 'Additional Vehicle Fee: $10 per vehicle per night') + rec.gov ('One vehicle per single site is included', 'maximum of six campers'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232305", "fcfs": "some_sites", "max_stay_nights": 14,
+              "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+              "note": "25 of the 30 sites are reservable; 001-005 are first come. The three-night holiday-weekend minimum is a soft rule that may be relaxed for a same-day booking."},
+   "source": "recreation.gov 232305 rules (minWeekendStay 2, minHolidayWeekendStay 3 softAny, maxConsecutiveStay 14) + campsite catalog (001-005 not reservable), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-16", "closes": "10-23", "note": "Mid-April to late October (2027 recreation.gov season); the Forest Service gave October 26 as the 2026 closing date."},
+   "source": "recreation.gov rates 232305 (Peak Season 2027-04-16 to 10-23) + FS page ('Anticipated closing date October 26, 2026'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 30, "max_rig_ft": 45, "note": "26 RV/trailer sites and 4 tent-only. 18 take a rig of 25 ft or more (006, 008, 014, 020-027, 029, 030 reservable; 001-005 first come); 007, 010, 011, 013, 015, 017, 019 and 028 are 15-20 ft."},
+   "source": "recreation.gov campsite catalog 232305 (per-site RV max length), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": false},
+   "source": "FS page ('Vault toilet(s)'; 'Potable water is not available at this site.') + rec.gov notice ('This is a dry campground, no water.'), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0},
+   "source": "FS page ('Electrical hookups not available') + rec.gov notice ('Electric hookups are not available'), read 2026-11-27",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {"interagency_senior_access": true},
+   "source": "FS page ('America the Beautiful Senior and Access Passes are accepted for half priced camping'), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Inyo NF campground on Big Pine Creek under pines, aspens and cottonwoods at the end of Glacier Lodge Rd, about 10 mi west of Big Pine; sites 021, 022, 024 and 029 sit beside the creek. The North Fork trail to Big Pine Lakes and the Palisade Glacier starts up the road. --Claude",
+ "summary": "FS page + rec.gov read: $26 (+$10 extra vehicle), 30 sites (18 take 25 ft+), dry campground (potable water true -> false), 25 reservable / 5 FCFS, weekend 2 / holiday 3 minimums, mid-April to late October. Creekside kept on sites 021/022/024/029 (~6-10 m). Pin fine.",
+ "flags": [
+  "WATERFRONT creekside KEPT: Big Pine Creek (well under 30 m) runs along the north edge; by the catalog points against the topo creek line, sites 029 (37.125677,-118.434939), 024 (37.125847,-118.434264), 022 (37.125894,-118.434060) and 021 (37.125936,-118.433907) are ~6-10 m from the creek and 020 (37.126044,-118.433350) ~15 m, north of the campground road with nothing between; all five are reservable by the night and take a 30-35 ft RV. Under continuous pine canopy, so this rests on the topo line plus rec.gov ('Some campsites boast creek-front access', 'perched along ... Big Pine Creek') and the FS ('adjacent to Big Pine Creek'). Proposed evidence: 'rec.gov 232305 catalog points vs Esri topo creek line 2026-11-27: sites 021/022/024/029 ~6-10 m and 020 ~15 m from Big Pine Creek, north of the loop road with nothing between; rec.gov \"Some campsites boast creek-front access\".'",
+  "FACILITIES: stored potable_water true is wrong - FS 'Potable water is not available' and rec.gov 'dry campground, no water'; written false.",
+  "PHONE: stored 760-873-2400 is the Inyo NF Supervisor's Office. The FS page gives the White Mountain Public Lands Information Center (760) 873-2501; rec.gov gives (760) 872-4552 for facility information (concession facility phone 760-935-4339). Suggest 760-873-2400 -> 760-873-2501.",
+  "WEBSITE: first line https://www.fs.usda.gov/r05/inyo -> https://www.fs.usda.gov/r05/inyo/recreation/big-pine-creek-campground; keep the recreation.gov line.",
+  "FIT: 8 of the 26 RV sites cap at 15-20 ft; 18 take 25 ft+ (13 of them reservable). Kept out of the note (in sites.note).",
+  "PIN: stored 37.12583,-118.43250 is beside site 013, ~90 m east of the site centroid (37.1257,-118.4335) - no move.",
+  "Open: FS 'Site Open' (2026 season ended Oct 26); the Inyo alerts list only the Reds Meadow road project - nothing for Big Pine Canyon.",
+  "Policy rows federal:usfs / federal not contradicted."
+ ]
+}

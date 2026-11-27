@@ -1,0 +1,50 @@
+{
+ "id": 12390,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://bearmountain-rvpark.com/ (operator, plain HTTP, read 2026-11-27): '130 Spacious, Full-Hookup RV Sites in Bakersfield'; 'Spacious sites from 64'x20' up to 86'x30' with water, sewer and 30/50-amp power, plus Wi-Fi, an off-leash dog park and onsite laundry. Stay a night, a week or a month.'; 'Nightly ... $41.29 /night'; 'Weekly ... $247.74 /week' ('About $35.39 a night'); 'Monthly ... Long-term application required ... $525 /month', '$25 application fee - approval required', 'Background check may be required'; 'Rates shown before applicable taxes.'; 'A deposit equal to one night's stay is required for all nightly and weekly reservations'; 'Short-term stays are limited to 21 consecutive days. After 21 days, guests must leave the park for at least 7 consecutive days before returning.'; 'Check-in is between 2:00 PM and 6:00 PM'; 'Office open 9:30-6'; '(661) 834-3811'; '4.2 on Google - 367 reviews'",
+  "https://bearmountain-rvpark.com/long-term-stays/ (read 2026-11-27): 'Are you planning to stay longer than 10 nights at our park? Please, fill out the application below'; 'Monthly Rates | $525/mo'; 'The arrangement is structured around a month-to-month residency'",
+  "https://bearmountain-rvpark.com/reservation-policy/ (read 2026-11-27): 21-consecutive-day limit; cancellation '$10 cancellation fee ... more than 48 hours prior'",
+  "https://bearmountain-rvpark.com/view-rates/ (Newbook engine embed, 'Powered by Newbook'): plain HTTP returns the form shell only; in the headless browser (full desktop Chrome UA, 2026-11-27) the page answered 'Checking your browser... Confirm you are human' - not clicked, so no availability / occupancy was read",
+  "Google Maps (tools/gm.py, 2026-11-27): 'Bear Mountain RV Park', 4.2 stars, 389 reviews, 16501 S Union Ave, Bakersfield, CA 93307, phone +1 661-834-3811, site bearmountain-rvpark.com; point 35.20500,-119.00367"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 41.29, "nightly_high": 41.29, "currency": "USD", "checked": "2026-11",
+              "note": "One flat rate before tax for every full-hookup site. Weekly $247.74 (about $35.39 a night); month-to-month $525 by application ($25 fee). A one-night deposit secures a booking."},
+   "source": "https://bearmountain-rvpark.com/ rates section, read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "https://bearmountain-rvpark.com/ ('Every site has water, sewer and 30/50-amp electricity'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 130, "max_rig_ft": null, "note": "Gravel sites 64-86 ft long and 20-30 ft wide."},
+   "source": "https://bearmountain-rvpark.com/ ('130 sites from 64'x20' up to 86'x30''), read 2026-11-27; the derived max_rig_ft 90 ('all over 90 ft') is contradicted by the posted 86-ft maximum site length and no rig limit is posted",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"wifi": true, "laundry": true},
+   "source": "https://bearmountain-rvpark.com/ ('Onsite Laundry', 'Wi-Fi'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "operator", "url": "https://bearmountain-rvpark.com/view-rates/",
+              "note": "Nightly and weekly stays book online (Newbook) or by phone, up to 21 consecutive days; stays over 10 nights go through a long-term application. After-hours arrivals use an overnight envelope at the office."},
+   "source": "https://bearmountain-rvpark.com/ + /reservation-policy/ + /long-term-stays/, read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "RV park on S Union Ave at the south edge of Bakersfield among farm fields, with an off-leash dog park and a shaded pergola picnic courtyard. Month-to-month residents share the park with overnight and weekly guests. --Claude",
+ "summary": "Operator site read: $41.29 nightly (weekly $247.74, monthly $525 by application), 130 full-hookup 30/50 A sites 64-86 ft, Newbook online booking (21-day short-stay cap); Google 4.2/389. Passes the gate; nightly share unmeasured (engine behind a human check). Not waterfront confirmed; pin fine.",
+ "flags": [
+  "PRICE GATE: $41.29 a night before tax, flat, posted on the operator's own page (read 2026-11-27) - passes. Not a Good Sam Park (stored false).",
+  "GOOGLE: 4.2 stars, 389 reviews (gm.py 2026-11-27) - passes the under-4.0 rule.",
+  "LONG-STAY TESTS: (1) markets nightly first ('Stay a night, a week or a month'; 'perfect for a stopover'); (2) nightly rate posted and an online engine - pass; (3) short stays capped at 21 days, longer by application/background check ('month-to-month residency', $525/month); (4) nightly share UNMEASURED - the Newbook engine answered 'Checking your browser... Confirm you are human' in the headless browser (not clicked) and plain HTTP gets only the form shell; the very low $525 monthly rate suggests a large resident share; (5) no lots sold (only RV storage coming). No discouraging wording toward nightly guests. Read as an ordinary transient park with residents - keep, but the reviewer may want the occupancy measured another way.",
+  "SITES: derived max_rig_ft 90 cleared - the operator gives site sizes 64'x20' to 86'x30' and no rig limit; count 130 written (was unset).",
+  "Not waterfront confirmed (farm fields); pin 35.2050,-119.0034 is ~30 m from Google's point - no move. PHONE 661-834-3811 and WEBSITE confirmed.",
+  "NOTE: address, hookups, site sizes, Wi-Fi/laundry/showers and 'Reservable by phone' repeated fields (or are now wrong - booking is online too) and are dropped; 'Gated' is not on the operator's pages (only gated storage 'coming soon') and is dropped. Showers are not mentioned on the operator site (stored derived showers true left alone)."
+ ]
+}
