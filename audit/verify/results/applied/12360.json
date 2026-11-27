@@ -1,0 +1,75 @@
+{
+ "id": 12360,
+ "checked": "2026-11-27",
+ "sources": [
+  "recreation.gov campground 247867 (API, rates, public campsite search, read 2026-11-27): facility_phone (530) 587-8113; 'Vault toilets, potable water available at campground entrance, ampitheater'; notice 'Campgound closes October 15. The last day to make a reservation will be October 14.'; 'Maximum of eight people per campsite including children. Two vehicles maximum per site. (One RV and one other vehicle).'; amenities 'Paved Sites', 'Vault Toilets', 'Water (Seasonal)', 'Water Spigot'; rules maxStay 14 nights 'Rolling 30 Days'; Peak Season rates 2026-05-15..2026-10-14 and 2027-05-15..2027-10-14 $20; catalog 24 reservable STANDARD NONELECTRIC sites, all 'Open', paved, 18 back-in / 6 pull-through, site lengths 38-67 ft, 'Drinking Water (peak season)'; site centroid 39.32155,-120.12210",
+  "https://www.spk.usace.army.mil/Locations/Sacramento-District-Parks/Martis-Creek-Lake/ : HTTP 403 to plain curl (not retried; recreation.gov carried every value written)",
+  "Esri World Imagery 39.3216,-120.1180 (1.4 km frame) with the 24 catalog site points, viewed 2026-11-27: one loop under pine on a sage bench west of the lake; the nearest sites (9-11) are ~500 m from the water and ~100-250 m from the edge of the bare basin below the dam"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 20,
+    "nightly_high": 20,
+    "currency": "USD",
+    "checked": "2026-11",
+    "extra_person": {
+     "max_people": 8
+    }
+   },
+   "source": "recreation.gov 247867 rates (2026 and 2027 Peak Season $20) + notices ('Maximum of eight people per campsite'; 'Two vehicles maximum per site'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 24
+   },
+   "source": "recreation.gov 247867 catalog (24 standard sites, lengths 38-67 ft), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 0,
+    "water": false,
+    "sewer": false
+   },
+   "source": "recreation.gov 247867 catalog (every site STANDARD NONELECTRIC; water only at the entrance spigot), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "vault_toilets": true,
+    "potable_water": true
+   },
+   "source": "recreation.gov 247867 ('Vault toilets, potable water available at campground entrance'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "opens": "05-15",
+    "closes": "10-15"
+   },
+   "source": "recreation.gov 247867 (Peak Season 05-15..10-14 every year; notice 'Campgound closes October 15'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "max_stay_nights": 14
+   },
+   "source": "recreation.gov 247867 (24 reservable sites; maxStay 14 nights per rolling 30 days), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Army Corps campground at Martis Creek Lake between Truckee and Northstar: one paved, one-way loop under pine above the reservoir, with a few pull-throughs. One RV and one other vehicle per site. Drinking water only at the entrance, in season. --Claude",
+ "summary": "Alpine Meadow: USACE, May 15 to Oct 15, rec.gov $20, 24 paved sites (38-67 ft), no hookups, vault toilets, water at the entrance. Not waterfront confirmed (nearest sites ~500 m from the water). Pin 125 m from the centroid, fine. Phone empty -> (530) 587-8113.",
+ "flags": [
+  "PHONE: stored '' -> '(530) 587-8113' (recreation.gov facility phone).",
+  "WATERFRONT: 'not waterfront' kept. recreation.gov tags every site 'Proximity to Water: Lakefront', but imagery puts the nearest sites (9-11) ~500 m from the water and 100-250 m from the bare basin below the dam, under pine canopy. That is a catalog boilerplate tag, not a waterfront.",
+  "PIN: stored 39.32048,-120.12214 is ~120 m south of the catalog site centroid 39.32155,-120.12210 - no move needed.",
+  "BOOKING: recreation.gov's reservationCutOff rule shows units 'Not Reservable' with value 0, but all 24 sites are reservable and the notice gives a booking deadline, so reservable true kept.",
+  "UNREAD: the USACE Martis Creek Lake page returned 403 to plain curl; the bot-wall route was not used because recreation.gov answered every field.",
+  "STATUS: open (closed now for the season)."
+ ]
+}

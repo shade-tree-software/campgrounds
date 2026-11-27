@@ -1,0 +1,51 @@
+{
+ "id": 14915,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://monovillage.com/camp-sites/ (mod_security 406 to plain curl; read 2026-11-27 in a headless browser): 'Our Entire Campground (Both Hook-up & Dry camp sites) is operated on a “first-come, first-served” basis. There are NO reservations taken on ANY of our campground sites. There is a maximum of eight persons per site.'; 'Trailer “Hook-up” Sites: Water, sewer, and electricity. $45 per day for 2 people, plus tax, $3 per day for each additional person. $850 per month, per camping unit.'; '“Dry” Camp Sites: $35.00 per day, plus tax, for 2 people ... Over 250 sites to choose from. $625 per month'; pets '.50c per day ... Monthly rate is $15.00; Seasonal rate is $75.00'; amenities 'Coin Operated Showers', 'Two Separate Laundry Facilities', 'Dump Stations', 'Propane Sales', 'Restrooms'; 'If arriving after campground gate operating hours, guests may select a site (if available), and register the following day before 9am.'",
+  "https://monovillage.com/ (headless browser, read 2026-11-27): 'a 300 space campground, a fully stocked grocery store'; 'rests at an elevation of 7,100 feet'; 'No reservations are taken on any campsites or hookups. All sites are first come, first served.'; no opening or closing dates on the home, news, cabins or storage pages (storage: trailers stored 'will not be removed until Mid-April')",
+  "Google Maps 'Annett's Mono Village' (gm.py, 2026-11-27): 4.3 stars, 545 reviews; phone +1 760-932-7071; 13425 Twin Lakes Rd, Bridgeport",
+  "Esri World Imagery 38.1474,-119.3803 (900 m frame) and 38.1458,-119.3772 (400 m frame), viewed 2026-11-27, plus the operator's campground photo (pine forest, no water in view): campground under continuous pine west of the marina and its parking lot; the lake is 100-200 m east of the nearest trailers across the lot and marina; Robinson Creek and the willow-choked inlet run along the south edge"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 35, "nightly_high": 45, "currency": "USD", "checked": "2026-11", "extra_person": {"included": 2, "amount": 3, "per": "night", "max_people": 8}, "note": "Dry sites $35 and hookup sites $45, each for two people plus tax. Monthly rates are $625 dry and $850 hookup."},
+   "source": "monovillage.com/camp-sites (headless browser), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 300},
+   "source": "monovillage.com home page ('a 300 space campground'); the camp-sites page says 'Over 250 sites', read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"water": true, "sewer": true},
+   "source": "monovillage.com/camp-sites ('Trailer “Hook-up” Sites: Water, sewer, and electricity'; amperage not stated), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "laundry": true, "dump": true, "camp_store": true, "flush_toilets": true},
+   "source": "monovillage.com/camp-sites ('Coin Operated Showers', 'Two Separate Laundry Facilities', 'Dump Stations', 'Restrooms', 'Family Style Restroom/Shower Combo') + home page ('fully stocked grocery store'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "fcfs": "always", "platform": "none"},
+   "source": "monovillage.com ('There are NO reservations taken on ANY of our campground sites'), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Fishing resort at the end of Twin Lakes Road at Upper Twin Lake, 7,100 ft, with a marina, boat rentals, cafe and store. The campground sits under tall pines behind the marina; hookup and dry sites, first-come only. Arrivals after the gate closes pick an open site and register before 9 a.m. Closed in winter. --Claude",
+ "summary": "Annett's Mono Village: private FCFS resort campground, $35 dry / $45 hookup (W/S/E) for 2 + tax, under the US$50 gate; monthly rates offered. Google 4.3 (545). Lakeview -> not waterfront recommended (continuous pine canopy, lake 100-200 m away behind the marina and its lot). Season not published. Phone and website confirmed.",
+ "flags": [
+  "WATERFRONT: stored 'lakeview' (not --AWH) -> recommend 'not waterfront'. The campground is under continuous pine canopy west of the marina; the nearest trailers are 100-200 m from the lake across the marina parking lot and docks (a developed buffer). The operator's only campground photo shows pine forest with no water. No source shows a lake view from any site. Robinson Creek and its willow-lined inlet run along the campground's south edge (around 38.1450,-119.3790 to 38.1455,-119.3765), and a few pads on imagery look close to it. The park publishes no site numbers, so creekside cannot be earned; flagged for the reviewer only.",
+  "LONG-STAY: the camp-sites page lists monthly rates ($625 dry / $850 hookup) and a 'Seasonal' pet rate, so monthly and seasonal stays are sold. Nightly share is NOT measurable: there is no booking engine (all first-come) and no site map. The page leads with nightly rates, has no minimum stay and no wording discouraging nightly guests, and the resort is a 300-space fishing campground. Not 'mostly seasonal' on the evidence read; reviewer's call.",
+  "GOOGLE: 4.3 stars over 545 reviews.",
+  "PRICE GATE: $45 hookup for 2 before tax -> under US$50, passes with no exception needed. Extra people are $3 each.",
+  "SEASON: no opening or closing dates on any operator page read (home, camp-sites, news, cabins, storage). Stored year_round false kept (derived); trailer storage runs to 'Mid-April'.",
+  "HOOKUPS: amperage not published - electric left unset (water and sewer written).",
+  "SITES: the home page says '300 space campground', the camp-sites page says 'Over 250 sites' - wrote 300.",
+  "OHV: 'All 1, 2, 3, & 4 wheel recreational vehicles are prohibited for personal use within Mono Village' - not an OHV park.",
+  "PHONE 760-932-7071 and WEBSITE https://monovillage.com/ confirmed (Google listing matches).",
+  "UNREAD: plain curl gets HTTP 406 (mod_security); every operator page was read through the headless browser."
+ ]
+}

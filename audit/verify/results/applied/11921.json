@@ -1,0 +1,49 @@
+{
+ "id": 11921,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.nps.gov/yose/planyourvisit/campgrounds.htm (read 2026-11-27): table row 'Wawona - All year - 4000 ft/1200 m - 35 ft/35 ft - 5 months ahead on 15th for Apr 15-Oct 26 (Loops B and C) and Apr 15-Nov 29 (Loop A) - $36 - 95 - 4 - Tap'; 'Wawona Campground extended its reservation period and will require reservations for Loop A until November 29 (last night for reservations is November 28) ... Loops B and C will close for the season as planned on October 26.'; 'dump stations (with fresh water) are available ... near Wawona Campground (summer only)'; 'No campsites in Yosemite have hook-ups of any kind.'; 'Showers are available at the Curry Village pool showerhouse for a fee. Showers are not available elsewhere in the park.'",
+  "developer.nps.gov/api/v1/campgrounds?parkCode=yose (Wawona Campground record, read 2026-11-27; the nps.gov wawonacamp.htm page renders it by script): fees '$36.00 ... reserved sites (RV or Tent)' April 15-November 29, 2026 and '$28.00 ... first-come, first-served sites (Loop A is open year-round and converts to first-come, first-served status sometime in fall, dates vary)' November 29, 2026 - approximately mid-April; reservationInfo 'During the rest of the year, Loop A is available on a first-come, first-served basis. Loops B and C are closed in winter.'; campsites totalSites 95 (group 1, tentOnly 30, walkBoatTo 10, rvOnly 2, other 62); rvInfo 'tents, RVs up to 35 feet and trailers up to 35 feet. Not every site can accommodate equipment of these lengths'; amenities flush toilets year round, potable water year round, showers None, dumpStation 'Yes - seasonal' ('Nearby (located in Wawona in summer only, on Forest Drive east of the Wawona Store)'); 'A maximum of six people (including children) are allowed per campsite'; phone 209/375-9535; point 37.5447,-119.6727 (Loop A)",
+  "recreation.gov campground 232446 (API + rates + public campsite search, read 2026-11-27): 'The A-loop of Wawona Campground remains on reservation through the night of November 28, 2026'; 'up to five months in advance on the 15th of each month at 7:00 a.m. PST'; rules maxStay 7 days 2026-05-01..2026-09-15; rates Peak 2026-04-15..10-25 and 2026-10-26..12-31 RV/STANDARD $36, Non-Peak 2026-01-01..04-14 $28, 2027 $36; catalog 98 units (97 family sites + Group Camp A), all NONELECTRIC, RV max length 24 ft or more on 33 sites (24 ft: 5, 27: 14, 30: 1, 35: 13), shorter or none on the rest; site points centroid 37.54877,-119.68058",
+  "Esri World Imagery around 37.5452,-119.6735 (Loop A, 400 m), 37.5482,-119.6792 (Loop B, 400 m) and 37.5505,-119.6838 (Loop C, 440 m) with the catalog site points, viewed 2026-11-27, + USGS 3DEP (EPQS) spot heights: the South Fork Merced runs a ~30 m boulder bed with a ~12-20 m wetted channel along the south-west side; Loop C's river row (sites 050-055, 061-065, 071-075, 077, walk-to 001) sits 25-35 m from the water behind a ~15-25 m strip of trees, site 074 at 1180 m against water at ~1176 m (gentle bank); Loop A sites 022-030 are ~40-55 m from the bed behind a tree belt; Loop B sites 31-41 sit 30-60 m from the bed under scattered canopy"
+ ],
+ "groups": {
+  "sites": {
+   "values": {"count": 95, "max_rig_ft": 35},
+   "source": "nps.gov/yose campgrounds table ('95' sites, '35 ft/35 ft') + NPS campground API (totalSites 95, rvMaxLength 35), read 2026-11-27",
+   "method": "manual"
+  },
+  "fees": {
+   "values": {"nightly_low": 28, "nightly_high": 36, "currency": "USD", "checked": "2026-11", "extra_person": {"max_people": 6}, "note": "$36 a night while reservations are taken (April 15 to November 28 in 2026); $28 a night first-come in winter, Loop A only."},
+   "source": "NPS campground API Wawona fees ($36 reserved April 15-November 29, 2026; $28 first-come November 29, 2026 - mid-April; 'A maximum of six people (including children)') + recreation.gov 232446 rates, read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "Loop A stays open all winter, first-come; Loops B and C close for the winter (October 26 in 2026)."},
+   "source": "nps.gov/yose campgrounds table ('Wawona - All year') + NPS campground API ('Loop A is available on a first-come, first-served basis. Loops B and C are closed in winter.'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "fcfs": null, "window_opens_days": 150, "max_stay_nights": 7, "season": {"opens": "04-15", "closes": "11-28"}, "note": "Reservations are required from April 15; sites release on the 15th of each month at 7 a.m. Pacific, five months ahead. Loops B and C book to late October, Loop A to late November (2026: October 25 and November 28), after which Loop A is first-come. The 7-night limit applies May 1 to September 15."},
+   "source": "recreation.gov 232446 (overview, rules: reservationWindow 5 months, blockReleaseDay 15, maxStay 7 days 2026-05-01..09-15) + nps.gov/yose campgrounds table and NPS campground API reservationInfo, read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "potable_water": true, "showers": false, "dump": false, "note": "A summer-only dump station with water is about a mile south, on Forest Drive in Wawona."},
+   "source": "NPS campground API amenities (flush toilets, potable water year round, showers None; dump 'Nearby (located in Wawona in summer only, on Forest Drive east of the Wawona Store)') + recreation.gov 232446 notice 'Potable water at the dump station (located one mile south of the campground) is only available during summer months', read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Along the South Fork Merced River near historic Wawona at the park's south end, 27 miles from Yosemite Valley; paved roads and spurs, food lockers. Most sites are short: about a third take an RV of 24 ft or more, so check the site's own length. Loop C's south row (sites 050-077) lines the river behind a strip of trees. --Claude",
+ "summary": "Wawona: all year (Loop A first-come in winter at $28; $36 reserved Apr 15 - Nov 28, B/C close Oct 26), 95 sites (stored 93), RV 35 ft but only 33 of 97 catalog sites take 24 ft+, rec.gov 5 months on the 15th, 7-night max May-mid Sep. Riverfront -> creekside recommended (river ~12-20 m wetted). PIN 2.4 km off -> 37.5488,-119.6806.",
+ "flags": [
+  "WATERFRONT: stored 'riverfront' (not --AWH) -> recommend 'creekside'. The South Fork Merced at the campground is a ~30 m boulder bed with a ~12-20 m wetted channel (Esri, Loop C frame) - under the ~30 m riverfront line. Best sites: Loop C's south row (050, 051, 052, 053, 055, 061, 062, 063, 065, 071, 072, 074, 075, 077; row ~37.5501,-119.6826 to 37.5501,-119.6848), 25-35 m from the water behind a ~15-25 m tree strip; 3DEP: site 074 at 1180 m, water ~1176 m (about 4 m over ~30 m, an easy walk down). Of those, 053, 072, 074, 075 (35 ft) and 063, 065 (27 ft) take a 23-ft rig; all are sold by the night. Loop A (022-030) is ~40-55 m back behind a tree belt; Loop B 30-60 m under scattered canopy. Creekside rests on the C-loop row; nothing is open-ground riverfront.",
+  "PIN: stored 37.54150,-119.65480 is ~2.4 km east-south-east of the campground (near Wawona village / the horse camp area); move to the catalog site centroid 37.54877,-119.68058 (Loop A ~37.5450,-119.6735, Loop C ~37.5505,-119.6838). Elevation at the pin may change (3DEP at the C row ~1180 m, A loop ~1190 m; stored 1246).",
+  "SITES: stored 93 -> 95 (nps.gov table and NPS API totalSites 95; NPS rvInfo text says 97; rec.gov catalog 97 family sites + group). Fit: 33 of 97 catalog sites list an RV max of 24 ft or more (24 ft: 5, 27: 14, 30: 1, 35: 13); 30 are tent-only and 10 walk-to. Loop B has only one site over 22 ft (043, 30 ft).",
+  "FEES: low 36 -> 28 (the winter first-come rate in Loop A, NPS-posted; a 23-ft rig can use the A-loop 24-35 ft sites then). High $36.",
+  "BOOKING: stored fcfs 'after_cutoff' (derived from note prose) cleared - there is no cutoff walk-up; the campground is reservation-only Apr 15 - Nov 28 and Loop A turns first-come after that. booking.season 04-15..11-28 (2026 dates; 2027 not yet posted). Window 150 days (5 months on the 15th), max stay 7 May 1 - Sep 15.",
+  "HORSE: Wawona Horse Camp (2 sites) is a separate NPS facility east of the campground, May-October; not this entry. Group Camp A is tent-only.",
+  "STATUS: open (Loop A on reservation through Nov 28, then first-come); Loops B and C closed for the season since Oct 26. No closure alert.",
+  "PHONE 209-375-9535 and websites confirmed."
+ ]
+}
