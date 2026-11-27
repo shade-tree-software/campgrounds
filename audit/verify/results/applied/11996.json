@@ -1,0 +1,68 @@
+{
+ "id": 11996,
+ "checked": "2026-11-27",
+ "sources": [
+  "recreation.gov campground API 234330 (read 2026-11-27): facility_name 'Silver Lake Campground June Lake (CA)'; facility_phone 760-934-5795; 'This is a moderate-sized facility that is fairly spread out. Some sites border the creek, and several border the lake. The facility provides drinking water, flush toilets, picnic tables, campfire rings and bear-proof lockers'; 'Some campsites are in open areas while others are shaded by aspen and willow trees. Rush Creek and Silver Lake border the facility'; '97-acre Silver Lake'; notices 'One RV with tow per single site', '$10.00 extra vehicle fee per day for the second vehicle', 'Please call the office at 760-934-5795'; rules maxStay 14 days Rolling 30 Days, minWeekendStay 0, minHolidayWeekendStay 0; rate table Peak Season 2026-04-17..2026-10-24 and 2027-04-16..2027-10-23: STANDARD NONELECTRIC $32 (a $64 double type)",
+  "recreation.gov campsite search API (asset 234330, read 2026-11-27): 63 sites, 62 RV/Tent/Trailer + 1 pickup-camper/tent; Max Vehicle Length 28-38 ft on 60 sites (15/20/22 on three); no hookup attributes; site centroid 37.78332,-119.12632; site photos 018/019/023/024/025/026 show paved spurs among willows and aspen, no water in frame",
+  "recreation.gov availability API month 2026-10 (read 2026-11-27): nights sold through 2026-10-24",
+  "https://www.fs.usda.gov/r05/inyo/recreation/silver-lake-campground (read 2026-11-27): 'Site Closed' (seasonal); '63 campsites near Silver Lake. Boat launch nearby.'; 'Campsites will accommodate a 40-foot vehicle. Each campsite is equipped with a bear locker.'; 'Single site: $32 per night Additional Vehicle Fee: $10 per vehicle per night'; 'Flush toilet(s)'; 'Potable water is available at this site.'; Mono Basin Scenic Area Visitor Center (760) 647-3044; Latitude 37.7832 Longitude -119.1261",
+  "Esri World_Imagery at 37.7825,-119.1268 (hw 380 m) and 37.7815,-119.1258 (hw 110 m) with the rec.gov site points, 2026-11-27: the campground lies between Hwy 158 (west) and the north shore of Silver Lake / Rush Creek (east); the campground loop road runs along the shore in front of the lakeside sites 018-025, with a continuous willow belt on the shore; stored pin is west of the highway on the resort/pack-station side"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 32,
+    "nightly_high": 32,
+    "currency": "USD",
+    "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+    "checked": "2026-11"
+   },
+   "source": "recreation.gov rate table 234330 (2026 and 2027 STANDARD NONELECTRIC $32) + fs.usda.gov ('Single site: $32 per night Additional Vehicle Fee: $10 per vehicle per night'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/234330",
+    "max_stay_nights": 14,
+    "note": "The 14-night limit is per rolling 30 days."
+   },
+   "source": "fs.usda.gov ('Make Reservations Here', recreation.gov) + recreation.gov rules (maxStay 14 days, Rolling 30 Days), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov catalog 234330 (no electric/water/sewer attribute on any of 63 sites; all STANDARD NONELECTRIC), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 63, "max_rig_ft": 38},
+   "source": "fs.usda.gov ('63 campsites') + recreation.gov catalog (Max Vehicle Length up to 38 ft; 60 of 63 at 28 ft or more), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "potable_water": true},
+   "source": "fs.usda.gov ('Flush toilet(s)', 'Potable water is available at this site.') + recreation.gov ('drinking water, flush toilets'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-17", "closes": "10-24", "note": "2026 dates; recreation.gov's 2027 season runs 04-16 to 10-23."},
+   "source": "recreation.gov rate table (Peak Season 2026-04-17..2026-10-24; 2027-04-16..2027-10-23) + availability calendar (nights sold through 2026-10-24), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Inyo NF campground on the June Lake Loop (Hwy 158), on the east side of the highway at the north end of 97-acre Silver Lake, with Rush Creek along its east edge; Silver Lake Resort's store and cafe, the pack station and an Ansel Adams Wilderness trailhead are across the road. Mix of open and willow/aspen-shaded sites; boat launch nearby. --Claude",
+ "summary": "rec.gov + FS page read: $32 confirmed (+$10 extra vehicle), rec.gov reservable 14 nights, no hookups confirmed, 63 sites / 38 ft kept (FS says 40), flush + water, season 04-17..10-24; lakefront -> lakeview recommended (loop road + willow belt between the lakeside sites and the shore); pin ~300 m off across the highway; phone, FS link and policy_ref flags.",
+ "flags": [
+  "WATERFRONT: stored 'lakefront' -> recommend 'lakeview'. The lakeside sites are 018-025 (018 37.78107,-119.12680; 019 37.78132,-119.12674; 023 37.78181,-119.12642; 024 37.78192,-119.12614; 025 37.78234,-119.12570), 20-30 m from the shore, but on Esri (hw 110 m) the campground's own loop road runs along the shore in front of them and a continuous willow belt lines the water - a loop road between the sites and the water is lakeview at best (AWH 2026-11-01). rec.gov photos of 018/019/023/024/025/026 show willows and aspen around the pads and no water. rec.gov's 'several border the lake' supports a view from these sites; a view is not shown in a photo, so if AWH wants photo proof the value would go to 'not waterfront'. Rush Creek (east edge, ~10-15 m wide) is behind the same loop road and willows: no creekside either. Replacement evidence: 'Esri 2026-11-27 + rec.gov catalog: lakeside sites 018-025 20-30 m from the shore with the loop road and a willow belt between; rec.gov \"several border the lake\" -> lakeview'.",
+  "PIN (~300 m): stored 37.78120,-119.12850 is west of Hwy 158 on the Silver Lake Resort / pack-station side. Suggest 37.78332,-119.12632 (centroid of the 63 rec.gov site points; FS point 37.7832,-119.1261).",
+  "PHONE: stored 760-924-5500 is the Mammoth Lakes Welcome Center. Suggest 760-934-5795 (rec.gov facility phone and notice 'Please call the office at 760-934-5795'); the FS page's office is the Mono Basin Visitor Center (760) 647-3044.",
+  "WEBSITE: add the FS page https://www.fs.usda.gov/r05/inyo/recreation/silver-lake-campground beside the rec.gov link.",
+  "POLICY_REF: the entry has no policy_ref, so it resolves 'federal:CA' + 'federal'; it is an Inyo NF (USFS) campground and should carry policy_ref 'federal:usfs' like its neighbours.",
+  "SITES: max_rig_ft kept at 38 (rec.gov catalog max); the FS page says 'Campsites will accommodate a 40-foot vehicle'.",
+  "FACILITIES: rec.gov's amenity list includes 'Shower' but neither description nor the FS page names showers in the campground (Silver Lake Resort across the road may be meant); showers not written.",
+  "STATUS: FS 'Site Closed' is the seasonal closure (season ended 10-24); no closure alert. Operating left open.",
+  "NOTE: rewritten; dropped the site count, length, hookups and reservable prose the fields hold. No --AWH text."
+ ]
+}

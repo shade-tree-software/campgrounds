@@ -1,0 +1,53 @@
+{
+ "id": 12227,
+ "checked": "2026-11-27",
+ "sources": [
+  "recreation.gov campground API 232785 'STONY CREEK SEQUOIA' (read 2026-11-27): 'For facility specific information, please call (661) 702-1420.'; 'Stony Creek offers nearly 50 reservable campsites, spread out along the creek. Vault toilets, drinking water and an amphitheater are available'; operated by Rocky Mountain Recreation Company (ExplorUS); 'nestled among Sigar Pines, Jeffrey Pines, Red Firs and the scenic Stony Creek is just steps away'; on the Generals Highway between Sequoia and Kings Canyon NPs; notices 'There is an additional fee $8.00 for each vehicle per night of stay', 'Camping fee does not include Park Entrance Fee'; rules maxStay 14 days Rolling 30 Days; rate table 2026 First-come, First-served Season 05-08..05-21 then Peak Season 05-22..09-26 (2027 Peak 05-28..09-25), STANDARD NONELECTRIC $36, double $71",
+  "recreation.gov campsite catalog 232785 (read 2026-11-27): 44 sites - 26 STANDARD NONELECTRIC taking RV/trailer, 17 TENT ONLY, 1 WALK TO; RV max lengths 20 ft (11), 24-25 ft (4), 30 ft (12); no hookup attributes; all sites 'Shade: Full'",
+  "recreation.gov availability API 2026-09/2026-10/2027-05 (read 2026-11-27): last night sold 2026-09-26; 2027 nights from 05-28",
+  "https://www.fs.usda.gov/r05/sequoia/recreation/stony-creek-campground (read 2026-11-27): 'Site Closed' (seasonal); 'nearly 50 campsites on reservations, spread out along the creek. Vault toilets, drinking water and an amphitheater'; 'Public phone, public showers, groceries, restaurant, and gasoline are available 1/2 mile away at the Stony Creek Resort.'; Seasons of Use 'May 23 - September 26, 2025'; 'Campsite fees range from $36/night for single unit, $71/night for double unit, $8/night for extra vehicle'; ExplorUS 559-745-4209; Hume Lake RD 559-338-2251; Lat/Long 36.66404424,-118.8335816",
+  "Esri World_Imagery at 36.6645,-118.8345 (hw 230 m) with the rec.gov site points, 2026-11-27: continuous conifer canopy over the loops; no pad seen at open water"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 36, "nightly_high": 36, "currency": "USD", "extra_vehicle": {"included": 1, "amount": 8, "per": "night"}, "checked": "2026-11", "note": "Double sites $71. The camping fee does not include a national park entrance fee."},
+   "source": "recreation.gov rate table 232785 (2026/2027 STANDARD NONELECTRIC $36) + notice '$8.00 for each vehicle per night' + fs.usda.gov ('$36/night for single unit, $71/night for double unit, $8/night for extra vehicle'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232785", "max_stay_nights": 14, "note": "The 14-night limit is per rolling 30 days. recreation.gov lists a first-come period of about two weeks in early May before the reservation season starts."},
+   "source": "recreation.gov rules (maxStay 14 days Rolling 30 Days) + rate table (First-come, First-served Season 2026-05-08..05-21), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov catalog 232785 (all 44 sites NONELECTRIC, no water/sewer attributes), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 44, "max_rig_ft": 30},
+   "source": "recreation.gov catalog 232785 (44 sites, 26 RV/trailer; max RV length 30 ft), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"vault_toilets": true, "potable_water": true, "showers": false},
+   "source": "recreation.gov + fs.usda.gov ('Vault toilets, drinking water and an amphitheater are available'; 'public showers ... 1/2 mile away at the Stony Creek Resort'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "05-22", "closes": "09-26", "note": "2026 reservation season; recreation.gov also lists first-come camping from 05-08. 2027 runs 05-28 to 09-25; the Forest Service gave May 23 - September 26 for 2025."},
+   "source": "recreation.gov rate table (2026 Peak 05-22..09-26, FCFS 05-08..05-21; 2027 Peak 05-28..09-25) + availability calendar (last night 2026-09-26) + fs.usda.gov Seasons of Use, read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Sequoia NF campground (Giant Sequoia National Monument) on the Generals Highway between Sequoia and Kings Canyon National Parks, under sugar pine, Jeffrey pine and red fir along Stony Creek. Only 15 sites take a rig over 20 ft (24-30 ft spurs); 17 are tent-only. Showers, groceries, a restaurant and gas half a mile away at Stony Creek Resort. --Claude",
+ "summary": "rec.gov + FS page read: $36 (+$8 extra vehicle) confirmed, rec.gov reservable 14 nights, no hookups, 44 sites (26 RV) / 30 ft, vault toilets + water, no showers, season 05-22..09-26 (FCFS from 05-08); waterfront kept not waterfront (canopy, no on-water evidence); site count 49 -> 44.",
+ "flags": [
+  "SITES: 49 (derived) -> 44 per the rec.gov catalog (26 RV/trailer, 17 tent-only, 1 walk-to). Only 15 sites are rated over 20 ft (24-25 ft: 006, 013, 035, 049; 30 ft: 016, 023, 030, 034, 036, 037, 038, 041, 042, 044, 046, 047) - named in the note so the 23-ft fit is clear.",
+  "WATERFRONT: rec.gov/FS 'spread out along the creek' and 'Stony Creek is just steps away' contradict nothing strong enough to raise 'not waterfront': every site is 'Shade: Full', the imagery shows continuous canopy, and no source ties a named site to the creek. Kept not waterfront (default down).",
+  "WEBSITE: stored first line is the forest root https://www.fs.usda.gov/r05/sequoia; suggest the campground page https://www.fs.usda.gov/r05/sequoia/recreation/stony-creek-campground.",
+  "PHONE: stored 661-702-1420 is rec.gov's 'facility specific information' number; keep. (FS gives ExplorUS 559-745-4209.)",
+  "FEES: FS page's 'Single Site: $34' line is stale; its own fee line and rec.gov say $36.",
+  "PIN: stored 36.66525,-118.83278 is rec.gov's facility point at the entrance, ~205 m NE of the site centroid (36.6640,-118.8345; FS point 36.66404,-118.83358); under the 250 m threshold, no move."
+ ]
+}

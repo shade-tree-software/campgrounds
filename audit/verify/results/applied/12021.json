@@ -1,0 +1,51 @@
+{
+ "id": 12021,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.nps.gov/deva/planyourvisit/sunset-campground.htm, rendered in the headless browser (campground data loads by script; read 2026-11-27): status 'Open'; 'Open seasonally, typically late fall through mid-April. First-come, first-served, large campground that rarely fills.'; 'little to no vegetation and is comprised of desert gravels ... No picnic tables or fire rings.'; 'TOTAL SITES: 230 Electric Hookups: 0'; amenities 'Internet Connectivity No', 'Laundry No', 'Dump Station Yes, Seasonal', 'Potable Water - Seasonal', 'Flush Toilets - seasonal', 'Shower Types None'; 'All sites are first-come, first-served. However, the NPS reserves the right to reserve sites at any time due to management needs. Occupy a site and then pay using the automated fee machine ... or head across the street to the visitor center to pay.'; Closures 'Closed for Summer April 27-October 14 ... Due to extreme summer heat', 'Delayed opening October 15-November 22 Closed'; Fees 'Standard Rate ... $18.00', 'Senior/Access Pass Rate ... $9.00'; phone 760-786-3200; 'showers, ice, and firewood are available for purchase nearby at Furnace Creek Ranch (less than a mile away)'; 'Camping Limits: 1 recreational vehicle with tow, 2 cars, or 4 motorcycles. 8 people per site. Stay limited to 30 days. No holding or reserving sites.'; 'RV Max Length in Feet - 60', 'Trailer Max Length in Feet - 50'",
+  "recreation.gov search API 'Sunset Campground Death Valley' and 'Death Valley' campgrounds (read 2026-11-27): only Furnace Creek Campground (232496) and Death Valley Backcountry Roadside Camping (10303151) listed in the park; no Sunset listing",
+  "Esri World_Imagery at 36.4585,-116.8641 (hw 500 m), 2026-11-27: pin sits inside the striped gravel lot east of the highway at Furnace Creek"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 18, "nightly_high": 18, "currency": "USD", "checked": "2026-11", "note": "Pay at the automated fee machine (card) or at the visitor center across the road; Senior/Access pass holders $9."},
+   "source": "nps.gov Sunset Campground Fees ('Standard Rate ... $18.00'; 'Senior/Access Pass Rate ... $9.00'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 30},
+   "source": "nps.gov ('First-come, first-served'; 'All sites are first come, first served'; 'Stay limited to 30 days. No holding or reserving sites.') + recreation.gov search (no Sunset listing), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "nps.gov ('Electric Hookups: 0'; liquid waste only at sanitary stations), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 230, "max_rig_ft": 60},
+   "source": "nps.gov ('TOTAL SITES: 230'; 'RV Max Length in Feet - 60', 'Trailer Max Length in Feet - 50'), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "wifi": false},
+   "source": "nps.gov amenities ('Flush Toilets - seasonal', 'Potable Water - Seasonal', 'Dump Station Yes, Seasonal', 'Shower Types None', 'Laundry No', 'Internet Connectivity No'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "10-15", "closes": "04-26", "note": "Closed for summer April 27 - October 14 because of the heat; the 2026 opening was delayed to November 23."},
+   "source": "nps.gov Closures & Seasonal Exceptions ('Closed for Summer April 27-October 14'; 'Delayed opening October 15-November 22 Closed'), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Death Valley NP campground at Furnace Creek, across the road from the visitor center: a large open gravel lot with curb-marked sites off paved roads, no shade, no picnic tables or fire rings (two group fire rings only). Showers, ice and firewood are sold less than a mile away at Furnace Creek Ranch. --Claude",
+ "summary": "nps.gov (rendered) + rec.gov search read: open now, first-come only (no rec.gov listing), $18, 230 sites (was 270), RV 60 / trailer 50 ft, no hookups, seasonal flush toilets, water and dump (stored false values corrected), no showers, 30-day limit, season 10-15..04-26 (2026 opening delayed to 11-23).",
+ "flags": [
+  "FACILITIES: stored potable_water false and dump false (derived from 'potable water and dump station nearby') are wrong; nps.gov lists both in the campground, seasonally. Corrected to true.",
+  "SITES: 270 -> 230 (nps.gov 'TOTAL SITES: 230').",
+  "SEASON: 10-01..04-30 (approximate, derived) -> 10-15..04-26 per nps.gov's posted closure; the 2026-27 opening was delayed to 11-23. Status: page shows 'Open' on 2026-11-27.",
+  "BOOKING: no recreation.gov listing for Sunset (only Furnace Creek 232496 and backcountry roadside camping in the park) - first-come, as nps.gov states.",
+  "WEBSITE: stored https://www.nps.gov/deva/planyourvisit/campgrounds.htm is the park-wide list; suggest the campground page https://www.nps.gov/deva/planyourvisit/sunset-campground.htm.",
+  "PHONE: 760-786-3200 confirmed. PIN fine (inside the lot). WATERFRONT 'not waterfront' kept."
+ ]
+}

@@ -1,0 +1,59 @@
+{
+ "id": 11919,
+ "checked": "2026-11-27",
+ "sources": [
+  "recreation.gov campground API 232801 (read 2026-11-27): facility_phone 559-642-3212 (concessionaire CLM); 'Drinking water and accessible flush toilets are provided. The facility's short parking spurs are paved and dirt-surfaced. Due to tight turns and configurations, this camp is not suitable for large travel trailers or RVs.'; 'located across the street from Bass Lake in a grove of oak, pine and cedar, and is well suited for tents or small RVs. The sites are shaded and clustered close together.'; 'The 2.6-mile Spring Cove Trail can be accessed within the camp.'; notices 'Please register at the Bass Lake Camp Store.', 'Maximum vehicle length is 30 feet', 'Most sites can accommodate 1 extra vehicle ... charged a per night fee and collected at the campground'; rules maxStay 14 days Rolling 30 Days, reservationCutOff 1 day prior, minWeekendStay 0 soft, minHolidayWeekendStay 0 soft; rate table Peak Season 2026-04-17..2026-09-12 and 2027-04-16..2027-09-11 STANDARD NONELECTRIC $54; amenities Drinking Water, Flush Toilets, Host, Trash Collection",
+  "recreation.gov campsite catalog 232801 (read 2026-11-27): 62 sites, all STANDARD NONELECTRIC, no hookup attributes; Max Vehicle Length 10-42 ft (33 sites at 30 ft)",
+  "recreation.gov availability API months 2026-09, 2026-10, 2026-11, 2027-03, 2027-04 (read 2026-11-27): last night sold 2026-09-12, nothing listed Oct-Mar; 2027 nights begin 2027-04-16",
+  "https://www.fs.usda.gov/r05/sierra/recreation/spring-cove-campground (read 2026-11-27): 'Site Closed' (seasonal); 'Due to tight turns and configurations, not suitable for large travel trailers or RVs.'; Operational Hours 'May - September'; 'Reservations can be made up to three days before arrival. There is a 2 night minimum stay on weekends and 3 night minimum stay on holidays.'; 'Single site: $52 per night Additional Holiday Fee: $2 per night'; Bass Lake Ranger District (559) 877-2218; Latitude 37.30162719 Longitude -119.5423853"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 54, "nightly_high": 54, "currency": "USD", "surcharges": {"holiday": 2}, "checked": "2026-11", "note": "An extra vehicle pays a nightly fee collected at the campground (amount not posted)."},
+   "source": "recreation.gov rate table 232801 (2026 and 2027 Peak Season STANDARD NONELECTRIC $54) + fs.usda.gov ('Additional Holiday Fee: $2 per night'; its 'Single site: $52' is the older figure) + rec.gov notice on extra vehicles, read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/232801",
+    "reserve_until": {"relative_to": "arrival", "offset_hours": -24},
+    "max_stay_nights": 14,
+    "note": "The 14-night limit is per rolling 30 days. The Forest Service page states a 2-night weekend and 3-night holiday minimum and a 3-day booking cutoff; recreation.gov enforces neither (minimums 0, cutoff 1 day)."
+   },
+   "source": "recreation.gov rules 232801 (maxStay 14 days Rolling 30 Days; reservationCutOff 1 day(s) prior to arrival; minWeekendStay/minHolidayWeekendStay 0 soft) + fs.usda.gov Restrictions, read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov catalog 232801 (all 62 sites STANDARD NONELECTRIC, no water/sewer attributes), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 62, "max_rig_ft": 30},
+   "source": "recreation.gov catalog 232801 (62 sites) + notice 'Maximum vehicle length is 30 feet' (catalog values above 30 ft disregarded), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"flush_toilets": true, "potable_water": true},
+   "source": "recreation.gov ('Drinking water and accessible flush toilets are provided') + fs.usda.gov ('Drinking water and accessible flush toilets provided.'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-17", "closes": "09-12", "note": "2026 dates (last night sold 09-12); 2027 opens 04-16 and closes 09-11 on recreation.gov. The Forest Service page says May - September."},
+   "source": "recreation.gov rate table (Peak Season 2026-04-17..09-12, 2027-04-16..09-11) + availability calendar (nights sold through 2026-09-12, 2027 nights from 04-16), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Sierra NF campground across the road from Bass Lake, in a grove of oak, pine and cedar; shaded sites clustered close together on short paved and dirt spurs. Tight turns: the agency calls it unsuitable for large travel trailers or RVs. Register at the Bass Lake camp store. The 2.6-mile Spring Cove Trail starts in camp. --Claude",
+ "summary": "rec.gov + FS page read: $52 -> $54 (rec.gov 2026/2027) + $2 holiday, rec.gov reservable 14 nights, no hookups, 62 sites / 30 ft, flush + water, season 04-17..09-12; 'not suitable for large travel trailers or RVs' flagged (23 ft is within the 30-ft limit); phone flag.",
+ "flags": [
+  "RIG FIT (keep): rec.gov and FS: 'Due to tight turns and configurations, this camp is not suitable for large travel trailers or RVs'; rec.gov 'well suited for tents or small RVs' and 'Maximum vehicle length is 30 feet'. This is about LARGE rigs, not motorhomes in general; 51 of 62 sites are rated 24 ft or more. Kept, with the tight-turns caveat in the note.",
+  "FEES: $52 (stored, matching the FS page) -> $54, the recreation.gov 2026 and 2027 rate.",
+  "PHONE: stored 559-877-2218 is the Bass Lake Ranger District (FS page). rec.gov's facility phone is the concessionaire, 559-642-3212; suggest that.",
+  "SITES: 63 -> 62 (rec.gov catalog).",
+  "BOOKING: FS page's 2-night weekend / 3-night holiday minimums and 3-day cutoff are not enforced on recreation.gov (trusting rec.gov); recorded in booking.note only.",
+  "WATERFRONT: stored 'not waterfront' agrees with rec.gov 'across the street from Bass Lake'; no change. Pin (37.30164,-119.54249) is ~95 m from rec.gov's point; fine."
+ ]
+}

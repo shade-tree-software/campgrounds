@@ -1,0 +1,73 @@
+{
+ "id": 12300,
+ "checked": "2026-11-27",
+ "sources": [
+  "recreation.gov campground API 232250 (read 2026-11-27): facility_name SERRANO; 'For facility specific information, please call (909) 866-8550.'; facility_phone '909-866-8021 OR 909-866-8550'; 'The campground offers more than a hundred sites for tent and RV camping. A couple dozen sites provide full utility hookups for RVs and a dump station, with a $10 fee, is located within the campground.'; 'Accessible flush toilets, showers and drinking water are provided.'; 'within walking distance of the lake'; 'The campground does not provide direct access to the lake, but a boat ramp is available about a mile away.'; 'Campground is 1/2 mile on left side of road across from Meadows Edge Day Use.'; notices 'Maximum 8 people on a single site', '$8 additional vehicle fee per night on the second vehicle in each single family campsite', 'Snowberry RV Loop is for RV camping. Electricity can be limited during high capacity usage.', 'Two vehicles maximum on a single site'; rules maxConsecutiveStay 14, maxStay 14 days Rolling 30 Days, minWeekendStay 0 soft, minHolidayWeekendStay 0 softAny; rate table Peak Season 2026-03-27..2026-11-28 and 2027-03-19..2027-11-27: STANDARD NONELECTRIC $44, RV ELECTRIC $56, MANAGEMENT $79",
+  "recreation.gov campsite search API (asset 232250, read 2026-11-27): 109 sites in loops Evening Star, Lake View, Snowberry, Summer; 27 RV ELECTRIC sites with 'Electricity Hookup' 30 and water/sewer Y; 82 STANDARD NONELECTRIC; Max Vehicle Length 40 ft on 89 sites, 35-38 on 16, 30 on 3; RV permitted on every overnight site but one small-tent site; site centroid 34.26338,-116.91852; site photo for 115/116 (Lake View loop) shows water glinting through pines and sagebrush beyond the site's fence",
+  "https://www.fs.usda.gov/r05/sanbernardino/recreation/serrano-family-campground (read 2026-11-27): 'Site Open'; 'Serrano is located on the north side of Big Bear Lake, 2 miles east of Fawnskin. There are 93 single sites and 16 double sites.'; 'dump station, RV hookups ... showers and restrooms'; 'Reservations can be placed as late as 24 hours in advance'; 'Individual sites at this campground operate on a 6-month rolling basis'; 'Seasons of Use March 27th - November 29th'; '3 night minimum for holiday weekends.'; 'Single Site: $44 per night Double Site: $56 per night Additional Holiday Fee: $2 per night Additional Vehicle Fee: $8 per vehicle per night Dump Station: $10 per use' and a second, older table 'Single Site $40 - Holiday $42 - 8 person maximum Double Site $79 - Holiday $81 - 16 person maximum Single Site with Hook up Site $51 - Holiday $53'; 'Camping fee includes entry for 1 vehicle.'; 'Potable water is available at this site.'; office Mountaintop Ranger District (909) 382-2790; Latitude 34.26305556 Longitude -116.9152778",
+  "https://www.fs.usda.gov/r05/sanbernardino/alerts (read 2026-11-27): no alert or forest order names Serrano or the north shore; current orders are fire restrictions, road closures on the MT & FC districts (#05-12-00-26-06, not naming Hwy 38 at Big Bear), Cucamonga/Upper Big Falls/Deep Creek area closures",
+  "Esri World_Imagery at 34.2620,-116.9165 (hw 650 m) with the rec.gov site points plotted, 2026-11-27: loops sit north of North Shore Lane / Hwy 38 under open pine; a strip of houses and a separate RV resort lie between the highway and the shore; nearest RV site (115/116) is ~185 m from the shoreline; the stored pin falls on the neighbouring RV resort's rows by the lake"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 44,
+    "nightly_high": 56,
+    "currency": "USD",
+    "surcharges": {"holiday": 2},
+    "extra_vehicle": {"included": 1, "amount": 8, "per": "night", "max_vehicles": 2},
+    "extra_person": {"max_people": 8},
+    "checked": "2026-11",
+    "note": "$44 is a standard (no-hookup) single site, $56 a full-hookup RV site. Double sites hold up to 16 people. Dump station $10 a use."
+   },
+   "source": "recreation.gov rate table 232250 (2026 and 2027 peak season: STANDARD NONELECTRIC $44, RV ELECTRIC $56) + fs.usda.gov Serrano Family Campground ('Additional Holiday Fee: $2 per night', 'Camping fee includes entry for 1 vehicle.', '$8 per vehicle per night', 'Dump Station: $10 per use') + rec.gov notices ('Maximum 8 people on a single site', 'Two vehicles maximum on a single site'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/232250",
+    "window_opens_days": 180,
+    "reserve_until": {"relative_to": "arrival", "offset_hours": -24},
+    "max_stay_nights": 14,
+    "note": "The 14-night limit is per rolling 30 days. The Forest Service page also states a 3-night minimum on holiday weekends; recreation.gov does not enforce one."
+   },
+   "source": "fs.usda.gov Serrano Family Campground ('6-month rolling basis'; 'Reservations can be placed as late as 24 hours in advance'; '3 night minimum for holiday weekends.') + recreation.gov rules (maxStay 14 days, Rolling 30 Days; minHolidayWeekendStay 0), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30, "water": true, "sewer": true},
+   "source": "recreation.gov catalog 232250 (27 RV ELECTRIC sites, Electricity Hookup 30, Water Hookup Y, Sewer Hookup Y) + rec.gov ('A couple dozen sites provide full utility hookups'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 109, "max_rig_ft": 40},
+   "source": "fs.usda.gov ('93 single sites and 16 double sites') + recreation.gov catalog (Max Vehicle Length 40 ft on 89 sites), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+   "source": "recreation.gov ('a dump station ... is located within the campground', 'Accessible flush toilets, showers and drinking water are provided') + fs.usda.gov ('Flush toilets available', 'Potable water is available at this site.'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "03-27", "closes": "11-29"},
+   "source": "fs.usda.gov Serrano Family Campground ('Seasons of Use March 27th - November 29th', 2026), read 2026-11-27; recreation.gov's 2027 rate season runs 03-19 to 11-27 (2027 campground dates not yet posted)",
+   "method": "manual"
+  }
+ },
+ "note": "Concession-run San Bernardino NF campground (Mountaintop Ranger District) on the north side of Big Bear Lake, 2 miles east of Fawnskin, across Highway 38 and a strip of houses from the shore: no direct lake access, boat ramp about a mile away. Snowberry is the RV hookup loop; its electricity can be limited when the campground is full. Big Bear Discovery Center across the road. --Claude",
+ "summary": "rec.gov + FS page read: fees $44/$56 confirmed (+$2 holiday, $8 extra vehicle, 8 people), booking 6-month window/24-hour cutoff/14 nights, FHU 30A confirmed, 109 sites/40 ft, showers/flush/water/dump, season 03-27..11-29; lakefront -> lakeview recommended (rec.gov: no direct lake access; Hwy 38 + houses between); pin ~700 m off on a neighbouring RV resort; phone and FS link added.",
+ "flags": [
+  "WATERFRONT: stored 'lakefront' -> recommend 'lakeview'. recreation.gov's own description: 'The campground does not provide direct access to the lake, but a boat ramp is available about a mile away.' On Esri imagery all four loops lie north of North Shore Lane / Hwy 38; a strip of houses and a separate lakeside RV resort sit between the highway and the shore. Nearest RV site 115/116 (Lake View loop, ~34.2627,-116.9192) is ~185 m from the shoreline across the highway. The rec.gov photo of site 115/116 shows the lake glinting through the pines beyond the site fence - a filtered view from a few Lake View loop sites, which earns lakeview. Replacement evidence: 'rec.gov: \"does not provide direct access to the lake\"; Esri 2026-11-27: loops N of Hwy 38, houses/RV resort between, nearest RV site 115/116 ~185 m from shore; rec.gov site photo 115/116 shows filtered lake view -> lakeview'.",
+  "PIN (~700 m): stored 34.26060,-116.91140 sits on the neighbouring lakeside RV resort's rows south of the highway, not on Serrano. Suggest 34.26338,-116.91852 (centroid of the 106 rec.gov site points, inside the loops on Esri). The FS page's point 34.26306,-116.91528 is at the east (entrance) end.",
+  "PHONE: stored empty -> (909) 866-8550 (rec.gov: 'For facility specific information, please call (909) 866-8550', the concessionaire). District office (909) 382-2790 (FS page).",
+  "WEBSITE: replace the forest root https://www.fs.usda.gov/r05/sanbernardino with the campground page https://www.fs.usda.gov/r05/sanbernardino/recreation/serrano-family-campground; keep the rec.gov link.",
+  "FEES CONFLICT: the FS page carries two tables - '$44 single / $56 double / +$2 holiday' and an older 'Single Site $40, Double Site $79, Single Site with Hook up $51'. rec.gov's 2026 and 2027 rate tables say $44 standard and $56 RV electric; written rec.gov's figures. rec.gov also lists a $79 MANAGEMENT type (not public).",
+  "MIN STAY CONFLICT: FS page '3 night minimum for holiday weekends'; rec.gov minHolidayWeekendStay value 0 (no rule). Not written as a min_stay; said in booking.note.",
+  "NAME: FS page calls it 'Serrano Family Campground' (rec.gov 'SERRANO'). Stored name is fine.",
+  "STATUS: FS page 'Site Open'; no forest alert names Serrano. Seasonal close 11-29, not a closure.",
+  "NOTE: rewritten; dropped the site counts, hookup, dump-fee and reservation prose the fields hold, and the unsourced 'largest and most developed campground on the lake'. No --AWH text."
+ ]
+}

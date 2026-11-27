@@ -1,0 +1,13 @@
+# p3-634 notes
+- 12300 WRITTEN: lakefront->lakeview rec (rec.gov 'no direct access'); pin 700 m (on neighbour RV resort) -> 34.26338,-116.91852; phone 909-866-8550
+- 12413 WRITTEN: creekside->not wf rec (creek 57-100 m in aspen thicket); OHV flag; sites 85; season 05-15..09-12
+- 11996 WRITTEN: lakefront->lakeview rec (loop road+willows); pin 300 m; policy_ref missing
+- 12428 WRITTEN: EID via Wayback; $30; 24 ft tight; water off 2026
+- 12346 WRITTEN: BLM No Fees, no rec.gov facility -> FCFS
+- 11709 WRITTEN: bayview->coastal walk rec; 199 sites; phone
+- 11919 WRITTEN: $54, 62 sites, large-rig caveat
+- 12227 WRITTEN: $36, 44 sites, 15 take >20ft
+- 11824 WRITTEN: $35-45, 43 sites, phone 833-6084
+- 12470 WRITTEN: phone-book, no rate, G 4.9/91, keep
+- 12021 WRITTEN: FCFS, 230 sites, facilities corrected
+- dry run: 11 ready, no !!; browser closed
