@@ -1,0 +1,13 @@
+# p3-632 notes
+- 11995 WRITTEN (lakeview kept 200-250 m open, $38, max 40, phone flag)
+- 12415 WRITTEN (pin 300 m, 45 sites, season 05-01..10-24)
+- 15408 WRITTEN ($49-125, G4.4/843, gateway JT 26 km)
+- 11849 WRITTEN (not wf confirmed FS 'no views', pin 300 m, evidence fix)
+- 12423 WRITTEN ($44-95, lakefront->lakeview, price borderline $59 summer, season 04-23..10-17)
+- 12159 WRITTEN (pin 370 m, vault false, phone -> 209-965-3116)
+- 12452 WRITTEN (long-stay caveat 21/62 nightly; price borderline summer; PA discount)
+- 11804 WRITTEN (bayview confirmed at Harford Landing row; pin move ~250 m off Flying Flags terraces; name fix; lead Flying Flags)
+- 11691 WRITTEN (coastal dunes confirmed; winter FCFS; 24ft no trailers)
+- 12400 WRITTEN (only 4 std sites fit 23ft; phone new 559-745-4209; season 05-15..10-24)
+- 11808 WRITTEN (lakefront -> not waterfront: Front Lake ~1.1 ha pond, pads 40-45 m; phone 951-684-7032)
+- ALL 11 DONE; dry run 11 ready, 0 !!; driver stopped

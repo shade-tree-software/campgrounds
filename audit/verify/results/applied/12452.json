@@ -1,0 +1,64 @@
+{
+ "id": 12452,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://pioneerrvpark.com/rates/ (read 2026-11-27): 'Military Discount: 15% Discount for Active Military and Veterans and First Responders'; 'PASSPORT AMERICA: 50% Discount on Individual Nights (Maximum of two nights discounted. Friday & Saturday nights are excluded ...)' and 'Discount does not apply Nov. 1 st through April 30 th'; 'Pull Through or Back In Sites Includes 30/50-amp electric and WiFi.'; 'RVs 12 years and older are permitted as long as they're in good condition.'; Nightly (includes up to 4 adults) Off-Season (11/01 through 04/30) Pull-Thru $45, Back-In 30/50 Amp $40, Back-In 30 Amp $35, Buddy Site $50; Peak (05/01 through 10/31) Fri-Sat $65/$60/$55/$70, Sun-Thu $55/$50/$45/$60, all '+ Tax'; 'Save 20% when booking 7 nights or more!'; Monthly 'Fall & Winter Season: $625.00/month (plus electricity ...)'; 'We encourage long term, month to month tenants.'; 'Daily: $10.00/day per extra person'; 'The maximum number of people allowed per site is six (6).'",
+  "https://pioneerrvpark.com/facilities/ and /long-term-rv-sites/ (read 2026-11-27): 'extra long and wide 30/50 amp full hook up \"Big Rig\" campsites'; 'Immaculate restrooms and showers', 'Spotless laundry facilities', 'Sanitary dump station', 'Free WiFi throughout the park', 'Clean, paved roads and RV sites'; 'Stay For A Month, A Season, or the Whole Year'",
+  "https://pioneerrvpark.com/rules/ (read 2026-11-27): 'Pioneer RV Park is a time restricted park. The maximum length of stay for any RV is not to exceed 180 consecutive days (6 months).'; 'The rent includes 1 RV & 2 passenger vehicles.'; nightly/weekly cancellation terms, office hours May 1-Oct 14 and Oct 15-Apr 30",
+  "Campspot engine https://www.campspot.com/book/pioneerrvpark via its JSON API in the headless browser (park 518, 2 adults, read 2026-11-27): types 'Pull Thru 30, 50 amp' (18 sites, up to 45 ft) and 'Double Site/Buddy Site' (3 sites) carry sites; 'Back in 30amp' and 'Back in 30, 50amp' list no site on any date read ('No campsites available for selected date range'); open on 2026-12-08: 6 pull-thrus + 1 buddy (avg $50 / $55 with fees), 2027-01-26: 6 + 1, 2027-05-18: 7 + 1 (avg $60 / $70); 2027-06-12 (Sat): 'There is a 2 night minimum'; dates past 180 days: 'Cannot book more than 180 days'",
+  "Google Maps 'Pioneer RV Park' (gm.py, read 2026-11-27): 4.6 from 142 reviews, phone (530) 283-0769",
+  "audit/price_research/gateways.py 39.93676,-120.91220 (run 2026-11-27): none within 40 km (Lassen Volcanic NP 77 km)"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 35, "nightly_high": 70, "currency": "USD", "checked": "2026-11",
+              "extra_person": {"included": 4, "amount": 10, "per": "night", "max_people": 6},
+              "extra_vehicle": {"included": 2, "max_vehicles": 2},
+              "note": "Plus tax. Nov-Apr: back-in 30 A $35, back-in 30/50 A $40, pull-through $45, buddy $50. May-Oct: $45-60 Sun-Thu and $55-70 Fri-Sat. Online booking sells only the pull-through and buddy sites. Weekly stays (7-26 nights, May-Oct) save 20%."},
+   "source": "pioneerrvpark.com/rates/ and /rules/ ('The rent includes 1 RV & 2 passenger vehicles'), Campspot API, read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": true},
+   "source": "pioneerrvpark.com/facilities/ ('30/50 amp full hook up'; 'Full water, sewer, and electric hookups'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"pull_through": true},
+   "source": "pioneerrvpark.com/rates/ and Campspot ('Pull Thru 30, 50 amp', 18 sites), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "laundry": true, "dump": true, "wifi": true},
+   "source": "pioneerrvpark.com/facilities/, read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/pioneerrvpark", "window_opens_days": 180, "max_stay_nights": 180,
+              "note": "Only the pull-through and buddy sites are sold online; a 2-night minimum applied to a June Saturday. Stays of 28 nights or more are booked by phone or email."},
+   "source": "Campspot API ('Cannot book more than 180 days'; 'There is a 2 night minimum'), pioneerrvpark.com/rules/ ('not to exceed 180 consecutive days') and /rates/, read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "pioneerrvpark.com/rates/ (Off-Season Rates 11/01 through 04/30) and Campspot selling December and January nights, read 2026-11-27",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {"passport_america": true, "military": true},
+   "source": "pioneerrvpark.com/rates/ ('PASSPORT AMERICA: 50% Discount on Individual Nights'; 'Military Discount: 15% Discount for Active Military and Veterans'), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Private RV park on Pioneer Rd in Quincy, beside the community park and public pool. Paved, angled big-rig sites under pines; sites 1-30 are the most open for satellite. More than half the sites are let by the month; only the 18 pull-throughs and 3 buddy sites are sold by the night online. Passport America's 50% applies May-Oct weeknights only. --Claude",
+ "summary": "Rates confirmed on the operator page ($35-70 + tax); 50 A FHU, pull-throughs, showers/laundry/dump/wifi, year-round, Passport America + military discounts, Campspot (180-day window). Long-stay: keep with caveat - 21 of ~62 sites sold nightly online (~34%), 6-8 open on winter/May weeknights. Price gate: posted $35 off-season / $45 peak weekday back-in, but the online pull-throughs are $45-65. Google 4.6 (142).",
+ "flags": [
+  "LONG-STAY (caveat band): Campspot sells only 'Pull Thru 30, 50 amp' (18 sites) and 'Double Site/Buddy Site' (3) - about 21 of the ~62 sites (~34%); both back-in types listed no site on every date read (2026-12-08, 2027-01-26, 2027-05-18, 2027-06-08/12). Open nightly sites on a weeknight: 7 (Dec), 7 (Jan), 8 (May). Operator: 'We encourage long term, month to month tenants', monthly $600-625 + electric, 180-day stay cap ('time restricted park'). Passes tests 1-5 (nightly rates posted, no application for nights, 2-night weekend minimum only, ~34% nightly, not a home community); kept with the caveat that more than half the sites are long-term (new note says so).",
+  "PRICE GATE (private): posted back-in 30 A $35 (Nov-Apr) / $45 (May-Oct Sun-Thu), but back-ins are not sold online; the pull-throughs a 23-ft rig can book are $45 off-season and $55-65 in May-Oct (+ tax). Passport America 50% on up to two May-Oct weeknights (operator member discount); military 15%. Not a Good Sam Park; no gateway within 40 km (Lassen 77 km). Borderline in summer; reviewer's call.",
+  "GOOGLE: 4.6 from 142 reviews (Google Maps, 2026-11-27); RV Life 4.5, $$ (stored).",
+  "RIG AGE: 'RVs 12 years and older are permitted as long as they're in good condition' - a 2023 rig passes.",
+  "SITES: stored count 62 is from old note prose; the operator pages read today give no count - left as is.",
+  "PIN: stored 39.93676,-120.91220 vs Campspot's 39.936826,-120.912903 (~60 m) - no move.",
+  "PHONE/WEBSITE: stored 530-283-0769 and https://pioneerrvpark.com/ match the operator and Google - keep."
+ ]
+}
