@@ -835,11 +835,17 @@ Off-road scope question. The operator: "Come to the Largest ATV Adventure Park",
 ## 12359 Wildcat Recreation Area (CA, USACE Eastman Lake) — p3-622, 2026-11-26 — OPEN
 Horse-separation question. rec.gov: "includes three equestrian sites with horse corrals"; all 19 sites are one loop ("WCAT"); equestrian W16-W18 sit together at one end of a lobe (37.2083-37.2089,-119.9660..-119.9663) with standard sites W19 and W01 beside them. 16 general sites, $20, year-round. Read under the 11-17 ruling (a few sold horse sites in a general campground = keep, like Pietrek) or the 11-12 one (horse sites mixed into the general loop = drop)? Kept for now.
 
-## 12347 Ivanpah Dry Lake East (CA, BLM) — p3-628, 2026-11-26 — OPEN (lean drop)
+## 12347 Ivanpah Dry Lake East (CA, BLM) — p3-628, 2026-11-26 — ANSWERED
 Inclusion is weak. BLM's only page for the area (Ivanpah Windsailing SRMA) never mentions camping; it says gates are locked "during wet seasons" and "Individual use of the dry lake bed for non-motorized sports is allowed with a permit". Needles FO's camping list omits Ivanpah. Only RV LIFE (4 reviews) supports overnight use; imagery at the pin shows playa edge by the railroad and a fenced pond installation, no camp vehicles. Not an FS small-free-site case (no agency ever listed it). Kept for now; drop?
 
-## 277 Kirk Creek (CA, Los Padres NF) — p3-629, 2026-11-26 — OPEN (--AWH value)
+**AWH 2026-11-27: drop.** Removed via criteria_drops.py.
+
+## 277 Kirk Creek (CA, Los Padres NF) — p3-629, 2026-11-26 — ANSWERED
 Stored waterfront 'coastal dunes' (--AWH). The camp is an open bluff top above the ocean with no dune field; under the current vocabulary it reads as 'coastal walk'. Not changed because the value is yours. Change to coastal walk?
 
-## 12260 Obsidian (CA, Humboldt-Toiyabe NF) — p3-631, 2026-11-26 — OPEN (lean keep)
+**AWH 2026-11-27: switch to coastal walk.** Done.
+
+## 12260 Obsidian (CA, Humboldt-Toiyabe NF) — p3-631, 2026-11-26 — ANSWERED
 FS page and rec.gov both say "This campground is best suited for small vehicles and tent camping." No site lengths, no 4WD/clearance wording, no explicit "trailers/motorhomes not recommended"; ~3 mi of unpaved Little Walker Rd (FR 066). Kept with the line in the note. Drop?
+
+**AWH 2026-11-27: keep with the caveat** and a note to call about vehicle size. Note now says to call the Bridgeport Ranger District (phone 760-932-7070).
