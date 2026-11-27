@@ -1,0 +1,51 @@
+{
+  "id": 11989,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233860 (read 2026-11-27): 'restrooms with flush toilets'; 'Showers are not located in the campground but are nearby.'; notices '$10 charge for use of the dump station', '... will assess an additional $10.00 extra vehicle fee per day for the second vehicle in each single family campsite'; rules maxConsecutiveStay 14; amenities Dump Station, Flush Toilets, Host; rate table 'Peak Season 2026-05-22 to 2026-09-12 PeakSTANDARD NONELECTRIC 32', 'Peak Season 2027-05-28 to 2027-09-11 ... 32'",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233860 (read 2026-11-27): 90 sites (89 STANDARD NONELECTRIC + 1 SHELTER NONELECTRIC), all reservable, RV/Tent/Trailer; max length 15-38 ft (59 sites 23 ft+); no electric/water/sewer attributes; site centroid 37.64910,-118.95942",
+    "https://www.recreation.gov/api/camps/availability/campground/233860/month 2026-09 (read 2026-11-27): sites Reserved through the night of 2026-09-12, October not offered",
+    "https://www.fs.usda.gov/r05/inyo/recreation/new-shady-rest-campground (last updated September 16, 2026; read 2026-11-27): 'Site Closed'; '92 Campsites'; 'Single Site: $32 per night / Additional Vehicle Fee: $10 per vehicle per night'; 'Flush toilet(s)'; 'Potable water is available at this site.'; Welcome Center '(760) 924-5500'; lat/lng 37.649923,-118.9599006. Alert 'ESCCRP Shady Rest Forest Health Project Area Closure' ran July 15 - September 15, 2026 on the forest north of 37.654N (not the campground)."
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 90, "max_rig_ft": 38},
+      "source": "recreation.gov campsite search for 233860 (90 sites, max length to 38 ft), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": false, "dump": true},
+      "source": "recreation.gov 233860 ('restrooms with flush toilets'; 'Showers are not located in the campground'; '$10 charge for use of the dump station') + fs.usda.gov page ('Potable water is available at this site.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-28", "closes": "09-11", "note": "The 2027 season on recreation.gov (2026 ran May 22 - Sep 12); it follows the Memorial Day and Labor Day weekends."},
+      "source": "recreation.gov 233860 rate table (Peak Season 2027-05-28 to 2027-09-11; 2026-05-22 to 2026-09-12) + availability month 2026-09 (reserved through 09-12, October not offered), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 32,
+        "nightly_high": 32,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+        "note": "$10 to use the dump station."
+      },
+      "source": "recreation.gov 233860 rate table (STANDARD NONELECTRIC $32, 2027 season) and notices ($10 extra vehicle per day; '$10 charge for use of the dump station') + fs.usda.gov ('Single Site: $32 per night / Additional Vehicle Fee: $10 per vehicle per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233860", "max_stay_nights": 14},
+      "source": "recreation.gov 233860 (all 90 sites reservable; maxConsecutiveStay 14), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Inyo NF campground in Jeffrey pine forest on Old Sawmill Road at the edge of Mammoth Lakes, across Hwy 203 from the Welcome Center; a paved path runs to town. Showers are in town. --Claude",
+  "summary": "rec.gov API + catalog + FS page read. 90 reservable non-electric sites to 38 ft (59 take 23 ft+), flush toilets, water, $10 dump, no showers; $32 + $10 extra vehicle; max stay 14; season late May - early Sep (2027: 05-28 to 09-11). FS page 'Site Closed' is the seasonal closure; the July-Sep forest-health closure covered the forest north of camp and has ended. Pin 257 m from the site centroid. Keep; waterfront unchanged (not waterfront).",
+  "flags": [
+    "PIN MOVE ~257 m: stored 37.64920,-118.95650 is at the east edge of the loops; recreation.gov site centroid is 37.64910,-118.95942 (90 sites span -118.9628 to -118.9557). FS page lists 37.649923,-118.9599006 (310 m). Re-pin to 37.6491,-118.9594 recommended.",
+    "SITE COUNT: recreation.gov 90 (used) vs FS page '92 Campsites'.",
+    "SEASON: the season shortened from late October (2019-2023 rate seasons to 10-28/10-31) to early September from 2024; written as the 2027 recreation.gov season."
+  ]
+}

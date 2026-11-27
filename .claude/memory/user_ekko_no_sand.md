@@ -7,7 +7,7 @@ metadata:
 
 Driving on sand or open beach is not safe for EKKO (AWH 2026-11-04, asked about Lake McConaughy's North Shore beach camping). A campground whose camping means driving onto sand or an open beach (beach-only areas, drive-on shoreline/dune camping, a sandy lakeshore flat where rigs park) is a drop I make and report. A developed loop that merely also offers beach camping stays.
 
-**Clarified AWH 2026-11-05:** "EKKO should be fine accessing packed gravel/sand pads via a maintained packed gravel/sand road. It's the bare sand of an open beach that is a concern." So Merritt Reservoir's RA 'Driveway Surface: Sand' loops (2716, 2717, Willow Cove) pass; the test is bare open-beach sand vs a maintained packed surface, not the word "sand".
+**Clarified AWH 2026-11-05:** "EKKO should be fine accessing packed gravel/sand pads via a maintained packed gravel/sand road. It's the bare sand of an open beach that is a concern." So Merritt Reservoir's RA 'Driveway Surface: Sand' loops (2716, 2717, Willow Cove) pass; the test is bare open-beach sand vs a maintained packed surface, not the word "sand". **Again AWH 2026-11-27 (Moabi/Pirate Cove 11789):** "Keep Moabi riverfront, packed pads off a paved road are fine" - sand pads off a paved road pass and can carry the waterfront value.
 
 **Why:** AWH's own call on vehicle safety; no agency 4WD wording is needed. Extends [[user_ekko_no_4wd]].
 

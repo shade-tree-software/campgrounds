@@ -1,0 +1,52 @@
+{
+  "id": 11672,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=593 (read 2026-11-27): 'Max trailer: 24 feet'; 'Max camper/motorhome: 40 feet'; 'Non-hookup sites: Maximum RV/Trailer length 24''; 'Hookup sites: Maximum RV/Trailer length 40''; 'The Morro Strand Campground offers over 70 campsites for tent camping and recreational vehicles. Each campsite has a fire ring and picnic table with water spigots and flush toilets nearby. TOKEN-operated shower facilities are available at the Morro Bay Campground with proof of registration. An RV sanitation station and water-fill station are also available there.'; '2 vehicle maximum per campsite ... your reservation only covers 1 vehicle.'; '8 Persons maximum per campsite.'; 'Morro Strand Campground (805) 772-8812'; Current Restrictions: 'Due to high surf conditions 24th St. & Studios Parking lots are currently closed.' (day-use lots, not the campground)",
+    "ReserveCalifornia API place 681 + search/grid 2027-05-11 (read 2026-11-27): Morro Strand Campground (sites 19-66) 584 - 47 units (29 Campsite, 27 of them 24 ft, C 40, D 30; 18 Hook Up 40 ft, sites 48-66); (sites 1-18, 67-81) 587 - 26 units (24 Campsite incl. A/B 40 ft; Hook Up 69, 70); Restrictions MaximumStay 10; search/details for every unit on Sat 2027-05-15 and samples on Tue 2027-01-12: Campsite $35, Hook Up $50, Fee 8.25; hookup amenities 'Electricity Hookup: amps 30', 'Water Hookup: Yes', 'Sewer Hookup: Yes'; all 73 units 'Proximity to Water: Oceanfront', 'Driveway Surface: Paved'",
+    "Esri World_Imagery 600 m frame at 35.4000,-120.8670 (read 2026-11-27): paved linear campground between Yerba Buena St (houses beyond, Hwy 1 ~250 m E) and the beach's vegetated dune field (~60-120 m of dunes with a small creek lagoon) to the open beach; no road, lot or day use between the west row and the dunes"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 73, "max_rig_ft": 40},
+      "source": "ReserveCalifornia grid 2027-05-11 (47 + 26 units) + parks.ca.gov page_id=593 ('Max camper/motorhome: 40 feet'; 'Hookup sites: Maximum RV/Trailer length 40''), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": true, "sewer": true},
+      "source": "ReserveCalifornia search/details unit 43219 (site 48, 'Hook Up Standard Site'): 'Electricity Hookup: amps 30', 'Water Hookup: Yes', 'Sewer Hookup: Yes', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": false, "dump": false},
+      "source": "https://www.parks.ca.gov/?page_id=593 ('water spigots and flush toilets nearby. TOKEN-operated shower facilities are available at the Morro Bay Campground with proof of registration. An RV sanitation station and water-fill station are also available there.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 50,
+        "currency": "USD",
+        "checked": "2026-11",
+        "surcharges": {"electric": 15, "weekend": 0},
+        "extra_vehicle": {"included": 1, "per": "night", "max_vehicles": 2},
+        "extra_person": {"max_people": 8},
+        "note": "Campsites $35 a night, hookup sites $50, the same on a winter Tuesday and a spring Saturday."
+      },
+      "source": "ReserveCalifornia search/details (Campsite $35, Hook Up $50 on 2027-01-12 and 2027-05-15) + parks.ca.gov page_id=593 ('2 vehicle maximum per campsite ... your reservation only covers 1 vehicle.'; '8 Persons maximum per campsite.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": null, "max_stay_nights": 10},
+      "source": "ReserveCalifornia place 681 / grid Restrictions ('MaximumStay': 10), every unit web-bookable, read 2026-11-27; the stored fcfs 'never' came from note prose no page states, cleared to inherit the state row",
+      "method": "manual"
+    }
+  },
+  "note": "State beach campground, a paved strip off Yerba Buena Street at the north end of Morro Bay, with the beach's own dunes between the sites and the ocean. Non-hookup sites take rigs to 24 ft, the hookup sites to 40 ft. Showers and the RV dump are at Morro Bay State Park's campground, about 4 mi south (proof of registration). --Claude",
+  "summary": "parks.ca.gov + ReserveCalifornia API + imagery read. 73 units (20 hookup, 30 A/water/sewer), non-hookup 24 ft, hookup 40 ft; $35 / $50 flat; max stay 10; no showers or dump on site (they are at Morro Bay SP). Coastal dunes CONFIRMED. Count set 73, electric 30, high 35 -> 50, fcfs 'never' cleared, showers false / dump false. Phone '' -> 805-772-8812.",
+  "flags": [
+    "WATERFRONT coastal dunes CONFIRMED: the west row of the paved strip (~35.4003,-120.8670) backs directly onto the beach's vegetated dune field, ~60-120 m of dunes (with a small creek lagoon) to the open beach, no road, lot or day use between; RC types all 73 units 'Oceanfront'. The closed '24th St. & Studios' lots are separate day-use lots. Pin OK (within ~170 m of RC facility 584's point, on the strip).",
+    "PHONE: '' -> 805-772-8812 (parks.ca.gov page_id=593: 'Morro Strand Campground (805) 772-8812').",
+    "SITES/FIT: 53 non-hookup units are 24 ft (A, B, C 40 ft; D 30 ft) and 20 hookup units (48-54, 56-66, 69, 70) 40 ft - a 23-ft rig fits all. Stored note's 'sites 47-71 full-hookup' was loose (RC lists no units 47, 55, 67, 68 or 71)."
+  ]
+}

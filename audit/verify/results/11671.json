@@ -1,0 +1,58 @@
+{
+  "id": 11671,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=594 (read 2026-11-27): 'Max trailer: 35 feet'; 'Max camper/motorhome: 35 feet'; 'The Morro Bay Campground offers over 140 campsites for tent camping, recreational vehicles, and group camping. The maximum length for an RV is 35 feet and electrical hookups are available in some campsites. Each campsite has a fire ring and picnic table with water spigots nearby. There are flush toilets and TOKEN-operated shower facilities in place. An RV sanitation station and water-fill station are also available.'; '2 vehicle maximum per campsite ... your reservation only covers 1 vehicle'; '8 Persons maximum per campsite.'; 'Select campsites at Morro Bay State Park are now part of California State Park's monthly Reservation Draw program'; 'Morro Bay Campground Kiosk (805) 772-7434'; Current Restrictions panel empty (no closure); availability panel shows sites open Dec 2026",
+    "ReserveCalifornia API (california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr), place 680 + search/grid 2027-05-11 (read 2026-11-27): Lower Section (sites 1-85) 582 - 57 units (20 'Hook Up Campsite' 40 ft, 37 'Campsite' 24-35 ft); Upper Section (sites 86-140) 583 - 36 'Campsite' 24-35 ft; Morro Lottery sites 2185 - 15 (5 hookup 40 ft: 22, 23, 25, 27, 28; 10 campsites 30 ft); Restrictions MaximumStay 10, MinimumStay 1 (same on Dec 8, Jan 12, Mar 9 grids); search/details: Hook Up $50, Campsite $35 on 2027-01-12, 2027-05-11, Sat 2027-05-15 and Sat 2027-05-29 (Memorial Day weekend), Fee 8.25; hookup site amenities 'Electricity Hookup: 30 AMPS', 'Water Hookup: Yes', 'Sewer Hookup: No', 'Proximity to Water: walk to bay' (all 108 units 'walk to bay')",
+    "Esri World_Imagery 900/360/160 m frames at 35.3470,-120.8400, 35.3455,-120.8395, 35.3453,-120.8392 + USGS 3DEP (read 2026-11-27): loops on flat ground at 4-6 m, north of State Park Road; south rows 25-30 m from the road, a dense cypress/eucalyptus belt along the road and the marina parking lot between them and the marina basin (~70-100 m); salt marsh east of the road; no clear sightline to open water"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 108, "max_rig_ft": 35},
+      "source": "ReserveCalifornia grid 2027-05-11 (57 + 36 + 15 individual units, 24-40 ft) + parks.ca.gov page_id=594 ('Max trailer: 35 feet'; 'Max camper/motorhome: 35 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": true, "sewer": false},
+      "source": "ReserveCalifornia search/details unit 43098 (site 1, 'Hook Up Standard Site'): 'Electricity Hookup: 30 AMPS', 'Water Hookup: Yes', 'Sewer Hookup: No', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "https://www.parks.ca.gov/?page_id=594 ('water spigots nearby'; 'flush toilets and TOKEN-operated shower facilities'; 'An RV sanitation station and water-fill station are also available.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "ReserveCalifornia grids 2026-12-08, 2027-01-12, 2027-03-09 and 2027-05-11 (all in season, units bookable) + parks.ca.gov availability panel (sites available Dec 1-12, 2026), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 35,
+        "nightly_high": 50,
+        "currency": "USD",
+        "checked": "2026-11",
+        "surcharges": {"electric": 15, "weekend": 0},
+        "extra_vehicle": {"included": 1, "per": "night", "max_vehicles": 2},
+        "extra_person": {"max_people": 8},
+        "note": "Campsites $35 a night, water-and-electric hookup sites $50, the same on winter weekdays, spring Saturdays and Memorial Day weekend."
+      },
+      "source": "ReserveCalifornia search/details (Campsite $35, Hook Up $50 on 2027-01-12, 2027-05-11, 2027-05-15, 2027-05-29) + parks.ca.gov page_id=594 ('2 vehicle maximum per campsite ... your reservation only covers 1 vehicle'; '8 Persons maximum per campsite.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "max_stay_nights": 10},
+      "source": "ReserveCalifornia place 680 / grid Restrictions ('MaximumStay': 10) on all three camping facilities, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "State park campground beside the park marina and golf course on the Morro Bay estuary, about 1.5 mi south of the town of Morro Bay; the bay shore is a short walk across State Park Road. Some sites are booked through California State Parks' monthly Reservation Draw lottery rather than the usual rolling window. --Claude",
+  "summary": "parks.ca.gov + ReserveCalifornia API + imagery/3DEP read. 108 units (25 hookup, 30 A + water, no sewer), RVs to 35 ft (every unit 24 ft+), $35 / $50 flat all year, max stay 10, year-round, no closure banner. Stored count 134 -> 108, electric -> 30, high 35 -> 50. Waterfront: bayview not supported by a sightline; RC types every site 'walk to bay' -> coastal walk recommended (upgrade, reported).",
+  "flags": [
+    "WATERFRONT RE-AUDIT (bayview -> coastal walk recommended, an upgrade, so reported not changed): ReserveCalifornia types all 108 units 'Proximity to Water: walk to bay' (none 'bay view'). On Esri imagery the south rows of the Lower Section (~35.3460,-120.8395) sit 25-30 m north of State Park Road behind a dense cypress/eucalyptus belt; past the road lie the park's marina parking lot and the marina basin of Morro Bay, ~70-100 m from the nearest pads, and the salt marsh of the estuary east of the road. The loops are flat at 4-6 m (3DEP), so the road belt screens any sightline - the stored evidence's 'view holds' is not supported. But Morro Bay is a large saltwater bay and the walk to its shore is ~100 m over the park road and the park's own marina lot, with no highway, town or rail between (curation doc: 'The park's own day-use beach, its parking and park roads may lie between'). If AWH prefers not to upgrade, the evidence supports not waterfront rather than bayview. Suggested evidence: 'RC 2026-11-27: every unit Proximity to Water walk to bay; Esri+3DEP: flat loops 4-6 m, road tree belt screens the marina basin 70-100 m S; walk to the bay shore ~100 m over State Park Rd and the park marina lot, no highway/town -> coastal walk.'",
+    "SITES: count 134 -> 108 (RC individual units; the park page says 'over 140 campsites' including group sites, and site numbers run to 140 with gaps). 15 of them (hookup 22, 23, 25, 27, 28; campsites 34, 35, 38, 50, 52, 54, 56, 71, 73, 78) are sold only through the monthly Reservation Draw. Every unit takes 24 ft or more; the page's 35-ft limit stands though RC lists the hookup pads at 40 ft.",
+    "HOOKUPS: 25 hookup sites (20 in the Lower Section + 5 lottery), 30 A + water, no sewer; the old note's 'sites 1-30' was approximate.",
+    "PHONE: stored 805-772-7434 is the page's 'Morro Bay Campground Kiosk'; the park's other number (805) 772-6101 is the Museum of Natural History. Kept the kiosk as the campground's own line."
+  ]
+}
