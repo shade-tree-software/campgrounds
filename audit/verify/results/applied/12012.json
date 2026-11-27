@@ -1,0 +1,58 @@
+{
+  "id": 12012,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233300 (read 2026-11-27): 'one large loop with parking spurs for each campsite. Several sites are equipped with level cement pads to allow campers to set up their telescopes. The sites can accommodate vehicles up to 32 feet in length. Drinking water, coin-operated showers (peak season only), grills, trash cans, campfire rings, picnic tables, a flush toilet (peak season only) and two vault toilets are provided.'; 'Visitors can also walk a 2.25-mile trail to the observatory itself.'; notice 'This campground will close temporarily during major winter weather events.'; rate table Peak Season 2026-04-01 to 2026-12-01 and 2027-04-01 to 2027-12-01: STANDARD NONELECTRIC $20, double $40",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233300 (read 2026-11-27): 28 units (6 of them doubles, e.g. '037/038'), all STANDARD NONELECTRIC; permitted equipment: 19 Tent only, 3 Tent+Trailer, 3 RV+Tent+Trailer, 1 RV+Trailer; units taking an RV: 035/036 (RV/Trailer max 12 ft), 037/038 (30 ft, double), 040 (35 ft), 041/042 (35 ft, double); 039 Trailer/Tent 35 ft; 028/029 Trailer 20 ft",
+    "https://www.recreation.gov/api/camps/availability/campground/233300/month 2026-11, 2026-12, 2027-03, 2027-04 (read 2026-11-27): bookable through the night of 12-01, no inventory Dec 2 - Mar 31, open again from 04-01",
+    "https://www.fs.usda.gov/r05/cleveland/recreation/observatory-campground (read 2026-11-27): 'Site Open'; 'Boil Water Advisory – Fry Creek & Observatory Campgrounds ... All drinking water should be boiled for at least one minute before use ... Observatory Campground shower facilities are closed until further notice.'; 'Coin operated hot showers and flush toilet are available.'; 'There are a total of 42 sites, 36 single sites and six doubles.'; 'Seasons of Use April 01'; 'Vehicles 32 ft. max.'; 'Single Site: $20 per night / Double Site: $40 per night / Additional Vehicle Fee: $5 per vehicle per night' (a second, older line on the page still says $15/$30); 'Palomar Ranger District - (760) 788-0250'",
+    "Esri World_Imagery 600 m frame at 33.3429,-116.8782 (read 2026-11-27): one paved loop with cleared patches in pine/oak forest on the Palomar Mountain ridge; no water in frame"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 28, "max_rig_ft": 35},
+      "source": "recreation.gov campsite search for 233300 (28 units; RV permitted to 35 ft at 040 and 041/042), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "potable_water": true, "showers": true},
+      "source": "recreation.gov 233300 ('Drinking water, coin-operated showers (peak season only) ... a flush toilet (peak season only) and two vault toilets'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "12-01", "note": "May close for a few days in major winter storms."},
+      "source": "recreation.gov 233300 rate seasons (04-01 to 12-01, 2026-2028) + availability (open through 12-01, no inventory Dec 2 - Mar 31) + notice 'will close temporarily during major winter weather events' + FS 'Seasons of Use April 01', read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open", "note": "Boil-water advisory in effect; the showers are closed until further notice."},
+      "source": "fs.usda.gov Observatory Campground page ('Boil Water Advisory ... Observatory Campground shower facilities are closed until further notice.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 5, "per": "night"},
+        "note": "Double sites $40."
+      },
+      "source": "recreation.gov 233300 rate table (single $20, double $40) + fs.usda.gov ('Additional Vehicle Fee: $5 per vehicle per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233300"},
+      "source": "recreation.gov 233300 (27 of 28 units reservable), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Cleveland NF campground in pine and oak on Palomar Mountain, a 2.25-mile trail below Palomar Observatory; several sites have level cement pads for telescopes. Only sites 40, 37/38 and 41/42 (the last two doubles) take a motorhome longer than 12 ft; the rest are tent or short-trailer sites. Showers and the flush toilet run in peak season only. --Claude",
+  "summary": "rec.gov API + catalog + availability + FS page + imagery read. 28 rec.gov units, but only THREE take a motorhome over 12 ft (040 single 35 ft; 37/38 double 30 ft; 41/42 double 35 ft) - criteria flag. Season Apr 1 - Dec 1 (was unknown). Boil-water advisory, showers closed (status note). $20 single / $40 double, $5 extra vehicle. Count 42 -> 28. Not waterfront unchanged; pin OK (~145 m from centroid). Phone unchanged.",
+  "flags": [
+    "CRITERIA (fit) - keep with caveat or drop, AWH's call: per rec.gov's per-site equipment list, only 3 of 28 units admit an RV a 23-ft rig needs - 040 (single, RV to 35 ft, $20), 037/038 (double, 30 ft, $40) and 041/042 (double, 35 ft, $40); 035/036 caps RVs at 12 ft, 039 is Trailer/Tent only (35 ft), 028/029 Trailer to 20 ft, the other 19 units Tent only. The facility text's 'sites can accommodate vehicles up to 32 feet' and the FS 'Vehicles 32 ft. max.' are the spur maximum, not most sites. Note rewritten to say so.",
+    "SITE COUNT 42 -> 28: rec.gov lists 28 bookable units (6 doubles); FS says '42 sites, 36 single sites and six doubles' - rec.gov used.",
+    "STATUS: boil-water advisory and showers closed until further notice (FS page) - written as a status note, operating stays open.",
+    "FS page carries two fee lines ($20/$40 and an older $15/$30); rec.gov's $20/$40 used."
+  ]
+}

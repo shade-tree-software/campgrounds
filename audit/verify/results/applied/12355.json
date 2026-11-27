@@ -1,0 +1,62 @@
+{
+  "id": 12355,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233568 (read 2026-11-27): 'The family-friendly campground offers 35 campsites and a group campground that fits 50. Conveniences include showers, a boat ramp complex, and a 18-hole disc golf course. No electric hookups or water hookups are available. The area is open seasonaly from 1 April through the second Monday in September.'; notices 'Limited Sanitation Facilities Due to ongoing sanitation infrastructure issues, flushing toilets and showers will not be available. Portable restrooms and handwashing stations will be in place ... Potable water and dump stations will remain available for visitor use.', 'Each campsite allows up to 4 vehicles*', 'A dump station and water filling station is available.', 'Direct access to the lake is limited due to steep terrain.'; rules maxStay 14 nights ('Rolling 30 Days'); rate seasons 2026-04-01 to 2026-09-09 and 2027-04-01 to 2027-09-08: STANDARD NONELECTRIC $20; phone 530-865-4781",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233568 (read 2026-11-27): 34 individual sites (OB01-OB35, no OB24) + group site OBGUA; OB14, the only STANDARD ELECTRIC site, is 'Not Available' and not reservable; RV permitted on 28 sites, 26 of them 25 ft or longer (OB01 and OB31 20 ft); OB10, 16, 17, 20, 22 permit only 'Vehicle' (20-30 ft); per-site coordinates (centroid 39.77295,-122.35395)",
+    "https://www.recreation.gov/api/camps/availability/campground/233568/month 2026-11, 2027-03, 2027-04, 2027-05 (read 2026-11-27): 'Not Available' through 2027-03-31, 'Available' from 2027-04-01",
+    "Esri World_Imagery 900 m frame at 39.7730,-122.3530 with the rec.gov site points + USGS 3DEP point elevations (read 2026-11-27): lake drawn down, a bare drawdown band below the campground; west-row sites 16-20 at ~155 m on the bluff edge; ground falls to ~147.6 m 30 m west of site 20 and to ~138.6 m 30 m west of site 16; the lidar water surface is ~137 m"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 34},
+      "source": "recreation.gov campsite search for 233568 (34 individual sites plus the group site), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov 233568 ('No electric hookups or water hookups are available.'; 'There are no electric/water/sewer hookups.'); the one STANDARD ELECTRIC site (OB14) is not reservable, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "recreation.gov 233568 ('Conveniences include showers'; 'flushing toilets and showers will not be available' (status note); 'A dump station and water filling station is available.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "09-08", "note": "Through about the week after Labor Day: rec.gov's text says the second Monday in September, its 2026 rate season ran to 09-09 and 2027's to 09-08."},
+      "source": "recreation.gov 233568 ('open seasonaly from 1 April through the second Monday in September'; rate seasons 2026-04-01..09-09, 2027-04-01..09-08; availability Not Available until 2027-04-01), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open", "note": "Flush toilets and showers out of service over sanitation repairs; portable restrooms in their place, water and the dump station still open."},
+      "source": "recreation.gov 233568 notice 'Limited Sanitation Facilities', read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {"max_vehicles": 4}
+      },
+      "source": "recreation.gov 233568 rate table (STANDARD NONELECTRIC $20, 2026 and 2027) + notice 'Each campsite allows up to 4 vehicles*', read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233568", "max_stay_nights": 14},
+      "source": "recreation.gov 233568 (sites reservable; rules maxStay 14 nights, rolling 30 days), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "USACE campground in blue oak woodland on the bluffs above Black Butte Lake's south shore, beside the Orland Buttes boat ramp; an 18-hole disc golf course is in the recreation area. The bank below the sites is steep. Sites 1 and 31 are 20 ft. --Claude",
+  "summary": "rec.gov API + catalog + availability + imagery/3DEP read. 34 sites (+ group), no hookups (the lone electric site OB14 is not bookable - electric 0), 26 sites take a 23-ft RV; $20, max stay 14; season Apr 1 - ~Sep 8 (was unknown); flush toilets and showers currently out of service (status note). LAKEVIEW CONFIRMED: west-row sites 16-20 sit on the bluff ~10 m above full pool with a steep bank. Pin OK (~125 m from the site centroid). Phone unchanged.",
+  "flags": [
+    "WATERFRONT lakeview CONFIRMED (kept): the west row (sites 16, 17, 18, 20, 21, 22; 39.7728-39.7736,-122.3551) sits at ~155 m on the bluff edge over open oak grassland; 3DEP falls to ~147.6 m 30 m west of site 20 and ~138.6 m 30 m west of site 16; Black Butte's gross pool is ~474 ft (~144.5 m), so full pool lies ~25-40 m from those pads but ~10 m below them down a steep bank - fails the kayak test; rec.gov: 'Direct access to the lake is limited due to steep terrain.' Imagery is drawn down (bare band below the campground). Suggested evidence: 'rec.gov sites + Esri + 3DEP 2026-11-27: west-row sites 16-22 at ~155 m on the bluff edge, full pool (~144.5 m) 25-40 m away ~10 m below down a steep bank; open oak grassland gives the sightline; rec.gov: direct lake access limited by steep terrain -> lakeview.'",
+    "HOOKUPS: electric set to 0 (was absent). rec.gov's facility text says no electric hookups; the single STANDARD ELECTRIC site OB14 is 'Not Available' and not reservable (likely the host's).",
+    "STATUS: rec.gov notice says flush toilets and showers 'will not be available' due to ongoing sanitation infrastructure issues; portable restrooms in place. Written as a status note; the facilities stay true.",
+    "SITES/FIT: count 34 -> 34 individual sites (stored note said ~33 + 1 electric). RV permitted on 28; 26 of those are 25 ft or more (OB01 and OB31 cap at 20 ft); OB10, 16, 17, 20 and 22 permit only 'Vehicle'. Stored max_rig_ft 40 (note prose) left alone: rec.gov lists RV spurs up to 115 ft, so 40 understates, but a single figure that large isn't meaningful.",
+    "SEASON END: rec.gov text 'through the second Monday in September' disagrees with its rate seasons (09-09 in 2026, 09-08 in 2027); 09-08 used, with a note. The USACE district page was not tried (it has answered Akamai 'Access Denied' to plain HTTP)."
+  ]
+}

@@ -1,0 +1,12 @@
+# CA phase 7 p3-645 working notes (2026-11-27)
+- 11671 Morro Bay SP: done; bayview -> coastal walk recommended (RC 'walk to bay' all 108); count 108, 30A, 5/0, max stay 10.
+- 11672 Morro Strand: coastal dunes confirmed; 73 units; phone '' -> 805-772-8812.
+- 11794 Mother Lode Fairgrounds: Wayback 2026-01-25 (live site down); first-come, open except events; phone '' -> 209-532-7428.
+- 11676 Navarro Beach: temporarily closed (flood/surf 11/27); riverfront -> coastal walk recommended; sand question flagged.
+- 11989 New Shady Rest: rec.gov 90 sites, season 05-28..09-11 (2027), pin 257 m to centroid.
+- 12318 North Eagle Lake: BLM first-come, no rec.gov; season Memorial Day - Nov 15; pin kept.
+- 11797 O'Neill: hookups cleared to unknown; pin 407 m to loops' middle; UseDirect 12 months.
+- 12013 Oak Grove: rec.gov 25 ft all sites, year-round, no showers.
+- 12012 Observatory: only 3 RV units (040, 37/38, 41/42) - criteria flag; season 04-01..12-01; boil water/showers closed.
+- 11685 Oceano (Pismo SB): lakefront not supported (shore tree belt, loop road) -> coastal walk recommended; dump false; phone -> 805-473-7220; max stay 15.
+- 12355 Orland Buttes: lakeview confirmed (bluff ~10 m over full pool); season 04-01..09-08; flush/showers out of service; electric 0.
