@@ -1,0 +1,55 @@
+{
+ "id": 11615,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=487 (read 2026-11-27): 'Current Restrictions' panel empty (last checked 11/27/2026); 'Contact Information (916) 777-4004'; 'Park hours are from sunrise to one hour after sunset. There is a new gate; it will close one hour after sunset'; 'Trailer Lengths: Sites vary from 20 feet to 36 feet in length. While booking your site, please check the site length and width under amenities'; facilities list 'RV/Trailer Campsites w/Hookups', 'RV Dump Station', 'Restrooms / Showers'; 'The park has a ten lane launch ramp, over 140 campsites'",
+  "https://www.parks.ca.gov/pages/487/files/BrannanIslandSRA_CampgroundMap20221221.pdf (read 2026-11-27): '17645 Hwy. 160 Rio Vista ... (916) 777-4004'; 'Brannan Island State Recreation Area offers year-round camping'; 'Eight people maximum are allowed per campsite'; 'You may park two vehicles in each campsite'; map: Willow (sites 1-50) and Cottonwood (51-100) along Three Mile Slough, Olympic Loop 'CH Olympic Loop Campground (No Tent Camping)' sites 103-115 by the launch, walk-in camp 116-128",
+  "ReserveCalifornia API (california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr/), PlaceId 621, search/place + search/grid + search/details for 2027-05-12 (Wed) and 2027-07-03 (Sat, holiday weekend), read 2026-11-27: Cottonwood (FacilityId 423) 46 'Campsite' units $36/$36, no hookups; Willow (428) 45 'Campsite' units $36/$36; Olympic (425) 10 'Hook Up (E/W) Campsite' units (O103-O109, O113-O115) $49/$49, 'Electricity Hookup: Amps 50', 'Hook Up Type: E,W', 'Sewer Hookup: No'; Walk In (427) 13 'Tent Only - Walk-In' $31/$36; VehicleLength 36 (32 on some Olympic units) on every unit; MaximumStay 30 (Olympic 14); booking open through 2027-05-27",
+  "Esri World_Imagery at 38.1115,-121.6925 (500 m half-width) and z18 tiles at 38.1128,-121.6913, viewed 2026-11-27: the Willow and Cottonwood loops run along the west bank of Three Mile Slough (~250 m wide); the outer spurs sit ~30-45 m from the waterline behind a narrow, broken fringe of riparian trees",
+  "USGS 3DEP (epqs.nationalmap.gov) transects bearing ~135 deg toward the slough, read 2026-11-27: from 38.11352,-121.69115 (outer Willow spur) 7.3 m -> 7.0 m at 25 m -> 1.5 m at 35 m -> water 1.1 m; from 38.1138,-121.6905 7.6 m -> 4.4 m at 10 m -> water 1.1 m at 20 m - the loops sit on a levee bench ~6 m above the slough"
+ ],
+ "groups": {
+  "fees": {
+   "values": {"nightly_low": 36, "nightly_high": 49, "currency": "USD", "checked": "2026-11",
+              "surcharges": {"electric": 13, "weekend": 0},
+              "note": "ReserveCalifornia, May and July 2027: campsites $36; Olympic loop electric and water sites $49; the same on a holiday Saturday."},
+   "source": "ReserveCalifornia API search/details, PlaceId 621 (Cottonwood 423, Willow 428, Olympic 425), 2027-05-12 and 2027-07-03, read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 50, "water": true, "sewer": false},
+   "source": "ReserveCalifornia search/details, Olympic Campground (425): 'Electricity Hookup: Amps 50', 'Hook Up Type: E,W', 'Sewer Hookup: No' (10 units); parks.ca.gov 'RV/Trailer Campsites w/Hookups', read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 114, "max_rig_ft": 36, "note": "101 drive-in sites (Willow 45, Cottonwood 46, Olympic 10 hookup sites) plus 13 walk-in tent sites; the park says sites run 20-36 ft, so check each site's length when booking."},
+   "source": "ReserveCalifornia grid (423/428/425/427) + parks.ca.gov page_id=487 ('Sites vary from 20 feet to 36 feet in length'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "parks.ca.gov campground map PDF ('offers year-round camping') + ReserveCalifornia availability through the winter, read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true, "showers": true},
+   "source": "https://www.parks.ca.gov/?page_id=487 ('RV Dump Station', 'Restrooms / Showers'), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"note": "Stays up to 30 nights in Willow and Cottonwood, 14 in the Olympic hookup loop."},
+   "source": "ReserveCalifornia search/place, PlaceId 621 (MaximumStay 30; Olympic 14), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Delta recreation area on Three Mile Slough off Hwy 160 near Rio Vista, with a ten-lane boat launch and swim beaches on Seven Mile Slough. The Willow and Cottonwood loops sit on the slough levee; the Olympic loop by the launch holds the hookup sites and takes no tents. Also walk-in tent sites, a cabin and a group camp. The entrance gate closes one hour after sunset. --Claude",
+ "summary": "parks.ca.gov + ReserveCalifornia read: $36 campsites / $49 Olympic E/W 50 A (stored 'no hookups' was wrong), 101 drive-in + 13 walk-in, 20-36 ft, year-round, no closure. WATERFRONT riverfront -> recommend riverview (loops on a levee ~6 m above Three Mile Slough). Phone differs from the park page.",
+ "flags": [
+  "WATERFRONT: stored 'riverfront' (not --AWH) -> recommend 'riverview'. The camp loops are on the west bank of Three Mile Slough (~250 m wide; the stored evidence named Seven Mile Slough, which is the day-use beach side), outer spurs ~30-45 m from the waterline behind a narrow broken riparian fringe, but 3DEP puts them on a levee bench ~6 m above the water with the drop over ~10-15 m (outer Willow spur 38.11352,-121.69115: 7.3 m -> 1.1 m water at ~35 m; 38.1138,-121.6905: 7.6 m -> 1.1 m at ~20 m) - fails the kayak test (a 2-3.7 m bank at ~30 deg is already a view). Proposed evidence: 'parks.ca.gov map + Esri + 3DEP 2026-11-27: Willow/Cottonwood loops on the Three Mile Slough levee, outer spurs ~30-45 m from the water but ~6 m above it on a steep bank behind a broken tree fringe - view.'",
+  "HOOKUPS: stored electric 0 / water false (note prose 'No hookups') was wrong - the Olympic loop's 10 sites have 50 A electric and water (ReserveCalifornia). Written.",
+  "PHONE: 916-777-7701 -> (916) 777-4004 (parks.ca.gov contact and the campground map PDF).",
+  "LENGTH: every ReserveCalifornia unit shows VehicleLength 36 (32 on some Olympic units) - likely a placeholder; the park page says sites vary from 20 to 36 ft. A 23-ft rig fits most; noted.",
+  "PIN: stored 38.11300,-121.69200 sits in the Willow loop, central to the three loops; no move.",
+  "No closure banner (Current Restrictions empty, 2026-11-27). State:CA row (ReserveCalifornia, $8.25 fee, 8 people, 2 vehicles) not contradicted; the campground map says two vehicles may park at each site."
+ ]
+}

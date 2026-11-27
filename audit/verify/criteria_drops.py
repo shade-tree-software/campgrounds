@@ -679,6 +679,7 @@ DROPS = {
     12347: ("2026-11-27", "not a campground: no agency page mentions camping (AWH 2026-11-27: drop)", "p3-628, read 2026-11-26: BLM Ivanpah Windsailing SRMA page never mentions camping, gates locked in wet seasons, lake-bed use by permit; Needles FO camping list omits it; only RV LIFE (4 reviews) supports overnight use."),
     12378: ("2026-11-27", "private park over US$50 a night for a 23-ft rig, no exception (price gate)", "p3-637, read 2026-11-27: Hipcamp listing: cheapest site a 23-ft rig fits is 'Cliff Sites 153-165 Full Hookups' $69; the $57 'Interior Sites' are for 'Vehicles under 20 ft'; no gateway within 40 km (Joshua Tree NP 142 km), not a Good Sam Park, no operator member discount; Hipcamp also says '4WD required'; only 32 of 182 sites sold nightly"),
     12404: ("2026-11-27", "operator discourages nightly guests ('call to see if we have room' - Cavens Landing rule)", "p3-637, read 2026-11-27: boladoparkeventcenter.com/rv-camping: 'Please call (831) 628-3421 to ask about current openings. Weekday business hour check in is required.'; no booking engine; weekly $325 and monthly $790 by application sold alongside $48 nights; no restrooms"),
+    12453: ("2026-11-27", "private park over US$50 a night, no exception (price gate)", "p3-638, read 2026-11-27: cariboucrossroads.com: '$79 per night 35amps and under $89 per night 50amps or over (not including tax and fees)', no cheaper season; not a Good Sam Park, no member discount; gateways.py: none within 40 km (Lassen Volcanic NP 54 km)"),
 }
 
 if __name__ == "__main__":

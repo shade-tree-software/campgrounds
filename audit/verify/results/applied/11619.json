@@ -1,0 +1,48 @@
+{
+ "id": 11619,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=599 (park page, read 2026-11-27): 'Annual Maintenance Advisory: Carpinteria State Beach will be performing annual maintenance starting February 15, 2027, through March 13, 2027. During this time, the Anacapa, Santa Cruz, Santa Rosa, and San Miguel camping loops (including group camps) will not be available for reservations. There will be some campsites available on a first-come, first-serve walk-up basis at the park entrance kiosks.'; 'Maximum Stay: From March 1 through November 30, park visitors may camp for a maximum of seven (7) consecutive days. From December 1 through February 28, park visitors may camp for a maximum of fifteen (15) consecutive days. ... a total of 30 days in any calendar year.'; contact '(805) 566-2494'",
+  "https://www.parks.ca.gov/?page_id=30711 (camping page, read 2026-11-27): 'Campsites are open year-round'; Santa Rosa 'All sites have full hookups; water, electric (30-amp service) and sewer ... Maximum vehicle length ranges from 21' to 30'' and 'Twenty-two premium beachside campsites'; San Miguel 'Sites 401-419: No hookups; Sites 420-446: water, electric, no sewer; Sites 447-456: No hookups; No tents allowed, back-in parking only; Maximum vehicle length ranges from 18' to 30''; Santa Cruz 'Twelve premium beachside campsites'",
+  "https://www.parks.ca.gov/pages/599/files/CarpinteriaSB_CampMap_081926_FINAL.pdf (campground map, read 2026-11-27): Santa Rosa 'Inland 21 ft. 301-338', 'Long Row 30 ft. 340-357', 'Beach Row 21 ft. 358-380'; San Miguel 'Inland 21 ft. 401-433', 'Long Row 30 ft. 434-446 (water, elec.) (439 & 440 25 ft.)', 'Beach Row 18 ft. 447-456 (no tents, back-in only)'; 'EN-ROUTE CAMPING is available for self-contained vehicles when the campgrounds are full'; 'OCCUPANCY: Eight people are allowed per campsite'; '805-566-2494'",
+  "ReserveCalifornia API (PlaceId 6; facilities 357 Anacapa, 358 Santa Cruz, 359 San Miguel, 360 Santa Rosa), search/grid + search/details for every unit on 2027-05-12, read 2026-11-27: 178 family campsites (22/39/50/67) plus 6 group and 1 hike/bike; Campsite $45, Premium Campsite $60, Hook Up (E/W) $70, Hook Up (E/W/S) $70, Premium Hook Up (E/W/S) $80; 'Electricity Hookup: Amps 20 & 30'; 79 of the 178 list a length of 23 ft or more (max 35)",
+  "Esri World_Imagery z19 + USGS 3DEP (EPQS) transects, 2026-11-27: Santa Rosa beach row and San Miguel beach row, Santa Cruz south row"
+ ],
+ "groups": {
+  "hookups": {
+   "values": {"electric": 30, "water": true, "sewer": true},
+   "source": "parks.ca.gov page_id=30711 ('water, electric (30-amp service) and sewer') + ReserveCalifornia unit amenities ('Amps 20 & 30'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 178, "max_rig_ft": 35, "note": "About 80 sites take 23 ft or more: the 35-ft Anacapa and Santa Cruz sites and the 30-ft Long Rows (Santa Rosa 340-357, San Miguel 434-446). Most hookup sites, the Santa Rosa beach row included, are 21 ft; the San Miguel beach row is 18 ft."},
+   "source": "ReserveCalifornia unit lengths (facilities 357-360) + parks.ca.gov campground map, read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {"max_stay_nights": 7, "note": "7 nights in a row March through November, 15 December through February, 30 nights a year. En-route overnight parking for self-contained rigs when the campground is full."},
+   "source": "parks.ca.gov page_id=599 + campground map, read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true, "note": "No reservations February 15 to March 13, 2027 during annual maintenance; some sites are first-come at the kiosk then."},
+   "source": "parks.ca.gov page_id=599 + page_id=30711, read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"dump": true, "showers": true},
+   "source": "parks.ca.gov campground map legend (RV Sanitation Station, Showers), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "State beach on the Santa Barbara Channel in the town of Carpinteria, south of Santa Barbara, with four loops along a mile of beach. Anacapa and Santa Cruz have no hookups; Santa Rosa has full hookups throughout; San Miguel has water and electric at 420-446. Check each site's posted length when booking. --Claude",
+ "summary": "ReserveCalifornia and parks.ca.gov read. 178 family sites at $45 standard / $60 premium / $70 hookups / $80 premium full hookup (the stored fees match). 30 A. About 80 sites take 23 ft. Max stay 7 nights Mar-Nov. Reservations close Feb 15-Mar 13, 2027 for maintenance. Phone change suggested. Waterfront: bayfront isn't supported at the RV pads; coastal walk recommended.",
+ "flags": [
+  "WATERFRONT (recommend bayfront -> coastal walk, or bayview; not --AWH): no RV pad meets the ~50 m open-apron bound.\n- Santa Rosa beach row (358-380; e.g. 34.38975,-119.51840): pads at ~4.2-4.4 m. 3DEP falls gently across open sand to 2.1 m at 66 m, and the water starts at ~72 m; imagery puts the surf ~80 m out. Open and unscreened, so at least bayview, but beyond the ~50 m bound.\n- San Miguel beach row (447-456; e.g. 34.38800,-119.51550): ~30-37 m from the surf, but the pads sit ~5.2 m up. 3DEP drops to 0.7 m within 20 m over a rocky revetment bank. That's a view under the kayak test.\n- Santa Cruz south row (201-220): screened by a continuous shrub and dune-vegetation band, with 100+ m of beach beyond.\n- Coastal walk is earned: the beach is the park's own, a few steps from every loop, with only park roads in between. The railroad and US 101 are inland of the camp, not between it and the shore.\nThe stored evidence ('~35-40 m of open unused sand ... no road, dune ridge or developed strip') was read at 34.3900,-119.5165 and missed the San Miguel bank height. Proposed evidence: 'parks.ca.gov map + 3DEP/Esri 2026-11-27: Santa Rosa beach row pads ~4.3 m, open sand to the water at ~70 m (beyond 50 m); San Miguel beach row ~35 m from surf but ~5 m up a rocky bank; Santa Cruz south row behind a dune-scrub band; the park's own beach within a short walk of every loop, no highway, town or rail line between -> coastal walk.' The beach-row sites are 18-21 ft anyway, so a 23-ft rig books only the 30-35 ft inland and long-row sites.",
+  "PHONE: 805-968-1033 -> 805-566-2494. The park page ('Contact Information (805) 566-2494') and the campground map both give it; 805-968-1033 appears on neither.",
+  "WEBSITE: stored 'https://www.parks.ca.gov/carpinteria' + 'https://www.reservecalifornia.com'. Suggest https://www.parks.ca.gov/?page_id=599 and the ReserveCalifornia deep link https://www.reservecalifornia.com/Web/#!park/6 (PlaceId 6).",
+  "SITE LENGTHS: the map gives 21 ft for most Santa Rosa and San Miguel hookup sites. The 30-ft long rows (Santa Rosa 340-357 full hookups; San Miguel 434-446 water/electric, except 439-440 at 25 ft) and the 35-ft Anacapa/Santa Cruz no-hookup sites fit a 23-ft rig. sites.count 216 -> 178 (ReserveCalifornia's family campsites; the stored 216 came from note prose).",
+  "SEASON/STATUS: open year-round. Reservations close Feb 15-Mar 13, 2027 for annual maintenance, with some first-come walk-up sites. Fees unchanged (stored $45-60 + $25 hookup surcharges match 2027-05-12).",
+  "PIN: 34.39050,-119.51750 lands on houses just inland of the railroad, ~80 m NE of the Santa Rosa loop. Under 250 m, so no move required; optionally 34.39009,-119.51818 (ReserveCalifornia's Santa Rosa facility point, inside the loop)."
+ ]
+}
