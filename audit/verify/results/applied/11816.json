@@ -1,0 +1,77 @@
+{
+ "id": 11816,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://parks.santaclaracounty.gov/locations/sanborn-county-park (plain curl 403; read in the headless browser, desktop Chrome UA, 2026-11-27; the stored /parks/sanborn-county-park URL now answers 'Page not found'): 'Visitors can enjoy hiking, hike-in camping, RV camping, and picnicking throughout the year.'; 'Park office: (408) 867-9959'; 'Fees are also required for RV camping'; 'Car camping is not allowed at Sanborn Park.'; Main park entrance 16055 Sanborn Road, Saratoga",
+  "https://parks.santaclaracounty.gov/things-do/camp/rv-campsites (headless, 2026-11-27): table 'Sanborn | 11' H X 30' L | [RV sites with water, electrical hook-ups and dump station] Yes | [tent campsites with RV size accommodations] No'; 'Sanborn | 14 RV sites | All sites are paved, gates close at sunset, no re-entry after gates close.'; 'RV campsites are only for RV's that have the ability to connect to both the water and electrical hook-ups.'; 'RV's larger than maximum's listed above arrive at their own risk and may be asked to leave'",
+  "https://parks.santaclaracounty.gov/plan-your-visit/fees/camping-fees (headless, 2026-11-27): 'RV campsites $53 Peak season fee. RV campsites include 2 vehicles' entrance fees, RV dump fee, electricity and water hookups.'; 'Camping: off-peak season discount 25% discount ... (Peak season is March 1 to October 31).'; 'RV sanitary dump fee $25 Fee is for non-camping RVs. This service is not available at Sanborn County Park.'; 'Camping and yurts: extra vehicle $10 Fee for each additional vehicle beyond the included vehicle entrance fee limit per campsite'",
+  "https://parks.santaclaracounty.gov/things-do/camp/reserve-campsite (headless, 2026-11-27): online at gooutsideandplay.org; 'Reservations office ... Phone: (408) 355-2201'; 'Off-season discount ... from November 1 to February 28 and 29'",
+  "https://gooutsideandplay.org/reservation/camping/ + /reservation/getresults.asp + /reservations/siteDetails.asp (county engine, plain curl, read 2026-11-27): Sanborn park record 'soonestDateOnly 11/28/2026', 'furthestDateOnly 05/27/2027', minNights 1, maxNights 14, gps 37.23312,-122.06403; 15 RV pads - '1RV Host' (Camp Host, not reservable), '2RV-ADA' (not reservable online), 3RV-15RV 'Camping - RV - Partial Hookup', all 'Paved', 'Back In', pads 37.23191-37.23227, -122.06219 to -122.06293; site 4RV details: 'Electric ( amps)' [amperage blank], 'Water', 'Max Vehicles: 2', 'Max: 6 people', 'Base Fee: $40.00' (2027-01-12) and '$53.00' (2027-05-18); 'The maximum stay is 14 days per park within any 45-day period. In addition, between Memorial Day and Labor Day, you may camp no more thab 14 days total at all County Parks combined.'; 'The afterhours camper gate and shower codes are provided to you once your reservation is completed.'",
+  "Sanborn County Park brochure (files.santaclaracounty.gov ... sanborn-brochure-cover.pdf; direct and browser-context fetch 403, read from the Wayback capture of 2025-03-19): 'An RV campground, open year-round, offers electric and water hookups and a dump station. Vehicle length limit is 30 feet. Reservations are required for RV and tent camping.'; 'Gate closes at sunset. Re-entry is allowed for campers.'; 'Check out time is 1 p.m.'; 'Two vehicles allowed per campsite, additional vehicles permitted at $10 daily per vehicle.'; 'RV Sites: Maximum capacity 8 persons. No tents allowed.'; guide map (Wayback 2025-03-12) legend 'Restroom with Shower', 'RV Dump Station', RV campground labels rv2-rv15",
+  "Esri World_Imagery at 37.2337,-122.0628 (hw 300 m) with the stored pin and the engine's RV-pad centroid marked; USGS 3DEP: RV row 443 m, stored pin 403 m, 2026-11-27"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 40,
+    "nightly_high": 53,
+    "currency": "USD",
+    "seasonal": [
+     {"name": "Peak season", "opens": "03-01", "closes": "10-31", "nightly_low": 53, "nightly_high": 53},
+     {"name": "Off-peak", "opens": "11-01", "closes": "02-28", "nightly_low": 40, "nightly_high": 40}
+    ],
+    "extra_vehicle": {"included": 2, "amount": 10, "per": "night"},
+    "checked": "2026-11",
+    "note": "The off-peak rate is the $53 peak fee less 25%."
+   },
+   "source": "parks.santaclaracounty.gov camping fees ('RV campsites $53 Peak season fee. RV campsites include 2 vehicles' entrance fees'; '25% discount' off-peak; '$10' extra vehicle) + gooutsideandplay.org site 4RV ('Base Fee: $40.00' 2027-01-12, '$53.00' 2027-05-18), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://gooutsideandplay.org/reservation/camping/",
+    "window_opens_days": 180,
+    "fcfs": "never",
+    "max_stay_nights": 14,
+    "note": "Reservations are required; also by phone at (408) 355-2201 on weekdays. The 14-night limit is per 45 days, and from Memorial Day to Labor Day 14 nights across all county parks combined. Gate and shower codes come with the confirmation."
+   },
+   "source": "gooutsideandplay.org park record (booking open 11/28/2026 through 05/27/2027 on 2026-11-27; maxNights 14) + siteDetails stay-limit FAQ + brochure ('Reservations are required for RV and tent camping') + reserve-campsite page, read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": null, "water": true, "sewer": false},
+   "source": "parks.santaclaracounty.gov RV campsites ('RV sites with water, electrical hook-ups and dump station: Yes') + camping fees ('electricity and water hookups') + gooutsideandplay.org ('Camping - RV - Partial Hookup'; site details 'Electric ( amps)' with the amperage blank, 'Water'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 14, "max_rig_ft": 30},
+   "source": "parks.santaclaracounty.gov RV campsites ('Sanborn | 14 RV sites | All sites are paved'; \"11' H X 30' L\") + gooutsideandplay.org (pads 2RV-15RV plus a host pad), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "dump": true},
+   "source": "Sanborn brochure (Wayback 2025-03-19: 'offers electric and water hookups and a dump station') + guide map legend ('Restroom with Shower', 'RV Dump Station') + gooutsideandplay.org ('camper gate and shower codes'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "Sanborn brochure ('An RV campground, open year-round') + park page ('RV camping ... throughout the year') + engine rates for January and May 2027, read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Santa Clara County park of redwood and tanoak in the Santa Cruz Mountains above Saratoga, with 22 miles of trails and summer Shakespeare in the park. The RV campground is a single paved row of back-in sites at the south edge of the main meadow; RV sites only (no tents, and no car camping anywhere in the park), and an RV must use both the water and electric hookups. The gate closes at sunset; campers get the combination. The hike-in tent camps close from late October to late March. --Claude",
+ "summary": "County pages (browser) + gooutsideandplay engine + brochure (Wayback) read: $53 peak (Mar-Oct) / $40 off-peak, 2 vehicles included (+$10); 14 paved back-in RV sites with water + electric (amps unposted), dump, showers; 30 ft / 11 ft high; year-round; reservations required, ~6 months, 14 nights. Hookups were stored as none - corrected. Pin ~345 m off (woods by the entrance road) -> RV row.",
+ "flags": [
+  "HOOKUPS: stored electric 0 / water false is WRONG - the county's RV page, fee page, brochure and engine all say the RV sites have water and electric hookups ('Camping - RV - Partial Hookup'; RVs 'must have water and electrical hookups'). Written water true, sewer false, and electric cleared to unknown (null) because no page gives the amperage (the engine's 'Electric ( amps)' is blank). A phone call could settle the amps but amperage alone doesn't justify one.",
+  "PIN MOVE (~345 m): stored 37.23518,-122.06272 is in the woods north of the day-use meadow near the entrance road (3DEP 403 m). Target 37.23209,-122.06256 - the centroid of the engine's RV pads 2RV-15RV, a paved row at the meadow's south edge on Esri (3DEP 443 m).",
+  "SITES: count 15 -> 14 (the county's RV page says 14; the engine's 15 RV pads include '1RV Host'); max_rig_ft 30 added (and an 11-ft height limit, which a 23-ft rig under 10.5 ft clears).",
+  "PEOPLE: the engine's site details say 'Max: 6 people'; the 2025 brochure says 'RV Sites: Maximum capacity 8 persons'. Not written.",
+  "DUMP: the fee page says the $25 non-camper dump service 'is not available at Sanborn County Park', but the RV page and brochure list a dump station for the RV campground (its fee is included in the RV site fee) - dump true for campers.",
+  "WEBSITE: stored https://parks.santaclaracounty.gov/parks/sanborn-county-park now returns 'Page not found' -> https://parks.santaclaracounty.gov/locations/sanborn-county-park.",
+  "PHONE: stored 408-867-9959 matches the park office (also in the engine's park record) - no change. Reservations: (408) 355-2201 (in booking.note).",
+  "WATERFRONT: 'not waterfront' CONFIRMED at the real RV row - a paved row under redwood edge, no water body near.",
+  "NOTE: rewritten; dropped '~15 drive-in sites, no hookups' (wrong, and a field) and 'reservable'. No --AWH text."
+ ]
+}

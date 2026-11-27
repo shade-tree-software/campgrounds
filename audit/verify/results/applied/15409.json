@@ -1,0 +1,93 @@
+{
+ "id": 15409,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://koa.com/campgrounds/san-diego/reserve/ - live re-quote attempted 2026-11-27 in the headless browser (full desktop Chrome UA, Jan 12-14 2027, RV/2 adults/23-ft motorhome): the form loaded but step 2 returned Cloudflare 'Performing security verification' twice; not pursued further",
+  "audit/koa_backlog_2026-10-19/dumps/san-diego_05.txt (KOA's own form, step 2 text, captured 2026-10-19 for 05/18/2027, 1 night, RV, 2 adults, 23-ft motorhome): 'Your search returned 7 out of 9 site types'; 'Back In, 30/20 Amps, Sewer/Electric ... $95.00 avg/night ... Perfect for tent trailers and smaller rigs'; 'Pull Thru, 30/20 Amps, Full Hookups Standard ... $100.00'; 'Back In, 30/20 Amps, Full Hookups Preferred ... $100.00'; 'Pull Thru, 30/20 Amps, Full Hookups Preferred ... $105.00'; 'Back In, 50/30 Amps, Full Hookups ... $110.00'; 'Pull Thru, 50/30 Amps, Full Hookups Preferred 50AMP ... $115.00'; 'Pull Thru, 30/20 Amps, Full Hookups End Sites ... $120.00'; 'KOA Select My Site (+$40.00)'; 'Up to 8 people.'; 'Save 10% at check out with KOA Rewards.'; 'Stay requires a 2 Night Minimum if stay includes any Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday for stays between 01/01/2026 and 12/31/2027.'",
+  "https://web.archive.org/web/20261117205020/https://koa.com/campgrounds/san-diego/ (Wayback capture 2026-11-17): 'We operate year-round and want to help you have the time of your life, whether you're visiting us for a couple of days in the summer or staying with us for a month in the winter.'; 'Our pool is open all year round'; Wi-Fi, propane, firewood, KampK9; 'Reserve: 1-619-427-3601'",
+  "https://web.archive.org/web/20250901170556/https://koa.com/campgrounds/san-diego/general-information/ (Wayback 2025-09-01): 'Open All Year'; 'Reserve: 1-800-562-9877', 'Info: 1-619-427-3601'; 'Check-In RV& Tent - 1:00 PM', 'Check-out RV& Tent - 12:00 PM'; 'Laundry Hours Open Daily: 7:30 am - 10:00 pm'; 'Strict limits of 6 or 8 people per site (depending on site type)'; 'visitors ... are welcome for $5 per additional adult and $10 per additional vehicle. Limit 8 total guests/visitors on an RV site'; GPS N32.656988, W117.081751",
+  "https://web.archive.org/web/20250828174557/https://koa.com/campgrounds/san-diego/amenities/ (Wayback 2025-08-28): '50 Max Amp', \"70' Max Length\", 'Pool (Open Year-Round)', 'Hot Tub / Sauna', 'Propane', 'Jumping Pillows!', 'The Sand Castle Cafe'",
+  "https://web.archive.org/web/20250901171846/https://koa.com/campgrounds/san-diego/extended-stays/ (Wayback 2025-09-01): 'Many of our guests know that the San Diego KOA is a great place to spend the winter. Other guests find that we are the perfect headquarters for those working short-term contract jobs'; 'Extended stay rates are available from September through June for 1 to 2 adults with a 9-month stay limit.'",
+  "Google Maps (tools/gm.py, 2026-11-27): 'San Diego Metro KOA Resort' 4.5 stars, 2,051 reviews, 111 N 2nd Ave, Chula Vista; phone +1 619-427-3601; site koa.com/campgrounds/san-diego/",
+  "audit/price_research/gateways.py 32.65554,-117.07899 (2026-11-27): 'San Diego (metro, 10 km)'",
+  "Esri World_Imagery at 32.6560,-117.0800 (hw 450 m) with the stored pin, KOA's GPS point and Google's point marked, 2026-11-27"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 95,
+    "nightly_high": 120,
+    "currency": "USD",
+    "extra_person": {
+     "max_people": 8
+    },
+    "checked": "2026-10",
+    "note": "Rates before tax for one night in May 2027; choosing a specific site adds $40. Day visitors pay $5 per adult and $10 per vehicle, within the 8-person limit."
+   },
+   "source": "KOA's own booking form, step 2 for 05/18/2027 (RV, 2 adults, 23-ft motorhome; repo capture audit/koa_backlog_2026-10-19/dumps/san-diego_05.txt, 2026-10-19: seven RV types $95-$120 avg/night, 'Up to 8 people', 'KOA Select My Site (+$40.00)') + KOA general-information page (Wayback 2025-09-01: '$5 per additional adult and $10 per additional vehicle'); live re-quote 2026-11-27 blocked by Cloudflare",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "operator",
+    "url": "https://koa.com/campgrounds/san-diego/reserve/",
+    "min_stay": [
+     {
+      "nights": 2,
+      "applies": "always"
+     }
+    ],
+    "note": "KOA's form requires two nights for any stay in 2026-2027. Extended-stay rates September-June for 1-2 adults, up to 9 months, by phone."
+   },
+   "source": "KOA booking form capture 2026-10-19 ('Stay requires a 2 Night Minimum if stay includes any Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday for stays between 01/01/2026 and 12/31/2027') + KOA extended-stays page (Wayback 2025-09-01)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": true,
+    "sewer": true
+   },
+   "source": "KOA booking form capture 2026-10-19 (Full Hookups types at 30/20 and 50/30 amps; the cheapest type is 'Sewer/Electric') + amenities page (Wayback 2025-08-28: '50 Max Amp')",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "pull_through": true,
+    "max_rig_ft": 70
+   },
+   "source": "KOA amenities page (Wayback 2025-08-28: \"70' Max Length\") + booking form capture 2026-10-19 (Pull Thru types)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "laundry": true,
+    "wifi": true,
+    "note": "Propane is sold on site."
+   },
+   "source": "KOA booking form capture 2026-10-19 ('close to restroom and shower facilities') + general-information page (Wayback 2025-09-01: 'Laundry Hours Open Daily') + main page (Wayback 2026-11-17: Wi-Fi, 'Propane is available to buy on-site')",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": true
+   },
+   "source": "KOA pages (Wayback 2025-09-01 'Open All Year'; 2026-11-17 'We operate year-round')",
+   "method": "manual"
+  }
+ },
+ "note": "KOA Resort in Chula Vista on the south bank of the Sweetwater River channel, 15 minutes from downtown San Diego: rows of RV sites under shade trees, cabins and glamping tents, a year-round pool and hot tub, cafe, jumping pillows, dog park and a full-time activities program. A popular winter base, with extended-stay rates from September through June. --Claude",
+ "summary": "KOA form (2026-10-19 capture; live re-quote Cloudflare-blocked) + Wayback KOA pages + Google read: $95-120 (cheapest electric $95 sewer/electric back-in, May 2027), 8 people; 2-night minimum all days through 2027; 50A full hookups, pull-throughs, 70 ft max; year-round. Gateway San Diego 10 km lifts the price gate; Google 4.5/2,051. Not waterfront confirmed; pin fine.",
+ "flags": [
+  "PRICE GATE: cheapest electric RV night a 23-ft rig can book is $95 (Back In, 30/20 Amps, Sewer/Electric, May 18 2027, before tax; KOA form capture 2026-10-19) - over US$50, but gateways.py finds San Diego (metro) 10 km away, so the gate is lifted (as the stored inclusion_evidence already says). Summer peak not re-quoted: the 2026-11-27 attempt (Jan 2027, to test the winter low) hit Cloudflare's 'Performing security verification' twice, so no lower winter rate or summer high could be read; the May 2027 spread is $95-120. Not a Good Sam Park (stored good_sam false); KOA Rewards members save 10%.",
+  "GOOGLE: 4.5 stars, 2,051 reviews - passes.",
+  "MINIMUM STAY: 2 nights on every night of 2026-2027 (under the 3-night standing-minimum line) - stays; written as min_stay always 2 and kept out of the note.",
+  "LONG-STAY TESTS: transient resort (activities director, themed weekends, cabins, KOA form sells nightly), with winter extended-stay rates Sept-June for 1-2 adults capped at 9 months; no age restriction seen. Not mostly-seasonal - passes. The large paved lot east of the campground on Esri is packed nose-to-tail with RVs, which looks like storage rather than campsites; not counted.",
+  "WATERFRONT: stored 'not waterfront' CONFIRMED - Esri shows the campground south of the Sweetwater River flood channel, separated from it by a wooded strip and the SR-54 interchange ramps.",
+  "PIN: stored 32.65554,-117.07899 sits on the interior road beside the central RV rows; KOA's GPS (32.656988,-117.081751) is the entrance on 2nd Ave ~300 m WNW, Google's (32.65667,-117.08072) the office. No move.",
+  "PHONE: stored 619-427-3601 matches KOA ('Info: 1-619-427-3601') and Google - no change. WEBSITE unchanged.",
+  "NOTE: stored note's 'Two-night minimum...' sentence moved to booking.min_stay; the address and 'full-hookup RV sites, pull-throughs' repeated fields and are dropped (no --AWH text)."
+ ]
+}

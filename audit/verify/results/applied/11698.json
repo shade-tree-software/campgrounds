@@ -1,0 +1,62 @@
+{
+ "id": 11698,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=453 (Salt Point SP, read 2026-11-27): banner 'The park is currently Open with restrictions in services and/or facilities.'; 'Notice: Please call the Salt Point phone number for site specifics regarding trailer, camper, and motorhome size'; 'Max trailer: 31 feet', 'Max camper/motorhome: 36 feet'; 'Ranger Station and Gerstle Cove Campground Phone: (707) 847-3221', 'Woodside Campground: (707) 847-3290'; 'Gerstle: $35.00 / night', 'Woodside: $35.00 / night', 'Overflow: $35.00 / night', 'Extra vehicle: $10.00 / night'; 'Visitor Center Information: CLOSED INDEFINITELY'; dogs 'on paved areas, and on trails from campground to cove'",
+  "https://www.parks.ca.gov/?page_id=31804 (Camping Information, read 2026-11-27): 'has a limited amount of first-come, first-served campsites based on reservations of that day'; 'There are no hook-ups, showers, or dump/fill station facilities available. Fill your tanks prior to your arrival, or you may show your camping receipt at the Bodega Dunes kiosk ... and fill up potable water/dump waste for free.'; 'Gerstle Cove and Woodside Campground offers 109 developed sites in total. Campsite lengths vary, and most of the pads are level and paved.'; 'There are water spigots throughout the campground loops. Gerstle Cove Campground is open year-round, while Woodside Campground opens May 1st and closes November 1st.'; 'En-route (Overflow) Camping is for SELF-CONTAINED VEHICLES ONLY ... located between Gerstle Cove Campground and the Day Use parking lot'; 'your reservation includes only one vehicle and one legally towed vehicle or trailer. All extra-vehicles are charged $10 per night'",
+  "ReserveCalifornia RDR API (plain curl), PlaceId 703 Salt Point SP, read 2026-11-27: facility 648 Gerstle Cove Campground (sites 1-30) 25 units (GC06/08/17/24/29 not listed), all 'Campsite', VehicleLength 31, Pad Length 22-36 (GC10 22, GC11/GC20 33, rest 36), Back In, paved, Electricity None, Sewer No, Shower No, Toilet Flushing, $35.00 on 2026-12-08 and 2027-07-17, in season in December; facility 649 Woodside Lower Loop (sites 31-70) 35 units (34 web-bookable at 31 ft, 1 at 36 ft not web-bookable), season grid out of season 2026-11-28, in season from 2027-04-30; facility 614 Woodside Upper Loop (sites 71-109) 35 units at 31 ft, in season from about 2027-05-24; all $35.00; facility 613 Warren Group Camp",
+  "Esri World_Imagery at 38.5680,-123.3270 (hw 700 m) and the pin 38.5690,-123.3252 (hw 250 m), 2026-11-27"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 35,
+    "currency": "USD",
+    "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+    "checked": "2026-11",
+    "note": "Self-contained en-route (overflow) camping is also $35."
+   },
+   "source": "parks.ca.gov/?page_id=453 ('Gerstle: $35.00 / night', 'Woodside: $35.00 / night', 'Extra vehicle: $10.00 / night') + ReserveCalifornia RDR API (every campsite $35.00 on 2026-12-08 and 2027-07-17), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "parks.ca.gov/?page_id=31804 ('There are no hook-ups, showers, or dump/fill station facilities available') + ReserveCalifornia (Electricity None, Sewer No), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 109, "max_rig_ft": 36},
+   "source": "parks.ca.gov/?page_id=31804 ('109 developed sites in total') + page_id=453 ('Max trailer: 31 feet', 'Max camper/motorhome: 36 feet'); ReserveCalifornia lists 95 campsites, all at 31 ft, read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": false, "dump": false, "flush_toilets": true, "potable_water": true},
+   "source": "parks.ca.gov/?page_id=31804 ('no hook-ups, showers, or dump/fill station facilities'; 'water spigots throughout the campground loops') + ReserveCalifornia (Toilet Type Flushing), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "note": "Woodside (sites 31-109) is open May 1 to Nov 1; in winter only Gerstle Cove (sites 1-30) is open. First-come sites are whatever is unreserved that day; call the park for them."
+   },
+   "source": "parks.ca.gov/?page_id=31804 ('Gerstle Cove Campground is open year-round, while Woodside Campground opens May 1st and closes November 1st'; 'limited amount of first-come, first-served campsites based on reservations of that day'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "parks.ca.gov/?page_id=31804 ('Gerstle Cove Campground is open year-round') + ReserveCalifornia (Gerstle Cove in season 2026-12-08), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Sonoma coast state park on Hwy 1 north of Jenner, about 18 miles from the nearest gas. Gerstle Cove campground sits in pines west of the highway, a few hundred metres by trail above Gerstle Cove; Woodside's two loops are east of Hwy 1. Pads are mostly level and paved and lengths vary, so the park advises calling about rig size. Campers may fill water and dump free at the Bodega Dunes kiosk with their camping receipt. A self-contained en-route overflow area sits between Gerstle Cove campground and the day-use lot. The visitor center is closed indefinitely. --Claude",
+ "summary": "parks.ca.gov park + camping pages and ReserveCalifornia API read: $35 at both campgrounds (+$10 extra vehicle), 109 sites (95 on RC, all 31 ft; page max trailer 31 / motorhome 36), no hookups/showers/dump, flush toilets + water; Gerstle Cove year-round, Woodside May 1-Nov 1. Coastal walk confirmed for Gerstle Cove. Split candidate (Gerstle vs Woodside).",
+ "flags": [
+  "WATERFRONT: stored 'coastal walk' CONFIRMED for Gerstle Cove campground (sites 1-30, reservable nightly, 25 on ReserveCalifornia). On Esri the campground loops (pin 38.5690,-123.3252) sit in pines west of Hwy 1, which runs along the NE edge of the camp; only the park road, the day-use area and open coastal terrace lie between the camp and Gerstle Cove's shore (~38.5665,-123.3297), roughly 300-500 m away, and the park page names 'trails from campground to cove'. No highway, town, rail or houses between. Woodside (sites 31-109) is east of Hwy 1 and does not qualify (stored evidence already says so).",
+  "SITES: max_rig_ft 31 -> 36 (parks.ca.gov 'Max camper/motorhome: 36 feet'; max trailer 31). ReserveCalifornia gives every web unit VehicleLength 31 and one Woodside Lower unit at 36 ft that isn't web-bookable; pad lengths mostly 36 ft, GC10 is 22 ft. A 23-ft rig fits.",
+  "SPLIT CANDIDATE: Gerstle Cove Campground (sites 1-30; 25 units on ReserveCalifornia; centroid 38.56887,-123.32481; year-round; phone (707) 847-3221; RC facility 648) vs Woodside Campground (sites 31-109; Lower Loop 35 units at 38.56568,-123.31239, RC facility 649; Upper Loop 35 units at 38.56635,-123.30763, RC facility 614; May 1-Nov 1; phone (707) 847-3290), about 1.1-1.5 km apart across Hwy 1, with their own loops, kiosk/phone and season. Booking: https://www.reservecalifornia.com/ (PlaceId 703). Only Gerstle Cove earns 'coastal walk'.",
+  "SEASON: ReserveCalifornia's grid shows Woodside Lower in season from 2027-04-30 and Upper from about 2027-05-24 (several grid calls returned HTTP 500, so the boundaries are approximate); the park page says May 1 - Nov 1.",
+  "STATUS: banner 'Open with restrictions in services and/or facilities' (visitor center closed indefinitely; walk-in environmental sites closed). Operating open.",
+  "PHONE/WEBSITE: phone 707-847-3221 matches (Ranger Station + Gerstle Cove). Website first line page_id=31804 is the camping page; the park page is page_id=453 - either works, no change needed."
+ ]
+}

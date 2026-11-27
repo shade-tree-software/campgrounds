@@ -1,0 +1,54 @@
+{
+ "id": 11702,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=646 (San Clemente SB, read 2026-11-27): no closure banner; 'Contact Information (949) 492-0802'; 'Max trailer: 30 feet', 'Max camper/motorhome: 30 feet'; 'Camping Fees RV Campsite (w/ Hookups): $70 per night', 'Tent Campsite: $45-$50 per night', 'Extra Vehicle Fee: $15 per night', 'Reservation Fee: $8.25 per reservation', 'Dump Station Fee: $10 per use', '$2.00 off per night for Seniors (62+) online only.'; 'This park offers a mix of both RV and tent camp sites. Max trailer length is 30ft.'; 'staying on a gorgeous cliffside overlooking the ocean'; 'Park Recorded Line: (949)492-3156', 'District Phone: (949)492-0802 , M-F | 10AM-4PM', 'Park Pass Office & Late Arrival Line (Camping): (949)670-8276'; 'Assistance may be needed on the steep trails to the beach.'",
+  "https://www.parks.ca.gov/pages/646/files/SanClementeSB_CampgroundMap_073124_FINAL.pdf (campground map rev. 2024, read 2026-11-27): 'The campsite fee covers one vehicle. Extra vehicles are allowed for a fee. There is no charge for a towed-in vehicle.'; 'Maximum camper or trailer length is 30 feet.'; 'Eight people maximum are allowed per campsite. The RV campground provides water, electrical, and sewage hookups.'; map: RV campground sites 1-72 inland by I-5/Avenida del Presidente; tent loops 73-160 between it and the bluff; 'Premium Campsites: 81, 82, 83, 85, 88, 89, 90' at the bluff edge by the lifeguard HQ; railroad along the foot of the bluff; 'Tunnel to beach'; RV sanitation station",
+  "ReserveCalifornia RDR API (plain curl), PlaceId 707, read 2026-11-27: facility 661 RV Campground (sites 1-72) 60 units 'Hook Up (E/W/S) Campsite', Amps 30, water + sewer, Pull Through, pads 30 (43) / 38 (17), VehicleLength 30, showers 'Pay & Token', $70.00 on 2026-12-08 and Saturday 2027-05-22; facility 662 Tent Campground East (100-160) 44 'Campsite' units, IsRVSite, Back In, pads 20-26, $45.00; facility 664 Tent Campground West (73-99) 15 'Campsite' $45.00 + 7 'Premium Tent Campsite' $50.00 (pads 24-30, IsRVSite); all in season 2026-12-08",
+  "Esri World_Imagery at 33.4040,-117.6010 (hw 450 m), 2026-11-27"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 45,
+    "nightly_high": 70,
+    "currency": "USD",
+    "surcharges": {"full_hookup": 25, "weekend": 0},
+    "extra_vehicle": {"included": 1, "amount": 15, "per": "night"},
+    "checked": "2026-11",
+    "note": "Premium bluff-edge tent sites $50. Seniors get $2 a night off online. The dump station costs $10 a use."
+   },
+   "source": "parks.ca.gov/?page_id=646 camping fees + ReserveCalifornia RDR API (hookup sites $70.00, tent sites $45.00, premium $50.00 on 2026-12-08 and Saturday 2027-05-22), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 30, "water": true, "sewer": true},
+   "source": "ReserveCalifornia RDR API (RV Campground sites: 'Hook Up (E/W/S) Campsite', Amps 30) + campground map ('The RV campground provides water, electrical, and sewage hookups'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"max_rig_ft": 30, "pull_through": true},
+   "source": "parks.ca.gov/?page_id=646 ('Max trailer: 30 feet', 'Max camper/motorhome: 30 feet') + campground map ('Maximum camper or trailer length is 30 feet') + ReserveCalifornia (RV sites Pull Through, VehicleLength 30), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "dump": true, "flush_toilets": true},
+   "source": "parks.ca.gov/?page_id=646 ('Dump Station Fee: $10 per use'; restrooms, showers) + ReserveCalifornia (Shower Type 'Pay & Token') + campground map (RV sanitation station), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "ReserveCalifornia RDR API (all three campgrounds in season 2026-12-08) + parks.ca.gov ('Day-use hours ... year-round'), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Bluff-top state beach campground at the south end of San Clemente, beside I-5 (Avenida Calafia exit). The hookup loop (sites 1-72, pull-through) sits inland; the non-hookup loops (73-160) lie between it and the bluff, with premium sites 81-90 at the edge overlooking the ocean. Steep trails lead down the bluff and through a tunnel under the coastal railroad to a mile-long beach. The visitor center is a 1934 ranger's cottage. Dogs are not allowed on the beach or trails. --Claude",
+ "summary": "parks.ca.gov page + campground map + ReserveCalifornia API read: $45 non-hookup (pads 20-26 ft) / $50 premium / $70 full hookup (30A), +$15 extra vehicle, dump $10, showers; max rig 30 ft (stored 42 wrong); year-round. Bayview confirmed. Phone (949) 492-3156 is the recorded line -> (949) 492-0802.",
+ "flags": [
+  "WATERFRONT: stored 'bayview' CONFIRMED. On Esri (33.4040,-117.6010) the hookup loop (pin 33.40450,-117.60180, inside it) sits ~250-350 m back from the bluff edge, across the tent loops and day-use lot; the campground map puts premium non-hookup sites 81, 82, 83, 85, 88, 89, 90 (reservable nightly, $50, RC pads 24-30 ft, so a 23-ft rig fits) at the bluff edge above the beach, and the park sells the campground as 'a gorgeous cliffside overlooking the ocean'. Coastal walk is ruled out: the LOSSAN railroad runs along the foot of the bluff between camp and beach (reached through a tunnel). Stored evidence stands.",
+  "SITES: max_rig_ft 42 -> 30. parks.ca.gov: 'Max trailer: 30 feet', 'Max camper/motorhome: 30 feet'; the map: 'Maximum camper or trailer length is 30 feet'; ReserveCalifornia VehicleLength 30 on every unit. The note's '~42 ft' is not supported anywhere. Count 159 left alone (map numbers sites 1-160; RC lists 126 units).",
+  "PHONE: stored 949-492-3156 is the 'Park Recorded Line'; the park page's contact number is (949) 492-0802 (District Phone, M-F 10-4). Suggest 949-492-3156 -> (949) 492-0802; late-arrival camping line is (949) 670-8276.",
+  "HOOKUPS: electric was missing; 30A written (RC 'Amps 30' on every hookup site).",
+  "LEAD: ReserveCalifornia lists 'San Clemente SB (The Holidays Vintage Trailers)' (PlaceId 708) - rental vintage trailers from a concessionaire (LUV-2-CAMP), not a campground; not a lead."
+ ]
+}

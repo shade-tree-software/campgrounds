@@ -1,0 +1,12 @@
+# p3-633 notes
+- 12424 WRITTEN (lakeview kept weak, RV pads 100-150 m; phone/website flags)
+- 12379 WRITTEN (bayfront->bayview rec, revetment 3.5 m; Faria consistency; phone)
+- 11698 WRITTEN (coastal walk confirmed Gerstle; max_rig 36; split candidate Gerstle/Woodside)
+- 11701 WRITTEN (creekside confirmed sites 2-6 RC tag; pin move 430 m to RC Creekside; phone)
+- 11702 WRITTEN (bayview confirmed premium 81-90; max_rig 42->30; phone recorded line)
+- 15409 San Diego Metro KOA: $95-120 (form capture 10-19; live Cloudflare), gateway SD 10 km, Google 4.5/2051, 2-night min always, 50A/70ft, not wf, pin ok. --done
+- 11703 San Elijo: RC 3 sections 145 RV sites (26 FHU 50A, middle only), $50/70/+25, bayview confirmed (13-17 m bluff), pin on Hwy 101 -> 33.021187,-117.284675 (~260 m). --done
+- 12016 San Gorgonio: FS+rec.gov: $34/+2 hol, ev 8, 54 sites/40 ft, showers, Apr17-Sep18 closed for season, 2/3-night mins, pin on SR-38 -> 34.17389,-116.86667 (~175 m). --done
+- 11816 Sanborn: county pages via browser; RV sites HAVE water+electric (stored none) - electric->null (amps unposted); 14 sites/30 ft; $53/$40; pin -> 37.23209,-122.06256 (~345 m); website moved. --done
+- 12332 Sawtooth Canyon: BLM page; free FCFS (rec.gov 274437 info-only), 13 sites, vault toilet, OHV riding prohibited; pin ok. --done
+- 11976 Sentinel: Hwy180 22-ft claim WRONG (advisory is Generals Hwy Potwisha-Giant Forest; 180 preferred) - no drop; riverview -> not waterfront rec (conifer band, photos forest); 78 sites, 4-mo window, 2027 05-26..09-14. --done

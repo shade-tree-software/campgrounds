@@ -1,0 +1,65 @@
+{
+ "id": 11701,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.parks.ca.gov/?page_id=469 (Samuel P. Taylor SP, read 2026-11-27): alerts 'Bill's Trail Seasonal Closure' and 'Lagunitas Creek Access Seasonal Closure ... closed for the salmon spawning season as of November 10, 2026 ... Creek access will reopen on June 15, 2027'; 'Creek access is closed from December 1 st thru June 15 th each year.'; 'Contact Information (415) 488-9897'; 'Standard Campsites : $35', 'Senior Campsite Rate : $33'; 'Operating Hours Year Around'; no park-wide closure",
+  "https://www.parks.ca.gov/pages/469/files/SamuelPTaylor_Infosheet_8.5x11_101625_FINAL.pdf (infosheet 10/16/25, read 2026-11-27): 'Over 50 campsites with restrooms, hot showers (token-only) and piped drinking water. No spaces have hookups. Trailer max length 27 feet; RV max length 31 feet.'",
+  "https://www.parks.ca.gov/pages/469/files/SamuelPTaylor_CampgroundMap_093024_FINAL.pdf (campground map rev. 2024, read 2026-11-27): 'OCCUPANCY: Six people maximum are allowed per campsite.'; 'Two vehicles maximum per campsite.'; 'Fees include one vehicle. Extra vehicle fees are due and payable upon arrival.'; 'Some parking spaces can accomodate small trailers (trailer max length is 27 feet; RV max length is 31 feet), but no spaces have hookups.'; map legend 'Campsite 2-59'; Creekside sites 2-6 strung along the loop road beside the Cross Marin Trail and Lagunitas (Papermill) Creek; Orchard Hill loop 26-59 to the west",
+  "https://www.parks.ca.gov/?page_id=28538 (camping page, read 2026-11-27): 'The main campground has about 60 single-family campsites with restrooms, hot showers, and piped drinking water. Some parking spaces can hold small trailers or RVs; none have hookups.'; 'The reservation link's website will indicate if any campsites are not reserved for the current day by marking them with a “W” for walkup'; 'The maximum occupancy for standard, single-family campsites is six persons of any age.'; 'Campgrounds are often full on weekends and every day during the summer months.'; sites 15, 21, 30, 37, 39, 58 accessible-only",
+  "ReserveCalifornia RDR API (plain curl), PlaceId 705, read 2026-11-27: facility 653 Creekside Loop (sites 1-25) 21 sites + HB1 at 38.019703,-122.735497 - sites 2-6 'Campsite' IsRVSite, Pad Length 31, each tagged 'Proximity to Water: Riverfront'; sites 7-25 'Tent Campsite' pads 18-24 (7, 11, 13, 14, 16 also tagged Riverfront); facility 657 Orchard Hill Loop (sites 26-59) 27 sites + MG3 - 20 'Campsite' RV sites with 28-31 ft pads (41, 47, 57 pull-through), 7 tent sites; every campsite $35.00 on 2026-12-08 and 2027-07-17; both loops in season every date read 2026-11-28..2027-05-26",
+  "Esri World_Imagery at 38.0193,-122.7350 (hw 250 m) and 38.0215,-122.7330 (hw 900 m), 2026-11-27: unbroken redwood canopy over the campground"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 35,
+    "currency": "USD",
+    "extra_vehicle": {"included": 1, "per": "night", "max_vehicles": 2},
+    "extra_person": {"max_people": 6},
+    "checked": "2026-11",
+    "note": "Seniors $33."
+   },
+   "source": "parks.ca.gov/?page_id=469 ('Standard Campsites : $35', 'Senior Campsite Rate : $33') + campground map ('Six people maximum', 'Two vehicles maximum per campsite') + ReserveCalifornia RDR API ($35.00 2026-12-08 and 2027-07-17), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "parks.ca.gov infosheet 10/16/25 ('No spaces have hookups') + campground map, read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 58, "max_rig_ft": 31, "pull_through": true},
+   "source": "campground map rev. 2024 ('Campsite 2-59'; 'trailer max length is 27 feet; RV max length is 31 feet') + ReserveCalifornia (pull-through sites 41, 47, 57), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true},
+   "source": "parks.ca.gov infosheet ('restrooms, hot showers (token-only) and piped drinking water') + ReserveCalifornia (Toilet Type Flushing, Shower Type Token), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "note": "Often full on weekends and every day in summer. Unreserved sites are marked W on ReserveCalifornia that day and go first-come."
+   },
+   "source": "parks.ca.gov/?page_id=28538 camping page, read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": true},
+   "source": "parks.ca.gov/?page_id=469 ('Operating Hours Year Around') + ReserveCalifornia (both loops in season 2026-11-28..2027-05-26), read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Redwood state park in west Marin, 15 miles west of San Rafael on Sir Francis Drake Blvd. Camp Taylor has two loops under the redwoods along Lagunitas Creek: Creekside, where RV-length sites 2-6 sit by the creek and the rest are tent sites, and Orchard Hill, which holds most of the RV-length pads. Trailers are limited to 27 ft. Creek access is closed from Dec 1 to June 15 each year for spawning coho and steelhead, and fishing is no longer allowed. Generators 10 a.m.-8 p.m. only; hammocks prohibited. The paved Cross Marin Trail runs through the park. --Claude",
+ "summary": "parks.ca.gov page + infosheet + campground map + camping page + ReserveCalifornia API read: $35 (seniors $33), 6 people, 2 vehicles; 58 sites (2-59), RV max 31 ft / trailer 27 ft, 25 RV-length sites on RC, 3 pull-throughs; no hookups, token showers, flush toilets, water; year-round. Creekside confirmed (sites 2-6, under canopy). Phone empty -> (415) 488-9897; pin move suggested.",
+ "flags": [
+  "WATERFRONT: stored 'creekside' CONFIRMED (Lagunitas Creek is a creek well under 30 m wide). ReserveCalifornia tags RV-length Creekside sites 2, 3, 4, 5 and 6 (31-ft pads, sold nightly) 'Proximity to Water: Riverfront', as it does tent sites 7, 11, 13, 14 and 16; the campground map draws sites 2-6 on the creek side of the loop road with only the park's Cross Marin Trail between them and the creek. Esri shows unbroken redwood canopy (38.0193,-122.7350), so imagery can neither confirm nor veto the ~50 m distance; the RC tag and the map are the evidence. Creek access is closed Dec 1-June 15 every year (salmon). Old evidence ('sites 1-21 line both banks') is wrong: Creekside's sites are all on one side. Replacement evidence text: 'Campground map 2024 + ReserveCalifornia 2026-11-27: RV-length Creekside sites 2-6 (31-ft pads) on the creek side of the loop, tagged Proximity to Water: Riverfront on RC; Lagunitas Creek under ~30 m wide; full redwood canopy on Esri, no veto.'",
+  "PIN: stored 38.01870,-122.73080 lies under canopy just SW of the entrance/headquarters clearing (RC place point 38.01959,-122.72956), i.e. by the Azalea day-use area, not the campground. ReserveCalifornia puts Creekside Loop at 38.019703,-122.735497 (~430 m west), which fits the map (Creekside west of Azalea, Orchard Hill beyond). Suggested move to 38.01970,-122.73550, from RC's facility point, canopy prevents an imagery check. RC's Orchard Hill point (38.03163,-122.73311) is 1.4 km north and contradicts the map, so it was not used.",
+  "PHONE: empty -> (415) 488-9897 (park page and campground map).",
+  "SITES: count 60 -> 58 (map 'Campsite 2-59'; camping page 'about 60', infosheet 'Over 50'). ReserveCalifornia lists 48 family sites (accessible sites 15, 21, 30, 37, 39, 58 not listed); 25 are RV-length 'Campsite' units (Creekside 2-6, Orchard Hill 20), the rest tent sites with 18-28 ft pads. max_rig_ft 31 (RV; trailers 27).",
+  "POLICY ROW: state:CA extra_person max_people 8 - this park caps standard sites at 6 (map and camping page); written per entry (the policy note already mentions Samuel P. Taylor).",
+  "LEAD: Devil's Gulch (1 mile north) is group/horse camping only - not a lead."
+ ]
+}

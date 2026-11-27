@@ -1,0 +1,72 @@
+{
+ "id": 12016,
+ "checked": "2026-11-27",
+ "sources": [
+  "https://www.fs.usda.gov/r05/sanbernardino/recreation/san-gorgonio-campground (read 2026-11-27): 'Site Closed'; 'Current Conditions Closed for the season.'; '54 camping sites reservable through Recreation.gov.'; 'No first-come, first-served sites.'; 'Amenities include 1 campfire ring, picnic table, bear box, flush toilets, and showers.'; 'Individual sites at this campground operate on a 6-month rolling basis'; 'Reservations can be placed as late as 24 hours in advance'; 'Seasons of Use April 17 to Sept. 18'; 'This campground requires 2-day minimum stay on weekends and 3-day minimum on holiday weekends.'; 'Single Site: $34: Holiday, $36 - 8 person max'; 'Double Site $67: Holiday ,$69 - 16 person max'; 'Camping fee includes entry for 1 vehicle.'; 'Extra vehicle fee: $8/night'; 'Space length: 55 feet'; Latitude 34.17388889, Longitude -116.8666667, elevation 6500; Mill Creek Visitor Center (909) 382-2882; forest line 1-909-382-2600",
+  "https://www.recreation.gov/api/camps/campgrounds/231976 (rg.py, read 2026-11-27): phone 909-866-8550; 'Utility hookups are not available, however, the parking spurs are paved'; 'A dump station with potable water is available at a nearby campground.'; 'Accessible flush toilets, showers and drinking water are provided. A campground host is available on-site'; 'composed of two loops'; notices 'No first come first serve sites available', Mountain Top Recreation '$8 additional vehicle fee per night on the second vehicle in each single family campsite'; rules maxStay 14 days rolling 30, reservationCutOff 1 day; rate table 'Peak Season 2027-04-16 - 2027-09-18' STANDARD NONELECTRIC $34, GROUP STANDARD NONELECTRIC $67; amenities Accessible Flush Toilets, Drinking Water, Host, Showers, Trash Collection",
+  "recreation.gov campsite catalog (catx.py 231976, read 2026-11-27): 54 sites - 51 STANDARD NONELECTRIC + 3 GROUP STANDARD NONELECTRIC (the double sites), all Overnight, RV/Trailer permitted; max lengths 29 ft (1), 35 ft (31), 40 ft (22); no electric/water/sewer attributes",
+  "Esri World_Imagery at 34.1735,-116.8675 (hw 350 m) with the stored pin and the FS point marked, 2026-11-27"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 34,
+    "nightly_high": 34,
+    "currency": "USD",
+    "surcharges": {"holiday": 2},
+    "extra_vehicle": {"included": 1, "amount": 8, "per": "night"},
+    "extra_person": {"max_people": 8},
+    "checked": "2026-11",
+    "note": "Double sites $67 ($69 on holidays) for up to 16 people."
+   },
+   "source": "fs.usda.gov San Gorgonio Campground ('Single Site: $34: Holiday, $36 - 8 person max', 'Double Site $67: Holiday ,$69 - 16 person max', 'Camping fee includes entry for 1 vehicle.', 'Extra vehicle fee: $8/night') + recreation.gov rate table (2027 peak season $34 single), read 2026-11-27",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/231976",
+    "window_opens_days": 180,
+    "reserve_until": {"relative_to": "arrival", "offset_hours": -24},
+    "fcfs": "never",
+    "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+    "max_stay_nights": 14,
+    "note": "The 14-night limit is per rolling 30 days."
+   },
+   "source": "fs.usda.gov San Gorgonio Campground ('6-month rolling basis'; 'as late as 24 hours in advance'; 'No first-come, first-served sites.'; '2-day minimum stay on weekends and 3-day minimum on holiday weekends') + recreation.gov rules (maxStay 14 days, rolling 30), read 2026-11-27",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {"electric": 0, "water": false, "sewer": false},
+   "source": "recreation.gov facility description ('Utility hookups are not available'), read 2026-11-27",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {"count": 54, "max_rig_ft": 40},
+   "source": "fs.usda.gov ('54 camping sites reservable through Recreation.gov') + recreation.gov catalog (51 single + 3 double sites; max lengths 29/35/40 ft), read 2026-11-27",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": false},
+   "source": "fs.usda.gov ('flush toilets, and showers') + recreation.gov ('Accessible flush toilets, showers and drinking water are provided'; 'A dump station with potable water is available at a nearby campground'), read 2026-11-27",
+   "method": "manual"
+  },
+  "season": {
+   "values": {"year_round": false, "opens": "04-17", "closes": "09-18"},
+   "source": "fs.usda.gov ('Seasons of Use April 17 to Sept. 18'; 'Closed for the season.') + recreation.gov 2027 peak season 04-16 to 09-18, read 2026-11-27",
+   "method": "manual"
+  }
+ },
+ "note": "Two shaded loops of Jeffrey and ponderosa pine and black oak in the Barton Flats area off Hwy 38, about 25 miles from Big Bear Lake; paved, level spurs. Close to the Barton Flats Visitor Center and Greyback Amphitheatre (weekend campfire programs in summer), with the Santa Ana River Trail and the Rio Monte Trail from camp. A dump station is at a nearby campground; firewood sold on site. Bears frequent the area. --Claude",
+ "summary": "FS page + rec.gov facility/rates/catalog read: $34 single (+$2 holiday), doubles $67, +$8 extra vehicle, 8 people; 54 sites (51 single + 3 double), to 40 ft, no hookups; flush toilets, showers, water, dump nearby; Apr 17-Sep 18, closed for the season now; rec.gov 6 months, 24 h cutoff, no FCFS, 2-night weekends / 3 holidays, 14 nights. Pin on SR-38 -> FS point ~175 m.",
+ "flags": [
+  "PIN (~175 m, under 250 m): stored 34.17316,-116.86836 (rec.gov's point) sits on the SR-38 roadway; the site loops are north of the highway. Suggest 34.17389,-116.86667 (the FS page's point, among the loop roads on Esri).",
+  "SITES: count 51 -> 54 (the FS page's 54 includes the 3 double sites, which rec.gov types 'GROUP STANDARD NONELECTRIC' but are family doubles for up to 16).",
+  "FACILITIES: showers added (FS + rec.gov); stored vault_toilets true has no source - both pages name flush toilets only. Not overwritten (left as stored); suggest removing it. dump false (the dump is at a nearby campground).",
+  "STATUS: 'Closed for the season' - seasonal (Apr 17-Sep 18), not a temporary closure; operating left as open.",
+  "PHONE: stored 909-382-2600 is the forest's main line (still on the FS page for fire restrictions). Alternatives: concessionaire 909-866-8550 (rec.gov facility phone), Mill Creek Visitor Center (909) 382-2882. No change suggested.",
+  "WATERFRONT: 'not waterfront' CONFIRMED - forested loops, no water body on Esri.",
+  "NOTE: rewritten; dropped the site counts, rig length, toilet/water and reservation prose that the fields hold. No --AWH text."
+ ]
+}
