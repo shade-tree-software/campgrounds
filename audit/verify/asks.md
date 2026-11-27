@@ -840,3 +840,6 @@ Inclusion is weak. BLM's only page for the area (Ivanpah Windsailing SRMA) never
 
 ## 277 Kirk Creek (CA, Los Padres NF) — p3-629, 2026-11-26 — OPEN (--AWH value)
 Stored waterfront 'coastal dunes' (--AWH). The camp is an open bluff top above the ocean with no dune field; under the current vocabulary it reads as 'coastal walk'. Not changed because the value is yours. Change to coastal walk?
+
+## 12260 Obsidian (CA, Humboldt-Toiyabe NF) — p3-631, 2026-11-26 — OPEN (lean keep)
+FS page and rec.gov both say "This campground is best suited for small vehicles and tent camping." No site lengths, no 4WD/clearance wording, no explicit "trailers/motorhomes not recommended"; ~3 mi of unpaved Little Walker Rd (FR 066). Kept with the line in the note. Drop?

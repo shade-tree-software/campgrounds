@@ -1,0 +1,12 @@
+# p3-631 notes
+- 11630 WRITTEN (creekside kept, max 28, phone, season May28-Sep30)
+- 12000 WRITTEN (FCFS, $28, phone/website, not wf kept)
+- 11795 WRITTEN (hookups corrected, 30.75-53, gooutsideandplay)
+- 12389 WRITTEN ($48, GS 4.4/390, max 7 nights, platform operator)
+- 12427 WRITTEN (FCFS $40-45, G4.6/481, propose coastal walk)
+- 15407 WRITTEN ($77-117, gateway Lassen 21 km, G4.7/575, season 04-02..10-25 2027)
+- 12384 WRITTEN ($36.95-42.95 all year, G4.3/693, phone, Do Not Drink notice)
+- 11678 WRITTEN (coastal walk kept, beach closed King tide, $35-50, yr-round north loop)
+- 11684 WRITTEN (coastal dunes kept, $25-35, phone 473-7220, beach closure)
+- 11923 WRITTEN (riverfront kept 520-526, lottery 2027, phone 209-372-8502)
+- 12260 WRITTEN (FCFS not reservable, 'small vehicles' drop candidate, note directions fixed, phone 760-932-7070)

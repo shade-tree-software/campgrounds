@@ -1,0 +1,75 @@
+{
+ "id": 11923,
+ "checked": "2026-11-26",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/232449 (read 2026-11-26): 'For the 2027 season, North Pines campground will utilize a one-time Early Access Lottery that allows successful applicants to make a reservation within the entire 2027 season ... Any remaining availability will be released during normal on-sale dates beginning with the February 15, 2027 on-sale. When not on a lottery, campsites at North Pines are available up to five months in advance on the 15th of each month at 7:00 a.m. (PT)'; 'paved roads and parking spurs, flush toilets, and drinking water. Each campsite contains a picnic table, fire ring, and a food storage locker'; 'Yosemite's free shuttle bus stops near the campground entrance. Nearby, historic Curry Village offers showers (for a fee), a general store'; facility phone (209) 372-8502; rules blockReleaseDay 15, maxConsecutiveStay 7",
+  "https://www.recreation.gov/api/camps/campgrounds/232449/rates (read 2026-11-26): Peak Season 2026-04-21 to 2026-10-25, 'STANDARD NONELECTRIC' and 'RV NONELECTRIC' $36",
+  "recreation.gov campsite catalog, facility 232449 (catx.py, read 2026-11-26): 81 sites, all reservable, all nonelectric (63 standard, 18 'RV NONELECTRIC'); max vehicle lengths 24 ft x19, 27 x22, 35 x37, 38 x2, 40 x1",
+  "recreation.gov availability, facility 232449 (read 2026-11-26): 2026 nights 'Reserved' through 2026-10-25; nothing Dec 2026 - Mar 2027; 2027 nights loaded 2027-04-26 to 2027-06-30, all 'Not Available' (held for the lottery)",
+  "developer.nps.gov campgrounds API, parkCode yose (DEMO_KEY, read 2026-11-26): 'North Pines is open seasonally from mid-April to mid-October for tents, RVs (up to 40 ft.), and trailers (up to 35 ft.). Exact dates vary. In 2026, the campground will be open from April 21 until October 26'; exception 'Seasonal Winter Closure' 2026-10-26 to 2027-04-21; totalSites 81, rvOnly 18, electricalHookups 0; 'Showers: Yosemite Valley (Curry Village) Dump Station: Nearby (Upper Pines Campground)'; 'Paved Roads - All vehicles OK'",
+  "https://www.nps.gov/yose/planyourvisit/pinescampgrounds.htm (read 2026-11-26, plain fetch; per-campground accordions load by script and came back empty): 'For 2027, all reservations for North Pines Campground will be available via the early access lottery (any reservations still available after the lottery will be available on the regular on-sale dates).'; 'call the Yosemite Valley Campgrounds Office at 209/372-8502'",
+  "Esri World Imagery 37.7420,-119.5660 (260 m) and 37.7411,-119.5663 (120 m) with the recreation.gov site points (viewed 2026-11-26): sites 520, 522, 524 and 526 sit ~10-15 m from the Merced's north-east bank over open dirt with scattered pines; 111 and 113 ~22-27 m behind a band of bank trees; the river is ~35 m wide here"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 36,
+    "nightly_high": 36,
+    "currency": "USD",
+    "checked": "2026"
+   },
+   "source": "recreation.gov rate table, 2026 Peak Season ($36 standard and RV sites), read 2026-11-26",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "url": "https://www.recreation.gov/camping/campgrounds/232449",
+    "fcfs": "never",
+    "max_stay_nights": 7,
+    "note": "2027 season sold through a one-time early access lottery; nights left over go on sale from Feb 15, 2027. Otherwise nights are released on the 15th of each month, five months ahead, 7 a.m. Pacific."
+   },
+   "source": "recreation.gov campground overview and rules (blockReleaseDay 15; maxConsecutiveStay 7) and catalog (all 81 sites reservable), read 2026-11-26",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 81,
+    "max_rig_ft": 40
+   },
+   "source": "recreation.gov catalog (81 sites, max 40 ft) and NPS campgrounds API (totalSites 81, rvMaxLength 40, trailerMaxLength 35), read 2026-11-26",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "flush_toilets": true,
+    "potable_water": true,
+    "showers": false,
+    "dump": false
+   },
+   "source": "NPS campgrounds API (flush toilets, potable water seasonal; showers 'None' with showers at Curry Village; dumpStation 'No', dump at Upper Pines) and recreation.gov description, read 2026-11-26",
+   "method": "manual"
+  },
+  "season": {
+   "values": {
+    "year_round": false,
+    "opens": "04-21",
+    "closes": "10-25",
+    "note": "2026: Apr 21 - Oct 25 (last night). NPS lists the winter closure to Apr 21, 2027; recreation.gov has 2027 nights loaded from Apr 26."
+   },
+   "source": "NPS campgrounds API operating hours (2026 Apr 21 - Oct 26, winter closure 2026-10-26 to 2027-04-21) and recreation.gov rate season / availability, read 2026-11-26",
+   "method": "manual"
+  }
+ },
+ "note": "Yosemite Valley campground along the Merced River near the stables, on the free valley shuttle; paved spurs, a food locker at every site. Showers (fee), store and food at Curry Village; dump station at Upper Pines. Trailers to 35 ft. The park entrance fee is extra. --Claude",
+ "summary": "North Pines: $36, all 81 sites reservable on recreation.gov (2027 by early access lottery, otherwise monthly release on the 15th five months ahead; 7-night limit); season 2026 Apr 21 - Oct 25. Riverfront kept (sites 520-526 ~10-15 m from the Merced over open ground). Phone '' -> (209) 372-8502.",
+ "flags": [
+  "WATERFRONT: riverfront KEPT on Esri imagery with the recreation.gov site points: 520 (37.74140,-119.56687), 522 (37.74127,-119.56673), 524 (37.74122,-119.56661) and 526 (37.74115,-119.56654) sit ~10-15 m from the Merced's NE bank over open dirt with scattered pines; all four are reservable standard sites taking RVs to 35 ft. The river is ~35 m wide here. 111/113 are ~22-27 m back behind bank trees.",
+  "PHONE: '' -> (209) 372-8502 (recreation.gov facility phone; NPS 'Yosemite Valley Campgrounds Office at 209/372-8502').",
+  "WEBSITE: kept (nps.gov pines page + recreation.gov 232449).",
+  "STATUS/SEASON: in its seasonal winter closure now (2026-10-26 to 2027-04-21 per NPS). recreation.gov's 2027 inventory starts Apr 26 and is all held for the lottery; the 2027 opening date is not yet firm.",
+  "BOOKING: the 2027 lottery is a one-off; the recurring rule (15th of the month, five months ahead) is in booking.note. window_opens_days not written (a monthly block, not a rolling day count; ~150 days).",
+  "PIN: stored 37.74180,-119.56450 is at the east edge of the loops (near site 136), ~95 m from recreation.gov's facility point (37.74194,-119.56556) - OK."
+ ]
+}
