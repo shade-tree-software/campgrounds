@@ -1,0 +1,41 @@
+{
+  "id": 12367,
+  "checked": "2026-11-27",
+  "sources": [
+    "http://matarawarvpark.com/ and /rates/ (read 2026-11-27): both now answer 301 -> https://viejas.com/ (Viejas Casino & Resort home page); the casino site and its sitemaps have no RV park, camping or Ma-Tar-Awa page",
+    "audit/price_research/private_2026-10-16/browser_CA.jsonl (headless-browser read of http://matarawarvpark.com/rates/ on 2026-10-16, when the site was still live): 'Charges reflect a Family Unit, not a Camp Site: / $35 per family unit / per night – full hook-up e,w,s / $25 per family unit/ per night – dry camping must have a trailer / Monthly Rates Available. / Management reserves the right to deny any service to any guest entering the park and the right to decide the length of stay of any camper. / Extra People: $5 per guest per night / Extra Vehicles: $5 per guest per night / Dumping Fee: $25 / Reservations require a deposit equal to one night's stay per site'",
+    "Google Maps panel 'Ma Tar Awa Viejas Camper Park' (headless browser, read 2026-11-27): 4.0 from 174 reviews, Campground, 25 Browns Rd, Alpine, CA 91901, (619) 445-3276, website matarawarvpark.com, not marked closed; review summary snippets 'I give this place a 3 because of the staff was very kind and helpful.', 'Stayed one night Pricy Dirty restroom, took a shower in a urine smell'; newest reviews read: 'a month ago' - 'Very friendly, nice pool. Need to update there website ... They no longer have a store and jaccui'; '6 years ago' - 'The spots are super roomy but only 10 spots available for short-term stays. The rest are reserved for \"long-term\"'",
+    "audit/price_research/gateways.py 32.8487,-116.6768 (2026-11-27): none within 40 km (San Diego 48 km)",
+    "Esri World_Imagery 700 m frame (sat.py, read 2026-11-27): dense RV loops with RVs on most pads north of the stored pin, which sits on the loops' south edge (~160 m from their centre; Google's point is ~220 m NW)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "checked": "2026",
+                 "extra_person": {"amount": 5, "per": "night"},
+                 "extra_vehicle": {"amount": 5, "per": "night"},
+                 "note": "Priced per family unit: $35 with full hookups, $25 dry camping (a trailer is required). The dump station is $25. Monthly rates are offered. Read 2026-10-16, before the site went offline."},
+      "source": "http://matarawarvpark.com/rates/ as read in a headless browser 2026-10-16 (audit/price_research/private_2026-10-16/browser_CA.jsonl); the domain now redirects to viejas.com (read 2026-11-27)",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true, "sewer": true},
+      "source": "http://matarawarvpark.com/rates/ ('full hook-up e,w,s'), read 2026-10-16; amperage not posted",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"camp_store": false},
+      "source": "Google Maps review, 'a month ago' (2026-10): 'They no longer have a store and jaccui. Only a pool and Rec room' (camper report)",
+      "method": "reported"
+    }
+  },
+  "note": "Viejas Band tribal RV park on the Viejas reservation near Viejas Casino & Outlets, Alpine, with a casino shuttle, pool and rec room. Mostly long-stay: a camper reported that only about 10 of its roughly 70 sites are kept for short stays. --Claude",
+  "summary": "Stored website now 301s to viejas.com (no RV page); rate $35 FHU / $25 dry from the operator page as read 2026-10-16; extra person/vehicle $5. Google 4.0 / 174, phone (619) 445-3276, open. Mostly long-term (camper: only ~10 short-term sites). No gateway; $35 passes the gate. DROP CANDIDATE for the reviewer (mostly long-stay + website gone + 4.0 reviews). Phone '' -> 619-445-3276. Pin OK.",
+  "flags": [
+    "DROP CANDIDATE (mostly long-stay and iffy, reviewer decides): Google review (6 years ago) 'only 10 spots available for short-term stays. The rest are reserved for \"long-term\"' (about 10 of ~70 sites, ~14%, inside the 10-50% caveat band); the operator page offered 'Monthly Rates Available' and 'Management reserves the right to ... decide the length of stay of any camper'; imagery shows RVs on most pads. Iffy signs: the operator website stopped answering after 2026-10-16 (matarawarvpark.com now 301-redirects to the Viejas casino home page, which has no RV page; a review from a month ago says 'Need to update there website'), Google exactly 4.0 from 174 reviews with 'Pricy Dirty restroom' in the summary, and the amenities shrinking ('They no longer have a store and jaccui'). Long-stay tests: (1) nightly sold - yes; (2) posted nightly rate - only on the now-dead page ($35, read 2026-10-16); (3) no seasonal-only wording; (4) ~14% nightly by one 2020 camper report, unmeasured since; (5) no lot sales. Gate facts: $35 FHU (under $50), no gateway within 40 km, no Good Sam data. If kept, the proposed note carries the 'Mostly long-stay' caveat.",
+    "WEBSITE: http://matarawarvpark.com now redirects to https://viejas.com/ with no RV park content - no replacement operator page found (Google still lists matarawarvpark.com).",
+    "PHONE: '' -> 619-445-3276 (Google Maps listing).",
+    "NAME: Google lists 'Ma Tar Awa Viejas Camper Park'; the operator's own title was 'Ma-Tar-Awa – RV and Camping Park'.",
+    "COUNT: stored 70 sites and pull_through came from the sweep note (imagery-based); no operator page states a count - left as is.",
+    "PRICE UNIT: rates are 'per family unit', not per site; extra people $5 each a night."
+  ]
+}

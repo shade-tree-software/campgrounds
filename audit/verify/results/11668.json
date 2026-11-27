@@ -1,0 +1,56 @@
+{
+  "id": 11668,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=587 (read 2026-11-27): 'Max trailer: 36 feet'; 'Max camper/motorhome: 36 feet'; 'Campgrounds, North Shore (Madera County Side)'; facilities 'RV/Trailer Campsites w/Hookups', 'RV Dump Station', 'Restrooms / Showers', 'Drinking Water Available'; '(559) 822-2332'; 'Call the park office at (559) 822-2332 for large and small group camp reservations occurring after January 1, 2027.'; no closure banner or alert",
+    "Park info sheet https://www.parks.ca.gov/pages/587/files/MillertonLake_InfoSheet_8.5x14_072925_FINAL.pdf (07/2025, read 2026-11-27): 'Capacity-Campsites limited to eight persons/three vehicles. One vehicle permitted per campsite with reservation. Additional vehicles will be charged overnight vehicle fee.'; 'Campsite Availability-Meadows Loop and Group Camps are open year-round; all others open April-September.'; 'Camping fees (per night): $30 for standard site, $40 for full hook-up site, and $15 for boat camp.'; 'Check-in/check out-2 p.m./noon'",
+    "Campground map https://www.parks.ca.gov/pages/587/files/MillertonLakeSRA_HighResMap_7-14-22.pdf (Rev. 2022, read 2026-11-27): North Shore Campground loops Rocky Point (1-23), Mono (24-37), Fort Miller (38-75), Dumna Strands (76-84), Valley Oak (85-90), Meadows (91-148, 'Hookup sites 117-144'); legend 'Max 21' Camper/Trailer = [box]', 'Max 31' = (circle)', 'Unmarked Sites = 36' Camper/Trailer'; RV Sanitation Station; North Shore Campground phone (559) 822-2225",
+    "ReserveCalifornia API place 678 + search/grid 2027-06-15 (read 2026-11-27): Meadows Loop (sites 92-148) 543 - 45 units (24 Campsite, 3 Hook Up (E/W), 18 Hook Up (E/W/S)) at 37.018175,-119.668515; Rocky Point and Mono Loops (sites 1-37) 1119 - 32 (18 Campsite, 14 Tent) at 37.019004,-119.684013; Fort Miller and Dumna Strands Loops (sites 38-84) 1120 - 44 (25 Campsite, 9 Tent, 10 Primitive) at 37.022800,-119.681000; Valley Oak Loop (sites 85-90) 1121 - 6 Primitive; Horse Camp 2120 - 1; every unit lists VehicleLength 36. Rates on the 2026-10-12 read (ca_units_2026-10-12.jsonl): Campsite $30, Hook Up (E/W) and (E/W/S) $40",
+    "Esri World_Imagery (700 m, 300 m frames) + USGS 3DEP, Millerton full pool 578 ft (~176.5-177 m) (read 2026-11-27): Fort Miller's east-end spurs at ~37.0223,-119.6806 and ~37.0227,-119.6801 sit at 178-179 m, ~2 m above full pool, which lies 20-25 m S/E across open grass and granite with scattered oaks; the RV-occupied south spurs at ~37.0221,-119.6817 are at ~181.5 m, 25-35 m from full pool; lake drawn down far below the high-water line in the imagery"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 127, "max_rig_ft": 36},
+      "source": "ReserveCalifornia grid 2027-06-15 (45 + 32 + 44 + 6 units in the four camping facilities, VehicleLength 36) + parks.ca.gov ('Max trailer: 36 feet'; 'Max camper/motorhome: 36 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true, "sewer": true},
+      "source": "ReserveCalifornia grid (Meadows Loop: 3 'Hook Up (E/W) Campsite', 18 'Hook Up (E/W/S) Campsite'), read 2026-11-27; amperage not posted",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "https://www.parks.ca.gov/?page_id=587 ('RV Dump Station'; 'Restrooms / Showers'; 'Drinking Water Available') + 2022 campground map (restroom/shower and RV Sanitation Station symbols), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "Info sheet 07/2025 ('Meadows Loop and Group Camps are open year-round; all others open April-September.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"extra_person": {"max_people": 8},
+                 "extra_vehicle": {"included": 1, "per": "night", "max_vehicles": 3}},
+      "source": "Info sheet 07/2025 ('Campsites limited to eight persons/three vehicles. One vehicle permitted per campsite with reservation. Additional vehicles will be charged overnight vehicle fee.'; '$30 for standard site, $40 for full hook-up site') + ReserveCalifornia rates read 2026-10-12 (Campsite $30, Hook Up $40), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "ReserveCalifornia place 678 (four camping facilities listed) + parks.ca.gov reservation availability panel, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "State recreation area campground on the north (Madera) shore of Millerton Lake, about 20 mi NE of Fresno, in several loops: Rocky Point, Mono, Fort Miller and Dumna Strands on the west side of Dumna Cove, Meadows (all the hookup sites) and Valley Oak across it. Only Meadows stays open in winter; the other loops are open April-September. Some sites take only 21- or 31-ft rigs (marked on the park map). --Claude",
+  "summary": "parks.ca.gov page + 2025 info sheet + 2022 campground map + ReserveCalifornia API + imagery/3DEP read. 36-ft max; 127 units (Meadows 45 incl. 21 hookup, Rocky Point/Mono 32, Fort Miller/Dumna 44, Valley Oak 6); showers, flush toilets, dump, water; Meadows year-round, others Apr-Sep; 8 people/3 vehicles; no closure banner. Stored count 25 -> 127. Lakefront KEPT (Fort Miller east-end sites ~2 m above full pool, 20-25 m from it). Pin OK; possible split noted (Meadows ~1.5 km E).",
+  "flags": [
+    "WATERFRONT lakefront CONFIRMED: Fort Miller's east-end spurs (2022 map sites 59-62 around the shower building; 59, 61 and 62 are unmarked 36-ft sites, 60 a 21-ft box) at ~37.0223,-119.6806 and ~37.0227,-119.6801 sit at 178-179 m on 3DEP, about 2 m above the 578-ft (~176.5-177 m) full pool, which is 20-25 m S/E of them across open grass and granite with scattered oaks - the kayak test passes. Sold by the night on ReserveCalifornia (Fort Miller and Dumna Strands Loops, facility 1120). The RV-occupied south spurs west of the shower building (~37.0221,-119.6817, map ~52-57, several 21-ft boxes) are ~5 m above full pool, 25-35 m from it. Map numbers matched to imagery by the shower building and spur shapes; the map is 'not to scale'. Suggested evidence: 'parks.ca.gov 2022 map + Esri + 3DEP 2026-11-27: Fort Miller east-end sites (map 59-62) ~2 m above the 578-ft full pool, 20-25 m from it over open grass/granite -> lakefront.'",
+    "SITES: count 25 -> 127 (the stored 25 was only the Meadows full-hookup figure from note prose). 23 of the 127 are tent sites and 16 primitive. The map marks a number of 21-ft (boxed: e.g. 6-8, 10, 22, 35, 38, 50-52, 55, 56, 60, 66, 69, 70, 76, 90, 100, 117-119, 148) and 31-ft (circled) sites; RC lists every unit at 36 ft.",
+    "SEASON: Meadows Loop year-round; Rocky Point, Mono, Fort Miller, Dumna Strands and Valley Oak April-September (info sheet 07/2025) - year_round written for Meadows, the split goes in the note.",
+    "SPLIT CANDIDATE (probably not): Meadows + Valley Oak (51 units, all the hookups, year-round) centroid ~37.0182,-119.6685 on the east side of Dumna Cove, ~1.4-1.6 km by the park road from Rocky Point/Mono/Fort Miller/Dumna (76 units, Apr-Sep) centroid ~37.0210,-119.6825. Same entrance station, same 'North Shore Campground' map and RC place 678 (facilities 543/1121 vs 1119/1120). Waterfront for Meadows not separately measured.",
+    "PIN: stored 37.0225,-119.6845 is near the Rocky Point/Mono loops' north side (~200 m from RC's Rocky Point point) - fine for the west complex; no move.",
+    "PHONE: 559-822-2332 confirmed (park); the campground map also lists North Shore Campground (559) 822-2225 - an optional second number.",
+    "STATUS: no closure banner on parks.ca.gov; group camps after 2027-01-01 by phone only (not relevant to family sites).",
+    "FEES: $30 standard / $40 full hookup unchanged (info sheet 07/2025 agrees with the 2026-10-12 RC read); fee rows left as stored, extra person/vehicle limits added."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": 12120,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/plumas/recreation/lone-rock-campground (read 2026-11-27): 'Site Closed'; 'Closed for the season September 27, 2026.'; 'shady with pine and fir trees and has several lake-front sites. It has 87 sites and accommodates both tent and RV camping'; 'There is a car-top boat launch in the campground'; '14 day camping limit / 6 people per campsite, 12 people for double sites / 2 vehicles per campsite'; 'Single Site: $36 per night'; 'Vault toilet(s)'; 'Potable water is not available at this site.'; forest alerts listed on the page: Stage I Fire Restrictions, Rogers Cow Camp Area Closure (neither is Antelope Lake)",
+    "https://www.recreation.gov/api/camps/campgrounds/232913 + /rates (read 2026-11-27): 'LONE ROCK (CA)', phone 530-283-0555; 'several of them adjacent to the lake, providing views of the lake'; 'vault toilets and drinking water'; notices 'RV dump station is closed indefinitely', 'the second vehicle fee will be collected onsite at the daily rate posted on the fee sign', 'Check- In is 2:00pm and Check-Out is Noon'; rules maxConsecutiveStay 14; rates: Peak Season 2026-05-22 to 2026-09-06 and First-come, First-served Season 2026-09-07 to 2026-09-27; Peak Season 2027-05-23 to 2027-08-31 and First-come Season 2027-09-01 to 2027-09-28; STANDARD NONELECTRIC $36 in every season",
+    "recreation.gov campsite search API, facility 232913 (catx.py, read 2026-11-27): 85 sites - 51 reservable + 32 first-come STANDARD NONELECTRIC (RV/Tent/Trailer), 1 non-reservable STANDARD ELECTRIC, 1 non-reservable group site; all Back-In, Paved, Shade Full, Max Num of People 8; Max Vehicle Length 22-53 ft (one site 22, all others 23+; 9 at 50, one at 53); 'Proximity to Water: Lakefront' on 19 sites (025-038 west arm, 060-080 east side)",
+    "Esri World_Imagery (satpts.py, 600 m and two 220 m frames with all 85 catalog positions plotted) + USGS 3DEP (epqs.nationalmap.gov) transects, read 2026-11-27: lidar water surface 1522.4 m; the lake's published elevation is 5,002 ft (~1524.6 m, Plumas NF brochure via search; Wikipedia gives normal 5,007 ft). West arm: sites 033/035/036 (pads ~1527 m) are ~40-45 m from the imagery waterline and ~55-60 m from the ~1524.6 m contour, through a continuous pine band ~25-30 m deep and then an open shoreline strip. East side: sites 066-072 (pads ~1527-1528.5 m) are ~45 m inside a dense pine stand from the treeline and ~60-70 m from the 1524.6 m contour, with drawn-down lakebed beyond. Every catalog site is tagged Shade Full. Stored pin 40.1916,-120.6131 is inside the loops (catalog centroid 40.1919,-120.6139, ~75 m)."
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 36, "nightly_high": 36, "currency": "USD", "checked": "2026",
+                 "note": "$36 a site in every season; a second vehicle pays the daily rate posted on the fee sign."},
+      "source": "recreation.gov 232913 rates (2026 and 2027 Peak and First-come seasons, STANDARD NONELECTRIC $36) + notices; FS page 'Single Site: $36 per night', read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov catalog 232913 (83 public sites STANDARD NONELECTRIC; the one STANDARD ELECTRIC site is not reservable, likely the host's), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 83, "max_rig_ft": 53, "pull_through": false,
+                 "note": "Plus one group site. Every site is a paved back-in; one is capped at 22 ft and all the others take 23 ft or more."},
+      "source": "recreation.gov campsite catalog 232913 (83 STANDARD NONELECTRIC family sites + 1 electric host-type site + 1 group site; Back-In; Max Vehicle Length 22-53), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "dump": false},
+      "source": "FS page ('Vault toilet(s)') + recreation.gov notice 'RV dump station is closed indefinitely', read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-23", "closes": "09-28"},
+      "source": "recreation.gov 232913 rate seasons for 2027 (reservable Peak Season 05-23 to 08-31, then First-come Season 09-01 to 09-28; 2026 ran 05-22 to 09-27) + FS page 'Closed for the season September 27, 2026', read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "FS page (only a seasonal closure, 'Closed for the season September 27, 2026'; no Antelope Lake alert) + recreation.gov selling the 2027 season, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14,
+                 "season": {"opens": "05-23", "closes": "08-31"},
+                 "note": "32 of the 83 family sites are first-come all season, and every site goes first-come from September 1 until the campground closes."},
+      "source": "recreation.gov 232913 (catalog: 51 reservable / 32 first-come family sites; 2027 Peak Season 05-23 to 08-31, First-come Season 09-01 to 09-28; rules maxConsecutiveStay 14), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Plumas NF campground on Antelope Lake, a remote reservoir about 30 mi NE of Taylorsville, in shady pine and fir woods on a point between the lake's west arm and its open water; a car-top boat launch is in the campground. --Claude",
+  "summary": "FS page + rec.gov facility/rates/catalog + imagery/3DEP read. $36 every season; 83 family sites (FS says 87) + 1 group, paved back-ins, all but one 23 ft+; no hookups; vault toilets; dump closed indefinitely; rec.gov, 32 FCFS sites and all FCFS after Aug 31; season ~05-23..09-28 (2026: 05-22..09-27); open. WATERFRONT: lakefront -> lakeview recommended (nearest 'Lakefront'-tagged sites 40-60 m back through continuous pine canopy). Pin fine. Water conflict FS vs rec.gov.",
+  "flags": [
+    "WATERFRONT DOWNGRADE (lakefront -> lakeview): rec.gov tags 19 sites 'Lakefront' (025-038 on the west arm; 060-080 on the east side) and says 'several of them adjacent to the lake, providing views of the lake'; the FS page says 'several lake-front sites'. Measured with all 85 catalog positions on Esri imagery and 3DEP: the nearest west-arm sites 033 (40.19129,-120.61557), 035 and 036 (40.19087,-120.61506) are ~40-45 m from the imagery waterline and ~55-60 m from the ~1524.6 m (5,002 ft) contour, through a continuous pine band ~25-30 m deep before an open shoreline strip; the east-side sites 066-072 (e.g. 070 at 40.19143,-120.61213) sit ~45 m inside a dense pine stand from the treeline and ~60-70 m from that contour, with drawn-down lakebed beyond. rec.gov tags every site 'Shade Full'. The bank is gentle (pads ~2.5-3 m above full pool over 55-70 m), but no named site is within ~50 m over open ground, so under the canopy rule this is a view. Suggested evidence: 'rec.gov 232913 Lakefront tags on 19 sites + its own wording \"adjacent to the lake, providing views of the lake\"; Esri + 3DEP 2026-11-27: nearest sites 033/035/036 (west arm) ~40-45 m to the waterline / ~55-60 m to the 5,002-ft contour through a 25-30 m pine band, east sites 066-072 ~60-70 m through dense pines; all sites Shade Full -> lakeview (filtered through trees).'",
+    "WATER CONFLICT: the FS page says 'Potable water is not available at this site.'; recreation.gov's facility text says 'vault toilets and drinking water'. potable_water not written.",
+    "PEOPLE CONFLICT: FS page '6 people per campsite'; rec.gov catalog 'Max Num of People 8' on every site. Not written.",
+    "EXTRA VEHICLE CONFLICT: FS '2 vehicles per campsite' and a rec.gov notice that the second vehicle pays the posted daily rate, against rec.gov's facility text 'extra vehicles can be parked in nearby overflow parking at no extra charge'. Amount not posted online; not written beyond the fees note.",
+    "COUNT: stored 87 (FS page) -> 83 family sites in the rec.gov catalog (85 incl. one group site and one non-reservable electric site, likely the host's).",
+    "DUMP: rec.gov notice 'RV dump station is closed indefinitely' -> facilities.dump false.",
+    "SEASON: 2027 dates written (rec.gov 2027 seasons); 2026 was 05-22 to 09-27. A rate season is not normally a campground season, but here the FS page's closing date matches the end of the first-come season."
+  ]
+}

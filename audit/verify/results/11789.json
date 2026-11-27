@@ -1,0 +1,56 @@
+{
+  "id": 11789,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://parks.sbcounty.gov/park/moabi-regional-park/ (read 2026-11-27): '760.326.9000'; 'Pirate Cove Resort is the concessionaire (contact for hours & amenity information).'; 'Located along the banks of the Colorado River, at the California and Arizona state lines'; 'Moabi Regional Park Campground offers a mix of group/tent camping and dedicated campsites, each of the dedicated campsites includes a picnic table, full RV hookups, charcoal grill, and access to bathrooms with showers.'; 'The tent campsites are located inland, away from the water'; 'Camping Options: Interior RV & Tent Camping / Group Camping on the Peninsula'",
+    "https://piratecoveresort.com/ (curl answers a Cloudflare 403; read in one headless Chrome under the lock, 2026-11-27): 'Pirate Cove Resort is located in the Moabi Regional Park on the banks of the Colorado River, just 11 miles southeast of Needles'; 'Not a timeshare. No membership fees. Always open to the public.'; 'RIVERFRONT RV CAMPING - Premium waterfront RV campsites with full hook-ups'; 'WE ARE PART OF THE GOOD SAM PROGRAM!'; 'The Pirate Cove off highway vehicle experience offers over 3,200 miles of designated trails. Start your off road fun at our staging area.'; 'RESERVATIONS Call: 760-326-9000 Toll Free: 1-866-301-3000'; RESERVE -> https://secure2.irm1.net/IRMNg/index.html?resort=B4",
+    "https://piratecoveresort.com/camping/ (headless, read 2026-11-27): 'Full-hookup riverfront sites with water, sewer, and 30/50 amp power; partial hookup and dry camping sites also available'; 'Spacious pads for large RVs, tow vehicles, off-road toys and water toys on the beach'; 'New high-speed WiFi at all riverfront sites'; 'Restrooms, showers and laundry available'; 'Gated resort with 24-hour security'; 'Long-term stay rates and perks available November through March'",
+    "https://piratecoveresort.com/pirate-cove-resort-direct-booking-rates/ (headless, read 2026-11-27): 'As of September 1, 2026'; 'Reservation and Resort fees have been eliminated'; Peak Season (April - October): 'Peninsula (Full Hookup) $90 [Fri/Sat] $75 [Sun-Thu] $120 [holiday weekend] $105 [holiday weeknight]'; 'Inland (Full Hookup) $55 $55 $70 $70'; 'Inland (Electric/Water only, no sewer) $50 $50 $60 $60'; Winter (November - March): 'Peninsula (Full Hookup) $70 $70 $110 $100 $900 [monthly]'; 'Inland (Full Hookup) $55 $55 $70 $70 $900'; 'Inland (Electric/Water only) $50 $50 $60 $60 $800'; 'Rates above do not include utility charges ... $10/night for nightly rate stays of less than 7 nights; $7/night for 7 or more nights'; 'Tent Camping Per campsite (max 2 tents, 4 persons) $30 / $40'; 'Good Sam membership discount (RV and tent sites only): 10% off nightly rate'; 'First Responder / Military discount (All accommodations): 10% off nightly rate'",
+    "Resort map https://piratecoveresort.com/wp-content/uploads/2025/03/24Resort-Registr-MAP-finalFF-2-scaled.jpg (2025, read 2026-11-27): 'Peninsula Sites 1-15' along the South Peninsula and '16-25' along the North Peninsula, each a cluster of lettered pads on the Colorado River shore; inland 'RV Sites 1-9', 'RV Sites 10-21 (Winter Season Only)' and an unnumbered RV-site block by the water park; Dump Station; Restrooms, Coin Showers, Laundry; 'OHV Dunes'; a Mobile Home Park beside the RV area",
+    "Esri World_Imagery (900 m and 300 m frames at 34.7315,-114.5072, read 2026-11-27): South Peninsula pad clusters on open sand along the Colorado main channel, RVs parked 7-15 m from the waterline at the pin; Peninsula Way paved behind them"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 60, "nightly_high": 100, "currency": "USD", "checked": "2026-11", "reservation_fee": 0,
+                 "note": "Includes the $10 nightly utility charge ($7 a night on stays of 7+). Inland sites $50 electric/water or $55 full hookup; Peninsula riverfront sites $75 Sunday-Thursday and $90 Friday-Saturday April-October, $70 in winter; holidays $60-120 before the utility charge. 15% off 7+ nights; winter monthly rates. Good Sam or military 10% off."},
+      "source": "https://piratecoveresort.com/pirate-cove-resort-direct-booking-rates/ ('As of September 1, 2026' table rows quoted in sources; '$10/night for nightly rate stays of less than 7 nights'; 'Reservation and Resort fees have been eliminated'), read 2026-11-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"good_sam": true, "military": true},
+      "source": "https://piratecoveresort.com/pirate-cove-resort-direct-booking-rates/ ('Good Sam membership discount (RV and tent sites only): 10% off nightly rate'; 'First Responder / Military discount (All accommodations): 10% off nightly rate'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://piratecoveresort.com/camping/ ('Full-hookup riverfront sites with water, sewer, and 30/50 amp power'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "dump": true, "camp_store": true, "flush_toilets": true},
+      "source": "https://piratecoveresort.com/camping/ ('Restrooms, showers and laundry available'; 'General store and boutique') + 2025 resort map (Dump Station, Restrooms, Coin Showers, Laundry), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://piratecoveresort.com/pirate-cove-resort-direct-booking-rates/ (Peak Season April-October and Winter Season November-March rates), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://secure2.irm1.net/IRMNg/index.html?resort=B4"},
+      "source": "https://piratecoveresort.com/ (RESERVE -> secure2.irm1.net IRM booking engine; 'Call: 760-326-9000'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "San Bernardino County regional park on the Colorado River 11 mi SE of Needles, run by the Pirate Cove Resort concession. The riverfront Peninsula sites are clusters of pads on the sand beach; the inland RV sites are back from the water (sites 10-21 in winter only). Marina, launch ramp, restaurant and an OHV staging area for the nearby dunes and trails. --Claude",
+  "summary": "County page + resort home/camping/rates/map (headless; curl is Cloudflare-blocked) + imagery read. As of 2026-09-01: inland $50 E/W / $55 FHU, Peninsula $75-90 peak ($70 winter), +$10 utility/night, no reservation fee; GS + military 10%. 30/50A FHU, showers, laundry, dump, store; year-round; IRM booking. Riverfront KEPT (Peninsula pads 7-15 m from the main channel) with a sand-pad caveat. OHV staging area flagged (general resort). Phone OK.",
+  "flags": [
+    "WATERFRONT riverfront CONFIRMED (with a sand caveat): resort map 'Peninsula Sites 1-15' (South Peninsula) and '16-25' (North Peninsula), each a cluster of lettered pads, sold by the night ($75-90 peak, $70 winter); Esri shows the South Peninsula clusters on open sand along the Colorado River main channel (~250 m wide), RVs 7-15 m from the waterline at the pin 34.7315,-114.5072, no trees or bank in between. The inland RV sites (1-21 and the block by the water park) are 150+ m from the river and not waterfront.",
+    "SAND (EKKO no-open-beach-sand rule - AWH call): the Peninsula pads look like bare beach sand off paved Peninsula Way ('Spacious pads ... on the beach'). The campground itself stays (inland full-hookup sites), but if the Peninsula pads count as open-beach sand, riverfront rests on sites a 2WD rig shouldn't use.",
+    "OHV (flag only, never drop): the resort runs an off-road staging area ('Start your off road fun at our staging area'; 'OHV Dunes' on the map) but is a general riverfront RV resort with marina, cabins and restaurant - a general campground with an OHV side.",
+    "PRICE (local ownership, not price-gated): with the mandatory $10 utility charge the Peninsula is $85-100 peak non-holiday ($76.50-90 after Good Sam 10% off the site rate); inland $60-65.",
+    "LONG STAY: winter monthly rates ($800-900) and a separate Mobile Home Park beside the RV area; nightly RV booking open all year ('Always open to the public'). Nightly share not measurable from the map; nothing discourages nightly stays.",
+    "PHONE: 760-326-9000 confirmed (toll-free 1-866-301-3000). WEBSITES: both stored links live (https://www.piratecoveresort.com/ resolves to https://piratecoveresort.com/, Cloudflare-blocks curl).",
+    "PIN: stored 34.7315,-114.5072 is on a South Peninsula pad cluster - fine for the riverfront sites (registration/inland sites ~400 m SW)."
+  ]
+}

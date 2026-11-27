@@ -1,0 +1,56 @@
+{
+  "id": 12023,
+  "checked": "2026-11-27",
+  "sources": [
+    "NPS API developer.nps.gov/api/v1/campgrounds?parkCode=deva (the data behind https://www.nps.gov/deva/planyourvisit/mesquite-spring-campground.htm; read 2026-11-27): description 'First-come, first-served campground at an elevation of 1,800 feet, located 2 miles off of the Scotty's Castle Road below Grapevine Canyon ... Each site has a fire grate and picnic table. There are no hook-ups available. Fee is paid at the automatic pay station'; reservationInfo 'The campground is first-come, first-served. NPS reserves the right to reserve sites for management needs.'; regulations 'Camping Limits: 1 recreational vehicle with tow, 2 cars, or 4 motorcycles. 8 people per site. Stay limited to 30 days. No holding or reserving sites.'; campsites totalSites '40', numberOfSitesFirstComeFirstServe '40'; amenities toilets 'Flush Toilets - year round', showers 'None', dumpStation 'Yes - year round', potableWater 'Yes - year round', campStore 'No'; accessibility rvAllowed '1', trailerAllowed '1', rvMaxLength '0', trailerMaxLength '0', rvInfo 'The camp sites are a mixture of gravel and paved each accessed by paved roadway.', accessRoads 'Paved Roads - All vehicles OK'; fees 'Mesquite Campground Fee - Standard Rate' $20.00, 'Senior/Access Pass Rate' $10.00; operatingHours 'Open year-round. Caution: summer months may be HOT, with nightly lows in the 90s Fahrenheit.'; directionsOverview 'Off of CA190 at the junction for Scotty's Castle road, travel north thirty-three (33) miles ... Travel two (2) miles on campground access road ... Note: Access is closed until further notice if traveling from Nevada through Grapevine Canyon on Nevada Highway 267.'; phone 760-786-3200",
+    "NPS API alerts?parkCode=deva (read 2026-11-27): one alert only (Panamint Springs gas pumps), nothing on the campground or Scotty's Castle Road",
+    "https://www.nps.gov/deva/planyourvisit/campgrounds.htm (stored website) answers 404 (read 2026-11-27)",
+    "recreation.gov search (read 2026-11-27): 'Mesquite Spring Campground' 10087322 is an information-only facility, reservable False, campground API 404",
+    "Esri World_Imagery 500 m frame at 36.9628,-117.3678 (read 2026-11-27): paved loops on the alluvial fan above the wash; stored pin 36.9620,-117.3678 is inside the loops"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 40, "max_rig_ft": null},
+      "source": "NPS API campgrounds (totalSites '40'; rvMaxLength/trailerMaxLength '0' - no posted limit), read 2026-11-27; the stored 35 ft came from note prose only",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "dump": true, "flush_toilets": true, "showers": false},
+      "source": "NPS API campgrounds amenities ('Flush Toilets - year round'; showers 'None'; dumpStation 'Yes - year round'; potableWater 'Yes - year round'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS API campgrounds ('There are no hook-ups available.'; electricalHookups '0'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "NPS API campgrounds operatingHours ('Open year-round.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 30},
+      "source": "NPS API campgrounds ('The campground is first-come, first-served'; 'Stay limited to 30 days. No holding or reserving sites.') + rec.gov 10087322 info-only, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026-11",
+                 "extra_person": {"max_people": 8},
+                 "extra_vehicle": {"max_vehicles": 2},
+                 "note": "Paid by card at the automated fee machine. One RV with tow, 2 cars or 4 motorcycles per site."},
+      "source": "NPS API campgrounds fees ('Standard Campsite Rate per night' $20.00; card at automated fee machine) + regulations ('1 recreational vehicle with tow, 2 cars, or 4 motorcycles. 8 people per site.'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Death Valley NP campground at about 1,800 ft below Grapevine Canyon, 2 mi off Scotty's Castle Road near the north end of the park; gravel and paved sites on paved loops. Summer nights can stay in the 90s F. --Claude",
+  "summary": "NPS API (campground record + alerts) + rec.gov + imagery read. $20 card machine, 8 people / 1 RV+tow or 2 cars; 40 sites (stored 30), no hookups, flush toilets, water, dump, no showers; year-round, FCFS, 30-day limit. max_rig_ft 35 cleared (note-derived, NPS posts no limit). Website 404 -> per-campground page. Pin fine. Not waterfront confirmed.",
+  "flags": [
+    "WEBSITE old -> new: https://www.nps.gov/deva/planyourvisit/campgrounds.htm (404) -> https://www.nps.gov/deva/planyourvisit/mesquite-spring-campground.htm",
+    "SITES: count 30 -> 40 (NPS totalSites and FCFS count both 40). max_rig_ft 35 cleared - it came from note prose and NPS posts no RV or trailer length (rvMaxLength '0'); 'Paved Roads - All vehicles OK', RVs and trailers allowed.",
+    "STATUS: open; Scotty's Castle Road access from CA-190 is open (only the Nevada SR-267 / Grapevine Canyon approach is 'closed until further notice'); no campground alert.",
+    "BOOKING: rec.gov 10087322 is an information-only facility (not reservable) - first-come confirmed.",
+    "PIN: stored 36.9620,-117.3678 sits inside the camp loops (the NPS point 36.96365,-117.36777 is ~180 m north at the entrance/spring); no move.",
+    "PHONE: 760-786-3200 confirmed. WATERFRONT: not waterfront confirmed (desert fan; the spring is a small riparian thicket, no open water)."
+  ]
+}

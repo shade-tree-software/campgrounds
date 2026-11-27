@@ -1,0 +1,48 @@
+{
+  "id": 12312,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.blm.gov/visit/mattole-campground (read 2026-11-27): 'sits at the mouth of the Mattole River within the King Range National Conservation Area'; 'The campground provides direct access to the Mattole River estuary and a short 600-foot trail through sand dunes leads to the beach'; 'Open year-round. All sites are first come, first served.'; 'Access and Parking: 750 Lighthouse Road, Petrolia, CA 95558. Partially unpaved dirt road. Maximum trailer length is 24 feet. Two vehicles maximum per site. Day-use and trailhead parking available on site'; 'Toilets: Vault toilets on site.'; 'Drinking Water: No potable water available.'; 'Camping: 23 tent/trailer campsites, including two wheelchair-accessible sites and two equestrian sites. Maximum of eight people and two vehicles per site. Fee is $15 per site per night. Mattole features an onsite ROK (remote off grid) payment system that takes debit or credit cards.'; 'Campsites are on grass and dirt'; 'sand from the nearby dunes can blow onto the gravel loop'; 'Rain can cause flooding near the kiosk closer to the entrance'; phone 707-986-5400",
+    "recreation.gov search + API (read 2026-11-27): 'Mattole Campground' facility 262790, reservable False; /api/camps/campgrounds/262790 answers 404 and the campsite search returns 0 sites - an information-only listing",
+    "Esri World_Imagery (sat.py 800 m, 900 m and 220 m frames, read 2026-11-27): the single gravel loop runs along the inland edge of a vegetated dune field at ~40.2897,-124.3557; the Mattole River estuary channel is ~350-400 m NORTH of the loop's north tip; west of the loop are ~100-150 m of hummocky vegetated dunes, then open beach with driftwood and the surf ~180 m out; no road, lot or other use between the loop and the beach (the day-use/trailhead parking is at the loop's south end); stored pin 40.2888,-124.3556 is on the entrance road ~100 m south of the loop's centre"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2026",
+                 "extra_vehicle": {"max_vehicles": 2},
+                 "extra_person": {"max_people": 8},
+                 "note": "Paid on site at a card-only ROK kiosk."},
+      "source": "https://www.blm.gov/visit/mattole-campground ('Fee is $15 per site per night'; 'Maximum of eight people and two vehicles per site'; ROK payment 'takes debit or credit cards'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 23, "max_rig_ft": 24},
+      "source": "https://www.blm.gov/visit/mattole-campground ('23 tent/trailer campsites'; 'Maximum trailer length is 24 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "https://www.blm.gov/visit/mattole-campground ('Vault toilets on site'; 'No potable water available'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.blm.gov/visit/mattole-campground ('Open year-round.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always"},
+      "source": "https://www.blm.gov/visit/mattole-campground ('All sites are first come, first served.') + recreation.gov 262790 information-only (not reservable, no campsites), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "BLM King Range NCA campground near the mouth of the Mattole River, at the end of Lighthouse Road about 6 mi from Petrolia (part of the road is unpaved). A short trail crosses the dunes to the beach; it is the northern trailhead of the Lost Coast Trail, elephant seals haul out on the shore, and the surf is dangerous for swimming. Two of the sites are equestrian sites in the same loop. --Claude",
+  "summary": "BLM page + rec.gov (info-only 262790) + imagery read. $15 card-only kiosk, 8 people/2 vehicles; 23 sites incl. 2 equestrian; 24-ft trailer max; vault toilets, no water; year-round, FCFS. WATERFRONT: riverfront not supported (river mouth ~350-400 m north of the loop); coastal dunes recommended (sites behind the campground's own dune field, 600-ft trail to the beach). Pin ~100 m off, fine. Phone OK.",
+  "flags": [
+    "WATERFRONT (riverfront -> coastal dunes recommended; riverfront not supported): on Esri imagery the loop (centre ~40.2897,-124.3557) sits on the inland edge of a hummocky vegetated dune field; the Mattole River estuary channel is ~350-400 m north of the loop's north tip, not 20-40 m as the stored evidence says (that evidence's 'open unused sand apron ~20-40m to the Mattole River mouth estuary/tidal flat' describes the dry backbeach, which carries no water in the imagery). BLM: 'a short 600-foot trail through sand dunes leads to the beach'; nothing but the dunes lies between the loop and the beach (trailhead/day-use parking is at the loop's south end, not between). That is the coastal-dunes case (the campground's own undeveloped dune field, campers walk through it to the beach). Site numbers can't be named (BLM posts site maps only at the kiosks). If AWH prefers not to move riverfront sideways without numbered sites, the default-down answer is coastal walk (ocean ~180 m on foot, no road between). Suggested evidence: 'BLM page 2026-11-27: \"a short 600-foot trail through sand dunes leads to the beach\"; Esri 2026-11-27: single loop on the inland edge of a vegetated wind-dune field, ~100-150 m of dunes then open beach, surf ~180 m W; river estuary ~350-400 m N of the loop; no road/lot/day-use between loop and beach -> coastal dunes.'",
+    "HORSE (Wildcat ruling: keep with caveat): BLM lists 'two equestrian sites' among the 23 in the single loop; their numbers and neighbours are not published online (site map only at the kiosks). The proposed note names the caveat.",
+    "FIT: 'Maximum trailer length is 24 feet' passes a 23-ft rig; 'Partially unpaved dirt road' with no RV warning.",
+    "BOOKING: recreation.gov has an information-only listing (facility 262790, not reservable, no sites) - first-come confirmed; a website line https://www.recreation.gov/camping/campgrounds/262790 is optional and adds nothing.",
+    "PIN: stored 40.2888,-124.3556 is ~100 m south of the loop centre (~40.2897,-124.3557) - under the 250 m threshold, no move needed."
+  ]
+}
