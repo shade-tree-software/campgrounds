@@ -1,0 +1,55 @@
+{
+  "id": 11643,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/halfmoonbay (-> ?page_id=531; Current Restrictions 'Last Checked: 11/27/2026', read 2026-11-27): only advisory 'Notice of Project Work at Half Moon Bay State Beach - Roosevelt Beach'; 'Max trailer: 40 feet'; 'Max camper/motorhome: 40 feet'; 'The campground hosts tent and RV camping with sites offering electric hookup or dry camping. There are no water or sewer hookups, but there is a dump station ($10 fee not included in camping reservation) and a water filling station. Quarter-operated hot showers are available as well.'; Santa Cruz District 30-day calendar-year limit; '(650) 726-8819'",
+    "https://www.parks.ca.gov/pages/531/files/HalfMoonBaySB_CampMap011520.pdf (campground brochure dated 01/15/20, read 2026-11-27): 'Francis Beach has 53 developed campsites for family camping ... Forty of the campsites have electrical hookups. There is a seven-day camping limit from May 1 to October 31 and a 15-day camping limit the rest of the year.'; 'Unreserved sites may be available, but will only be rented one night at a time.'; 'A maximum of three vehicles (including towed-in vehicles and trailers) is allowed per site.'; 'up to eight persons'",
+    "https://california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr/ (ReserveCalifornia API, read 2026-11-27): PlaceId 652, FacilityId 498 'Francis Beach Campground' at 37.4688,-122.4458; 44 units online: 7 'Campsite' $35, 26 'Hook Up (E ) Campsite' $50, 8 'Premium Hook Up (E ) Campsite' $65, 3 'Tent Campsite' $35 (2027-06-15; the same on Saturday 2027-06-19); 'Electricity Hookup' 'Amps 50'; 'Pad Length' 40; 'Toilet Type' 'Flushing'; 'Shower Type' 'Pay'; 'Proximity to Water' 'Oceanfront' on premium 16, 17, 19, 22, 24, 26, 30 and tent sites 36-38",
+    "Esri World_Imagery 400 m frame at 37.4685,-122.4455, read 2026-11-27: the loop's west row of RV pads sits ~20-40 m behind the sand edge across a vegetated foredune/grass band, the beach then ~90-100 m wide to the surf; no road, lot or town between the west row and the beach"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "ReserveCalifornia search/details ('Electricity Hookup' 'Amps 50' on the Hook Up (E) and Premium units) + parks.ca.gov ('There are no water or sewer hookups'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 40},
+      "source": "parks.ca.gov ('Max trailer: 40 feet'; 'Max camper/motorhome: 40 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "dump": true, "showers": true, "flush_toilets": true},
+      "source": "parks.ca.gov ('there is a dump station ($10 fee ...) and a water filling station. Quarter-operated hot showers') + ReserveCalifornia ('Toilet Type' 'Flushing'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "parks.ca.gov campground brochure ('a seven-day camping limit from May 1 to October 31 and a 15-day camping limit the rest of the year') + no seasonal closure on parks.ca.gov, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "max_stay_nights": 7, "note": "Seven nights May 1 to October 31, 15 the rest of the year; unreserved sites go one night at a time."},
+      "source": "parks.ca.gov campground brochure (01/15/20), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 35, "nightly_high": 35, "currency": "USD",
+        "surcharges": {"electric": 15, "weekend": 0},
+        "checked": "2026-11",
+        "note": "ReserveCalifornia, June 2027: standard site $35, electric $50, premium oceanfront electric $65; Saturday the same. Dump station $10. Read 2026-11-27."
+      },
+      "source": "ReserveCalifornia search/details units 002, 001, 016 on 2027-06-15 and 2027-06-19 + parks.ca.gov dump fee, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "California State Parks campground behind Francis Beach at the west end of Kelly Ave in Half Moon Bay; paths and a stairway lead down to the beach. Premium electric sites 16, 17, 19, 22, 24, 26 and 30 are on the ocean row. --Claude",
+  "summary": "parks.ca.gov page + campground brochure + ReserveCalifornia API (all 44 units) + imagery read. Electric 50A written (was blank); max 40 confirmed; dump ($10)/water fill/pay showers/flush; $35 base, electric +$15, premium $65, weekend same; 7-night summer / 15-night winter limit; year-round. Open (no closure). Waterfront: recommend bayview -> coastal walk (reviewer).",
+  "flags": [
+    "WATERFRONT (recommend upgrade, not applied): bayview -> 'coastal walk'. RC tags premium sites 16, 17, 19, 22, 24, 26, 30 (RV, 50A, $65, sold by the night) and tent sites 36-38 'Oceanfront'. On imagery the west-row pads are ~20-40 m behind the sand edge over a foredune/grass band, with Francis Beach (the park's own day-use beach, ~90-100 m wide) between them and the surf; no highway, town or road between. The stored evidence (pads atop a low bluff with a stairway) rules out bayfront, and the single low foredune berm is not a dune field (no coastal dunes), but the coastal-walk test ('an easy walk to the shore of an ocean ... the park's own day-use beach ... may lie between') is met. Sites near 37.4690,-122.4462 (west row).",
+    "SITES COUNT: stored 52 left. The 2020 brochure says 53 developed sites, 40 with electric; ReserveCalifornia lists 44 bookable units (7 standard, 34 electric, 3 tent). The note's '4 tent-only' does not match RC's 3.",
+    "BOOKING: RC MaxStay reads 7 on most units and 30 on a few for a June date; the brochure's 7-night May-Oct limit is written.",
+    "PHONE 650-726-8819 confirmed (brochure prints 650-726-8820). STATUS open; only advisory is project work at Roosevelt Beach (day-use). WEBSITE fine (line 2 is the generic reservecalifornia.com home page, held by the state row)."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": 11645,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=590 (read 2026-11-27): 'Max trailer: 35 feet' / 'Max camper/motorhome: 35 feet'; alert (Last Checked 11/27/2026): 'Partial Closure of portions of San Simeon Creek Campground. Existing and incoming reservations will be relocated to a different campsite.'; 'The park is currently Open with restrictions'; 'The San Simeon Creek Campground offers 134 campsites for tent camping or recreational vehicles. The maximum length for an RV is 35 feet ... flush toilets (or chemical toilets) and TOKEN-operated shower facilities ... An RV sanitation station and water-fill station are also available.'; 'RV electrical hookups are not available at the San Simeon Creek Campground.'; '10 consecutive night stay limit per campsite(s) ... 30-day calendar year maximum nights allowed per park'; phone 'San Simeon Creek & Washburn Campgrounds 805-927-2035'",
+    "ReserveCalifornia API (rdr search/place 713, search/grid 789/687/788, search/details, read 2026-11-27): Creek Campground Upper Section (sites 1-35) 31 units, Lower Section (36-115) 66 units, Creek Tent Campground (116-134) 19 units; RV 'Campsite' units 49547 C1 and 45213 C38 $35.00 on 2027-01-12, 2027-05-04 and Saturday 2027-05-08, 'Pad Length' 26 and 25, MaxStay 10; 'Proximity to Water: walking distance to the beach'; units free on December, January and March nights (2026-12-08..10, 2027-01-12..14)",
+    "Esri World_Imagery, 1400 m and 340 m frames at the campground, read 2026-11-27: lower loop's south edge is screened from the San Simeon Creek lagoon by a continuous band of riparian trees; the beach lies west across the Hwy 1 bridge"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 134, "max_rig_ft": 35},
+      "source": "https://www.parks.ca.gov/?page_id=590 ('134 campsites', 'Max camper/motorhome: 35 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.parks.ca.gov/?page_id=590 ('RV electrical hookups are not available at the San Simeon Creek Campground'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true},
+      "source": "https://www.parks.ca.gov/?page_id=590 (flush toilets, token showers, RV sanitation and water-fill station), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "ReserveCalifornia grid: RV units bookable December, January and March nights (read 2026-11-27)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "max_stay_nights": 10},
+      "source": "https://www.parks.ca.gov/?page_id=590 ('10 consecutive night stay limit') + ReserveCalifornia MaximumStay 10, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "surcharges": {"weekend": 0}, "checked": "2026-11", "note": "2027 nights on ReserveCalifornia (January, May weekday and Saturday): RV campsites $35. Read 2026-11-27."},
+      "source": "ReserveCalifornia search/details units 49547, 45213 (2027-01-12, 2027-05-04, 2027-05-08), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "https://www.parks.ca.gov/?page_id=590 (partial closure of portions only; reservations relocated), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Main campground of Hearst San Simeon SP, along San Simeon Creek just east of Hwy 1 near Cambria; a trail runs under the highway bridge to the beach. RV pads run about 25-26 ft on ReserveCalifornia. Showers are token-operated; some toilets may be chemical. Portions of the campground were closed in late November 2026, with reservations moved to other sites (park alert, 2026-11-27). --Claude",
+  "summary": "parks.ca.gov + ReserveCalifornia API + imagery read. 134 sites, max 35 ft (pads ~25-26 ft); no electric; flush toilets, token showers, dump + water fill; year-round; max stay 10; $35 (2027). Partial closure alert (reservations relocated) - status open. Not waterfront holds. Phone -> 805-927-2035.",
+  "flags": [
+    "STATUS: parks.ca.gov alert (2026-11-27) 'Partial Closure of portions of San Simeon Creek Campground. Existing and incoming reservations will be relocated to a different campsite.' Left open; dated note line added.",
+    "PHONE: 805-927-2020 -> 805-927-2035 (parks.ca.gov 'San Simeon Creek & Washburn Campgrounds'); park contact (805) 772-6101, district office 805-927-2010.",
+    "COUNT: parks.ca.gov 134; ReserveCalifornia lists 116 units (31 + 66 + 19, of which 86 are RV 'Campsite' units) - some site numbers are not on RC (possibly the partial closure).",
+    "MAX LENGTH: 35 ft posted (trailer and motorhome); RC pad lengths 25-26 ft on the sampled RV sites - a 23-ft rig fits.",
+    "WATERFRONT: not waterfront holds. Coastal values are ruled out by Hwy 1 between camp and beach (RC says 'walking distance to the beach'). The lower loop's south side is screened from the creek lagoon by a continuous riparian tree band; no named site over open ground.",
+    "PIN: stored 35.59913,-121.1253 is at the entrance road west of the upper loop, ~215 m from the campground centroid (~35.5978,-121.1236) - under the 250 m bar, left."
+  ]
+}

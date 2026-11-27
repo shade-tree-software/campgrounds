@@ -1,0 +1,100 @@
+{
+  "id": 12303,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232249 (read 2026-11-27): notice 'RV'S over 26 feet not recommended due to limited turn around in campground.'; 'The campground offers over 80 single-family sites for tent or RV camping. Some sites are available on a first-come, first-served basis.'; 'Vault toilets and trash collection are provided, but no hookups are available. A dump station is available at nearby Serrano Campground.'; 'A portion of the road to the campground is rough dirt, but within the campground, the roads are paved.'; notice 'Flush toilets are not available due to not producing enough water from the well.'; notice '$8 additional vehicle fee per night on the second vehicle in each single family campsite'; rules maxConsecutiveStay 14; facility_phone 909-382-2790, 'For facility specific information, please call (909) 866-8550'",
+    "https://www.recreation.gov/api/camps/campgrounds/232249/rates (read 2026-11-27): 2027-04-16..2027-10-23 Peak Season, STANDARD NONELECTRIC $33, STANDARD NONELECTRIC-DOUBLE $65, TENT ONLY $33",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232249 (catalog, read 2026-11-27): 67 sites, 37 STANDARD NONELECTRIC (RV/Trailer/Fifth Wheel permitted, Max Vehicle Length 20-28 ft, 26 on most; 35 of them 24 ft or more) + 30 TENT ONLY; all site-specific reservable",
+    "https://www.fs.usda.gov/r05/sanbernardino/recreation/hanna-flat-family-campground (Last updated November 25, 2026; read 2026-11-27): banner 'Site Closed' (season ended); 'Tucked away down a winding dirt road'; 'Seasons of Use 04/17/2026 - 10/25/2026'; '3 night minimum on holiday weekends.'; 'Single Site $33 - Holiday $35 - 8 person maximum'; 'Double Site $65- Holiday $67'; 'Camping fee includes entry for 1 vehicle. Extra vehicle fee $8 per night.'; 'Restrooms are not available at this site.'; 'Potable water is not available at this site.'; directions: 'after the pavement ends the road turns into Forest Road 3N14. This dirt road will take you approximately 2.5 miles to Hanna Flat Campground'; phone (909) 382-2790",
+    "https://www.fs.usda.gov/r05/sanbernardino/alerts (read 2026-11-27): fire-danger levels only, no Hanna Flat or 3N14 closure"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 67,
+        "max_rig_ft": 26
+      },
+      "source": "recreation.gov notice ('RV'S over 26 feet not recommended due to limited turn around in campground') + catalog (Max Vehicle Length 26 on most RV sites), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "recreation.gov description ('no hookups are available') + catalog (all 67 typed NONELECTRIC), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": false,
+        "dump": false
+      },
+      "source": "recreation.gov description ('Vault toilets and trash collection are provided ... A dump station is available at nearby Serrano Campground') + FS page ('Potable water is not available at this site.'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-16",
+        "closes": "10-23"
+      },
+      "source": "recreation.gov rates (2027 Peak Season 2027-04-16..2027-10-23) + FS page (2026 season 04/17-10/25), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232249",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "min_stay": [
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ]
+      },
+      "source": "recreation.gov ('Some sites are available on a first-come, first-served basis'; maxConsecutiveStay 14) + FS page ('3 night minimum on holiday weekends'), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 33,
+        "nightly_high": 33,
+        "currency": "USD",
+        "surcharges": {
+          "holiday": 2
+        },
+        "extra_vehicle": {
+          "included": 1,
+          "amount": 8,
+          "per": "night"
+        },
+        "extra_person": {
+          "max_people": 8
+        },
+        "checked": "2026-11",
+        "note": "Single site $33 ($35 holidays); double site $65 ($67 holidays). Read 2026-11-27."
+      },
+      "source": "recreation.gov rates 2027 + FS page fee block, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "USFS San Bernardino NF campground in Jeffrey pine, about 2.5 miles up dirt Forest Rd 3N14 from Fawnskin on Big Bear Lake's north shore; paved inside, with a tight turnaround. The well runs short, so bring water; the nearest dump station is at Serrano Campground. --Claude",
+  "summary": "rec.gov API (description, notices, rates, catalog) + FS page + alerts read. Max rig 40 -> 26 (rec.gov notice; 23-ft rig fits). No potable water (FS page; well), dump false (Serrano), vault toilets. Season 2027 04-16..10-23; $33 (+$2 holiday), $8 extra vehicle, 8 people; fcfs some_sites; 14-night max; 3-night holiday minimum. FS 'Site Closed' = off-season. Website line 2 generic -> FS page.",
+  "flags": [
+    "CRITERIA (fit, passes): recreation.gov notice 'RV'S over 26 feet not recommended due to limited turn around in campground.' A 23-ft rig is under it; stored 40 ft (driveway lengths) replaced by 26. 35 of the 37 RV-permitted sites take 24 ft or more.",
+    "ACCESS (no drop): 'A portion of the road to the campground is rough dirt' (rec.gov) / 'This dirt road will take you approximately 2.5 miles' (FS). No 4WD, high-clearance or 'trailers not recommended' wording.",
+    "OHV (flag only, general campground): 'No ATV/OHV in campground'; FS mentions Big Pine Flat OHV staging ~5 miles away and target-shooting areas 2-2.5 miles north on 3N14. Not an OHV campground.",
+    "FACILITIES CONFLICT: FS page says 'Restrooms are not available at this site' while rec.gov says 'Vault toilets ... are provided' and 'Flush toilets are not available'; vault_toilets left true. Potable water false from the FS page (rec.gov notice: the well does not produce enough water).",
+    "COUNT: rec.gov says 'over 80 single-family sites', some first-come; the catalog lists 67 reservable (37 RV-capable, 30 tent-only). 67 kept.",
+    "STATUS: FS page banner 'Site Closed' (out of season; 2026 season ended 10/25). Written open/seasonal.",
+    "WEBSITE line 2: https://www.fs.usda.gov/r05/sanbernardino (generic forest root) -> https://www.fs.usda.gov/r05/sanbernardino/recreation/hanna-flat-family-campground",
+    "PHONE 909-382-2790 confirmed (Mountaintop RD / Discovery Center); concessionaire line 909-866-8550.",
+    "PIN fine (site centroid ~34.2873,-116.9748 is ~90 m from the stored pin)."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": 12441,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/tahoe/recreation/granite-flat-campground (Tahoe NF, last updated 2026-10-13, read 2026-11-27): status 'Site Closed' (out of season); 'located on the banks of the Truckee River and adjacent to Highway 89 South, three miles south of Truckee'; 'The campground offers 70 single-family sites'; 'Several sites overlook the Truckee River, while other sites are adjacent to Highway 89. All sites are a short walking distance to the river.'; 'Seven sites are designated for tent-camping only. These sites are a short walk-in'; 'Accessible vault toilets and drinking water are provided. Roads within campground are paved.'; 'Most single family sites and group campgrounds can be reserved at www.recreation.gov'; 'Seasons of Use May 27 - October 11'; 'Single Site: $22 per night'; 'Additional Vehicle Fee: $5 per vehicle per night'; amenity block 'Potable water is not available at this site.'; alerts list only a prescribed-fire pile notice",
+    "https://www.recreation.gov/api/camps/campgrounds/232883 (read 2026-11-27): facility phone '(530)587-3558'; 'Between 05/21/2027 and 09/25/2027 this location is staffed. Please call (530) 606-3978'; 'Vault toilets and drinking water are provided.'; 'Seven campsites are walk-in tent sites ... #69, #70, #71, #72, #73, #74, and #75'; Hwy 89 noise sites '#7, #9, #11, #13, #15, #17, #19, #21, #23, #47, #49, #51, #53, #67, and #68'; 'operated and maintained by Lake Tahoe Hospitality LLC'; notices: 'Additional vehicle fee cost is $10/each per night for all vehicles' (one included with a single site, two with a double), '6 people maximum per single site', 'Off-highway vehicles must be trailered to and from designated OHV routes'",
+    "https://www.recreation.gov/api/camps/campgrounds/232883/rates (read 2026-11-27): Peak Season 2027-05-21 to 2027-09-25 and 2028-05-19 to 2028-09-23: STANDARD NONELECTRIC 22, STANDARD NONELECTRIC-DOUBLE 44, WALK TO 22, S&P single 22; 2026 Peak 05-22 to 10-03 then 'First-come, First-served Season' 2026-10-04 to 10-11",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232883 (per-site catalog, read 2026-11-27): 73 records incl. Host - 65 STANDARD NONELECTRIC RV/Tent/Trailer sites (60 reservable, 5 not; 032/033 and 050/052 doubles), 066 a small-vehicle site (Pickup Camper/Vehicle/Small Tent, 20 ft), 7 WALK TO tent sites 069-075; 'Max Vehicle Length' 25-65 ft on the RV sites (016 and 024 65 ft; 030, 050/052 and 063 25 ft); no electric/water/sewer attributes",
+    "Esri World_Imagery 660 m frame at 39.3005,-120.2045 with the catalog's site points plotted, plus z19 tiles at 39.3011,-120.2041 and 39.2992,-120.2043, read 2026-11-27: the sites run in a strip between Hwy 89 (west) and the Truckee River (east), under broken pine canopy; the river is ~22-28 m wide; the east-side sites closest to it - 031 (39.30120,-120.20432) ~26-30 m, 034 and 032/033 ~31-35 m, 064 ~35 m, 043 ~39 m, 041 ~45-50 m - sit behind a tree and brush line along the bank"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 22, "nightly_high": 44, "currency": "USD", "checked": "2026-11",
+        "extra_vehicle": {"included": 1, "amount": 10, "per": "night"},
+        "extra_person": {"max_people": 6},
+        "note": "$22 a single site, $44 a double (two vehicles included). Extra vehicles $10 a night on recreation.gov's notice; the Forest Service page still says $5. Read 2026-11-27."
+      },
+      "source": "recreation.gov rates (2027 Peak Season: STANDARD NONELECTRIC 22, -DOUBLE 44) + recreation.gov notices ('Additional vehicle fee cost is $10/each per night'; '6 people maximum per single site'), read 2026-11-27; fs.usda.gov says '$5 per vehicle per night'",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov per-site catalog (every site STANDARD NONELECTRIC / WALK TO, no hookup attributes), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 72, "max_rig_ft": 65, "note": "65 RV/trailer sites (two of them doubles) posted at 25-65 ft, one small-vehicle site, and seven walk-in tent sites (69-75); the Forest Service page says 70 sites."},
+      "source": "recreation.gov per-site catalog (72 sites besides the host; 'Max Vehicle Length' up to 65 on 016/024), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "recreation.gov ('Vault toilets and drinking water are provided.') + fs.usda.gov description ('Accessible vault toilets and drinking water are provided.'), read 2026-11-27; the FS amenity block's 'Potable water is not available at this site.' contradicts both",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-21", "closes": "10-11", "note": "Approximate: recreation.gov's 2027 reservable season opens May 21; in 2026 the last week (Oct 4-11) was first-come only. The Forest Service page gives May 27 to October 11."},
+      "source": "recreation.gov rates (2027 Peak 05-21..09-25; 2026 Peak 05-22..10-03 + 'First-come, First-served Season' 10-04..10-11) + fs.usda.gov ('Seasons of Use May 27 - October 11'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites"},
+      "source": "fs.usda.gov ('Most single family sites ... can be reserved at www.recreation.gov') + recreation.gov catalog (5 standard sites not reservable; first-come-only week at season end), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Tahoe National Forest campground in Jeffrey and lodgepole pine between Hwy 89 and the Truckee River, about a mile south of Truckee; several east-side sites overlook the river. Sites 7-23 (odd numbers), 47-53 and 67-68 sit beside the highway and hear its traffic. --Claude",
+  "summary": "FS page, recreation.gov facility/rates/per-site catalog and imagery read. $22 single / $44 double; extra vehicle $10 (rec.gov; FS says $5); 72 sites (65 RV/trailer to 65 ft, 7 walk-in tent); no hookups (confirmed), vault toilets + drinking water; season 05-21..10-11 (approx.); reservable with some first-come sites. Riverview kept after a hard look. Phone '' -> 530-587-3558. No closure (off-season only).",
+  "flags": [
+    "WATERFRONT 'riverview' KEPT after a hard check. The Truckee River here is ~22-28 m wide (creek-size under the 30 m rule, so any on-water value would be creekside). Closest RV sites to the water, all on the east side and all behind the tree/brush line on the bank: 031 (39.30120,-120.20432) ~26-30 m, 034 (39.30207,-120.20459) and 032/033 (39.30194,-120.20451) ~31-35 m, 064 (39.29900,-120.20450) ~35 m, 043 (39.30050,-120.20440) ~39 m, 041 ~45-50 m; all are reservable and posted 36-50 ft. FS: 'Several sites overlook the Truckee River'. A creekside lead at most if the reviewer reads the bank as open; not upgraded. The stored evidence's claim that 'on-river sites (#69-75)' are walk-in tent sites is wrong: rec.gov and the FS put the walk-ins 69-75 at the south end beside Hwy 89. Proposed evidence: 'rec.gov site points on Esri imagery 2026-11-27: east-side sites 031/032-034/043/064 are 26-40 m from the ~25 m-wide Truckee River behind a tree and brush line on the bank; walk-in tent sites 69-75 sit by Hwy 89; FS \"several sites overlook the Truckee River\" -> riverview.'",
+    "PHONE: stored '' -> 530-587-3558 (Truckee Ranger District, recreation.gov facility phone). In season the concessionaire's local line is (530) 606-3978.",
+    "FEES: extra vehicle $10 a night on recreation.gov's notice vs '$5 per vehicle per night' on the FS page; rec.gov written. High $22 -> $44 (double sites 032/033, 050/052).",
+    "FACILITIES: the FS amenity block says 'Potable water is not available at this site.' while the FS description and recreation.gov both say drinking water is provided; kept true on the two statements.",
+    "SITES: count 70 -> 72 (catalog, besides the host; FS says 70). max_rig_ft 65 added (016, 024); most sites 35-50 ft, a 23-ft rig fits all 65 RV/trailer sites.",
+    "PIN: stored 39.3025,-120.2045 is ~230 m north of the site centroid (39.30043,-120.20495), beside site 14; under the 250 m line, optional move.",
+    "STATUS: open; FS 'Site Closed' is the off-season. Tahoe NF alerts carry only a prescribed-fire pile notice (Truckee Landing).",
+    "OPERATOR: concessionaire Lake Tahoe Hospitality LLC. WEBSITE: both lines fine."
+  ]
+}

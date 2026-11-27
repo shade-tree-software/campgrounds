@@ -1,0 +1,56 @@
+{
+  "id": 11644,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=590 (read 2026-11-27): 'Max trailer: 35 feet' / 'Max camper/motorhome: 35 feet'; 'The Washburn Campground offers an additional 68 sites. This primitive campground is approximately 1 mile inland from the beach on a plateau overlooking the Santa Lucia Mountains as well as the Pacific Ocean. The Washburn Campground can be accessed from the San Simeon Creek Campground entrance station. Facilities here include chemical toilets, and at each campsite a fire ring and picnic table with water spigots nearby. There are no shower facilities available in the Washburn Campground.'; 'the RV sanitation station and water-fill station are available at the San Simeon Creek Campground'; 'Shower facilities are available only for those registered in the San Simeon Creek Campground.'; 'RV electrical hookups are not available at the Washburn Campground.'; '10 consecutive night stay limit'; phone 'San Simeon Creek & Washburn Campgrounds 805-927-2035'",
+    "ReserveCalifornia API (search/grid 787 Washburn Campground (sites 201-268), search/details, read 2026-11-27): 65 'Primitive Campsite' units; unit 49578 W201 $20.00 on 2027-01-12, 2027-05-04 and Saturday 2027-05-08, 'Pad Length' 35, MaxStay 10; units free on December, January and March nights",
+    "Esri World_Imagery 500 m frame at 35.5950,-121.1115, read 2026-11-27: the loop sits on an open upland terrace; San Simeon Creek is downslope in its wooded valley and the ocean ~1.5 km west beyond Hwy 1"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 68, "max_rig_ft": 35},
+      "source": "https://www.parks.ca.gov/?page_id=590 ('an additional 68 sites', 'Max camper/motorhome: 35 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.parks.ca.gov/?page_id=590 ('RV electrical hookups are not available at the Washburn Campground'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "showers": false, "flush_toilets": false, "dump": true},
+      "source": "https://www.parks.ca.gov/?page_id=590 (chemical toilets, water spigots, 'no shower facilities', sanitation station at the neighbouring San Simeon Creek Campground in the same park), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "ReserveCalifornia grid 787: units bookable December, January and March nights (read 2026-11-27)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "max_stay_nights": 10},
+      "source": "https://www.parks.ca.gov/?page_id=590 ('10 consecutive night stay limit') + ReserveCalifornia MaximumStay 10, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "surcharges": {"weekend": 0}, "checked": "2026-11", "note": "2027 nights on ReserveCalifornia (January, May weekday and Saturday): primitive campsites $20. Read 2026-11-27."},
+      "source": "ReserveCalifornia search/details unit 49578 (2027-01-12, 2027-05-04, 2027-05-08), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "https://www.parks.ca.gov/?page_id=590 (no Washburn closure; park open with restrictions), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Primitive campground of Hearst San Simeon SP on an open plateau about 1 mile inland from the beach, reached through the San Simeon Creek Campground entrance; chemical toilets and water spigots near the sites. The RV dump and water fill are at San Simeon Creek Campground, whose showers are for its own campers only. --Claude",
+  "summary": "parks.ca.gov + ReserveCalifornia API + imagery read. 68 sites (RC 65 units, pads 35 ft), max 35 ft; no electric; chemical toilets, water spigots, no showers, dump at the Creek CG; year-round; max stay 10; $20 (2027). Not waterfront holds. Phone -> 805-927-2035.",
+  "flags": [
+    "PHONE: 805-927-2020 -> 805-927-2035 (parks.ca.gov 'San Simeon Creek & Washburn Campgrounds').",
+    "WATERFRONT: not waterfront holds. The park says the plateau overlooks 'the Pacific Ocean', but the ocean is ~1.5 km west beyond Hwy 1, which rules out coastal values; San Simeon Creek is downslope in a wooded valley.",
+    "FACILITIES: flush_toilets false (park page: 'chemical toilets'); showers false (none at Washburn). dump kept true: the park's sanitation station is at San Simeon Creek Campground next door.",
+    "COUNT: parks.ca.gov 68; ReserveCalifornia lists 65 units (201-268).",
+    "PIN: stored 35.5952,-121.1132 sits in brush ~100 m west of the loop, ~230 m from its centroid; ReserveCalifornia's facility point 35.59486,-121.11112 is on the loop. Under the 250 m bar; optional re-pin to 35.5949,-121.1112.",
+    "STATUS open (no Washburn alert; park-level alerts concern the pier, Hearst Beach lot, Moonstone Beach access and parts of the Creek campground)."
+  ]
+}

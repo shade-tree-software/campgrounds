@@ -1,0 +1,60 @@
+{
+  "id": 12407,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233509 (read 2026-11-27): 'Hidden View campground provides 53 campsites, including two group campsites. Some sites have electric hookups, and all campsites are located within walking distance of the lake and boat ramp.'; 'Water levels are highest in the spring and can be quite low by mid-summer.'; gate 'will automatically close at 10PM and reopen at 6AM'; 'A two-vehicle limit per site is strictly enforced (RVs are counted as a vehicle). No extra vehicles are allowed in the campground at any time. All extra vehicles must be parked in overflow parking at the boat ramp and require a daily $10 day-use fee.'; 'An 8-person maximum per site is strictly enforced.'; 'You may stay up to a maximum of 14 nights total at this campground within rolling 30 days.'; 'For facility specific information, please call (559) 831-7040.'; amenities list Flush Toilets, Showers, Dump Station, Electric Hookups, Water Spigot",
+    "https://www.recreation.gov/api/camps/campgrounds/233509/rates (read 2026-11-27): 2027 STANDARD ELECTRIC $30, STANDARD NONELECTRIC $20, TENT ONLY $20, double two-electric $60, double two-nonelectric $40, one electric + one non-electric $50, group $100",
+    "recreation.gov campsite catalog 233509 (read 2026-11-27): 53 listings; 18 STANDARD ELECTRIC + 15 STANDARD NONELECTRIC reservable/open, 13 tent-only, 2 group, 5 not available; electric 50 A on 17 sites (024 is 30 A); 'Water Hookup' Y on 15 electric sites; Max Vehicle Length 90 ft on RV sites 001, 003&005, 006, 026, 032, 040, 045&046, 052; site centroid 37.1225,-119.8926",
+    "recreation.gov availability, months 2026-12 and 2027-01 (read 2026-11-27): 52 of 53 sites Available/Reserved every night; one site Closed",
+    "Esri World_Imagery 2.6 km, 660 m and 220 m frames around the loops (read 2026-11-27) + rec.gov site photos 037, 040, 041 (2022) + Open-Meteo DEM (pads 040/041/037 167 m, inlet water 155-161 m)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 53, "max_rig_ft": 90},
+      "source": "recreation.gov facility description ('53 campsites, including two group campsites') + campsite catalog (Max Vehicle Length 90 on several RV sites with 106-130 ft driveways), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "recreation.gov campsite catalog 233509 (Electricity Hookup 50 on 17 bookable sites, Water Hookup Y on 15, no sewer attribute), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "recreation.gov facility amenities (Flush Toilets, Showers, Dump Station, Water Spigot), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "recreation.gov availability calendar, December 2026 and January 2027 (52 of 53 sites open every night) + 2026-2028 rate seasons Jan 1-Dec 31, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233509", "max_stay_nights": 14},
+      "source": "recreation.gov facility notice ('a maximum of 14 nights total at this campground within rolling 30 days'), read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 30, "currency": "USD", "surcharges": {"electric": 10}, "extra_vehicle": {"included": 2, "amount": 10, "per": "night"}, "extra_person": {"max_people": 8}, "checked": "2026-11", "note": "2027 recreation.gov rates: non-electric site $20, electric $30; double sites $40-60, group $100. A third vehicle must park in the boat-ramp overflow lot at $10 a day. Read 2026-11-27."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233509/rates + facility notices (two-vehicle limit, $10 day-use for extra vehicles, 8-person maximum), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "recreation.gov facility page and availability calendar (no closure notice), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Corps of Engineers campground on the west shore of Hensley Lake (Fresno River) just north of Hidden Dam, about 15 mi NE of Madera. The reservoir runs highest in spring and is often low by mid-summer. The entrance gate is closed 10 PM to 6 AM. --Claude",
+  "summary": "rec.gov facility, rates, catalog and calendar + imagery read. 53 sites (2 group, 13 tent-only), max 90 ft per catalog; 50 A electric and water at 15-17 sites; flush/showers/dump/water; year-round; max stay 14; 2027 $20 non-electric / $30 electric. Lakeview holds. Pin ~1.7 km off (at the dam's south end) -> 37.1225,-119.8926. Phone '' -> 559-831-7040.",
+  "flags": [
+    "PIN: stored 37.10850,-119.88450 sits below the south end of Hidden Dam by the Fresno River, ~1.7 km SSE of the campground. Target the site centroid 37.1225,-119.8926 (recreation.gov site coordinates; loops span 37.1208-37.1241, -119.8959 to -119.8906). Elevation should be re-fetched (stored 147 m is the river below the dam; pads read ~167 m).",
+    "WATERFRONT: lakeview holds. Closest RV pads are 040 (37.12267,-119.89069) and 041 (37.12276,-119.89055), nightly reservable non-electric, ~25 m in plan from the inlet's high-water rim, but the site photos show raised pads behind a block retaining wall with a grassy slope down to the water, and the DEM puts the pads ~6 m above the inlet surface: fails the kayak test (a view). 037 (37.12240,-119.89120) is ~30 m from the inlet over a wet grassy flat that is drawdown lakebed. Point sites 036A-D are tent-only. The stored evidence was likely taken at the pin by the dam, not at the loops - re-audit lead. rec.gov's amenity list includes 'Waterfront Sites' but names none.",
+    "PHONE: '' -> 559-831-7040 (recreation.gov 'For facility specific information, please call (559) 831-7040'; facility_phone field shows 559-673-5151).",
+    "WEBSITE: unchanged (rec.gov 233509 + corpslakes).",
+    "SITES: max_rig_ft 62 (derived from note prose) -> 90 (catalog Max Vehicle Length on several RV sites with 106-130 ft driveways). Note's '21 with electric' does not match the catalog (18 electric listings incl. 3 doubles, 17 at 50 A).",
+    "FEES: nightly_high 50 was the mixed double; single-site range is $20-30. Doubles and group listed in the fee note.",
+    "NOTE: rewrote to drop field repeats (counts, length, facilities, rec.gov) and the wrong '~50 mi N of Fresno' (it is ~27 mi straight-line; rec.gov's own Overview also says 50 miles, so it is the agency's wording, but the lake is ~15 mi NE of Madera).",
+    "STATUS open; year-round confirmed on the December and January calendars."
+  ]
+}

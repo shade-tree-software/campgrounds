@@ -1,0 +1,65 @@
+{
+  "id": 12471,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://hawksnestrvcabins.com/rv-sites.htm (read 2026-11-27): 'The campground offers 22 RV sites: 5 full hook-up sites with 50 amp service, 12 full hook-up sites with 30 amp service, and 6 dry RV sites ... large, flat gravel-padded sites'; 'generous back-in sites or oversized pull-throughs designed to accommodate big rigs'; 'RV dry spots , no hook ups $45.00 per night ( 4 people, 2 additonal people allowed with $10/per day charge per person )'; 'RV full hook ups $55.00 per night'; 'Tent Camping $25 per tent per day'; '$25.00 To use our dump station' (non-guests)",
+    "https://booking.staylist.app/hawksnest (Staylist booking site, categories search, read 2026-11-27): June 8-10 2027 and other 2027 dates - 'Dry Back-In $45.00 / night', '30Amp FHU Back-In $55.00 / night', '30Amp FHU Pull-Through $55.00 / night', '50Amp FHU Pull-Through $65.00 / night', 'Dry Tent Site $25.00 / night'; cabins $115-165; one-night stays price normally; nights are priced/bookable May 1 - Oct 31, 2027 and unpriced on Apr 30 and Nov 1 onward; 'Hunting season September 1st through October 31st will get no refund'",
+    "https://hawksnestrvcabins.com/faq.htm (read 2026-11-27): 'we proudly offer a 10% military discount with a valid ID for active duty or retired service members'; 'moderate complimentary Wi-Fi'; 'on-site laundry facility'; 'bathrooms and shower facilities'; 'RV & Tent: $5 per night, per pet'; 'There are no refunds during hunting season in September and October'",
+    "https://hawksnestrvcabins.com/ (read 2026-11-27): 'Nestled in the peaceful pines of Modoc National Forest ... full-hookup RV sites or cozy cabins'; 'just 15 minutes from Lava Beds NM'; amenities list Free Wi-Fi, Bathrooms, Showers, On-Site Laundry, Country Store, Group Campfires; phone 530-664-3187",
+    "Google Maps (headless browser, gm.py, read 2026-11-27): \"Hawk's Nest Tionesta\", 200 Co Rd 97A, Tulelake - 4.5 stars, 118 reviews, phone +1 530-664-3187, at 41.648232,-121.289311",
+    "audit/price_research/gateways.py 41.6479,-121.2896 (2026-11-27): none within 40 km"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 22},
+      "source": "https://hawksnestrvcabins.com/rv-sites.htm ('The campground offers 22 RV sites'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://hawksnestrvcabins.com/rv-sites.htm ('5 full hook-up sites with 50 amp service, 12 full hook-up sites with 30 amp service') + Staylist categories, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "wifi": true, "dump": true},
+      "source": "hawksnestrvcabins.com home/FAQ (showers, on-site laundry, complimentary Wi-Fi) + rv-sites.htm ('To use our dump station'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-31", "note": "Nights the Staylist booking site prices for 2027 (May 1 - Oct 31); the website states no season."},
+      "source": "https://booking.staylist.app/hawksnest categories search, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://booking.staylist.app/hawksnest", "note": "Staylist booking site sells single nights. No refunds on cancellations during hunting season (September-October)."},
+      "source": "https://booking.staylist.app/hawksnest + hawksnestrvcabins.com/faq.htm, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 45, "nightly_high": 65, "currency": "USD",
+        "checked": "2026-11",
+        "extra_person": {"included": 4, "amount": 10, "per": "night", "max_people": 6},
+        "note": "Staylist, 2027 nights (read 2026-11-27): dry back-in $45, 30-amp full hookup $55, 50-amp pull-through $65; tent sites $25. Pets $5 a night."
+      },
+      "source": "https://booking.staylist.app/hawksnest (2027 quotes) + https://hawksnestrvcabins.com/rv-sites.htm (4 people, 2 more at $10 a day each), read 2026-11-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true},
+      "source": "https://hawksnestrvcabins.com/faq.htm ('10% military discount with a valid ID for active duty or retired service members'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "RV park with cabins and tent sites in ponderosa pines at the base of Timber Mountain on the Modoc NF edge, about 15 minutes from Lava Beds NM; gravel back-in and pull-through pads; camp store. --Claude",
+  "summary": "Operator site (home, RV sites, FAQ, rules, contact) + Staylist booking site + Google + gateways read. 22 RV sites (5 FHU 50A, 12 FHU 30A, 6 dry), 30/50A; showers, laundry, wifi, dump; booking site sells nights May 1-Oct 31 2027; dated base $45 (dry, 2027) - passes the price gate; FHU $55, 50A $65; extra person $10 beyond 4. Google 4.5/118. Long-stay tests pass. Not waterfront holds.",
+  "flags": [
+    "PRICE GATE: passes - dated base (Staylist 2027 quotes) is $45 a night for a dry back-in site a 23-ft motorhome can book; 30-amp full hookup $55, 50-amp pull-through $65 (stored high $55 raised). No gateway within 40 km (not needed). Tax not shown in the category view.",
+    "GOOGLE: 4.5 stars / 118 reviews (gm.py, 2026-11-27). RV Life 4/$$ stored. Good Sam: not stated (stored false left).",
+    "LONG-STAY TESTS (all pass): no weekly/monthly or seasonal offering on the site or booking engine; single nights bookable; no minimum; all RV sites nightly; RV park, not a home community.",
+    "SITE COUNT: the operator's breakdown (5 + 12 + 6) adds to 23, not the stated 22; Staylist category availability totals 21 RV sites (7 + 2 + 6 + 6). Count 22 kept as stated.",
+    "SEASON: 05-01..10-31 is what the booking site prices for 2027 (nights unpriced Apr 30 and from Nov 1); the website gives no season dates.",
+    "PHONE 530-664-3187 and WEBSITE confirmed; booking URL added (https://booking.staylist.app/hawksnest).",
+    "WATERFRONT: not waterfront holds (no water near; Medicine Lake is miles away). PIN fine (~45 m from Google's point). STATUS open."
+  ]
+}
