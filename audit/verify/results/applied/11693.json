@@ -1,0 +1,54 @@
+{
+  "id": 11693,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=631 (read 2026-11-27; 'Current Restrictions' block 'Last Checked: 11/27/2026' lists no closure or restriction): 'The campground is open 24 hours.'; '(661) 946-6092'; 'Camping is available in developed campsites only in the Ricardo Campground ... 50 primitive campsites, potable water, pit toilets, fire rings, and tables ... There are no RV hook-ups or showers. A maximum of 8 people are allowed per site'; 'Camping is first-come, first served; there is no reservation system. The campground can fill up on weekends in the spring and fall'; 'Camping is $25 per night per site, which includes parking for one vehicle per site, or $23 per night for seniors (62 years old or older). Additional vehicles are $6 each. There is a 30 foot maximum for RVs. Self-registration/payment is required'; sidebar 'Max trailer: 30 feet', 'Max camper/motorhome: 30 feet'; 'Reservation Availability: No upcoming camping/lodging reservations at this time.'; 'Please note: Nightmare Gulch Temporary Closure' (a seasonal wildlife closure area of the park, not the campground)",
+    "https://www.parks.ca.gov/pages/631/files/Ricardo%20Campground%20Map.pdf (read 2026-11-27): sites 1-50 around one loop below the White House Cliffs, restroom/water points, 'WALK-IN CAMP' beside site 7, 'SANITATION STATION' at the entrance by the visitor center",
+    "ReserveCalifornia rdr API (read 2026-11-27): Red Rock Canyon SP PlaceId 1194, FacilityId 2038 'Ricardo Campground'; search/grid for Dec 2026, Mar, Jun and Oct-Nov 2027: UnitCount 50, every unit AllowWebBooking false, WalkinCounts 50 on every night, DatesInSeason 0 (never sold online); 49 'Primitive Campsite' + 'Hike In Primitive Campsite #7'; VehicleLength posted only on a few units (25-30 ft); search/details unit 52353 (#16): Rate 25.00, MaxStay 30, 'Pull Through', VehicleLength 30; unit 52343 (#1): Rate 25.00, 'Back In'",
+    "OSM (api.openstreetmap.org map bbox, read 2026-11-27): tourism=camp_site 'Ricardo Campground' polygon (charge '25 USD') centred ~35.37196,-117.99552; 'Day Use/Camping Self-Registration Booth' at 35.37328,-117.99104. Esri World_Imagery 600-800 m frames: the stored pin (35.37360,-117.99060) is on the visitor-center/self-registration buildings; the campsites ring the Ricardo Campground Road loop to the west, under the cliffs; no water anywhere"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}, "note": "Seniors (62+) pay $23. Pay at the self-registration booth; no reservation fee applies because nothing is reservable."},
+      "source": "parks.ca.gov page_id=631 ('Camping is $25 per night per site ... or $23 per night for seniors ... Additional vehicles are $6 each'; 'Self-registration/payment is required') + ReserveCalifornia search/details Rate 25.00, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "max_stay_nights": 30},
+      "source": "parks.ca.gov page_id=631 ('Camping is first-come, first served; there is no reservation system') + ReserveCalifornia FacilityId 2038 (all 50 units AllowWebBooking false, WalkinCounts 50 every night; MaxStay 30), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "parks.ca.gov page_id=631 ('There are no RV hook-ups or showers'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 50, "max_rig_ft": 30, "pull_through": true, "note": "Site 7 is a walk-in (hike-in) site, so 49 are drive-in."},
+      "source": "parks.ca.gov page_id=631 ('50 primitive campsites'; 'There is a 30 foot maximum for RVs'; 'Max trailer: 30 feet', 'Max camper/motorhome: 30 feet') + ReserveCalifornia units (#7 'Hike In Primitive Campsite'; #16 'Pull Through', VehicleLength 30) + campground map PDF, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "showers": false, "dump": true},
+      "source": "parks.ca.gov page_id=631 ('potable water, pit toilets'; 'no RV hook-ups or showers') + Ricardo Campground Map PDF ('SANITATION STATION' at the entrance), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "parks.ca.gov page_id=631 ('The campground is open 24 hours'; no seasonal closure) + ReserveCalifornia walk-in counts of 50 on nights in December, March, June and October-November, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Desert state park campground in Red Rock Canyon off Hwy 14 near Cantil, with sites around one loop at the foot of the White House Cliffs. It fills on spring and fall weekends, so arrive by Thursday evening or Friday morning. Street-legal and green-sticker OHVs may use the park's dirt roads. --Claude",
+  "summary": "parks.ca.gov page + campground map PDF, ReserveCalifornia grid/details, OSM, imagery read. Open year-round, no closure in the banner. First-come only (no reservation system; RC lists 50 walk-in units, none web-bookable). $25 ($23 seniors), $6 extra vehicle. 50 sites (#7 walk-in), 30-ft max (agency-posted, so it stays), some pull-throughs; no hookups, pit toilets, potable water, a dump station, no showers. Not waterfront. Pin 482 m off on the visitor center - re-pin. Phone '' -> (661) 946-6092.",
+  "flags": [
+    "PIN MOVE (482 m): stored 35.37360,-117.99060 sits on the visitor center / self-registration booth. Target 35.37196,-117.99552 (OSM 'Ricardo Campground' camp_site polygon centre; the sites ring the loop under the White House Cliffs; Open-Meteo elevation 803 m vs stored 790). Not waterfront either way - no water in any frame.",
+    "PHONE: '' -> (661) 946-6092 (parks.ca.gov page).",
+    "WEBSITE: https://www.parks.ca.gov/?page_id=631 live - keep.",
+    "SITES: max_rig 30 is now agency-sourced ('There is a 30 foot maximum for RVs'), no longer note-derived. A 23-ft rig fits. Count 50 includes walk-in site 7.",
+    "BOOKING: the stored reservable false / fcfs always is confirmed. ReserveCalifornia lists the facility, but every unit is walk-in only (AllowWebBooking false), so the state:CA ReserveCalifornia / $8.25 fee row does not apply here - a policy-row contradiction for this entry.",
+    "OHV (flag only, keep): a general state park campground. The park's primitive road system is open to street-legal and green-sticker OHVs ('Vehicles (including OHV) must be parked within the rock lined areas provided at each campsite'); it is not a staging camp.",
+    "STATUS: open, with no current restriction in the 'Current Restrictions' block (checked 11/27/2026). 'Nightmare Gulch Temporary Closure' concerns a backcountry area, not the campground.",
+    "FACILITIES: dump true from the campground map's 'SANITATION STATION'; the agency page does not mention it."
+  ]
+}

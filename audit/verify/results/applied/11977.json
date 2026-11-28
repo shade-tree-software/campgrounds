@@ -1,0 +1,52 @@
+{
+  "id": 11977,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/sequoia/recreation/princess-campground (read 2026-11-27): 'Site Closed' (out of season); 'This spectacular site has three campground loops - Shining Cloud, Yellow Moon, and Morning Star ... Princess Campground is in the middle of Indian Basin Grove next to Indian Basin Meadow'; 'All developed campground areas on the Forest operate under a concessionaire permit with ExplorUS ... (559)745-4209'; 'Seasons of Use May 23 - September 26, 2025'; 'Single Site: $36 per night Double Site: $71 per night RV Dump Station Fee: $20.00'; 'extra vehicle fee of $8.00/night on the 2nd vehicle in each single campsite'; 'Hume Lake Ranger District ... Phone: 559-338-2251'",
+    "https://www.recreation.gov/api/camps/campgrounds/232782 (read 2026-11-27): 'This 88-site park consists of several loops, among them 19 tent-only sites'; 'Sites are shaded, parking stands are dirt and gravel'; 'Princess Campground sits next to a large meadow at an elevation of 5,900 feet'; 'For facility specific information, please call (661) 702-1420'; facility_phone 559-335-2232; notices 'This campground has a dump station onsite, fee is $20.00.' and 'Overnight camping fee includes 1 car or RV/Trailer with tow vehicle. There is an additional fee $8.00 for each vehicle'; rules reservationCutOff 3; amenities 'Drinking Water', 'Vault Toilets'; rates 2026 'First-come, First-served Season' 2026-05-08..05-21 and 'Peak Season' 2026-05-22..09-26, 2027 Peak 2027-05-28..09-25: STANDARD NONELECTRIC $36, double $71, TENT ONLY $36",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232782 (catalog, read 2026-11-27): 82 sites - 64 STANDARD NONELECTRIC (RV/Tent/Trailer; 63 Site-Specific, 1 not reservable) + 18 TENT ONLY; RV max lengths 20-50 ft, 63 sites take 23 ft+; all driveways 'Back-In'; no electric/water/sewer attributes; two 12-person double sites",
+    "Esri World_Imagery 600 m frame with the 81 catalog site points, read 2026-11-27: loops in mixed conifer/sequoia-stump forest inside the Hwy 180 curve; Indian Basin Meadow with a small pond ~120 m south-east of sites 006/009; no lake, river or creek at the sites; site centroid 36.80351,-118.94144 is 129 m from the stored pin"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 36, "nightly_high": 36, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 1, "amount": 8, "per": "night"}, "note": "Single sites $36; double sites $71. The dump station costs $20."},
+      "source": "fs.usda.gov Princess page ('Single Site: $36 per night Double Site: $71 per night RV Dump Station Fee: $20.00'; '$8.00/night on the 2nd vehicle') + recreation.gov 232782 rate tables 2026-2028, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232782", "fcfs": "some_sites", "max_stay_nights": 14, "note": "The first two weeks after opening (about May 8-21 in 2026) are first-come, first-served; reservations cover the peak season from late May to late September. One standard site is not reservable. 14 nights in any rolling 30 days."},
+      "source": "recreation.gov 232782 rates ('First-come, First-served Season' 2026-05-08..05-21; 'Peak Season' 2026-05-22..09-26) + rules (maxStay 14 days 'Rolling 30 Days') + catalog (one STANDARD site not reservable), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov catalog 232782: every site STANDARD NONELECTRIC or TENT ONLY NONELECTRIC, no water/sewer hookups, read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 82, "max_rig_ft": 50, "pull_through": false},
+      "source": "recreation.gov catalog 232782 (82 sites, RV max length to 50 ft, all 'Back-In'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "recreation.gov 232782 amenities ('Drinking Water', 'Vault Toilets') + notice ('This campground has a dump station onsite, fee is $20.00'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-08", "closes": "09-26", "note": "2026 ran May 8 (first-come) to September 26; the 2027 reservation season is May 28 - September 25, and the 2025 season was May 23 - September 26."},
+      "source": "recreation.gov 232782 rate seasons 2026/2027 + fs.usda.gov ('Seasons of Use May 23 - September 26, 2025'; 'Site Closed' in November), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Sequoia National Forest campground on Hwy 180 in the Indian Basin Grove beside Indian Basin Meadow, 3 miles from Hume Lake and on the way to Kings Canyon; three loops among giant sequoia stumps, with dirt and gravel parking spurs. Run by a concessionaire. --Claude",
+  "summary": "FS page, recreation.gov record + catalog, imagery read. Seasonal (2026: May 8 FCFS, May 22-Sep 26 reserved; 2027 peak May 28-Sep 25), closed for the season now. $36 single / $71 double, $8 extra vehicle, $20 dump. 82 sites (stored 69), 63 take 23 ft+, max 50, back-in; no hookups; vault toilets, water, dump. Not waterfront confirmed. Pin 129 m from centroid - fine.",
+  "flags": [
+    "SITES: count 69 (note-derived) -> 82 per the rec.gov catalog (64 standard, 18 tent); rec.gov prose says '88-site ... 19 tent-only'.",
+    "PHONE: stored 559-338-2251 is the Hume Lake RD office (FS page) - fine to keep. Alternatives: concessionaire ExplorUS 559-745-4209 (FS page), rec.gov 'facility specific information' (661) 702-1420, rec.gov facility_phone 559-335-2232.",
+    "WEBSITE: first line https://www.fs.usda.gov/r05/sequoia (forest home) -> https://www.fs.usda.gov/r05/sequoia/recreation/princess-campground; keep the recreation.gov line.",
+    "STATUS: FS shows 'Site Closed' - seasonal closure (season ends late September), not a temporary closure. FS alerts list Hume Lake RD 2026 winter road closures (forest roads, not Hwy 180).",
+    "WATERFRONT: not waterfront confirmed - a small meadow pond ~120 m south-east of the nearest sites; no water at the loops.",
+    "OLD NOTE: hookups/toilets/water/reservable and the site counts dropped (fields hold them)."
+  ]
+}

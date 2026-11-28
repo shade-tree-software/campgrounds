@@ -1,0 +1,54 @@
+{
+  "id": 12194,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/tahoe/recreation/prosser-family-campground (read 2026-11-27): 'Site Closed - Closed for the season.'; Current Conditions 'Water system is non-functional'; 'located on the west shore above Prosser Reservoir ... situated within walking distance of the western shore of the reservoir ... Some sites have filtered views of the reservoir and the surrounding mountains can be seen through the trees.'; 'Most single family sites and group campgrounds can be reserved at www.recreation.gov'; 'Prosser OHV staging area is approximately two miles west, across Highway 89 ... Non-street legal OHVs must be trailered from the campground to the OHV trails.'; 'Seasons of Use May 27 - October 10' (undated); 'Single Site: $20 per night Additional Vehicle Fee: $5 per vehicle per night'",
+    "https://www.recreation.gov/api/camps/campgrounds/234210 (read 2026-11-27): facility_phone '(530)587-3558'; 'Between 05/21/2027 and 09/25/2027 this location is staffed. Please call (530) 606-3978'; 'Vault toilets are provided'; 'Limited, low-pressure water will be available at this facility'; '6 people and 2 dogs maximum per site'; 'Off-highway vehicles must be trailered to and from designated OHV routes. Recreational riding is not allowed in the campground'; rules maxConsecutiveStay 14, maxStay 14 days each year; rates Peak 2025-05-23..10-12, 2026-05-22..09-26, 2027-05-21..09-25, 2028-05-19..09-23: STANDARD NONELECTRIC $20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A234210 (catalog, read 2026-11-27): 29 STANDARD NONELECTRIC sites (28 reservable, 1 not), all 'Back-in'; RV max lengths 35-40 ft, site 004 60 ft, site 015 20 ft; 28 of 29 take 23 ft+; no hookup attributes; site centroid 39.37769,-120.16119 (~90 m from the stored pin)",
+    "recreation.gov per-site photos (cdn.recreation.gov, Nov 2018) for 28 of 29 sites, viewed 2026-11-27: every site in Jeffrey pine forest; no photo shows water. Site 008 looks east through the trees across an open sage flat toward the (drawn-down) basin.",
+    "Esri World_Imagery 800 m frame with the 29 catalog site points + USGS 3DEP EPQS profile, read 2026-11-27: the loop sits in a continuous pine stand on a bench; reservoir drawn down with wide bare shore. Profile south from site 024 (39.37697,-120.16095): 1775.7 m at the site, 1771.6 m at 63 m, 1758.2 m at 110 m (forest edge), 1746.5 m at 152 m; Prosser Creek Reservoir full pool is ~1750 m, so the high-water edge is ~140 m from the nearest site and ~25 m below it, through forest."
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 1, "amount": 5, "per": "night"}},
+      "source": "fs.usda.gov Prosser Family page ('Single Site: $20 per night Additional Vehicle Fee: $5 per vehicle per night') + recreation.gov 234210 rate tables 2026-2028 ($20), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/234210", "fcfs": "some_sites", "max_stay_nights": 14, "note": "One of the 29 sites is not reservable; 14 nights a year in all."},
+      "source": "recreation.gov 234210 rules (maxConsecutiveStay 14; maxStay 14 days 'Each Year') + catalog (28 of 29 reservable) + fs.usda.gov ('Most single family sites ... can be reserved'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov catalog 234210: every site STANDARD NONELECTRIC, no water/sewer hookups, read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 29, "max_rig_ft": 60, "pull_through": false},
+      "source": "recreation.gov catalog 234210 (29 sites, RV max length to 60 ft at site 004, all 'Back-in'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "recreation.gov 234210 ('Vault toilets are provided'; amenity 'Accessible Vault Toilets'), read 2026-11-27. Drinking water left unknown: rec.gov says 'Limited, low-pressure water will be available', the FS page says 'Water system is non-functional'.",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-22", "closes": "09-26", "note": "2026 season May 22 - September 26; 2027 is May 21 - September 25. The 2025 season ran to October 12."},
+      "source": "recreation.gov 234210 rate seasons 2025-2028 + fs.usda.gov ('Closed for the season'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Tahoe National Forest campground on a pine-covered bench above the west shore of Prosser Creek Reservoir, 10 minutes north of Truckee; the shore is a walk away and a boat ramp is about half a mile off. Water supply has been limited or out of service, so arrive with water. OHVs must be trailered to the trails west of Highway 89. --Claude",
+  "summary": "FS page, rec.gov record + catalog + 28 site photos, imagery and a 3DEP profile read. $20, $5 extra vehicle; 29 back-in sites (28 fit 23 ft, one 20 ft), max 60; no hookups, vault toilets; water unreliable. Seasonal May 22 - Sep 26 (2026); closed for the season now. Waterfront: lakeview NOT confirmed -> not waterfront (downgrade). Phone and website to fill.",
+  "flags": [
+    "WATERFRONT DOWNGRADE lakeview -> not waterfront (the stored value is not --AWH). No recreation.gov site photo (28 of 29 viewed; 022 would not load) shows the reservoir; every site sits in a continuous Jeffrey pine stand. The nearest site to full pool is 024 (39.37697,-120.16095): ~1750 m full-pool edge ~140 m south and ~25 m below it, through forest (3DEP: 1775.7 site, 1758.2 at the forest edge 110 m out, 1746.5 at 152 m). For keeping lakeview, the reviewer has the FS page's 'Some sites have filtered views of the reservoir ... through the trees' (agency prose, not a sole basis) and site 008's photo (39.37828,-120.16124), which looks east through trees across an open sage flat toward the basin. That basin was drawn down in the November 2018 photo, so no water shows; full-pool water lies ~400 m+ off across the flat and the boat-ramp road.",
+    "PHONE: '' -> 530-587-3558 (Truckee Ranger District; rec.gov facility_phone and the FS fire-conditions contact). In season the campground is staffed at 530-606-3978 per rec.gov.",
+    "WEBSITE: first line https://www.fs.usda.gov/tahoe -> https://www.fs.usda.gov/r05/tahoe/recreation/prosser-family-campground; keep the recreation.gov line.",
+    "WATER: FS 'Current Conditions: Water system is non-functional' vs rec.gov 'Limited, low-pressure water will be available' - potable_water left unknown; the note says to arrive with water.",
+    "OHV (flag only, keep): general campground; the FS page names Prosser OHV staging area ~2 miles west across Hwy 89, and OHVs must be trailered there; 'Recreational riding is not allowed in the campground'. Not a staging camp.",
+    "STATUS: 'Closed for the season' (seasonal, not temporary). FS 'Seasons of Use May 27 - October 10' is undated and differs from rec.gov's 2026 dates; rec.gov used.",
+    "OLD NOTE: site count/max RV/toilets/hookups/reservable dropped (fields hold them)."
+  ]
+}

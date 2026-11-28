@@ -1,0 +1,59 @@
+{
+  "id": 12450,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://rollinghillscasino.com/hotels/rv-park/ (Cloudflare 403 to plain HTTP; read in headless Chrome 2026-11-27): 'full electrical, water, and sewage hookups in a park-like setting at our 96-space RV park conveniently located just off Interstate 5 (I-5). All spaces are pull-throughs.'; 'The RV Park has a 10 day stay maximum.'; 'You can reserve online, or by calling 530-528-3500'; 'RV Park rates may change during special events and on concert nights.'; 'RV models must be 10 years old or newer and in good conditions. A maximum of one additional vehicle per site will be allowed.'; 'GPS Coordinates: 39.8728, -122.2024'",
+    "https://rollinghillscasino.com/hotels/rv-park/rv-park-amenities/ (headless, read 2026-11-27): 'Full hook-ups with power, water and sewer'; 'Spacious 75-foot pull-through sites'; 'Access to a laundromat and private showers at the nearby Traveler's Clubhouse'",
+    "https://book.onagilysys.com/onecart/unit/offers/1783/RollingHillsCasino (operator's Agilysys booking engine; availableUnits quotes read 2026-11-27): one offer 'Best Available Rate - RV'; 96 units 'RV Spot N - Pull-Through'; every unit $59.00 + $5.90 tax, resort fee $0, for nights 2026-11-27, 2026-12-02, 2027-01-13, 2027-04-07, 2027-06-11 (Fri), 2027-06-15, 2027-07-03 (holiday Sat), 2027-09-08",
+    "https://www.goodsam.com/campgrounds-rv-parks/california/corning/the-rv-park-at-rolling-hills-casino-and-resort/cgid-201419636 (headless, read 2026-11-27): 'From $59 / night'; 'Open all year'; Good Sam Rating 10/10/10; 'Discounts: Good Sam'; trip_data/goodsam_parks.json (fetched 2026-10-02): isGsPark true",
+    "Google Maps 'RV Park At Rolling Hills', 2645 Everett Freeman Way, Corning (headless gm.py, read 2026-11-27): 4.2 stars, 306 reviews",
+    "audit/price_research/gateways.py 39.8722,-122.2029 (run 2026-11-27): 'none within 40 km; nearest: Lassen Volcanic NP 85 km'",
+    "Esri World_Imagery 700 m frame, read 2026-11-27: the RV park is the tree-lined pull-through rows west of the casino's truck/RV parking lot, centred ~39.8722,-122.2056; the stored pin (39.87220,-122.20290) sits on the open asphalt truck lot ~235 m east"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 59, "nightly_high": 59, "currency": "USD", "checked": "2026-11", "tax": {"included": false, "percent": 10}, "note": "One flat rate for every pull-through site, weekends and holidays included; the operator says rates may change on event and concert nights."},
+      "source": "Agilysys availableUnits quotes for 8 nights Nov 2026 - Sep 2027: all 96 units $59.00 + $5.90 tax + $0 resort fee; goodsam.com 'From $59 / night'; operator page ('RV Park rates may change during special events and on concert nights'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://book.onagilysys.com/onecart/unit/offers/1783/RollingHillsCasino", "max_stay_nights": 10},
+      "source": "rollinghillscasino.com RV park page ('The RV Park has a 10 day stay maximum.'; 'You can reserve online, or by calling 530-528-3500') + the Agilysys engine it links, read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 96, "pull_through": true},
+      "source": "rollinghillscasino.com ('96-space RV park ... All spaces are pull-throughs'; 'Spacious 75-foot pull-through sites') + Agilysys static units (96 'RV Spot N - Pull-Through'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true},
+      "source": "rollinghillscasino.com amenities ('Access to a laundromat and private showers at the nearby Traveler's Clubhouse'), read 2026-11-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"good_sam": true},
+      "source": "goodsam.com listing ('Discounts: Good Sam') + Good Sam directory isGsPark true (trip_data/goodsam_parks.json, fetched 2026-10-02)",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "goodsam.com listing ('Open all year') + Agilysys engine selling nights in January, April, June-September, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Paskenta Band casino RV park off I-5 at Corning: 75-ft pull-throughs with full hookups beside the casino and golf course, with a casino shuttle; showers and laundry are at the Traveler's Clubhouse. RVs must be 10 years old or newer. --Claude",
+  "summary": "Operator pages (headless), Agilysys engine quotes, Good Sam listing, Google, gateways, imagery read. A real 96-site full-hookup pull-through RV park (not an overnight lot), nightly booking, 10-night max, year-round. Flat $59 + 10% tax every night checked; Good Sam Park 10% -> $53.10, still over $50; no gateway within 40 km -> PRICE-GATE DROP CANDIDATE. Google 4.2/306. Count 72 -> 96. Pin ~235 m off on the truck lot.",
+  "flags": [
+    "DROP CANDIDATE (price gate): $59.00/night before tax ($5.90 tax) at all 96 sites on every night quoted (Nov 2026 - Sep 2027, weekday, Friday and July 3 alike). It is a Good Sam Park, but 10% off gives $53.10, still over $50. The engine has only one offer ('Best Available Rate - RV'), with no posted member or club discount. gateways.py: 'none within 40 km; nearest: Lassen Volcanic NP 85 km'.",
+    "GOOGLE: 4.2 stars, 306 reviews - passes.",
+    "LONG-STAY TESTS: pass - 'The RV Park has a 10 day stay maximum', so it is entirely transient; it is a defined RV park, not an overnight lot. Rig rule 'RV models must be 10 years old or newer' passes for a 2023 rig.",
+    "PIN (under the 250 m threshold, but on the wrong lot): stored 39.87220,-122.20290 sits on the casino's open truck/RV parking asphalt; the RV park's tree-lined rows centre ~39.8722,-122.2056 (~235 m west). The operator's 'GPS Coordinates: 39.8728, -122.2024' is the casino frontage, not the park. Re-pin suggested to 39.8722,-122.2056.",
+    "HOOKUPS: electric 50 / water / sewer left as stored. The operator says 'full electrical' but posts no amperage, and nor does the Good Sam listing; the stored 50 A is note-derived and unconfirmed.",
+    "SITES: count 72 -> 96 (operator + engine); every site is a 75-ft pull-through, so no rig limit was set.",
+    "FACILITIES: stored wifi/dump (note-derived) were not confirmed by the operator. Good Sam lists WiFi, but a Good Sam review says 'No Wifi or cable, have to pay for showers'.",
+    "PHONE: stored (530) 528-3500 matches the operator's reservation line - keep. Google shows 530-528-3586 for the RV park.",
+    "WEBSITE: https://rollinghillscasino.com/hotels/rv-park/ live (Cloudflare blocks plain HTTP, opens in a browser) - keep.",
+    "NOT A LEAD: the operator names a separate Equestrian Center RV park (horse-oriented, so out of scope)."
+  ]
+}

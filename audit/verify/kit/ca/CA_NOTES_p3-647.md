@@ -1,0 +1,11 @@
+- 11806 Potrero: $39, 35 PH sites 20/30/50+water, 28-47ft back-in, yr-round, 365d, site 1 FCFS, showers/dump, phone -> 619-478-5212, pin ok
+- 11969 Potwisha: $32, 37 sites (42), 28 fit 23+, 120d window, phone suggest 559-565-3714, website -> potwisha.htm, 22-ft Generals Hwy advisory above camp in note
+- 11807 Prado: $45/55 FHU 20/30/50, 70 sites (75), phone 909-465-5291, website dead sbcountyparks.com -> parks.sbcounty.gov, not waterfront 105 m
+- 11690 Elk Prairie: creekside KEPT (west rows 26..60, 19-29 m road-creek, 1-2 m drop); $35 all; 61 sites; max stay 7 from mid-May; 5-47 blocked Dec-May
+- 11977 Princess: $36, 82 sites (69), 63 fit, max 50, season 05-08..09-26, FCFS 2 wks, website -> FS page
+- 12194 Prosser: lakeview -> not waterfront (no site photo shows water; 140 m/25 m to 1750 full pool thru forest); $20, 29 sites, phone ''->530-587-3558, web -> FS page
+- 12450 Rolling Hills: $59 flat (+10% tax), GS Park -> $53.10 still >50, no gateway => PRICE DROP CANDIDATE; Google 4.2/306; 96 PT; pin 235 m on truck lot
+- 14912 Rancho Colina: no operator site/booking/current rate (last $50 Jan 2021, phone-only); imagery 2018+2021 full of trailers next to MH park => LONG-STAY DROP CANDIDATE; Google 4.6/93; no groups
+- 11693 Ricardo: FCFS only (RC 50 walk-in, none web), $25/$23 senior, $6 veh, 30 ft agency, dump (map); pin 482 m -> 35.37196,-117.99552; phone ''->(661) 946-6092
+- 12461 Redding RV: $55 back-in +tax, GS Park -> $49.50 passes; Google 4.0/311; monthly + 'many full time' but outer rows empty in 2 frames; phone ''->530-241-0707; platform phone
+- 11809 Redwood Acres: fair test passes ($45 standard night, 'spring getaways...winter hideaways'; may be unavailable during events); 30-night cap; phone 707-499-6187; no Google RV rating
