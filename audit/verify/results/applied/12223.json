@@ -1,0 +1,61 @@
+{
+  "id": 12223,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233182 (read 2026-11-27): notices 'Six people per site including children', 'Hookups are not available', 'River views are limited due to bank overgrowth', 'ExplorUS will be assessing an additional vehicle fee of $8.00 per night on the second vehicle in each single family campsite... provided these vehicles are not joined to the first vehicle by a hitch', 'Site length includes tow vehicle'; Overview 'Sandy Flat Campground is set back from the Lower Kern River at an altitude of 2,300 feet... Campsites are a short walk from the river'; Facilities 'Campsites are set along one loop in largely open sites... River access is in the day camp area. Drinking water, picnic areas and vault toilets are provided.'; Contact '(760) 376-1269'; facility_phone 760-376-1815; facility lat/lng 35.574714,-118.529933",
+    "https://www.recreation.gov/api/camps/campgrounds/233182/rates (read 2026-11-27): 2026, 2027 and 2028 seasons 1 Jan-31 Dec, STANDARD NONELECTRIC and TENT ONLY NONELECTRIC $36",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233182 (read 2026-11-27): 27 sites, 19 'STANDARD NONELECTRIC' (RV/Trailer/Tent) and 8 tent-only (015-020, 031, 034). Max Vehicle Length on the RV sites: 006 25, 007 45, 009 20, 010 30, 011-013 35, 014 20, 021 20, 022 50, 023 30, 025 30, 026 20, 027 35, 028 25, 029 35, 030 25, 032 50, 033 30. Site coordinates span 35.58266-35.58459, -118.52392 to -118.52565 (centroid 35.58381,-118.52486)",
+    "rec.gov availability month API (read 2026-11-27): December 2026 825 nights Available and 12 Reserved; April 2027 793 Available; July 2027 NYR",
+    "https://www.fs.usda.gov/r05/sequoia/recreation/sandy-flat-campground (read 2026-11-27): 'Site Open'; 'Sandy Flat Campground offers 35 family campsites along the lower Kern River southwest from Lake Isabella. Includes 6 walk-in sites, water, and bathrooms.'; 'Seasons of Use: Open all year around.'; 'Single Site: $36 per night', '$8.00 per night for extra vehicle.'; ExplorUS Lake Isabella office 760-376-1269 or 559-745-4209; Kernville office 760-376-3781; 'Restrooms: Vault toilet(s)'; 'Water: Potable water is not available at this site.'; 'Latitude: 35.58271669 Longitude: -118.5245838'",
+    "OSM (read 2026-11-27): 'Sandy Flat' tourism=camp_site way centred 35.58360,-118.52519; the stored pin 35.57471,-118.52993 sits ~180 m from 'Hobo Campground' (35.57467,-118.52791), a separate FS site. USGS 3DEP at 35.5837,-118.5249: 707.0 m. Esri World_Imagery 360 m frame at 35.5836,-118.5252 with the catalog site points plotted: the river runs down the west side of the frame, screened by a dense riparian tree band. Site 022, the nearest RV site, is ~50-70 m from the channel through that band (67 m to the OSM river line)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 36, "nightly_high": 36, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 1, "amount": 8, "per": "night"}, "extra_person": {"max_people": 6}},
+      "source": "rec.gov rates API (2026-2028 seasons, $36) + rec.gov notices ($8.00 per night second vehicle; 'Six people per site including children') + fs.usda.gov ('Single Site: $36 per night', '$8.00 per night for extra vehicle'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "rec.gov 233182 availability (Dec 2026 and Apr 2027 bookable) + fs.usda.gov ('This site can be reserved... on-line at http://www.recreation.gov'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov notice 'Hookups are not available'; catalog: all 27 sites NONELECTRIC, read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 15, "max_rig_ft": 50, "note": "Of 19 RV sites, 15 take 25 ft or more; 009, 014, 021 and 026 cap at 20 ft. Posted lengths include the tow vehicle."},
+      "source": "rec.gov campsite catalog for 233182 (Max Vehicle Length per site; 'Site length includes tow vehicle' notice), read 2026-11-27. The stored 27 came from note prose and counted tent-only and 20-ft sites",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "fs.usda.gov ('Restrooms: Vault toilet(s)') + rec.gov ('vault toilets are provided'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "fs.usda.gov ('Seasons of Use: Open all year around.') + rec.gov rate seasons 1 Jan-31 Dec and December 2026 bookable, read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "fs.usda.gov ('Site Open') + rec.gov availability, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Sequoia National Forest campground in the Lower Kern River canyon off Highway 178, a few miles below Lake Isabella. One loop of open sites among large granite boulders, set back from the river behind riparian growth; river access is through the day-use area, and the Hobo fishing trail is nearby. The Lower Kern is fast and cold and claims swimmers most years. --Claude",
+  "summary": "rec.gov details, rates, catalog and availability plus the FS page and imagery read. Open year-round. $36, extra vehicle $8, 6 people. No hookups, vault toilets. Of 19 RV sites, 15 fit a 23-ft rig (max 50 ft). Drinking water conflicts between rec.gov and FS, so not written. Not waterfront kept (river screened by bank overgrowth). PIN MOVE 1106 m: the stored pin is rec.gov's facility point beside Hobo Campground.",
+  "flags": [
+    "PIN MOVE 1106 m: stored 35.57471,-118.52993 (rec.gov's facility coordinates, ~180 m from Hobo Campground, a separate FS site) -> 35.58381,-118.52486 (centroid of the 27 catalog sites; OSM 'Sandy Flat' 35.58360,-118.52519; FS lists 35.58272,-118.52458). Elevation at the new pin: 707 m (USGS 3DEP) vs stored 695. Waterfront re-measured from the sites: still not waterfront.",
+    "WATERFRONT: not waterfront agrees. The nearest RV site, 022 (35.58421,-118.52520), is ~50-70 m from the Kern (67 m to the OSM river line) through a dense riparian band (Esri), and rec.gov says 'River views are limited due to bank overgrowth' and 'River access is in the day camp area'. The closer site 026 caps at 20 ft.",
+    "DRINKING WATER CONFLICT: rec.gov 'Drinking water... provided' and the FS intro 'Includes... water' vs the FS amenity block 'Potable water is not available at this site. Be prepared to bring your own drinking water'. potable_water not written.",
+    "SITE COUNT: FS says '35 family campsites... Includes 6 walk-in sites'; rec.gov lists 27 (19 RV, 8 tent). Counted the 15 RV sites a 23-ft rig can book.",
+    "PHONE: '' -> 760-376-1269 (ExplorUS Lake Isabella office, the rec.gov contact). Kernville ranger office 760-376-3781; rec.gov facility_phone 760-376-1815.",
+    "WEBSITE: line 1 https://www.fs.usda.gov/r05/sequoia -> https://www.fs.usda.gov/r05/sequoia/recreation/sandy-flat-campground; keep line 2 (rec.gov 233182).",
+    "FEE: the FS page also lists '$34.0 per night for single unit' beside '$36 per night'. rec.gov's current table is $36 only, so $36 written.",
+    "LEAD: Hobo Campground (OSM 35.57467,-118.52791, FS Sequoia, ~1 km south on the same road) is not in campgrounds.json. Not vetted."
+  ]
+}

@@ -689,6 +689,7 @@ DROPS = {
     12417: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-646, read 2026-11-27: Google 3.6 (185 reviews); no nightly rate posted (booking page password-gated, 2027 booking opens in February)"),
     12450: ("2026-11-27", "price gate: over US$50 after the Good Sam 10% with no gateway, and reviews not strong enough to decide it", "p3-647, read 2026-11-27: engine '$59.00' + $5.90 tax on all 96 sites, Nov 2026-Sep 2027; Good Sam Park 10% -> $53.10; single 'Best Available Rate - RV' offer; gateways.py none within 40 km (Lassen 85 km); Google 4.2/306"),
     14912: ("2026-11-27", "no live web presence (parked domain) and mostly long-stay with no current nightly rate", "p3-647, read 2026-11-27: ranchocolina.com parked; Facebook page 'Unofficial'; only rate Campendium $50 (Jan 2021); phone-only reservations; imagery 2018/2021 nearly every pad filled with trailers beside a mobile-home park; campbase 'some extended stay'"),
+    12365: ("2026-11-27", "an adult snowbird resort selling park models (long-stay test 5; Ridge Manor precedent), peak nights over US$50", "p3-648, read 2026-11-27: about page 'Our premier luxury adult resort', 'home, community, health, recreation and beauty for adults'; 'Rio Bend is a Snowbird destination', '4 MONTHS FOR $899!'; park models sold as 'Excellent investments'; no booking engine or site count; daily $40 May-Sep, $60 Oct-Apr ($54 Good Sam); Google 4.5/481"),
 }
 
 if __name__ == "__main__":

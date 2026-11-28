@@ -1,0 +1,75 @@
+{
+  "id": 11697,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/SaddlebackButte (-> https://www.parks.ca.gov/?page_id=618, read 2026-11-27; Current Restrictions last checked 11/27/2026, none listed): 'Campground is open 24 hours/day.'; '(661) 946-6092'; 'Max trailer: 30 feet', 'Max camper/motorhome: 30 feet'; 'The campground is first-come, first-served with 37 sites containing a table, BBQ grill, and fire ring. Most sites have a ramada... Potable water faucets and full restrooms with a flush toilet and sink are located throughout the campground. No showers. Eight people maximum per campsite.'; 'RVs/Trailers: All parking slots can accomodate up to 30'. However, exact length varies by campsite and many can accommodate longer rigs. Slots are angled for ease of backing in. Use of the RV dump station is $10 (credit card only).'; Park Use Fees: 'Fees payable by check or cash (exact change) only. Self-registration stations'; 'Camping/Night Use $20 per site per night. $18 with seniors. $10 for disabled. Fee includes one vehicle and one towed trailer; $5 each additional vehicle. 8 people max per site. First-come, first-served only.'; the Joshua Group Camp is the reservable part ('Reservations are required for the Joshua Group Camp... Reserve California')",
+    "ReserveCalifornia RDR (read 2026-11-27): fd/citypark/namecontains/Saddleback -> PlaceId 702 'Saddleback Butte SP'; search/place lists one facility only, 647 'Group Site' (Group Campsite). No family-site facility",
+    "OSM (read 2026-11-27): way 397522335 tourism=camp_site 'Saddleback Butte Campground' (California Department of Parks and Recreation) centroid 34.67737,-117.82534, 107 m from the stored pin; three toilet buildings in the loop"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2026-11",
+        "extra_vehicle": {
+          "included": 1,
+          "amount": 5,
+          "per": "night"
+        },
+        "note": "Seniors $18, disabled $10. The fee covers one vehicle and one towed trailer. Dump station $10."
+      },
+      "source": "parks.ca.gov Saddleback Butte page, Park Use Fees ('$20 per site per night. $18 with seniors. $10 for disabled. Fee includes one vehicle and one towed trailer; $5 each additional vehicle'; dump '$10 (credit cards only)'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "platform": "none",
+        "fcfs": "always",
+        "note": "Self-registration; check or exact cash only. Only the group camp is booked through ReserveCalifornia."
+      },
+      "source": "parks.ca.gov Saddleback Butte page ('The campground is first-come, first-served with 37 sites'; 'First-come, first-served only.'; 'Fees payable by check or cash (exact change) only. Self-registration stations') + ReserveCalifornia PlaceId 702 (only facility 647 Group Site), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 37,
+        "max_rig_ft": 30,
+        "note": "Many spurs take more than 30 ft; slots are angled back-ins."
+      },
+      "source": "parks.ca.gov Saddleback Butte page ('37 sites'; 'Max trailer: 30 feet', 'Max camper/motorhome: 30 feet'; 'All parking slots can accomodate up to 30'... many can accommodate longer rigs. Slots are angled'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "potable_water": true,
+        "showers": false,
+        "dump": true
+      },
+      "source": "parks.ca.gov Saddleback Butte page ('Potable water faucets and full restrooms with a flush toilet and sink'; 'No showers'; 'RV dump station is $10'), read 2026-11-27",
+      "method": "manual"
+    },
+    "status": {
+      "values": {
+        "operating": "open"
+      },
+      "source": "parks.ca.gov Saddleback Butte page (Current Restrictions checked 11/27/2026, none; 'Campground is open 24 hours/day'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "High-desert state park in Joshua-tree woodland at the foot of Saddleback Butte, about 17 miles east of Lancaster in the Antelope Valley. The campground is off 170th Street East just north of Avenue K. Most sites have a shade ramada as a sun and wind block. The 2-mile Saddleback Butte Peak Trail starts in the campground, and the park is popular for stargazing. --Claude",
+  "summary": "parks.ca.gov page (fees, campground facilities, rig limits, hours, restrictions) and ReserveCalifornia read. First-come only for the 37 family sites (RC lists just the group camp), so booking changes from reservable to not reservable / fcfs always. $20 (+$5 per extra vehicle, one vehicle plus trailer included); check or exact cash. Max 30 ft, many longer. Flush toilets, water, dump $10, no showers. Year-round, no restrictions. Pin fine. Not waterfront.",
+  "flags": [
+    "BOOKING CHANGE: stored reservable true / fcfs some_sites (note-derived) -> reservable false, fcfs always. parks.ca.gov: 'First-come, first-served only.'; ReserveCalifornia PlaceId 702 holds only facility 647 'Group Site'.",
+    "POLICY ROW CONTRADICTION (state:CA): the row assumes ReserveCalifornia booking with an $8.25 reservation fee and one extra vehicle included; here the family sites are first-come (no RC, no reservation fee), and the fee covers one vehicle plus one towed trailer with $5 for each additional vehicle. Entry-level booking and extra_vehicle values written to override it. The 8-person limit matches the row.",
+    "PHONE: '' -> (661) 946-6092 (parks.ca.gov). Great Basin District office (661) 724-1206.",
+    "WEBSITE: line 1 https://www.parks.ca.gov/SaddlebackButte works (redirects to ?page_id=618), keep it; line 2 https://www.reservecalifornia.com is the generic home and only the group camp books there -> drop it.",
+    "SEASON: the stored year_round (manual) agrees with 'Campground is open 24 hours/day'; not rewritten.",
+    "PIN: 107 m from OSM's campground centroid (34.67737,-117.82534), no move.",
+    "PAYMENT: check or exact cash only at self-registration; the dump takes credit cards only.",
+    "HOOKUPS: not rewritten. The page lists the site amenities (table, BBQ grill, fire ring, ramada, faucets in the campground) but never says 'no hookups'; the stored none stays note-derived."
+  ]
+}
