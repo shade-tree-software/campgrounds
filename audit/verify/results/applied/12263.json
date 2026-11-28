@@ -1,0 +1,55 @@
+{
+  "id": 12263,
+  "checked": "2026-11-27",
+  "sources": [
+    "recreation.gov facility 10291436 'Sonora Bridge' (API, read 2026-11-27): 'This tent and RV friendly campground offers primitive single family campsites with picnic tables and campfire rings. Vault toilets and garbage service are provided... The campground does not have potable water.'; notice 'Campsites are First Come First Serve. Sites are available for campers as they become vacant, and availability is not guaranteed.'; '6-person limit : There is a max of 6 people per single campsite'; 'Extra vehicle will be charged a per night fee and collected at the campground'; rules scanAndPay=1; rate table 'First-come, First-served Season 2026-04-23 to 2026-09-20 {WalkInS&PStandardNonelectric: 24}' (2027: 04-30 to 09-19); phone 760-932-7070",
+    "recreation.gov campsite catalog 10291436 (read 2026-11-27): 23 sites, all 'STANDARD NONELECTRIC', no posted max length, water hookup 'No' on all 23",
+    "https://www.fs.usda.gov/r04/humboldt-toiyabe/recreation/sonora-bridge-campground (read 2026-11-27): 'Sonora Bridge Campground is a 23-site campground along CA-108. Located on the West Walker River in a Jeffrey pine forest'; 'Late April - early October, as weather and conditions allow'; 'Single Site: $24 per night / Extra Vehicle Fee: $6 per night'; 'Vault toilet(s)'; 'Potable water is not available at this site.'; Latitude 38.362486, Longitude -119.474628; Bridgeport Ranger District 760-932-7070",
+    "Esri World Imagery + OSM camp_site polygon (2026-11-27): loops on a pine bench south of CA-108 (polygon centroid ~38.3642,-119.4775); the West Walker River runs north of the highway, ~70 m from the closest loop at its NW end and 100-250 m elsewhere"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 1, "amount": 6, "per": "night"}, "extra_person": {"max_people": 6}},
+      "source": "recreation.gov rate table (FCFS season, $24) + Forest Service page ('Extra Vehicle Fee: $6 per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "note": "First-come only; pay on site through recreation.gov Scan & Pay."},
+      "source": "recreation.gov facility 10291436 notice ('Campsites are First Come First Serve'), rate season 'First-come, First-served Season', scanAndPay rule, read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog 10291436: all 23 sites STANDARD NONELECTRIC, water hookup No, read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 23},
+      "source": "recreation.gov campsite catalog (23 sites) + Forest Service page ('23-site campground'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "recreation.gov ('The campground does not have potable water') + Forest Service page ('Potable water is not available at this site'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-23", "closes": "09-20"},
+      "source": "recreation.gov rate table, 2026 First-come, First-served Season 2026-04-23 to 2026-09-20, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Humboldt-Toiyabe NF campground in Jeffrey pines on a bench above CA-108 near its junction with US-395, between Bridgeport and Walker. The West Walker River, stocked with trout, runs on the far side of the highway. Bring water. --Claude",
+  "summary": "rec.gov + FS page read. Stored booking was wrong: first-come only (Scan & Pay), not reservable; stored potable water was wrong: none. $24, extra vehicle $6, 23 non-electric sites, season late April to late Sept (rec.gov). Not waterfront agrees; pin fine.",
+  "flags": [
+    "BOOKING CORRECTION: stored reservable true / recreation.gov -> first-come only ('Campsites are First Come First Serve'); recreation.gov is only the Scan & Pay channel.",
+    "WATER CORRECTION: stored potable_water true -> false (both rec.gov and FS: no potable water).",
+    "SEASON: rec.gov FCFS season 04-23 to 09-20 (2026; 2027 runs 04-30 to 09-19) written; the FS page says 'Late April - early October'.",
+    "FEES: FS extra vehicle $6; rec.gov names a per-night extra-vehicle fee without an amount.",
+    "RIG LENGTH: no posted maximum anywhere; FS calls it 'tent and RV friendly'.",
+    "WATERFRONT: not waterfront agrees - loops sit south of CA-108 (the stored evidence says US-395; it is CA-108), with the West Walker River across the highway, ~70 m from the nearest loop at best.",
+    "PIN: stored 38.36405,-119.47731 sits inside the OSM campground polygon; FS point 38.362486,-119.474628 is ~290 m SE at the loop's south entrance; rec.gov's 38.3674,-119.4818 is north of the river. No move.",
+    "PHONE: '' -> 760-932-7070 (Bridgeport Ranger District; rec.gov and FS agree).",
+    "WEBSITE: https://www.fs.usda.gov/htnf -> https://www.fs.usda.gov/r04/humboldt-toiyabe/recreation/sonora-bridge-campground (keep the recreation.gov line)."
+  ]
+}

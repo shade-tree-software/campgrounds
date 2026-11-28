@@ -1,0 +1,12 @@
+# CA phase 7 p3-649 working notes (2026-11-27)
+- 12364 Sans End: $40 yr-round; AGE 45+ drop cand; Google 4.1/212; Newbook unreadable; count 170
+- 11819 Santa Margarita: primitive no-hookup $38-49 (stored FHU wrong); WebTrac via browser; Osprey/Roadrunner waterfront lead; lead Santa Margarita KOA
+- 11893 Schoolhouse: confirmed $24/$48; reservations only; 52 sites 23ft+; Apr15-Oct15
+- 12398 Shoshone RV: $50 (ResOnTheWeb Jan 2027) passes; Google 4.3/280; electric cleared
+- 12191 Silver Creek Truckee: riverview -> not waterfront; 24 ft turnaround; 13 RV sites
+- 11707 Silver Strand: bayfront -> coastal walk; re-pin 32.6360,-117.1428; $65/85; 113 sites
+- 12430 Sly Park: lakefront -> lakeview (canopy, RV fit unread); re-pin 38.7276,-120.5468; 2025 fees via Wayback
+- 11820 Sonoma Fair RV: $70-95, GS 10%, 28-night max; Google 3.8/383 (local)
+- 12263 Sonora Bridge: FCFS only (was reservable), no potable water (was true); $24; season 04-23..09-20
+- 11821 Spring Lake: $41 no hookups, 31 sites/31ft; PIN MOVE ~770 m to 38.4480,-122.6505 (stored = Violetti entrance)
+- 12458 Stafford: AUTO DROP Google 3.8/119; no posted rate

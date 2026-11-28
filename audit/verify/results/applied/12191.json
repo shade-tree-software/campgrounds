@@ -1,0 +1,56 @@
+{
+  "id": 12191,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232884 (read 2026-11-27): 'SILVER CREEK-TRUCKEE'; 'The campground is situated on the banks of the Truckee River. A few sites overlook the river.'; 'Vault toilets and drinking water are provided'; notices 'Limited turnaround space restricts RVs longer than 24 feet', 'One vehicle included with reservation. Additional vehicle fee cost is $10/each per night', '6 people and 2 dogs maximum per site', 'Campsite check-out time is 12:00pm. Check-in time is 2:00pm.'; maxConsecutiveStay 14; amenities incl. Water Spigot, Vault Toilets, Waterfront Sites; staffed 05/21/2027-09/25/2027; phone (530)587-3558; operated by Lake Tahoe Hospitality LLC",
+    "https://www.recreation.gov/api/camps/campgrounds/232884/rates (read 2026-11-27): Peak Season 2026-05-22 to 2026-10-03 and 2027-05-21 to 2027-09-25, STANDARD NONELECTRIC $20; First-come, First-served Season 2026-10-04 to 2026-10-11, $20",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232884 (read 2026-11-27): 28 sites - 13 reservable STANDARD NONELECTRIC sites permitting RV/Trailer at 30 ft (001, 003-008, 011, 013, 014, 016-018), 002 the same but not reservable, 015 tent-only equipment, 5 TENT ONLY, 7 WALK TO (022-028, Hike-In, 15-20 ft); availability June 2027 Open/NYR only",
+    "https://www.fs.usda.gov/r05/tahoe/recreation/silver-creek-campground (last updated October 13, 2026; read 2026-11-27): 'Site Closed' (off-season); 'Seven sites are designated for tent-camping only. These sites are a short walk-in and overlook the Truckee River. Other sites are close to Highway 89.'; 'Number of sites: 19'; 'Seasons of Use May 27 - October 10'; 'Single Site: $20 per night Additional Vehicle Fee: $5 per vehicle per night'; 'Vault toilet(s)'; 'Potable water is not available at this site.'",
+    "Esri World Imagery with the rec.gov site points plotted (39.2228,-120.2014, 2026-11-27) + OSM Truckee River centreline (api.openstreetmap.org): the river runs ~-120.2004 to -120.2007 past the camp, wetted channel ~19-26 m wide; the walk-to tent sites 022-028 sit 25-45 m from it, the nearest drive-in RV sites (014 39.22272,-120.20139; 016 39.22247,-120.20134; 005 39.22367,-120.20148) are 75-90 m back under continuous pine canopy, behind the walk-in sites"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026-11", "extra_vehicle": {"included": 1, "amount": 10, "per": "night"}},
+      "source": "rec.gov rates (2026/2027 $20) + notice 'Additional vehicle fee cost is $10/each per night', read 2026-11-27 (FS page says $5 extra vehicle)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232884", "max_stay_nights": 14, "note": "The last week of the season (October 4-11 in 2026) is first-come. Check-in 2 pm, check-out noon."},
+      "source": "rec.gov details (maxConsecutiveStay 14) + rates ('First-come, First-served Season 2026-10-04 to 2026-10-11'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov catalog (all STANDARD NONELECTRIC, no hookup attributes), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 24, "note": "Turnaround space limits RVs to 24 ft though spurs post 30 ft; walk-in tent sites take the riverbank."},
+      "source": "rec.gov catalog (13 reservable sites permitting RV/Trailer, 30 ft) + notice 'Limited turnaround space restricts RVs longer than 24 feet', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "rec.gov ('Vault toilets and drinking water are provided'; amenity 'Water Spigot'), read 2026-11-27. The FS page says 'Potable water is not available at this site' - flagged",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-21", "closes": "10-11"},
+      "source": "rec.gov rates: 2027 peak opens 2027-05-21; 2026 season ran 2026-05-22 to 2026-10-11 incl. the first-come week (2027's end not posted beyond the Sep 25 peak), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Tahoe National Forest campground on Highway 89 between Truckee and Tahoe City, beside the Truckee River. The RV sites sit under pines near the highway; the river-edge sites are walk-in tent sites. Limited turnaround space restricts RVs to 24 ft, so a 23-ft rig fits with little to spare. Fly-fishing, swimming and tubing on the river; bears frequent the area. --Claude",
+  "summary": "rec.gov details/rates/catalog and FS page read. $20, extra vehicle $10, 14-night max, May 21-Oct 11. 13 reservable RV sites; turnaround limits RVs to 24 ft. Riverview -> not waterfront (river ~20-25 m wide, RV sites 75-90 m back under canopy behind walk-in tent sites).",
+  "flags": [
+    "WATERFRONT DOWNGRADE: riverview -> not waterfront. The Truckee River here is ~19-26 m wetted on Esri imagery (creek-sized under the ~30 m rule, so riverview cannot apply), and the nearest RV sites (014 at 39.22272,-120.20139; 016 at 39.22247,-120.20134; 005 at 39.22367,-120.20148) are 75-90 m from it under continuous canopy, behind walk-in tent sites 022-028. Only the walk-in tent sites 'overlook the Truckee River' (FS). Replacement evidence: 'Esri + rec.gov site points 2026-11-27: Truckee River ~20-25 m wide (creek-sized) ~-120.2005; walk-in tent sites 022-028 25-45 m from it; nearest drive-in RV sites 014/016/005 75-90 m back under continuous pine canopy -> not waterfront'. Not an --AWH value.",
+    "RIG LENGTH: rec.gov notice 'Limited turnaround space restricts RVs longer than 24 feet' - a 23-ft rig passes; stored max_rig_ft 30 (note prose) -> 24. Caveat in note.",
+    "SITE COUNT: stored 28 (all sites incl. tent/walk-in) -> 13 reservable RV sites; FS page says 19 sites.",
+    "FS vs REC.GOV: FS says 'Potable water is not available at this site' while rec.gov says 'drinking water are provided' (Water Spigot) - wrote rec.gov. FS extra vehicle $5 vs rec.gov $10 - wrote rec.gov. FS season 'May 27 - October 10' looks stale; wrote rec.gov's.",
+    "STATUS: FS 'Site Closed' banner is the off-season; open.",
+    "PHONE: '' -> 530-587-3558 (Truckee Ranger District, rec.gov and FS).",
+    "WEBSITE: https://www.fs.usda.gov/tahoe -> https://www.fs.usda.gov/r05/tahoe/recreation/silver-creek-campground (keep the rec.gov 232884 line).",
+    "OHV: rec.gov notes OHVs must be trailered to designated routes; no riding in camp - general campground, no flag.",
+    "PIN: stored 39.22326,-120.20264 is ~100 m W of the RV-site centroid (~39.2230,-120.2017); fine."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": 11707,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=654 (from /silverstrand, read 2026-11-27): 'Max trailer: 40 feet', 'Max camper/motorhome: 40 feet'; 'Entrance Gates open year-round at 7 a.m.'; 'Restroom and cold showers are available on each side of the park... Per Coastal Commission regulations, campers must be in fully self-contained vehicles'; 'The entrance to the park is from Highway 75, which serves as a divider between the ocean side of the park and the bay side'; Campground Kiosk 619-435-5184; alerts: only the beach/bay water-quality monitoring notice (no closure)",
+    "https://www.parks.ca.gov/pages/654/files/SilverStrandCampground2013.pdf (campground brochure, (c) 2022, read 2026-11-27): 'OVERNIGHT RV CAMPING: Self-contained vehicles only... Tent and car camping are not allowed'; 'Each campsite may have up to eight persons'; 'For an additional fee, each site is allowed one extra vehicle'; 'DUMP STATION: A dump station is located at the south end of the campground'; map ('not to scale'): RV sites 101-137 along the lot's ocean (west) edge, 2xx/3xx in the centre island, 4xx along the east edge by the park road and State Route 75",
+    "ReserveCalifornia API (california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr, read 2026-11-27): citypark 715 'Silver Strand SB'; search/place: facilities 694 'Silver Strand Northern Section' (Premium Hook Up (E/W) 15 + Hook Up (E/W) 52, MaxVehicleLength 40) and 696 'Silver Strand Southern Section' (Premium 10 + Premium (E) + Hook Up (E/W) 24); search/grid: 72 + 41 units, VehicleLength 30-40; restrictions MinimumStay 1, MaximumStay 14, booking to 2027-05-27; search/details (2027-01-12 and 2027-04-17): Hook Up (E/W) #218 / #204 rate 65.00, Premium #119 / #103 rate 85.00, 'Electricity Hookup: Amps 50', 'Water Hookup: Yes', 'Sewer Hookup: No', 'Pad Length 35/40', 'Proximity to Water: Oceanfront', 'Toilet Type: Flushing', 'Shower Type: Token'; unit text 'Camping is available for self-contained recreational vehicles, motorhomes, or trailers only... **NO TENT CAMPING ALLOWED** Dumpstation available at park'",
+    "Esri World Imagery (32.6370,-117.1433 and 32.6285,-117.1397, 2026-11-27): the RV rows sit in the paved ocean-side lots west of SR-75; from the west (1xx) row to the wet-sand/high-tide line is ~60-90 m of open public beach sand; no road or structure between, SR-75 lies east of the lots"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 65, "nightly_high": 85, "currency": "USD", "checked": "2026-11", "extra_person": {"max_people": 8}, "note": "Premium sites $85."},
+      "source": "ReserveCalifornia search/details, Hook Up (E/W) $65 and Premium Hook Up (E/W) $85 on 2027-01-12 and 2027-04-17 in both sections; brochure 'up to eight persons', read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://www.reservecalifornia.com/", "max_stay_nights": 14, "note": "Self-contained RVs only (a built-in sink with an enclosed drain and a toilet with a holding tank); tents and car camping are not allowed. The entrance gate is locked overnight."},
+      "source": "ReserveCalifornia facilities 694/696 (MaximumStay 14) + parks.ca.gov brochure and unit text, read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "ReserveCalifornia search/details ('Electricity Hookup: Amps 50', 'Water Hookup: Yes', 'Sewer Hookup: No'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 113, "max_rig_ft": 40, "pull_through": false},
+      "source": "ReserveCalifornia grid (72 units Northern Section + 41 Southern Section, VehicleLength to 40, back-in) + parks.ca.gov ('Max trailer: 40 feet'), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true},
+      "source": "parks.ca.gov ('Restroom and cold showers'), brochure ('A dump station is located at the south end of the campground'), RC ('Toilet Type: Flushing'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "parks.ca.gov ('Entrance Gates open year-round at 7 a.m.') + ReserveCalifornia selling January and April 2027, read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "State beach on the Silver Strand between Coronado and Imperial Beach. Back-in RV sites in paved rows along the ocean-side lots, west of Highway 75, with the open Pacific beach a short walk across the sand; San Diego Bay's beaches are across the highway. Showers are cold. --Claude",
+  "summary": "parks.ca.gov page + brochure/map and ReserveCalifornia API read. $65 E/W, $85 premium; 50 A + water, no sewer, dump; 113 sites in two sections, RVs to 40 ft, self-contained only, 14-night max, year-round. Bayfront -> coastal walk (pads 60-90 m from the high-tide line across the public beach). Re-pin west of SR-75.",
+  "flags": [
+    "WATERFRONT DOWNGRADE: bayfront -> coastal walk. The nearest pads are the ocean-edge row 101-137 (brochure map; RC tags every unit 'Oceanfront'), and they are ~60-90 m from the wet-sand/high-tide line across the state beach's open public day-use sand (Esri at ~32.6365,-117.1432): beyond the ~50 m on-water bound, and a day-use beach is a use. No highway or town between (SR-75 is east of the lots), so coastal walk holds. Replacement evidence: 'Esri 2026-11-27 + parks.ca.gov map: RV rows in the paved ocean-side lots west of SR-75; ocean-edge row 101-137 ~60-90 m from the high-tide line across the public day-use beach, no road between -> coastal walk'. Not an --AWH value. The stored evidence was taken at 32.6310,-117.1390, which is east of SR-75.",
+    "PIN MOVE (~660 m): stored 32.63100,-117.13900 sits east of SR-75 on the bay side, across the highway from the campground. Target 32.6360,-117.1428 (the Northern Section lot, 72 of 113 sites; RC facility point 32.636987,-117.143338). The Southern Section (41 sites) RC point is 32.628485,-117.139658, ~1 km south in the same strip of lots off the same park road - not a split (one entrance, one kiosk).",
+    "FEES: confirmed $65-85 for January and April 2027 (stored values were June 2027); the same in both sections.",
+    "HOOKUPS: electric was unset -> 50 (RC 'Amps 50').",
+    "SITE COUNT: stored ~120 (note prose) -> 113 bookable units on RC (72 + 41).",
+    "PHONE: 619-435-5184 agrees (campground kiosk).",
+    "WEBSITE: keep https://www.parks.ca.gov/silverstrand (resolves to ?page_id=654); drop the generic https://www.reservecalifornia.com line (booking.url carries it).",
+    "STATUS: open; only the water-quality monitoring notice on parks.ca.gov."
+  ]
+}

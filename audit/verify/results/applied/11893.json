@@ -1,0 +1,52 @@
+{
+  "id": 11893,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.fs.usda.gov/r05/tahoe/recreation/schoolhouse-campground (last updated October 16, 2026; read 2026-11-27): 'Site Closed' (off-season); 'about a half mile from Dark Day Boat Ramp and about 3 miles from Cottage Creek Boat Ramp. There are 56 campsites- 44 single campsites and 12 double campsites, flush toilets and one vault toilet, and treated potable water.'; 'Seasons of Use April 15 - October 15'; 'Check in: 2:00 p.m.; Check-out: 12:00 p.m.'; 'Restrictions Reservations only'; 'Single Site: $24 per night Double Site: $48 per night'; Yuba River Ranger District 530-265-4531; 'Latitude: 39.41807174 Longitude: -121.1207041'; forest alerts: only a prescribed-fire notice (Truckee Landing Piles)",
+    "https://www.recreation.gov/api/camps/campgrounds/10040047 (read 2026-11-27): 'Schoolhouse Campground (CA)'; notices 'Utility hookups and showers are not available', 'There is not a dump station at this facility', bears/food containers; amenities Drinking Water, Flush Toilets, Vault Toilets, Paved Roads; 'The sides of the reservoir are generally steep'; Contact (530) 265-4531",
+    "https://www.recreation.gov/api/camps/campgrounds/10040047/rates (read 2026-11-27): Peak Season 2026 and 2027 Apr 15-Oct 15, PeakSingleSite $24, PeakDoubleSite $48",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10040047 (read 2026-11-27): 55 sites, all STANDARD NONELECTRIC, Drive In, paved; 43 Single and 12 Double; 54 reservable, site 3 (22 ft) Not Reservable; Max Vehicle Length 12-92 ft, 52 reservable sites permit RV/Trailer at 23 ft or more (12 is 20 ft, 13 is 12 ft tent/pop-up); site centroid 39.41870,-121.12138 (~85 m from the stored pin)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026-11", "note": "Double sites $48."},
+      "source": "rec.gov rates (2026/2027 PeakSingleSite $24, PeakDoubleSite $48) + fs.usda.gov ('Single Site: $24 per night Double Site: $48 per night'), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "fcfs": "never", "note": "Check-in 2 pm, check-out noon."},
+      "source": "fs.usda.gov ('Restrictions Reservations only') + rec.gov catalog (54 of 55 sites reservable), read 2026-11-27. The stored fcfs 'some_sites' came from note prose",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov notice 'Utility hookups and showers are not available'; catalog all NONELECTRIC, read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 52, "max_rig_ft": 92, "note": "44 single and 12 double sites; 52 reservable sites take 23 ft or more, 12 pull-throughs."},
+      "source": "rec.gov campsite catalog for 10040047 (Max Vehicle Length per site; Driveway Entry), read 2026-11-27; FS page says 56 sites (44 single, 12 double)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "potable_water": true, "showers": false, "dump": false},
+      "source": "fs.usda.gov ('flush toilets and one vault toilet, and treated potable water') + rec.gov notices ('showers are not available', 'There is not a dump station'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-15", "closes": "10-15"},
+      "source": "fs.usda.gov ('Seasons of Use April 15 - October 15'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Tahoe National Forest campground on Marysville Road on the southeast side of New Bullards Bar Reservoir, about half a mile from the Dark Day boat ramp. Shaded paved sites in conifer and hardwood forest; the reservoir's sides are steep, so shore access is mostly at the ramps. Bears frequent the area. --Claude",
+  "summary": "FS page and rec.gov details/rates/catalog read. $24 single / $48 double, Apr 15-Oct 15, reservations only. 52 reservable sites fit 23 ft+ (max 92). Flush + vault toilets, water, no hookups/showers/dump. Not waterfront kept; pin fine.",
+  "flags": [
+    "SITE COUNT: FS says 56 (44 single, 12 double); rec.gov lists 55 (43 single, 12 double). Counted the 52 reservable sites that permit RV/Trailer at 23 ft or more; site 12 caps at 20 ft, 13 at 12 ft, site 3 (22 ft) is not reservable.",
+    "BOOKING: FS 'Reservations only' -> fcfs never (stored some_sites was note prose).",
+    "STATUS: FS banner 'Site Closed' is the off-season (season Apr 15-Oct 15); no closure written.",
+    "PHONE: 530-265-4531 agrees (FS district office and rec.gov contact). rec.gov facility_phone 530-478-6253.",
+    "WEBSITE: both lines good (FS r05 page, rec.gov 10040047).",
+    "WATERFRONT: not waterfront agrees (FS: half a mile from the Dark Day ramp; rec.gov: steep reservoir sides)."
+  ]
+}

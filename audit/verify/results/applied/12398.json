@@ -1,0 +1,50 @@
+{
+  "id": 12398,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.shoshonevillage.com/death-valley-rv-parks-shoshone-rv-park/ (read 2026-11-27): 'Shoshone RV Park is located at the north end of the Village next to the natural warm spring swimming pool and nature trails. It is one mile from the southeast entrance to Death Valley National Park. There are 25 full hook-up sites and many campsites under the open skies or sheltered by trees. The facilities include a laundromat, restrooms, showers, library, community room and a fire pit.'; 'To make a reservation by phone call: 1-760-852-4569'; 'Check-in hours are from 1pm until 9pm every day. If you can't make it by 10pm, we will not be able to accommodate you for that night... call us at 760-852-4335'; 'Reserve an RV Space!' -> resontheweb.com HotelCode=4574",
+    "https://www.resontheweb.com/shoshonecampground/index.jsp?HotelCode=4574&arrival=20270112&nights=1&adults=2 (ResOnTheWeb; plain curl gets only 'Loading ResOnTheWeb...', read in the headless browser with a desktop Chrome UA, 2026-11-27): 'Pull-through RV site ... Maximum occupancy: 5 $50.00/night Standard Rate'; 'Back-in RV site ... Maximum occupancy: 5 $50.00/night'; 'Tent ... $40.00/night'. 2027-02-17: 'Sorry, it appears the hotel does not have rates defined for these dates.'",
+    "Google Maps panel (headless browser, 2026-11-27): 'Shoshone Trailer RV Park' 4.3 (280 reviews), +1 760-852-4569, 22 CA-178, Shoshone; 35.98020,-116.27158 (~47 m from the stored pin)",
+    "audit/price_research/gateways.py 35.9806,-116.2714 (run 2026-11-27): 'none within 40 km; nearest: Death Valley NP 76 km'"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 50, "nightly_high": 50, "currency": "USD", "checked": "2026-11", "extra_person": {"max_people": 5}, "note": "Pull-through and back-in RV sites the same price; tent sites $40. Rates were loaded only for winter 2026-27 dates."},
+      "source": "ResOnTheWeb HotelCode 4574 quote for 2027-01-12, 1 night, 2 adults ('$50.00/night' for both RV site types, 'Maximum occupancy: 5', Tent $40.00), read 2026-11-27 in the headless browser",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.resontheweb.com/NavigationServlet?HotelCode=4574", "note": "Check-in 1-9 pm; arrivals after 10 pm cannot be accommodated. Phone reservations 760-852-4569."},
+      "source": "shoshonevillage.com RV park page ('Reserve an RV Space!' link, check-in hours, phone line) + ResOnTheWeb engine, read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": null, "water": true, "sewer": true},
+      "source": "shoshonevillage.com ('There are 25 full hook-up sites'), read 2026-11-27. The stored 50 A came from note prose; no operator page states the amperage, so it is cleared",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 25, "pull_through": true},
+      "source": "shoshonevillage.com ('25 full hook-up sites and many campsites') + ResOnTheWeb site types 'Pull-through RV site' and 'Back-in RV site', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"laundry": true, "showers": true},
+      "source": "shoshonevillage.com ('The facilities include a laundromat, restrooms, showers...'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "RV park at the north end of Shoshone village, next to the village's warm-spring swimming pool and nature trails and about a mile from Death Valley's southeast entrance road. Wetland ponds nearby shelter the endangered Shoshone pupfish. Open RV rows and tree-shaded campsites. --Claude",
+  "summary": "Operator page and ResOnTheWeb engine (browser) read. $50 a night both RV types (Jan 2027), tents $40. 25 full-hookup sites; amperage unsourced, cleared. Price gate passes at $50 exactly. Google 4.3/280. Not waterfront kept; pin fine.",
+  "flags": [
+    "PRICE GATE: passes at exactly $50 (ResOnTheWeb, 2027-01-12, pull-through and back-in alike, before tax); a Good Sam 10% (stored derived good_sam true) would make $45. No gateway within 40 km by gateways.py (Death Valley NP measured 76 km), though the operator says the park is 'one mile from the southeast entrance to Death Valley National Park'. Rates beyond January 2027 are not loaded yet ('does not have rates defined for these dates'), so the summer figure is unread.",
+    "GOOGLE: 4.3 (280 reviews) as 'Shoshone Trailer RV Park', +1 760-852-4569. RV Life 4*/$$ stored.",
+    "PRESENCE: passes (operator page with phone, live booking engine).",
+    "LONG-STAY: not long-stay in character (no weekly/monthly marketing); tests not needed.",
+    "HOOKUPS: stored electric 50 (note prose) cleared to unknown; the operator says only 'full hook-up'.",
+    "PHONE: '' -> 760-852-4569 (the page's reservation line and Google's listing); the front desk/check-in line is 760-852-4335.",
+    "WEBSITE: https://www.shoshonevillage.com/death-valley-rv-parks-shoshone-rv-park/ is the operator's page; keep.",
+    "NAME: Google lists it as 'Shoshone Trailer RV Park'; the operator calls it 'Shoshone RV Park' - keep the stored name.",
+    "WATERFRONT: not waterfront agrees (desert village; the warm-spring pool is a swimming pool)."
+  ]
+}
