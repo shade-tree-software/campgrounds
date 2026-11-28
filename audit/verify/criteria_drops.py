@@ -693,6 +693,7 @@ DROPS = {
     12458: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-649, read 2026-11-27: Google 'Avenue of the Giants Stafford RV Park and Campground' 3.8 (119 reviews); no posted rate (Firefly engine quotes only after a dated search)"),
     12420: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-651, read 2026-11-27: Google 3.6 (195 reviews); $52 ($46 Good Sam/AAA/military); workforce/long-stay character"),
     11839: ("2026-11-27", "posted vehicle limit 21 ft, under a 23-ft rig", "p3-651, read 2026-11-27: City of Monterey Veterans Memorial Park campground page 'Vehicles or trailers cannot be longer than 21 feet.'; $50 + $10 RV surcharge"),
+    14938: ("2026-11-28", "membership resort of member-assigned lots (long-stay test 5)", "p3-651, read 2026-11-27, AWH drop 2026-11-28: rules 'a membership camping resort', 'Each site ... exclusively assigned to one Member', 'members 50 years of age and older'; 'sold 135 of the Phase 1 lots'; only rate a 2018 image"),
 }
 
 if __name__ == "__main__":
