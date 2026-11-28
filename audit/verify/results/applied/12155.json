@@ -1,0 +1,56 @@
+{
+  "id": 12155,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10174943 (read 2026-11-27): 'Sweetwater Campground has 12 single camping units. All units are suitable for tents & RV's (32 ft. max). All interior and spur roads are poaved. Each unit contains at least one picnic table, fire ring and bear box. This is one double vault toilet... Well water is available and is piped to 3 faucets'; 'Rainbow Pools is .8 miles from campground'; notices 'Electric site hook-ups are not available at this facility.', 'This campground has first-come, first-served single family campsites. These sites and walk-ins are cash or check only', 'A fee will be charged for additional vehicles.', 'RV's 32 ft. max'; rules reservationCutOff 4; facility point 37.82397,-120.00495; phone 801-226-3564",
+    "https://www.recreation.gov/api/camps/campgrounds/10174943/rates (read 2026-11-27): PeakStandardNonelectric $29, 2024-2028 seasons (2027: 2027-04-26..2027-10-13)",
+    "recreation.gov campsite catalog 10174943 (read 2026-11-27): 13 STANDARD NONELECTRIC sites, all reservable, equipment incl. RV/Trailer/Fifth Wheel; no lengths listed",
+    "recreation.gov availability calendar 10174943 (2026-08..2027-05, read 2026-11-27): 2026 nights listed through 2026-10-11, none Nov-Mar; 2027 first night 2027-04-26",
+    "https://www.fs.usda.gov/r05/stanislaus/recreation/sweetwater-campground (updated October 28, 2026; read 2026-11-27): 'Site Closed'; 'potable water is available over the summer season (May – Sep)'; 'The number of people allowed in a single campsite is 6. The maximum length of stay in any campground is 14 days.'; 'Single Site: $29 per night'; 'American Land & Leisure operates this campground under a special use permit'; 'Fees are currently $37.00 per night (+fees and taxes).'; 'Contact Phone: 209-962-7825'; amenity list 'Potable water is not available at this site.'",
+    "Esri World Imagery 600 m frame at the stored pin (2026-11-27): one paved loop on an open, sparsely treed hillside on the north side of Highway 120; no water in the frame"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 29, "nightly_high": 29, "currency": "USD", "checked": "2026-11", "extra_person": {"max_people": 6}},
+      "source": "recreation.gov rates for 10174943 ($29 for 2026-2028) + FS Sweetwater page ('Single Site: $29 per night', 6 per site), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10174943", "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "max_stay_nights": 14},
+      "source": "recreation.gov campground 10174943 rules (reservationCutOff 4) + FS Sweetwater page ('The maximum length of stay in any campground is 14 days'), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "recreation.gov notice 'Electric site hook-ups are not available at this facility.', read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 13, "max_rig_ft": 32},
+      "source": "recreation.gov campsite catalog (13 sites) + notice 'RV's 32 ft. max', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "recreation.gov description ('double vault toilet', 'Well water is available and is piped to 3 faucets') + FS page ('potable water is available over the summer season (May – Sep)'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-26", "closes": "10-11", "note": "recreation.gov calendar: 2026 nights ran through Oct. 11; 2027 opens April 26. Water is on May-September."},
+      "source": "recreation.gov availability calendar for 10174943, read 2026-11-27; FS page shows 'Site Closed' (updated 2026-10-28)",
+      "method": "manual"
+    }
+  },
+  "note": "Stanislaus NF (Groveland RD) campground beside Highway 120 about 15 miles east of Groveland, near Yosemite's Big Oak Flat entrance, on an open, sparsely treed hillside; Rainbow Pools on the South Fork Tuolumne is 0.8 mile away. Run by the concessionaire American Land & Leisure. Walk-up payment is cash or check only. --Claude",
+  "summary": "rec.gov description/notices/rates/catalog/calendar + FS page read. $29, 13 sites, 32 ft, no electric, vault toilets + seasonal water confirmed; added 6 people, 14 nights, 4-day cutoff, season Apr 26 - Oct 11 (calendar). FS page also says '$37.00 per night' - conflict flagged.",
+  "flags": [
+    "FEE CONFLICT: the FS page says both 'Single Site: $29 per night' and 'Fees are currently $37.00 per night (+fees and taxes)' (concessionaire paragraph); the rec.gov rate table says $29 for 2026-2028. Kept $29 (rec.gov). If $37 is current, it is still under the $50 gate (federal anyway).",
+    "FCFS: rec.gov notice says 'This campground has first-come, first-served single family campsites... cash or check only', but all 13 catalog sites are reservable; fcfs not written.",
+    "SEASON: from the rec.gov calendar (2026 through Oct 11; 2027 from Apr 26); the FS page shows 'Site Closed' now (seasonal). Water May-Sep per FS.",
+    "PHONE: '' -> 209-962-7825 (Groveland Ranger District, FS page); rec.gov lists 801-226-3564 (concessionaire).",
+    "WEBSITE: https://www.fs.usda.gov/r05/stanislaus (forest home page) -> https://www.fs.usda.gov/r05/stanislaus/recreation/sweetwater-campground; keep the rec.gov line.",
+    "SITE COUNT: rec.gov description says '12 single camping units' but the catalog has 13 reservable sites; kept 13.",
+    "WATERFRONT: not waterfront confirmed (no water on imagery; Rainbow Pools 0.8 mi).",
+    "PIN: stored 37.82420,-120.00470 is ~35 m from the rec.gov point; fine."
+  ]
+}

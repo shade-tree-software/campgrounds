@@ -1,0 +1,53 @@
+{
+  "id": 12410,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233837 (read 2026-11-27): 'Each campsite has a paved parking spur, picnic table, grill and campfire ring. Vault toilets are available, and water is provided.'; 'Big Creek, which runs by the campground'; notices 'Maximum vehicle length is 25 feet', 'One RV with tow vehicle per single site... Extra vehicle will be charged a per night fee'; rules maxConsecutiveStay 14, minWeekendStay 0 soft, minHolidayWeekendStay 0 soft, reservationCutOff 2; facility point 37.48967,-119.63231; phone 559-642-3212 (concessionaire)",
+    "https://www.recreation.gov/api/camps/campgrounds/233837/rates (read 2026-11-27): STANDARD NONELECTRIC $49 per night every season 2020-2028 (2027 season 2027-05-07..2027-09-11), holiday 2",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233837 (read 2026-11-27): 32 sites (28 reservable SD03-SD30, plus SD02 and FS1-20/20N/30 not reservable); Max Vehicle Length 20 ft at 21 sites, 25 ft at SD05/06/07/30, 30 ft at SD02/03/12/17/27/28 and FS1-30; 'Proximity to Water: Riverfront' at SD21 (37.490975,-119.633556) and SD22 (37.490705,-119.633495), both listed 20 ft; all STANDARD NONELECTRIC",
+    "https://www.recreation.gov/api/camps/availability/campground/233837/month (2026-09, 2027-05, read 2026-11-27): 2026 nights listed through 2026-09-12, none in October; 2027 first night 2027-05-07",
+    "https://www.fs.usda.gov/r05/sierra/recreation/summerdale-campground (read 2026-11-27): 'Site Open'; 'Operational Hours June - November'; 'Reservations must be made at least three days in advance of arrival. There is a two night minimum stay on weekends and a three night minimum on holidays. Maximum stay = 14 days / Maximum vehicle length = 24 foot / Maximum group size = 6 per site'; 'Single Site: $47 per night / Additional Holiday Fee: $2 per night / Additional Vehicle fee: $10 per night'; Bass Lake Ranger District (559) 877-2218; 'Latitude: 37.4892262 Longitude: -119.633699'; 'Potable water is not available at this site.'",
+    "Esri World Imagery 340 m frame at 37.4912,-119.6332 with the rec.gov site points (2026-11-27): loop in a meadow between Highway 41 (east) and Big Creek, which runs under continuous conifer canopy ~20-30 m west of SD17-SD22"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 49, "nightly_high": 49, "currency": "USD", "checked": "2026-11", "surcharges": {"holiday": 2}, "extra_vehicle": {"included": 1, "amount": 10, "per": "night"}, "extra_person": {"max_people": 6}},
+      "source": "recreation.gov rates for 233837 ($49 STANDARD NONELECTRIC, holiday +$2), read 2026-11-27; extra vehicle $10 and 6 per site from the Sierra NF Summerdale page, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233837", "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "max_stay_nights": 14},
+      "source": "recreation.gov campground 233837 rules (maxConsecutiveStay 14, reservationCutOff 2; weekend/holiday minimums 0 soft = no rule), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 32, "max_rig_ft": 25, "note": "Only SD05-07 and SD30 (25 ft) and SD02, SD03, SD12, SD17, SD27, SD28 (30 ft) are listed over 20 ft."},
+      "source": "recreation.gov notice 'Maximum vehicle length is 25 feet' + campsite catalog for 233837, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "recreation.gov campground 233837 description ('Vault toilets are available, and water is provided'), read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-07", "closes": "09-12", "note": "recreation.gov calendar: the 2026 season ran through Sept. 12 and the 2027 season opens May 7."},
+      "source": "recreation.gov availability calendar for 233837 (2026-09 and 2027-05 months), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Sierra NF (Bass Lake RD) campground on Highway 41 near Fish Camp, about 1.5 miles south of Yosemite's south entrance, in a meadow among fir, cedar and cottonwood. Big Creek runs past the west side; sites 21-22 are by the creek but listed for 20 ft, as are most sites. --Claude",
+  "summary": "rec.gov description/rules/rates/catalog/calendar + FS page read. $47 -> $49 (rec.gov), holiday +$2, extra vehicle $10, 6 people, 14 nights, 2-day cutoff; 32 sites, max 25 ft (only 10 sites over 20 ft); season May 7 - Sep 12 from the calendar. Creekside kept (rec.gov Riverfront SD21-22). Pin is 1.3 km off.",
+  "flags": [
+    "PIN MOVE (~1.3 km): stored 37.50300,-119.63300 is ~1.3 km north of the campground. Target 37.4911,-119.6332 (centroid of the rec.gov site points SD05-SD30; FS page gives 37.48923,-119.63370, rec.gov facility point 37.48967,-119.63231).",
+    "FIT: only 10 of 32 sites are listed over 20 ft (SD05/06/07/30 at 25 ft; SD02/03/12/17/27/28 at 30 ft, SD02 not reservable); a 23-ft rig still fits those. rec.gov notice says max 25 ft, FS page 24 ft; max_rig_ft 24 -> 25 (rec.gov over FS per AWH).",
+    "WATERFRONT: creekside kept (weak). rec.gov tags SD21 (37.490975,-119.633556) and SD22 (37.490705,-119.633495) 'Riverfront'; both are sold by the night but listed for 20 ft, so a 23-ft rig can't book them. On Esri Big Creek runs under continuous canopy ~20-30 m west of SD17-SD22 (creek-sized, not visible under the trees); canopy-blind, so imagery cannot veto. If the reviewer counts only sites a 23-ft rig fits, the nearest is SD17 (30 ft) on the same west edge, untagged -> would go down to not waterfront. Not an --AWH value.",
+    "FEES: stored $47 (equals the FS page) -> $49 from the rec.gov rate table for every season incl. 2027 (trust rec.gov over FS pages, AWH).",
+    "MIN STAY / CUTOFF CONFLICT: FS page says 'a two night minimum stay on weekends and a three night minimum on holidays' and 3-day advance booking; rec.gov rules carry minWeekendStay 0 soft / minHolidayWeekendStay 0 soft (no rule) and a 2-day cutoff. Wrote rec.gov's values, no min_stay.",
+    "SEASON CONFLICT: FS page 'Operational Hours June - November' vs the rec.gov calendar (2027 opens May 7; 2026 nights end Sept 12). Wrote the calendar season; the stored 05-15..09-15 was note-derived.",
+    "WATER CONFLICT: FS page 'Potable water is not available at this site' vs rec.gov and the FS page's own description 'water is provided'. Kept potable_water true (rec.gov).",
+    "PHONE: stored 559-877-2218 is the Bass Lake RD office (FS page); rec.gov lists 559-642-3212 (concessionaire). Keep stored.",
+    "WEBSITE: both links live; no change.",
+    "OHV: rec.gov mentions the Miami Motorcycle Trails Area 'a few miles' away - not an OHV campground, no flag."
+  ]
+}

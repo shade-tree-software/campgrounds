@@ -1,0 +1,44 @@
+{
+  "id": 11822,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://parks.venturacounty.gov/county-parks/steckel-park/ - live page (and ventura.org, and the cdn fee-schedule PDF) answer an F5 'Request Rejected' to plain curl; read from Wayback capture 20260713062340: 'AMENITIES: BBQ-Fire Pit, Showers, Group Area Camping, Hook Ups, Playground, Clubhouse, Group Picnic, Individual Picnic, Restrooms, Park Host, Tent-RV'; 'Santa Paula Creek flows through this picturesque park... popular location for picnics, creek side camping'; 'Reservations can be made online or by calling 805-654-3951'; 'The private campground north of Santa Paula Creek is leased by the County to the Ventura Ranch KOA'; Camping fees 'Full Hook-up $52.00per day peak season, $50.00 per day off season, per site (1 RV, 1 vehicle, and 1 tent maximum)', 'Tent/Dry RV $29.00 per day peak season, $27.00 off season, per site.'; 'Each additional vehicle must fit within site and pay extra vehicle fee per night if allowed'; '10 Full Hook-ups'; 'Maximum of 6 people per campsite allowed'; 'Length of Stay 14 days consecutively'; dogs 'Fee is 3 per night, per dog'; Quiet Hours 10 pm-7 am (no generator use); booking link https://ventura.itinio.com/steckel/camping",
+    "https://ventura.itinio.com/steckel/camping (2026-11-27): AWS WAF CAPTCHA page ('verify that you're not a robot by solving a CAPTCHA puzzle') - not attempted; no Wayback capture. Site list, lengths and site numbers unread",
+    "Esri World Imagery frames at 34.4092,-119.0828 (350 m), 34.4065,-119.0818 (160 m) and 34.4075,-119.0815 (120 m), read 2026-11-27, with OSM ways (api.openstreetmap.org; Santa Paula Creek, Steckel Park polygon, Ventura Ranch KOA node 34.40576,-119.07984 east of the creek): RVs parked along a loop road at ~34.4067-34.4076,-119.0828 to -119.0820 between Hwy 150 and the creek; the loop's north/east edge meets the creek's open gravel bed, wetted channel ~25-30 m from the nearest pads with scattered riparian trees between; a dirt strip with parked vehicles runs south-east along the creek behind a tree fringe; the stored pin sits ~250 m north in the wooded day-use part of the park"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 27, "nightly_high": 52, "currency": "USD", "checked": "2026", "extra_person": {"max_people": 6}, "note": "Tent/dry RV sites $27 off season, $29 peak; full hookups $50 off season, $52 peak (one RV, one vehicle and one tent a site). Dogs $3 a night each."},
+      "source": "parks.venturacounty.gov Steckel Park page, Wayback 20260713062340 (live page refuses curl)",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://ventura.itinio.com/steckel/camping", "max_stay_nights": 14},
+      "source": "parks.venturacounty.gov Steckel Park page ('Reservations can be made online or by calling 805-654-3951'; 'Length of Stay 14 days consecutively'; Self-Booking link to ventura.itinio.com), Wayback 20260713062340",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true, "sewer": true},
+      "source": "parks.venturacounty.gov Steckel Park page ('Full Hook-up' fee, '10 Full Hook-ups'), Wayback 20260713062340; amperage not stated",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true},
+      "source": "parks.venturacounty.gov Steckel Park page (AMENITIES '... Showers ...'), Wayback 20260713062340",
+      "method": "manual"
+    }
+  },
+  "note": "Ventura County park on Santa Paula Creek off Highway 150 north of Santa Paula, among oaks and sycamores below the mountains, with an aviary and picnic grounds. The campground loop sits between the highway and the creek, its north end at the edge of the creek's gravel bed. Generators off 10 pm-7 am. The separate campground across the creek is the Ventura Ranch KOA, on land leased from the county. --Claude",
+  "summary": "County page read via Wayback (live site F5-blocked; Itinio engine behind an AWS WAF CAPTCHA). Tent/dry RV $27-29, full hookup $50-52 (10 FHU sites), 6 people, 14-night max, showers; sewer added. Creekside kept on imagery of the loop's north end at the creek bed (no site numbers available).",
+  "flags": [
+    "WATERFRONT (kept creekside, weak): the county page markets 'creek side camping'; on Esri the campground loop (~34.4067-34.4076,-119.0828/-119.0820) meets Santa Paula Creek's open gravel bed at its north/east end, the wetted channel ~25-30 m from the nearest pads with scattered riparian trees and no road between; the south-east dirt strip is behind a denser tree fringe. Santa Paula Creek is creek-sized (a few metres wetted). No site map or site numbers could be read (Itinio behind a CAPTCHA), so the keep rests on imagery of the loop, not on named sites; if the reviewer wants named sites, it goes down to not waterfront. Replacement evidence: 'Esri 2026-11-27 + OSM: campground loop ~34.4071,-119.0824 between Hwy 150 and Santa Paula Creek; the loop's north/east end meets the creek's open gravel bed, wetted channel ~25-30 m from the nearest pads with scattered riparian trees, no road between; county page \"creek side camping\" -> creekside (site numbers unread)'. Not an --AWH value. The stored evidence was taken at 34.4085,-119.0815.",
+    "PIN MOVE (~250 m): stored 34.40920,-119.08280 sits in the wooded day-use part of the park; target 34.4071,-119.0824 (the RV loop where RVs show on imagery). Borderline at the 250 m threshold; optional.",
+    "FEES: stored none -> $27 (Tent/Dry RV off season) to $52 (full hookup peak), from the July 2026 capture of the county page; peak/off-season dates not stated there. The 2026 fee schedule PDF (cdn.parks.venturacounty.gov/.../Rent-and-Fee-Schedule-Approved-6.23.26.pdf) also refuses curl and its Wayback capture is the reject page; unread.",
+    "HOOKUPS: '10 Full Hook-ups' -> water true (kept), sewer false -> true. Electric amperage not posted; left unset.",
+    "SITE COUNT / RIG LENGTH: not stated on the county page; Itinio unread. Aggregators say 49 sites and 45 ft, not used. RVs are visible in the loop on imagery.",
+    "WEBSITE: '' -> https://parks.venturacounty.gov/county-parks/steckel-park/ (F5 bot wall to curl, not dead; Wayback 2026-07-13 shows it live).",
+    "PHONE: 805-654-3951 agrees (county reservations line, on the park page).",
+    "STATUS: open as of the 2026-07-13 capture (only a Wi-Fi upgrade notice); live page unread.",
+    "LEAD: Ventura Ranch KOA (OSM node 34.40576,-119.07984, 7400 Pine Grove Rd, venturaranchkoa.com, +1-805-933-3200), the private campground across the creek on county-leased land; checked campgrounds.json - nothing within 2 km but this entry. Not vetted (KOA, likely a price-gate case)."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": 11712,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=544 (read 2026-11-27): Current Restrictions 'Last Checked: 11/27/2026' with no restriction listed; '(831) 763-7063'; 'Max trailer: 31 feet' / 'Max camper/motorhome: 31 feet'; Overnight Facilities 'Tent Camping, Group Campsites, Hike-and-Bike Campsites, RV Access'; Other Facilities 'Restrooms / Showers, Restrooms, Outdoor Showers, Drinking Water Available' (no dump station listed); 'A peaceful campground under the pines... a favorite year-round destination'",
+    "https://www.parks.ca.gov/pages/544/files/SunsetSBCampground083116.pdf (2016 campground map): 'Payment of camping fees at Sunset State Beach qualifies registered vehicle(s) to utilize the dump station at New Brighton State Beach (1500 Park Avenue, Capitola, CA 95010).'; 'SHOWERS: Pay showers'; 'Generators may only be used from 10 a.m. to 8 p.m.'",
+    "ReserveCalifornia API, PlaceId 726, read 2026-11-27: Pines Hollow and Dunes Camp (Sites 38-90, FacilityId 734) 47 campsites (VehicleLength 31 at 40, 26 at 5, 24 and 17 at one each) + 6 bike-in; South Camp (sites 1-37, FacilityId 737) 34 campsites (31 ft at 25; 15-27 ft at 9); campsite Rate 35.00 on 2027-01-14, 2027-05-21 and Saturday 2027-05-22; MaxStay 7 on all but one sampled unit; search/place InSeason: South Camp in season at every sample 2026-12-01..2027-04-27, Pines Hollow/Dunes out of season 2026-12-01..2027-03-31 and in season 2027-04-06 and 2027-04-27",
+    "Esri World Imagery frames 900 m at 36.8875,-121.8300 and 400 m at 36.8895,-121.8320 (2026-11-27): all three loops lie east of the paved park road that runs the length of the park; west of that road an undeveloped dune-scrub field ~150-200 m wide runs to the beach, with footpaths and one short spur road to a lookout in the dunes"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 81, "max_rig_ft": 31, "note": "Most sites take 31 ft; about a dozen are shorter."},
+      "source": "parks.ca.gov page 544 ('Max trailer: 31 feet', 'Max camper/motorhome: 31 feet') + ReserveCalifornia unit catalog (47 + 34 campsites), read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true, "dump": null},
+      "source": "parks.ca.gov page 544 facility list ('Restrooms / Showers', 'Drinking Water Available', no dump station) + 2016 campground map (campers use the dump station at New Brighton State Beach), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "max_stay_nights": 7},
+      "source": "ReserveCalifornia API search/details, Sunset SB campsites MaxStay 7, read 2026-11-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "ReserveCalifornia search/place InSeason: South Camp (sites 1-37) in season at every sample 2026-12-01..2027-04-27, read 2026-11-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "surcharges": {"weekend": 0}, "checked": "2026-11", "note": null},
+      "source": "ReserveCalifornia API search/details, Sunset SB campsites Rate 35.00 (2027-01-14, 2027-05-21, Saturday 2027-05-22), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "State beach south of Watsonville on Monterey Bay, with campsites among Monterey pines and cypress between farm fields and a broad dune field above a long sandy beach. Three loops: South Camp stays open all winter; Pines Hollow and Dunes Camp close for the winter (out of season on ReserveCalifornia from December through March, open by early April 2027). The nearest dump station is at New Brighton State Beach in Capitola. No hookups. --Claude",
+  "summary": "parks.ca.gov page, 2016 campground map and ReserveCalifornia catalog read. $35 and 31 ft confirmed; 85 -> 81 sites; 7-night max; showers/water added, dump cleared (it is at New Brighton SB); South Camp year-round, Pines Hollow/Dunes closed Dec-Mar. Coastal dunes questioned: the park road runs between every loop and the dune field.",
+  "flags": [
+    "WATERFRONT (downgrade recommended, coastal dunes -> coastal walk): on Esri every loop (Dunes Camp around the stored pin 36.8905,-121.8311; Pines Hollow ~36.8883,-121.8295; South Camp ~36.8849,-121.8274) lies EAST of the paved park road that runs the length of the park; the undeveloped dune-scrub field (~150-200 m) and the beach lie west of it. The stored evidence says 'no road/day-use complex between camp and shore', which imagery contradicts. The curation doc lists 'a road/highway between camp and shore' as disqualifying coastal dunes; for coastal walk only a highway, town, rail line or residential strip counts, and the park's own road may lie between. So coastal walk is clearly earned; coastal dunes depends on whether the park's own road counts. Replacement evidence: 'Esri 2026-11-27: all three loops east of the paved park road; west of it the park's undeveloped dune-scrub field ~150-200 m to the Monterey Bay beach, footpaths across -> coastal walk (the park road between camp and dunes rules out coastal dunes)'. Not an --AWH value.",
+    "FACILITIES: dump true (note prose) -> cleared. The 2016 campground map sends campers to 'the dump station at New Brighton State Beach', and the current park page's facility list (which shows 'RV Dump Station' at parks that have one) lists none.",
+    "SITES: count 85 (note prose) -> 81 campsites in the RC catalog (47 Pines Hollow/Dunes + 34 South Camp, plus 6 bike-in and a group area); max 31 ft confirmed on the page.",
+    "SEASON: South Camp in season all winter on RC -> year_round true. Pines Hollow/Dunes out of season 2026-12-01..2027-03-31 (in season by 2027-04-06); the old note's 'close Oct-mid March' is not borne out for March and is replaced in the note.",
+    "BOOKING: RC MaxStay 7 on sampled units (one unit showed 30) -> max_stay_nights 7.",
+    "WEBSITE: drop the generic second line https://www.reservecalifornia.com; keep https://www.parks.ca.gov/?page_id=544.",
+    "PHONE: (831) 763-7063 agrees with the page.",
+    "STATUS: open; no current restriction posted (page checked 11/27/2026).",
+    "PIN: stored 36.89050,-121.83110 is in the northern (Dunes Camp) loop; fine."
+  ]
+}

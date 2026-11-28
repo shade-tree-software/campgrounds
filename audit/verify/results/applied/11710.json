@@ -1,0 +1,49 @@
+{
+  "id": 11710,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.parks.ca.gov/?page_id=423 (read 2026-11-27): 'Campground open all year.'; '(707) 925-6482'; 'Max trailer: 24 feet', 'Max camper/motorhome: 27 feet'; 'High water (and removal of seasonal bridges) makes much of the park... inaccessible in winter, but at least one campground is always open.'; facilities list 'Restrooms / Showers', 'Drinking Water Available', 'RV Access'; Current Restrictions block empty; 'Reservation Availability: No upcoming camping/lodging reservations at this time.'",
+    "https://www.parks.ca.gov/pages/423/files/Standish-HickeySRAFinalWebLayout2019.pdf (park brochure 2019, read 2026-11-27): 'Camping - Hickey and Rock Creek Campgrounds are open seasonally. One campsite is set aside for bicyclists and hikers'",
+    "ReserveCalifornia API (california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr, read 2026-11-27): citypark 721 'Standish-Hickey SRA'; facilities 718 Rock Creek Campground (39.87716,-123.72494; 28 campsites #3-35 + hike-in HB1) and 719 Hickey Campground (39.87735,-123.72906; 51 campsites #37-97); search/details per unit (2027-05-20): Rock Creek 20 'Standard' sites + 8 'Tent Only', Hickey 35 'Standard' + 16 'Tent Only'; every Standard site 'Site Length 27' (two 24), 10 pull-through; 'Electricity Hookup: None', 'Water Hookup: No', 'Sewer Hookup: No' on every unit that lists them; rate 35.00 on 2026-12-15, 2026-12-19 (Sat), 2027-01-15, 2027-05-20, 2027-05-22 (Sat), 2027-05-29 (Sat); no Redwood Campground facility. search/place season scan: Rock Creek InSeason only through ~2026-12-21, Hickey not in season through 2027-05-27 (season not yet loaded)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "checked": "2026-11", "surcharges": {"weekend": 0}, "note": null},
+      "source": "ReserveCalifornia search/details: Campsite $35 on weekdays and Saturdays, December 2026 and May 2027, both campgrounds, read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "usedirect", "url": "https://www.reservecalifornia.com/"},
+      "source": "ReserveCalifornia facilities 718/719 bookable online, read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "ReserveCalifornia search/details for all 80 units: 'Electricity Hookup: None', 'Water Hookup: No', 'Sewer Hookup: No' (the rest list no hookup), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 55, "max_rig_ft": 24, "pull_through": true, "note": "Rock Creek has 20 RV-capable sites and Hickey 35; the other 24 numbered sites in the two campgrounds are tent-only. Motorhomes to 27 ft, trailers to 24 ft."},
+      "source": "parks.ca.gov ('Max trailer: 24 feet', 'Max camper/motorhome: 27 feet') + ReserveCalifornia per-unit 'Standard' vs 'Tent Only' and Site Length, read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "potable_water": true},
+      "source": "parks.ca.gov facilities list ('Restrooms / Showers', 'Drinking Water Available'), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Redwood park on the South Fork Eel River 1.5 mi north of Leggett, with two drive-in campgrounds, Rock Creek and Hickey, on the bluffs above the river; the river-flat Redwood Campground takes no trailers or vehicles over 18 ft. Much of the park, trails included, is cut off by high water in winter when the seasonal bridges come out, but at least one campground stays open. Swimming holes and fishing on the river. --Claude",
+  "summary": "parks.ca.gov page/brochure and ReserveCalifornia API read. $35 every night sampled; no hookups at any unit (stored water true and the note's 'water+electric at Rock Creek' were wrong); 55 RV-capable sites (Rock Creek 20, Hickey 35) of 79, trailers 24 ft, motorhomes 27 ft; phone added. Not waterfront kept.",
+  "flags": [
+    "HOOKUPS CORRECTED: stored water true (note prose: 'Rock Creek ~28 sites, water+electric hookups') -> electric 0, water false, sewer false; every ReserveCalifornia unit at Rock Creek and Hickey lists 'Electricity Hookup: None' / 'Water Hookup: No' or nothing.",
+    "SITE COUNT: stored 92 (note prose) -> 55 RV-capable sites: ReserveCalifornia has 28 units at Rock Creek (#3-35; 20 Standard, 8 Tent Only) and 51 at Hickey (#37-97; 35 Standard, 16 Tent Only), plus a hike/bike site. The Redwood Campground has no ReserveCalifornia facility.",
+    "RIG LENGTH: parks.ca.gov 'Max trailer: 24 feet', 'Max camper/motorhome: 27 feet'; stored max_rig_ft 27 -> 24 (the trailer figure, per the trailer-limit rule); a 23-ft motorhome fits. Every Standard site posts 27 ft (two 24 ft).",
+    "SEASON: kept year_round (manual, parks.ca.gov 'Campground open all year.'). The 2019 brochure says both campgrounds 'are open seasonally', and ReserveCalifornia has Rock Creek in season only to about Dec 21 and nothing in season Jan-May 2027 (likely not yet loaded; Rock Creek's December nights show 0 available). The park page also says 'No upcoming camping/lodging reservations at this time.' Worth a re-read in spring.",
+    "PHONE: '' -> (707) 925-6482 (parks.ca.gov contact).",
+    "WEBSITE: keep https://www.parks.ca.gov/?page_id=423; drop the generic https://www.reservecalifornia.com line (booking.url carries it).",
+    "STATUS: open; the Current Restrictions block on parks.ca.gov is empty.",
+    "PIN: stored 39.87600,-123.72700 sits between the two campgrounds, ~220 m from each RC facility point (Rock Creek 39.87716,-123.72494; Hickey 39.87735,-123.72906); fine. The two campgrounds are ~350 m apart off one entrance - not a split.",
+    "WATERFRONT: not waterfront kept; stored evidence (2009 map 'STEEP BLUFFS' between Hickey/Rock Creek and the river) unchanged; no RC unit carries a Proximity to Water value."
+  ]
+}

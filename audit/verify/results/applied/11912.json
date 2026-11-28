@@ -1,0 +1,50 @@
+{
+  "id": 11912,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.nps.gov/lavo/planyourvisit/summit-lake-campground.htm (read 2026-11-27): 'The campground contains a north section and a south section. Both have access to Summit Lake and are connected via a short trail along the east shore. Swimming is generally better from the north shore'; 'South Summit Lake Campground cannot accommodate RVs or trailers (except small tent trailers).' The per-campground boxes (amenities, season, fees) load by script from the NPS campground data (ids 7716/7717) and are blank to curl - unread",
+    "https://www.recreation.gov/api/camps/campgrounds/234041 (read 2026-11-27): 'This facility has flush toilets, drinking water, campfire rings and picnic tables.'; 'The campground is within walking distance of the small but scenic Summit Lake'; notices 'There are no electricity, water or sewer hook-ups', 'An entrance fee of $30 per vehicle is required', 'food and scented products must be stored in the bear lockers provided at each campsite', '50 percent discount on camping fees applies only to lifetime pass holders and senior annual pass holders'; rules maxConsecutiveStay 7, minConsecutiveStay 1 soft, reservationCutOff 0; phone 530 595-6121",
+    "https://www.recreation.gov/api/camps/campgrounds/234041/rates (read 2026-11-27): STANDARD NONELECTRIC and TENT ONLY $24 every peak season 2020-2028 (2027: 2027-06-25..2027-09-06)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234041 (read 2026-11-27): 42 sites in loops A and B - 33 STANDARD NONELECTRIC (RV/Tent/Trailer) and 9 TENT ONLY; Max Vehicle Length 20-35 ft on most standard sites, 54 ft at A04 and 60 ft at A15; no site tagged for proximity to water",
+    "recreation.gov availability calendar 234041 (2026-08, 2026-09, 2027-06, read 2026-11-27): 2026 nights listed only 2026-08-29..2026-09-07; 2027 nights from 2027-06-25 are NYR",
+    "Esri World Imagery frames 440 m at 40.4935,-121.4245 and 240 m at 40.4942,-121.4232 with the rec.gov site points (2026-11-27): loops A and B north of the lake; the nearest sites (B01-B03) are ~35-40 m from the north shore behind a continuous band of conifers"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026-11"},
+      "source": "recreation.gov rates for 234041 ($24 STANDARD NONELECTRIC, every season through 2028), read 2026-11-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/234041", "max_stay_nights": 7},
+      "source": "recreation.gov campground 234041 rules (maxConsecutiveStay 7; minConsecutiveStay 1 soft = no rule), read 2026-11-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "recreation.gov campground 234041 notice 'There are no electricity, water or sewer hook-ups', read 2026-11-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true},
+      "source": "recreation.gov campground 234041 ('This facility has flush toilets, drinking water'), read 2026-11-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 42, "note": "33 sites take RVs and trailers; 9 are tent-only."},
+      "source": "recreation.gov campsite catalog for 234041 (42 sites: 33 STANDARD NONELECTRIC, 9 TENT ONLY), read 2026-11-27",
+      "method": "manual"
+    }
+  },
+  "note": "Lassen Volcanic NP campground at 6,700 ft on the main park road, on the north side of small Summit Lake, with swimming from the north shore and a trail along the east shore to Summit Lake South (no RVs there). Two loops (A/B) with bear lockers at every site; close to the Lassen Peak and Cluster Lakes trailheads. --Claude",
+  "summary": "rec.gov description/notices/rules/rates/catalog + NPS page read (NPS data boxes are script-loaded, unread). $24 confirmed; no hookups (sewer added), flush toilets + water, 7-night max; site count 46 -> 42 (33 RV). Not waterfront kept (trees between the loops and the shore). Season not settled by the calendar.",
+  "flags": [
+    "SITES: count 46 (note prose) -> 42 per the rec.gov catalog (33 RV/trailer + 9 tent-only). max_rig_ft 40 (note prose) left unchanged: the catalog lists 20-35 ft on most standard sites plus 54 ft (A04) and 60 ft (A15), which may be real pull-throughs or typos; the NPS page's own data box (likely the source of '40 ft') is script-loaded and unread.",
+    "SEASON: not written. rec.gov rate season 2027-06-25..2027-09-06 is a rate season; the 2026 calendar shows nights only 2026-08-29..09-07 (a late 2026 opening, reason not found on the NPS page) and 2027 nights from 06-25 are NYR. NPS season box unread.",
+    "WATERFRONT: not waterfront kept. Nearest sites B01 (40.494305,-121.423547), B02 (40.494389,-121.423386) and B03 (40.494482,-121.42321) are ~35-40 m from Summit Lake's north shore through a continuous band of conifers; rec.gov tags no site for water and says 'within walking distance'. Not an --AWH value. A reviewer could consider lakeview, but the tree band looks dense on imagery; left down.",
+    "FEES: entrance fee $30 per vehicle (rec.gov notice) not written; check the federal:nps policy row.",
+    "PHONE: stored 530-595-6100 (park HQ) vs rec.gov 530 595-6121; keep stored.",
+    "PIN: stored 40.49413,-121.42553 is ~80 m from site A02; fine.",
+    "WEBSITE: both links live; no change."
+  ]
+}
