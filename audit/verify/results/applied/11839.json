@@ -1,0 +1,33 @@
+{
+  "id": 11839,
+  "checked": "2026-11-27",
+  "sources": [
+    "http://monterey.org/camping -> https://monterey.gov/your_city_hall/departments/parks_and_recreation/parks/veterans_park_campground.php (read 2026-11-27): 'Besides campgrounds (open 365 days per year)'; 'Campsites are first come, first served; no reservations.'; 'Camping is limited to three (3) consecutive days.'; 'Vehicles or trailers cannot be longer than 21 feet.'; Schedule of Fees: 'Campsite with 1 Vehicle $50'; 'Additional Vehicle $15'; 'Active Duty & Retired U.S. Military, Disabled U.S. Veterans & Senior Age 62 and Older - Vehicle Campsite $5 discount'; 'Shower Fee Campers & Non-Campers (5 minute shower) $4'; 'Dump Station Fee (1 free dump station use included per stay) $15 per use'; 'Recreational Vehicle Surcharge $10 per night'; picnic reservations (831) 646-3865; Parks and Recreation (831) 646-3799",
+    "Google Maps panel 'Veterans Memorial Park Campground Monterey' (gm.py headless, read 2026-11-27): 4.4 from 897 reviews, (831) 646-3865, 1200 Veterans Dr, pin 36.59929,-121.91176"
+  ],
+  "groups": {
+    "fees": {"values": {"nightly_low": 60, "nightly_high": 60, "currency": "USD", "checked": "2026-11",
+                        "extra_vehicle": {"included": 1, "amount": 15, "per": "night"},
+                        "note": "$50 vehicle campsite plus a $10 nightly RV surcharge; $5 off for military, disabled veterans and seniors 62+. Showers $4; one dump per stay included, then $15."},
+             "source": "https://monterey.gov/your_city_hall/departments/parks_and_recreation/parks/veterans_park_campground.php Schedule of Fees ('Campsite with 1 Vehicle $50'; 'Recreational Vehicle Surcharge $10 per night'; 'Additional Vehicle $15'), read 2026-11-27", "method": "manual"},
+    "facilities": {"values": {"showers": true, "dump": true},
+                   "source": "same page ('Shower Fee Campers & Non-Campers (5 minute shower) $4'; 'Dump Station Fee (1 free dump station use included per stay)'), read 2026-11-27", "method": "manual"},
+    "sites": {"values": {"max_rig_ft": 21},
+              "source": "same page ('Vehicles or trailers cannot be longer than 21 feet.'), read 2026-11-27", "method": "manual"},
+    "booking": {"values": {"reservable": false, "fcfs": "always", "platform": "none", "max_stay_nights": 3},
+                "source": "same page ('Campsites are first come, first served; no reservations.'; 'Camping is limited to three (3) consecutive days.'), read 2026-11-27", "method": "manual"},
+    "season": {"values": {"year_round": true},
+               "source": "same page ('campgrounds (open 365 days per year)'), read 2026-11-27", "method": "manual"}
+  },
+  "note": "City of Monterey campground in a 50-acre Monterey pine park on the hill a mile above downtown, with trails into Huckleberry Hill Nature Preserve; RVs and trailers are limited to 21 ft. No campfires June 1 - Nov 1. --Claude",
+  "summary": "DROP CANDIDATE: the city posts 'Vehicles or trailers cannot be longer than 21 feet.' Otherwise first-come, open 365 days, 3-night limit, $50 + $10 RV surcharge ($60 a night for an RV), showers $4, dump. Google 4.4 (897). Phone empty -> 831-646-3865.",
+  "flags": [
+    "DROP CANDIDATE (rig length): city page: 'Vehicles or trailers cannot be longer than 21 feet.' A 23-ft rig is over the posted limit for the whole campground (written sites.max_rig_ft 21).",
+    "PRICE: an RV pays $60 a night ($50 campsite + 'Recreational Vehicle Surcharge $10 per night'), $55 with the military/veteran/62+ discount. It is local, so the private price gate does not apply.",
+    "STAY: 'Camping is limited to three (3) consecutive days' (a maximum, not a minimum).",
+    "SITE COUNT: stored 40 (derived) not on the city page; left untouched.",
+    "PHONE: empty -> 831-646-3865 (park line on Google and the page's reservation line for picnic areas); Parks and Recreation main line 831-646-3799.",
+    "WEBSITE: https://monterey.org -> https://monterey.gov/your_city_hall/departments/parks_and_recreation/parks/veterans_park_campground.php (monterey.org/camping redirects there).",
+    "PIN: Google 36.59929,-121.91176 vs stored 36.59930,-121.91250 = ~65 m; no move."
+  ]
+}

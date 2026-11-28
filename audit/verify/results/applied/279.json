@@ -1,0 +1,39 @@
+{
+  "id": 279,
+  "checked": "2026-11-27",
+  "sources": [
+    "https://www.nps.gov/yose/planyourvisit/tmcamp.htm (read 2026-11-27): 'Each campsite contains a fire ring, picnic table, and food locker ... and is near a bathroom with drinking water and flushing toilets'; 'call the Tuolumne Meadows campground office at 209/372-4025'",
+    "NPS campgrounds API record 'Tuolumne Meadows Campground' (developer.nps.gov, read 2026-11-27): fee '$36.00 ... Standard Sites (RV or Tent) and Tent Only Sites (non-group site)/night'; 'Tuolumne Meadows is open seasonally from July through September for tents, RVs (up to 35 ft.) and trailers (up to 24 ft.). Exact dates vary. The opening date ... varies depending on the opening of the Tioga Road ... Reservations are required. In 2026, the campground will be open from July 1 until September 28.'; 'Seasonal Winter Closure' 2026-09-28 to 2027-07-01; amenities: flush toilets, potable water, showers None, dumpStation No; totalSites 289, electricalHookups 0",
+    "https://www.recreation.gov/api/camps/campgrounds/232448 (read 2026-11-27): 'Flush toilets, drinking water, and an amphitheater are provided'; 'There are no electric, water or sewer hook-ups at this facility'; rules maxStay 14 nights, reservationWindow '5 months to be released at a time', blockReleaseDay 'Blocks released on the 15th of each month'; 'Campsites in Yosemite are extremely popular and typically sell out in minutes ... before the 7:00 a.m. (PST) release time'",
+    "https://www.recreation.gov/api/camps/campgrounds/232448/rates (read 2026-11-27): 2026 Peak Season Jul 1 - Sep 26, STANDARD NONELECTRIC $36, TENT ONLY $36, group $75, equestrian $50",
+    "recreation.gov campsite catalog for 232448 (read 2026-11-27): 290 sites, all nonelectric; max vehicle length 35 ft at 9 sites, 30 at 5, 24-28 at 32, the rest 16-20 ft; 162 tent-only, hike-to and walk-to sites",
+    "recreation.gov availability 2026-09 (read 2026-11-27): every site 'Reserved' Sep 1-26, nothing after",
+    "USGS NHD flowlines (hydro.nationalmap.gov MapServer/6, read 2026-11-27) + Esri World Imagery around 37.8735,-119.3520 (viewed 2026-11-27): the Tuolumne River (mapped as a river area) runs 70-72 m from A028 and A041, the nearest 24-ft+ sites, through a continuous belt of conifer; an unnamed small stream passes 20-29 m from C074, C075 and C017 under the same canopy"
+  ],
+  "groups": {
+    "fees": {"values": {"nightly_low": 36, "nightly_high": 36, "currency": "USD", "checked": "2026-11"},
+             "source": "https://www.recreation.gov/api/camps/campgrounds/232448/rates (2026 Peak Season, STANDARD NONELECTRIC $36) + NPS campground record ('$36.00 ... Standard Sites (RV or Tent)'), read 2026-11-27", "method": "manual"},
+    "facilities": {"values": {"flush_toilets": true, "potable_water": true, "showers": false},
+                   "source": "https://www.nps.gov/yose/planyourvisit/tmcamp.htm ('near a bathroom with drinking water and flushing toilets') + NPS record (showers None), read 2026-11-27", "method": "manual"},
+    "sites": {"values": {"count": 290, "max_rig_ft": 35,
+                         "note": "Most sites take only 18 ft; about 45 take 24 ft or more, nine of them 35 ft. Trailers are limited to 24 ft at most sites."},
+              "source": "recreation.gov campsite catalog for 232448 (290 sites; Max Vehicle Length 35 ft at 9) + NPS record ('RVs (up to 35 ft.) and trailers (up to 24 ft.)'), read 2026-11-27", "method": "manual"},
+    "booking": {"values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/232448", "fcfs": "never", "max_stay_nights": 14, "window_opens_days": 150,
+                           "note": "Reservations required. Sites are released in monthly blocks up to five months ahead, on the 15th at 7 a.m. Pacific, and typically sell out in minutes. Sign in at the entrance on arrival or the reservation is cancelled."},
+                "source": "https://www.recreation.gov/api/camps/campgrounds/232448 (reservationWindow '5 months to be released at a time'; blockReleaseDay 'Blocks released on the 15th of each month'; maxStay 14) + NPS record ('Reservations are required'), read 2026-11-27", "method": "manual"},
+    "season": {"values": {"year_round": false, "opens": "07-01", "closes": "09-28",
+                          "note": "Dates vary with the opening of the Tioga Road; 2026 ran July 1 - September 28."},
+               "source": "NPS campground record ('open seasonally from July through September ... Exact dates vary ... In 2026, the campground will be open from July 1 until September 28'), read 2026-11-27", "method": "manual"}
+  },
+  "note": "Yosemite's high-country campground along the Tioga Road at 8,600 ft, a short walk from Tuolumne Meadows, the visitor center and the store. Tioga Road is closed in winter. No cell service or internet. Many sites hold one vehicle; overflow parking is at the Parsons Lodge trailhead and the old gas station lot. The river runs below the A loop through the trees. --Claude",
+  "summary": "NPS page/API + rec.gov read. Riverview kept: nearest 24-ft+ sites (A028, A041) are ~70 m from the Tuolumne River through continuous forest; the note's 'A028 backs up directly to the river' is wrong and is removed. Season Jul 1 - Sep 28 (varies with Tioga Road), $36, 290 sites, most 18 ft, ~45 take 24 ft+, nine 35 ft; reservations only, 5-month monthly-block window.",
+  "flags": [
+    "WATERFRONT: riverview kept. NHD + Esri imagery: A028 (37.87351,-119.35229, 24 ft) is 72 m and A041 (37.87236,-119.35033, 24 ft) 70 m from the Tuolumne River centerline, with a continuous belt of conifer between; A026/A027/A036 are 83-113 m. No RV-length site within ~50 m over open ground. The stored note line 'Site A028 is the only RV site that backs up directly to the river' is not supported and has been dropped from the note.",
+    "CREEKSIDE LEAD (not upgraded): an unnamed small stream (NHD StreamRiver, probably Unicorn/Budd Creek drainage) passes 20 m from C075 (37.87168,-119.35894, 28 ft), 24 m from C074 (37.87168,-119.35916, 24 ft) and 29 m from C017 (37.87256,-119.35900, 24 ft), all under continuous canopy; not visible on imagery and may be seasonal. Kept riverview.",
+    "SEASON: year_round false, Jul 1 - Sep 28 written from the 2026 dates; the NPS says dates vary every year with Tioga Road.",
+    "BOOKING: the federal registry's 180-day window does not apply; Yosemite releases 5 months ahead in monthly blocks on the 15th - written window_opens_days 150 with the rule in booking.note. fcfs never ('Reservations are required').",
+    "FACILITIES: rec.gov notice mentions a dump station closing Sept 8, but the NPS record says dumpStation 'No'; dump left unset.",
+    "PIN: stored 37.8712,-119.3577 is ~85 m from the site-catalog centroid 37.8719,-119.3581; no move.",
+    "PHONE: 209-372-4025 matches; rec.gov also lists 209-372-8502. WEBSITE: both stored links are current."
+  ]
+}

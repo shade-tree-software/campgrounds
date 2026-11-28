@@ -691,6 +691,8 @@ DROPS = {
     14912: ("2026-11-27", "no live web presence (parked domain) and mostly long-stay with no current nightly rate", "p3-647, read 2026-11-27: ranchocolina.com parked; Facebook page 'Unofficial'; only rate Campendium $50 (Jan 2021); phone-only reservations; imagery 2018/2021 nearly every pad filled with trailers beside a mobile-home park; campbase 'some extended stay'"),
     12365: ("2026-11-27", "an adult snowbird resort selling park models (long-stay test 5; Ridge Manor precedent), peak nights over US$50", "p3-648, read 2026-11-27: about page 'Our premier luxury adult resort', 'home, community, health, recreation and beauty for adults'; 'Rio Bend is a Snowbird destination', '4 MONTHS FOR $899!'; park models sold as 'Excellent investments'; no booking engine or site count; daily $40 May-Sep, $60 Oct-Apr ($54 Good Sam); Google 4.5/481"),
     12458: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-649, read 2026-11-27: Google 'Avenue of the Giants Stafford RV Park and Campground' 3.8 (119 reviews); no posted rate (Firefly engine quotes only after a dated search)"),
+    12420: ("2026-11-27", "private park under 4.0 on Google with 25+ reviews", "p3-651, read 2026-11-27: Google 3.6 (195 reviews); $52 ($46 Good Sam/AAA/military); workforce/long-stay character"),
+    11839: ("2026-11-27", "posted vehicle limit 21 ft, under a 23-ft rig", "p3-651, read 2026-11-27: City of Monterey Veterans Memorial Park campground page 'Vehicles or trailers cannot be longer than 21 feet.'; $50 + $10 RV surcharge"),
 }
 
 if __name__ == "__main__":
